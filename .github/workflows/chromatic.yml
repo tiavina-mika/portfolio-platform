@@ -35,7 +35,7 @@ jobs:
     outputs:
       run: ${{ steps.changes.outputs.run }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event_name == 'schedule' && 'develop' || github.ref }}
 
@@ -67,12 +67,12 @@ jobs:
           && '[{"app":"web","tokenSecret":"CHROMATIC_PROJECT_TOKEN_WEB"}]'
           || '[{"app":"web","tokenSecret":"CHROMATIC_PROJECT_TOKEN_WEB"}]') }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: ${{ github.event_name == 'schedule' && 'develop' || github.ref }}
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
 
@@ -97,7 +97,7 @@ jobs:
 
       - name: Publish to Chromatic
         id: chromatic
-        uses: chromaui/action@14cfaef73576e69f95f47f60058063f46ca38719 # v18.1.0
+        uses: chromaui/action@5bcadb5104b09e360e210c54f95a7437c2d82bab # v18.13.3
         with:
           projectToken: ${{ secrets[matrix.tokenSecret] }}
           storybookBuildDir: apps/${{ matrix.app }}/storybook-static
