@@ -14,13 +14,6 @@ export interface IImageHttpResponse {
   publicId: string;
 }
 
-export enum PlatformEnum {
-  WEB = 'web',
-  BO = 'bo',
-  ANDROID = 'android',
-  IOS = 'ios'
-}
-
 export interface IRights {
   create: boolean;
   find: boolean;
@@ -45,3 +38,28 @@ export type JobStatusData = {
 };
 
 export type ParseTriggerValidation = (request: Parse.Cloud.FunctionRequest) => any;
+
+export interface IIdsToTransform {
+  key: string;
+  className: string;
+}
+
+/**
+ * What the back-office bulk "mark as seen"/"mark as unseen" action gets back.
+ * `toggledIds` names only the rows that actually changed state, so the caller can drop exactly
+ * those from the list it is showing; `count` is the collection's badge count recomputed after the
+ * write, so the badge never has to be guessed at from the number of rows ticked.
+ */
+export type ToggleSeenResult = {
+  toggledIds: string[];
+  count: number;
+};
+
+/**
+ * What "mark the whole collection as seen" gets back: how many rows this pass cleared, and what
+ * the badge reads afterwards — a non-zero `count` means the backlog was deeper than one pass.
+ */
+export type MarkAllSeenResult = {
+  markedCount: number;
+  count: number;
+};

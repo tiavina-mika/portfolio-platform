@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import type { Locale } from './app.type';
 
-import { clientFileValidationSchema } from '@/validations/file.validation';
+import { clientFileValidationSchema } from '@/validations/_core/file.validations';
 
 
 export interface IUploadedFile {
