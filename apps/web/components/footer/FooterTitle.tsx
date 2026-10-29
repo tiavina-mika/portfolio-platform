@@ -5,7 +5,7 @@ type Props = {
 };
 const FooterTitle = ({ text }: Props) => {
   return (
-    <Title className="!text-lg font-semibold" level={3}>
+    <Title className="text-lg! font-semibold" level={3}>
       {text}
     </Title>
   );

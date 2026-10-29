@@ -30,8 +30,8 @@ const LogoSVG = ({ className }: Props) => {
       <title>logo</title>
       {paths.map((path, index) => (
         <path
-          key={index}
           d={path.d}
+          key={index}
           className={`
             fill-default stroke-default stroke-[0.75px]
             dark:fill-white dark:stroke-white

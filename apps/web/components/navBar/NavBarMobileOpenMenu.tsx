@@ -32,11 +32,11 @@ const NavBarMobileOpenMenu = ({
     <AnimatePresence>
       {openMenu && (
         <motion.div
-          key="menu"
           animate={{ x: 0 }}
           // className={classes.menu}
           exit={{ transition: { duration: 0.4 } }}
           initial={{ x: -54 }}
+          key="menu"
           transition={{ duration: 0.7 }}
           {...(classes && { className: classes.menu })} // avoid className not recognized
 
@@ -53,8 +53,8 @@ const NavBarMobileOpenMenu = ({
                 <TextLink
                   className="flex flex-row justify-between font-medium"
                   href={menu.value}
-                  underline={false}
                   onClick={toggleMenu}
+                  underline={false}
                 >
                   {menu.label}
                   <NextIcon size={18} src="/icons/chevron-right.svg" />

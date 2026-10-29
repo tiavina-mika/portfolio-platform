@@ -117,7 +117,7 @@ const FieldContent = ({ className, ...props }: ComponentProps<'div'>) => (
   <div
     data-slot="field-content"
     className={cn(
-      'group/field-content leading-snug flex flex-1 flex-col gap-1.5',
+      'group/field-content flex flex-1 flex-col gap-1.5 leading-snug',
       className
     )}
     {...props}
@@ -132,7 +132,7 @@ const FieldLabel = ({
     data-slot="field-label"
     className={cn(
       `
-        group/field-label peer/field-label leading-snug flex w-fit gap-2
+        group/field-label peer/field-label flex w-fit gap-2 leading-snug
         group-data-[disabled=true]/field:opacity-50
       `,
       `
@@ -155,7 +155,7 @@ const FieldTitle = ({ className, ...props }: ComponentProps<'div'>) => (
     data-slot="field-label"
     className={cn(
       `
-        leading-snug flex w-fit items-center gap-2 text-sm font-medium
+        flex w-fit items-center gap-2 text-sm leading-snug font-medium
         group-data-[disabled=true]/field:opacity-50
       `,
       className

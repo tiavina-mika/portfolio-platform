@@ -40,8 +40,8 @@ const Newsletter = ({ locale }: Props) => {
             palette="light"
             size="sm"
             className={`
-              !text-sm
-              md:!text-sm
+              text-sm!
+              md:text-sm!
             `}
           >
             * {t('unsubscribeMessage')}

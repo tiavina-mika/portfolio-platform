@@ -183,9 +183,9 @@ const Projects = () => {
           ? (
             <ActionsMenu
               label={name}
-              type="icon"
               onDestroy={() => handleDestroy(project.id)}
               onPreview={() => handlePreview(project.id)}
+              type="icon"
             />
           )
           : (
@@ -235,10 +235,10 @@ const Projects = () => {
         defaultFilters={searchParams}
         headCells={headCells}
         items={dataTable}
-        renderFilter={(props: IRenderSearchProps) => <SearchProjects {...props} />}
-        tabs={recycleBinTabOptions}
         onDeleteSelected={handleDeleteSelected}
         onUpdateData={handleUpdateData}
+        renderFilter={(props: IRenderSearchProps) => <SearchProjects {...props} />}
+        tabs={recycleBinTabOptions}
       />
 
       {canCreate && (

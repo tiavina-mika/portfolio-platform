@@ -15,7 +15,7 @@ const Loading = ({ className, rootClassName }: Props) => {
         xmlns="http://www.w3.org/2000/svg"
         className={cn(
           `
-            h-6 w-6 animate-spin fill-blue-600 text-gray-200
+            size-6 animate-spin fill-blue-600 text-gray-200
             dark:text-gray-600
           `,
           className

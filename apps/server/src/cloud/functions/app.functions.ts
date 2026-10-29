@@ -64,7 +64,7 @@ Parse.Cloud.define(
     const decryptedEmail = decrypt(encryptedEmail, null, false);
     const newsletter = await new Parse.Query(Newsletter).equalTo('email', decryptedEmail).first(USE_MASTER_KEY);
 
-    if (!newsletter || (newsletter && newsletter.get('active') === true)) {
+    if (!newsletter || newsletter.get('active') === true) {
       return false;
     }
 

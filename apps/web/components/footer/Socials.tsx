@@ -16,7 +16,7 @@ const Socials = ({ className }: Props) => {
       )}
     >
       {SOCIALS.map((social, index) => (
-        <a key={index} href={social.value}>
+        <a href={social.value} key={index}>
           <div className="flex size-[42px] flex-row items-center justify-center rounded-sm bg-default">
             {/* light */}
             <Image

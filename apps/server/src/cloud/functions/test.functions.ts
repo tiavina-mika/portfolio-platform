@@ -63,7 +63,7 @@ Parse.Cloud.define(
 
     if (!user) throw new Error(translate('user.noAccountByEmail', locale));
 
-    const isSent = await sendEmailVerification(user, '123456' as string, locale);
+    const isSent = await sendEmailVerification(user, '123456', locale);
 
     return isSent;
   })

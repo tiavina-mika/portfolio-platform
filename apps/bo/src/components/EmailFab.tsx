@@ -15,6 +15,7 @@ const EmailFab = ({
       <Fab
         aria-label="add"
         color="primary"
+        onClick={onClick}
         sx={{
           margin: 0,
           top: 'auto',
@@ -23,7 +24,6 @@ const EmailFab = ({
           left: 'auto',
           position: 'fixed',
         }}
-        onClick={onClick}
       >
         <FiSend size={26} />
       </Fab>

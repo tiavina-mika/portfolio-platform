@@ -49,8 +49,8 @@ const ResetPassword = () => {
               form={form}
               isDisabled={false}
               loading={loading}
-              primaryButtonText={t('common:confirm')}
               onSubmit={handleSubmit(onSubmitHandler)}
+              primaryButtonText={t('common:confirm')}
             >
               <PasswordChecklistField
                 fullWidth

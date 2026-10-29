@@ -33,8 +33,8 @@ const ProfileUserPasswordForm = ({
     <Form
       form={form}
       formId={formId}
-      primaryButtonText={t('user:login')}
       onSubmit={handleSubmit(onSubmitHandler)}
+      primaryButtonText={t('user:login')}
     >
       <PasswordField
         fullWidth

@@ -150,7 +150,7 @@ const Contacts = () => {
       // default data
       const data: Record<string, any> = {
         id: contact.id, // required even if not displayed
-        name: contact.has('user') ? getUserFullName(contact.get('user')!) : contact.get('name'),
+        name: contact.has('user') ? getUserFullName(contact.get('user')) : contact.get('name'),
         email: contact.get('email'),
         message: cutText(contact.get('message'), 100),
         replied: <BooleanIcons value={contact.get('replied')} />,
@@ -159,8 +159,8 @@ const Contacts = () => {
           ? (
             <ActionsMenu
               label={t('user:contacts.thisMessageOf', { name: contact.get('name') })}
-              type="icon"
               onDestroy={() => handleDestroy(contact.id)}
+              type="icon"
             />
           )
           : (
@@ -220,17 +220,17 @@ const Contacts = () => {
         enableMultipleSelect={!canDestroy}
         headCells={headCells}
         items={dataTable}
-        renderFilter={(prop: IRenderSearchProps) => <SearchContacts {...prop} />}
-        tabs={defaultTabOptions}
         onDeleteSelected={handleDeleteSelected}
         onMarkAsSeenSelected={handleSelectedAsSeen}
         onRowClick={handleRowClick}
         onUpdateData={handleUpdateData}
+        renderFilter={(prop: IRenderSearchProps) => <SearchContacts {...prop} />}
+        tabs={defaultTabOptions}
       />
       <ContactPreviewDialog
-        selectedContact={selectedContact}
         onChangeIsMessageReplied={handleIsReplied}
         onClose={handleClosePreviewDialog}
+        selectedContact={selectedContact}
       />
     </>
   );

@@ -30,7 +30,7 @@ const ProfileEditUserPassword = () => {
 
   return (
     <>
-      <IconButton size="small" onClick={toggleOpenEditUserPasswordFormDialog}>
+      <IconButton onClick={toggleOpenEditUserPasswordFormDialog} size="small">
         <FiEdit />
       </IconButton>
       <Dialog

@@ -22,6 +22,7 @@ const CategoryAdvancedFilterForm = ({
 
   return (
     <AdvancedSearchForm<CategoryFiltersInput>
+      onSubmit={onSubmit}
       schema={categoryFilterSchema}
       fields={[
         {
@@ -71,7 +72,6 @@ const CategoryAdvancedFilterForm = ({
           ),
         },
       ]}
-      onSubmit={onSubmit}
     />
   );
 };

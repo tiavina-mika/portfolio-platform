@@ -79,7 +79,7 @@ export const setValues = (
   }
   for (const key in values) {
 
-    if (!values.hasOwnProperty(key)) {
+    if (!Object.prototype.hasOwnProperty.call(values, key)) {
       continue;
     }
     const value = values[key];

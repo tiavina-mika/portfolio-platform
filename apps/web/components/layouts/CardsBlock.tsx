@@ -51,7 +51,7 @@ const CardsBlock = ({
         )}
       >
         {items.map((item, index) => (
-          <Card key={index} className={cardClassName}>
+          <Card className={cardClassName} key={index}>
             <CardHeader>
               <CardImage
                 alt={item.title}
@@ -78,7 +78,7 @@ const CardsBlock = ({
                 />
               )}
             </CardHeader>
-            <CardContent className="!pt-2">
+            <CardContent className="pt-2!">
               <CardTitle className={titleClassName} level={4}>
                 {item.title}
               </CardTitle>

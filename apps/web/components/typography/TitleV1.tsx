@@ -79,7 +79,7 @@ const TitleV1 = ({
        */
       {
         'text-3xl md:text-5xl lg:text-6xl': Heading === 'h1',
-        'max-md:leading-snug text-2xl md:text-4xl lg:text-5xl':
+        'text-2xl max-md:leading-snug md:text-4xl lg:text-5xl':
             Heading === 'h2',
         'text-xl max-md:leading-[1.4em] md:text-3xl lg:text-4xl':
             Heading === 'h3',

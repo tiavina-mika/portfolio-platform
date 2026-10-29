@@ -101,10 +101,10 @@ const CheckedMultiSelectInput = ({
         multiple
         autoWidth={autoWidth}
         labelId="multiple-select-label"
+        onChange={handleChange}
         renderValue={renderValue}
         sx={{ bgcolor, ...sx }}
         value={formatValue(selected)}
-        onChange={handleChange}
       >
         <MenuItem value="all">
           <ListItemIcon>

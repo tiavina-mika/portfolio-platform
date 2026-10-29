@@ -18,7 +18,7 @@ const ArticlesSkeleton = () => {
             md:h-[230px]
           `}
           />
-          <CardContent className="space-y-2 !p-0">
+          <CardContent className="space-y-2 p-0!">
             <Skeleton className="h-4 w-16" />
             <Skeleton className="h-6" />
             <Skeleton className="h-16" />

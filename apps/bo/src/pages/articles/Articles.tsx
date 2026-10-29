@@ -177,9 +177,9 @@ const Articles = () => {
           ? (
             <ActionsMenu
               label={title}
-              type="icon"
               onDestroy={() => handleDestroy(article.id)}
               onPreview={() => handlePreview(article.id)}
+              type="icon"
             />
           )
           : (
@@ -228,10 +228,10 @@ const Articles = () => {
         defaultFilters={searchParams} // @see articles.routes.tsx
         headCells={headCells}
         items={dataTable}
-        renderFilter={(props: IRenderSearchProps) => <SearchArticles {...props} />}
-        tabs={recycleBinTabOptions}
         onDeleteSelected={handleDeleteSelected}
         onUpdateData={handleUpdateData}
+        renderFilter={(props: IRenderSearchProps) => <SearchArticles {...props} />}
+        tabs={recycleBinTabOptions}
       />
 
       {canCreate && (

@@ -46,8 +46,8 @@ const SettingsTabs = ({
       aria-label="settings tabs"
       className={className}
       css={classes.tabs}
-      value={tab}
       onChange={handleTabChange}
+      value={tab}
     >
       {options.map((option: ISelectOption, index: number) => (
         <Tab

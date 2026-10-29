@@ -68,8 +68,8 @@ const ProfileMenu = () => {
       <Button
         className="flexRow alignCenter"
         color="inherit"
-        sx={{ textTransform: 'capitalize' }}
         onClick={handleOpen}
+        sx={{ textTransform: 'capitalize' }}
       >
         <Avatar
           user={currentUser}
@@ -96,6 +96,8 @@ const ProfileMenu = () => {
         anchorEl={anchorEl}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         id="account-menu"
+        onClick={handleClose}
+        onClose={handleClose}
         open={open}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         slotProps={{
@@ -122,8 +124,6 @@ const ProfileMenu = () => {
             },
           },
         }}
-        onClick={handleClose}
-        onClose={handleClose}
       >
         <MenuItem disableRipple className="flexCenter">
           <div

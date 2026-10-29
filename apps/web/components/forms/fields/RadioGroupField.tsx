@@ -39,9 +39,9 @@ const RadioGroupField = ({
           >
             {options.map(({ value, label }) => (
               <Stack
-                key={value}
                 align="center"
                 direction="row"
+                key={value}
                 spacing={0.5}
               >
                 <RadioGroupItem value={value} />

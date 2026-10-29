@@ -8,7 +8,6 @@ import { goToJobs } from '@/redux/actions/app.action';
 import { clearRecycleBinInCloud, migrate } from '@/redux/actions/misc.action';
 
 import MiscButton from './MiscButton';
-import ZodTestForm from './ZodTestForm';
 
 
 const FILES_TO_DELETE = 100;
@@ -43,8 +42,6 @@ const Misc = () => {
   const handleGoToJobs = () => navigate(goToJobs());
   const handleClearFilesInCloud = () => dispatch(clearRecycleBinInCloud(FILES_TO_DELETE));
 
-
-  return <ZodTestForm />;
 
   return (
     <>

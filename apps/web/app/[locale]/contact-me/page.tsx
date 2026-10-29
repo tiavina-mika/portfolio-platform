@@ -62,7 +62,7 @@ const ContactPage = async (props: Props) => {
       `}
     >
       <div className="flex-1">
-        <PageTitle className="2xl:!text-10xl">{t('contactMe')}</PageTitle>
+        <PageTitle className="2xl:text-10xl!">{t('contactMe')}</PageTitle>
         <div>
           <PageDescription>{t('description')}</PageDescription>
         </div>

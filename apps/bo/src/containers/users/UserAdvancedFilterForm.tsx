@@ -21,6 +21,7 @@ const UserAdvancedFilterForm = ({
 
   return (
     <AdvancedSearchForm<UserFiltersInput>
+      onSubmit={onSubmit}
       schema={userFilterSchema}
       fields={[
         {
@@ -96,7 +97,6 @@ const UserAdvancedFilterForm = ({
           ),
         },
       ]}
-      onSubmit={onSubmit}
     />
 
   );

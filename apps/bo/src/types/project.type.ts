@@ -1,8 +1,9 @@
 import { z } from 'zod';
 
+import type { IProjectTranslatedFields, IProjectUrl } from '@shared/domain-types';
+
 import { projectFilterSchema, projectSchema } from '@/validations/project.validation';
 
-import type { IProjectTranslatedFields, IProjectUrl } from '@shared/domain-types';
 import { ICategory } from './category.type';
 import { IFileCloud, ITranslatedFileCloud } from './file.type';
 

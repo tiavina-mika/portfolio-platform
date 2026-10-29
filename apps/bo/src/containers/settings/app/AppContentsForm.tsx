@@ -62,8 +62,8 @@ const AppContentsForm = () => {
         {/* translated tabs */}
         <TranslationTabs
           errors={getTranslatedFormTabErrors(form?.formState.errors, TRANSLATED_CMS_FIELDS)}
-          tab={tab}
           onTabChange={onTabChange}
+          tab={tab}
         />
         {/* all translated fields */}
         {locales.map((locale: string, index: number) => (

@@ -46,21 +46,21 @@ const Tabs = ({
         <MUITabs
           aria-label="scrollable-setting-tabs"
           className={tabsClassName}
+          onChange={handleTabChange}
           scrollButtons="auto"
           slotProps={{ indicator: { sx: { display: 'none' } } }}
           value={tab}
           variant="scrollable"
-          onChange={handleTabChange}
         >
           {options.map((option: ISelectOption, index: number) => (
             <Tab
+              className="flex1"
               key={index}
+              label={option.label}
+              value={option.value}
               ref={option.value === tab
                 ? currentTabRef
                 : null}
-              className="flex1"
-              label={option.label}
-              value={option.value}
             />
           ))}
         </MUITabs>

@@ -266,9 +266,9 @@ const ProjectPage = async (props: Props) => {
                 {(project.get('images') || [])
                   .map((image: IUploadedFile, index: number) => (
                     <FadeInImage
-                      key={image.publicId + index}
                       alt={title}
                       height={0}
+                      key={image.publicId + index}
                       sizes="100vw"
                       src={image.url}
                       style={{ width: '100%', height: '100%' }}
@@ -372,10 +372,10 @@ const ProjectPage = async (props: Props) => {
                     {(project.get('technologies') || [])
                       .map((technology: string, index: number) => (
                         <TextLink
-                          key={technology + index}
                           buttonVariant="outlined"
                           className="px-3! py-2!"
                           href={`${ROUTES.projects.root}?technologies=${slugify(technology)}`}
+                          key={technology + index}
                           variant="button"
                         >
                           {capitalize(technology)}
@@ -395,8 +395,8 @@ const ProjectPage = async (props: Props) => {
                       .split(',')
                       .map((tag: string, index: number) => (
                         <TextLink
-                          key={tag + index}
                           href={`${ROUTES.projects.root}?tags=${slugify(tag)}`}
+                          key={tag + index}
                         >
                           {capitalize(tag)}
                           {index < translatedTags.split(',').length - 1 && ','}

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 import { capitalize } from 'string-ts';
 
 import i18n from '@/config/i18n';

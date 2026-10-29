@@ -41,6 +41,7 @@ const LanguageSwitcherSelect = ({
   return (
     <Select
       {...props}
+      onChange={handleSelectChange}
       options={options}
       value={defaultValue}
       className={cn(
@@ -49,7 +50,6 @@ const LanguageSwitcherSelect = ({
         },
         className
       )}
-      onChange={handleSelectChange}
     />
   );
 };

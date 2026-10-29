@@ -87,9 +87,9 @@ const Share = ({ parseObj, currentPathname }: Props) => {
       >
         {options.map((option, index) => (
           <ShareIcon
-            key={index}
             collection={parseObj.className}
             id={parseObj.id}
+            key={index}
             social={option.social}
             title={t('shareOn', { social: capitalize(option.social) })}
             url={option.url}

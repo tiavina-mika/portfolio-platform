@@ -2,6 +2,8 @@ import { Dayjs } from 'dayjs';
 import { ComponentType } from 'react';
 import { z } from 'zod';
 
+import type { IFileCloud, ISEOFields } from '@shared/types';
+
 import { Locale } from '@/i18n/config';
 import {
   ContactSchema,
@@ -145,8 +147,6 @@ export interface ISort {
   orderedBy: string;
   order: 'asc' | 'desc';
 }
-
-import type { IFileCloud, ISEOFields } from '@shared/types';
 
 export type { IFileCloud, ISEOFields };
 

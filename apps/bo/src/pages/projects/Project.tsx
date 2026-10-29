@@ -180,7 +180,7 @@ const Project = () => {
       value: project.has(field) && (
         <Stack>
           {(project?.get(field) || []).map((link: IProjectUrl, index: number) => (
-            <ProjectLink key={link.url + index} icon={icon} url={link.url} />
+            <ProjectLink icon={icon} key={link.url + index} url={link.url} />
           ))}
         </Stack>
       ),
@@ -230,10 +230,10 @@ const Project = () => {
           goToList={handleGoToList}
           label={translatedFields.name}
           menus={menus}
-          websiteUrl={goToProjectsOnWebsite(project.get('translated'), tab)}
           onCreate={handleCreate}
           onDelete={handleDelete}
           onEdit={handleEdit}
+          websiteUrl={goToProjectsOnWebsite(project.get('translated'), tab)}
         />
       )}
       title={(
@@ -251,8 +251,8 @@ const Project = () => {
           <Stack spacing={3}>
             {/* ------- tabs for translation ------- */}
             <TranslationTabs
-              tab={tab}
               onTabChange={onTabChange}
+              tab={tab}
             />
             <Layout cardTitle={t('common:details')}>
               <Items items={infosItems} />

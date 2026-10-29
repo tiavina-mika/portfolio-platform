@@ -29,12 +29,13 @@ const ProfilePicUploadButton = () => {
   return (
     <>
       <input
+        onChange={handleFileChange}
         ref={inputRef}
         style={{ display: 'none' }}
         type="file"
-        onChange={handleFileChange}
       />
       <IconButton
+        onClick={handleUploadClick}
         size="small"
         sx={{
           bgcolor: 'white',
@@ -45,7 +46,6 @@ const ProfilePicUploadButton = () => {
             ? '#000'
             : theme.palette.background.default,
         }}
-        onClick={handleUploadClick}
       >
         <FiCamera fontSize="inherit" />
       </IconButton>

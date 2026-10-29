@@ -26,14 +26,14 @@ const RolesChip = ({
         <Chip
           key={index}
           label={role.get('name')}
+          onDelete={onRemove
+            ? () => onRemove(role)
+            : undefined}
           sx={{
             backgroundColor: [HIGHEST_LEVEL_DEFAULT_ROLES[0], HIGHEST_LEVEL_DEFAULT_ROLES[1]].includes(role.get('name'))
               ? colors[index + 1]
               : colors[index],
           }}
-          onDelete={onRemove
-            ? () => onRemove(role)
-            : undefined}
         />
       ))}
     </Stack>

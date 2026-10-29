@@ -20,7 +20,7 @@ const SitemapSkeleton = () => {
       `}
       >
         {Array.from({ length: 5 }).map((_, index) => (
-          <Skeleton key={index} className="h-8 w-full rounded-md" />
+          <Skeleton className="h-8 w-full rounded-md" key={index} />
         ))}
       </div>
     </div>

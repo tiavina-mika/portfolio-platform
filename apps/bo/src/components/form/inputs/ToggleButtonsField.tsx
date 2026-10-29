@@ -75,14 +75,14 @@ const ToggleButtonsField = ({
             color="primary"
             css={classes.toggleButtonGroup}
             exclusive={!isMulti}
-            value={value}
             onChange={(_, value: string[] | string) => onChange(value)}
+            value={value}
           >
             {options.map((option, index: number) => (
               <ToggleButton
-                key={option.label + index}
                 aria-label={option.label}
                 css={classes.toggleButton}
+                key={option.label + index}
                 value={option.value}
               >
                 <Typography>{option.label}</Typography>

@@ -14,7 +14,7 @@ const ProjectsSkeleton = () => {
             md:h-[200px]
           `}
           />
-          <CardContent className="space-y-2 !p-0">
+          <CardContent className="space-y-2 p-0!">
             <Skeleton className="h-6 w-[200px]" />
             <Skeleton className="h-[80px]" />
             <div className="flex flex-row justify-end">

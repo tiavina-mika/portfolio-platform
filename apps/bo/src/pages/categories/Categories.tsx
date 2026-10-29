@@ -207,9 +207,9 @@ const Categories = () => {
           ? (
             <ActionsMenu
               label={t('cms:category.thisCategory')}
-              type="icon"
               onDestroy={() => handleDestroy(category.id)}
               onPreview={() => handlePreview(category.id)}
+              type="icon"
             />
           )
           : (
@@ -275,10 +275,10 @@ const Categories = () => {
         enableMultipleSelect={!canDestroy}
         headCells={headCells}
         items={dataTable}
-        renderFilter={(prop: IRenderSearchProps) => <SearchCategories {...prop} />}
-        tabs={recycleBinTabOptions}
         onDeleteSelected={handleDeleteSelected}
         onUpdateData={handleUpdateData}
+        renderFilter={(prop: IRenderSearchProps) => <SearchCategories {...prop} />}
+        tabs={recycleBinTabOptions}
       />
 
       {canCreate && (

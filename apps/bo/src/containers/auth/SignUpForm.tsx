@@ -48,8 +48,8 @@ const SignUpForm = ({
       formId={formId}
       isDisabled={false}
       loading={loading}
-      primaryButtonText={button}
       onSubmit={handleSubmit(onSubmitHandler as any)}
+      primaryButtonText={button}
     >
       <TextField
         fullWidth

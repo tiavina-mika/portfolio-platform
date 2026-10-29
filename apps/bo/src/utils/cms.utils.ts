@@ -177,7 +177,7 @@ export const getArticleEditionInitialValues = async (
 
   const defaultValues = { ...values, ...imagesFields };
 
-  return defaultValues as IArticleInput;
+  return defaultValues;
 };
 
 export const getSectionBlocksEditionCmsInitialValues = async (
@@ -213,7 +213,7 @@ export const getPageSectionEditionInitialValues = async (
 
   const values = {
     ...getValues(section, ['active']),
-    ...pageSectionCodec.encode(section.get('translated') as Record<string, any>),
+    ...pageSectionCodec.encode(section.get('translated')),
     blocks: blocksValues?.blocks?.length ? blocksValues.blocks : [{ title: '' }],
   };
 

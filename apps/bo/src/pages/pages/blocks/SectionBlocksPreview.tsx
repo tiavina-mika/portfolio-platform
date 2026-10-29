@@ -94,8 +94,8 @@ const SectionBlocksPreview = ({
 
                 return (
                   <div
-                    key={index + block.id}
                     css={classes.block(values.imagePosition)}
+                    key={index + block.id}
                   >
                     <div className="flex1" css={classes.imageContainer}>
                       {values.image && <img alt="block" css={{ width: '100%' }} src={values.image.url} />}

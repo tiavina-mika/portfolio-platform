@@ -187,13 +187,13 @@ const ActionsMenu = ({
           ? (
             <Button
               css={classes.button}
+              onClick={handleClick}
               endIcon={(
                 <FiChevronDown color={theme.palette.mode === 'light'
                   ? '#000'
                   : '#fff'}
                 />
               )}
-              onClick={handleClick}
             >
               <Typography sx={{ fontSize: 16, textTransform: 'none', px: 0 }}>Actions</Typography>
             </Button>
@@ -214,10 +214,10 @@ const ActionsMenu = ({
         css={classes.menu}
         elevation={0}
         id="account-menu"
-        open={open}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         onClick={handleClose}
         onClose={handleClose}
+        open={open}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       >
         {options.map((option, index) => (
           option.display && (
@@ -235,14 +235,14 @@ const ActionsMenu = ({
       <Dialog
         buttonColor="error"
         maxWidth="xs"
+        onClick={handleConfirmDeleteDialogClick}
+        onPrimaryButtonAction={onDelete || onDestroy}
         open={openDeleteDialog}
         title={t('deletion')}
         toggle={handleCloseDeleteDialog}
         description={dialogDescription || (onDestroy
           ? t('infoMessages.onDestructionMessage')
           : '')}
-        onClick={handleConfirmDeleteDialogClick}
-        onPrimaryButtonAction={onDelete || onDestroy}
       >
         {label && (!!onDelete || !!onDestroy)
           ? t('sureToDelete', { value: label })

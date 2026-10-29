@@ -85,13 +85,14 @@ const Search = ({
           src="/icons/search.svg"
           className={cn(
             `
-              absolute top-1/2 left-5 h-5 w-5 -translate-y-1/2 transform text-gray-500
+              absolute top-1/2 left-5 size-5 -translate-y-1/2 transform text-gray-500
               peer-focus:text-gray-900
             `,
             searchIconClassName
           )}
         />
         <Input
+          onChange={searchHandler}
           placeholder={tSearch}
           type="text"
           value={search}
@@ -105,7 +106,6 @@ const Search = ({
             `,
             inputClassName
           )}
-          onChange={searchHandler}
         />
         {loading && (
           <Loading
@@ -123,11 +123,11 @@ const Search = ({
         >
           {searchResults.map((result, index) => (
             <div
-              key={result.id + index}
               className="p-2"
+              key={result.id + index}
+              onClick={handleClick}
               role="button" // div is not interactive, so we need to add role="button" to make it accessible
               tabIndex={0} // add tabIndex to make it focusable
-              onClick={handleClick}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   handleClick();

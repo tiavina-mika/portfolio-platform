@@ -13,7 +13,7 @@ const meta = {
     layout: 'fullscreen',
   },
   decorators: [
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+
     (Story: FC) => {
       return (
         <div className="flex min-h-screen items-center">

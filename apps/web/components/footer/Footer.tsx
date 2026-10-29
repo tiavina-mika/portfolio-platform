@@ -87,7 +87,7 @@ const Footer = async ({ locale }: Props) => {
               `}
               >
                 {defaultMenus.map((menu, index) => (
-                  <FooterLink key={index} href={menu.value || '/'}>
+                  <FooterLink href={menu.value || '/'} key={index}>
                     {menu.label}
                   </FooterLink>
                 ))}
@@ -109,7 +109,7 @@ const Footer = async ({ locale }: Props) => {
               `}
               >
                 {CONTACTS.map((contact, index) => (
-                  <Text key={index} className="text-base">
+                  <Text className="text-base" key={index}>
                     {contact}
                   </Text>
                 ))}
@@ -140,7 +140,7 @@ const Footer = async ({ locale }: Props) => {
             {t('allRightsReserved')}.
           </Text>
           <LanguageSwitcher
-            className="!w-[110px]"
+            className="w-[110px]!"
             inputClassName="border-none"
           />
         </div>

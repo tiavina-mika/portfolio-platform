@@ -85,8 +85,8 @@ const EditPageSection = () => {
       <Head title={t('cms:editPageSection', { title: section.id })} />
 
       <PageSectionForm
-        section={section}
         onSubmit={handleSubmit}
+        section={section}
       />
     </Layout>
   );

@@ -67,8 +67,8 @@ const TranslatedSectionBlocksField = ({
       {/* language selection tab */}
       {!currentLocale && (
         <TranslationTabs
-          tab={tab}
           onTabChange={onTabChange}
+          tab={tab}
         />
       )}
 
@@ -87,6 +87,7 @@ const TranslatedSectionBlocksField = ({
               {locales.map((locale: string) => {
                 return (
                   <div
+                    key={locale}
                     // hide other locale fields, display only the selected (current) locale
                     style={{
                       display: locale === (currentLocale || tab)
@@ -181,9 +182,9 @@ const TranslatedSectionBlocksField = ({
                 <Button
                   color="error"
                   css={{ padding: '4px 12px', borderRadius: 4 }}
+                  onClick={() => remove(index)}
                   startIcon={<FiTrash size={18} />}
                   variant="outlined"
-                  onClick={() => remove(index)}
                 >
                   {`${t('delete')} ${t('cms:block').toLowerCase()} n° ${index + 1}`}
                 </Button>

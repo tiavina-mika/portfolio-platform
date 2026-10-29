@@ -95,8 +95,8 @@ const Pagination = ({
 
       {pageNumbers.map((pageNumber, index) => (
         <TextLink
-          key={index}
           href={getPaginatedUrl(pageNumber)}
+          key={index}
           underline={false}
           className={cn(
             'text-base',

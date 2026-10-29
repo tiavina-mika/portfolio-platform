@@ -20,7 +20,7 @@ const Avatar = ({ user }: Props) => {
       >
         <Text className={`
           font-medium uppercase
-          max-md:!text-xs
+          max-md:text-xs!
         `}
         >
           {getUserFullNameAbbreviation(user)}

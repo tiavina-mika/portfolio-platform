@@ -25,7 +25,7 @@ const RadioGroupItem = ({
   <RadioGroupPrimitive.Item
     data-slot="radio-group-item"
     className={cn(
-      'h-4 w-4',
+      'size-4',
       `
         aspect-square size-4 shrink-0 rounded-full border border-input text-primary shadow-xs
         transition-[color,box-shadow] outline-none

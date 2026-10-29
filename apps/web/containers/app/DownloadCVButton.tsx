@@ -32,8 +32,8 @@ const DownloadCVButton = ({
   return (
     <ButtonComponent
       className={className}
-      variant={variant}
       onClick={handleDownload}
+      variant={variant}
     >
       {children}
     </ButtonComponent>

@@ -103,8 +103,8 @@ const MiscButton = ({
     <div className="flexColumn center">
       <Button
         css={[classes.button, getButtonStyle(color)]}
-        variant="contained"
         onClick={action}
+        variant="contained"
       >
         {label}
       </Button>

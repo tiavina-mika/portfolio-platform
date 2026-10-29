@@ -75,8 +75,8 @@ const EditProject = () => {
       <Head title={t('project.editProject', { title: project.id })} />
 
       <ProjectForm
-        project={project}
         onSubmit={handleSubmitProject}
+        project={project}
       />
     </Layout>
   );

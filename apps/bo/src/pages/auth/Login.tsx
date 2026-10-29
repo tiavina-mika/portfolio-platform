@@ -35,8 +35,8 @@ const Login = () => {
           <AuthLink label={t('user:haveNoAccountYet')} text={t('user:signUp')} url={PATH_NAMES.signUp} />
           <AuthLink
             label={t('user:forgottenPassword')}
-            text={t('user:resetPassword')}
             onClick={handleForgottenPassword}
+            text={t('user:resetPassword')}
           />
         </Stack>
       </Stack>

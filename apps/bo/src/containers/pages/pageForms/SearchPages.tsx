@@ -18,8 +18,8 @@ const SearchPages = ({
       <Stack direction="row" spacing={2}>
         <SearchInput
           name="text"
-          placeholder={t('cms:searchByPage')}
           onChange={onSearch}
+          placeholder={t('cms:searchByPage')}
         />
       </Stack>
       <PageAdvancedFilterForm onSubmit={onAdvancedSearch} />

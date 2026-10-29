@@ -14,10 +14,11 @@ const SectionDescription = ({ children, className }: Props) => {
   return (
     <div className={cn(`
       mb-6
-      lg:mb-[70px] lg:max-w-1/2 2xl:max-w-2/5
+      lg:mb-[70px] lg:max-w-1/2
+      2xl:max-w-2/5
     `, className)}
     >
-      <Title className={cn('md:!text-xl', primaryFont)} level={4}>
+      <Title className={cn('md:text-xl!', primaryFont)} level={4}>
         {children}
       </Title>
     </div>

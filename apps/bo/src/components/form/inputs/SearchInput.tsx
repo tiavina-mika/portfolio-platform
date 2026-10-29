@@ -58,10 +58,10 @@ const SearchInput = ({
       </IconButton>
       {withDivider && <Divider orientation="vertical" sx={{ height: 28, m: 0.5 }} />}
       <InputBase
+        onChange={handleChange}
         placeholder={placeholder ?? t('search')}
         sx={{ ml: 0, flex: 1, fontSize: 14 }}
         value={value}
-        onChange={handleChange}
       />
     </StyledSearchInput>
   );

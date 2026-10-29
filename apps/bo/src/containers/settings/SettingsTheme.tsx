@@ -36,7 +36,7 @@ const SettingsTheme = () => {
       <Stack>
         <InputLabel label="Theme" />
         <FormControlLabel
-          control={<StyledAndroidSwitch checked={theme === 'light'} sx={{ m: 1 }} onChange={onChangeTheme} />}
+          control={<StyledAndroidSwitch checked={theme === 'light'} onChange={onChangeTheme} sx={{ m: 1 }} />}
           label={theme === 'light'
             ? t('light')
             : t('dark')}
@@ -50,8 +50,8 @@ const SettingsTheme = () => {
           {themeColorOptions.map((colorOption: IThemeColors, index: number) => (
             <Button
               key={colorOption.name + index}
-              sx={{ minWidth: 0 }}
               onClick={() => onChangeThemeColor(colorOption.name)}
+              sx={{ minWidth: 0 }}
             >
               <Tooltip title={t('colors.' + colorOption.name)}>
                 <Box

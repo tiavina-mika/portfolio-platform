@@ -191,8 +191,8 @@ const Users = () => {
           ? (
             <ActionsMenu
               label={user.get('lastName')}
-              type="icon"
               onPreview={() => handlePreview(user.id)}
+              type="icon"
             />
           )
           : (
@@ -239,16 +239,16 @@ const Users = () => {
         enableMultipleSelect={!canDestroy}
         headCells={headCells}
         items={dataTable}
-        tabs={usersTabOptions}
-        renderFilter={(props: IRenderSearchProps) => (
-          <>
-            <SearchInput placeholder={t('user:searchByNameOrEmail')} onChange={props.onSearch} />
-            <UserAdvancedFilterForm onSubmit={props.onAdvancedSearch} />
-          </>
-        )}
         onDeleteSelected={handleDeleteSelected}
         onRowClick={handlePreview}
         onUpdateData={handleUpdateData}
+        tabs={usersTabOptions}
+        renderFilter={(props: IRenderSearchProps) => (
+          <>
+            <SearchInput onChange={props.onSearch} placeholder={t('user:searchByNameOrEmail')} />
+            <UserAdvancedFilterForm onSubmit={props.onAdvancedSearch} />
+          </>
+        )}
       />
       <Dialog
         fullWidth

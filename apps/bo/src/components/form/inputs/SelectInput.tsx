@@ -227,9 +227,23 @@ const SelectInput = <V = unknown>({
         isMulti={isMulti}
         isSearchable={isSearchable}
         menuPosition="fixed"
+        onBlur={onBlur}
         options={options}
         placeholder={placeholder ?? `${t('select')}...`}
         value={formatValue(value)}
+        onChange={(inputValue: any) => {
+          if (!inputValue) return;
+
+          // get only the value, not the label
+          if (isMulti) {
+            const values = (inputValue)?.map((option: ICustomSelectOption) => option.value);
+
+            onChange(values);
+            return;
+          }
+
+          onChange((inputValue)?.value);
+        }}
         styles={getCustomStyles({
           theme: muiTheme,
           width: fullWidth
@@ -247,20 +261,6 @@ const SelectInput = <V = unknown>({
             primary: muiTheme.palette.primary.main,
           },
         })}
-        onBlur={onBlur}
-        onChange={(inputValue: any) => {
-          if (!inputValue) return;
-
-          // get only the value, not the label
-          if (isMulti) {
-            const values = (inputValue)?.map((option: ICustomSelectOption) => option.value);
-
-            onChange(values);
-            return;
-          }
-
-          onChange((inputValue)?.value);
-        }}
       />
       {helperText && (
         <FormHelperText>

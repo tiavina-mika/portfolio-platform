@@ -160,10 +160,10 @@ const Page = () => {
           goToList={handleGoToList}
           label={translatedFields.title}
           menus={menus}
-          websiteUrl={goToPageOnWebsite(page.get('translated'), tab)}
           onCreate={handleCreate}
           onDelete={handleDelete}
           onEdit={handleEdit}
+          websiteUrl={goToPageOnWebsite(page.get('translated'), tab)}
         />
       )}
       title={(
@@ -184,8 +184,8 @@ const Page = () => {
             {/* ------- tabs for translation ------- */}
             <TranslationTabs
               fixedOnScroll
-              tab={tab}
               onTabChange={onTabChange}
+              tab={tab}
             />
             {/* main infos bloc */}
             <Layout cardTitle={t('common:details')}>
@@ -205,7 +205,7 @@ const Page = () => {
               helperText={t('cms:sectionsHelperText')}
               rightActions={(
                 <Tooltip title={t('cms:createSectionForThisPage')}>
-                  <IconButton size="small" onClick={goToCreateSection}>
+                  <IconButton onClick={goToCreateSection} size="small">
                     <FiPlus />
                   </IconButton>
                 </Tooltip>

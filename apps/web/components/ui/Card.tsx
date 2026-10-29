@@ -63,7 +63,7 @@ const CardContent = ({ className, ...props }: ComponentProps<'div'>) => (
 
 const CardFooter = ({ className, ...props }: ComponentProps<'div'>) => (
   <div
-    className={cn(SPACING_CLASSES, 'flex items-center !pt-0', className)}
+    className={cn(SPACING_CLASSES, 'flex items-center pt-0!', className)}
     data-slot="card-footer"
     {...props}
   />
@@ -145,7 +145,7 @@ type CardSubtitleProps =
 const CardSubtitle = ({ className, children, ...props }: CardSubtitleProps) => (
   <Text
     as="p"
-    className={cn('!text-base font-semibold text-muted-foreground', className)}
+    className={cn('text-base! font-semibold text-muted-foreground', className)}
     data-slot="card-subtitle"
     {...props}
   >

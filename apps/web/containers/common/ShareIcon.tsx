@@ -39,10 +39,10 @@ const ShareIcon = ({
   return (
     <a
       href={url}
+      onClick={handleClick}
       rel="noopener noreferrer"
       target="_blank"
       title={title}
-      onClick={handleClick}
     >
       <NextIcon size={32} src={`/icons/share/${social}.svg`} />
     </a>

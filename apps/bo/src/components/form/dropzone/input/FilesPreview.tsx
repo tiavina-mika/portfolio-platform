@@ -53,8 +53,8 @@ const FilesPreview = ({
         <InputActionButton
           color={theme.palette.error.main}
           icon={<FiTrash2 size={18} />}
-          text={t('removeAll')}
           onClick={onRemoveAll}
+          text={t('removeAll')}
         />
       )}
     </Box>

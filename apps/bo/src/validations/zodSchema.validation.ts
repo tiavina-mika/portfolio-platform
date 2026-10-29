@@ -27,10 +27,10 @@ export const generateDateOrNumberSchema = (
   if (type === 'date') {
     mainSchema = z.date();
     if (min !== undefined) {
-      mainSchema = (mainSchema as z.ZodDate).min(min as Date);
+      mainSchema = (mainSchema as z.ZodDate).min(min);
     }
     if (max !== undefined) {
-      mainSchema = (mainSchema as z.ZodDate).max(max as Date);
+      mainSchema = (mainSchema as z.ZodDate).max(max);
     }
   } else {
     mainSchema = z.coerce.number();
@@ -333,7 +333,7 @@ export const getTranslatedFieldsCodec = (
           }
         }
 
-        return input as z.infer<typeof formSchema>;
+        return input;
       },
     }
   );

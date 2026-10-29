@@ -51,9 +51,9 @@ const Sort = ({
       <Select
         className={className}
         inputClassName={inputClassName}
+        onChange={handleChangeOrderBy}
         options={options}
         value={options[0]?.value}
-        onChange={handleChangeOrderBy}
       />
       <IconButton onClick={toggleSort}>
         <NextIcon

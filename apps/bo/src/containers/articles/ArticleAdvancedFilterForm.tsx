@@ -24,6 +24,7 @@ const ArticleAdvancedFilterForm = ({
 
   return (
     <AdvancedSearchForm<ArticleFiltersInput>
+      onSubmit={onSubmit}
       schema={articleFilterSchema}
       fields={[
         {
@@ -72,7 +73,6 @@ const ArticleAdvancedFilterForm = ({
           component: <TextField fullWidth name="user" placeholder={t('user:nameOrEmail')} />,
         },
       ]}
-      onSubmit={onSubmit}
     />
   );
 };

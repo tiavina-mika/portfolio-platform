@@ -17,6 +17,7 @@ const ToggleTheme = ({ className }: Props) => {
 
   return (
     <IconButton
+      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
       className={cn(
         `
           relative cursor-pointer rounded-md border border-gray-100! p-2
@@ -24,7 +25,6 @@ const ToggleTheme = ({ className }: Props) => {
         `,
         className
       )}
-      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
     >
       <NextIcon
         alt=""

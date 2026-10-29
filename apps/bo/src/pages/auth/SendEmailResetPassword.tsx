@@ -49,8 +49,8 @@ const SendEmailResetPassword = () => {
         form={form}
         isDisabled={false}
         loading={loading}
-        primaryButtonText={t('user:sendCode')}
         onSubmit={handleSubmit(onSubmitHandler)}
+        primaryButtonText={t('user:sendCode')}
       >
         <TextField
           fullWidth

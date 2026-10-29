@@ -39,8 +39,8 @@ const LoginForm = () => {
       form={form}
       isDisabled={false}
       loading={loading}
-      primaryButtonText={t('user:login')}
       onSubmit={handleSubmit(onSubmitHandler)}
+      primaryButtonText={t('user:login')}
     >
       <TextField
         fixedLabel

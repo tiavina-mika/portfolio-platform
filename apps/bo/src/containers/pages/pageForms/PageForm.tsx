@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
-  IPageInput, IPage, IPageStepOneInput, IPageStepThreeInput, IPageStepTwoInput,
+  IPageInput, IPage, IPageStepOneInput, IPageStepThreeInput,
 } from '@/types/page.type';
 
 import PageFormStepOne from './PageFormStepOne';
@@ -64,32 +64,32 @@ const PageForm = ({
         <PageFormStepOne
           buttonDirection="row"
           loading={loading}
-          page={page}
-          primaryButtonText={t('common:nextStep', { step, total: lastStep })}
           onSecondaryButtonClick={handlePrevious}
           onSubmit={handleFinalSubmit(step) as (values: IPageStepOneInput) => void}
+          page={page}
+          primaryButtonText={t('common:nextStep', { step, total: lastStep })}
         />
       )}
       {step === 2 && (
         <PageFormStepTwo
           buttonDirection="row"
           loading={loading}
+          onSecondaryButtonClick={handlePrevious}
+          onSubmit={handleFinalSubmit(step)}
           page={page}
           primaryButtonText={t('common:nextStep', { step, total: lastStep })}
           secondaryButtonText={t('common:previous')}
-          onSecondaryButtonClick={handlePrevious}
-          onSubmit={handleFinalSubmit(step) as (values: IPageStepTwoInput) => void}
         />
       )}
       {step === 3 && (
         <PageFormStepThree
           buttonDirection="row"
           loading={loading}
+          onSecondaryButtonClick={handlePrevious}
+          onSubmit={handleFinalSubmit(step) as (values: IPageStepThreeInput) => void}
           page={page}
           primaryButtonText={t('common:terminateAndSaveStep', { step, total: lastStep })}
           secondaryButtonText={t('common:previous')}
-          onSecondaryButtonClick={handlePrevious}
-          onSubmit={handleFinalSubmit(step) as (values: IPageStepThreeInput) => void}
         />
       )}
     </div>

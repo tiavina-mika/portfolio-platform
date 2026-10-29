@@ -27,8 +27,8 @@ const Articles = ({ articles, locale, itemsClassName }: Props) => {
         {Array.isArray(articles) &&
           articles.map((article: IArticle, index: number) => (
             <Article
-              key={article.id + index}
               article={article}
+              key={article.id + index}
               locale={locale}
             />
           ))}

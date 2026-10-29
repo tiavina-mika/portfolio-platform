@@ -84,18 +84,18 @@ const TranslationTabs = ({
   };
 
   return (
-    <div ref={divToFixedRef} css={classes.tabsContainer(isFixed)}>
+    <div css={classes.tabsContainer(isFixed)} ref={divToFixedRef}>
       <Tabs
         aria-label="language selection tabs"
         className={className}
         css={classes.tabs}
-        value={tab}
         onChange={handleTabChange}
+        value={tab}
       >
         {localeOptions.map((localeOption: ISelectOption, index: number) => (
           <Tab
-            key={index}
             css={classes.tab(!!errors?.includes(localeOption.value))}
+            key={index}
             label={<LocaleTab label={localeOption.label} locale={localeOption.value} />}
             value={localeOption.value}
           />

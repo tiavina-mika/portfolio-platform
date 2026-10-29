@@ -77,6 +77,7 @@ const ListWithSelection = <
               label: t('markAsSeen'),
               renderTriggerComponent: (selectedIds: string[], resetSelectedIds: () => void) => (
                 <SelectInput<SeenState>
+                  onChange={handleMarkAsSeen(selectedIds, resetSelectedIds)}
                   placeholder={t('markAsSeen')}
                   styles={{ control: { paddingTop: 0, paddingBottom: 0, fontSize: 14 } }}
                   value={selectedSeenOption}
@@ -85,7 +86,6 @@ const ListWithSelection = <
                     { label: t('seen'), value: 'seen' },
                     { label: t('unseen'), value: 'unseen' },
                   ]}
-                  onChange={handleMarkAsSeen(selectedIds, resetSelectedIds)}
                 />
               ),
             },
@@ -105,10 +105,10 @@ const ListWithSelection = <
               <Dialog
                 description={t('sureToDeleteSelected', { count: selectedIds.length })}
                 maxWidth="xs"
+                onPrimaryButtonAction={() => onDeleteSelected?.(selectedIds)}
                 open={open}
                 title={t('delete')}
                 toggle={toggle}
-                onPrimaryButtonAction={() => onDeleteSelected?.(selectedIds)}
               />
             ),
           },

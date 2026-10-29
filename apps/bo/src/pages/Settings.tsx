@@ -84,7 +84,7 @@ const Settings = () => {
     <Layout isCard={false} title={title}>
       <Head title={title} />
       <Stack spacing={2}>
-        <SettingsTabs tab={tab as SettingsTab} onTabChange={handleTabChange} />
+        <SettingsTabs onTabChange={handleTabChange} tab={tab as SettingsTab} />
         <StyledGridContainer container spacing={2}>
           {tab === SettingsTabEnum.BO && (
             <>

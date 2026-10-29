@@ -14,7 +14,7 @@ const DynamicFooterPages = async ({ locale }: Props) => {
   return (
     <>
       {pages.footers.map((page: ISelectOption, index: number) => (
-        <FooterLink key={index} href={page.value}>
+        <FooterLink href={page.value} key={index}>
           {page.label}
         </FooterLink>
       ))}

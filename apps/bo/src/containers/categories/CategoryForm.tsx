@@ -73,8 +73,8 @@ const CategoryForm = ({
       {/* translated tabs */}
       <TranslationTabs
         errors={getTranslatedFormTabErrors(form?.formState.errors, TRANSLATED_CMS_FIELDS)}
-        tab={tab}
         onTabChange={onTabChange}
+        tab={tab}
       />
       <div>
         {locales.map((locale: string, index: number) => (
@@ -92,10 +92,10 @@ const CategoryForm = ({
               fullWidth
               label={t('common:name')}
               name={locale + ':name'}
+              onFieldChange={handleNameChange}
               required={locale === DEFAULT_LOCALE}
               type="text"
               variant="outlined"
-              onFieldChange={handleNameChange}
             />
             {/* slug field */}
             <TranslatedSlugField locale={locale} tab={tab} />

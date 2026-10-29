@@ -37,8 +37,8 @@ const RightsTableField = ({
           {description && <FormHelperText>{description}</FormHelperText>}
 
           <RightsTableInput
-            value={value}
             onChange={onChange}
+            value={value}
           />
           {errors[name] && <FormHelperText error>{(errors as any)[name]}</FormHelperText>}
         </Box>

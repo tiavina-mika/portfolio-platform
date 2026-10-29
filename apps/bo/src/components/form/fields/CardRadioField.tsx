@@ -41,9 +41,9 @@ const CardRadioField = ({
         }) => (
           <Box>
             <CardRadioInput
+              onChange={onChange}
               options={options}
               value={value}
-              onChange={onChange}
               {...rest}
             />
 

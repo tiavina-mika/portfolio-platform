@@ -65,9 +65,9 @@ const DropzoneField = ({
             <DropzoneInput
               error={error || (errors as any)[name]?.message}
               inputLabel={inputLabel}
+              onBlur={onBlur}
               shouldReset={shouldReset}
               value={value}
-              onBlur={onBlur}
               onChange={(...e) => {
                 onChange(...e);
                 onFieldChange?.();

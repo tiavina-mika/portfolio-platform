@@ -44,6 +44,7 @@ const NavBarItem = ({
       <TextLink
         {...linkProps}
         href={href}
+        onClick={onClick}
         underline={false}
         className={cn(
           {
@@ -58,7 +59,6 @@ const NavBarItem = ({
             md:py-0
           `
         )}
-        onClick={onClick}
       >
         {label}
         <NextIcon

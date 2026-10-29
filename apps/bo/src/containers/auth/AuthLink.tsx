@@ -47,7 +47,7 @@ const AuthLink = ({
 
       {/* ------- button ------- */}
       {!!onClick && (
-        <button className="transparentButton" type="button" onClick={handleClick}>
+        <button className="transparentButton" onClick={handleClick} type="button">
           <Typography css={getLinkStyles}>
             {text}
           </Typography>

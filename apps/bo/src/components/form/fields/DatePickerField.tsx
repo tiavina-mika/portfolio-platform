@@ -50,9 +50,9 @@ const DatePickerField = ({
             disableFuture={disableFuture}
             inputFormat={inputFormat}
             label={label}
+            onChange={onChange}
             value={value}
             withHour={withHour}
-            onChange={onChange}
             {...inputProps}
           />
         )}

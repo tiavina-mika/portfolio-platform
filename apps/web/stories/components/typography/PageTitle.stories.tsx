@@ -13,7 +13,7 @@ const meta = {
   tags: ['autodocs'],
   // add a container for the component
   decorators: [
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+
     (Story: FC) => (
       <div className="md:w-1/3">
         <Story />

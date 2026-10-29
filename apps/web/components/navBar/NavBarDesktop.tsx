@@ -63,8 +63,8 @@ const NavBarDesktop = ({
             <ul className="flex flex-row items-center justify-between px-0">
               {menus.map((menu, index) => (
                 <NavBarItem
-                  key={menu.label + index}
                   href={menu.value}
+                  key={menu.label + index}
                   label={menu.label}
                   rootClassName={cn(
                     `

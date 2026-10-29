@@ -1,4 +1,4 @@
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -56,9 +56,9 @@ const CategoriesSearchByEntityField = ({
       loading={isCategoryOptionsLoading}
       multiple={multiple}
       name={name}
+      onSearch={handleSearchCategory}
       options={categoryOptions}
       placeholder={placeholder}
-      onSearch={handleSearchCategory}
     />
   );
 };

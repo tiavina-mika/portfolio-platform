@@ -175,7 +175,7 @@ const TextLink = ({
       <ChildComponent {...childProps}>
         {isExternal ? (
           <Balancer as="span">
-            <span className="leading-relaxed max-w-full">{children}</span>
+            <span className="max-w-full leading-relaxed">{children}</span>
             <NextIcon alt={alt} size={12} src="/icons/external-link.svg" />
           </Balancer>
         ) : (

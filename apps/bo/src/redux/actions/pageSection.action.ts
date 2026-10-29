@@ -191,8 +191,8 @@ export const createOrUpdatePageSection = (
   // rights
   {
     collection: 'Page',
-    action: Boolean(defaultSection) ? 'update' : 'create',
-    hasNoRightErrorMessage: i18n.t(`common:errors.hasNoRightTo${Boolean(defaultSection) ? 'Update' : 'Create'}`, { value: i18n.t('cms:thisPage') }),
+    action: defaultSection ? 'update' : 'create',
+    hasNoRightErrorMessage: i18n.t(`common:errors.hasNoRightTo${defaultSection ? 'Update' : 'Create'}`, { value: i18n.t('cms:thisPage') }),
   });
 };
 

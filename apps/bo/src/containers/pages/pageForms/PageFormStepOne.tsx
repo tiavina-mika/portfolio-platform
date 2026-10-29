@@ -88,8 +88,8 @@ const PageFormStepOne = ({
           {/* translated tabs */}
           <TranslationTabs
             errors={getTranslatedFormTabErrors(form?.formState.errors, TRANSLATED_CMS_FIELDS)}
-            tab={tab}
             onTabChange={onTabChange}
+            tab={tab}
           />
           {/* all translated fields */}
           {locales.map((locale: string, index: number) => (
@@ -110,10 +110,10 @@ const PageFormStepOne = ({
                     helperText={t('cms:pageNameHelper')}
                     label={t('cms:pageName')}
                     name={locale + ':name'}
+                    onFieldChange={handlePageNameChange}
                     required={locale === DEFAULT_LOCALE}
                     type="text"
                     variant="outlined"
-                    onFieldChange={handlePageNameChange}
                   />
                   <TextField
                     fixedLabel

@@ -24,6 +24,7 @@ const ProjectAdvancedFilterForm = ({
 
   return (
     <AdvancedSearchForm<ProjectFiltersInput>
+      onSubmit={onSubmit}
       schema={projectFilterSchema}
       fields={[
         {
@@ -87,7 +88,6 @@ const ProjectAdvancedFilterForm = ({
           component: <DateRangePickerField fullWidth name="updatedAt" />,
         },
       ]}
-      onSubmit={onSubmit}
     />
   );
 };

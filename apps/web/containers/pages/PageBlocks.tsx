@@ -110,9 +110,9 @@ const PageBlocks = ({
                   alt={title}
                   src={block.get('image')?.url}
                   containerClassName={cn({
-                    'md:!h-[350px] md:w-[70%] lg:w-[90%]':
+                    'md:h-[350px]! md:w-[70%] lg:w-[90%]':
                       imagePosition !== 'bottom',
-                    'md:!h-[380px] md:w-[50%]': imagePosition === 'bottom',
+                    'md:h-[380px]! md:w-[50%]': imagePosition === 'bottom',
                   })}
                 />
               </div>

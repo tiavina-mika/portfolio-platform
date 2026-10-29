@@ -38,9 +38,9 @@ const ReplyContactForm = ({
       buttonFullWidth={false}
       form={form}
       formId={formId}
-      primaryButtonText={t('user:contacts.send')}
       onSecondaryButtonClick={onSecondaryButtonClick}
       onSubmit={handleSubmit(handleFormSubmit)}
+      primaryButtonText={t('user:contacts.send')}
     >
       <TextField
         fullWidth

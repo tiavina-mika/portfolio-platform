@@ -35,10 +35,10 @@ const SitemapGroup = <T extends Record<string, any>>({
       >
         {items.map((item: T, index: number) => (
           <TextLink
-            key={item.id + index}
             underline
             className="text-lg!"
             href={renderItemUrl(item)}
+            key={item.id + index}
           >
             {renderItemLinkText(item)}
           </TextLink>

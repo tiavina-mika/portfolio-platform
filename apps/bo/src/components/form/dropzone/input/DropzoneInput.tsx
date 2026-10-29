@@ -3,7 +3,7 @@ import {
   Box, FormHelperText, Stack, styled, Typography, useTheme,
 } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { uniqBy } from 'lodash';
+import uniqBy from 'lodash/uniqBy';
 import { useCallback, useEffect, useState } from 'react';
 import { type DropzoneOptions, type FileRejection, useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';

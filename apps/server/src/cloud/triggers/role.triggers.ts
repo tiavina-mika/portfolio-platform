@@ -13,7 +13,7 @@ import { parseFunction } from '../utils/utils.cloud';
  * 2nd Administrator
  * 3rd Manager
  */
-Parse.Cloud.afterSave(Parse.Role as any,
+Parse.Cloud.afterSave(Parse.Role,
   parseFunction(async (request: Parse.Cloud.AfterSaveRequest): Promise<void> => {
     const role = request.object;
 
@@ -28,7 +28,7 @@ Parse.Cloud.afterSave(Parse.Role as any,
   })
 );
 
-Parse.Cloud.beforeDelete(Parse.Role as any,
+Parse.Cloud.beforeDelete(Parse.Role,
   parseFunction(async (request: Parse.Cloud.AfterDeleteRequest): Promise<void | undefined> => {
     const role = request.object;
     const { user } = request;
@@ -60,7 +60,7 @@ Parse.Cloud.beforeDelete(Parse.Role as any,
   })
 );
 
-Parse.Cloud.afterDelete(Parse.Role as any,
+Parse.Cloud.afterDelete(Parse.Role,
   parseFunction(async (request: Parse.Cloud.AfterDeleteRequest): Promise<void> => {
     const role = request.object;
 

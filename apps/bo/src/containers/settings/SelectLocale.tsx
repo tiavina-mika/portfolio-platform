@@ -25,10 +25,10 @@ const SelectLocale = () => {
 
   return (
     <SelectInput
+      onChange={handleChange}
       options={options}
       styles={{ control: classes.selectLocale }}
       value={locale}
-      onChange={handleChange}
     />
   );
 };

@@ -24,6 +24,7 @@ const PageAdvancedFilterForm = ({
 
   return (
     <AdvancedSearchForm<PageFiltersInput>
+      onSubmit={onSubmit}
       schema={pageFilterSchema}
       fields={[
         {
@@ -84,7 +85,6 @@ const PageAdvancedFilterForm = ({
           component: <TextField fullWidth name="user" placeholder={t('user:nameOrEmail')} />,
         },
       ]}
-      onSubmit={onSubmit}
     />
   );
 };

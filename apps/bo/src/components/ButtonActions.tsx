@@ -88,11 +88,11 @@ const ButtonActions = ({
       <Dialog
         description={dialogDescription ?? t('sureToDelete', { value })}
         maxWidth="xs"
+        onClick={handleConfirmDeleteDialogClick}
+        onPrimaryButtonAction={onDelete}
         open={openDeleteModal}
         title={t('delete', { value })}
         toggle={toggleDeleteModal}
-        onClick={handleConfirmDeleteDialogClick}
-        onPrimaryButtonAction={onDelete}
       />
     </>
   );

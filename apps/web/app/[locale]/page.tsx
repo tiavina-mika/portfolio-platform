@@ -98,7 +98,19 @@ const HomePage = async (props: Props) => {
       {/* -------------------------------- */}
       <PageHeader
         mainClassName="mb-[30px] md:mb-[50px] md:mt-20 flex flex-row"
+        title={APP_NAME}
         titleClassName="2xl:text-10xl!"
+        /*
+         * description={t.markup('description', {
+         *   b: (chunks) => `<b>${chunks}</b>`
+         * })}
+         */
+
+        className={`
+          md:pb-8
+          xl:pb-10
+          2xl:pb-10
+        `}
         description={(
           <Suspense fallback={<HomeDescriptionSkeleton />}>
             <HomeHeaderTexts locale={locale} />
@@ -109,24 +121,12 @@ const HomePage = async (props: Props) => {
             <DynamicMainImage theme="light" />
           </Suspense>
         )}
-        // eslint-disable-next-line @stylistic/jsx-sort-props
+
         imageDarkMode={(
           <Suspense fallback={null}>
             <DynamicMainImage theme="dark" />
           </Suspense>
         )}
-        title={APP_NAME}
-        /*
-         * description={t.markup('description', {
-         *   b: (chunks) => `<b>${chunks}</b>`
-         * })}
-         */
-        // eslint-disable-next-line @stylistic/jsx-sort-props
-        className={`
-          md:pb-8
-          xl:pb-10
-          2xl:pb-10
-        `}
       >
         {/* CV button */}
         <Suspense fallback={null}>

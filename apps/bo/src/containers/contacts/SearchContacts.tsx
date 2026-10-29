@@ -18,8 +18,8 @@ const SearchContacts = ({
       <Stack direction="row" spacing={2}>
         <SearchInput
           name="text"
-          placeholder={t('user:contacts.search')}
           onChange={onSearch}
+          placeholder={t('user:contacts.search')}
         />
       </Stack>
       <ContactAdvancedFilterForm onSubmit={onAdvancedSearch} />

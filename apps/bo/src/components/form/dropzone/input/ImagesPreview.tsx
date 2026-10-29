@@ -57,8 +57,9 @@ const ImagesPreview = ({
         {Array.isArray(files) &&
           files.map((file, index) => (
             <Card
-              key={index}
               elevation={1}
+              key={index}
+              onClick={() => onSelectImage(file)}
               sx={{
                 maxWidth: 200,
                 position: 'relative',
@@ -68,7 +69,6 @@ const ImagesPreview = ({
                   ? 'transparent'
                   : theme.palette.info.main),
               }}
-              onClick={() => onSelectImage(file)}
             >
               {/* ----- image ----- */}
               <CardMedia
@@ -81,7 +81,7 @@ const ImagesPreview = ({
 
               {/* ----- buttons ----- */}
               <CardActions sx={sx.cardActions}>
-                <IconButton aria-label="delete-image" sx={sx.deleteButton} onClick={handleRemoveFile(file)}>
+                <IconButton aria-label="delete-image" onClick={handleRemoveFile(file)} sx={sx.deleteButton}>
                   <FiTrash2 color={theme.palette.error.main} size={22} />
                 </IconButton>
               </CardActions>
@@ -94,8 +94,8 @@ const ImagesPreview = ({
         <InputActionButton
           color={theme.palette.error.main}
           icon={<FiTrash2 size={18} />}
-          text={t('removeAll')}
           onClick={onRemoveAll}
+          text={t('removeAll')}
         />
       )}
 

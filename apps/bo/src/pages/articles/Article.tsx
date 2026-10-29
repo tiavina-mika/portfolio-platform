@@ -156,10 +156,10 @@ const Article = () => {
           goToList={handleGoToList}
           label={translatedFields.title}
           menus={menus}
-          websiteUrl={goToArticlesOnWebsite(article.get('translated'), tab)}
           onCreate={handleCreate}
           onDelete={handleDelete}
           onEdit={handleEdit}
+          websiteUrl={goToArticlesOnWebsite(article.get('translated'), tab)}
         />
       )}
       title={(
@@ -179,8 +179,8 @@ const Article = () => {
           <Stack spacing={3}>
             {/* ------- tabs for translation ------- */}
             <TranslationTabs
-              tab={tab}
               onTabChange={onTabChange}
+              tab={tab}
             />
             <Layout cardTitle={t('common:details')}>
               <Items items={infosItems} />
@@ -213,7 +213,7 @@ const Article = () => {
             <Layout cardTitle={t('cms:share')}>
               {article.has('shares') && (
                 Object.keys(article.get('shares') || {}).map((key: string, index: number) => (
-                  <Stack key={key + index} direction="row" spacing={2}>
+                  <Stack direction="row" key={key + index} spacing={2}>
                     <Typography>{capitalize(key)}:</Typography>
                     <Typography>{article.get('shares')?.[key]}</Typography>
                   </Stack>

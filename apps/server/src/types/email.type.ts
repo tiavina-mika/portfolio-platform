@@ -1,5 +1,6 @@
-import type { Brevo } from '@getbrevo/brevo';
 import { z } from 'zod';
+
+import type { Brevo } from '@getbrevo/brevo';
 
 import { secureCodeEmailSchema } from '@/validations/email.validation';
 

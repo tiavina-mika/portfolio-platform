@@ -33,9 +33,9 @@ const CheckedMultiSelectField = ({
         <CheckedMultiSelectInput
           error={(errors as any)[name]}
           helperText={helperText}
+          onChange={onChange}
           options={options}
           value={value}
-          onChange={onChange}
         />
       )}
     />

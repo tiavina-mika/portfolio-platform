@@ -157,15 +157,11 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
           return capitalize(message.trim());
         }
         /**
-         * Cases where the value is too big
+         * Cases where the value is too big or too small
          * (e.g., string length, number value, array length, etc.)
+         * @NOTE: too small is handled both by "nonempty()" and "min()" here
          */
         case 'too_big':
-        /**
-         * Cases where the value is too small
-         * (e.g., string length, number value, array length, etc.)
-         * @NOTE: it is handled both "nonempty()" and "min()" here
-         */
         case 'too_small': {
           const isTooBig = issue.code === 'too_big';
           const valueType = issue.origin;

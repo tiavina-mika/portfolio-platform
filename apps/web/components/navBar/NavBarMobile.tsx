@@ -69,8 +69,8 @@ const NavBarMobile = ({
             />
             <button
               className="absolute right-0 flex h-full flex-col justify-center self-stretch"
-              type="button"
               onClick={toggleSearchInput}
+              type="button"
             >
               <NextIcon size={20} src="/icons/x.svg" />
             </button>
@@ -85,8 +85,8 @@ const NavBarMobile = ({
             <div className="flex flex-row justify-between space-x-4">
               <button
                 className="mr-10 flex flex-col items-center justify-center self-stretch"
-                type="button"
                 onClick={toggleSearchInput}
+                type="button"
               >
                 <NextIcon
                   size={20}
@@ -109,8 +109,8 @@ const NavBarMobile = ({
               {cvDownloadButton}
               <button
                 className="flex flex-col items-center justify-center self-stretch"
-                type="button"
                 onClick={toggleMenu}
+                type="button"
               >
                 <HamburgerMenuSvgMobile open={openMenu} />
               </button>

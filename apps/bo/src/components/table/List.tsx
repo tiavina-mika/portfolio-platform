@@ -1,6 +1,6 @@
 import { IconButton, Stack, Tooltip } from '@mui/material';
 import Box from '@mui/material/Box';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import {
   ChangeEvent, MouseEvent, ReactNode, useEffect, useState,
 } from 'react';

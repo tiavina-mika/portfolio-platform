@@ -18,8 +18,8 @@ const SearchCategories = ({
       <Stack direction="row" spacing={2}>
         <SearchInput
           name="text"
-          placeholder={t('cms:category.searchCategory')}
           onChange={onSearch}
+          placeholder={t('cms:category.searchCategory')}
         />
       </Stack>
       <CategoryAdvancedFilterForm onSubmit={onAdvancedSearch} />

@@ -124,7 +124,7 @@ const Stack = <C extends React.ElementType = 'div'>(props: StackProps<C>) => {
           items.push(cloneElement(divider as React.ReactElement, { key }));
         } else {
           items.push(
-            <span key={key} aria-hidden style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <span aria-hidden key={key} style={{ display: 'inline-flex', alignItems: 'center' }}>
               {divider}
             </span>
           );
@@ -153,7 +153,7 @@ const Stack = <C extends React.ElementType = 'div'>(props: StackProps<C>) => {
         getClassNames(direction ?? defaultProps.direction, align, justify),
         className
       )}
-      {...(other as any)}
+      {...(other)}
     >
       {items}
     </Component>

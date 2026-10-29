@@ -28,11 +28,11 @@ const IconPopover = ({
     <div>
       <IconButton
         aria-haspopup="true"
+        onMouseEnter={handlePopoverOpen}
+        onMouseLeave={handlePopoverClose}
         aria-owns={open
           ? 'mouse-over-popover'
           : undefined}
-        onMouseEnter={handlePopoverOpen}
-        onMouseLeave={handlePopoverClose}
       >
         {icon || <FaInfoCircle color={grey[400]} size={18} />}
       </IconButton>
@@ -40,6 +40,7 @@ const IconPopover = ({
         disableRestoreFocus
         anchorEl={anchorEl}
         id="mouse-over-popover"
+        onClose={handlePopoverClose}
         open={open}
         slotProps={{ paper: { sx: { maxWidth: 300 } } }}
         sx={{ pointerEvents: 'none' }}
@@ -51,7 +52,6 @@ const IconPopover = ({
           vertical: 'top',
           horizontal: 'left',
         }}
-        onClose={handlePopoverClose}
       >
         <Typography sx={{ p: 1, fontSize: 14 }}>{message}</Typography>
       </Popover>

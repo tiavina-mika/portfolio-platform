@@ -1,5 +1,5 @@
 import { cutText } from '@shared/utils';
-import { escapeRegExp } from 'lodash';
+import escapeRegExp from 'lodash/escapeRegExp';
 import { ReactNode } from 'react';
 import { capitalize } from 'string-ts';
 

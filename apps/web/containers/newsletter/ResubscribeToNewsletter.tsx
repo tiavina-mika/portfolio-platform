@@ -60,8 +60,8 @@ const ResubscribeToNewsletter = ({
       className="flex flex-row items-center"
       color="default"
       fullWidth={false}
-      variant="text"
       onClick={handleResubscribe}
+      variant="text"
     >
       {label}. {isPending ? <Loading className="ml-2 size-3" /> : null}
     </Button>

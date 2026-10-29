@@ -1,7 +1,8 @@
-import type { ISEOFields } from '@shared/types';
 import { useNavigate } from '@tanstack/react-router';
 import { MouseEvent, ReactNode } from 'react';
 import { z } from 'zod';
+
+import type { ISEOFields } from '@shared/types';
 
 
 import { Store } from '@/redux/store';

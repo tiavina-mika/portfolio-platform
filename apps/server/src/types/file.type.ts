@@ -1,8 +1,9 @@
 import { z } from 'zod';
 
+import type { Locale } from './app.type';
+
 import { clientFileValidationSchema } from '@/validations/file.validation';
 
-import type { Locale } from './app.type';
 
 export interface IUploadedFile {
   publicId: string;

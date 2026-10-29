@@ -26,11 +26,11 @@ const ConfirmDeletionFormModalAction = ({
       </IconButton>
       <ConfirmDeletionFormModal
         label={label}
+        onConfirmed={onConfirmed}
         open={isOpenConfirmDeleteModal}
         toggle={toggleOpenConfirmDeleteModal}
         type={type}
         value={value}
-        onConfirmed={onConfirmed}
       />
     </>
   );

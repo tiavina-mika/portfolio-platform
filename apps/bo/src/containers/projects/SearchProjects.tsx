@@ -18,13 +18,13 @@ const SearchProjects = ({
       <Stack direction="row" spacing={2}>
         <SearchInput
           name="text"
-          placeholder={t('cms:searchByPage')}
           onChange={onSearch}
+          placeholder={t('cms:searchByPage')}
         />
         <SearchInput
           name="user"
-          placeholder={t('cms:searchByAuthor')}
           onChange={onSearch}
+          placeholder={t('cms:searchByAuthor')}
         />
       </Stack>
       <ProjectAdvancedFilterForm onSubmit={onAdvancedSearch} />

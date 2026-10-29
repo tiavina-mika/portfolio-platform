@@ -30,7 +30,7 @@ const ProfileEditUserInfo = () => {
 
   return (
     <>
-      <IconButton size="small" onClick={toggleOpenEditUserInfoFormDialog}>
+      <IconButton onClick={toggleOpenEditUserInfoFormDialog} size="small">
         <FiEdit />
       </IconButton>
       <Dialog

@@ -8,6 +8,7 @@ const MobileOpenMenuIcon = ({ onClick }: Props) => {
       aria-controls="navbar-default"
       aria-expanded="false"
       data-collapse-toggle="navbar-default"
+      onClick={onClick}
       type="button"
       className={`
         flex size-5 items-center justify-center rounded-lg text-sm text-gray-500
@@ -16,7 +17,6 @@ const MobileOpenMenuIcon = ({ onClick }: Props) => {
         md:hidden
         dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600
       `}
-      onClick={onClick}
     >
       <span className="sr-only">Open main menu</span>
       <svg

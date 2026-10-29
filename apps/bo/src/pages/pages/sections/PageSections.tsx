@@ -152,9 +152,9 @@ const PageSections = () => {
           ? (
             <ActionsMenu
               label={description}
-              type="icon"
               onDestroy={() => handleDestroy(section.id)}
               onPreview={() => handlePreview(section.id)}
+              type="icon"
             />
           )
           : (
@@ -199,10 +199,10 @@ const PageSections = () => {
         defaultFilters={searchParams}
         headCells={headCells}
         items={dataTable}
-        renderFilter={(prop: IRenderSearchProps) => <SearchPages {...prop} />}
-        tabs={recycleBinTabOptions}
         onDeleteSelected={handleDeleteSelected}
         onUpdateData={handleUpdateData}
+        renderFilter={(prop: IRenderSearchProps) => <SearchPages {...prop} />}
+        tabs={recycleBinTabOptions}
       />
     </>
   );

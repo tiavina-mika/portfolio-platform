@@ -19,6 +19,7 @@ const ContactAdvancedFilterForm = ({
 
   return (
     <AdvancedSearchForm<ContactFiltersInput>
+      onSubmit={onSubmit}
       schema={contactFilterSchema}
       fields={[
         {
@@ -68,7 +69,6 @@ const ContactAdvancedFilterForm = ({
           ),
         },
       ]}
-      onSubmit={onSubmit}
     />
   );
 };

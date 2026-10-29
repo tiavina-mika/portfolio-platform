@@ -54,6 +54,15 @@ const DatePickerInput = ({
         inputFormat={inputFormat ?? (withHour
           ? t('fullDateFormat')
           : t('dateOnlyFormat'))}
+        onChange={(value: Date | Dayjs | null) =>
+          handleChange(
+            value
+              ? dayjs.isDayjs(value)
+                ? value.toDate()
+                : value
+              : null
+          )
+        }
         renderInput={(params: TextFieldProps) => (
           <TextField
             fullWidth
@@ -64,15 +73,6 @@ const DatePickerInput = ({
             {...inputProps}
           />
         )}
-        onChange={(value: Date | Dayjs | null) =>
-          handleChange(
-            value
-              ? dayjs.isDayjs(value)
-                ? value.toDate()
-                : value
-              : null
-          )
-        }
       />
     </LocalizationProvider>
   );

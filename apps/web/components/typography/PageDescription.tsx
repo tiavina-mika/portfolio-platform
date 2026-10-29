@@ -14,7 +14,7 @@ const PageDescription = ({ children }: Props) => {
 
     <Text className={`
       text-lg leading-7 text-dark-400
-      md:text-xl md:!leading-normal
+      md:text-xl md:leading-normal!
     `}
     >
       {parse(children as string)}

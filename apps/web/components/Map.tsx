@@ -57,19 +57,19 @@ const Map = () => {
           <GoogleMap
             center={COORD.center}
             mapContainerStyle={{ height: 500 }}
-            options={options}
-            zoom={COORD.zoom}
             onLoad={onLoad}
             onUnmount={onUnmount}
+            options={options}
+            zoom={COORD.zoom}
           >
             <Marker
-              position={COORD.center}
               onClick={toggleMarker}
+              position={COORD.center}
             />
             {openMarker && (
               <InfoWindow
-                position={COORD.center}
                 onCloseClick={toggleMarker}
+                position={COORD.center}
               >
                 <Text>{placeName}</Text>
               </InfoWindow>

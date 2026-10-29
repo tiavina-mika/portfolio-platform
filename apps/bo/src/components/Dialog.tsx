@@ -77,8 +77,8 @@ const Dialog = ({
       aria-label="close"
       color="inherit"
       edge="start"
-      sx={{ position: 'absolute', right: 0, top: 0 }}
       onClick={toggle}
+      sx={{ position: 'absolute', right: 0, top: 0 }}
     >
       <FiX />
     </IconButton>
@@ -91,9 +91,9 @@ const Dialog = ({
       aria-labelledby="alert-dialog-title"
       css={classes.dialog}
       maxWidth={maxWidth}
-      open={!!open}
       onClick={onClick}
       onClose={toggle}
+      open={!!open}
     >
       {/*  ------------- full screen ------------- */}
       {dialogProps.fullScreen
@@ -145,7 +145,7 @@ const Dialog = ({
         <DialogActions>
           {/* cancel button */}
           {withCancelButton && (
-            <Button color="inherit" sx={{ textTransform: 'capitalize', fontWeight: 500 }} onClick={toggle}>
+            <Button color="inherit" onClick={toggle} sx={{ textTransform: 'capitalize', fontWeight: 500 }}>
               {secondaryButtonText ?? t('cancel')}
             </Button>
           )}
@@ -154,9 +154,9 @@ const Dialog = ({
           {onPrimaryButtonAction && (
             <Button
               color={buttonColor}
+              onClick={handlePrimaryButtonAction}
               sx={{ textTransform: 'capitalize' }}
               variant="contained"
-              onClick={handlePrimaryButtonAction}
             >
               {loading
                 ? <CircularProgress size={20} />

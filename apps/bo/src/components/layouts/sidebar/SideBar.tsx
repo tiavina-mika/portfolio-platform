@@ -263,25 +263,25 @@ const SideBar = ({
             <Fragment key={subMenu.label + subMenuIndex}>
               <SideBarItem
                 isSelected={isSelected(location, subMenu.id, subMenu.pathnamePosition)}
+                onClose={onClose}
                 open={open}
                 rightIcon={renderRightIcon(!!subMenu.subMenus, openSubMenu)}
                 subMenu={subMenu}
-                onClose={onClose}
               />
               {subMenu.subMenus?.map((subMenu2: ISubMenu, subMenu2Index: number) => (
                 <Collapse
-                  key={subMenu2.label + subMenu2Index}
                   unmountOnExit
                   in={openSubMenu}
+                  key={subMenu2.label + subMenu2Index}
                   timeout="auto"
                 >
                   <List disablePadding component="div">
                     <SideBarItem
                       isLevel2
                       isSelected={isSelected(location, subMenu2.id, subMenu2.pathnamePosition)}
+                      onClose={onClose}
                       open={open}
                       subMenu={subMenu2}
-                      onClose={onClose}
                     />
                   </List>
                 </Collapse>
@@ -300,8 +300,8 @@ const SideBar = ({
     <List sx={{ p: 0 }}>
       {filteredMenus.map((menu, index) => (
         <List
-          key={index}
           css={{ padding: 0 }}
+          key={index}
           // subheader is the title of the menu
           subheader={menu.title
             ? (

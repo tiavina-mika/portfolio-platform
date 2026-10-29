@@ -250,9 +250,9 @@ const ArticlePage = async (props: Props) => {
           >
             {(article.get('images') || []).map((image: IFileCloud, index: number) => (
               <CardImage
-                key={image.url + index}
                 alt={title}
                 containerClassName="!h-[400px]"
+                key={image.url + index}
                 src={image.url}
               />
             ))}

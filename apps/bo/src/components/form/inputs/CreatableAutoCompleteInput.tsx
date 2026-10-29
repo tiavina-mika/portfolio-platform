@@ -88,13 +88,6 @@ const CreatableAutoCompleteInput = ({
             }
             return option.label;
           }}
-          renderOption={(props, option) => {
-            return (
-              <li {...props}>
-                {option.label}
-              </li>
-            );
-          }}
           onChange={(_, newValue) => {
             if (typeof newValue === 'string' && isCreateOnInputChange) {
               // timeout to avoid instant validation of the dialog's form.
@@ -118,16 +111,23 @@ const CreatableAutoCompleteInput = ({
 
             onChange(newValue);
           }}
+          renderOption={(props, option) => {
+            return (
+              <li {...props}>
+                {option.label}
+              </li>
+            );
+          }}
         />
         {!isCreateOnInputChange && (
           <Tooltip title={dialogTitle}>
             <IconButton
+              onClick={toggleDialog}
               sx={{
                 border: '1px solid ' + grey[400],
                 borderRadius: 1,
                 px: 2,
               }}
-              onClick={toggleDialog}
             >
               <FiPlus />
             </IconButton>

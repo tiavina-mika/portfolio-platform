@@ -44,9 +44,9 @@ const DateRangePickerField = ({
             {...textfieldProps}
             hasError={!!errors[name]}
             inputFormat={inputFormat}
+            onChange={onChange}
             separator={separator}
             value={value}
-            onChange={onChange}
           />
         )}
       />

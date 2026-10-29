@@ -15,7 +15,7 @@ const Command = ({ className, ...props }: ComponentProps<typeof CommandPrimitive
   <CommandPrimitive
     data-slot="command"
     className={cn(
-      'flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground',
+      'flex size-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground',
       className
     )}
     {...props}

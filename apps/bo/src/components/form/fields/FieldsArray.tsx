@@ -110,9 +110,9 @@ const FieldsArray = ({
                 {/* subfields */}
                 {subNames.map((subName, subIndex) => (
                   <Controller
-                    key={field.id + subIndex}
                     control={control}
                     defaultValue=""
+                    key={field.id + subIndex}
                     name={`${name}.${index}.${subName.name}`}
                     render={({
                       field,

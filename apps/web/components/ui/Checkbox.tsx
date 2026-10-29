@@ -12,7 +12,7 @@ const Checkbox = ({ className, ...props }: ComponentProps<typeof CheckboxPrimiti
     data-slot="checkbox"
     className={cn(
       `
-        peer h-4 w-4 shrink-0 rounded-xs border border-primary shadow
+        peer size-4 shrink-0 rounded-xs border border-primary shadow
         focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-hidden
         disabled:cursor-not-allowed disabled:opacity-50
         data-[state=checked]:bg-primary-light data-[state=checked]:text-primary-foreground

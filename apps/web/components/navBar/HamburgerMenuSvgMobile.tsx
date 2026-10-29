@@ -20,11 +20,11 @@ const HamburgerMenuSvgMobile = ({ open }: Props) => {
       <AnimatePresence>
         {!open && (
           <motion.g
-            key="lt-g"
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.4 } }}
             id="lt-g"
             initial={{ opacity: 0 }}
+            key="lt-g"
             transition={{ duration: 0.7 }}
           >
             <path

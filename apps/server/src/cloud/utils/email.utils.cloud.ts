@@ -1,6 +1,6 @@
 
 import type { Locale } from '@/types/app.type';
-import type { ICreateEmailContactResponse, ICreateEmailResponse, ISendEmail } from '@/types/email.type';
+import type { ICreateEmailContactResponse, ICreateEmailResponse } from '@/types/email.type';
 
 import { generateEmailTemplate } from '@/config/emails';
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18next';
@@ -83,7 +83,7 @@ export const sendEmailVerification = async (
     }),
   };
 
-  const data = await sendEmail(params as ISendEmail);
+  const data = await sendEmail(params);
 
   return isEmailSentResponse(data);
 };
@@ -133,7 +133,7 @@ export const sendEmailToUser = async (
     }),
   };
 
-  const data = await sendEmail(params as ISendEmail);
+  const data = await sendEmail(params);
 
   return isEmailSentResponse(data);
 };
@@ -175,7 +175,7 @@ export const sendArticleToNewsletterEmails = async (
     }),
   };
 
-  const data = await sendEmail(params as ISendEmail);
+  const data = await sendEmail(params);
 
   return isEmailSentResponse(data);
 };

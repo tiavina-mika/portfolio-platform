@@ -70,11 +70,11 @@ const CreatableAutoCompleteField = ({
             formId={formId}
             isCreateOnInputChange={isCreateOnInputChange}
             label={label}
+            onChange={onChange}
             options={options}
             placeholder={placeholder}
             renderForm={renderForm}
             value={value}
-            onChange={onChange}
           />
         )}
       />

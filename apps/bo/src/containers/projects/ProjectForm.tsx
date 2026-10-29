@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Stack } from '@mui/material';
 import { t } from 'i18next';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { useEffect } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 
@@ -100,8 +100,8 @@ const ProjectForm = ({
         {/* translated tabs */}
         <TranslationTabs
           errors={getTranslatedFormTabErrors(form?.formState.errors, TRANSLATED_CMS_FIELDS)}
-          tab={tab}
           onTabChange={onTabChange}
+          tab={tab}
         />
         {/* all translated fields */}
         {locales.map((locale: string, index: number) => (
@@ -119,10 +119,10 @@ const ProjectForm = ({
                 fullWidth
                 label={t('common:name')}
                 name={locale + ':name'}
+                onFieldChange={handleNameChange}
                 required={locale === DEFAULT_LOCALE}
                 type="text"
                 variant="outlined"
-                onFieldChange={handleNameChange}
               />
               <TextField
                 fixedLabel

@@ -49,7 +49,7 @@ const NotFoundPage = () => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button variant="contained" onClick={goToHome}>{t('returnToHome')}</Button>
+          <Button onClick={goToHome} variant="contained">{t('returnToHome')}</Button>
         </CardActions>
       </Card>
     </Paper>

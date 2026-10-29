@@ -45,9 +45,9 @@ const AutocompleteField = <T extends Record<string, any>>({
           <AutocompleteInput<T>
             {...otherProps}
             label={label}
-            value={value}
             onChange={onChange}
             onInputChange={onSearch}
+            value={value}
             onChangeList={(values: ISelectOption<T>[]) => {
               if (!previewName) return;
               setValue(previewName, values, { shouldValidate: true });

@@ -28,13 +28,13 @@ const PasswordInput = forwardRef<HTMLDivElement, CustomTextFieldInputProps>(({
           <IconButton
             aria-label="toggle password visibility"
             edge="end"
+            onClick={toggleIsPasswordShowed}
+            onMouseDown={handleMouseDownPassword}
             css={{
               color: mode === 'light'
                 ? '#000'
                 : COLORS.authTextFieldPlaceholder,
             }}
-            onClick={toggleIsPasswordShowed}
-            onMouseDown={handleMouseDownPassword}
           >
             {/* toggle eye icon */}
             {isPasswordShowed

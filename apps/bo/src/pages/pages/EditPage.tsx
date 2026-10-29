@@ -77,8 +77,8 @@ const EditPage = () => {
       <Head title={t('cms:editPage', { title: page.id })} />
 
       <PageForm
-        page={page}
         onSubmit={handleSubmitPage}
+        page={page}
       />
     </Layout>
   );

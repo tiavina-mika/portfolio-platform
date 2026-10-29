@@ -122,8 +122,8 @@ const ArticleForm = ({
           {/* translated tabs */}
           <TranslationTabs
             errors={getTranslatedFormTabErrors(form?.formState.errors, TRANSLATED_CMS_FIELDS)}
-            tab={tab}
             onTabChange={onTabChange}
+            tab={tab}
           />
           {/* all translated fields */}
           {locales.map((locale: string, index: number) => (
@@ -141,10 +141,10 @@ const ArticleForm = ({
                   fullWidth
                   label={t('cms:title')}
                   name={locale + ':title'}
+                  onFieldChange={handleTitleChange}
                   required={locale === DEFAULT_LOCALE}
                   type="text"
                   variant="outlined"
-                  onFieldChange={handleTitleChange}
                 />
                 {/* slug field */}
                 <TranslatedSlugField locale={locale} tab={tab} />

@@ -73,8 +73,8 @@ const PageSectionForm = ({
       {/* translated tabs */}
       <TranslationTabs
         errors={getTranslatedFormTabErrors(form?.formState.errors, ['title', 'description'])}
-        tab={tab}
         onTabChange={onTabChange}
+        tab={tab}
       />
       <Stack spacing={3}>
         <Stack>
