@@ -13,7 +13,7 @@ import {
 import { getUserFullName } from './user.utils.cloud';
 
 const isEmailSentResponse = (data: ICreateEmailResponse): boolean =>
-  !!(data?.body.messageId || data?.body.messageIds);
+  !!(data?.messageId || data?.messageIds);
 
 const renderCode = (code: string, locale: Locale) => {
   return `

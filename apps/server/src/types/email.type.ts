@@ -1,11 +1,9 @@
-import {
-  CreateSmtpEmail, CreateUpdateContactModel, GetContacts, SendSmtpEmail,
-} from '@getbrevo/brevo';
+import type { Brevo } from '@getbrevo/brevo';
 import { z } from 'zod';
 
 import { secureCodeEmailSchema } from '@/validations/email.validation';
 
-export interface ISendEmail extends SendSmtpEmail {}
+export type ISendEmail = Brevo.SendTransacEmailRequest;
 
 interface IContactEmailAttribute {
   firstName?: string;
@@ -21,16 +19,11 @@ export interface ICreateContactEmailParams {
   smsBlacklisted?: boolean;
   listIds?: number[];
   updateEnabled?: boolean;
-  smtpBlacklistSender?: string;
+  smtpBlacklistSender?: string[];
 }
 
 export type ISecureCodeParams = z.infer<typeof secureCodeEmailSchema>;
 
-export interface IEmailResponse<T = CreateSmtpEmail> {
-  response: Record<string, any>;
-  body: T;
-}
-
-export type ICreateEmailContactResponse = IEmailResponse<CreateUpdateContactModel> | undefined;
-export type IGetContactsResponse = IEmailResponse<GetContacts> | undefined;
-export type ICreateEmailResponse = IEmailResponse | undefined;
+export type ICreateEmailContactResponse = Brevo.CreateContactResponse | undefined;
+export type IGetContactsResponse = Brevo.GetContacts | undefined;
+export type ICreateEmailResponse = Brevo.SendTransacEmailResponse | undefined;

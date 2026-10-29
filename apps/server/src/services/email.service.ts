@@ -1,6 +1,4 @@
-import {
-  ContactsApi, CreateAttribute, CreateContact, SendSmtpEmail, TransactionalEmailsApi,
-} from '@getbrevo/brevo';
+import { BrevoClient, BrevoError } from '@getbrevo/brevo';
 
 import type {
   ICreateContactEmailParams,
@@ -18,82 +16,50 @@ import { logger } from '@/utils/logger';
  * see: https://app.brevo.com/contact/attribute/list
  */
 const CONTACT_ATTRIBUTES = [
-  {
-    type: 'normal',
-    name: 'FIRSTNAME',
-    attributeType: CreateAttribute.TypeEnum.Text,
-  },
-  {
-    type: 'normal',
-    name: 'LASTNAME',
-    attributeType: CreateAttribute.TypeEnum.Text,
-  },
+  { attributeCategory: 'normal' as const, attributeName: 'FIRSTNAME', type: 'text' as const },
+  { attributeCategory: 'normal' as const, attributeName: 'LASTNAME', type: 'text' as const },
 ];
 
-/**
- * set key for api instance
- * @param apiInstance
- */
-const setKey = (apiInstance: any) => {
-  const apiKey = apiInstance.authentications.apiKey;
+// ─── Singleton client ────────────────────────────────────────────────────────
 
-  apiKey.apiKey = process.env.BREVO_API_KEY;
+let _client: BrevoClient | null = null;
 
-  const partnerKey = apiInstance.authentications.partnerKey;
-
-  partnerKey.apiKey = process.env.BREVO_API_KEY;
+const getBrevoClient = (): BrevoClient => {
+  if (!_client) {
+    _client = new BrevoClient({ apiKey: process.env.BREVO_API_KEY ?? '' });
+  }
+  return _client;
 };
+
+// ─── Contact attributes — initialized once ──────────────────────────────────
+
+let _contactAttributesReady: Promise<void> | null = null;
 
 /**
  * create attributes for contact
  * the attributes are the fields of the contact
  * and used as variables in the email template
- * @param type
- * @param name
- * @param values
- * @returns
  */
-type CreateAttributeType = 'normal' | 'transactional' | 'category' | 'calculated' | 'global';
-const createAttribute = async (
-  type: 'normal' | 'transactional' | 'category' | 'calculated' | 'global',
-  name: string,
-  values: CreateAttribute
-) => {
-  const apiInstance = new ContactsApi();
+const createContactAttributes = async (): Promise<void> => {
+  const client = getBrevoClient();
 
-  setKey(apiInstance);
-
-  let attributes: any = new CreateAttribute();
-
-  attributes = {
-    ...attributes,
-    ...values,
-  };
-
-  const data = await apiInstance.createAttribute(type, name, attributes);
-
-  return data;
+  await Promise.all(
+    CONTACT_ATTRIBUTES.map((attribute) => client.contacts.createAttribute(attribute))
+  );
 };
 
-const createContactAttributes = async () => {
-  try {
-    const result = await Promise.all(CONTACT_ATTRIBUTES.map(async (attribute) => {
-      const data = await createAttribute(
-        attribute.type as CreateAttributeType,
-        attribute.name,
-        { type: attribute.attributeType }
-      );
-
-      return data.body;
-    }));
-
-    return result;
+const ensureContactAttributes = (): Promise<void> => {
+  if (!_contactAttributesReady) {
+    _contactAttributesReady = createContactAttributes().catch((error: unknown) => {
+      // swallow error to avoid breaking the contact creation, reset so it is retried on the next call
+      _contactAttributesReady = null;
+      logger.error('createContactAttributes failed : ', (error as BrevoError)?.body);
+    });
   }
-  catch (error) {
-    // swallow error to avoid breaking the contact creation
-    logger.error('createContactAttributes failed : ', (error as any)?.body);
-  }
+  return _contactAttributesReady;
 };
+
+// ─── Public API ─────────────────────────────────────────────────────────────
 
 /**
  * create contact in Brevo
@@ -101,92 +67,63 @@ const createContactAttributes = async () => {
  * @param values
  * @param id
  * @returns
- * @throws
  */
 export const createContactEmail = async (
   values: ICreateContactEmailParams,
   id?: string
 ): Promise<ICreateEmailContactResponse> => {
   try {
-    const apiInstance = new ContactsApi();
+    const client = getBrevoClient();
 
-    setKey(apiInstance);
+    await ensureContactAttributes();
 
-    /**
-     * NOTE: the attributes swallow the error if the attribute already exists
-     * so we can create the contact even if the attribute already exists
-     */
-    await createContactAttributes();
-
-    let contactEmail: any = new CreateContact();
-
-    contactEmail = {
-      ...contactEmail,
+    const data = await client.contacts.createContact({
       ...values,
       attributes: {
         LASTNAME: values.attributes.lastName,
-        FIRSTNAME: values.attributes.firstName,
+        FIRSTNAME: values.attributes.firstName ?? '',
         EMAIL: values.email,
-        SMS: values.attributes.sms,
-        // WHATSAPP: values.attributes.sms,
+        SMS: values.attributes.sms ?? '',
       },
-    };
-
-    if (id) {
-      contactEmail.extId = id;
-    }
-
-    const data = await apiInstance.createContact(contactEmail);
+      ...(id ? { ext_id: id } : {}),
+    });
 
     logger.info('create contact success: ', JSON.stringify(data));
     return data;
   }
-  catch (error) {
-    logger.error('create contact failed : ', (error as any)?.body);
+  catch (error: unknown) {
+    logger.error('create contact failed : ', (error as BrevoError)?.body);
   }
 };
 
 export const getContacts = async (): Promise<IGetContactsResponse> => {
   try {
-    const apiInstance = new ContactsApi();
-
-    setKey(apiInstance);
-
-    const opts = {
-      limit: 50,
-      offset: 0,
-    };
-
-    const data = await apiInstance.getContacts(opts.limit, opts.offset);
+    const client = getBrevoClient();
+    const data = await client.contacts.getContacts({ limit: 50, offset: 0 });
 
     logger.info('getContacts success: ', data);
     return data;
   }
-  catch (error) {
-    logger.error('getContacts failed : ', (error as any)?.body);
+  catch (error: unknown) {
+    logger.error('getContacts failed : ', (error as BrevoError)?.body);
   }
 };
 
 export const sendEmail = async (values: ISendEmail): Promise<ICreateEmailResponse> => {
   try {
-    const apiInstance = new TransactionalEmailsApi();
-
-    setKey(apiInstance);
-    const sendSmtpEmail: any = new SendSmtpEmail();
+    const client = getBrevoClient();
 
     if (!values.sender) {
       values.sender = { email: ADMIN_EMAIL_SENDER!, name: APP_NAME };
     }
 
-    const emailValues = { ...sendSmtpEmail, ...values };
+    const data = await client.transactionalEmails.sendTransacEmail(values);
 
-    const data = await apiInstance.sendTransacEmail(emailValues);
-
-    logger.info('sendEmail success : ', JSON.stringify(data.body));
+    logger.info('sendEmail success : ', JSON.stringify(data));
     return data;
   }
-  catch (error) {
-    logger.error('sendEmail failed : ', (error as any)?.body);
+  catch (error: unknown) {
+    logger.error('sendEmail failed : ', (error as BrevoError)?.body);
 
     throw error;
   }
