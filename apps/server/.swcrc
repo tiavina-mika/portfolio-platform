@@ -1,0 +1,31 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true
+    },
+    // Same as tsconfig.json "compilerOptions"
+    "baseUrl": "./",
+    // Same as tsconfig.json "compilerOptions.paths"
+    // This is needed for proper path aliasing during transpilation
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "target": "esnext",
+    "experimental":{
+      // To support import assertions like: import data from './data.json' assert { type: 'json' };
+      "keepImportAttributes": true,
+      // To support import assertions for JSON modules
+      "emitAssertForImportAttributes": true
+    }
+  },
+  "module": {
+    "type": "nodenext",
+    // It will add .js extension to local imports during transpilation
+    "resolveFully": true
+  },
+  // Enable source maps for easier debugging
+  "sourceMaps": true,
+  // Set to false when debugging to have readable output code
+  "minify": true
+}

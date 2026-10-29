@@ -1,0 +1,25 @@
+{
+  "Article": {
+    "relatedArticles": "Related articles",
+    "articles": "Articles",
+    "anArticle": "an article",
+    "theArticle": "the article",
+    "categories": "Categories",
+    "category": "Category",
+    "title": "Title",
+    "content": "Content",
+    "author": "Author",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at",
+    "noArticlesYet": "No articles yet.",
+    "viewAll": "View all",
+    "message": {
+      "error": {
+        "notFound": "Article not found."
+      }
+    }
+  },
+  "Page": {
+    "pages": "Pages"
+  }
+}

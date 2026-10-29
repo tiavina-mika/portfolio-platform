@@ -1,0 +1,43 @@
+{
+  "users": "mpampiasa",
+  "admins": "mpitantana",
+  "articles": "lahatsoratra",
+  "projects": "projets",
+  "login": "hiditra",
+  "signup": "hiditra-mpikambana",
+  "changePassword": "hanova-tenimiafina",
+  "contacts": "hafatra",
+  "profile": "mombamomba",
+  "roles": "andraikitra",
+  "confirmEmail": "hamarino-ny-mailaka",
+  "settings": "fikirana",
+  "recycleBin": "dabam-pako",
+  "logout": "hiala",
+  "pages": "pejy",
+  "create": "hamorona",
+  "update": "hanova",
+  "blocks": "blocs",
+  "statistics": "antontanisa",
+  "account": "kaonty",
+  "confirmCode": "kaody/hamarinina",
+  "verifyAccount": "hamarinina",
+  "emailResetPassword": "mot-de-passe/hanavao",
+  "edit": "hovaina",
+  "add": "hanampy",
+  "notFound": "tsy-hita",
+  "administration": "fitantanana",
+  "factures": "faktiora",
+  "categories": "sokajy",
+  "miscellaneous": "hafa",
+  "tests": "anjana",
+  "pageSections": "fizaran-pejy",
+  "website": {
+    "articles": "lahatsoratra",
+    "blog": "blogy",
+    "projects": "projets"
+  },
+  "tabs": {
+    "recycleBin": "dabam-pako",
+    "news": "vaovao"
+  }
+}

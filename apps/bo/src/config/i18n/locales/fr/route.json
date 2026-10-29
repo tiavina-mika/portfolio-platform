@@ -1,0 +1,42 @@
+{
+  "users": "utilisateurs",
+  "admins": "admins",
+  "articles": "articles",
+  "projects": "projets",
+  "login": "connexion",
+  "signup": "creation-compte",
+  "changePassword": "changer-mot-de-passe",
+  "contacts": "contacts",
+  "profile": "profil",
+  "roles": "roles",
+  "confirmEmail": "email-confirmation",
+  "settings": "parametres",
+  "recycleBin": "corbeille",
+  "logout": "deconnexion",
+  "pages": "pages",
+  "blocks": "blocs",
+  "create": "creer",
+  "update": "modifier",
+  "account": "compte",
+  "confirmCode": "code/confirmer",
+  "verifyAccount": "verifier",
+  "emailResetPassword": "mot-de-passe/reinitialiser",
+  "edit": "modifier",
+  "add": "ajouter",
+  "notFound": "introuvable",
+  "administration": "administration",
+  "factures": "factures",
+  "categories": "categories",
+  "miscellaneous": "divers",
+  "tests": "tests",
+  "pageSections": "sections-de-page",
+  "website": {
+    "articles": "articles",
+    "blog": "blog",
+    "projects": "projets"
+  },
+  "tabs": {
+    "recycleBin": "corbeille",
+    "news": "nouveaux"
+  }
+}
