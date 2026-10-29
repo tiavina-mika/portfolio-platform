@@ -75,6 +75,10 @@ Each app has its **own** `package.json` but there is a **single** `pnpm-lock.yam
 - **Inventory**: a new env variable, external service, Cloud Function, trigger or job updates `docs/inventory/` (and `docs/services/`) in the same change.
 - **Features**: user-facing changes in `apps/bo` or `apps/web` update `docs/features/`.
 
+### Detailed rules
+
+Topic rules live in `.claude/rules/` (code style, naming, TypeScript, component structure, forms, theming, accessibility, Parse patterns, docs, inventory, Storybook, git branches, implementation completeness). Per-app guidance is in `apps/<name>/CLAUDE.md` and `apps/<name>/.claude/rules/`.
+
 ### Environments
 
 - Local dev: `NODE_ENV=development`
