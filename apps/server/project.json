@@ -1,0 +1,31 @@
+{
+  "name": "server",
+  "targets": {
+    "dev": {
+      "command": "pnpm dev",
+      "options": { "cwd": "apps/server" }
+    },
+    "build": {
+      "command": "pnpm build",
+      "options": { "cwd": "apps/server" },
+      "outputs": ["{projectRoot}/dist"]
+    },
+    "typecheck": {
+      "command": "pnpm typecheck",
+      "options": { "cwd": "apps/server" }
+    },
+    "build-preprod": {
+      "dependsOn": ["build", "bo:build-preprod"],
+      "command": "pnpm copy",
+      "options": { "cwd": "apps/server" },
+      "outputs": ["{projectRoot}/clientBuild/bo/preprod"]
+    },
+    "build-prod": {
+      "dependsOn": ["build", "bo:build-prod"],
+      "command": "cross-env NODE_ENV=production pnpm copy",
+      "options": { "cwd": "apps/server" },
+      "outputs": ["{projectRoot}/clientBuild/bo/prod"]
+    }
+  },
+  "tags": ["scope:core", "type:app"]
+}

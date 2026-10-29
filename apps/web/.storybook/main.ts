@@ -5,6 +5,10 @@ import path, { dirname } from 'path';
 import type { StorybookConfig } from '@storybook/nextjs-vite';
 import { mergeConfig } from "vite";
 
+import { applyStorybookEnv } from './storybook-env';
+
+applyStorybookEnv();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 

@@ -2,8 +2,8 @@
 logs
 *.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+pnpm-debug.log*
+pnpm-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
@@ -70,12 +70,13 @@ web_modules/
 *.tgz
 
 # Yarn Integrity file
-.yarn-integrity
+.pnpm-integrity
 
 # dotenv environment variable files
 .env.prod
 .env.preprod
 .env.development.local
+.env.test
 .env.test.local
 .env.production.local
 .env.local
@@ -123,9 +124,12 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-# yarn v2
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn
+# pnpm v2
+.pnpm/cache
+.pnpm/unplugged
+.pnpm/build-state.yml
+.pnpm
 .pnp.*
+
+globalConfig.json
+scripts/clear-db.js

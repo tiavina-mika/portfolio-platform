@@ -5,7 +5,7 @@ import {
   createRoute,
   notFound,
 } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
 import NotFoundPage from '@/pages/NotFoundPage';
 import { logout } from '@/redux/actions/auth.action';

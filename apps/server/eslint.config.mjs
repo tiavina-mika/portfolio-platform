@@ -1,7 +1,6 @@
 import globals from 'globals';
 import stylistic from '@stylistic/eslint-plugin';
 import tseslint from 'typescript-eslint';
-import jestPlugin from 'eslint-plugin-jest';
 
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions';
@@ -13,260 +12,7 @@ import cspellESLintPluginRecommended from '@cspell/eslint-plugin/recommended';
 import importPlugin from 'eslint-plugin-import';
 import lodashPlugin from 'eslint-plugin-lodash';
 import externalImportEsm from 'eslint-plugin-external-import-esm';
-
-// --- Stylistic rules ---
-const stylisticRules = {
-  '@stylistic/eol-last': 'error',
-  '@stylistic/semi': 'error',
-  'no-useless-return': 'error',
-  '@stylistic/indent': ['error', 2],
-  '@stylistic/keyword-spacing': ['error', { after: true, before: true }],
-  '@stylistic/key-spacing': ['error', { beforeColon: false, afterColon: true }],
-  '@stylistic/lines-around-comment': ['error', { beforeBlockComment: false }],
-  '@stylistic/multiline-comment-style': ['error', 'starred-block'],
-  '@stylistic/multiline-ternary': 'off',
-  '@stylistic/no-extra-semi': 'error',
-  '@stylistic/no-floating-decimal': 'error',
-  '@stylistic/no-mixed-operators': 'error',
-  '@stylistic/no-mixed-spaces-and-tabs': 'error',
-  '@stylistic/no-multi-spaces': 'error',
-  '@stylistic/no-multiple-empty-lines': ['error', { max: 2, maxEOF: 0 }],
-  '@stylistic/no-trailing-spaces': 'error',
-  '@stylistic/max-len': [
-    'error',
-    {
-      code: 110,
-      // Ignore objects when enforcing line length (to avoid conflicts with object-curly-newline)
-      ignorePattern: 'ImportDeclaration',
-      ignoreUrls: true,
-      ignoreStrings: true,
-      ignoreComments: true,
-      ignoreTrailingComments: true,
-    },
-  ],
-  '@stylistic/object-curly-newline': [
-    'error',
-    {
-      // e.g: const a = {};
-      ObjectExpression: { consistent: true, multiline: true, minProperties: 0 },
-      // "ObjectExpression": { "consistent": true, "multiline": true, "minProperties": 3 },
-      // e.g: const { a } = obj;
-      ObjectPattern: { consistent: true, multiline: true, minProperties: 4 },
-      // e.g: import { a } from 'module';
-      ImportDeclaration: { consistent: true, minProperties: 4 },
-      // e.g: export { a } from 'module';
-      ExportDeclaration: {
-        consistent: true,
-        multiline: true,
-        minProperties: 3,
-      },
-    },
-  ],
-  '@stylistic/object-curly-spacing': ['error', 'always'],
-  '@stylistic/quote-props': ['error', 'as-needed'],
-  '@stylistic/quotes': ['error', 'single'],
-  '@stylistic/rest-spread-spacing': ['error', 'never'],
-  '@stylistic/semi-spacing': 'error',
-  '@stylistic/space-before-blocks': 'error',
-  '@stylistic/space-in-parens': ['error', 'never'],
-  '@stylistic/space-unary-ops': 'error',
-  '@stylistic/spaced-comment': ['error', 'always'],
-  '@stylistic/template-curly-spacing': 'error',
-  '@stylistic/member-delimiter-style': 'error',
-  '@stylistic/padding-line-between-statements': [
-    'error',
-    { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
-    {
-      blankLine: 'any',
-      prev: ['const', 'let', 'var'],
-      next: ['const', 'let', 'var'],
-    },
-  ],
-  '@stylistic/comma-dangle': [
-    'error',
-    {
-      arrays: 'always-multiline', // Trailing commas for arrays with multiple lines
-      objects: 'always-multiline', // Trailing commas for objects with multiple lines
-      imports: 'always-multiline', // Trailing commas in multi-line import statements
-      exports: 'always-multiline', // Trailing commas in multi-line export statements
-      functions: 'never', // No trailing commas in function parameter lists
-    },
-  ],
-  '@stylistic/comma-spacing': ['error', { before: false, after: true }],
-  '@stylistic/operator-linebreak': [
-    'error',
-    'after',
-    {
-      overrides: {
-        '?': 'before',
-        ':': 'before',
-      },
-    },
-  ],
-  '@stylistic/type-generic-spacing': ['error'],
-  '@stylistic/dot-location': ['error', 'property'],
-  '@stylistic/curly-newline': ['error', { minElements: 1 }],
-};
-
-// --- TypeScript rules ---
-const typescriptRules = {
-  '@typescript-eslint/no-unused-vars': [
-    'error',
-    {
-      args: 'all',
-      argsIgnorePattern: '^_',
-      caughtErrors: 'all',
-      caughtErrorsIgnorePattern: '^_',
-      destructuredArrayIgnorePattern: '^_',
-      varsIgnorePattern: '^_',
-      ignoreRestSiblings: true,
-    },
-  ],
-  'default-param-last': 'off',
-  '@typescript-eslint/default-param-last': 'error',
-  // Note: you must disable the base rule as it can report incorrect errors
-  'max-params': 'off',
-  '@typescript-eslint/no-unsafe-assignment': 'off',
-  '@typescript-eslint/max-params': ['error', { max: 4 }],
-  '@typescript-eslint/method-signature-style': ['error', 'property'],
-  '@typescript-eslint/no-array-delete': 'error',
-  '@typescript-eslint/no-duplicate-enum-values': 'error',
-  '@typescript-eslint/no-duplicate-type-constituents': 'error',
-  '@typescript-eslint/no-mixed-enums': 'error',
-  '@typescript-eslint/no-require-imports': 'error',
-  '@typescript-eslint/no-unnecessary-boolean-literal-compare': [
-    'error',
-    { allowComparingNullableBooleansToTrue: false },
-  ],
-  '@typescript-eslint/no-unnecessary-template-expression': 'error',
-  '@typescript-eslint/no-unnecessary-type-arguments': 'error',
-  '@typescript-eslint/no-unsafe-function-type': 'error',
-  '@typescript-eslint/no-useless-empty-export': 'error',
-  // Note: you must disable the base rule as it can report incorrect errors
-  'no-throw-literal': 'off',
-  '@typescript-eslint/only-throw-error': 'error',
-  '@typescript-eslint/prefer-find': 'error',
-  '@typescript-eslint/prefer-for-of': 'error',
-  '@typescript-eslint/prefer-optional-chain': 'error',
-  '@typescript-eslint/array-type': 'error',
-  '@typescript-eslint/explicit-function-return-type': 'off',
-  // these 2 following rules cause performance issue
-  '@typescript-eslint/await-thenable': 'off',
-  '@typescript-eslint/no-floating-promises': 'off',
-  '@typescript-eslint/no-unsafe-call': 'off',
-  '@typescript-eslint/no-unsafe-member-access': 'off',
-  '@typescript-eslint/no-unsafe-argument': 'off',
-  '@typescript-eslint/no-unsafe-return': 'off',
-  '@typescript-eslint/no-unsafe-enum-comparison': 'off',
-  '@typescript-eslint/no-redundant-type-constituents': 'off',
-  // This rule will not work as expected if strictNullChecks is not enabled, so it is disabled by default.
-  '@typescript-eslint/prefer-nullish-coalescing': 'off',
-  '@typescript-eslint/no-misused-promises': 'off',
-  '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
-  '@typescript-eslint/consistent-type-definitions': 'off',
-  '@typescript-eslint/naming-convention': [
-    'error',
-    {
-      selector: 'variable',
-      modifiers: ['const'],
-      format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
-    },
-    {
-      selector: 'import',
-      format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
-    },
-    {
-      selector: 'variable',
-      types: ['boolean'],
-      format: ['PascalCase'],
-      // e.g: isReady, hasError, shouldFetch, ...
-      prefix: ['is', 'should', 'has', 'can', 'did', 'will', 'open'],
-      filter: {
-        // exception. e.g: loadingProjects, openDialog, LOCAL
-        regex: '^(?:[A-Z_]+|.*loading.*|open.*)$',
-        match: false,
-      },
-    },
-    { selector: 'typeLike', format: ['PascalCase'] },
-    // e.g: IProject, IUser, IProjectData, ...
-    { selector: 'interface', format: ['PascalCase'], prefix: ['I'] },
-    { selector: 'typeAlias', format: ['PascalCase'] },
-    { selector: 'enumMember', format: ['UPPER_CASE', 'camelCase'] },
-    { selector: 'class', format: ['PascalCase'] },
-    { selector: 'classProperty', format: ['camelCase', 'UPPER_CASE'] },
-    { selector: 'classMethod', format: ['camelCase'] },
-    {
-      selector: 'parameter',
-      format: ['camelCase'],
-      leadingUnderscore: 'allow',
-    },
-    { selector: 'function', format: ['camelCase'] },
-    { selector: 'enum', format: ['PascalCase'] },
-  ],
-};
-
-// --- JSX rules ---
-const jsxRules = {
-  '@stylistic/jsx-closing-bracket-location': [1, 'line-aligned'],
-  '@stylistic/jsx-one-expression-per-line': [1, { allow: 'non-jsx' }],
-  '@stylistic/jsx-pascal-case': [
-    1,
-    {
-      allowAllCaps: false,
-      allowNamespace: true,
-      allowLeadingUnderscore: false,
-    },
-  ],
-  '@stylistic/jsx-equals-spacing': ['error', 'never'],
-  '@stylistic/jsx-max-props-per-line': [
-    'error',
-    {
-      maximum: { single: 3, multi: 1 },
-    },
-  ],
-  // Force new line after opening tag if multiline
-  '@stylistic/jsx-first-prop-new-line': [2, 'multiline-multiprop'],
-  '@stylistic/no-multi-spaces': 'error',
-  '@stylistic/jsx-tag-spacing': [
-    'error',
-    {
-      closingSlash: 'never',
-      beforeSelfClosing: 'always',
-      afterOpening: 'never',
-      beforeClosing: 'never',
-    },
-  ],
-  /**
-   * Sort props in JSX
-   * NOTE: comments between props (line) is not supported
-   * solution: name="John" // User name
-   */
-  '@stylistic/jsx-sort-props': [
-    'error',
-    {
-      callbacksLast: true,
-      shorthandFirst: true,
-      shorthandLast: false,
-      ignoreCase: true,
-      reservedFirst: true,
-      multiline: 'last',
-    },
-  ],
-
-  '@stylistic/jsx-wrap-multilines': [
-    'error',
-    {
-      declaration: 'parens-new-line',
-      assignment: 'parens-new-line',
-      return: 'parens-new-line',
-      arrow: 'parens-new-line',
-      condition: 'parens-new-line',
-      logical: 'parens-new-line',
-      prop: 'parens-new-line',
-      propertyValue: 'parens-new-line',
-    },
-  ],
-};
+import { stylisticRules, typescriptRules, moduleBoundariesConfig, coreDomainBoundaryConfig } from '@shared/eslint-config';
 
 // --- General rules ---
 const generalRules = {
@@ -372,23 +118,29 @@ export default defineConfig(
       '**/eslint.config.mjs',
       '**/demos/',
       '**/commitlint.config.mjs',
-      '**/jest.config.cjs',
+      // plain Node tooling, outside the TypeScript project the rules are typed against
+      '**/scripts/*.mjs',
       '**/config',
-      '**/clientBuild'
+      '**/clientBuild',
+      '**/coverage',
+      '**/scripts/*.js',
     ],
   },
+  { files: ['**/*.ts', '**/*.tsx'], ...moduleBoundariesConfig },
+  ...coreDomainBoundaryConfig(),
   jsxA11y.flatConfigs.recommended,
   eslintPluginPrettierRecommended,
   cspellESLintPluginRecommended,
   comments.recommended,
   importPlugin.flatConfigs.recommended,
-  // This add .js extension support for ESM imports (e.g: import x from 'async/queue.js')
+  // This add .js extension support for ESM imports (e.g: import x from 'async/queue.js.js')
   externalImportEsm.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
   {
     languageOptions: {
       globals: {
+        ...globals.node,
         Parse: 'readonly',
       },
       parserOptions: {
@@ -403,7 +155,7 @@ export default defineConfig(
     },
   },
   {
-    extends: [],
+    extends: [js.configs.recommended],
     files: ['**/*.ts', '**/*.tsx'],
     plugins: {
       'prefer-arrow-functions': preferArrowFunctions,
@@ -414,7 +166,10 @@ export default defineConfig(
       ...generalRules,
       ...stylisticRules,
       ...typescriptRules,
-      ...jsxRules
+      // rolled out here first (Cloud Functions/triggers/jobs are the most exposed to unhandled
+      // rejections)
+      '@typescript-eslint/await-thenable': 'warn',
+      '@typescript-eslint/no-floating-promises': 'warn',
     },
   },
   // --- Lodash rules --- //
@@ -425,18 +180,6 @@ export default defineConfig(
     },
     rules: {
       "lodash/import-scope": ["error", "method"],
-    },
-  },
-  // --- Jest rules --- //
-  {
-    languageOptions: {
-      globals: { ...globals.jest },
-    },
-    files: ['**/__tests__/?(*.)+(spec|test).ts?(x)'],
-    ...jestPlugin.configs['flat/recommended'],
-    rules: {
-      ...jestPlugin.configs['flat/recommended'].rules,
-      'jest/prefer-expect-assertions': 'off',
     },
   },
 );

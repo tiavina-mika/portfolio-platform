@@ -9,7 +9,9 @@
         "cwd": "${workspaceFolder}/apps/bo",
         "shell": {
           "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
-          "args": ["-c"]
+          "args": [
+            "-c"
+          ]
         }
       },
       "presentation": {
@@ -23,27 +25,6 @@
       "problemMatcher": []
     },
     {
-      "label": "BO: Storybook",
-      "type": "shell",
-      "command": ". ../../.vscode/use-node-24.sh && pnpm sb",
-      "options": {
-        "cwd": "${workspaceFolder}/apps/bo",
-        "shell": {
-          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
-          "args": ["-c"]
-        }
-      },
-      "presentation": {
-        "panel": "dedicated",
-        "group": "portfolio",
-        "reveal": "always",
-        "focus": true,
-        "close": false
-      },
-      "isBackground": true,
-      "problemMatcher": []
-    },
-    {
       "label": "Web",
       "type": "shell",
       "command": ". ../../.vscode/use-node-24.sh && sleep 30 && pnpm dev",
@@ -51,7 +32,9 @@
         "cwd": "${workspaceFolder}/apps/web",
         "shell": {
           "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
-          "args": ["-c"]
+          "args": [
+            "-c"
+          ]
         }
       },
       "presentation": {
@@ -72,70 +55,9 @@
         "cwd": "${workspaceFolder}/apps/web",
         "shell": {
           "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
-          "args": ["-c"]
-        }
-      },
-      "presentation": {
-        "panel": "dedicated",
-        "group": "portfolio",
-        "reveal": "always",
-        "focus": true,
-        "close": false
-      },
-      "isBackground": true,
-      "problemMatcher": []
-    },
-    {
-      "label": "Mobile: Android",
-      "type": "shell",
-      "command": ". ../../.vscode/use-node-24.sh && sleep 30 && pnpm android",
-      "options": {
-        "cwd": "${workspaceFolder}/apps/mobile",
-        "shell": {
-          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
-          "args": ["-c"]
-        }
-      },
-      "presentation": {
-        "panel": "dedicated",
-        "group": "portfolio",
-        "reveal": "always",
-        "focus": false,
-        "close": false
-      },
-      "isBackground": true,
-      "problemMatcher": []
-    },
-    {
-      "label": "Mobile: Web",
-      "type": "shell",
-      "command": ". ../../.vscode/use-node-24.sh && sleep 30 && pnpm web",
-      "options": {
-        "cwd": "${workspaceFolder}/apps/mobile",
-        "shell": {
-          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
-          "args": ["-c"]
-        }
-      },
-      "presentation": {
-        "panel": "dedicated",
-        "group": "portfolio",
-        "reveal": "always",
-        "focus": true,
-        "close": false
-      },
-      "isBackground": true,
-      "problemMatcher": []
-    },
-    {
-      "label": "Mobile: Storybook",
-      "type": "shell",
-      "command": ". ../../.vscode/use-node-24.sh && pnpm sb:web",
-      "options": {
-        "cwd": "${workspaceFolder}/apps/mobile",
-        "shell": {
-          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
-          "args": ["-c"]
+          "args": [
+            "-c"
+          ]
         }
       },
       "presentation": {
@@ -156,7 +78,9 @@
         "cwd": "${workspaceFolder}/apps/server",
         "shell": {
           "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
-          "args": ["-c"]
+          "args": [
+            "-c"
+          ]
         }
       },
       "presentation": {
@@ -170,29 +94,10 @@
       "problemMatcher": []
     },
     {
-      "label": "E2E Stack",
-      "type": "shell",
-      "command": ". .vscode/use-node-24.sh && pnpm nx run e2e:stack:serve",
-      "options": {
-        "cwd": "${workspaceFolder}",
-        "shell": {
-          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
-          "args": ["-c"]
-        }
-      },
-      "presentation": {
-        "panel": "dedicated",
-        "group": "portfolio-e2e",
-        "reveal": "always",
-        "focus": true,
-        "close": false
-      },
-      "isBackground": true,
-      "problemMatcher": []
-    },
-    {
       "label": "run-dev",
-      "dependsOn": ["Server", "BO: Storybook"],
+      "dependsOn": [
+        "Server"
+      ],
       "dependsOrder": "parallel",
       "presentation": {
         "reveal": "never"
@@ -201,7 +106,9 @@
     },
     {
       "label": "run-dev:no-bo",
-      "dependsOn": ["Mobile: Web", "Mobile: Storybook", "Server"],
+      "dependsOn": [
+        "Server"
+      ],
       "dependsOrder": "parallel",
       "presentation": {
         "reveal": "never"

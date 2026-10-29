@@ -1,58 +1,62 @@
+import { readFileSync } from 'node:fs'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import tsconfigPaths from 'vite-tsconfig-paths'
-
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
+
+// read rather than imported: a JSON import here would need an import attribute the TS config doesn't allow
+const { version } = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf-8'))
 
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
+    tsconfigPaths: true,
     alias: {
-        // parse: path.resolve(__dirname, './node_modules/parse/dist/parse.min.js'),
-        // "parse": new URL('./node_modules/parse/dist/parse.min.js', import.meta.url).pathname,
-        "@/": new URL('./src', import.meta.url).pathname,
-        "assets": new URL('./public', import.meta.url).pathname,
+      "@/": new URL('./src', import.meta.url).pathname,
+      "assets": new URL('./public', import.meta.url).pathname,
+    },
+  },
+  optimizeDeps: {
+    include: ['@emotion/react', '@emotion/styled'],
+  },
+  define: {
+    'process.env': {},
+    // the build the admin is looking at
+    'import.meta.env.VITE_APP_VERSION': JSON.stringify(version),
+  },
+  server: {
+    open: true,
+  },
+  plugins: [
+    react({
+      jsxImportSource: '@emotion/react',
+      babel: {
+        plugins: ['@emotion/babel-plugin'],
+      },
+    }),
+    /*
+     * The Parse SDK's browser build needs exactly one Node module: `events` (its EventEmitter —
+     * without it, the "Emitter" constructor error). Polyfilling every module by default also
+     * bundled crypto-browserify into the parse chunk for nothing.
+     */
+    nodePolyfills({ include: ['events'] }),
+  ],
+  build: {
+    chunkSizeWarningLimit: 500,
+    rollupOptions: {
+      output: {
+        // the libraries get chunks of their own: they change far less often than the app code
+        manualChunks: (id: string) => {
+          if (!id.includes('node_modules')) return undefined
+          if (id.includes('node_modules/parse/')) return 'parse'
+          if (/node_modules\/(react|react-dom|scheduler)\//.test(id)) return 'react'
+          if (/node_modules\/(@mui\/(material|system|utils|styled-engine|private-theming)|@emotion)\//.test(id)) {
+            return 'mui'
+          }
+          if (/node_modules\/@tanstack\/(react-router|router-core|history|react-store|store)\//.test(id)) {
+            return 'router'
+          }
+          return undefined
         },
-      },
-      optimizeDeps: {
-        include: ['@emotion/react', '@emotion/styled'],
-      },
-      define: {
-        'process.env': {},
-      },
-      server: {
-        open: true,
-      },
-      plugins: [
-        react({
-          jsxImportSource: '@emotion/react',
-          babel: {
-            plugins: ['@emotion/babel-plugin'],
-          },
-        }),
-        // Polyfill Node.js core modules in the browser
-        // To fix the "Emitter" constructor error from parse sdk
-        nodePolyfills(),
-        tsconfigPaths(),
-      ],
-      build: {
-        // Controls the warning threshold for chunk sizes
-        chunkSizeWarningLimit: 1200,
-        rollupOptions: {
-          output: {
-            // Code splitting for Parse SDK
-            manualChunks: (id: any) => {
-              if (id.includes('node_modules/parse')) return 'parse'
-            },
-          },
-          // ← Magic line that suppresses the eval warning
-          onwarn(warning, handler) {
-            // Specifically suppresses the eval warning from vm-browserify
-            if (warning.code === 'EVAL' && (warning.id as any)?.includes('vm-browserify')) {
-              return; // ignore
-            }
-            // Lets other warnings pass through as usual
-        handler(warning);
       },
     },
   },

@@ -64,8 +64,8 @@ jobs:
         # stories opted into the visual check (weekly), and all of them (manual publish)
         include: >-
           ${{ fromJSON(github.event_name == 'workflow_dispatch'
-          && '[{"app":"mobile","tokenSecret":"CHROMATIC_PROJECT_TOKEN_MOBILE"},{"app":"bo","tokenSecret":"CHROMATIC_PROJECT_TOKEN_BO"},{"app":"web","tokenSecret":"CHROMATIC_PROJECT_TOKEN_WEB"}]'
-          || '[{"app":"mobile","tokenSecret":"CHROMATIC_PROJECT_TOKEN_MOBILE"},{"app":"bo","tokenSecret":"CHROMATIC_PROJECT_TOKEN_BO"}]') }}
+          && '[{"app":"web","tokenSecret":"CHROMATIC_PROJECT_TOKEN_WEB"}]'
+          || '[{"app":"web","tokenSecret":"CHROMATIC_PROJECT_TOKEN_WEB"}]') }}
     steps:
       - uses: actions/checkout@v4
         with:

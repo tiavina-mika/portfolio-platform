@@ -14,7 +14,7 @@ const withNextIntlConfig = createNextIntlPlugin();
 
 /**
  * see bundle size.
- * run yarn analyze, this will open 3 tabs in your browser.
+ * run pnpm analyze, this will open 3 tabs in your browser.
  * @see: https://www.npmjs.com/package/@next/bundle-analyzer
  */
 
@@ -32,12 +32,31 @@ const nextConfig = {
       },
     ],
   },
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: false,
   experimental: {
     staleTimes: {
       dynamic: 30,
     },
   },
+  headers: () => [
+    {
+      source: '/(.*)',
+      headers: [
+        { key: 'X-Content-Type-Options', value: 'nosniff' },
+        { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+        { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
+      ],
+    },
+    {
+      source: '/_next/static/:path*',
+      headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+    },
+    {
+      source: '/fonts/:path*',
+      headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+    },
+  ],
 };
 
 export default withNextIntlConfig(withBundleAnalyzerConfig(nextConfig));

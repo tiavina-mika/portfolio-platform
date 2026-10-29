@@ -92,9 +92,8 @@ jobs:
       - name: Lint commit messages
         run: pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
 
-  # The server has its own workflow (`server-tests.yml`: it needs a Mongo memory server and a `.env.test`),
-  # `web` has no unit test, and `e2e` runs nightly: this job covers the other unit suites, mobile (Jest)
-  # and back-office (Vitest).
+  # The server has no unit test yet,
+  # `web` has no unit test: this job covers the other unit suites.
   test:
     name: Unit tests of affected projects
     runs-on: ubuntu-latest
@@ -117,7 +116,7 @@ jobs:
       - uses: nrwl/nx-set-shas@v4
 
       - name: Test
-        run: pnpm nx affected -t test --exclude=server,web,e2e
+        run: pnpm nx affected -t test --exclude=server,web
 
   # A story nobody builds is a story nobody notices breaking: building catches a Storybook config or an import
   # that no longer loads. Running every story as a test (render, `play`, a11y) is `storybook-tests.yml`: it

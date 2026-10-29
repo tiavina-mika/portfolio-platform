@@ -13,10 +13,11 @@
     },
     "target": "esnext",
     "experimental":{
-      // To support import assertions like: import data from './data.json' assert { type: 'json' };
+      // Keep 'with { type: "json" }' on JSON imports — Node requires the attribute to load them
       "keepImportAttributes": true,
-      // To support import assertions for JSON modules
-      "emitAssertForImportAttributes": true
+      // Must stay false: emitting the legacy 'assert' keyword instead of 'with' throws a
+      // SyntaxError on Node 22+, where import assertions were removed
+      "emitAssertForImportAttributes": false
     }
   },
   "module": {
@@ -27,5 +28,5 @@
   // Enable source maps for easier debugging
   "sourceMaps": true,
   // Set to false when debugging to have readable output code
-  "minify": true
+  "minify": false
 }

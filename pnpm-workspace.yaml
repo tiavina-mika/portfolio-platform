@@ -10,9 +10,6 @@ packages:
   - 'libs/shared-utils'
   - 'libs/shared-validations'
 
-# pnpm 11 no longer reads `node-linker` from .npmrc — without this line installs fall back to the
-# isolated symlink layout, which breaks Metro and the Vite-based mobile Storybook (react-native-web
-# can't be resolved from the .pnpm virtual store paths)
 nodeLinker: hoisted
 
 allowBuilds:
@@ -50,10 +47,6 @@ minimumReleaseAgeExclude:
 
 overrides:
   '@types/node': '24.13.2'
-  # one React for the whole workspace: react-native is hoisted to the root and resolves the root copy,
-  # so a second version in the mobile app loads two Reacts in its tests (null hook dispatcher)
-  react-test-renderer: '19.2.9'
 
 patchedDependencies:
-  expo-modules-core@57.0.9: patches/expo-modules-core@57.0.9.patch
   parse@8.6.2: patches/parse@8.6.2.patch

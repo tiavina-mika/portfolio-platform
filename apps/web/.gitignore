@@ -21,8 +21,8 @@
 
 # debug
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+pnpm-debug.log*
+pnpm-error.log*
 
 # local env files
 .env*.local
@@ -41,4 +41,14 @@ next-env.d.ts
 web
 backend/node_modules
 backend/logs
-.yarn
+.pnpm
+# storybook
+storybook-static
+*storybook.log
+# design-sync
+.design-sync/sb-reference/
+.design-sync/learnings/
+.design-sync/.cache/
+.design-sync/node_modules
+.ds-sync/
+ds-bundle/

@@ -8,15 +8,4 @@ description = "Dummy values and generated files"
 paths = [
   '''pnpm-lock\.yaml$''',
   '''\.env\.example$''',
-  # dummy keys of the E2E stack, documented as such in the file header
-  '''apps/e2e/e2e\.env\.ts$''',
-  # random dummy key material of a unit test
-  '''apps/server/__tests__/unit/_core/mfa\.utils\.spec\.ts$''',
-  # built bundles (BO copy, Storybook) and design exports: they embed the client key, which every
-  # client bundle ships to the browser by design, never a server secret
-  '''apps/server/clientBuild/''',
-  '''storybook-static/''',
-  '''design/.*\.html$''',
-  # the E2E guide (every path it has had, English and French) that quotes the dummy keys of the E2E stack
-  '''docs/(code/)?testing/(e2e/(fr|en)/)?E2E_IMPLEMENTATION_GUIDE(\.FR)?\.md$''',
 ]

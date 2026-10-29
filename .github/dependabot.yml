@@ -16,16 +16,10 @@ updates:
       # minor and patch bumps arrive as one PR per ecosystem instead of dozens
       nx:
         patterns: ['nx', '@nx/*']
-      expo:
-        patterns: ['expo', 'expo-*', '@expo/*']
       storybook:
         patterns: ['storybook', '@storybook/*', 'eslint-plugin-storybook']
       minor-and-patch:
         update-types: [minor, patch]
-    ignore:
-      # Expo and React Native versions are pinned together by the Expo SDK
-      - dependency-name: react-native
-        update-types: [version-update:semver-major, version-update:semver-minor]
 
   - package-ecosystem: github-actions
     directory: /
