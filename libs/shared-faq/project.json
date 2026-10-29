@@ -1,0 +1,5 @@
+{
+  "name": "shared-faq",
+  "sourceRoot": "libs/shared-faq/src",
+  "tags": ["scope:shared-domain"]
+}

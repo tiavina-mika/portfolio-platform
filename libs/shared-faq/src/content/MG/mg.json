@@ -1,0 +1,90 @@
+{
+  "themes": [
+    {
+      "id": "trips",
+      "title": "Dia sy famandrihana",
+      "items": []
+    },
+    {
+      "id": "luggage",
+      "title": "Entana sy safidy",
+      "items": []
+    },
+    {
+      "id": "during",
+      "title": "Mandritra ny dia",
+      "items": []
+    },
+    {
+      "id": "payment",
+      "title": "Fandoavam-bola sy famindrana",
+      "items": []
+    },
+    {
+      "id": "commission",
+      "title": "Komisiona",
+      "items": [
+        {
+          "id": "how-1lalana-earns",
+          "question": "Ahoana no ahazoan’ny 1lalana vola?",
+          "answer": "Amin’ny komisiona alaina amin’ny mpamily, indray mandeha, rehefa vita ny dia tsirairay. Io ihany no vola miditra mivantana ho an’ny 1lalana. Ny mpandeha dia tsy mandoa saran-dalana fanampiny ho fanampin’ny vidin’ny seza."
+        }
+      ]
+    },
+    {
+      "id": "passenger-cancel",
+      "title": "Fanafoanana avy amin’ny mpandeha",
+      "items": []
+    },
+    {
+      "id": "driver-cancel",
+      "title": "Fanafoanana avy amin’ny mpamily",
+      "items": []
+    },
+    {
+      "id": "suspension",
+      "title": "Fanampiana ny kaonty",
+      "items": []
+    },
+    {
+      "id": "absences",
+      "title": "Tsy fisian’ny olona amin’ny fiaingana",
+      "items": []
+    },
+    {
+      "id": "reviews",
+      "title": "Hevitra sy naoty",
+      "items": []
+    },
+    {
+      "id": "safety",
+      "title": "Fiarovana sy tatitra",
+      "items": []
+    },
+    {
+      "id": "driver",
+      "title": "Handefa dia",
+      "items": []
+    },
+    {
+      "id": "vehicles",
+      "title": "Mpamily sy fiara",
+      "items": []
+    },
+    {
+      "id": "notifications",
+      "title": "Fampandrenesana",
+      "items": []
+    },
+    {
+      "id": "account",
+      "title": "Kaonty sy angona manokana",
+      "items": []
+    },
+    {
+      "id": "support",
+      "title": "Fanohanana sy fifandraisana",
+      "items": []
+    }
+  ]
+}
