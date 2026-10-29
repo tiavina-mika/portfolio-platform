@@ -93,10 +93,10 @@ maintenant utilisés là où ils auraient dû l'être :
 ## Site web
 
 - **Pages touchées** :
-  - Liste des articles : `http://localhost:9002/fr/articles`
-  - Détail d'un projet : `http://localhost:9002/fr/projets/<slug>` (le slug de n'importe quel projet
+  - Liste des articles : `http://localhost:9012/fr/articles`
+  - Détail d'un projet : `http://localhost:9012/fr/projets/<slug>` (le slug de n'importe quel projet
     publié)
-  - Page éditoriale : `http://localhost:9002/fr/<slug>` (le slug de n'importe quelle page)
+  - Page éditoriale : `http://localhost:9012/fr/<slug>` (le slug de n'importe quelle page)
 - **Liste des articles** : choisir un tri (« Le plus récent » / « Titre ») change maintenant l'ordre et
   revient à la page 1. Avant, le choix était ignoré.
 - **Détail d'un projet** : la section **Liens** (liens, GitHub, npm, CodeSandbox) s'affiche maintenant
@@ -112,8 +112,8 @@ maintenant utilisés là où ils auraient dû l'être :
 pnpm install
 pnpm nx run server:dev   # API sur http://localhost:8089
 pnpm nx run bo:dev       # back-office sur l'URL Vite (http://localhost:5173 par défaut)
-pnpm nx run web:dev      # site sur http://localhost:9002
-pnpm nx run web:sb       # Storybook sur http://localhost:6006
+pnpm nx run web:dev      # site sur http://localhost:9012
+pnpm nx run web:sb       # Storybook sur http://localhost:6016
 ```
 
 Back-office (chemins en français, langue par défaut) :
@@ -130,10 +130,10 @@ Site : voir les URL dans [Site web](#site-web).
 
 Storybook : quatre stories ont seulement eu leur chemin d'import ajusté (aucun changement visuel) :
 
-- `http://localhost:6006/?path=/story/components-iconbutton--icon-button`
-- `http://localhost:6006/?path=/story/components-forms--form-demo`
-- `http://localhost:6006/?path=/story/components-typography-pagetitle--page-title`
-- `http://localhost:6006/?path=/story/components-typography-title--h-1`
+- `http://localhost:6016/?path=/story/components-iconbutton--icon-button`
+- `http://localhost:6016/?path=/story/components-forms--form-demo`
+- `http://localhost:6016/?path=/story/components-typography-pagetitle--page-title`
+- `http://localhost:6016/?path=/story/components-typography-title--h-1`
 
 ## Bugs, régressions et failles possibles
 

@@ -56,27 +56,25 @@ const SelectTrigger = ({
   >
     {children}
     {!hideCaretIcon && (
-      <SelectPrimitive.Icon asChild>
-        <>
-          {/* light */}
-          <NextIcon
-            size={16}
-            src="/icons/chevron-down.svg"
-            className={`
-              block opacity-50
-              dark:hidden
-            `}
-          />
-          {/* dark */}
-          <NextIcon
-            size={16}
-            src="/icons/chevron-down-dark.svg"
-            className={`
-              hidden opacity-50
-              dark:block
-            `}
-          />
-        </>
+      <SelectPrimitive.Icon className="flex">
+        {/* light */}
+        <NextIcon
+          size={16}
+          src="/icons/chevron-down.svg"
+          className={`
+            block opacity-50
+            dark:hidden
+          `}
+        />
+        {/* dark */}
+        <NextIcon
+          size={16}
+          src="/icons/chevron-down-dark.svg"
+          className={`
+            hidden opacity-50
+            dark:block
+          `}
+        />
       </SelectPrimitive.Icon>
     )}
   </SelectPrimitive.Trigger>

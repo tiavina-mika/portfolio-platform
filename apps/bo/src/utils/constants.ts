@@ -23,7 +23,7 @@ export const SERVER_PORT = 8089;
  */
 // export const LOCAL_NETWORK_HOSTNAME = '192.168.88.10';
 export const LOCAL_NETWORK_HOSTNAME = 'localhost';
-const WEBSITE_PORT = 9002;
+const WEBSITE_PORT = 9012;
 
 export const SIGNUP_TOTAL_STEP = 3;
 // eslint-disable-next-line @cspell/spellchecker

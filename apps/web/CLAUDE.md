@@ -28,7 +28,7 @@ pnpm nx run web:dev       # nodemon + custom Express server (server.js), APP_ENV
 pnpm build                # next build (build:preprod / build:prod set APP_ENV)
 pnpm typecheck            # tsc --noEmit
 pnpm lint                 # eslint --fix
-pnpm nx run web:sb        # Storybook dev server (port 6006)
+pnpm nx run web:sb        # Storybook dev server (port 6016)
 pnpm build-sb             # Storybook static build
 pnpm test-storybook       # every story as a browser test (Vitest + Playwright)
 pnpm format               # prettier --write

@@ -28,7 +28,7 @@ All emails are transactional emails sent by the server through [Brevo](https://w
 
 - Brevo SDK `@getbrevo/brevo`, one client created on first use with `BREVO_API_KEY`.
 - Sender: `ADMIN_EMAIL_SENDER` as the address and the constant `APP_NAME` (`Portfolio`) as the name.
-- `BREVO_API_KEY` and `WEBSITE_URL` are required at startup (`validateEnv`); `ADMIN_EMAIL_SENDER` is read where emails are built. Links in emails point to `WEBSITE_URL` (in local development, `http://localhost:9002`), and the logo is served by the server at `/logo.svg`.
+- `BREVO_API_KEY` and `WEBSITE_URL` are required at startup (`validateEnv`); `ADMIN_EMAIL_SENDER` is read where emails are built. Links in emails point to `WEBSITE_URL` (in local development, `http://localhost:9012`), and the logo is served by the server at `/logo.svg`.
 - `sendEmail` logs the Brevo response and rethrows on failure; a helper reports success when the response carries a `messageId`.
 - The text of each email is translated with the server i18n (`translate(key, locale)`), see [I18N.md](I18N.md). The locale comes from the Cloud Function parameter or from the save context; the default is `fr`.
 

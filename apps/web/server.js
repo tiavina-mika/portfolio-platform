@@ -12,7 +12,7 @@ const dev = process.env.APP_ENV === 'development';
  * should be the same as the server URL
  * change also the hostname in .env file (e.g: SERVER_URL and NEXT_PUBLIC_SERVER_URL)
  */
-const PORT = process.env.PORT || 9002;
+const PORT = process.env.PORT || 9012;
 
 // when using middleware `hostname` and `port` must be provided below
 const nextApp = next({ dev, port: PORT });

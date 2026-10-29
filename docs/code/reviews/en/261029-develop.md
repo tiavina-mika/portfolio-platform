@@ -89,9 +89,9 @@ have been:
 ## Website
 
 - **Pages touched**:
-  - Articles list: `http://localhost:9002/fr/articles`
-  - Project detail: `http://localhost:9002/fr/projets/<slug>` (the slug of any published project)
-  - Editorial page: `http://localhost:9002/fr/<slug>` (the slug of any page)
+  - Articles list: `http://localhost:9012/fr/articles`
+  - Project detail: `http://localhost:9012/fr/projets/<slug>` (the slug of any published project)
+  - Editorial page: `http://localhost:9012/fr/<slug>` (the slug of any page)
 - **Articles list**: choosing a sort ("Most recent" / "Title") now changes the order and goes back to
   page 1. Before, the choice was ignored.
 - **Project detail**: the **Links** section (links, GitHub, npm, CodeSandbox) now shows whenever the
@@ -106,8 +106,8 @@ have been:
 pnpm install
 pnpm nx run server:dev   # API on http://localhost:8089
 pnpm nx run bo:dev       # back-office on the Vite URL (http://localhost:5173 by default)
-pnpm nx run web:dev      # website on http://localhost:9002
-pnpm nx run web:sb       # Storybook on http://localhost:6006
+pnpm nx run web:dev      # website on http://localhost:9012
+pnpm nx run web:sb       # Storybook on http://localhost:6016
 ```
 
 Back-office (French paths, default language):
@@ -124,10 +124,10 @@ Website: see the URLs in [Website](#website).
 
 Storybook: four stories only had their import path adjusted (no visual change):
 
-- `http://localhost:6006/?path=/story/components-iconbutton--icon-button`
-- `http://localhost:6006/?path=/story/components-forms--form-demo`
-- `http://localhost:6006/?path=/story/components-typography-pagetitle--page-title`
-- `http://localhost:6006/?path=/story/components-typography-title--h-1`
+- `http://localhost:6016/?path=/story/components-iconbutton--icon-button`
+- `http://localhost:6016/?path=/story/components-forms--form-demo`
+- `http://localhost:6016/?path=/story/components-typography-pagetitle--page-title`
+- `http://localhost:6016/?path=/story/components-typography-title--h-1`
 
 ## Possible bugs, regressions and holes
 

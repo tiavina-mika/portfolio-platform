@@ -10,7 +10,7 @@ Storybook (`@storybook/nextjs-vite`, with the a11y and vitest addons) exists in 
 
 - Config: `apps/web/.storybook/` (`main.ts`, `preview.tsx`)
 - Stories: `apps/web/stories/**` (a `*.stories.ts(x)` file next to the other stories, mirroring the source path)
-- Commands: `pnpm nx run web:sb` (dev, port 6006), `pnpm nx run web:test-storybook` (every story as a browser test)
+- Commands: `pnpm nx run web:sb` (dev, port 6016), `pnpm nx run web:test-storybook` (every story as a browser test)
 
 ---
 
@@ -86,7 +86,7 @@ exact shape (`satisfies Meta<typeof Component>`, `StoryObj<typeof meta>`, `tags:
 Whenever a coding task **creates or modifies a story file**, the final message to the user must list
 the direct link of **every story variant touched**, so they can open each one in one click.
 
-**URL format:** `http://localhost:6006/?path=/story/<story-id>` (start it with `pnpm nx run web:sb`).
+**URL format:** `http://localhost:6016/?path=/story/<story-id>` (start it with `pnpm nx run web:sb`).
 
 **Story id:** the `title` in lowercase, with every `/` and space replaced by `-`, then `--`, then
 the name of the exported story in kebab-case.

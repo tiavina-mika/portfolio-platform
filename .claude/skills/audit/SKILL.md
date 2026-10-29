@@ -146,7 +146,7 @@ Figures and rules (statuses and transitions, publication, slugs, limits) with wh
 | App | Page (name as seen) | Route / path | Local URL | Who has access |
 |---|---|---|---|---|
 | BO | Articles | `routes.tsx` entry | … | admin, editor |
-| Web | Article | `/[locale]/articles/[slug]` | http://localhost:9002/fr/... | public |
+| Web | Article | `/[locale]/articles/[slug]` | http://localhost:9012/fr/... | public |
 
 Then the entry points (menu, button, link, email) and the emails / newsletters sent, plus the
 Storybook links (section 8). An unreachable page is itself a finding.
@@ -257,12 +257,12 @@ Already tracked elsewhere: links to the existing items (not repeated here).
 |---|---|---|
 | Server | `pnpm nx run server:dev` | `http://localhost:<PORT from apps/server/.env.*>` (Cloud Functions: `POST /parse/functions/<name>`) |
 | BO | `pnpm nx run bo:dev` | Vite URL + path from `apps/bo/src/routes/routes.tsx` |
-| Web | `pnpm nx run web:dev` | `http://localhost:9002/<locale>/<translated path>` — `apps/web/i18n/routes.ts` |
+| Web | `pnpm nx run web:dev` | `http://localhost:9012/<locale>/<translated path>` — `apps/web/i18n/routes.ts` |
 
 Check the ports in `.env` / `vite.config.ts` / `apps/web/server.js` if they may have changed. For a
 dynamic page, give the pattern and how to obtain a real slug/id.
 
-Storybook exists for web only (`pnpm nx run web:sb`, `http://localhost:6006`): link format
+Storybook exists for web only (`pnpm nx run web:sb`, `http://localhost:6016`): link format
 `<base>/?path=/story/<title-id>--<story-id>` (title lowercased, non-alphanumerics → `-`; export name
 split on capitals, lowercased, joined by `-`). A web component of the scope with **no story** is a
 finding (§6).

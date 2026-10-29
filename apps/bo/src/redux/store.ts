@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistCombineReducers } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 
 import type { Action, ThunkAction } from '@reduxjs/toolkit';
+
+import { persistStorage } from '@/utils/storage.utils';
 
 import appReducer from './reducers/app.reducer';
 import articleReducer from './reducers/article.reducer';
@@ -28,7 +29,7 @@ const reducers = {
 
 const persistConfig = {
   key: 'root',
-  storage,
+  storage: persistStorage,
   // There is an issue in the source code of redux-persist (default setTimeout does not cleaning)
   timeout: undefined,
   whitelist: ['settings'],

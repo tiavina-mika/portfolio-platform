@@ -264,7 +264,7 @@ export const getTranslatedField = <T extends Record<string, any>>(
 
 export const getClientUrl = (): string => {
   if (IS_LOCAL) {
-    return `http://${LOCAL_NETWORK_HOSTNAME}:9002`;
+    return `http://${LOCAL_NETWORK_HOSTNAME}:9012`;
   }
 
   return process.env.WEBSITE_URL!;

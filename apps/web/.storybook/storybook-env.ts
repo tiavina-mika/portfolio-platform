@@ -8,9 +8,9 @@ export const STORYBOOK_ENV: Record<string, string> = {
   PARSE_APP_ID: 'storybook',
   SERVER_URL: 'http://localhost:1337/parse',
   RECAPTCHA_SECRET_KEY: 'storybook',
-  APP_URL: 'http://localhost:6006',
+  APP_URL: 'http://localhost:6016',
   NEXT_PUBLIC_SERVER_URL: 'http://localhost:1337/parse',
-  NEXT_PUBLIC_APP_URL: 'http://localhost:6006',
+  NEXT_PUBLIC_APP_URL: 'http://localhost:6016',
   NEXT_PUBLIC_GOOGLE_MAP_KEY: 'storybook',
   NEXT_PUBLIC_RECAPTCHA_SITE_KEY: 'storybook',
 };

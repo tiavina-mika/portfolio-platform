@@ -20,7 +20,7 @@
     "format:old": "run-s format:write format:check",
     "format:write": "prettier --write \"**/*.{js,ts,tsx,md,mdx,json}\" --cache --experimental-ternaries",
     "analyze": "ANALYZE=true pnpm build",
-    "sb": "cross-env APP_ENV=development storybook dev -p 6006",
+    "sb": "cross-env APP_ENV=development storybook dev -p 6016",
     "build-sb": "storybook build",
     "depcheck": "npx depcheck",
     "test-storybook": "vitest run --project=storybook"

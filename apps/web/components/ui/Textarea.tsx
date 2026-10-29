@@ -6,10 +6,10 @@ export type TextareaProps = {
   error?: boolean;
 } & ComponentProps<'textarea'>;
 
-const Textarea = ({ className, ...props }: TextareaProps) => {
+const Textarea = ({ className, error, ...props }: TextareaProps) => {
   return (
     <textarea
-      data-error={!!props.error}
+      data-error={!!error}
       data-slot="textarea"
       className={cn(
         `

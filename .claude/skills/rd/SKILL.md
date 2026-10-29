@@ -76,8 +76,8 @@ Skip when `--force` was passed. A listening port means the terminal is up:
 |---|---|---|
 | Server | `PORT` of `apps/server/.env.*` | Express |
 | BO | Vite port (default `5173` unless `apps/bo/vite.config.ts` sets `server.port`) | Vite |
-| Web | `9002` (`apps/web/server.js`, overridable with `PORT`) | Next custom server |
-| Web: Storybook | `6006` (`apps/web` → `sb`) | Storybook |
+| Web | `9012` (`apps/web/server.js`, overridable with `PORT`) | Next custom server |
+| Web: Storybook | `6016` (`apps/web` → `sb`) | Storybook |
 
 Read the real values first (`.env`, `vite.config.ts`) rather than assuming, then:
 

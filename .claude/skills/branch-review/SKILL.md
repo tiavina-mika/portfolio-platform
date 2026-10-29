@@ -202,17 +202,17 @@ locale-specific:
 |---|---|---|
 | Server (API) | `pnpm nx run server:dev` | `http://localhost:<PORT from apps/server/.env.*>` (Cloud Functions: `POST /parse/functions/<name>`) |
 | BO | `pnpm nx run bo:dev` | Vite URL + path from `apps/bo/src/routes/routes.tsx` |
-| Web | `pnpm nx run web:dev` | `http://localhost:9002/<locale>/<translated path>` — see `apps/web/i18n/routes.ts` |
+| Web | `pnpm nx run web:dev` | `http://localhost:9012/<locale>/<translated path>` — see `apps/web/i18n/routes.ts` |
 
 For a dynamic page, give the pattern and how to get a real value (`/fr/articles/<slug>` — "the slug
 of any published article").
 
 ## 6. Storybook links
 
-Only the web app has Storybook (`pnpm nx run web:sb`, base URL `http://localhost:6006`). For every
+Only the web app has Storybook (`pnpm nx run web:sb`, base URL `http://localhost:6016`). For every
 story file added or changed by the branch:
 
-`http://localhost:6006/?path=/story/<title-id>--<story-id>`
+`http://localhost:6016/?path=/story/<title-id>--<story-id>`
 
 - `title-id` = the story's `title`, lowercased, every `/` and run of non-alphanumeric characters
   replaced by `-`: `Containers/Project/ProjectCard` → `containers-project-projectcard`.

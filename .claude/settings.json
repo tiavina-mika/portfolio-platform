@@ -8,7 +8,7 @@
       "Bash(pnpm check-doc-twins *)",
       "Bash(pnpm check-doc-links)",
       "Bash(pnpm lint:docs)",
-      "ClaudeInChromeDomain(localhost:6006)"
+      "ClaudeInChromeDomain(localhost:6016)"
     ]
   }
 }
