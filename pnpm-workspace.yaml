@@ -6,7 +6,6 @@ packages:
   - 'libs/shared-domain-types'
   - 'libs/shared-types'
   - 'libs/shared-utils'
-  - 'libs/shared-validations'
 
 nodeLinker: hoisted
 

@@ -27,7 +27,6 @@
     "@shared/domain-types": "workspace:*",
     "@shared/types": "workspace:*",
     "@shared/utils": "workspace:*",
-    "@shared/validations": "workspace:*",
     "@tanstack/react-router": "^1.170.46",
     "axios": "^1.21.0",
     "dayjs": "^1.11.23",

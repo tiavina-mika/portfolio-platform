@@ -37,7 +37,7 @@ The build of `bo` is copied into the server (`pnpm copy` in `apps/server`) and s
 
 ## Shared libraries
 
-`libs/` holds the shared code (`shared-constants`, `shared-domain-constants`, `shared-domain-types`, `shared-types`, `shared-utils`, `shared-validations`) and the shared configs (`@shared/eslint-config`, `@shared/prettier-config` under `libs/config/`) consumed by the apps.
+`libs/` holds the shared code (`shared-constants`, `shared-domain-constants`, `shared-domain-types`, `shared-types`, `shared-utils`) and the shared configs (`@shared/eslint-config`, `@shared/prettier-config` under `libs/config/`) consumed by the apps.
 
 ## Tooling
 
