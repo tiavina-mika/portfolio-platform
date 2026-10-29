@@ -2,23 +2,11 @@ import { z } from 'zod';
 
 import { projectFilterSchema, projectSchema } from '@/validations/project.validation';
 
-import { ISEOFields } from './app.type';
+import type { IProjectTranslatedFields, IProjectUrl } from '@shared/domain-types';
 import { ICategory } from './category.type';
 import { IFileCloud, ITranslatedFileCloud } from './file.type';
 
-export interface IProjectTranslatedFields extends ISEOFields {
-  description?: string;
-  slug?: string;
-  title?: string;
-  name?: string;
-  content?: string;
-  tags?: string;
-  societyDescription?: string;
-}
-
-export interface IProjectUrl {
-  url: string;
-}
+export type { IProjectTranslatedFields, IProjectUrl } from '@shared/domain-types';
 export interface IProjectAttributes {
   objectId: string;
   updatedAt?: string;

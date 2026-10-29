@@ -1,3 +1,4 @@
+import { cutText } from '@shared/utils';
 import { escapeRegExp } from 'lodash';
 import { ReactNode } from 'react';
 import { capitalize } from 'string-ts';
@@ -207,13 +208,7 @@ export const isNull = (item: string): boolean => {
   }
 };
 
-export const cutText = (text: string, limit = 100): string => {
-  if (text.length > limit) {
-    return `${text.substring(0, limit)}...`;
-  }
-
-  return text;
-};
+export { cutText };
 
 export const BOOLEAN_LIKES = ['true', 1, 'false', 0, '0', '1'];
 

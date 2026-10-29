@@ -146,17 +146,9 @@ export interface ISort {
   order: 'asc' | 'desc';
 }
 
-export interface ISEOFields {
-  slug?: string;
-  metaTitle?: string;
-  metaDescription?: string;
-  tags?: string;
-}
+import type { IFileCloud, ISEOFields } from '@shared/types';
 
-export interface IFileCloud {
-  url: string;
-  publicId: string;
-}
+export type { IFileCloud, ISEOFields };
 
 export interface ISearchParams extends Pick<IPagination, 'page'>, ISort {
   tag?: string;

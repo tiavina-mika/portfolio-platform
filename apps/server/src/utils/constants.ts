@@ -22,8 +22,7 @@ export const USE_MASTER_KEY_WITHOUT_CASCADE_SAVE = { useMasterKey: true, cascade
 export const USE_READ_PREFERENCE = { readPreference: 'SECONDARY' };
 
 export const NOTIFICATION_PROPERTIES = ['from', 'to', 'seen'];
-export const HIGHEST_LEVEL_ROLES = ['Owner', 'Administrator']; // the first role is the highest level, the order is important
-export const DEFAULT_ROLES = ['Manager'];
+export { DEFAULT_ROLES, HIGHEST_LEVEL_ROLES } from '@shared/constants';
 
 /**
  * NOTE: it is also defined in /config/copyBuilds.js
@@ -35,7 +34,7 @@ export const BO_BUILD_FOLDERS = {
 };
 
 export const BO_BUILD_FOLDER = (process.env.NODE_ENV === 'production' || FORCE_PROD) ? BO_BUILD_FOLDERS.prod : BO_BUILD_FOLDERS.preprod;
-export const LOCALES = ['fr', 'mg', 'en'] as const;
+export { LOCALES } from '@shared/constants';
 export const MAX_FILES_UPLOAD = 10;
 
 export const LOG_TOPIC = {

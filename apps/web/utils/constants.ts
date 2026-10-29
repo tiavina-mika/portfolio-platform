@@ -3,15 +3,7 @@ export const APP_NAME = 'Tiavina Michael RALAINIRINA';
 export const AUTHOR_USERNAME = 'tiavina-mika';
 export const APP_SHORT_NAME = 'Mika';
 
-export const collections = {
-  Article: 'Article',
-  Newsletter: 'Newsletter',
-  Page: 'Page',
-  Category: 'Category',
-  Project: 'Project',
-  Contact: 'Contact',
-  App: 'App',
-};
+export { COLLECTIONS as collections } from '@shared/constants';
 
 export const DISABLE_USER_ACCOUNT_CONFIRMATION = false;
 export const PAGINATION = {

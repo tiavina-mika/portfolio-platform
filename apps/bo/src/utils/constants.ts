@@ -54,8 +54,7 @@ export const COLORS = {
   authTextFieldPlaceholder: '#fff',
 };
 
-export const HIGHEST_LEVEL_DEFAULT_ROLES = ['Owner', 'Administrator'];
-export const DEFAULT_ROLES = ['Manager'];
+export { DEFAULT_ROLES, HIGHEST_LEVEL_ROLES as HIGHEST_LEVEL_DEFAULT_ROLES } from '@shared/constants';
 export const SHOW_NOTIFICATIONS_APP_BAR = false;
 
 export const ROLE_DEFAULT_LIMIT = 10;

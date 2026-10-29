@@ -20,9 +20,7 @@ export const wait = (ms: number): Promise<void> => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
 
-export const cutText = (text: string, length: number): string => {
-  return text.length > length ? `${text.substring(0, length)}...` : text;
-};
+export { cutText } from '@shared/utils';
 
 export const filter = (
   object: Record<string, any>,

@@ -4,7 +4,7 @@ import { DEFAULT_LANGUAGE } from '@/config/i18next';
 import { getUploadBodyRequestSchema } from '@/validations/file.validation';
 import { DownloadFileInputSchema } from '@/validations/util.validation';
 
-export type Locale = 'fr' | 'mg' | 'en';
+export type { Locale } from '@shared/types';
 
 export interface IUploadedFile {
   publicId: string;

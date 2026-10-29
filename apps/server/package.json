@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "@getbrevo/brevo": "^6.0.2",
+    "@shared/constants": "workspace:*",
+    "@shared/types": "workspace:*",
     "async": "^3.2.6",
     "body-parser": "^2.3.0",
     "cloudinary": "^2.10.0",

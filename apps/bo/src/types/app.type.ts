@@ -1,3 +1,4 @@
+import type { ISEOFields } from '@shared/types';
 import { useNavigate } from '@tanstack/react-router';
 import { MouseEvent, ReactNode } from 'react';
 import { z } from 'zod';
@@ -271,12 +272,7 @@ export interface IAdvancedSearchOption {
   component: ReactNode;
 }
 
-export interface ISEOFields {
-  slug?: string;
-  metaTitle?: string;
-  metaDescription?: string;
-  tags?: string;
-}
+export type { ISEOFields };
 
 /**
  * Options for translated fields generation
