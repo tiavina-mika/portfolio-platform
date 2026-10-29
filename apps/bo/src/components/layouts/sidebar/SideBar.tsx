@@ -1,326 +1,228 @@
-import { Collapse, Divider, ListSubheader } from '@mui/material';
-import List from '@mui/material/List';
-import { useNavigate, useRouterState, type RouterState } from '@tanstack/react-router';
-import {
-  Fragment, ReactNode, useState, useMemo, useCallback,
-} from 'react';
-import { useTranslation } from 'react-i18next';
-import { FaLockOpen } from 'react-icons/fa';
-import {
-  FiChevronRight,
-  FiChevronUp,
-  FiSettings,
-  FiUsers,
-  FiLayers,
-  FiFileText,
-  FiLayout,
-  FiTool,
-  FiPackage,
-  FiMessageCircle,
-  FiServer,
-  FiGrid,
-} from 'react-icons/fi';
-import { capitalize } from 'string-ts';
 
-import { goToMisc, goToSettings, goToTests } from '@/redux/actions/app.action';
-import { goToArticles } from '@/redux/actions/article.action';
-import { goToCategories } from '@/redux/actions/category.action';
-import { goToPages } from '@/redux/actions/page.action';
-import { goToPageSections } from '@/redux/actions/pageSection.action';
-import { goToProjects } from '@/redux/actions/project.action';
-import { goToRoles } from '@/redux/actions/role.action';
-import { goToUsers } from '@/redux/actions/user.action';
-import { goToList } from '@/redux/actions/util.action';
-import { IRole, UIRoleEnum } from '@/types/role.type';
-import { PATH_NAMES } from '@/utils/pathnames';
-import { getRights } from '@/utils/role.utils';
+import {
+  Box, Collapse, ListSubheader,
+} from '@mui/material';
+import List from '@mui/material/List';
+import { useRouterState, type RouterState } from '@tanstack/react-router';
+import {
+  Fragment, ReactNode, useState,
+} from 'react';
+import { useSelector } from 'react-redux';
+
+import { FONT_SIZE_OVERLINE, SIDEBAR_GROUP_TITLE_ID } from '@/constants/_core/ui/ui.constants';
+import { useNavigationMenus } from '@/hooks/useNavigationMenus';
+import { getAppNotificationsSelector } from '@/redux/reducers/_core/app.reducer';
+import { ISidebarSubMenu } from '@/types/_core/navigation.type';
+import { IRole } from '@/types/_core/role.type';
+import { canOpenMenuItem } from '@/utils/_core/role.utils';
+import { getSidebarScrollbarStyles } from '@/utils/_core/theme/styles.utils';
+import { SidebarTokens } from '@/utils/_core/theme/tokens.utils';
 
 import SideBarItem from './SideBarItem';
 
-/**
- * mark list as selected if the current route is match the list id
- * @param {RouterState['location']} location
- * @param {string} id
- * @returns
- */
 const isSelected = (location: RouterState['location'], id: string, pathPosition = 0): boolean => {
   const isHome = location.pathname === '/';
 
-  // the home url is an exception since it's just /
   if (id === 'home') {
     return isHome;
   }
 
-  // ex: /recycle-bin/contacts => recycle-
   const splittedPathnames = location.pathname.split('/');
   const pathnames = splittedPathnames.filter((path: string) => path);
 
-  /*
-   * ex: /articles/categories => /categories (position: 2)
-   * ex: /articles/xxxx => /articles
-   */
   const firstPathname = pathnames[pathPosition];
 
   if (!firstPathname) return false;
 
-  return id.includes(firstPathname);
+  return id === `/${firstPathname}`;
 };
-
-const renderRightIcon = (withSubMenus: boolean, openSubMenu: boolean): ReactNode | null => {
-  if (!withSubMenus) return null;
-  return openSubMenu ? <FiChevronUp /> : <FiChevronRight />;
-};
-
-type HasRightName = 'canCreate' | 'canFind' | 'canGet' | 'canUpdate' | 'canDelete' | 'canDestroy';
-
-export interface ISubMenu {
-  id: string;
-  label: string;
-  onClick?: () => void;
-  icon: ReactNode;
-  className?: string;
-  notification?: number;
-  pathnamePosition?: number;
-  subMenus?: ISubMenu[];
-  uiRight?: UIRoleEnum;
-  hasRightName?: HasRightName;
-}
-
-interface IMenu {
-  title?: string;
-  subMenus: ISubMenu[];
-  hasRightName?: HasRightName;
-}
 
 const classes = {
-  subMenuHeader: {
-    lineHeight: 1.57,
-    fontWeight: 500,
-    opacity: 0.8,
-    letterSpacing: 0.8,
+  // mirrors `.sb-group-label` in the design reference
+  subMenuHeader: (tokens: SidebarTokens) => ({
+    backgroundColor: 'transparent',
+    lineHeight: 1.4,
+    fontWeight: 600,
+    letterSpacing: 0.4,
+    fontSize: FONT_SIZE_OVERLINE,
     textTransform: 'uppercase' as const,
-    marginTop: 14,
-    marginBottom: 9,
-  },
+    padding: '16px 14px 6px',
+    color: tokens.group,
+  }),
+  // sub-items sit indented under their parent — no tree connector line in the design reference
+  subMenuWrapper: { paddingLeft: 14 },
+  /*
+   * matches `nav{flex:1;overflow-y:auto;padding:8px 0}` in the design reference — growing and
+   * scrolling here is what keeps the footer user block pinned to the bottom of the drawer.
+   * minHeight:0 is required for a flex child to actually scroll instead of overflowing its parent.
+   */
+  nav: (tokens: SidebarTokens) => ({
+    paddingTop: 8,
+    paddingBottom: 8,
+    flex: 1,
+    minHeight: 0,
+    overflowY: 'auto' as const,
+    ...getSidebarScrollbarStyles(tokens),
+  }),
 };
-
-const ICON_SIZE = 20;
-// const SUBMENU_ICON_SIZE = 16;
 
 type Props = {
   open: boolean;
   roles: IRole[];
+  tokens: SidebarTokens;
   onClose: () => void;
 };
 
 const SideBar = ({
-  open, roles, onClose,
+  open, roles, tokens, onClose,
 }: Props) => {
-  const {
-    t,
-  } = useTranslation(['common', 'route', 'user']);
-  const {
-    location,
-  } = useRouterState();
-  const navigate = useNavigate();
+  /*
+   * unseen counts keyed by collection name (NOTIFICATION_COLLECTIONS) — drives the item badges.
+   * Read here rather than handed down by the dashboard layout, so a badge refresh (polling,
+   * LiveQuery push, tab focus) re-renders the menu only, not the whole shell around the page
+   */
+  const notifications = useSelector(getAppNotificationsSelector);
+  /*
+   * the location only: the whole router state also changes on every pending/resolved step of a
+   * navigation, and each of those rebuilt the full menu tree with its per-item rights
+   */
+  const location = useRouterState({ select: state => state.location });
+  const menus = useNavigationMenus();
 
-  const [openSubMenu, setOpenSubMenu] = useState<boolean>(true);
-  const toggleOpenSubMenu = useCallback(() => setOpenSubMenu((prev) => !prev), []);
+  // expand the parent of whichever sub-route is active on load (bookmark, reload, shared link)
+  const [openSubMenus, setOpenSubMenus] = useState<Record<string, boolean>>(() => menus.reduce(
+    (acc: Record<string, boolean>, menu) => {
+      menu.subMenus.forEach((subMenu) => {
+        const hasActiveChild = !!subMenu.subMenus?.some(
+          subMenu2 => isSelected(location, subMenu2.id, subMenu2.pathnamePosition)
+        );
 
-  // Memoize menus for performance
-  const menus: IMenu[] = useMemo(() => [
-    {
-      // title: t('common:webSite'),
-      subMenus: [
-        {
-          id: PATH_NAMES.articles,
-          label: t('cms:articles'),
-          onClick: () => navigate(goToArticles()),
-          icon: <FiFileText size={ICON_SIZE} />,
-          className: 'Article',
-          hasRightName: 'canFind',
-        },
-        {
-          id: 'page-group',
-          // id: PATH_NAMES.pages,
-          onClick: toggleOpenSubMenu,
-          label: t('cms:webPage'),
-          icon: <FiLayers size={ICON_SIZE} />,
-          className: 'Page',
-          hasRightName: 'canFind',
-          subMenus: [
-            {
-              id: PATH_NAMES.pages,
-              label: t('cms:pages'),
-              onClick: () => navigate(goToPages()),
-              icon: <FiLayout size={ICON_SIZE} />,
-              className: 'Page',
-              hasRightName: 'canFind',
-            },
-            {
-              id: PATH_NAMES.pageSections,
-              label: t('cms:sections'),
-              onClick: () => navigate(goToPageSections()),
-              icon: <FiServer size={ICON_SIZE} />,
-              className: 'Page',
-              hasRightName: 'canFind',
-            },
-          ],
-        },
-        {
-          id: PATH_NAMES.categories,
-          label: t('cms:category.categories'),
-          onClick: () => navigate(goToCategories()),
-          icon: <FiGrid size={ICON_SIZE} />,
-          className: 'Category',
-          hasRightName: 'canFind',
-        },
-      ],
-    },
-    {
-      // title: 'Apps',
-      subMenus: [
-        {
-          id: PATH_NAMES.users,
-          label: t('user:users'),
-          onClick: () => navigate(goToUsers()),
-          icon: <FiUsers size={ICON_SIZE} />,
-          className: '_User',
-          hasRightName: 'canFind',
-        },
-        {
-          id: PATH_NAMES.contacts,
-          label: t('user:contacts.contacts'),
-          onClick: () => navigate(goToList('contacts')),
-          icon: <FiMessageCircle size={ICON_SIZE} />,
-          className: 'Contact',
-          hasRightName: 'canFind',
-        },
-      ],
-    },
-    {
-      // title: 'Apps',
-      subMenus: [
-        {
-          id: PATH_NAMES.projects,
-          label: t('common:project.projects'),
-          onClick: () => navigate(goToProjects()),
-          icon: <FiPackage size={ICON_SIZE} />,
-          className: 'Project',
-          hasRightName: 'canFind',
-        },
-      ],
-    },
-    {
-      // title: t('common:settings'),
-      subMenus: [
-        {
-          id: PATH_NAMES.roles,
-          label: t('user:role.rights'),
-          onClick: () => navigate(goToRoles()),
-          icon: <FaLockOpen size={ICON_SIZE} />,
-          className: '_Role',
-          hasRightName: 'canFind',
-        },
-        {
-          id: PATH_NAMES.settings,
-          label: t('common:settings'),
-          onClick: () => navigate(goToSettings()),
-          icon: <FiSettings size={ICON_SIZE} />,
-          hasRightName: 'canFind',
-        },
-        {
-          id: PATH_NAMES.miscellaneous,
-          label: capitalize(t('route:miscellaneous')),
-          onClick: () => navigate(goToMisc()),
-          icon: <FiServer size={ICON_SIZE} />,
-          uiRight: UIRoleEnum.MISCELLANEOUS,
-          hasRightName: 'canFind',
-        },
-        {
-          id: PATH_NAMES.tests,
-          label: capitalize(t('route:tests')),
-          onClick: () => navigate(goToTests()),
-          icon: <FiTool size={ICON_SIZE} />,
-          uiRight: UIRoleEnum.TESTS,
-          hasRightName: 'canFind',
-        },
-      ],
-    },
-  ], [t, navigate, toggleOpenSubMenu]);
-
-  // Memoize filtered submenus for each menu
-  const filteredMenus = useMemo(() => menus.map((menu) => {
-    const filteredSubMenus = menu.subMenus.reduce(
-      (acc: ReactNode[], subMenu: ISubMenu, subMenuIndex: number) => {
-        // check rights
-        const rightObj = getRights(roles, subMenu.className, subMenu.uiRight);
-        // e.g: rightObj.canFind: true
-        const hasRight = rightObj[subMenu.hasRightName!];
-
-        if (hasRight) {
-          acc.push(
-            <Fragment key={subMenu.label + subMenuIndex}>
-              <SideBarItem
-                isSelected={isSelected(location, subMenu.id, subMenu.pathnamePosition)}
-                onClose={onClose}
-                open={open}
-                rightIcon={renderRightIcon(!!subMenu.subMenus, openSubMenu)}
-                subMenu={subMenu}
-              />
-              {subMenu.subMenus?.map((subMenu2: ISubMenu, subMenu2Index: number) => (
-                <Collapse
-                  unmountOnExit
-                  in={openSubMenu}
-                  key={subMenu2.label + subMenu2Index}
-                  timeout="auto"
-                >
-                  <List disablePadding component="div">
-                    <SideBarItem
-                      isLevel2
-                      isSelected={isSelected(location, subMenu2.id, subMenu2.pathnamePosition)}
-                      onClose={onClose}
-                      open={open}
-                      subMenu={subMenu2}
-                    />
-                  </List>
-                </Collapse>
-              ))}
-            </Fragment>
-          );
+        if (hasActiveChild) {
+          acc[subMenu.id] = true;
         }
+      });
 
-        return acc;
-      }, [] as ReactNode[]);
+      return acc;
+    },
+    {}
+  ));
 
-    return { ...menu, filteredSubMenus };
-  }), [menus, roles, location, open, openSubMenu, onClose]);
+  /*
+   * the item's unseen rows, plus whatever other queue of work is filed under the same entry — the
+   * badge says there is something to open behind the item, and both are
+   */
+  const getBadgeCount = (subMenu: ISidebarSubMenu): number => [
+    ...(subMenu.className ? [subMenu.className] : []),
+    ...(subMenu.badgeKeys ?? []),
+  ].reduce((sum: number, key: string) => sum + (notifications[key] ?? 0), 0);
+
+  const handleToggleSubMenu = (id: string) => {
+    setOpenSubMenus(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
   return (
-    <List sx={{ p: 0 }}>
-      {filteredMenus.map((menu, index) => (
-        <List
-          css={{ padding: 0 }}
-          key={index}
-          // subheader is the title of the menu
-          subheader={menu.title
-            ? (
-              <ListSubheader component="div" css={classes.subMenuHeader} id="nested-list-subheader">
-                {open ? menu.title : ''}
-              </ListSubheader>
-            )
-            : null}
-        >
-          {menu.filteredSubMenus}
-          {/* divider */}
-          {(menu.filteredSubMenus.length > 0 &&
-            !menu.title &&
-            index !== filteredMenus.length - 1
-          ) && (
-            <Divider />
-          )}
-        </List>
-      ))}
+    // a plain block, not a list: it holds one list per group, and a `ul` may only contain `li`
+    <List component="div" css={classes.nav(tokens)}>
+      {menus.map((menu, index) => {
+        const filteredSubMenus = menu.subMenus.reduce(
+          (acc: ReactNode[], subMenu: ISidebarSubMenu, subMenuIndex: number) => {
+            if (canOpenMenuItem(roles, subMenu)) {
+              const isSubMenuOpen = openSubMenus[subMenu.id] ?? false;
+              // a descendant route is active while this parent is still collapsed
+              const hasActiveChild = !!subMenu.subMenus?.some(
+                subMenu2 => isSelected(location, subMenu2.id, subMenu2.pathnamePosition)
+              );
+
+              acc.push(
+                <Fragment key={subMenu.label + subMenuIndex}>
+                  <SideBarItem
+                    badgeCount={getBadgeCount(subMenu)}
+                    isActiveGroup={!isSubMenuOpen && hasActiveChild}
+                    isSubMenuOpen={isSubMenuOpen}
+                    open={open}
+                    subMenu={subMenu}
+                    tokens={tokens}
+                    isSelected={
+                      !subMenu.subMenus && isSelected(location, subMenu.id, subMenu.pathnamePosition)
+                    }
+                    onClose={subMenu.subMenus
+                      ? () => handleToggleSubMenu(subMenu.id)
+                      : onClose
+                    }
+                  />
+                  {/* the nested list belongs inside a row of the group, not beside it */}
+                  {!!subMenu.subMenus?.length && (
+                    <Box component="li" css={classes.subMenuWrapper}>
+                      {subMenu.subMenus.map((subMenu2: ISidebarSubMenu, subMenu2Index: number) => {
+                        if (!canOpenMenuItem(roles, subMenu2)) return null;
+
+                        return (
+                          /*
+                           * unmountOnExit removes collapsed sub-items from the DOM/tab order on purpose —
+                           * they follow their parent's disclosure state, so a collapsed group can't be
+                           * tabbed into without first expanding it (same pattern as any tree/disclosure nav)
+                           */
+                          <Collapse
+                            unmountOnExit
+                            in={isSubMenuOpen}
+                            key={subMenu2.label + subMenu2Index}
+                            timeout="auto"
+                          >
+                            <List disablePadding>
+                              <SideBarItem
+                                isLevel2
+                                isSelected={isSelected(location, subMenu2.id, subMenu2.pathnamePosition)}
+                                onClose={onClose}
+                                open={open}
+                                subMenu={subMenu2}
+                                tokens={tokens}
+                              />
+                            </List>
+                          </Collapse>
+                        );
+                      })}
+                    </Box>
+                  )}
+                </Fragment>
+              );
+            }
+
+            return acc;
+          }, [] as ReactNode[]);
+
+        if (filteredSubMenus.length === 0) return null;
+
+        return (
+          /*
+           * no horizontal inset: nav items run edge to edge inside the sidebar so the active
+           * item's tint spans its full width — mirrors `nav{padding:8px 0}` in the design reference
+           */
+          <List
+            disablePadding
+            // the group is named by its own title, so the rows under it are read as belonging to it
+            aria-labelledby={open ? `${SIDEBAR_GROUP_TITLE_ID}-${index}` : undefined}
+            key={index}
+            subheader={
+              open
+                ? (
+                  <ListSubheader
+                    disableSticky
+                    css={classes.subMenuHeader(tokens)}
+                    id={`${SIDEBAR_GROUP_TITLE_ID}-${index}`}
+                  >
+                    {menu.title}
+                  </ListSubheader>
+                )
+                // collapsed rail: groups are separated by a plain gap, not a rule
+                : index > 0
+                  ? <Box aria-hidden component="li" sx={{ height: 8 }} />
+                  : null
+            }
+          >
+            {filteredSubMenus}
+          </List>
+        );
+      })}
     </List>
   );
 };

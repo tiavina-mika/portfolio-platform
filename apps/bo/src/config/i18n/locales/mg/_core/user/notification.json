@@ -1,0 +1,298 @@
+{
+  "notifications": {
+    "from": "Avy amin'i",
+    "to": "Ho an'i",
+    "type": "Karazana",
+    "seen": "Hita",
+    "deleted": "Voafafa",
+    "status": "Sata",
+    "notifications": "Fampandrenesana",
+    "notification": "Fampandrenesana",
+    "noNotification": "Tsy misy fampandrenesana",
+    "unread": "Tsy voavaky",
+    "read": "Voavaky",
+    "receiverSeen": "Hitan'ny mpandray",
+    "receiverSeenAt": "Hitan'ny mpandray tamin'ny",
+    "readByAllAt": "Novakian'ny rehetra tamin'ny",
+    "senderSearchPlaceholder": "Anarana na mailaky ny mpandefa",
+    "receiverSearchPlaceholder": "Anarana na mailaky ny mpandray",
+    "types": {
+      "ride": "Dia",
+      "request": "Fangatahana",
+      "rating": "Naoty",
+      "account": "Kaonty",
+      "rate": "Hevitra",
+      "ticket": "Tapakila fanampiana",
+      "vehicle": "Fiara",
+      "announcement": "Fanambarana"
+    },
+    "statusLabels": {
+      "RIDE": {
+        "PUBLISHED": "Dia navoaka",
+        "BOOKED": "Dia voaraisina",
+        "FULL": "Dia feno",
+        "CANCELED": "Dia foana",
+        "IN_PROGRESS": "Dia eo am-pandrosoana",
+        "AWAITING_CONFIRMATION": "Dia miandry fanamafisana",
+        "COMPLETED": "Dia vita",
+        "ARCHIVED": "Dia voatahiry",
+        "RIDE_PAYOUT_RELEASED": "Voaloa ny mpamily",
+        "DRIVER_CANCELLATION_PENALTY": "Sazy noho ny fanafoanana nataon'ny mpamily",
+        "RIDE_DEPARTURE_REMINDER": "Fampahatsiahivana fiaingana",
+        "RIDE_COMPLETION_REMINDER": "Fampahatsiahivana famaranana dia",
+        "RIDE_COMPLETION_CHECK": "Nitranga ve ny dia?",
+        "RIDE_AUTO_COMPLETED": "Narakitra ho azy ny dia",
+        "RIDE_AUTO_COMPLETED_DRIVER": "Narakitra ho azy ny dia (mpamily)",
+        "SUSPENSION_LIFTED": "Fanakanana nesorina",
+        "RIDE_UPDATED": "Dia novaina"
+      },
+      "REQUEST": {
+        "PENDING": "Fandoavana famandrihana eo am-panaovana",
+        "CONFIRMED": "Famandrihana voamarina",
+        "CANCELED_BY_PASSENGER": "Famandrihana nofoanana",
+        "LATE_PAYMENT_REFUNDED": "Naverina ny fandoavana tara",
+        "REQUEST_REFUND_PAID": "Nalefa ny famerenam-bola",
+        "CANCELED_BY_DRIVER": "Fangatahana nofoanan'ny mpamily",
+        "COMPLETED": "Fangatahana vita",
+        "PAYMENT_FAILED": "Tsy nahomby ny fandoavana",
+        "NO_SHOW": "Mpandeha voalaza fa tsy tonga",
+        "CONTESTED_NO_SHOW": "Fanoherana ny tsy fahatongavana",
+        "REQUEST_PAYMENT_SUCCEEDED": "Nahomby ny fandoavana",
+        "PASSENGER_CANCELLATION_SUSPENSION": "Fanakanana mpandeha (fanafoanana)",
+        "DRIVER_NO_SHOW_REPORTED": "Voalaza fa tsy tonga ny mpamily",
+        "DRIVER_NO_SHOW_REPLIED": "Namaly ny fitarainana ny mpamily",
+        "DRIVER_NO_SHOW_CONFIRMED": "Voamarina ny tsy fahatongavan'ny mpamily",
+        "DRIVER_NO_SHOW_REJECTED": "Nolavina ny fitarainana",
+        "PASSENGER_NO_SHOW_CONFIRMED": "Voamarina ny tsy fahatongavan'ny mpandeha",
+        "PASSENGER_NO_SHOW_REJECTED": "Nolavina ny tsy fahatongavan'ny mpandeha"
+      },
+      "ACCOUNT": {
+        "ACCOUNT_BANNED": "Kaonty voaroaka",
+        "ACCOUNT_SUSPENDED": "Kaonty voasakana (fitarainana)",
+        "ACCOUNT_UNBANNED": "Kaonty naverina",
+        "SUSPENSION_LIFTED": "Fanakanana nesorina",
+        "PASSENGER_CANCELLATION_SUSPENSION": "Fanakanana mpandeha (fanafoanana)",
+        "NEW_DEVICE_LOGIN": "Fidirana vaovao",
+        "SUPPORT_SESSION_ENDED": "Vita ny fanampiana",
+        "PASSWORD_RESET_DELAYED": "Fanovana teny miafina voatazona"
+      },
+      "RATE": {
+        "COMPLETED": "Hevitra vaovao",
+        "RATING_INVITATION": "Fanasana hanome naoty",
+        "RATING_REMINDER": "Fampahatsiahivana hanome naoty",
+        "RATING_REPLY": "Valin’ny hevitra"
+      },
+      "TICKET": {
+        "newReplyFromAgent": "Valin'ny fanampiana",
+        "TICKET_RESOLVED": "Tapakila voavaha",
+        "REPORT_RECEIVED": "Voaray ny tatitra",
+        "REPORT_RESOLVED": "Voavaha ny tatitra"
+      },
+      "VEHICLE": {
+        "VEHICLE_VERIFIED": "Fiara voamarina",
+        "VEHICLE_DOCUMENT_REJECTED": "Taratasim-piara nolavina",
+        "VEHICLE_DOCUMENT_EXPIRING_SOON": "Taratasim-piara ho lany daty tsy ho ela",
+        "VEHICLE_DOCUMENT_EXPIRED": "Taratasim-piara lany daty"
+      },
+      "ANNOUNCEMENT": {
+        "ANNOUNCEMENT": "Fanambarana"
+      }
+    },
+    "resendPush": "Alefaso indray ny fampandrenesana",
+    "resent_one": "Nalefa indray tamin'ny mpandray 1 ny fampandrenesana.",
+    "resent_other": "Nalefa indray tamin'ny mpandray {{count}} ny fampandrenesana.",
+    "resendFailed": "Tsy nisy nalefa indray: tsy azo amboarina indray ho an'ity fampandrenesana ity io fantsona io, na tsy misy intsony izy.",
+    "search": "Hitady hafatra, mpandefa (anarana na mailaka) na kaodin'ny sata",
+    "noMessage": "Tsy misy hafatra",
+    "category": "Sokajy",
+    "readRate": "Famakiana",
+    "readRatio": "{{seen}} / {{total}} · {{percent}} %",
+    "sentBetween": "Nalefa teo anelanelan'ny",
+    "sentAt": "Nalefa ny",
+    "statusCode": "Kaodin'ny sata",
+    "sendType": "Karazana fandefasana",
+    "sender": "Mpandefa",
+    "senderName": "Anaran'ny mpandefa",
+    "recipient": "Mpandray",
+    "recipients": "Mpandray",
+    "recipientCount": "Isan'ny mpandray",
+    "recipientsWithCount_one": "mpandray {{count}}",
+    "recipientsWithCount_other": "mpandray {{count}}",
+    "recipientsWithRemaining": "mpandray {{count}} · + {{remaining}}",
+    "moreRecipients_one": "+ mpandray {{count}} hafa",
+    "moreRecipients_other": "+ mpandray {{count}} hafa",
+    "system": "Rafitra",
+    "systemInitials": "RA",
+    "automatedSend": "Fandefasana mandeha ho azy",
+    "channelsLabel": "Fantsona",
+    "channelsUntracked": "Tsy narahi-maso",
+    "channelBreakdown": "{{failed}} tsy tanteraka · {{pending}} miandry · {{notSent}} tsy nalefa",
+    "deliveryPerRecipient": "Fandefasana isaky ny mpandray",
+    "resendTo": "Alefaso indray any amin'i {{name}}",
+    "resendFailures": "Alefaso indray ireo tsy tanteraka",
+    "resendFailuresWithCount_one": "Alefaso indray ilay fandefasana tsy tanteraka",
+    "resendFailuresWithCount_other": "Alefaso indray ireo fandefasana {{count}} tsy tanteraka",
+    "resendUnreadWithCount_one": "Alefaso indray amin'ny mpandray tsy nanokatra",
+    "resendUnreadWithCount_other": "Alefaso indray amin'ny mpandray {{count}} tsy nanokatra",
+    "failedDeliveriesResent_one": "Fandefasana 1 natomboka ({{channels}}).",
+    "failedDeliveriesResent_other": "Fandefasana {{count}} natomboka ({{channels}}).",
+    "noFailedDeliveryToResend": "Tsy misy fandefasana tsy tanteraka halefa indray.",
+    "copyPayload": "Adikao ireo fanondroana",
+    "readStates": {
+      "unread": "Tsy novakiana",
+      "partial": "Novakiana ampahany",
+      "read": "Novakiana tanteraka"
+    },
+    "sendTypes": {
+      "single": "Fandefasana tokana",
+      "multiple": "Fandefasana maro"
+    },
+    "senderTypes": {
+      "system": "Rafitra",
+      "user": "Kaonty iray"
+    },
+    "channels": {
+      "push": "Push",
+      "email": "Mailaka",
+      "sms": "SMS"
+    },
+    "channelStatuses": {
+      "pending": {
+        "label": "Miandry",
+        "description": "Mbola ao anaty filaharana ny hafatra, tsy mbola nandefa."
+      },
+      "sent": {
+        "label": "Nalefa",
+        "description": "Natolotra ny mpamatsy ny fantsona ny hafatra."
+      },
+      "failed": {
+        "label": "Tsy tanteraka",
+        "description": "Nolavin'ny mpamatsy ny fandefasana. Azo alefa indray."
+      },
+      "no_device": {
+        "label": "Tsy misy fitaovana",
+        "description": "Tsy misy fitaovana voasoratra handray ny push."
+      },
+      "no_template": {
+        "label": "Tsy misy modely",
+        "description": "Tsy misy modelin-kafatra ho an'ity fantsona ity : ahitsio ao amin'ny fandrindrana."
+      },
+      "disabled_by_user": {
+        "label": "Nosakanan'ny mpampiasa",
+        "description": "Nosakanan'ny mpandray ity fantsona ity ao amin'ny safidiny."
+      },
+      "no_email": {
+        "label": "Tsy misy mailaka",
+        "description": "Tsy misy adiresy mailaka ao amin'ny kaontin'ny mpandray."
+      },
+      "no_phone": {
+        "label": "Tsy misy laharana",
+        "description": "Tsy misy laharan-telefaona ao amin'ny kaontin'ny mpandray."
+      },
+      "rate_limited": {
+        "label": "Tonga ny fetra",
+        "description": "Efa nahazo ny SMS fanampiny faratampony ao anatin'ny 24 ora ny mpandray: tsy nalefa ity."
+      }
+    },
+    "payloadKeys": {
+      "ride": "Dia",
+      "request": "Fangatahana",
+      "rating": "Hevitra",
+      "ticket": "Tapakila",
+      "vehicle": "Fiara"
+    },
+    "id": "ID",
+    "channel": "Fantsona",
+    "delivery": "Fandefasana",
+    "relatedEntity": "Zavatra mifandraika",
+    "noRecipient": "Tsy misy mpandray",
+    "seenOutOf": "{{seen}} amin'ny {{total}} no nahita",
+    "senderToRecipients": "{{sender}} → {{recipients}}",
+    "channelFailures_one": "{{count}} tsy lasa {{channel}}",
+    "channelFailures_other": "{{count}} tsy lasa {{channel}}",
+    "sentColumn": "Lasa",
+    "seenColumn": "Hita",
+    "toHandle": "Tokony hojerena",
+    "lastAttempt": "Andrana farany",
+    "retryChannel": "Averina alefa : {{channel}}",
+    "statusCount": "{{count}} {{label}}",
+    "seenAtColumn": "Hita tamin'ny",
+    "providerAnswer": "Namaly ny mpamatsy : {{answer}}",
+    "providerErrorWithCode": "{{message}} (kaody {{code}})",
+    "smsCost": {
+      "title": "SMS famonjena — andro {{days}} farany",
+      "description": "Ny SMS alefa ho famonjena amin'ny hetsika manan-danja, isan'andro. Voaloa ny SMS tsirairay ekena avy amin'ny mpandraharaha : ity fanarahana ity no ahafahana mamaritra raha hohamaroina na tsia ny lisitry ny hetsika alefa amin'ny SMS.",
+      "date": "Andro",
+      "sent": "Alefa",
+      "rateLimited": "Voasakana (fetra)",
+      "failed": "Nolavina",
+      "cost": "Vidiny tombanana",
+      "totalSent": "SMS alefa",
+      "totalCost": "Vidiny tombanana",
+      "totalRateLimited": "Voasakan'ny fetra",
+      "totalFailed": "Nolavin'ny mpandraharaha",
+      "empty": "Tsy nisy SMS famonjena tamin'ity vanim-potoana ity",
+      "emptyDescription": "Tsy nisy SMS famonjena nalefa, voasakana na nolavina tamin'ity vanim-potoana ity."
+    },
+    "smsCostNotice": "Voaloa amin'ny mpandraharaha ny SMS tsirairay alefa indray.",
+    "confirmResendTitle": "Halefa indray ireo tsy tanteraka?",
+    "confirmResendDescription": "Halefa indray : {{channels}}.",
+    "confirmResendAllTitle": "Halefa indray amin'ny rehetra ve ny fampandrenesana?",
+    "confirmResendAllDescription": "Halefa indray amin'ireo mpandray {{count}} ny push, ao anatin'izany ireo efa nahazo na namaky azy.",
+    "readAt": "Novakiana tamin'ny {{date}}",
+    "clickToResend": "Tsindrio raha hamerina handefa.",
+    "providerAnswersLabel": "Valin'ny mpamatsy",
+    "channelAnswer": "{{channel}} : {{answer}}",
+    "resendsLabel": "Fandefasana indray",
+    "resendsSummary_one": "Fandefasana indray 1, tamin'ny {{date}}",
+    "resendsSummary_other": "Fandefasana indray {{count}}, ny farany tamin'ny {{date}}",
+    "resendReasons": {
+      "all_one": "Nalefa indray tamin'ny mpandray ({{channel}})",
+      "all_other": "Nalefa indray tamin'ireo mpandray {{count}} ({{channel}})",
+      "unread_one": "Fampahatsiahivana ho an'ny mpandray tsy nanokatra azy ({{channel}})",
+      "unread_other": "Fampahatsiahivana ho an'ireo mpandray {{count}} tsy nanokatra azy ({{channel}})",
+      "failed_one": "Nalefa indray ny fandefasana tsy tanteraka ({{channel}})",
+      "failed_other": "Nalefa indray ireo fandefasana tsy tanteraka {{count}} ({{channel}})",
+      "recipient_one": "Nalefa indray tamin'ny mpandray iray ({{channel}})",
+      "recipient_other": "Nalefa indray tamin'ireo mpandray {{count}} ({{channel}})"
+    },
+    "events": {
+      "created": "Noforonina",
+      "receiverSeen": "Novakian'ny mpandray rehetra",
+      "deleted": "Natao tao anaty fako",
+      "undeleted": "Navoaka tao anaty fako"
+    },
+    "broadcast": {
+      "broadcast": "Fandefasana",
+      "title": "Mandefa fanambarana",
+      "subtitle": "Manorata hafatra ho an'ny mpikambana rehetra na ho an'ireo ao amin'ny tanàna iray, amin'ny fiteny telo.",
+      "segment": "Mpandray",
+      "segments": {
+        "all": "Ny mpikambana rehetra",
+        "city": "Ny mpikambana ao amin'ny tanàna iray"
+      },
+      "city": "Tanàna",
+      "cityHelper": "Ny tanàna araka ny fisehoany ao amin'ny adiresy nosoratan'ny mpikambana ao amin'ny mombamomba azy.",
+      "messageTitle": "Lohateny",
+      "messageBody": "Hafatra",
+      "languageTab": "Malagasy",
+      "audience": "Mpandray tombanana",
+      "audienceCount_one": "mpikambana {{count}}",
+      "audienceCount_other": "mpikambana {{count}}",
+      "audienceUnknown": "Hamarino ny mpandray alohan'ny handefasana",
+      "checkAudience": "Hamarino ny mpandray",
+      "send": "Alefaso ny fanambarana",
+      "confirmTitle": "Hamafiso ny fandefasana",
+      "confirmDescription": "Handeha any amin'ny mpikambana {{count}} ity fanambarana ity. Tsy azo foanana na ovaina intsony rehefa lasa.",
+      "confirmCheckbox": "Novakiako indray ny hafatra sy ny mpandray",
+      "confirmAction": "Alefaso tanteraka",
+      "sent_one": "Nalefa tany amin'ny mpikambana {{count}} ny fanambarana",
+      "sent_other": "Nalefa tany amin'ny mpikambana {{count}} ny fanambarana",
+      "history": "Fanambarana farany",
+      "noHistory": "Mbola tsy nisy fanambarana nalefa",
+      "sentBy": "Nalefan'i",
+      "audienceLabel": "Mpandray",
+      "preview": "Topi-maso"
+    }
+  }
+}

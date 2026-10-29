@@ -1,0 +1,28 @@
+{
+  "thisWeek": "cette semaine",
+  "today": "aujourd'hui",
+  "monthRevenue": "Revenus du mois",
+  "transactions": "transactions",
+  "updatedAt": "Mis à jour à {{time}}",
+  "loadError": "Une erreur s'est produite. Veuillez réessayer",
+  "alerts": "Alertes",
+  "failedPayments": "Paiements échoués",
+  "noFailedPayments": "Aucun paiement en échec",
+  "seeAllPayments": "Voir tous les paiements",
+  "unknownPayer": "Payeur inconnu",
+  "unresolvedReports": "Signalements en cours",
+  "noUnresolvedReports": "Aucun signalement à traiter",
+  "seeAllReports": "Voir tous les signalements",
+  "recentActivity": "Activité récente",
+  "newUsers": "Nouveaux utilisateurs",
+  "noNewUsers": "Aucune inscription pour le moment",
+  "seeAllUsers": "Voir tous les utilisateurs",
+  "seeNewUsers_one": "Voir le nouvel utilisateur",
+  "seeNewUsers_other": "Voir les {{count}} nouveaux utilisateurs",
+  "partialNotice": "Certaines informations ne sont pas affichées pour votre poste.",
+  "noAccess": {
+    "title": "Aucune information à afficher",
+    "description": "Votre poste ne donne accès à aucune donnée du tableau de bord. Ouvrez l'une des pages autorisées pour votre poste.",
+    "linksLabel": "Pages accessibles"
+  }
+}

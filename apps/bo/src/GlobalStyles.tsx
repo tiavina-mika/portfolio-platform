@@ -1,5 +1,8 @@
 import { css, Global, type Theme } from '@emotion/react';
-import { type Theme as MUITheme } from '@mui/material';
+
+import type { Theme as MUITheme } from '@mui/material';
+
+import { FONT_FAMILY_MONO } from '@/constants/_core/ui/ui.constants';
 
 interface IThemeProps {
   theme: Theme & MUITheme;
@@ -9,14 +12,14 @@ const getGlobalStyles = (theme: IThemeProps['theme']) => {
   return css`
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 
-        'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+      font-family: ${theme.typography.fontFamily};
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
+    /* one monospace stack for the whole interface — the same one identifiers and amounts use */
     code {
-      font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+      font-family: ${FONT_FAMILY_MONO};
     }
 
     /* ------------------ Font styles ------------------ */
@@ -159,7 +162,7 @@ const getGlobalStyles = (theme: IThemeProps['theme']) => {
     }
 
     .h4Grey600 {
-      color: ${theme.palette.grey[600]};
+      color: ${theme.palette.text.secondary};
     }
 
     .fw700 {
@@ -234,7 +237,7 @@ const getGlobalStyles = (theme: IThemeProps['theme']) => {
       color: ${theme.palette.grey[300]} !important;
     }
     .grey600 {
-      color: ${theme.palette.grey[600]} !important;
+      color: ${theme.palette.text.secondary} !important;
     }
     .grey800 {
       color: ${theme.palette.grey[800]} !important;
@@ -242,34 +245,11 @@ const getGlobalStyles = (theme: IThemeProps['theme']) => {
     .grey900 {
       color: ${theme.palette.grey[900]} !important;
     }
-
-    .red {
-      background-color: red;
-    }
-
-    .blue {
-      background-color: blue;
-    }
-
-    .green {
-      background-color: green;
-    }
-
-    .yellow {
-      background-color: yellow;
-    }
-
-    .lightBlue {
-      background-color: lightblue;
-    }
-
-    .orange {
-      background-color: orange;
-    }
-
-    .pink {
-      background-color: #fe5977;
-    }
+    /*
+     * The block that used to sit here painted flat red / blue / pink backgrounds - layout debug
+     * helpers, referenced by nothing, and the only colours in this file that came from outside the
+     * palette. Anything that needs a colour reads it off the theme, like the greys above.
+     */
     /* ------------ COLORS ------------ */
 
     /* ------------ SCROLL ------------ */

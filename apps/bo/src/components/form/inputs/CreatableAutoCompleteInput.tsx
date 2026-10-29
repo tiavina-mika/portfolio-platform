@@ -9,7 +9,7 @@ import { FiPlus } from 'react-icons/fi';
 import { v4 as uuidv4 } from 'uuid';
 
 import Dialog from '@/components/Dialog';
-import { ICreatableSelectOption } from '@/types/util.type';
+import { ICreatableSelectOption } from '@/types/_core/utils.type';
 
 const filter = createFilterOptions<any>();
 

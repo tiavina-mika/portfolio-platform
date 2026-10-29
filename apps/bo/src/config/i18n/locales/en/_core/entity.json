@@ -1,0 +1,26 @@
+{
+  "price": "Price",
+  "status": "Status",
+  "prices": "Prices",
+  "current": "Current",
+  "unitPrice": "Unit price",
+  "phone": "Phone",
+  "paymentPhone": "Payment phone",
+  "receiverSeen": "Seen by receiver",
+  "at": "At",
+  "by": "By",
+  "history": "History",
+  "processHistory": "Process history",
+  "eventHistory": "Event history",
+  "paymentHistory": "Payment history",
+  "eventsHistory": {
+    "lastSeen": "Last opened",
+    "deleted": "Deleted",
+    "seen": "Seen",
+    "unseen": "Unseen",
+    "undeleted": "Undeleted",
+    "created": "Created",
+    "updated": "Updated"
+  },
+  "platform": "Platform"
+}

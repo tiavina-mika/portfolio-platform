@@ -48,9 +48,11 @@ const TextField = ({
           {transformValuePreview && (
             <Typography
               gutterBottom
-
-              sx={{ pt: 0.5, display: 'block' }}
               variant="caption"
+              sx={{
+                display: 'block',
+                pt: 0.5,
+              }}
             >
               {preview}
               {transformValuePreview(field.value)}

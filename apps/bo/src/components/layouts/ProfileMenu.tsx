@@ -1,46 +1,92 @@
 import {
-  Box, MenuItem, Menu, Divider, ListItemIcon, Typography, useTheme, Button, type Theme,
+  Box, MenuItem, Menu, Divider, ListItemIcon, Typography, Button,
 } from '@mui/material';
-import { grey } from '@mui/material/colors';
 import { useNavigate } from '@tanstack/react-router';
 import { MouseEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  FiChevronDown, FiChevronUp, FiPower, FiUser,
+  FiChevronDown, FiChevronUp, FiInfo, FiPower, FiUser,
 } from 'react-icons/fi';
-import { IoPersonCircle } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 
 import Avatar from '@/components/Avatar';
-import { useBreakpoint } from '@/hooks/useBreakpoint';
-import { goToLogout } from '@/redux/actions/auth.action';
-import { getAppCurrentUserSelector } from '@/redux/reducers/app.reducer';
-import { PATH_NAMES } from '@/utils/pathnames';
-import { getCuttedFirstName, getUserFullName } from '@/utils/user.utils';
+import { PROFILE_MENU_WIDTH } from '@/constants/_core/ui/entity.constants';
+import {
+  APPBAR_COMPACT_BREAKPOINT, FONT_SIZE_BODY, FONT_SIZE_META, FONT_SIZE_OVERLINE, RADIUS,
+} from '@/constants/_core/ui/ui.constants';
+import { useBreakpoint } from '@/hooks/_core/useBreakpoint';
+import { goToLogout } from '@/redux/actions/_core/auth.action';
+import { getAppCurrentUserSelector } from '@/redux/reducers/_core/app.reducer';
+import { PATH_NAMES } from '@/utils/_core/pathnames';
+import { getCuttedFirstName, getUserFullName } from '@/utils/_core/user.utils';
 
-const AVATAR_SIZE = 60;
-
-const getIconColor = (theme: Theme): string => (theme.palette.mode === 'light'
-  ? '#000'
-  : '#fff');
+// the toolbar avatar sits inside a 34px-tall action row, the menu header one is the panel's anchor
+const TOOLBAR_AVATAR_SIZE = 30;
+const MENU_AVATAR_SIZE = 48;
 
 const sx = {
+  trigger: {
+    gap: 0.75,
+    minWidth: 0,
+    padding: '4px 6px',
+    borderRadius: `${RADIUS}px`,
+    color: 'text.secondary',
+    textTransform: 'capitalize',
+  },
+  triggerAvatar: {
+    fontSize: FONT_SIZE_OVERLINE,
+    fontWeight: 600,
+  },
   profileLabel: {
-    px: 1,
-    color: (theme: Theme): string => (theme.palette.mode === 'light'
-      ? grey[600]
-      : '#fff'),
+    fontSize: FONT_SIZE_BODY,
     fontWeight: 500,
+    color: 'text.secondary',
+  },
+  menuPaper: {
+    width: PROFILE_MENU_WIDTH,
+    mt: 1,
+  },
+  menuHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 1.5,
+    p: 2,
+    minWidth: 0,
+  },
+  // both lines truncate rather than wrap — a long name must not stretch the panel out of shape
+  menuHeaderText: {
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: 0,
+    '& > *': {
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+    },
+  },
+  menuHeaderName: {
+    fontSize: FONT_SIZE_BODY,
+    fontWeight: 600,
+    color: 'text.primary',
+  },
+  menuHeaderUsername: {
+    fontSize: FONT_SIZE_META,
+    color: 'text.secondary',
+  },
+  menuItemIcon: {
+    minWidth: 0,
+    mr: 1,
+    color: 'text.secondary',
   },
 };
 
 const ProfileMenu = () => {
   const currentUser = useSelector(getAppCurrentUserSelector);
-  const theme = useTheme();
-  const isDesktopDown = useBreakpoint();
+  // the first name + chevron only fit next to the full-width search field, which needs the same room
+  const isCompactHeader = useBreakpoint(APPBAR_COMPACT_BREAKPOINT);
   const {
     t,
-  } = useTranslation(['user']);
+  } = useTranslation(['user', 'common']);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -58,7 +104,11 @@ const ProfileMenu = () => {
   };
 
   const handleGoToProfile = () => {
-    navigate({ to: PATH_NAMES.profile } as any);
+    navigate({ to: PATH_NAMES.profile });
+  };
+
+  const handleGoToAbout = () => {
+    navigate({ to: PATH_NAMES.about });
   };
 
   if (!currentUser) return null;
@@ -69,24 +119,15 @@ const ProfileMenu = () => {
         className="flexRow alignCenter"
         color="inherit"
         onClick={handleOpen}
-        sx={{ textTransform: 'capitalize' }}
+        sx={sx.trigger}
       >
-        <Avatar
-          user={currentUser}
-          size={isDesktopDown
-            ? 24
-            : 32}
-        />
-        {!isDesktopDown && (
+        <Avatar size={TOOLBAR_AVATAR_SIZE} sx={sx.triggerAvatar} user={currentUser} />
+        {!isCompactHeader && (
           <>
-            {currentUser && <Typography sx={sx.profileLabel}>{getCuttedFirstName(currentUser)}</Typography>}
+            <Typography sx={sx.profileLabel}>{getCuttedFirstName(currentUser)}</Typography>
             {open
-              ? (
-                <FiChevronUp color={getIconColor(theme)} size={18} />
-              )
-              : (
-                <FiChevronDown color={getIconColor(theme)} size={18} />
-              )}
+              ? <FiChevronUp size={16} />
+              : <FiChevronDown size={16} />}
           </>
         )}
       </Button>
@@ -103,73 +144,37 @@ const ProfileMenu = () => {
         slotProps={{
           paper: {
             elevation: 0,
-            sx: {
-              overflow: 'visible',
-              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-              mt: 1.5,
-              minWidth: 300,
-              px: { xs: 0, xl: 2 },
-              '&:before': {
-                content: '""',
-                display: 'block',
-                position: 'absolute',
-                top: 0,
-                right: 14,
-                width: 10,
-                height: 10,
-                bgcolor: 'background.paper',
-                transform: 'translateY(-50%) rotate(45deg)',
-                zIndex: 0,
-              },
-            },
+            sx: sx.menuPaper,
           },
         }}
       >
-        <MenuItem disableRipple className="flexCenter">
-          <div
-            css={{ marginTop: 6 }}
-            className={isDesktopDown
-              ? 'flexRow'
-              : 'flexCenter'}
-          >
-            {currentUser.get('image')
-              ? (
-                <div
-                  className="flexCenter"
-                  css={{ width: AVATAR_SIZE, height: AVATAR_SIZE, borderRadius: AVATAR_SIZE / 2 }}
-                >
-                  <IoPersonCircle color={theme.palette.primary.main} size={AVATAR_SIZE} />
-                </div>
-              )
-              : (
-                <Avatar size={60} user={currentUser} />
-              )}
-            <Box
-              sx={{ mt: 1.5, mb: 1, ml: { xs: 1, xl: 0 } }}
-              className={isDesktopDown
-                ? 'flexColumn'
-                : 'flexCenter'}
-            >
-              <Typography sx={{ mb: 0.5 }} variant="h6">
-                {getUserFullName(currentUser)}
-              </Typography>
-              <Typography variant="body2">{currentUser.get('username')}</Typography>
-            </Box>
-          </div>
-        </MenuItem>
+        {/* identity header — not a menu item, it is not actionable */}
+        <Box sx={sx.menuHeader}>
+          <Avatar size={MENU_AVATAR_SIZE} user={currentUser} />
+          <Box sx={sx.menuHeaderText}>
+            <Typography sx={sx.menuHeaderName}>{getUserFullName(currentUser)}</Typography>
+            <Typography sx={sx.menuHeaderUsername}>{currentUser.username}</Typography>
+          </Box>
+        </Box>
         <Divider />
         <MenuItem onClick={handleGoToProfile}>
-          <ListItemIcon>
-            <FiUser />
+          <ListItemIcon sx={sx.menuItemIcon}>
+            <FiUser size={16} />
           </ListItemIcon>
-          <Typography variant="subtitle1">{t('user:myProfile')}</Typography>
+          {t('user:myProfile')}
+        </MenuItem>
+        <MenuItem onClick={handleGoToAbout}>
+          <ListItemIcon sx={sx.menuItemIcon}>
+            <FiInfo size={16} />
+          </ListItemIcon>
+          {t('common:about.title')}
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleLogout}>
-          <ListItemIcon>
-            <FiPower />
+          <ListItemIcon sx={sx.menuItemIcon}>
+            <FiPower size={16} />
           </ListItemIcon>
-          <Typography variant="subtitle1">{t('user:logout')}</Typography>
+          {t('user:logout')}
         </MenuItem>
       </Menu>
     </Box>

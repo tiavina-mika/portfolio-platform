@@ -1,0 +1,26 @@
+{
+  "price": "Prix",
+  "status": "Status",
+  "current": "Actuel",
+  "prices": "Prices",
+  "unitPrice": "Prix unitaire",
+  "phone": "Téléphone",
+  "paymentPhone": "Téléphone de paiement",
+  "receiverSeen": "Vu par le destinataire",
+  "at": "Date",
+  "by": "Par",
+  "history": "Historique",
+  "processHistory": "Historique du processus",
+  "eventHistory": "Historique des événements",
+  "paymentHistory": "Historique des paiements",
+  "eventsHistory": {
+    "lastSeen": "Dernière ouverture",
+    "deleted": "Supprimé",
+    "seen": "Vu",
+    "unseen": "Non vu",
+    "undeleted": "Non supprimé",
+    "created": "Créé",
+    "updated": "Modifié"
+  },
+  "platform": "Plateforme"
+}

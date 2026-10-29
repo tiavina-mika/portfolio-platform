@@ -2,7 +2,7 @@ import { FormControl, FormHelperText } from '@mui/material';
 import { ReactNode } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 
-import { ICreatableSelectOption } from '@/types/util.type';
+import { ICreatableSelectOption } from '@/types/_core/utils.type';
 
 import InputLabel from '../InputLabel';
 import CreatableAutoCompleteInput from '../inputs/CreatableAutoCompleteInput';
@@ -52,7 +52,7 @@ const CreatableAutoCompleteField = ({
         <InputLabel
           label={fixedLabel}
           required={required}
-          sx={{ color: '#000' }}
+          sx={{ color: 'text.primary' }}
           tooltip={tooltip}
         />
       )}

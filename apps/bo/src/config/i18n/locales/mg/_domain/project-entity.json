@@ -1,0 +1,81 @@
+{
+  "project": {
+    "societyDescription": "Famariparitana momba ny fiaraha-monina",
+    "projects": "Tetikasa",
+    "project": "Tetikasa",
+    "newProject": "Tetikasa vaovao",
+    "createProject": "Mamorona tetikasa",
+    "editProject": "Hanova ny {{name}}",
+    "societyLogo": "Sary famantarana ny logo",
+    "website": "Tranonkala",
+    "links": "Rohy",
+    "society": "Orinasa",
+    "repositories": "Dépôts",
+    "addLinks": "Ampiana rohy",
+    "addRepository": "Ampiana dépôt",
+    "invalidRepositoryUrl": "URL dépôt tsy mety",
+    "invalidYoutubeUrl": "URL Youtube tsy mety",
+    "addNpmLinks": "Ampiana rohy npm",
+    "invalidNpmUrl": "URL npm tsy mety",
+    "link": "Rohy",
+    "npmLinks": "Rohy npm",
+    "codesandboxLinks": "Rohy Codesandbox",
+    "addCodesandboxLinks": "Ampiana rohy Codesandbox",
+    "invalidCodesandboxUrl": "URL Codesandbox tsy mety",
+    "projectTypes": "Karazana tetikasa",
+    "technologies": "Teknolojia",
+    "types": {
+      "socialNetwork": "Tambajotra sosialy",
+      "eCommerce": "E-varotra",
+      "multimedia": "Multimedia",
+      "ecology": "Ekolojia",
+      "artificialIntelligence": "Faharanitan-tsaina artifisialy",
+      "education": "Fanabeazana",
+      "greenEnergy": "Angovo maitso",
+      "renewableEnergy": "Angovo azo havaozina",
+      "economicDevelopment": "Fampandrosoana ara-toekarena",
+      "literature": "Literature",
+      "sport": "Fanatanjahantena",
+      "searchEngine": "Motera fikarohana",
+      "deepLearning": "Fianarana lalina",
+      "chatBot": "Chat bot",
+      "travel": "Dia",
+      "portfolio": "Portofolio",
+      "blog": "Blog",
+      "startup": "Fanombohana",
+      "foodTech": "Teknolojian'ny sakafo",
+      "supplyChain": "Rojo famatsiana",
+      "cuisine": "Lakozia",
+      "utility": "Fampiasana",
+      "productManagement": "Fitantanana vokatra",
+      "transport": "Fitanterana",
+      "openSource": "Open source",
+      "philosophy": "Filozofia"
+    },
+    "activeProjectVisible": "Hita ny mpampiasa ny tetikasa active",
+    "errors": {
+      "projectNotFound": "Tsy hita ny tetikasa"
+    },
+    "messages": {
+      "deletedSuccessfully": "Vola soa aman-tsara ny tetikasa",
+      "published": "Navoaka ny tetikasa. Hita ao amin'ny tranonkala izy izao.",
+      "unpublished": "Tsy navoaka intsony ny tetikasa. Tsy hita ao amin'ny tranonkala intsony izy."
+    },
+    "thisProject": "ity tetikasa ity",
+    "theseProjects": "ireo tetikasa ireo",
+    "theProject": "ny tetikasa",
+    "searchByName": "Hikaroka araka ny anarana",
+    "contentOfTheProject": "Votoatin'ny tetikasa",
+    "previewImageHelper": "Sary kely kokoa ampiasaina amin'ny karatry ny tetikasa sy rehefa zaraina ny rohiny",
+    "untitledProject": "Anaran'ny tetikasa",
+    "loadingProject": "Mampiditra ny tetikasa…",
+    "status": {
+      "published": "Navoaka",
+      "draft": "Penina"
+    },
+    "form": {
+      "classification": "Sokajiana",
+      "sectionsOrderHelper": "Azo fenoina amin'ny filaharana tianao ny fizarana. Ny anarana, ny lohateny, ny fanazavana ary ny votoaty amin'ny teny frantsay, ny sary, karazana iray sy teknolojia iray farafahakeliny ihany no tsy maintsy fenoina."
+    }
+  }
+}
