@@ -1,5 +1,3 @@
-import Parse from 'parse';
-
 import { DEFAULT_ROLES, HIGHEST_LEVEL_ROLES, USE_MASTER_KEY } from '@/utils/constants';
 
 const allDefaultRoles = [...HIGHEST_LEVEL_ROLES, ...DEFAULT_ROLES];
