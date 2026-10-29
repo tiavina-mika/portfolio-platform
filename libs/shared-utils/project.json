@@ -1,0 +1,5 @@
+{
+  "name": "shared-utils",
+  "sourceRoot": "libs/shared-utils/src",
+  "tags": ["scope:shared-core"]
+}
