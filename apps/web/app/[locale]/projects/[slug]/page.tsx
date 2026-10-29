@@ -208,44 +208,44 @@ const ProjectPage = async (props: Props) => {
               content={getTranslatedField(translated, locale, 'content')}
             />
           </ProjectSection>
-          {project.has('links') ||
+          {(project.has('links') ||
             project.has('repositories') ||
             project.has('npm') ||
-            (project.has('codesandbox') && (
-              <ProjectSection
-                className="flex flex-col gap-1"
-                title={t('links')}
-              >
-                {/* links */}
-                {project.has('links') && (
-                  <ProjectLinks links={project.get('links') || []} />
-                )}
-                {/* repositories */}
-                {project.has('repositories') && (
-                  <ProjectLinks
-                    icon="/icons/github.svg"
-                    iconSize={24}
-                    links={project.get('repositories') || []}
-                  />
-                )}
-                {/* npm */}
-                {project.has('npm') && (
-                  <ProjectLinks
-                    icon="/icons/npm.svg"
-                    iconSize={24}
-                    links={project.get('npm')!}
-                  />
-                )}
-                {/* codesandbox */}
-                {project.has('codesandbox') && (
-                  <ProjectLinks
-                    icon="/icons/codesandbox.svg"
-                    iconSize={22}
-                    links={project.get('codesandbox')!}
-                  />
-                )}
-              </ProjectSection>
-            ))}
+            project.has('codesandbox')) && (
+            <ProjectSection
+              className="flex flex-col gap-1"
+              title={t('links')}
+            >
+              {/* links */}
+              {project.has('links') && (
+                <ProjectLinks links={project.get('links') || []} />
+              )}
+              {/* repositories */}
+              {project.has('repositories') && (
+                <ProjectLinks
+                  icon="/icons/github.svg"
+                  iconSize={24}
+                  links={project.get('repositories') || []}
+                />
+              )}
+              {/* npm */}
+              {project.has('npm') && (
+                <ProjectLinks
+                  icon="/icons/npm.svg"
+                  iconSize={24}
+                  links={project.get('npm')!}
+                />
+              )}
+              {/* codesandbox */}
+              {project.has('codesandbox') && (
+                <ProjectLinks
+                  icon="/icons/codesandbox.svg"
+                  iconSize={22}
+                  links={project.get('codesandbox')!}
+                />
+              )}
+            </ProjectSection>
+          )}
           {/* -------------------- */}
           {/* ------ images ------ */}
           {/* -------------------- */}

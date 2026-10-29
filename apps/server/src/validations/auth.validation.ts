@@ -49,8 +49,9 @@ export const UserIdSchema = z.object({
 });
 
 export const getResetPasswordSchema = (locale: Locale) => z.object({
-  // email there is encrypted, so its a string
-  email: getEmailFieldSchema(locale),
+  // the email is encrypted, so it is a plain string and not a valid email
+  encryptedEmail: z.string()
+    .nonempty(translate('error.required', locale, { field: translate('user:email') })),
   password: z.string()
     .min(8, locale ? translate('error.min', locale, { field: translate('user:password'), number: '8' }) : 'common:form.error.passwordMin')
     .max(64, locale ? translate('error.max', locale, { field: translate('user:password'), number: '64' }) : 'common:form.error.passwordMax'),

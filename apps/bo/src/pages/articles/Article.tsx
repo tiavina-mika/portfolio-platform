@@ -20,11 +20,11 @@ import PreviewImages from '@/containers/cms/PreviewImages';
 import UserInfo from '@/containers/users/UserInfos';
 import UsersForEntity from '@/containers/users/UsersForEntity';
 import { useTranslatedValuesByTab } from '@/hooks/useTranslatedValuesByTab';
+import { toggleActive } from '@/redux/actions/app.action';
 import {
   deleteArticle, goToAddArticle, goToArticles, goToArticlesOnWebsite, goToEditArticle,
 } from '@/redux/actions/article.action';
-import { toggleUsersNotification } from '@/redux/actions/user.action';
-import { getArticleArticleSelector } from '@/redux/reducers/article.reducer';
+import { getArticleArticleSelector, loadArticleSlice } from '@/redux/reducers/article.reducer';
 import { ISelectOption } from '@/types/app.type';
 import { IArticle, IArticleTranslatedFields } from '@/types/article.type';
 import { PREVIEW_PAGE_GRID } from '@/utils/constants';
@@ -130,9 +130,10 @@ const Article = () => {
     navigate(goToAddArticle());
   };
 
-  // for notification
   const togglePublish = () => {
-    dispatch(toggleUsersNotification([article.id], !article.get('active')));
+    dispatch(toggleActive({
+      item: article, collection: 'Article', value: !article.get('active'), loadSlice: loadArticleSlice,
+    }));
   };
 
   const menus = [

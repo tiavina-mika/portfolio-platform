@@ -44,7 +44,16 @@ const createContactAttributes = async (): Promise<void> => {
   const client = getBrevoClient();
 
   await Promise.all(
-    CONTACT_ATTRIBUTES.map((attribute) => client.contacts.createAttribute(attribute))
+    CONTACT_ATTRIBUTES.map(async (attribute) => {
+      try {
+        await client.contacts.createAttribute(attribute);
+      }
+      catch (error: unknown) {
+        // Brevo answers 400 when the attribute already exists: it is ready, no need to retry it
+        if (error instanceof BrevoError && error.statusCode === 400) return;
+        throw error;
+      }
+    })
   );
 };
 
@@ -79,11 +88,12 @@ export const createContactEmail = async (
 
     const data = await client.contacts.createContact({
       ...values,
+      // a missing value is left out: Brevo rejects an empty SMS as an invalid phone number
       attributes: {
         LASTNAME: values.attributes.lastName,
-        FIRSTNAME: values.attributes.firstName ?? '',
         EMAIL: values.email,
-        SMS: values.attributes.sms ?? '',
+        ...(values.attributes.firstName ? { FIRSTNAME: values.attributes.firstName } : {}),
+        ...(values.attributes.sms ? { SMS: values.attributes.sms } : {}),
       },
       ...(id ? { ext_id: id } : {}),
     });

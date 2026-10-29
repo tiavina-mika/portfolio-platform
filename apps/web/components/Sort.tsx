@@ -31,7 +31,7 @@ const Sort = ({
   }, [values, pathname, router]);
 
   const handleChangeOrderBy = (value: string) => {
-    setValues(prev => ({ ...prev, orderBy: value }));
+    setValues(prev => ({ ...prev, orderedBy: value, page: 1 }));
   };
 
   const toggleSort = useCallback(() => {
@@ -53,7 +53,7 @@ const Sort = ({
         inputClassName={inputClassName}
         onChange={handleChangeOrderBy}
         options={options}
-        value={options[0]?.value}
+        value={values.orderedBy ?? options[0]?.value}
       />
       <IconButton onClick={toggleSort}>
         <NextIcon

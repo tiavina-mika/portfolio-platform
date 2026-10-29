@@ -24,12 +24,12 @@ import SectionsByPage from '@/containers/pages/SectionsByPage';
 import UserInfo from '@/containers/users/UserInfos';
 import UsersForEntity from '@/containers/users/UsersForEntity';
 import { useTranslatedValuesByTab } from '@/hooks/useTranslatedValuesByTab';
+import { toggleActive } from '@/redux/actions/app.action';
 import {
   deletePage, goToAddPage, goToPages, goToEditPage, goToPageOnWebsite,
 } from '@/redux/actions/page.action';
 import { goToAddPageSection } from '@/redux/actions/pageSection.action';
-import { toggleUsersNotification } from '@/redux/actions/user.action';
-import { getPagePageSelector, getSectionsByPageSelector } from '@/redux/reducers/page.reducer';
+import { getPagePageSelector, getSectionsByPageSelector, loadPageSlice } from '@/redux/reducers/page.reducer';
 import { ISelectOption } from '@/types/app.type';
 import { IPage } from '@/types/page.type';
 import { PREVIEW_PAGE_GRID } from '@/utils/constants';
@@ -130,9 +130,10 @@ const Page = () => {
     navigate(goToAddPage());
   };
 
-  // for notification
   const togglePublish = () => {
-    dispatch(toggleUsersNotification([page.id], !page.get('active')));
+    dispatch(toggleActive({
+      item: page, collection: 'Page', value: !page.get('active'), loadSlice: loadPageSlice,
+    }));
   };
 
   const goToCreateSection = () => {

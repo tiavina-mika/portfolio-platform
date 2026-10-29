@@ -20,14 +20,14 @@ import Items from '@/components/Items';
 import ItemsStatus from '@/components/ItemsStatus';
 import Layout from '@/components/layouts/Layout';
 import { useTranslatedValuesByTab } from '@/hooks/useTranslatedValuesByTab';
+import { toggleActive } from '@/redux/actions/app.action';
 import { goToPage } from '@/redux/actions/page.action';
 import {
   deletePageSection,
   goToEditPageSection,
   goToPageSections,
 } from '@/redux/actions/pageSection.action';
-import { toggleUsersNotification } from '@/redux/actions/user.action';
-import { getPageSectionSelector } from '@/redux/reducers/page.reducer';
+import { getPageSectionSelector, loadPageSectionSlice } from '@/redux/reducers/page.reducer';
 import { ISelectOption } from '@/types/app.type';
 import { PREVIEW_PAGE_GRID } from '@/utils/constants';
 import { displayDate } from '@/utils/date.utils';
@@ -91,9 +91,10 @@ const PageSection = () => {
     navigate(goToPageSections());
   };
 
-  // for notification
   const togglePublish = () => {
-    dispatch(toggleUsersNotification([section.id], !section.get('active')));
+    dispatch(toggleActive({
+      item: section, collection: 'PageSection', value: !section.get('active'), loadSlice: loadPageSectionSlice,
+    }));
   };
 
   const goToEdit = (pageId: string, sectionId: string) => {

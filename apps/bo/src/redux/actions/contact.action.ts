@@ -129,13 +129,17 @@ export const toggleContactsByIds = (ids: string[], field: string, value = true):
 };
 
 export const setContactAsReplied = (contact: IContact): any => {
-  return async (dispatch: AppDispatch): Promise<void> => {
+  return actionWithLoader(async (dispatch: AppDispatch): Promise<void> => {
     contact.set('replied', true);
     const updatedContact = await contact.save();
 
-    // delete
     dispatch(updateContactInListSlice(updatedContact));
-  };
+  },
+  // rights
+  {
+    collection,
+    action: 'update',
+  });
 };
 
 /*

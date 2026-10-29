@@ -174,7 +174,7 @@ Parse.Cloud.define(
     const currentUser = request.user;
 
     if (!currentUser) return;
-    const isAdmin = isAdministrator(currentUser);
+    const isAdmin = await isAdministrator(currentUser);
 
     if (!isAdmin) {
       throw new Error('user:errors.accessDenied');
@@ -200,7 +200,7 @@ Parse.Cloud.define(
     const currentUser = request.user;
 
     if (!currentUser) return;
-    const isAdmin = isAdministrator(currentUser);
+    const isAdmin = await isAdministrator(currentUser);
 
     if (!isAdmin) {
       throw new Error('user:errors.accessDenied');
@@ -250,7 +250,7 @@ Parse.Cloud.define(
     const currentUser = request.user;
 
     if (!currentUser) return;
-    const isAdmin = isAdministrator(currentUser);
+    const isAdmin = await isAdministrator(currentUser);
 
     if (!isAdmin) {
       throw new Error('user:errors.accessDenied');

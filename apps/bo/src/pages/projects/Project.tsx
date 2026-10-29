@@ -23,11 +23,11 @@ import Layout from '@/components/layouts/Layout';
 import ListSeparatedByComma from '@/components/ListSeparatedByComma';
 import PreviewImages from '@/containers/cms/PreviewImages';
 import { useTranslatedValuesByTab } from '@/hooks/useTranslatedValuesByTab';
+import { toggleActive } from '@/redux/actions/app.action';
 import {
   deleteProject, goToAddProject, goToProjects, goToProjectsOnWebsite, goToEditProject,
 } from '@/redux/actions/project.action';
-import { toggleUsersNotification } from '@/redux/actions/user.action';
-import { getProjectProjectSelector } from '@/redux/reducers/project.reducer';
+import { getProjectProjectSelector, loadProjectSlice } from '@/redux/reducers/project.reducer';
 import { ISelectOption } from '@/types/app.type';
 import { IProject, IProjectTranslatedFields, IProjectUrl } from '@/types/project.type';
 import { PREVIEW_PAGE_GRID } from '@/utils/constants';
@@ -204,9 +204,10 @@ const Project = () => {
     navigate(goToAddProject());
   };
 
-  // for notification
   const togglePublish = () => {
-    dispatch(toggleUsersNotification([project.id], !project.get('active')));
+    dispatch(toggleActive({
+      item: project, collection: 'Project', value: !project.get('active'), loadSlice: loadProjectSlice,
+    }));
   };
 
   const menus = [

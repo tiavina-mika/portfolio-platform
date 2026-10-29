@@ -119,6 +119,35 @@ export const markAsSeen = (parseObj: Parse.Object, notify: string): any => {
   });
 };
 
+type ToggleActiveInput<I> = {
+  // the object shown in the preview page
+  item: I;
+  // collection name, used to check the update right
+  collection: string;
+  // new value of the active field
+  value: boolean;
+  // reducer action that puts the saved object back in the preview page state
+  loadSlice: (item: I) => Action;
+};
+/**
+ * publish or unpublish the object of a preview page (the active field)
+ */
+export const toggleActive = <I extends Parse.Object>({
+  item, collection: collectionName, value, loadSlice,
+}: ToggleActiveInput<I>): any => {
+  return actionWithLoader(async (dispatch: AppDispatch): Promise<void> => {
+    item.set('active', value);
+    const savedItem = await item.save();
+
+    dispatch(loadSlice(savedItem));
+  },
+  // rights
+  {
+    collection: collectionName,
+    action: 'update',
+  });
+};
+
 type ToggleMultiMarkAsSeenInput<I> = {
   // collection name in which we want to mark the items as seen
   collection: string;

@@ -401,7 +401,7 @@ export const resetPassword = (values: ResetPasswordInput): any => {
     const state = getState?.()!;
     const accountEmail = getAppAccountEmailSelector(state);
 
-    await Parse.Cloud.run('resetPassword', { email: accountEmail, password: values.newPassword });
+    await Parse.Cloud.run('resetPassword', { encryptedEmail: accountEmail, password: values.newPassword });
 
     dispatch(
       setAlertSlice({
@@ -424,13 +424,13 @@ export const onEnterResetPassword = ({
   return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
     const state = getState?.()!;
     const locale = getSettingsLocaleSelector(state);
-    const isUserExists = await Parse.Cloud.run('isUserExistsByEmail', { encryptedEmail: params.email, locale });
+    const isUserExists = await Parse.Cloud.run('isUserExistsByEmail', { encryptedEmail: params.encryptedEmail, locale });
 
     if (!isUserExists) {
       throw new Error(i18n.t('user:errors.userNotFound'));
     }
 
-    dispatch(setAccountEmailSlice(params.email));
+    dispatch(setAccountEmailSlice(params.encryptedEmail));
   });
 };
 
@@ -484,7 +484,7 @@ export const goToLogout = (): any => ({ to: PATH_NAMES.logout });
  */
 export const goToSendEmailResetPassword = (): any => ({ to: PATH_NAMES.account.root + '/' + PATH_NAMES.account.resetPassword });
 export const goToResetPasswordConfirmCode = (): any => ({ to: PATH_NAMES.account.root + '/' + PATH_NAMES.account.confirmResetPasswordCode });
-export const goToResetPassword = (email: string): any => ({ to: PATH_NAMES.account.root + '/' + PATH_NAMES.account.resetPassword + '/$email', params: { email } });
+export const goToResetPassword = (encryptedEmail: string): any => ({ to: PATH_NAMES.account.root + '/' + PATH_NAMES.account.resetPassword + '/$encryptedEmail', params: { encryptedEmail } });
 //   push('/' + PATH_NAMES.account.root + '/' + PATH_NAMES.account.resetPassword + '/' + email);
 
 export const goToAccountVerificationCode = (): any => ({ to: PATH_NAMES.account.root + '/' + PATH_NAMES.account.verifyAccount });

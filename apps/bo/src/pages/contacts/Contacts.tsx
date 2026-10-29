@@ -17,10 +17,10 @@ import SearchContacts from '@/containers/contacts/SearchContacts';
 import { useProtect } from '@/hooks/useProtect';
 import { destroyObjects, toggleMultiMarkAsSeen } from '@/redux/actions/app.action';
 import {
-  deleteContact, loadContacts, toggleContactsByIds,
+  deleteContact, loadContacts, setContactAsReplied, toggleContactsByIds,
 } from '@/redux/actions/contact.action';
 import {
-  getContactCountSelector, getContactContactsSelector, deleteContactsSlice, updateContactInListSlice,
+  getContactCountSelector, getContactContactsSelector, deleteContactsSlice,
   loadContactsSlice,
 } from '@/redux/reducers/contact.reducer';
 import { contactsRoute } from '@/routes/protected/contact.routes';
@@ -204,8 +204,7 @@ const Contacts = () => {
   const handleIsReplied = () => {
     if (!selectedContact) return;
 
-    selectedContact.set('replied', true);
-    dispatch(updateContactInListSlice(selectedContact));
+    dispatch(setContactAsReplied(selectedContact));
   };
 
   return (

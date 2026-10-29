@@ -21,6 +21,8 @@ export const getPage = async (
   try {
     const page = await new Parse.Query(collections.Page)
       .equalTo(`translated.${locale}.slug`, slug)
+      .notEqualTo('deleted', true)
+      .equalTo('active', true)
       .include('blocks')
       .first();
 

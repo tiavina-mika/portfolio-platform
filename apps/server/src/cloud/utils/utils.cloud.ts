@@ -121,7 +121,7 @@ export const fromBO = <T extends ParseCloudRequest>(
   });
 };
 
-export const cloudValidationRules = (
+export const cloudValidationRules = async (
   request:
     | Parse.Cloud.AfterSaveRequest |
     Parse.Cloud.BeforeSaveRequest |
@@ -137,7 +137,7 @@ export const cloudValidationRules = (
     throw Error('Validation failed. Please login to continue.');
   }
 
-  if (request.user && !isAdministrator(request.user)) {
+  if (request.user && !(await isAdministrator(request.user))) {
     throw Error('Access denied.');
   }
 };

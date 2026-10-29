@@ -21,9 +21,9 @@ import UsersForEntity from '@/containers/users/UsersForEntity';
 import { useProtect } from '@/hooks/useProtect';
 import { useToggle } from '@/hooks/useToggle';
 import { useTranslatedValuesByTab } from '@/hooks/useTranslatedValuesByTab';
+import { toggleActive } from '@/redux/actions/app.action';
 import { deleteCategory, editCategory, goToCategories } from '@/redux/actions/category.action';
-import { toggleUsersNotification } from '@/redux/actions/user.action';
-import { getCategoryCategorySelector } from '@/redux/reducers/category.reducer';
+import { getCategoryCategorySelector, loadCategorySlice } from '@/redux/reducers/category.reducer';
 import { ISelectOption } from '@/types/app.type';
 import { ICategory, ICategoryInput, ICategoryTranslatedFields } from '@/types/category.type';
 import { getCategoryEntityLabel } from '@/utils/cms.utils';
@@ -111,9 +111,10 @@ const Category = () => {
     navigate(goToCategories());
   };
 
-  // for notification
   const togglePublish = () => {
-    dispatch(toggleUsersNotification([category.id], !category.get('active')));
+    dispatch(toggleActive({
+      item: category, collection: 'Category', value: !category.get('active'), loadSlice: loadCategorySlice,
+    }));
   };
 
   const menus = [

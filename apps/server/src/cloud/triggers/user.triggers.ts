@@ -132,7 +132,6 @@ Parse.Cloud.afterSave(
  */
 Parse.Cloud.afterDelete(
   Parse.User,
-  // eslint-disable-next-line @typescript-eslint/require-await
   parseFunction(async (request: Parse.Cloud.AfterDeleteRequest<Parse.User>): Promise<void> => {
     const user = request.object;
     const currentUser = request.user;
@@ -140,7 +139,7 @@ Parse.Cloud.afterDelete(
     logger.info(`User ${user.id} deleted from the database at ${dayjs().format()} by ${currentUser?.get('username')}`);
 
     if (!currentUser) return;
-    const isAdmin = isAdministrator(currentUser);
+    const isAdmin = await isAdministrator(currentUser);
 
     if (!isAdmin) {
       throw new Error('Access denied');

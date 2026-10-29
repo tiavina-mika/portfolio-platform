@@ -63,7 +63,7 @@ export const isAdministratorOrBetter = async (request: Record<string, any>): Pro
  * @returns {Promise.<boolean>}
  */
 export const isOwner = async (user: User): Promise<boolean> => {
-  const isUserOwner = await hasRole([HIGHEST_LEVEL_ROLES[1]!], user);
+  const isUserOwner = await hasRole([HIGHEST_LEVEL_ROLES[0]!], user);
 
   return isUserOwner;
 };
