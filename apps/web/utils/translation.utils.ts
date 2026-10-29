@@ -7,13 +7,16 @@ import enApp from '@/translations/en/app.json';
 import enArticle from '@/translations/en/article.json';
 import enCommon from '@/translations/en/common.json';
 import enForm from '@/translations/en/form.json';
+import enHome from '@/translations/en/home.json';
+import enProject from '@/translations/en/project.json';
 import enZod from '@/translations/en/zod.json';
 import frApp from '@/translations/fr/app.json';
 import frArticle from '@/translations/fr/article.json';
 import frCommon from '@/translations/fr/common.json';
 import frForm from '@/translations/fr/form.json';
+import frHome from '@/translations/fr/home.json';
+import frProject from '@/translations/fr/project.json';
 import frZod from '@/translations/fr/zod.json';
-
 
 import { COOKIES } from './constants';
 
@@ -42,6 +45,8 @@ export const getTranslatedMessages = (locale: string): AbstractIntlMessages => {
         ...enCommon,
         ...enForm,
         ...enZod,
+        ...enHome,
+        ...enProject,
       };
 
     // french is the default
@@ -52,6 +57,8 @@ export const getTranslatedMessages = (locale: string): AbstractIntlMessages => {
         ...frCommon,
         ...frForm,
         ...frZod,
+        ...frHome,
+        ...frProject,
       };
   }
 };

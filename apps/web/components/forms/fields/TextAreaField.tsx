@@ -10,28 +10,33 @@ type Props = {
   name: string;
   label?: string;
   description?: string;
+  rootClassName?: string;
 } & TextareaProps;
 
 const TextAreaField = ({
-  name, label, description, ...inputProps
+  name, label, description, rootClassName, ...inputProps
 }: Props) => {
   const {
     control,
     formState: { errors },
   } = useFormContext();
 
+  const messageId = `${name}-message`;
+
   return (
     <Controller
       control={control}
       name={name}
       render={({ field }) => (
-        <Stack spacing={1.5}>
+        <Stack className={rootClassName} spacing={1.5}>
           {label && (
             <FieldLabel htmlFor={name}>
               {label} {inputProps.required && '*'}
             </FieldLabel>
           )}
           <Textarea
+            aria-describedby={errors[name] ? messageId : undefined}
+            id={name}
             {...inputProps}
             {...field}
             error={!!errors[name]?.message}
@@ -43,7 +48,7 @@ const TextAreaField = ({
           />
           {description && <FieldDescription>{description}</FieldDescription>}
           {errors[name] && (
-            <FieldError>{(errors as any)[name]?.message}</FieldError>
+            <FieldError id={messageId}>{(errors as any)[name]?.message}</FieldError>
           )}
         </Stack>
       )}

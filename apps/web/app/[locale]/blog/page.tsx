@@ -1,23 +1,23 @@
 import { Metadata, ResolvingMetadata } from 'next';
-import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { Suspense } from 'react';
 import { capitalize } from 'string-ts';
 
-import { Breadcrumbs } from '@/components/Breadcrumbs';
-import Section from '@/components/layouts/Section';
-import Pagination from '@/components/Pagination';
-import Sort from '@/components/Sort';
-import Text from '@/components/typography/Text';
-import Title from '@/components/typography/Title';
-import { siteConfig } from '@/config/site';
 import Articles from '@/containers/articles/Articles';
-import { defaultLocale, Locale } from '@/i18n/config';
+import ArticlesHeader from '@/containers/articles/ArticlesHeader';
+import { locales, Locale } from '@/i18n/config';
 import { ROUTES } from '@/i18n/routes';
-import { getArticles } from '@/server/queries/article.queries';
-import { ISearchParams, ISelectOption } from '@/types/app.type';
-import { getPaginatedQuery, getTranslatedAbsoluteUrl } from '@/utils/app.utils';
-import { PAGINATION } from '@/utils/constants';
+import { getArticleCategories, getCategoryBySlug } from '@/server/queries/category.queries';
+import { ISearchParams } from '@/types/app.type';
+import { OgCardLayoutEnum } from '@/types/og.type';
+import { getAlternates, getTranslatedAbsoluteUrl } from '@/utils/app.utils';
+import { APP_NAME } from '@/utils/constants';
+import { getSocialMetadata } from '@/utils/og.utils';
+import { getTranslatedField } from '@/utils/translation.utils';
 import { paginationSearchParamsSchema } from '@/validations/app.validations';
+
+
+import ArticlesPage from './ArticlesPage';
 
 /*
  * ----------------------------- //
@@ -38,30 +38,34 @@ export const generateMetadata = async (
     locale,
     namespace: 'Metadata',
   });
+  const tOg = await getTranslations({ locale, namespace: 'OpenGraph' });
 
-  const image = `${siteConfig.url}/images/metadata/og-image-articles.${locale || defaultLocale}.jpg`;
-
-  const og = (await parent).openGraph;
   const keywords = (await parent).keywords || [];
 
+  // canonical always points to the unfiltered, page-1 listing — filters/pagination are not canonical
+  const urlsByLocale = Object.fromEntries(
+    locales.map((loc) => [loc, getTranslatedAbsoluteUrl(ROUTES.articles.root, { locale: loc })])
+  );
+  const title = t('articles.metaTitle');
+  const description = t('articles.metaDescription');
+
   return {
-    title: t('articles.metaTitle'),
-    description: t('articles.metaDescription'),
+    title,
+    description,
     keywords: [...keywords, 'articles', 'blog', 'news'],
-    openGraph: {
-      ...og,
-      title: t('articles.metaTitle'),
-      description: t('articles.metaDescription'),
-      url: getTranslatedAbsoluteUrl(ROUTES.articles.root, { locale }),
-      images: [
-        {
-          url: image,
-          width: 1200,
-          height: 630,
-          alt: t('articles.metaTitle'),
-        },
-      ],
-    },
+    alternates: getAlternates(urlsByLocale, locale),
+    ...getSocialMetadata({
+      card: {
+        layout: OgCardLayoutEnum.CENTERED,
+        chip: tOg('blog.chip'),
+        title: tOg('blog.title', { appName: APP_NAME }),
+        subtitle: tOg('blog.subtitle'),
+      },
+      title,
+      description,
+      url: urlsByLocale[locale],
+      locale,
+    }),
   };
 };
 
@@ -72,7 +76,7 @@ type Props = {
   searchParams: Promise<ISearchParams>;
 };
 
-const ArticlesPage = async (props: Props) => {
+const ArticlesContent = async (props: Props) => {
   const searchParams = await props.searchParams;
   const params = await props.params;
 
@@ -80,95 +84,68 @@ const ArticlesPage = async (props: Props) => {
 
   setRequestLocale(locale);
 
-  const t = await getTranslations('Common');
-  const tArticle = await getTranslations('Article');
-  const { perPage } = PAGINATION;
-
   const parsedSearchParams = paginationSearchParamsSchema.parse(searchParams);
   const page = parseInt(parsedSearchParams.page, 10) || 1;
-  const orderedBy = parsedSearchParams.orderedBy || 'updatedAt';
-  const order = parsedSearchParams.order || 'asc';
-  const { tag } = parsedSearchParams;
-  const { category } = parsedSearchParams;
+  const { order, tag, category } = parsedSearchParams;
 
-  const articleBreadcrumbs = [
-    {
-      title: tArticle('articles'),
-      href: (ROUTES.articles as any).root,
-    },
-  ];
+  const [categories, categoryObj] = await Promise.all([
+    getArticleCategories(),
+    category ? getCategoryBySlug(category, locale) : undefined,
+  ]);
 
-  const options: ISelectOption[] = [
-    {
-      label: t('newest'),
-      value: 'updatedAt',
-    },
-    {
-      label: tArticle('title'),
-      value: 'title',
-    },
-  ];
+  const categoryName = categoryObj
+    ? getTranslatedField(categoryObj.translated, locale, 'name')
+    : category;
 
-  // preload the data from server
-  const data = await getArticles({
-    orderedBy,
-    order,
-    locale,
-    tag,
-    category,
-    ...getPaginatedQuery(perPage, page),
-  });
-
-  if ((data as any).error) {
-    notFound();
-  }
+  /*
+   * the filters and the sort that the links of the page (pagination included) keep; the default sort
+   * adds nothing, so the plain address of the blog stays the canonical one
+   */
+  const linkSearchParams: Record<string, string> = {
+    ...(category ? { category } : {}),
+    ...(tag ? { tag } : {}),
+    ...(order === 'asc' ? { order } : {}),
+  };
 
   return (
-    <Section className="flex flex-col" rootClassName="mb-8 md:mb-10 lg:md-12">
-      {/* header */}
-      <div className={`
-        mb-4 flex flex-col justify-between
-        sm:flex-row sm:items-center
-        md:mb-0
-        lg:mb-8
-      `}
-      >
-        {category ? (
-          //
-          <div className={`
-            mb-4 flex flex-col gap-1
-            md:mt-4 md:mb-8
-            lg:mt-8 lg:mb-4
-          `}
-          >
-            <div>
-              <Text className="font-medium">{tArticle('category')}</Text>
-            </div>
-            <div>
-              <Title level={2}>{capitalize(category)}</Title>
-            </div>
-          </div>
-        ) : (
-          <Breadcrumbs className="self-stretch" segments={articleBreadcrumbs} />
-        )}
-
-        <Sort options={options} searchParams={parsedSearchParams} />
-      </div>
-      {(data as any).articles.length > 0 ? (
-        <Articles articles={(data as any).articles} locale={locale} />
-      ) : (
-        <Text>{tArticle('noArticlesYet')}</Text>
+    <ArticlesPage
+      articles={(
+        <Articles
+          category={category}
+          locale={locale}
+          order={order}
+          page={page}
+          searchParams={linkSearchParams}
+          tag={tag}
+        />
       )}
-      {/* pagination */}
-      <Pagination
-        className="mt-4"
-        page={page}
-        perPage={perPage}
-        searchParams={parsedSearchParams}
-        total={(data as any).count}
-      />
-    </Section>
+      header={(
+        <ArticlesHeader
+          category={category}
+          categoryName={categoryName ? capitalize(categoryName) : undefined}
+          locale={locale}
+          sort={order === 'asc' ? 'oldest' : 'newest'}
+          tag={tag}
+          categories={categories.map((item) => ({
+            slug: getTranslatedField(item.translated, locale, 'slug'),
+            name: getTranslatedField(item.translated, locale, 'name'),
+          }))}
+        />
+      )}
+    />
   );
 };
 
-export default ArticlesPage;
+/**
+ * this route reads `searchParams` (pagination/filters), which — unlike `params` — is never
+ * covered by `generateStaticParams` and so is always request-time data — wrapped in its own
+ * `<Suspense>` boundary so `cacheComponents` can still validate/prerender the static shell
+ * (nav/footer) around it
+ */
+const ArticlesApp = (props: Props) => (
+  <Suspense fallback={null}>
+    <ArticlesContent {...props} />
+  </Suspense>
+);
+
+export default ArticlesApp;

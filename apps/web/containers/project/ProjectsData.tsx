@@ -1,32 +1,36 @@
-import { notFound } from 'next/navigation';
-
-
-import Pagination from '@/components/Pagination';
-import Projects from '@/containers/projects/Projects';
 import { Locale } from '@/i18n/config';
 import { getProjects } from '@/server/queries/project.queries';
-import { IError, ISearchParams } from '@/types/app.type';
-import { IProject } from '@/types/project.type';
 import { getPaginatedQuery } from '@/utils/app.utils';
 import { PAGINATION } from '@/utils/constants';
-import { projectSearchParamsSchema } from '@/validations/app.validations';
+import { getProjectCardData } from '@/utils/project.utils';
+
+import ProjectsSection from './ProjectsSection';
 
 type Props = {
   locale: Locale;
-  searchParams: ISearchParams;
+  page: number;
+  /**
+   * `desc` lists the newest first
+   */
+  order: 'asc' | 'desc';
+  orderedBy?: string;
+  tag?: string;
+  technologies?: string;
+  /**
+   * Search params kept in the links of the pagination
+   */
+  searchParams: Record<string, string>;
 };
 
-const PaginatedProjects = async ({ locale, searchParams }: Props) => {
+/**
+ * Loads one page of the projects and renders it. A failed request throws, so the boundary around
+ * shows the error (or offline) banner with a retry.
+ */
+const ProjectsData = async ({
+  locale, page, order, orderedBy, tag, technologies, searchParams,
+}: Props) => {
   const { perPage } = PAGINATION;
 
-  const parsedSearchParams = projectSearchParamsSchema.parse(searchParams);
-  const page = parseInt(parsedSearchParams.page, 10) || 1;
-  const { orderedBy } = parsedSearchParams;
-  const { order } = parsedSearchParams;
-  const { tag } = parsedSearchParams;
-  const { technologies } = parsedSearchParams;
-
-  // preload the data from server
   const data = await getProjects({
     orderedBy,
     order,
@@ -36,34 +40,20 @@ const PaginatedProjects = async ({ locale, searchParams }: Props) => {
     ...getPaginatedQuery(perPage, page),
   });
 
-  if ((data as IError).error) {
-    notFound();
-  }
+  if ('error' in data) throw new Error(data.error);
 
-  const { projects, count } = data as {
-    projects: IProject[];
-    count: number;
-  };
+  const projects = await Promise.all(
+    data.projects.map((project) => getProjectCardData(project, locale))
+  );
 
   return (
-    <>
-      <Projects
-        locale={locale}
-        projects={projects}
-        className={`
-          mt-10
-          lg:mt-20
-        `}
-      />
-      <Pagination
-        className="mt-4"
-        page={page}
-        perPage={perPage}
-        searchParams={parsedSearchParams}
-        total={count}
-      />
-    </>
+    <ProjectsSection
+      pagination={{ page, perPage, total: data.count }}
+      projects={projects}
+      searchParams={searchParams}
+      status="ready"
+    />
   );
 };
 
-export default PaginatedProjects;
+export default ProjectsData;

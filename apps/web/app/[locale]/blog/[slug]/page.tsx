@@ -1,46 +1,31 @@
-
-import dayjs from 'dayjs';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { cache, Fragment, Suspense } from 'react';
-import { capitalize, titleCase } from 'string-ts';
+import { cache } from 'react';
+import { titleCase } from 'string-ts';
 
-import type { IError, IFileCloud } from '@/types/app.type';
-import type { IArticle } from '@/types/article.type';
-import type { ICategory, ICategoryTranslated } from '@/types/cms.type';
-
-import Avatar from '@/components/Avatar';
-import Section from '@/components/layouts/Section';
-import Text from '@/components/typography/Text';
-import TextLink from '@/components/typography/TextLink';
-import Title from '@/components/typography/Title';
-import {
-  Card,
-  CardDescription,
-  CardImage,
-  CardSubtitle,
-} from '@/components/ui/Card';
-import Articles from '@/containers/articles/Articles';
-import ArticlesSkeleton from '@/containers/articles/ArticlesSkeleton';
-import ReadOnlyTextCodeEditor from '@/containers/articles/ReadOnlyTextCodeEditor';
-import Share from '@/containers/common/Share';
-import Newsletter from '@/containers/newsletter/NewsLetter';
-import { defaultLocale, Locale } from '@/i18n/config';
+import { BreadcrumbsSegment } from '@/components/Breadcrumbs';
+import JsonLd from '@/components/JsonLd';
+import { defaultLocale, locales, Locale } from '@/i18n/config';
 import { ROUTES } from '@/i18n/routes';
 import {
   getArticle,
+  getArticleSlugsForLocale,
   getRelatedArticles,
 } from '@/server/queries/article.queries';
-import { getAbsoluteUrl } from '@/utils/app.utils';
-import { goToItemsByCategory } from '@/utils/cms.utils';
-import { createQueryString, generateOGImageUrl } from '@/utils/next.utils';
-import { getSSRCurrentPathname } from '@/utils/server.utils';
+import { IError } from '@/types/app.type';
+import { IArticle } from '@/types/article.type';
+import { OgCard, OgCardLayoutEnum } from '@/types/og.type';
+import { getAbsoluteUrl, getAlternates } from '@/utils/app.utils';
+import { getArticleImageUrl } from '@/utils/cms.utils';
+import { GENERATE_STATIC_PARAMS_FALLBACK_SLUG } from '@/utils/constants';
+import { getArticleJsonLd } from '@/utils/jsonLd.utils';
+import { retrievePathnameFromDynamicPathname } from '@/utils/next.utils';
+import { generateOGImageUrl, getSocialImages } from '@/utils/og.utils';
 import { getTranslatedField } from '@/utils/translation.utils';
-import { getUserFullName } from '@/utils/user.utils';
-import { slugify } from '@/utils/utils';
 
-import { getCachedApp } from '../../page';
+
+import ArticlePage from './ArticlePage';
 
 const getCachedArticle = cache(
   async (slug: string, locale: Locale): Promise<IArticle | null> => {
@@ -52,6 +37,37 @@ const getCachedArticle = cache(
     return article as IArticle;
   }
 );
+
+/**
+ * the share card of an article: its first category in the chip (the blog when it has none) and
+ * its title as the page heading shows it — not the meta title, which is written for search engines
+ */
+const getArticleOgCard = async (article: IArticle, locale: Locale): Promise<OgCard> => {
+  const t = await getTranslations({ locale, namespace: 'OpenGraph' });
+  const category = article.categories?.[0];
+
+  return {
+    layout: OgCardLayoutEnum.LEFT,
+    chip: (category && getTranslatedField(category.translated, locale, 'name')) || t('blog.chip'),
+    title: getTranslatedField(article.translated, locale, 'title'),
+  };
+};
+
+/**
+ * prerenders every published article at build time, per locale — combined with the layout's
+ * own `generateStaticParams` for `[locale]`, Next.js runs this once per locale and pairs the
+ * resulting slugs with it. Slugs missing at build time still render on demand (dynamicParams
+ * defaults to true).
+ */
+export const generateStaticParams = async ({ params }: { params: { locale: string } }) => {
+  const locale = params.locale as Locale;
+  const slugs = await getArticleSlugsForLocale(locale);
+
+  // `cacheComponents` requires at least one result — see GENERATE_STATIC_PARAMS_FALLBACK_SLUG
+  if (slugs.length === 0) return [{ slug: GENERATE_STATIC_PARAMS_FALLBACK_SLUG }];
+
+  return slugs.map((slug) => ({ slug }));
+};
 
 /*
  * ----------------------------- //
@@ -67,14 +83,14 @@ type Props = {
 
 export const generateMetadata = async (props: Props): Promise<Metadata> => {
   const params = await props.params;
+  const slug = params.slug;
   const locale = params.locale as Locale;
-  const article = await getCachedArticle(params.slug, locale);
+  const article = await getCachedArticle(slug, locale);
 
   // it may return an error instead of a parse object, so we need to check if it has an id
   if (!article) return {};
-  const app = await getCachedApp();
 
-  const translated = article?.get('translated');
+  const translated = article?.translated;
 
   const title =
     getTranslatedField(translated, locale, 'metaTitle') ||
@@ -84,38 +100,39 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
     getTranslatedField(translated, locale, 'description');
   const tags = getTranslatedField(translated, locale, 'tags') || '';
 
-  const currentPathname = await getSSRCurrentPathname();
-  const url = getAbsoluteUrl(currentPathname);
+  /*
+   * build the equivalent article URL for every locale, from each locale's own translated slug —
+   * derived from route params instead of `headers()`, so this route can be statically prerendered
+   */
+  const articlesPath = retrievePathnameFromDynamicPathname(ROUTES.articles.preview().pathname);
+  const urlsByLocale = Object.fromEntries(
+    locales.map((loc) => [
+      loc,
+      getAbsoluteUrl(`/${loc}${articlesPath}${getTranslatedField(translated, loc, 'slug')}`),
+    ])
+  );
+  const url = urlsByLocale[locale];
 
-  const ogImage = generateOGImageUrl({
-    title,
-    image: app?.get('image')?.url || '',
-  });
+  const { openGraphImages, twitter } = getSocialImages(
+    await getArticleOgCard(article, locale),
+    titleCase(title),
+    description
+  );
 
   return {
     title: titleCase(title),
     description,
-    keywords: tags.split(',').map((tag: string) => tag.trim()),
-    // comment this part if using generated og image (see ./opengraph-image.tsx)
+    keywords: tags ? tags.split(',').map((tag: string) => tag.trim()) : undefined,
+    alternates: getAlternates(urlsByLocale, locale),
     openGraph: {
       title: titleCase(title),
       description,
       type: 'article',
       url,
       locale: locale || defaultLocale,
-      images: [
-        {
-          url: ogImage, // Dynamic og route
-          width: 800,
-          height: 600,
-        },
-        {
-          url: ogImage, // Dynamic og route
-          width: 1200,
-          height: 630,
-        },
-      ],
+      images: openGraphImages,
     },
+    twitter,
   };
 };
 
@@ -124,220 +141,58 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
  * ------------ page ----------- //
  * ----------------------------- //
  */
-const ArticlePage = async (props: Props) => {
+const ArticleApp = async (props: Props) => {
   const params = await props.params;
 
   const slug = params.slug;
   const locale = params.locale as Locale;
 
   setRequestLocale(locale);
-  const t = await getTranslations('Article');
+  const tNavBar = await getTranslations('NavBar');
 
   const article = await getCachedArticle(slug, locale);
 
   // it may return an error instead of a parse object, so we need to check if it has an id
   if (!article) {
     notFound();
-    return;
   }
 
-  const pathname = await getSSRCurrentPathname();
-  const currentPathname = getAbsoluteUrl(pathname);
+  // derived from route params instead of `headers()`, so this route can be statically prerendered
+  const articlesPath = retrievePathnameFromDynamicPathname(ROUTES.articles.preview().pathname);
+  const currentPathname = getAbsoluteUrl(`/${locale}${articlesPath}${slug}`);
 
-  const author = article.get('user');
-  const translated = article.get('translated');
-  const title = getTranslatedField(translated, locale, 'title');
-  const tags = getTranslatedField(translated, locale, 'tags');
-  const tagsArr = tags?.split(',') || [];
-  const categories = article.get('categories') || [];
+  const relatedArticlesResponse = await getRelatedArticles(article);
+  const relatedArticles = (relatedArticlesResponse as IError)?.error
+    ? []
+    : (relatedArticlesResponse as IArticle[]);
 
-  const relatedArticles = await getRelatedArticles(article);
+  const title = getTranslatedField(article.translated, locale, 'title');
+  const ogImage = generateOGImageUrl(await getArticleOgCard(article, locale));
+
+  const breadcrumbs: BreadcrumbsSegment[] = [
+    { name: tNavBar('blog'), link: ROUTES.articles.root },
+    { name: title, link: ROUTES.articles.preview(slug) },
+  ];
 
   return (
     <>
-      <Section className="flex flex-col" size="md">
-        <Card className="self-stretch" withShadow={false}>
-          {/* ---------- category ---------- */}
-          {categories.map((category: ICategory, index: number) => (
-            <CardSubtitle key={category.id + index}>
-              <TextLink
-                underline={false}
-                className={`
-                  font-light
-                  max-md:text-sm!
-                `}
-                href={goToItemsByCategory<ICategoryTranslated>(
-                  category.get('translated'),
-                  locale,
-                  'articles'
-                )}
-              >
-                {getTranslatedField(category.get('translated'), locale, 'name')}
-              </TextLink>
-              {categories.length - 1 !== index && (
-                <Text className={`
-                  mr-2 font-light
-                  max-md:text-sm!
-                `}
-                >, </Text>
-              )}
-            </CardSubtitle>
-          ))}
-          <Title>{title}</Title>
-
-          <CardDescription>
-            {getTranslatedField(translated, locale, 'description')}
-          </CardDescription>
-          {article.has('image') && (
-            <CardImage
-              alt={title}
-              containerClassName="mt-6 sm:h-[300px] md:h-[400px] lg:h-[543px]"
-              src={article.get('image')?.url!}
-            />
-          )}
-
-        </Card>
-        {/* -------- author -------- */}
-
-        <div className={`
-          mt-8 mb-6 flex flex-row items-center justify-between self-stretch border-b border-b-dark-300 pb-3
-          md:pb-4
-          lg:mt-12
-        `}
-        >
-          {author && (
-            <div className={`
-              flex flex-1 flex-row items-center gap-2
-              md:gap-3
-            `}
-            >
-              <Avatar user={author} />
-              <TextLink
-                // @TODO make this dynamic
-                href="/"
-                underline={false}
-                className={`
-                  font-medium
-                  max-md:text-sm!
-                `}
-              >
-                {getUserFullName(author)}
-              </TextLink>
-            </div>
-          )}
-          {/* ----- updated at ----- */}
-          <div>
-            <Text className={`
-              font-light
-              max-md:text-sm!
-            `}
-            >
-              {dayjs(article.get('updatedAt')).format('DD MMM YYYY')}
-            </Text>
-          </div>
-        </div>
-        <ReadOnlyTextCodeEditor
-          content={getTranslatedField(translated, locale, 'content')}
-        />
-        {/* images */}
-        {article.has('images') && (
-          <div className={`
-            mt-16 flex flex-col gap-8
-            md:grid md:grid-cols-2
-            lg:mt-20
-            xl:mt-24
-          `}
-          >
-            {(article.get('images') || []).map((image: IFileCloud, index: number) => (
-              <CardImage
-                alt={title}
-                containerClassName="!h-[400px]"
-                key={image.url + index}
-                src={image.url}
-              />
-            ))}
-          </div>
-        )}
-        {/* share on social media */}
-        <Share currentPathname={currentPathname} parseObj={article} />
-        {/* ----------- tags ----------- */}
-        {tags && (
-          <div className={`
-            mt-8 flex flex-col gap-3
-            md:mt-16
-            lg:mt-20
-          `}
-          >
-            <div className="h-[5px] w-6 bg-black" />
-            {/* bottom */}
-            <div className={`
-              flex flex-row gap-2
-              md:gap-5
-            `}
-            >
-              <Text className={`
-                font-medium
-                max-sm:text-sm
-              `}
-              >Tags:</Text>
-              <div className="flex flex-row items-center">
-                {tagsArr.map((tag: string, index: number) => (
-                  <Fragment key={tag + index}>
-                    <TextLink
-                      href={`${ROUTES.articles.root}?${createQueryString({ tag: slugify(tag) })}`}
-                      className={`
-                        font-light
-                        max-md:text-sm!
-                      `}
-                    >
-                      {capitalize(tag)}
-                    </TextLink>
-                    {tagsArr.length - 1 !== index && (
-                      <Text className={`
-                        mr-2 font-light
-                        max-md:text-sm!
-                      `}
-                      >
-                        ,{' '}
-                      </Text>
-                    )}
-                  </Fragment>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-      </Section>
-
-      {/* ----------- related articles ----------- */}
-      {relatedArticles && (relatedArticles as IArticle[]).length > 0 && (
-        <Section
-          rootClassName="mt-8 md:mt-20"
-          size="lg"
-          className={`
-            flex flex-col gap-5
-            md:gap-10
-          `}
-        >
-          <div>
-            <Title level={4}>{t('relatedArticles')}</Title>
-            <div className={`
-              divider mt-2
-              md:mt-4
-            `}
-            />
-          </div>
-          <Suspense fallback={<ArticlesSkeleton />}>
-            <Articles
-              articles={(relatedArticles as IArticle[]) || []}
-              locale={locale}
-            />
-          </Suspense>
-        </Section>
-      )}
-      <Newsletter locale={locale} />
+      <JsonLd
+        data={getArticleJsonLd({
+          article,
+          locale,
+          url: currentPathname,
+          image: getArticleImageUrl(article) || ogImage,
+        })}
+      />
+      <ArticlePage
+        article={article}
+        breadcrumbs={breadcrumbs}
+        currentPathname={currentPathname}
+        locale={locale}
+        relatedArticles={relatedArticles}
+      />
     </>
   );
 };
 
-export default ArticlePage;
+export default ArticleApp;

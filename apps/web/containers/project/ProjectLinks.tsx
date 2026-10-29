@@ -13,13 +13,13 @@ const ProjectLinks = ({
   iconSize = 18,
 }: Props) => {
   return (
-    <div className={`
-      flex flex-col
+    <ul className={`
+      flex list-none flex-col
       lg:gap-1
     `}
     >
       {links.map((link: IProjectUrl, index: number) => (
-        <div
+        <li
           key={link.url + index}
           className={`
             flex flex-row items-center gap-2
@@ -27,14 +27,19 @@ const ProjectLinks = ({
           `}
         >
           <div className="flex size-[28px] flex-col items-center justify-center">
-            <NextIcon size={iconSize} src={icon} />
+            <NextIcon
+              aria-hidden
+              alt=""
+              size={iconSize}
+              src={icon}
+            />
           </div>
           <TextLink className="max-md:text-base" href={link.url}>
             {link.url}
           </TextLink>
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 

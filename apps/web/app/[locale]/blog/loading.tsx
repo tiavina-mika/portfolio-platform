@@ -1,12 +1,5 @@
-import Section from '@/components/layouts/Section';
-import ArticlesSkeleton from '@/containers/articles/ArticlesSkeleton';
+import ArticlesSection from '@/containers/articles/ArticlesSection';
 
-const ArticlesLoading = () => {
-  return (
-    <Section rootClassName="mt-16">
-      <ArticlesSkeleton />
-    </Section>
-  );
-};
+const ArticlesLoading = () => <ArticlesSection status="loading" />;
 
 export default ArticlesLoading;

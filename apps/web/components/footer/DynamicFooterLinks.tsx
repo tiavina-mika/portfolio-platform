@@ -8,13 +8,17 @@ import FooterLink from './FooterLink';
 type Props = {
   locale: Locale;
 };
-const DynamicFooterPages = async ({ locale }: Props) => {
+
+/**
+ * The footer links of the CMS pages
+ */
+const DynamicFooterLinks = async ({ locale }: Props) => {
   const pages: PagesForUrlsOutput = await getCachedPagesForUrls(locale);
 
   return (
     <>
-      {pages.footers.map((page: ISelectOption, index: number) => (
-        <FooterLink href={page.value} key={index}>
+      {pages.footers.map((page: ISelectOption) => (
+        <FooterLink href={page.value} key={page.value}>
           {page.label}
         </FooterLink>
       ))}
@@ -22,4 +26,4 @@ const DynamicFooterPages = async ({ locale }: Props) => {
   );
 };
 
-export default DynamicFooterPages;
+export default DynamicFooterLinks;

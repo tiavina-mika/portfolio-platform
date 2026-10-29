@@ -1,8 +1,6 @@
-import Parse from 'parse';
-
 import { Locale } from '@/i18n/config';
 
-import { IFileCloud, ISEOFields } from './app.type';
+import { IFileCloud, ISEOFields, IUploadedFile } from './app.type';
 import { ICategory } from './cms.type';
 import { IUser } from './user.type';
 
@@ -21,11 +19,12 @@ export interface IArticleAttributes {
   user: IUser;
   translated: IArticleTranslated;
   image?: IFileCloud;
-  previewImage?: IFileCloud;
+  previewImage?: IUploadedFile;
   images?: IFileCloud[];
   categories: ICategory[];
+  totalMediaShare?: number;
 }
 
-export interface IArticle extends Parse.Object<IArticleAttributes> {
+export interface IArticle extends IArticleAttributes {
   id: string;
 }

@@ -3,132 +3,31 @@ import { join } from 'path';
 
 import { ImageResponse } from 'next/og';
 
-import { APP_NAME } from '@/utils/constants';
+import OgCard from '@/containers/og/OgCard';
+import { OG_IMAGE_SIZE } from '@/utils/constants';
+import { parseOgCardSearchParams } from '@/utils/og.utils';
 
-const cwd = join(process.cwd(), 'components');
 const publicCwd = join(process.cwd(), 'public');
 
-const loadFile = (relPath: string, path = cwd): Buffer => {
-  return fs.readFileSync(join(path, relPath));
-};
+const loadFile = (relPath: string): Buffer => fs.readFileSync(join(publicCwd, relPath));
 
-const loadDataUrl = (
-  relPath: string,
-  mimeType: string,
-  path?: string
-): string => {
-  const fileData = loadFile(relPath, path);
-  const base64Data = fileData.toString('base64');
-
-  return `data:${mimeType};base64,${base64Data}`;
-};
+// read once per server process: the same files serve every card
+const fonts = [
+  { name: 'Basier', data: loadFile('fonts/BasierCircle/BasierCircle-Regular.ttf'), weight: 400 as const },
+  { name: 'Basier', data: loadFile('fonts/BasierCircle/BasierCircle-SemiBold.ttf'), weight: 600 as const },
+  { name: 'Basier', data: loadFile('fonts/BasierCircle/BasierCircle-Bold.ttf'), weight: 700 as const },
+].map((font) => ({ ...font, style: 'normal' as const }));
 
 /**
- * A heuristic for choosing a font size to fill a box (assuming perfectly even line wrapping)
- * @returns a size in pixels to roughly fill the box
- */
-const maximizeFontSize = ({
-  text,
-  width,
-  height,
-}: {
-  text: string;
-  width: number;
-  height: number;
-}): number => {
-  let lines = 1;
-  let size = Math.min(width / text.length, height);
-
-  while (size * (lines + 1) < height) {
-    lines += 1;
-    size = Math.min(width / (text.length / lines), height);
-  }
-  return size;
-};
-
-/**
- * inspired by
- * @see https://wiscaksono.com/articles/generate-dynamic-open-graph-with-nextjs?fxck=true
- * @see https://github.com/loganzartman/loga.nz/blob/e2fdb725558b8d6e3012acd81bfee363c33adf6b/src/lib/generate-og-image.tsx
- * we use route to generate dynamic open graph images instead of the opengraph-image.tsx
+ * The share card of a page, as a PNG. A route rather than `opengraph-image.tsx` files: the pages
+ * have translated paths, which the file convention does not follow, and one route serves every
+ * page and every language. The page passes the texts already translated (see `getSocialImages`);
+ * the route only cuts them to what fits and never fetches anything, so it cannot be turned into a
+ * proxy.
  */
 export const GET = (request: Request) => {
   const { searchParams } = new URL(request.url);
+  const card = parseOgCardSearchParams(searchParams);
 
-  const title = searchParams.get('title') || APP_NAME;
-  const imageSearchParams = searchParams.get('image');
-  const backgroundColor = searchParams.get('background') || '#F5E7E7';
-  const textColor = searchParams.get('color') || '#000000';
-  const image = imageSearchParams?.split('url=')[1] || imageSearchParams;
-
-  const width = 1200;
-  const height = 630;
-  const titleFontSize = `${maximizeFontSize({
-    text: title,
-    width: width - 200,
-    height: height / 1.5,
-  })}px`;
-
-  return new ImageResponse(
-    (
-      <div
-        style={{
-          background: backgroundColor,
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          padding: '100px',
-          gap: '12px',
-          position: 'relative',
-        }}
-      >
-        {/* logo */}
-        {}
-        <img
-          alt=""
-          height="40"
-          src={loadDataUrl('images/logo.svg', 'image/svg+xml', publicCwd)}
-          width="100"
-        />
-        {/* title */}
-        <h1
-          style={{
-            fontFamily: 'font-serif',
-            fontSize: titleFontSize,
-            textWrap: 'balance',
-            lineHeight: '1.0',
-            wordBreak: 'break-word',
-            display: 'block',
-            color: textColor,
-          }}
-        >
-          {title}
-        </h1>
-
-        {/* image */}
-        {image && (
-          <img
-            alt={`${title} ${APP_NAME}`}
-            src={image}
-            style={{ position: 'absolute', bottom: -15, right: -30 }}
-            width={width / 3}
-          />
-        )}
-        {}
-      </div>
-    ),
-    {
-      width,
-      height,
-      fonts: [
-        {
-          name: 'font-serif',
-          data: loadFile('fonts/Calibre-Bold.otf'),
-          weight: 600,
-          style: 'normal',
-        },
-      ],
-    }
-  );
+  return new ImageResponse(<OgCard {...card} />, { ...OG_IMAGE_SIZE, fonts });
 };

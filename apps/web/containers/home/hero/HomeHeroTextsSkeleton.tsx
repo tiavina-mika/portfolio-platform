@@ -1,11 +1,22 @@
+import { useTranslations } from 'next-intl';
+
 import { Skeleton } from '@/components/ui/Skeleton';
 
-const HomeDescriptionSkeleton = () => {
+/**
+ * Stands for the description while it loads from the database: the bars reserve its final height
+ */
+const HomeHeroTextsSkeleton = () => {
+  const t = useTranslations('HomeHero');
+
   return (
-    <div className={`
-      flex flex-1 flex-col gap-3
-      2xl:gap-4
-    `}
+    <div
+      aria-busy="true"
+      aria-label={t('loading')}
+      role="status"
+      className={`
+        flex flex-1 flex-col gap-3
+        2xl:gap-4
+      `}
     >
       <Skeleton className={`
         h-6 w-full
@@ -40,4 +51,4 @@ const HomeDescriptionSkeleton = () => {
   );
 };
 
-export default HomeDescriptionSkeleton;
+export default HomeHeroTextsSkeleton;

@@ -6,7 +6,6 @@ import { getTranslations } from 'next-intl/server';
 import { ReactNode } from 'react';
 
 import { getCachedApp } from '@/app/[locale]/page';
-import { IFileCloud } from '@/types/app.type';
 
 import DownloadCVButton, { type DownloadCVButtonProps } from './DownloadCVButton';
 
@@ -19,14 +18,12 @@ const DownloadCV = async ({ children, className, ...rest }: Props) => {
   const t = await getTranslations('App');
   const app = await getCachedApp();
 
-  if (!app) return null;
-  if (!app.has('cv')) return null;
-  const cv = app.get('cv') || {} as IFileCloud;
+  if (!app?.cv) return null;
 
   return (
     <DownloadCVButton
       className={className}
-      publicId={cv.publicId}
+      publicId={app.cv.publicId}
       {...rest}
     >
       {children || t('downloadMyCV')}

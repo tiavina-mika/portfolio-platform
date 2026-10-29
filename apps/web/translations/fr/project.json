@@ -1,0 +1,34 @@
+{
+  "Project": {
+    "visitSite": "Visiter le site Web",
+    "seeCodeSource": "Voir le code source",
+    "projectDescription": "Description du projet",
+    "society": "Société",
+    "technicalStack": "Stack technique",
+    "aboutTheSociety": "À propos de la société",
+    "technologies": "Technologies",
+    "otherProjectsOf": "Autres projets de {society}",
+    "links": "Liens",
+    "repositories": "Code source",
+    "screenShot": "Capture d'écran",
+    "video": "Video",
+    "projects": "Projets",
+    "projectDevelopedRecently": "Projets développés récemment ({count})",
+    "societyDescription": "Description de la société",
+    "projectsIDevelopedTitle": "Projets que j'ai développés au cours de ma carrière",
+    "projectsIDevelopedOverMyCareerDescription": "Au cours de ma carrière, j'ai eu l'opportunité de concevoir, développer, construire et déployer une variété d'applications qui répondent à des problèmes du monde réel et améliorent l'expérience utilisateur.",
+    "otherProjectsFrom": "Autres projets de {society}",
+    "message": {
+      "error": {
+        "notFound": "Page introuvable."
+      }
+    },
+    "seeOtherProjects": "Voir {count} autres projets",
+    "platforms": "Plateformes",
+    "tags": "Tags",
+    "loading": "Chargement des projets",
+    "loadError": "Les projets n'ont pas pu être chargés.",
+    "offline": "Vous êtes hors ligne. Les projets s'afficheront dès le retour de la connexion.",
+    "noProjectsYet": "Aucun projet pour le moment."
+  }
+}

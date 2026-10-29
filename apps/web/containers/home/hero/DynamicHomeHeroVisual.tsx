@@ -2,28 +2,24 @@ import { getCachedApp } from '@/app/[locale]/page';
 import AnimatedPageHeaderImage from '@/components/layouts/AnimatedPageHeaderImage';
 import { getImageByBreakpoint } from '@/server/responsive.server';
 
-
 type Props = {
-  // if the image should be displayed in mobile
   theme?: 'light' | 'dark';
 };
 
-const DynamicMainImage = async ({ theme }: Props) => {
-  const field = theme === 'dark' ? 'imageForDarkMode' : 'image';
+/**
+ * The main image of the hero for a theme, from the app settings in the database, at the size of the
+ * device. Without an image it renders nothing. Rendered inside a Suspense boundary: reading the
+ * device makes it dynamic
+ */
+const DynamicHomeHeroVisual = async ({ theme }: Props) => {
   const app = await getCachedApp();
+  const file = theme === 'dark' ? app?.imageForDarkMode : app?.image;
 
-  if (!app) return null;
-  if (!app.has(field)) return null;
+  if (!file) return null;
 
-  const responsiveImage = await getImageByBreakpoint(app.get(field)!);
+  const image = await getImageByBreakpoint(file);
 
-  return (
-    <AnimatedPageHeaderImage
-      displayInMobile
-      image={responsiveImage}
-      theme={theme}
-    />
-  );
+  return <AnimatedPageHeaderImage displayInMobile image={image} theme={theme} />;
 };
 
-export default DynamicMainImage;
+export default DynamicHomeHeroVisual;

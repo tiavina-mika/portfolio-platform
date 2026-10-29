@@ -1,0 +1,34 @@
+{
+  "Project": {
+    "visitSite": "Visit website",
+    "seeCodeSource": "See source code",
+    "projectDescription": "Project description",
+    "society": "Society",
+    "technicalStack": "Technical stack",
+    "aboutTheSociety": "About the society",
+    "technologies": "Technologies",
+    "otherProjectsOf": "Other projects of {society}",
+    "links": "Links",
+    "repositories": "Repositories",
+    "screenShot": "Screenshot",
+    "video": "Video",
+    "projects": "Projects",
+    "projectDevelopedRecently": "Projects developed recently ({count})",
+    "societyDescription": "Society description",
+    "projectsIDevelopedTitle": "Projects I have developed over my career",
+    "projectsIDevelopedOverMyCareerDescription": "Over the course of my career, I have had the opportunity to design, develop, build, and deploy a variety of applications that address real-world problems and enhance user experiences.",
+    "otherProjectsFrom": "Other projects from {society}",
+    "message": {
+      "error": {
+        "notFound": "Project not found."
+      }
+    },
+    "seeOtherProjects": "See {count} other projects",
+    "platforms": "Platforms",
+    "tags": "Tags",
+    "loading": "Loading the projects",
+    "loadError": "The projects could not be loaded.",
+    "offline": "You are offline. The projects will show as soon as the connection is back.",
+    "noProjectsYet": "No projects yet."
+  }
+}

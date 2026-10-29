@@ -42,4 +42,11 @@ export const customViewports = {
       height: '801px',
     },
   },
+  '3xl': {
+    name: '3XL',
+    styles: {
+      width: '1980px',
+      height: '801px',
+    },
+  },
 };

@@ -1,7 +1,3 @@
-/**
- * this component is a container for the project list as well as the project loading skeleton
- */
-
 import { ReactNode } from 'react';
 
 import { cn } from '@/utils/app.utils';
@@ -11,12 +7,16 @@ type Props = {
   children?: ReactNode;
 };
 
-const ProjectListContainer = ({ className, children }: Props) => {
+/**
+ * The grid shared by the project cards and their loading skeleton, so nothing jumps when the cards
+ * replace the skeleton
+ */
+const ProjectList = ({ className, children }: Props) => {
   return (
-    <div
+    <ul
       className={cn(
         `
-          flex flex-1 flex-col gap-24
+          flex flex-1 list-none flex-col gap-24
           md:grid md:grid-cols-2 md:gap-x-12
           lg:grid-cols-3 lg:gap-x-6 lg:gap-y-16
           xl:gap-x-8 xl:gap-y-18
@@ -26,8 +26,8 @@ const ProjectListContainer = ({ className, children }: Props) => {
       )}
     >
       {children}
-    </div>
+    </ul>
   );
 };
 
-export default ProjectListContainer;
+export default ProjectList;

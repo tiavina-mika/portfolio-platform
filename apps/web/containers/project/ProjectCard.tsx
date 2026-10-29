@@ -1,6 +1,6 @@
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 
-import Button from '@/components/buttons/Button';
+import { buttonVariants } from '@/components/buttons/Button';
 import TextLink from '@/components/typography/TextLink';
 import {
   Card,
@@ -11,79 +11,81 @@ import {
   CardImage,
   CardTitle,
 } from '@/components/ui/Card';
-import { Locale } from '@/i18n/config';
-import { ROUTES } from '@/i18n/routes';
-import { getImageByBreakpoint } from '@/server/responsive.server';
-import { IProject } from '@/types/project.type';
-import { getTranslatedField } from '@/utils/translation.utils';
+import { cn } from '@/utils/app.utils';
 
-type Props = {
-  project: IProject;
-  locale: Locale;
+export type ProjectCardData = {
+  id: string;
+  name: string;
+  description: string;
+  /**
+   * Address of the project page
+   */
+  href: any;
+  /**
+   * The preview picture, sized for the device. Without it the card has no picture
+   */
+  imageUrl?: string;
+  /**
+   * Text alternative of the picture
+   */
+  imageAlt?: string;
 };
 
-const Project = async ({ project, locale }: Props) => {
-  const t = await getTranslations('Common');
-
-  const responsiveImage = project.has('previewImage')
-    ? await getImageByBreakpoint(project.get('previewImage')!)
-    : project.get('image')?.url;
+/**
+ * A project of the portfolio as a card with one click zone: the name is the link and is stretched over
+ * the whole card, so the link is named by the project alone. The "see more" button is only a cue.
+ */
+const ProjectCard = ({
+  name, description, href, imageUrl, imageAlt,
+}: ProjectCardData) => {
+  const t = useTranslations('Common');
 
   return (
-    <TextLink
-      underline={false}
-      useChildSpan={false}
-      className={`
-        group flex flex-col self-stretch
-        first-line:flex
-      `}
-      href={ROUTES.projects.preview(
-        getTranslatedField(project.get('translated'), locale, 'slug')
-      )}
+    <Card className={`
+      group relative gap-5
+      lg:gap-0
+    `}
     >
-      <Card className={`
-        gap-5
-        lg:gap-0
-      `}
-      >
-        <CardHeader>
-          {responsiveImage && (
-            <CardImage
-              alt={getTranslatedField(project.get('translated'), locale, 'title')}
-              loading="lazy"
-              objectSize="scale-down"
-              src={responsiveImage}
-            />
+      <CardHeader>
+        {imageUrl && (
+          <CardImage
+            alt={imageAlt || ''}
+            loading="lazy"
+            objectSize="scale-down"
+            src={imageUrl}
+          />
+        )}
+      </CardHeader>
+      <CardContent>
+        <CardTitle level={5}>
+          <TextLink
+            href={href}
+            underline={false}
+            useChildSpan={false}
+            className={`
+              group-hover:text-info-light group-hover:underline
+              after:absolute after:inset-0 after:content-['']
+              focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-ring
+            `}
+          >
+            {name}
+          </TextLink>
+        </CardTitle>
+        <CardDescription size="md">{description}</CardDescription>
+      </CardContent>
+      <CardFooter className="flex flex-1 items-end self-stretch">
+        <span
+          aria-hidden
+          className={cn(
+            buttonVariants({ variant: 'contained', color: 'primary', size: 'md' }),
+            'w-full text-center'
           )}
-        </CardHeader>
-        <CardContent>
-          <CardTitle
-            className="group-hover:text-info-light group-hover:underline"
-            level={5}
-          >
-            {getTranslatedField(project.get('translated'), locale, 'name')}
-          </CardTitle>
-          <CardDescription size="md">
-            {getTranslatedField(
-              project.get('translated'),
-              locale,
-              'description'
-            )}
-          </CardDescription>
-        </CardContent>
-        <CardFooter className="flex flex-1 items-end self-stretch">
-          <Button
-            className="w-full"
-            color="primary"
-            size="md"
-            variant="contained"
-          >
-            {t('seeMore')}
-          </Button>
-        </CardFooter>
-      </Card>
-    </TextLink>
+        >
+          {t('seeMore')}
+        </span>
+      </CardFooter>
+    </Card>
   );
 };
 
-export default Project;
+export default ProjectCard;

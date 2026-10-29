@@ -1,4 +1,4 @@
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import SitemapGroup from '@/containers/sitemaps/SitemapGroup';
 import { Locale } from '@/i18n/config';
@@ -19,17 +19,18 @@ const SitemapProjectsSlot = async (props: Props) => {
 
   const locale = params.locale as Locale;
 
+  setRequestLocale(locale);
   const t = await getTranslations('Project');
   const items = await getDataForUrls<IProject>(collections.Project);
 
   return (
-    <SitemapGroup<IProject>
+    <SitemapGroup
       items={items || []}
       title={t('projects')}
       renderItemLinkText={item =>
-        getTranslatedField(item.get('translated'), locale, 'name') || ''}
+        getTranslatedField(item.translated, locale, 'name') || ''}
       renderItemUrl={item =>
-        goToItemBySlug(item.get('translated'), locale, 'projects')}
+        goToItemBySlug(item.translated, locale, 'projects')}
     />
   );
 };

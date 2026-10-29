@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import * as React from 'react';
 
@@ -13,6 +14,7 @@ type Props = {
   className?: string;
 };
 const ToggleTheme = ({ className }: Props) => {
+  const t = useTranslations('NavBar');
   const { theme, setTheme } = useTheme();
 
   return (
@@ -47,7 +49,7 @@ const ToggleTheme = ({ className }: Props) => {
         `}
       />
 
-      <span className="sr-only">Toggle theme</span>
+      <span className="sr-only">{t('toggleTheme')}</span>
     </IconButton>
   );
 };

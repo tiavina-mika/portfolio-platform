@@ -3,7 +3,6 @@
  * https://github.com/whitecrownclown/merge-headers/blob/master/index.ts
  */
 
-import env from '@/env';
 import { defaultLocale, locales } from '@/i18n/config';
 import { nonSEORoutes, translatedRoutes } from '@/i18n/routes';
 
@@ -127,25 +126,4 @@ export const retrievePathnameFromDynamicPathname = (route: string): string => {
   const path = paths?.[0];
 
   return path;
-};
-
-/**
- * dynamically generate the OG image url
- * call the OG image API to generate the image
- * @see /app/api/og/route.tsx
- * ex: http://localhost:9001/api/og?title=My%20Article&image=https://example.com/image.png
- * @param title
- * @param image
- * @returns
- */
-type GenerateOGImageUrlParams = {
-  title: string;
-  image?: string;
-  color?: string;
-  background?: string;
-};
-export const generateOGImageUrl = (params: GenerateOGImageUrlParams) => {
-  const url = `${env.APP_URL}/api/og?${createQueryString(params)}`;
-
-  return url;
 };

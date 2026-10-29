@@ -2,21 +2,28 @@ import { useTranslations } from 'next-intl';
 import { ComponentPropsWithoutRef, Fragment } from 'react';
 
 
+import { Locale } from '@/i18n/config';
 import { cn } from '@/utils/app.utils';
+import { getBreadcrumbListJsonLd } from '@/utils/jsonLd.utils';
 import { cutText } from '@/utils/utils';
 
+import JsonLd from './JsonLd';
 import NextIcon from './NextIcon';
 import TextLink from './typography/TextLink';
 
 export type BreadcrumbsSegment = {
-  title: string;
-  href: any;
+  name: string;
+  link: any;
 };
 
 type BreadcrumbsProps = ComponentPropsWithoutRef<'nav'> & {
   segments: BreadcrumbsSegment[];
   separator?: string;
   truncationLength?: number;
+  /**
+   * current locale, used to build the absolute, locale-prefixed URLs in the BreadcrumbList JSON-LD
+   */
+  locale?: Locale;
 };
 
 export type IBreadCrumbSegment = BreadcrumbsProps['segments'];
@@ -26,14 +33,15 @@ export const Breadcrumbs = ({
   separator,
   truncationLength = 0,
   className,
+  locale,
   ...props
 }: BreadcrumbsProps) => {
   const t = useTranslations('NavBar');
 
   const newSegments = [
     {
-      title: t('home'),
-      href: '/',
+      name: t('home'),
+      link: '/',
     },
     ...segments,
   ];
@@ -47,14 +55,15 @@ export const Breadcrumbs = ({
       )}
       {...props}
     >
-      {newSegments.map((segment, index) => {
+      <JsonLd data={getBreadcrumbListJsonLd(newSegments, locale)} />
+      {newSegments.map((segment: BreadcrumbsSegment, index: number) => {
         const isLastSegment = index === newSegments.length - 1;
 
         return (
           <Fragment key={index}>
             <TextLink
               aria-current={isLastSegment ? 'page' : undefined}
-              href={segment.href}
+              href={segment.link}
               underline={false}
               className={cn(
                 `
@@ -62,13 +71,13 @@ export const Breadcrumbs = ({
                   hover:opacity-70
                 `,
                 isLastSegment
-                  ? 'font-bold text-gray-800'
+                  ? 'font-semibold text-primary-dark'
                   : 'font-normal text-gray-600'
               )}
             >
-              {truncationLength > 0 && segment.title
-                ? cutText(segment.title, truncationLength)
-                : segment.title}
+              {truncationLength > 0 && segment.name
+                ? cutText(segment.name, truncationLength)
+                : segment.name}
             </TextLink>
             {/* do not display icon in the last link */}
             {!isLastSegment && (

@@ -8,6 +8,7 @@ type Props = {
 const HamburgerMenuSvgMobile = ({ open }: Props) => {
   return (
     <svg
+      aria-hidden="true"
       data-name="Layer 1"
       height="20.01"
       id="hamburger"
@@ -15,7 +16,7 @@ const HamburgerMenuSvgMobile = ({ open }: Props) => {
       width="20.03"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>hamburger-menu</title>
+
 
       <AnimatePresence>
         {!open && (

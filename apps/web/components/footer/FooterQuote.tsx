@@ -1,6 +1,5 @@
-import { getCachedApp } from '@/app/[locale]/page';
 import { Locale } from '@/i18n/config';
-import { IAppTranslated } from '@/types/app.type';
+import { getApp } from '@/server/queries/app.queries';
 
 import Text from '../typography/Text';
 
@@ -8,21 +7,22 @@ type Props = {
   locale: Locale;
 };
 
+/**
+ * The quote of the App object, in the language of the page (nothing when there is none)
+ */
 const FooterQuote = async ({ locale }: Props) => {
-  const app = await getCachedApp();
+  const app = await getApp();
+  const quote = app?.translated?.[locale]?.quote;
 
-  if (!app) return null;
-  if (!app.has('translated')) return null;
-  const translated: IAppTranslated = app.get('translated') || {};
+  if (!quote) return null;
 
   return (
-
     <Text className={`
       w-full leading-7
       max-md:text-base
     `}
     >
-      {translated[locale].quote}
+      {quote}
     </Text>
   );
 };

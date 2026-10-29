@@ -19,13 +19,13 @@ interface ICardProps extends ComponentProps<'div'> {
 
 const Card = ({
   className,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/naming-convention
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   as: Component = 'div',
   withShadow = true,
   ...props
 }: ICardProps) => {
   return (
-    <div
+    <Component
       data-slot="card"
       className={cn(
         'flex flex-1 flex-col gap-3 self-stretch',

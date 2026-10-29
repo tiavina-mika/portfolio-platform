@@ -2,10 +2,13 @@ import TiptapParser, { type TiptapProps } from 'tiptap-parser';
 
 const ReadOnlyTextCodeEditor = ({
   language = 'javascript',
+  content,
   ...rest
 }: TiptapProps) => {
   return (
     <TiptapParser
+      // the CMS translated field may be empty for a given locale — html-react-parser requires a string
+      content={content || ''}
       language={language}
       containerClassName={`
         prose 
@@ -30,7 +33,7 @@ const ReadOnlyTextCodeEditor = ({
         max-[767px]:prose-headings:mt-8 max-[767px]:prose-headings:mb-3
         max-[640px]:prose-headings:mt-5 max-[640px]:prose-headings:mb-2
 
-        prose-p:mb-5 prose-p:text-black dark:prose-p:text-white
+        prose-p:mb-5 prose-p:text-default dark:prose-p:text-white
         prose-p:md:mb-4
 
 

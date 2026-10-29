@@ -1,22 +1,21 @@
-import { Locale } from '@/i18n/config';
-
-import Project from './Project';
-import ProjectListContainer from './ProjectListContainer';
+import ProjectCard, { type ProjectCardData } from './ProjectCard';
+import ProjectList from './ProjectList';
 
 type Props = {
-  projects: any[];
-  locale: Locale;
+  projects: ProjectCardData[];
   className?: string;
 };
 
-const Projects = ({ projects, locale, className }: Props) => {
+const ProjectCards = ({ projects, className }: Props) => {
   return (
-    <ProjectListContainer className={className}>
-      {projects.map((project, index) => (
-        <Project key={project.id + index} locale={locale} project={project} />
+    <ProjectList className={className}>
+      {projects.map((project) => (
+        <li className="flex min-w-0" key={project.id}>
+          <ProjectCard {...project} />
+        </li>
       ))}
-    </ProjectListContainer>
+    </ProjectList>
   );
 };
 
-export default Projects;
+export default ProjectCards;

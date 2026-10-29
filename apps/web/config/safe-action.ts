@@ -3,6 +3,8 @@ import { getTranslations } from 'next-intl/server';
 import { createSafeActionClient, DEFAULT_SERVER_ERROR_MESSAGE } from 'next-safe-action';
 import Parse from 'parse';
 
+import env from '@/env';
+
 export class ActionError extends Error {}
 
 const handleServerError = async (e: Error) => {
@@ -58,19 +60,20 @@ export const action = createSafeActionClient({
   handleServerError,
 })
   .use(async ({ next, clientInput, metadata }) => {
-    console.log('LOGGING MIDDLEWARE');
-
     const startTime = performance.now();
 
     // Here we await the action execution.
     const result = await next();
 
-    const endTime = performance.now();
+    // dev-only debug logging — client input can contain PII (contact/newsletter form payloads)
+    if (env.APP_ENV === 'development') {
+      const endTime = performance.now();
 
-    console.log('Result ->', result);
-    console.log('Client input ->', clientInput);
-    console.log('Metadata ->', metadata);
-    console.log('Action execution took', (endTime - startTime) / 1000, 's');
+      console.log('Result ->', result);
+      console.log('Client input ->', clientInput);
+      console.log('Metadata ->', metadata);
+      console.log('Action execution took', (endTime - startTime) / 1000, 's');
+    }
 
     // And then return the result of the awaited action.
     return result;
