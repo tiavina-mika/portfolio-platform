@@ -2,43 +2,62 @@
 
 ## Table des matières
 
-- [Connexion](#connexion)
-- [Projets](#projets)
+- [Connexion et compte](#connexion-et-compte)
+- [Navigation](#navigation)
 - [Articles](#articles)
 - [Pages et sections](#pages-et-sections)
 - [Catégories](#catégories)
+- [Utilisateurs](#utilisateurs)
 - [Contacts](#contacts)
-- [Utilisateurs et rôles](#utilisateurs-et-rôles)
-- [Profil et paramètres](#profil-et-paramètres)
+- [Projets](#projets)
+- [Droits et paramètres](#droits-et-paramètres)
 
-## Connexion
+## Connexion et compte
 
-L'accès se fait par e-mail et mot de passe. Un compte peut être créé puis vérifié par un code reçu par e-mail ; le mot de passe peut être réinitialisé de la même façon.
+- [Connexion et création de compte](auth/fr/AUTH.FR.md) : connexion, inscription, confirmation par code, réinitialisation du mot de passe.
+- [Mon profil](account/fr/MY_PROFILE.FR.md) : nom, mot de passe et photo, depuis le menu de l'avatar.
 
-## Projets
+## Navigation
 
-Liste des projets du portfolio avec recherche et filtres. Un projet se crée et se modifie dans un formulaire : titre, description et contenu traduits (français, anglais, malgache), images, logo, technologies, liens, dates. Un projet actif est visible sur le site public ; un projet supprimé va à la corbeille et peut être restauré.
+- [Accueil et navigation](dashboard/fr/DASHBOARD.FR.md) : page d'accueil et menu latéral.
+- [Pages d'erreur et messages](errors/fr/ERROR_PAGES.FR.md)
 
 ## Articles
 
-Liste, création et modification d'articles avec un éditeur de texte riche, des images et des traductions. Un article actif est visible sur le site public.
+- [Liste](articles/fr/ARTICLES_LIST.FR.md)
+- [Ajout et modification](articles/fr/ARTICLES_ADD_EDIT.FR.md)
+- [Aperçu](articles/fr/ARTICLES_PREVIEW.FR.md)
 
 ## Pages et sections
 
-Création de pages du site (contenu éditorial par langue) et de sections regroupant des pages. Une page peut être affichée dans le menu ou dans le pied de page du site.
+- [Liste des pages](pages/fr/PAGES_LIST.FR.md)
+- [Ajout et modification d'une page](pages/fr/PAGES_ADD_EDIT.FR.md)
+- [Aperçu d'une page](pages/fr/PAGES_PREVIEW.FR.md)
+- [Sections de page](pages/fr/PAGE_SECTIONS.FR.md)
 
 ## Catégories
 
-Les catégories classent les articles et les pages. Chaque catégorie a un nom traduit et peut avoir une image.
+- [Liste](categories/fr/CATEGORIES_LIST.FR.md)
+- [Ajout et modification](categories/fr/CATEGORIES_ADD_EDIT.FR.md)
+- [Aperçu](categories/fr/CATEGORIES_PREVIEW.FR.md)
+
+## Utilisateurs
+
+- [Liste](users/fr/USERS_LIST.FR.md)
+- [Fiche](users/fr/USERS_PREVIEW.FR.md)
 
 ## Contacts
 
-Messages envoyés depuis le formulaire de contact du site. On peut les consulter, répondre par e-mail (la réponse est enregistrée avec l'auteur et la date) et les supprimer.
+- [Liste](contacts/fr/CONTACTS_LIST.FR.md)
+- [Lire et répondre](contacts/fr/CONTACTS_PREVIEW.FR.md)
 
-## Utilisateurs et rôles
+## Projets
 
-Liste des utilisateurs, avec leurs rôles. Les rôles définissent ce que chacun peut voir et faire dans le back-office ; un rôle utilisé par des utilisateurs demande une confirmation avant suppression.
+- [Liste](projects/fr/PROJECTS_LIST.FR.md)
+- [Ajout et modification](projects/fr/PROJECTS_ADD_EDIT.FR.md)
+- [Aperçu](projects/fr/PROJECTS_PREVIEW.FR.md)
 
-## Profil et paramètres
+## Droits et paramètres
 
-Chaque utilisateur modifie son nom, son mot de passe et sa photo. Les paramètres permettent de changer la langue (français, anglais, malgache) et le thème clair ou sombre.
+- [Droits et rôles](roles/fr/ROLES.FR.md)
+- [Paramètres](settings/fr/SETTINGS.FR.md)
