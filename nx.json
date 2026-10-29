@@ -1,0 +1,29 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    }
+  ],
+  "targetDefaults": {
+    "build": {
+      "cache": true
+    },
+    "test": {
+      "cache": true
+    },
+    "typecheck": {
+      "cache": true
+    },
+    "build-sb": {
+      "cache": true
+    },
+    "test-storybook": {
+      "cache": true
+    }
+  },
+  "analytics": false
+}

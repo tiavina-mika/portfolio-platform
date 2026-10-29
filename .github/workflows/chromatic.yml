@@ -1,0 +1,119 @@
+name: Chromatic — Storybooks
+
+# Publishes the mobile, back-office and web Storybooks to Chromatic: a permanent link per app for design,
+# product and support. Each Storybook is its own Chromatic project (a project token is tied to one
+# Storybook), so each entry of the matrix carries the name of its own secret.
+#
+# It is also the visual test: only the stories that opt in with `VISUAL_TEST_PARAMETERS` are captured
+# (a short list on mobile and back-office), and `onlyChanged` limits a build to the stories touched since
+# the last one, because every capture is billed and the three projects share one quota.
+#
+# Two triggers, on purpose: neither runs on every push or pull request, and the scheduled one is every four
+# days, to stay inside the 2,000 free minutes a month of a private repository (the Storybook builds are what
+# costs).
+#   - every four days: mobile and back-office on `develop`, skipped when `develop` has no commit from the last
+#     four days. Changes are accepted automatically, so `develop` is the visual baseline.
+#   - manual: the three apps, on the branch it is started on. A visual difference is reviewed in the
+#     Chromatic build, it does not turn the workflow red.
+#
+# A scheduled workflow runs on the default branch (`main`), which only moves on a release: the scheduled run
+# checks out `develop` and tells Chromatic it is the `develop` branch.
+# The web has no story that opts in, so it is published by hand only.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # cron steps the day of the month, so the run lands on the 1st, 5th, 9th … 29th and the turn of a month
+    # is two or three days instead of four — close enough, and never more than four days apart
+    - cron: '0 3 */4 * *' # 06:00 in Madagascar, after the 02:00 UTC story tests
+
+jobs:
+  # decided once for the whole matrix, so a quiet period does not install and build anything
+  changes:
+    name: Look for new commits
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.changes.outputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'schedule' && 'develop' || github.ref }}
+
+      # 98 hours rather than 96: the run starts a few minutes late and a commit pushed right before the
+      # previous run must not be captured twice
+      - name: Look for new commits
+        id: changes
+        run: |
+          age=$(( $(date +%s) - $(git log -1 --format=%ct) ))
+          if [ '${{ github.event_name }}' != 'schedule' ] || [ "$age" -lt 352800 ]; then
+            echo 'run=true' >> "$GITHUB_OUTPUT"
+          else
+            echo "No commit on develop for $(( age / 3600 )) hours: nothing new to capture"
+          fi
+
+  chromatic:
+    name: Publish ${{ matrix.app }}
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      # a missing token or a broken build on one app must not hide the result of the two others
+      fail-fast: false
+      matrix:
+        # the `env` context is not available here, so the two lists are written in place: the apps that have
+        # stories opted into the visual check (weekly), and all of them (manual publish)
+        include: >-
+          ${{ fromJSON(github.event_name == 'workflow_dispatch'
+          && '[{"app":"mobile","tokenSecret":"CHROMATIC_PROJECT_TOKEN_MOBILE"},{"app":"bo","tokenSecret":"CHROMATIC_PROJECT_TOKEN_BO"},{"app":"web","tokenSecret":"CHROMATIC_PROJECT_TOKEN_WEB"}]'
+          || '[{"app":"mobile","tokenSecret":"CHROMATIC_PROJECT_TOKEN_MOBILE"},{"app":"bo","tokenSecret":"CHROMATIC_PROJECT_TOKEN_BO"}]') }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'schedule' && 'develop' || github.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # the script lives in each app, not in the root package.json: going through Nx runs it from
+      # the right folder and restores the build from the cache when nothing changed
+      - name: Build Storybook
+        run: pnpm nx run ${{ matrix.app }}:build-sb
+
+      # a scheduled run is on `main` as far as GitHub is concerned: Chromatic would record the build under that
+      # branch and commit instead of the `develop` ones it was built from
+      - name: Branch and commit seen by Chromatic
+        if: github.event_name == 'schedule'
+        run: |
+          echo 'CHROMATIC_BRANCH=develop' >> "$GITHUB_ENV"
+          echo "CHROMATIC_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+      - name: Publish to Chromatic
+        id: chromatic
+        uses: chromaui/action@14cfaef73576e69f95f47f60058063f46ca38719 # v18.1.0
+        with:
+          projectToken: ${{ secrets[matrix.tokenSecret] }}
+          storybookBuildDir: apps/${{ matrix.app }}/storybook-static
+          skip: 'dependabot/**'
+          # only the stories touched since the last build are captured again (needs the full history, see checkout)
+          onlyChanged: true
+          # develop is the baseline: what lands there is accepted
+          autoAcceptChanges: develop
+          # a visual difference is reviewed in the Chromatic build, it does not turn the workflow red
+          exitZeroOnChanges: true
+
+      # the run summary lists the links side by side, so nobody has to open each job's log;
+      # it also runs when the Chromatic step fails, since the Storybook can be published and the build
+      # still fail afterwards
+      - name: Storybook URL
+        if: ${{ !cancelled() && steps.chromatic.outputs.storybookUrl != '' }}
+        run: |
+          echo "Storybook ${{ matrix.app }} published → ${{ steps.chromatic.outputs.storybookUrl }}"
+          echo "- **${{ matrix.app }}**: [Storybook](${{ steps.chromatic.outputs.storybookUrl }}) · [build](${{ steps.chromatic.outputs.buildUrl }})" >> "$GITHUB_STEP_SUMMARY"

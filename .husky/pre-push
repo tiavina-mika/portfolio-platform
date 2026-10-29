@@ -1,0 +1,14 @@
+pnpm nx affected -t lint typecheck
+# every translation key used in the code exists, in every locale
+pnpm check-i18n
+# no leaked secret in the commits about to be pushed — skipped where gitleaks is not installed,
+# the `Security` workflow runs the same scan on every PR
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks git --config .gitleaks.toml --redact --log-opts="origin/develop..HEAD"
+fi
+# the Markdown docs follow the lint rules of .markdownlint-cli2.jsonc (the `CI` workflow runs it too)
+pnpm lint:docs
+# every relative link and anchor of the docs points at something that exists
+pnpm check-doc-links
+# a translated doc and its twin change together (SKIP_DOC_TWINS=1 to skip, for a one-language fix)
+pnpm check-doc-twins

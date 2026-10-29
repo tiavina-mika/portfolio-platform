@@ -1,0 +1,106 @@
+name: Storybook tests
+
+# Every story of web, bo and mobile rendered in Chromium through the Storybook Vitest addon (render, `play`
+# function, a11y), one app at a time.
+#
+# Run in shards (scripts/run-story-tests.mjs): on a two-core runner Chromium sometimes drops the test iframe
+# ("Cannot connect to the iframe", "Browser connection was closed") about once every hundred story files, and
+# Vitest then aborts the whole run. A shard of a few dozen files completes, and the rare one that fails is run
+# again. Memory is not the cause and neither is Vite's dependency optimizer (checked in the runner logs).
+#
+# Nightly and on demand only until it has run clean for two weeks, then add it to `ci.yml`.
+#
+# A scheduled workflow runs on the default branch (`main`), which only moves on a release: the night run
+# checks out `develop`, where the code changes, and is skipped when `develop` has no commit from the last 25
+# hours (the same code would be tested again for nothing, and the free quota of private repositories is
+# 2,000 minutes a month). A manual run always tests the branch it is started on.
+#
+# The back-office stories are not run here for now (see the commented step below); web and mobile are.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * *' # 05:00 in Madagascar
+
+concurrency:
+  group: storybook-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-storybook:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'schedule' && 'develop' || github.ref }}
+
+      # hours rather than 24: the run starts a few minutes late and a commit pushed right before the previous
+      # night's run must not be tested twice
+      - name: Look for new commits
+        id: changes
+        run: |
+          age=$(( $(date +%s) - $(git log -1 --format=%ct) ))
+          if [ '${{ github.event_name }}' != 'schedule' ] || [ "$age" -lt 90000 ]; then
+            echo 'run=true' >> "$GITHUB_OUTPUT"
+          else
+            echo "No commit on develop for $(( age / 3600 )) hours: nothing new to test"
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.changes.outputs.run == 'true'
+        with:
+          node-version: 24
+
+      - name: Enable Corepack
+        if: steps.changes.outputs.run == 'true'
+        run: corepack enable
+
+      # the runner starts with about 14 GB free and the workspace, Chromium and the Vite caches use most of it:
+      # these folders (Android SDK, .NET, Haskell) are never used here
+      - name: Free disk space
+        if: steps.changes.outputs.run == 'true'
+        run: |
+          df -h /
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /usr/local/.ghcup
+          df -h /
+
+      - name: Install dependencies
+        if: steps.changes.outputs.run == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Cache Playwright browsers
+        if: steps.changes.outputs.run == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-storybook-${{ hashFiles('pnpm-lock.yaml') }}
+
+      # the root copy: it is the one `@vitest/browser-playwright` launches, and the apps' own copies can
+      # be an older release that downloads a different Chromium build
+      - name: Install Chromium
+        if: steps.changes.outputs.run == 'true'
+        run: node_modules/.bin/playwright install --with-deps chromium
+
+      # one app after the other, and every app runs even when an earlier one fails, so a night's result
+      # lists everything that is red
+      - name: Test web stories
+        if: steps.changes.outputs.run == 'true'
+        run: node scripts/run-story-tests.mjs web 4
+
+      # DISABLED for now, to stay inside the 2,000 free minutes a month of a private repository: the back-office
+      # is about 8 of the 22 minutes of this run, and it is the internal tool, not what the public uses. The
+      # stories, the Vitest project and the `test-storybook` script of apps/bo are untouched, so they still run
+      # locally with `pnpm test-storybook` from apps/bo.
+      #
+      # To enable it again, remove the `#` in front of the three lines below. Keep it between the web and the
+      # mobile steps: the `!cancelled()` makes it run even when the web step failed, so a night lists everything
+      # that is red.
+      #
+      # - name: Test BO stories
+      #   if: ${{ !cancelled() && steps.changes.outputs.run == 'true' }}
+      #   run: node scripts/run-story-tests.mjs bo 6
+
+      - name: Test mobile stories
+        if: ${{ !cancelled() && steps.changes.outputs.run == 'true' }}
+        run: node scripts/run-story-tests.mjs mobile 8
