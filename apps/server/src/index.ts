@@ -127,7 +127,6 @@ const init = async () => {
     masterKey: process.env.PARSE_MASTER_KEY || 'master-',
     allowClientClassCreation: true,
     allowExpiredAuthDataToken: false,
-    encodeParseObjectInCloudFunction: false,
   });
 
   // start the parse server

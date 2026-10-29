@@ -20,7 +20,8 @@ Render is the hosting provider the code is written for: the server contains a ke
 
 - The server serves the Parse API (`/parse`), the upload and download routes and the built back-office (`clientBuild/bo/preprod` or `clientBuild/bo/prod`) from one Express process, so the back-office is copied into the server before deployment (`pnpm copy` in `apps/server`).
 - Application variables are set in the Render service settings: the server does not read a `.env` file outside local development (see [environments](../../../inventory/code/en/ENVIRONMENTS.md)).
-- The web app is a Next.js app with its own `start` script (`server.js`); where it is hosted is not recorded in the repository.
+- The web app is a Next.js app with its own `start` script (`server.js`), deployed as a second Render web service.
+- The full procedure, with the build and start commands and the variables of each service, is in the [deployment tutorial](RENDER_DEPLOYMENT.md).
 
 ## Gotchas
 

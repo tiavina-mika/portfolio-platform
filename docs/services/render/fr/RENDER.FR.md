@@ -20,7 +20,8 @@ Render est l'hébergeur pour lequel le code est écrit : le serveur contient un 
 
 - Le serveur sert l'API Parse (`/parse`), les routes d'envoi et de téléchargement et le back-office construit (`clientBuild/bo/preprod` ou `clientBuild/bo/prod`) depuis un seul processus Express : le back-office est donc copié dans le serveur avant le déploiement (`pnpm copy` dans `apps/server`).
 - Les variables applicatives se posent dans les réglages du service Render : le serveur ne lit pas de fichier `.env` hors développement local (voir les [environnements](../../../inventory/code/fr/ENVIRONMENTS.FR.md)).
-- L'app web est une app Next.js avec son propre script `start` (`server.js`) ; son hébergement n'est pas consigné dans le dépôt.
+- L'app web est une app Next.js avec son propre script `start` (`server.js`), déployée comme second service web Render.
+- La procédure complète, avec les commandes de build et de démarrage et les variables de chaque service, est dans le [tutoriel de déploiement](RENDER_DEPLOYMENT.FR.md).
 
 ## Pièges
 

@@ -36,6 +36,7 @@ Each guide has an English and a French version (the French file name ends with `
 | Google reCAPTCHA | [RECAPTCHA.md](recaptcha/en/RECAPTCHA.md) | [RECAPTCHA.FR.md](recaptcha/fr/RECAPTCHA.FR.md) |
 | Google Maps | [GOOGLE_MAPS.md](google-maps/en/GOOGLE_MAPS.md) | [GOOGLE_MAPS.FR.md](google-maps/fr/GOOGLE_MAPS.FR.md) |
 | Render | [RENDER.md](render/en/RENDER.md) | [RENDER.FR.md](render/fr/RENDER.FR.md) |
+| Render, step-by-step deployment tutorial | [RENDER_DEPLOYMENT.md](render/en/RENDER_DEPLOYMENT.md) | [RENDER_DEPLOYMENT.FR.md](render/fr/RENDER_DEPLOYMENT.FR.md) |
 
 GitHub, Chromatic and Slack are documented with the workflows that use them: [CI workflows](../inventory/code/en/CI_WORKFLOWS.md) and [GitHub variables and secrets](../inventory/code/en/GITHUB_VARIABLES_AND_SECRETS.md).
 
