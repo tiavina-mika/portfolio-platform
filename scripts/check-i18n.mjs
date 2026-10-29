@@ -27,9 +27,8 @@ const SOURCE_EXTENSIONS = ['.ts', '.tsx'];
  * which file the key lives in. Parity still applies to it.
  */
 const APPS = [
-  { name: 'mobile', localesDir: 'apps/mobile/src/config/i18n/locales', sourceDir: 'apps/mobile/src', checkUsage: true },
   { name: 'bo', localesDir: 'apps/bo/src/config/i18n/locales', sourceDir: 'apps/bo/src', checkUsage: true },
-  { name: 'server', localesDir: 'apps/server/src/config/i18n/locales', sourceDir: 'apps/server/src', checkUsage: false },
+  { name: 'server', localesDir: 'apps/server/src/locales', sourceDir: 'apps/server/src', checkUsage: false },
   { name: 'web', localesDir: 'apps/web/translations', sourceDir: 'apps/web', checkUsage: false },
 ];
 

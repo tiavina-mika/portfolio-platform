@@ -94,12 +94,12 @@
   "noDataAvailable": "Il n'y pas encore de données",
   "noData": "Pas de données",
   "notDefined": "Pas defini",
-  "sureToDelete" : "Etes-vous sûr de vouloir supprimer {{value}}?",
-  "sureToDeleteAll" : "Etes-vous sûr de vouloir tout supprimer?",
-  "sureToDeleteSelected" : "Etes-vous sûr de vouloir supprimer cet {{count}} élement selectionné?",
-  "sureToDeleteSelected_plural" : "Etes-vous sûr de vouloir supprimer ces {{count}} élements selectionnés?",
-  "selectedCount" : "{{count}} selectionné(e)",
-  "selectedCount_plural" :  "{{count}} selectionné(e)s",
+  "sureToDelete": "Etes-vous sûr de vouloir supprimer {{value}}?",
+  "sureToDeleteAll": "Etes-vous sûr de vouloir tout supprimer?",
+  "sureToDeleteSelected": "Etes-vous sûr de vouloir supprimer cet {{count}} élement selectionné?",
+  "sureToDeleteSelected_plural": "Etes-vous sûr de vouloir supprimer ces {{count}} élements selectionnés?",
+  "selectedCount": "{{count}} selectionné(e)",
+  "selectedCount_plural": "{{count}} selectionné(e)s",
   "me": "Moi",
   "deleted": "Supprimé",
   "search": "Rechercher",
@@ -123,8 +123,8 @@
   "deleteSomething": "Supprimer {{value}}",
   "returnToList": "Retourner à la liste",
   "deletion": "Suppression",
-  "newCount" : "{{count}} nouveau",
-  "newCount_plural" :  "{{count}} nouveaux",
+  "newCount": "{{count}} nouveau",
+  "newCount_plural": "{{count}} nouveaux",
   "seeAll": "Voir tout",
   "markAsSeen": "Marquer comme vu",
   "markAsUnseen": "Marquer comme non vu",
@@ -180,24 +180,6 @@
   "accepted": "Accepté",
   "close": "Fermer",
   "suppression": "Suppression",
-  "welcome": {
-    "step1": {
-      "title": "Inscription gratuite",
-      "description": "Conducteurs et passagers ne paient pas de frais d'inscription ni d'abonnement."
-    },
-    "step2": {
-      "title": "En tant que propriétaire de voiture",
-      "description": "Précisez où vous allez, où vous souhaitez prendre et déposer des passagers, et quand."
-    },
-    "step3": {
-      "title": "En tant que passager",
-      "description": "Entrez votre point de départ, votre destination, ainsi que la date à laquelle vous souhaitez voyager. Ensuite, l'application vous présente tous les trajets disponibles selon votre recherche particulière."
-    },
-    "step4": {
-      "title": "Une fois le trajet terminé",
-      "description": "Une fois le trajet terminé. Payez le chauffeur par mobile money ou en espèces. Ensuite, les court-voitureurs peuvent se donner une note mutuellement."
-    }
-  },
   "noCameraAccess": "Pas d'accès à la caméra",
   "selectLanguage": "Selectionner une langue",
   "selectLanguageDescription": "Langue utilisée par l'application",
@@ -255,7 +237,6 @@
     "hasNoRightToDoAction": "Vous n'avez pas le droit de faire cette action",
     "unauthorizedAction": "vous n'êtes pas autorisé à effectuer cette action",
     "somethingWentWrong": "Une erreur s'est produite. Veuillez réessayer plus tard"
-
   },
   "errorsFromServer": {
     "invalidFileType": "Type de fichier invalide",
@@ -295,7 +276,7 @@
   "region": "Region",
   "cms": "CMS",
   "removeAll": "Supprimer tout",
-  "orDragAnDropFile" : "ou glisser-déposer pour télécharger",
+  "orDragAnDropFile": "ou glisser-déposer pour télécharger",
   "dropFileHere": "Déposer les fichiers ici",
   "image": "Image",
   "images": "Images",
@@ -445,5 +426,6 @@
     "backOffice": "Back office",
     "quote": "Citation",
     "quoteDescription": "Citation affichée sur le pied de page au-dessous du logo"
-  }
+  },
+  "deletedBy": "Supprimé par"
 }

@@ -125,9 +125,9 @@ export const generateFileSchema = (
     const validMimeTypes = mimeTypes.filter((mime: string) => mime !== '');
 
     // e.g: Only .jpg, .png are allowed
-    const errorMessage = i18n.t('form:globalError.invalidFileMimeType', {
+    const errorMessage = i18n.t('zod:globalError.invalidFileMimeType', {
       extensions: extensions.map((ext: string) => (ext.startsWith('.') ? ext : '.' + ext)).join(', '),
-      field: i18n.t('form:name.file'),
+      field: i18n.t('zod:name.file'),
     });
 
     fileSchema = fileSchema.mime(validMimeTypes, { error: errorMessage });

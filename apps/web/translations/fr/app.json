@@ -114,7 +114,9 @@
     "blog": "Blog",
     "contactMe": "Me contacter",
     "toggleTheme": "Changer de thème",
-    "projects": "Projets"
+    "projects": "Projets",
+    "article": "Article",
+    "contact": "Contact"
   },
   "LanguageSwitcher": {
     "label": "Changer language",

@@ -71,7 +71,6 @@
     "userNotVerified": "Your account is not verified yet. An email has been sent to you. Please check your email and enter the code in that email.",
     "invalidEmail": "Invalid email",
     "noAccountByEmail": "No account found with matching email",
-    "noVerificationSend": "No code has been sent",
     "incorrectCode": "Incorrect code",
     "userRequired": "User required",
     "codeLength": "Code should be 6 characters",
@@ -80,7 +79,8 @@
     "requiredEmailSubject": "Required email subject",
     "sessionTokenExpired": "Your session has expired. Please try to log in.",
     "emailNotSent": "Email not sent. Please try again.",
-    "sendVerificationEmailFail": "Error while sending verification code"
+    "sendVerificationEmailFail": "Error while sending verification code",
+    "expiredCode": "Code expired"
   },
   "users": "Users",
   "user": "User",
@@ -118,11 +118,11 @@
     "nameAlreadyExist": "A role with that name already exists.",
     "addRolesToThisUserSuccessfully": "{{count}} role added successfully to this user.",
     "addRolesToThisUserSuccessfully_plural": "{{count}} roles added successfully to this user.",
-    "removeRolesForThisUserSuccessfully" : "{{count}} role removed successfully for this user.",
-    "removeRolesForThisUserSuccessfully_plural" : "{{count}} roles removed successfully for this user.",
-    "deleteRoleSuccessfully" : "Delete {{name}} role successfully.",
-    "sureToDeleteRoleWithUsers" : "Are you sure to delete {{name}}? This role has {{userCount}} associated user.",
-    "sureToDeleteRoleWithUsers_plural" : "Are you sure to delete {{name}}? This role has {{userCount}} associated users.",
+    "removeRolesForThisUserSuccessfully": "{{count}} role removed successfully for this user.",
+    "removeRolesForThisUserSuccessfully_plural": "{{count}} roles removed successfully for this user.",
+    "deleteRoleSuccessfully": "Delete {{name}} role successfully.",
+    "sureToDeleteRoleWithUsers": "Are you sure to delete {{name}}? This role has {{userCount}} associated user.",
+    "sureToDeleteRoleWithUsers_plural": "Are you sure to delete {{name}}? This role has {{userCount}} associated users.",
     "theRoleName": "the role name",
     "roleNotFound": "Role not found",
     "roleCannotBeDeleted": "This Role cannot be deleted",
@@ -130,7 +130,8 @@
     "menu": "Menu",
     "uiDescription": "Which menus are visible to the user in the back office",
     "resourceRights": "Resource rights",
-    "resourceRightsDescription": "Resource rights are used to define the rights of a user on a collection of resources. For example, you can define if the user has the right to delete, create, update or find an article."
+    "resourceRightsDescription": "Resource rights are used to define the rights of a user on a collection of resources. For example, you can define if the user has the right to delete, create, update or find an article.",
+    "otherRoles": "Other roles"
   },
   "accountAwaitValidation": "An administrator will validate it as soon as possible.",
   "emailWithCodeSentConfirmCodeBelow": "An email with code have been sent to you. Enter the code below.",
@@ -204,5 +205,6 @@
     "repliedBy": "Replied by",
     "repliedAt": "Replied at",
     "search": "Name, email or message"
-  }
+  },
+  "accountCreatedSuccessfully": "Account created successfully"
 }

@@ -89,7 +89,7 @@ const Project = () => {
       value: translatedFields.title,
     },
     {
-      label: t('cms:description'),
+      label: t('common:description'),
       value: translatedFields.description,
     },
     {

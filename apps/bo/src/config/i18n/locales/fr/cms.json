@@ -57,7 +57,6 @@
   "pageName": "Nom de la page",
   "pageNameHelper": "Le nom de la page est affiché dans un lien par exemple, et aussi le slug est généré automatiquement par le nom",
   "pageTitleHelper": "Affiché en haut de la page. Le nom de la page est affiché à la place si vide",
-
   "otherPages": "Autres pages",
   "pagesHelper": "Données d'autres pages à afficher sur la page actuelle",
   "previewImage": "Aperçu de l'image",
@@ -131,17 +130,16 @@
     "missingParamsId": "L'identifiant est manquant",
     "articleAlreadyExists": "Article avec la référence {{value}} existe déjà",
     "thisArticleAlreadyExists": "Cette article existe déjà",
-
     "pageCreatedSuccessfully": "Page créé avec succès",
     "pageEditedSuccessfully": "Page {{value}} modifié avec succès",
     "pageDeletedSuccessfully": "Page {{value}} supprimé avec succès",
     "pageAlreadyExists": "Page avec la référence {{value}} existe déjà",
     "thisPageAlreadyExists": "Cette page existe déjà",
-
     "blocksAddedToThePage": "Blocs ajoutés à la page",
     "blocksEditedForThisPage": "Blocs modifiés pour cette page",
     "contactDeletedSuccessfully": "Contact {{value}} supprimé avec succès",
-    "pageSectionSavedSuccessfully": "Section de page {{value}} enregistrée avec succès"
+    "pageSectionSavedSuccessfully": "Section de page {{value}} enregistrée avec succès",
+    "pageSectionDeletedSuccessfully": "Section de page {{value}} supprimée avec succès"
   },
   "errors": {
     "pageToUpdateNotFound": "La page que vous tentez de mettre à jour n'existe pas, elle a peut-être été supprimé.",
@@ -181,5 +179,6 @@
       "preview": "Aperçu",
       "editor": "Éditeur"
     }
-  }
+  },
+  "activeProjectVisible": "Un projet actif est visible pour les utilisateurs"
 }

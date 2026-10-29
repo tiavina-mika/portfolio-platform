@@ -12,8 +12,6 @@
     "english": "Anglisy",
     "french": "Frantsay"
   },
-  "waiting": "Miandry",
-  "sent": "Lasa",
   "alreadyExists": "Efa misy",
   "status": {
     "canceled": "Najanona",
@@ -78,8 +76,6 @@
   "passengers": "Mpandeha",
   "passenger": "Mpandeha",
   "done": "Tapitra",
-  "inProgress": "Amin'izao",
-  "canceled": "Najanona",
   "comment": "Commentaire",
   "continue": "Tohizana",
   "finish": "Tapitra",
@@ -98,12 +94,12 @@
   "noDataAvailable": "Mbola tsy misy données",
   "noData": "Tsy misy données",
   "notDefined": "Tsy voafaritra",
-  "sureToDelete" : "Mahatoky ve ianao fa hamafa an'ny {{value}}?",
-  "sureToDeleteAll" : "Vonona ve ianao fa hamafa azy rehetra?",
-  "sureToDeleteSelected" : "Vonona ve ianao hamafa io lisitra {{count}} io?",
-  "sureToDeleteSelected_plural" : "Vonona ve ianao hamafa ireo lisitra {{count}} voafidy?",
-  "selectedCount" : "{{count}} voasafidy",
-  "selectedCount_plural" :  "{{count}} voasafidy",
+  "sureToDelete": "Mahatoky ve ianao fa hamafa an'ny {{value}}?",
+  "sureToDeleteAll": "Vonona ve ianao fa hamafa azy rehetra?",
+  "sureToDeleteSelected": "Vonona ve ianao hamafa io lisitra {{count}} io?",
+  "sureToDeleteSelected_plural": "Vonona ve ianao hamafa ireo lisitra {{count}} voafidy?",
+  "selectedCount": "{{count}} voasafidy",
+  "selectedCount_plural": "{{count}} voasafidy",
   "me": "Izaho",
   "deleted": "Voafafa",
   "search": "Mitady",
@@ -129,8 +125,8 @@
   "deleteSomething": "Fafèna {{value}}",
   "returnToList": "Iverina amin'ny lisitra",
   "deletion": "Famafàna",
-  "newCount" : "{{count}} vaovao",
-  "newCount_plural" :  "{{count}} vaovao",
+  "newCount": "{{count}} vaovao",
+  "newCount_plural": "{{count}} vaovao",
   "seeAll": "Jerena daholo",
   "markAsSeen": "Atao hita",
   "markAsUnseen": "Averina mbola tsy hita",
@@ -158,7 +154,6 @@
     "sureToDeleteThing": "Vonona ve ianao hamafa",
     "enterConfirmAndDelete": "Ampidiro {{type}} ho ekena ho fafàna",
     "pleaserEnterValue": "Ampidiro ny \"{{value}}\" ho fanekena ny famafàna",
-    "cooperativeAlreadyExist": "Efa manana coopérative ianao",
     "articlePreviewImage": "Ny sary famantarana dia aseho amin'ny habeny kely indrindra, raha tsisy dia ny sary ny lahatsoratra no miasa",
     "destroyedSuccessfullyWithCount": "{{number}} {{entity}} voafafa soamantsara",
     "onDestructionMessage": "Tsy afaka averina io hetsika io. Voafafa mandrak'izay ireo données rehetra.",
@@ -175,7 +170,6 @@
   "lastLocation": "Toerana nahitàna farany",
   "contact": "Fifandraisana",
   "contacts": "Fifandraisana",
-  "plateform": "Sehatra",
   "active": "Actif",
   "inactive": "Inactif",
   "activate": "Activer",
@@ -255,7 +249,6 @@
   "place": "Seza",
   "car": "Fiara",
   "moreAction": "Actions maro ho an'ny {{value}}",
-  "passengersCount": "Isan'ny mpandeha",
   "prices": "Sarany",
   "rating": "Naoty",
   "total": "Fitambarany",
@@ -283,7 +276,7 @@
   "region": "Faritra",
   "cms": "CMS",
   "removeAll": "Fafàna izy rehetra",
-  "orDragAnDropFile" : "na sintonina sy alatsaka eto hampakarana azy",
+  "orDragAnDropFile": "na sintonina sy alatsaka eto hampakarana azy",
   "dropFileHere": "Apetraho eto ny fichiers",
   "image": "Sary",
   "images": "Sary",
@@ -403,7 +396,6 @@
       "literature": "Literature",
       "sport": "Fanatanjahantena",
       "searchEngine": "Motera fikarohana",
-      "philosophie": "Filozofia",
       "deepLearning": "Fianarana lalina",
       "chatBot": "Chat bot",
       "travel": "Dia",
@@ -416,7 +408,8 @@
       "utility": "Fampiasana",
       "productManagement": "Fitantanana vokatra",
       "transport": "Fitanterana",
-      "openSource": "Open source"
+      "openSource": "Open source",
+      "philosophy": "Filozofia"
     }
   },
   "app": {
@@ -433,5 +426,6 @@
     "backOffice": "Back office",
     "quote": "Citation",
     "quoteDescription": "Citation aseho eo amin'ny tongotry ny pejy ambanin'ny logo"
-  }
+  },
+  "deletedBy": "Nofafain'i"
 }

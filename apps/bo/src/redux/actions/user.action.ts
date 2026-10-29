@@ -390,7 +390,7 @@ export const sendEmailToUser = (user: IUser, values: SendEmailInput): any => {
     const isSend = await Parse.Cloud.run('sendEmailToUser', values);
 
     if (!isSend) {
-      dispatch(setErrorSlice(i18n.t('user:emailNotSendTo', { email: values.email })));
+      dispatch(setErrorSlice(i18n.t('user:errors.emailNotSendTo', { email: values.email })));
       return;
     }
     // TODO: send email to user here

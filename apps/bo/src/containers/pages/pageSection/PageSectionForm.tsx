@@ -119,7 +119,7 @@ const PageSectionForm = ({
       <CheckboxField
         label={t('common:active')}
         name="active"
-        tooltip={t('cms:category.activePageVisible')}
+        tooltip={t('cms:activePageVisible')}
       />
     </Form>
   );

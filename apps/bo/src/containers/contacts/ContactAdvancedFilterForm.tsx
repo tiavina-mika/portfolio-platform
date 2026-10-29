@@ -22,7 +22,7 @@ const ContactAdvancedFilterForm = ({
       schema={contactFilterSchema}
       fields={[
         {
-          label: t('user.contacts:replied'),
+          label: t('user:contacts.replied'),
           name: 'replied',
           checked: false,
           component: (

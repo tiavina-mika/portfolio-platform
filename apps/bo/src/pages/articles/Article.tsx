@@ -55,7 +55,7 @@ const Article = () => {
       value: translatedFields.title,
     },
     {
-      label: t('cms:description'),
+      label: t('common:description'),
       value: translatedFields.description,
     },
     {
@@ -233,7 +233,7 @@ const Article = () => {
             label: t('user:updatedBy'),
             value: 'updatedBy',
           }, {
-            label: t('user:deletedBy'),
+            label: t('common:deletedBy'),
             value: 'deletedBy',
           }]}
         />

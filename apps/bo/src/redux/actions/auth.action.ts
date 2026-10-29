@@ -184,7 +184,7 @@ export const loginSuccess = (redirectToHome?: boolean, navigate?: INavigate): an
      * ------------- login failed ---------------//
      * ------------------------------------------//
      */
-    dispatch(setErrorSlice(i18n.t('user:error.sessionTokenExpired')));
+    dispatch(setErrorSlice(i18n.t('user:errors.sessionTokenExpired')));
     if (!navigate) return;
 
     /*

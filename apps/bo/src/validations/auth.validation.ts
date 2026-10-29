@@ -129,7 +129,7 @@ export const signUpInfoSchema = object({
    * sex: sexSchema,
    * birthday: date({
    *   required_error: i18n.t('form.error.required', { field: i18n.t('user:birthday') }),
-   *   invalid_type_error: i18n.t('form.error.required', { field: i18n.t('common:form.invalidDateType') }),
+   *   invalid_type_error: i18n.t('form.error.required', { field: i18n.t('zod:globalError.invalidDateType') }),
    * }), // convert string / date type to unix timestamp
    */
   address: string()

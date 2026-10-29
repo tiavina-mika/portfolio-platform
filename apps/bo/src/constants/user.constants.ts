@@ -37,11 +37,11 @@ export const userPlatformOptions: ISelectOption[] = [
 // Not used
 export const repliedOptions: ISelectOption<boolean>[] = [
   {
-    label: i18n.t('user:contact.replied'),
+    label: i18n.t('user:contacts.replied'),
     value: true,
   },
   {
-    label: i18n.t('user:contact.notReplied'),
+    label: i18n.t('user:contacts.notReplied'),
     value: false,
   },
 ];

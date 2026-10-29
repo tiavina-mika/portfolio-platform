@@ -238,7 +238,7 @@ const Page = () => {
             label: t('user:updatedBy'),
             value: 'updatedBy',
           }, {
-            label: t('user:deletedBy'),
+            label: t('common:deletedBy'),
             value: 'deletedBy',
           }]}
         />

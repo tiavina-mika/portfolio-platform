@@ -58,7 +58,7 @@ const CategoryAdvancedFilterForm = ({
           component: <DateRangePickerField fullWidth name="updatedAt" variant="standard" />,
         },
         {
-          label: t('common:user'),
+          label: t('user:user'),
           name: 'user',
           checked: false,
           component: (

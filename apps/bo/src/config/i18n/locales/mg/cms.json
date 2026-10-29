@@ -121,7 +121,6 @@
     "seePagesForThisCategory": "Hijery ny pejy ho an'io sokajy io",
     "imageHelper": "Ny sary dia ilaina amin'ireo motera fikarohana (google, ...) sy ireo tamban-jotra sosialy (facebook, twitter, ...)",
     "categoriesRequired": "Misafidia sokajy iray na betsaka"
-
   },
   "messages": {
     "articleCreatedSuccessfully": "Article voaforona soamantsara",
@@ -135,11 +134,11 @@
     "pageDeletedSuccessfully": "Pejy {{value}} voafafa soamantsara",
     "pageAlreadyExists": "Pejy efa misy",
     "thisPageAlreadyExists": "Efa misy io pejy io",
-
     "blocksAddedToThePage": "Blocs voaforona ho an'ny pejy",
     "blocksEditedForThisPage": "Blocs voaova ho an'ito pejy ito",
     "contactDeletedSuccessfully": "Contact {{value}} voafafa soamantsara",
-    "pageSectionSavedSuccessfully": "Fizarana pejy {{value}} voavonjy soamantsara"
+    "pageSectionSavedSuccessfully": "Fizarana pejy {{value}} voavonjy soamantsara",
+    "pageSectionDeletedSuccessfully": "Voafafa soa aman-tsara ny sokajy pejy {{value}}"
   },
   "errors": {
     "pageToUpdateNotFound": "Ny pejy ezahinao havaozina dia tsy misy, mety ho voafafa.",
@@ -179,5 +178,7 @@
       "preview": "Fanehoana",
       "editor": "Editeur"
     }
-  }
+  },
+  "entity": "Singa",
+  "activeProjectVisible": "Hita ny mpampiasa ny tetikasa active"
 }

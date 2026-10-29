@@ -66,11 +66,15 @@
     "subscribe": "Subscribe",
     "subscribeWithSuccess": "You have successfully subscribed to the newsletter.",
     "messageSent": "Your message has been sent.",
-    "description": "For any new projects or new collaborations, I would first like to get to know you and your company through a call or a meeting. Then I would like to understand the context of your company, its goals and long-term objectives. After agreeing on the collaboration and prioritizing tasks, we write an agreement and start the mission in a few days. If you have an interesting topic in mind and want to learn more and hear my expertise, just contact me via the contact form."
+    "description": "For any new projects or new collaborations, I would first like to get to know you and your company through a call or a meeting. Then I would like to understand the context of your company, its goals and long-term objectives. After agreeing on the collaboration and prioritizing tasks, we write an agreement and start the mission in a few days. If you have an interesting topic in mind and want to learn more and hear my expertise, just contact me via the contact form.",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message"
+    }
   },
   "Error": {
     "unknown": "Something went wrong. Please try again later.",
-    "max": "Hii max",
     "somethingWentWrong": "Something went wrong.",
     "tryAgain": " Please either refresh the page or try again later.",
     "ifProblemPersist": "If the problem persists, please",

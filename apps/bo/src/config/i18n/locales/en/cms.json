@@ -136,7 +136,8 @@
     "blocksAddedToThePage": "Blocks added to the page",
     "blocksEditedForThisPage": "Blocks edited for this page",
     "contactDeletedSuccessfully": "Contact {{value}} deleted successfully",
-    "pageSectionSavedSuccessfully": "Page section {{value}} saved successfully"
+    "pageSectionSavedSuccessfully": "Page section {{value}} saved successfully",
+    "pageSectionDeletedSuccessfully": "Page section {{value}} deleted successfully"
   },
   "errors": {
     "pageToUpdateNotFound": "The page you are attempting to update does not exists, it may have been deleted.",
@@ -176,5 +177,8 @@
       "preview": "Preview",
       "editor": "Editor"
     }
-  }
+  },
+  "thisPage": "This page",
+  "pageFrom": "Message from {{user}}",
+  "activeProjectVisible": "An active project is visible to users"
 }

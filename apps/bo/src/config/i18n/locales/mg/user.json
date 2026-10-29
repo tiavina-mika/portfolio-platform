@@ -117,11 +117,11 @@
     "nameAlreadyExist": "Efa misy andraikitra manana an'io anarana io",
     "addRolesToThisUserSuccessfully": "Andraikitra {{count}} voaforina ho an'ity mpampiasa ity",
     "addRolesToThisUserSuccessfully_plural": "Andraikitra {{count}} voaforina ho an'ity mpampiasa ity",
-    "removeRolesForThisUserSuccessfully" : "{{count}} andraikitra voafafa ho an'ity mpampiasa ity",
-    "removeRolesForThisUserSuccessfully_plural" : "{{count}} andraikitra voafafa ho an'ity mpampiasa ity",
-    "deleteRoleSuccessfully" : "andraikitra {{name}} voafafa",
-    "sureToDeleteRoleWithUsers" : "Vonona ve ianao hamafa an'ny {{name}}? Ito andraikitra ito dia manana mpampiasa mihisa {{userCount}}",
-    "sureToDeleteRoleWithUsers_plural" : "Vonona ve ianao hamafa an'ny {{name}}? Ito andraikitra ito dia manana mpampiasa mihisa {{userCount}}",
+    "removeRolesForThisUserSuccessfully": "{{count}} andraikitra voafafa ho an'ity mpampiasa ity",
+    "removeRolesForThisUserSuccessfully_plural": "{{count}} andraikitra voafafa ho an'ity mpampiasa ity",
+    "deleteRoleSuccessfully": "andraikitra {{name}} voafafa",
+    "sureToDeleteRoleWithUsers": "Vonona ve ianao hamafa an'ny {{name}}? Ito andraikitra ito dia manana mpampiasa mihisa {{userCount}}",
+    "sureToDeleteRoleWithUsers_plural": "Vonona ve ianao hamafa an'ny {{name}}? Ito andraikitra ito dia manana mpampiasa mihisa {{userCount}}",
     "theRoleName": "ny anaran'ny andraikitra",
     "roleNotFound": "Andraikitra tsy hita",
     "roleCannotBeDeleted": "Andraikitra tsy azo fafàna",
@@ -203,5 +203,8 @@
     "repliedBy": "Novalian'i",
     "repliedAt": "Novaliana tamin'ny",
     "search": "Anarana, mailaka na hafatra"
-  }
+  },
+  "password": "Tenimiafina",
+  "contact": "Fifandraisana",
+  "accountCreatedSuccessfully": "Kaonty voaforona soa aman-tsara"
 }
