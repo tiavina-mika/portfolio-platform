@@ -1,0 +1,11 @@
+# Prettier writes LF (endOfLine: lf) and the lint hook runs it with --fix, so a working tree
+# normalized to CRLF would be rewritten on every lint and show up as modified for good.
+* text=auto eol=lf
+
+/.pnpm/**            linguist-vendored
+/.pnpm/releases/*    binary
+/.pnpm/plugins/**/*  binary
+/.pnp.*              binary linguist-generated
+
+# Excalidraw sketches embed their editable scene in the SVG: a text diff is unreadable noise
+*.excalidraw.svg    -diff

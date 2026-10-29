@@ -1,0 +1,42 @@
+{
+  "users": "users",
+  "admins": "admins",
+  "login": "login",
+  "articles": "articles",
+  "projects": "projects",
+  "signup": "signup",
+  "changePassword": "change-password",
+  "contacts": "contacts",
+  "profile": "profile",
+  "roles": "roles",
+  "confirmEmail": "email-confirmation",
+  "settings": "settings",
+  "recycleBin": "recycle-bin",
+  "logout": "logout",
+  "pages": "pages",
+  "blocks": "blocks",
+  "create": "create",
+  "update": "update",
+  "account": "account",
+  "emailResetPassword": "password/reset",
+  "confirmCode": "code/confirm",
+  "verifyAccount": "verify",
+  "edit": "edit",
+  "add": "add",
+  "notFound": "not-found",
+  "administration": "administration",
+  "categories": "categories",
+  "miscellaneous": "miscellaneous",
+  "tests": "tests",
+  "pageSections": "page-sections",
+  "website": {
+    "articles": "articles",
+    "blog": "blog",
+    "projects": "projects"
+  },
+  "tabs": {
+    "recycleBin": "recycle-bin",
+    "news": "news"
+  },
+  "factures": "invoices"
+}

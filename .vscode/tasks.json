@@ -1,0 +1,119 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "BO",
+      "type": "shell",
+      "command": ". ../../.vscode/use-node-24.sh && sleep 30 && pnpm dev",
+      "options": {
+        "cwd": "${workspaceFolder}/apps/bo",
+        "shell": {
+          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+          "args": [
+            "-c"
+          ]
+        }
+      },
+      "presentation": {
+        "panel": "dedicated",
+        "group": "portfolio",
+        "reveal": "always",
+        "focus": false,
+        "close": false
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Web",
+      "type": "shell",
+      "command": ". ../../.vscode/use-node-24.sh && sleep 30 && pnpm dev",
+      "options": {
+        "cwd": "${workspaceFolder}/apps/web",
+        "shell": {
+          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+          "args": [
+            "-c"
+          ]
+        }
+      },
+      "presentation": {
+        "panel": "dedicated",
+        "group": "portfolio",
+        "reveal": "always",
+        "focus": false,
+        "close": false
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Web: Storybook",
+      "type": "shell",
+      "command": ". ../../.vscode/use-node-24.sh && pnpm sb",
+      "options": {
+        "cwd": "${workspaceFolder}/apps/web",
+        "shell": {
+          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+          "args": [
+            "-c"
+          ]
+        }
+      },
+      "presentation": {
+        "panel": "dedicated",
+        "group": "portfolio",
+        "reveal": "always",
+        "focus": true,
+        "close": false
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Server",
+      "type": "shell",
+      "command": ". ../../.vscode/use-node-24.sh && pnpm dev",
+      "options": {
+        "cwd": "${workspaceFolder}/apps/server",
+        "shell": {
+          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+          "args": [
+            "-c"
+          ]
+        }
+      },
+      "presentation": {
+        "panel": "dedicated",
+        "group": "portfolio",
+        "reveal": "always",
+        "focus": false,
+        "close": false
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "run-dev",
+      "dependsOn": [
+        "Server"
+      ],
+      "dependsOrder": "parallel",
+      "presentation": {
+        "reveal": "never"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "run-dev:no-bo",
+      "dependsOn": [
+        "Server"
+      ],
+      "dependsOrder": "parallel",
+      "presentation": {
+        "reveal": "never"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,322 @@
+/* 1. Import external */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css');
+/* 2. Import Tailwind CSS and styles */
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* 3. Plugins */
+@plugin 'tailwindcss-animate';
+@plugin "@tailwindcss/forms";
+@plugin "tailwind-highlightjs";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+/* @config '../tailwind.config.ts'; */
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+/* ----------- custom ---------- */
+@theme {
+  /* Custom Colors */
+  --color-default-light: #4d4d4d;
+  --color-default: #1D2424;
+  --color-default-dark: #00112c;
+
+  --color-primary-light: #86efac;
+  --color-primary: #202020; /* COLOR_ACTIVE */
+  --color-primary-dark: #166534;
+
+  /* Use name other than --color-secondary */
+  --custom-secondary: #b2ce66;
+  --color-secondary-light: #dff79e;
+  --color-secondary: var(--custom-secondary);
+  --color-secondary-dark: #5c6b34;
+
+  --color-error-light: #fee2e2;
+  --color-error: #dc2626;
+  --color-error-dark: #991b1b;
+
+  --color-warning-light: #ffedd5;
+  --color-warning: #ea580c;
+  --color-warning-dark: #c2410c;
+
+  --color-success-light: #dcfce7;
+  --color-success: #16a34a;
+  --color-success-dark: #15803d;
+
+  --color-info-light: #0969da;
+  --color-info: #2563eb;
+  --color-info-dark: #1e40af;
+
+  --color-dark-100: #F4F4F4;
+  --color-dark-200: #E0E3E7;
+  --color-dark-300: #e0e0e0;
+  --color-dark-400: #4d4d4d;
+  --color-dark-500: #1D2424;
+
+  /* Shadcn Colors (leave CSS variables for dynamic theming) */
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: var(--background);
+  --color-foreground: hsl(var(--foreground));
+
+  --color-destructive: hsl(var(--destructive));
+
+  --color-muted: hsl(var(--muted));
+  --color-accent: hsl(var(--accent));
+  --color-popover: hsl(var(--popover));
+  --color-card: hsl(var(--card));
+
+  /* Border radius Shadcn */
+  --border-radius-lg: var(--radius);
+  --border-radius-md: calc(var(--radius) - 2px);
+  --border-radius-sm: calc(var(--radius) - 4px);
+
+
+  /* Font sizes personnalisées (avec line-height) */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1;
+
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.42857; /* 1.25 / 0.875 */
+
+  --text-base: 1rem;
+  --text-base--line-height: 1.5;
+
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.55556; /* 1.75 / 1.125 */
+
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 0.96; /* 1.2 / 1.25 */
+
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 0.8; /* 1.2 / 1.5 */
+
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 0.64; /* 1.2 / 1.875 */
+
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: 0.53333; /* 1.2 / 2.25 */
+
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 0.33333; /* 1 / 3 */
+
+  --text-6xl: 3.75rem;
+  --text-6xl--line-height: 0.26667; /* 1 / 3.75 */
+
+  --text-7xl: 4.5rem;
+  --text-7xl--line-height: 0.22222; /* 1 / 4.5 */
+
+  --text-8xl: 5rem;
+  --text-8xl--line-height: 0.24; /* 1.2 / 5 */
+
+  --text-9xl: 6rem;
+  --text-9xl--line-height: 0.16667; /* 1 / 6 */
+
+  --text-10xl: 136px;
+  --text-10xl--line-height: 1;
+
+  /* Line height global (added to the original extend) */
+  --leading-normal: 1.6;
+
+  /* Custom Flex */
+  --flex-2: 2 2 0%;
+
+  /* Breakpoints (adds xs in addition to the defaults) */
+  --breakpoint-xs: 360px;
+
+  --radius: 0.625rem; /* 10px */
+
+  /* Shadcn Animations */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from { height: 0px; }
+    to { height: var(--radix-accordion-content-height); }
+  }
+
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0px; }
+  }
+}
+
+@theme inline {
+  --font-primary: var(--font-primary);
+  --font-secondary: var(--font-secondary);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--custom-secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+:root {
+  /* shadcn background */
+  --background: #FFFFFF;
+  --foreground: 222.2 84% 4.9%;
+
+  /* shadcn theme */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklab(53.217000000000006% 0.00119 0.00031 / 0.506);
+  --ring: oklch(16.714% 0.03942 22.251);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  /* Font sizes */
+  --font-xs: 0.75rem;
+  --font-sm: 0.875rem;
+  --font-base: 1rem;
+  --font-lg: 1.125rem;
+  --font-xl: 1.25rem;
+  --font-2xl: 1.5rem;
+  --font-3xl: 1.875rem;
+  --font-4xl: 2.25rem;
+  --font-5xl: 3rem;
+  --font-6xl: 3.75rem;
+  --font-7xl: 4.5rem;
+  --font-8xl: 5rem;
+  --font-9xl: 6rem;
+  --font-10xl: 136px;
+}
+
+.dark {
+  --background: oklch(0.12 0 0) !important;
+  --foreground: 210 40% 98%;
+
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
+@layer components {
+  /*
+    .prose is used by tailwind typography plugin
+    We used it in ReadOnlyTextCodeEditor.tsx for styling stringified rich text content from database
+    Here we override some styles to make sure that span, strong and b tags inherit the text color
+  */
+  .prose {
+    /* Child elements inside paragraphs can not be styled independently, so we override their color here */
+    & p span, p strong, p b {
+      color: var(--inherit) !important;
+    }
+
+  }
+
+  .divider {
+    height: 1px;
+    width: 100%;
+    background-color: var(--color-dark-300);
+  }
+}

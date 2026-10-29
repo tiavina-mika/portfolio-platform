@@ -1,0 +1,25 @@
+{
+  "name": "bo",
+  "targets": {
+    "dev": {
+      "command": "pnpm dev",
+      "options": { "cwd": "apps/bo" }
+    },
+    "build": {
+      "command": "pnpm build",
+      "options": { "cwd": "apps/bo" },
+      "outputs": ["{projectRoot}/dist"]
+    },
+    "build-preprod": {
+      "command": "pnpm build:preprod",
+      "options": { "cwd": "apps/bo" },
+      "outputs": ["{projectRoot}/dist"]
+    },
+    "build-prod": {
+      "command": "pnpm build:prod",
+      "options": { "cwd": "apps/bo" },
+      "outputs": ["{projectRoot}/dist"]
+    }
+  },
+  "tags": ["scope:app", "type:app"]
+}

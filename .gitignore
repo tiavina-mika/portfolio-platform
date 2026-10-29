@@ -2,8 +2,7 @@
 logs
 *.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+pnpm-debug.log*
 lerna-debug.log*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
@@ -62,9 +61,6 @@ web_modules/
 # Output of 'npm pack'
 *.tgz
 
-# Yarn Integrity file
-.yarn-integrity
-
 # dotenv environment variable files
 .env
 .env.*
@@ -82,6 +78,9 @@ out
 .nuxt
 dist
 .output
+
+# BO build copied into the server (now built by Render via Nx)
+apps/server/clientBuild/
 
 # Gatsby files
 .cache/
@@ -122,28 +121,26 @@ dist
 # TernJS port file
 .tern-port
 
-# Stores Visual Studio Code versions used for testing Visual Studio Code extensions
+# Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
 # pnpm
 .pnpm-store
-
-# yarn v3
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
 
 # Vite files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 
-# Astro generated types
-.astro/
 
-# Turbo Repo
-.turbo
+
+.nx/cache
+.nx/workspace-data
+.nx/migrate-runs
+.nx/polygraph
+.claude/worktrees
+.claude/settings.local.json
+# HyperFrames video sources: regenerable cache and old renders (sources themselves are tracked)
+videos/**/source/.hyperframes/
+videos/**/source/node_modules/
+videos/**/source/renders/

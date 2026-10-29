@@ -1,0 +1,37 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "useGitignore": false,  // Disable .gitignore usage to allow custom ignorePaths
+  "globRoot": "./",
+  "words": [
+    "Brevo",
+    "BREVO",
+    "backoffice",
+    "preprod",
+    "viewports",
+    "Viewports",
+    "ICMS",
+    "ISEO",
+    "Autodocs",
+    "autodocs",
+    "Français",
+    "developpeur",
+    "Basier",
+    "basier",
+    "opengraph",
+    "codesandbox",
+    "Ambohitsoa",
+    "cmdk"
+  ],
+  "flagWords": [],
+  "ignorePaths": [
+    "package.json",
+    "yarn.lock",
+    "tsconfig.json",
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    "stories/**",
+    "__tests__/**"
+  ]
+}

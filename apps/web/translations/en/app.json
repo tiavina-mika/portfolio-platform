@@ -1,0 +1,181 @@
+{
+  "App": {
+    "description": "I am a <b>Full Stack Developer</b> with more than <b>6 years of experience</b> based in Madagascar, with solid knowledge in <b>IT development</b> and who is dedicated to to provide its customers with applications of all kinds ready for production. My goal is to create clean, functional code that always complies with web standards.",
+    "downloadMyCV": "Download my CV",
+    "downloadCV": "Download CV",
+    "myProjects": "My projects",
+    "letsTalkTogether": "Let's talk together",
+    "doNotHesitateToContactMe": "Do not hesitate to contact me. I am always open to discuss new projects, innovative ideas or new opportunities.",
+    "subscribeToNewsletter": "Subscribe to my newsletter",
+    "newsLetterDescription": "Subscribe to my newsletter to be able to follow and receive special offers and the articles / tutorials that I occasionally publish on my blog",
+    "projectDevelopedRecently": "Projects developed recently ({count})",
+    "seeOtherProjects": "See {count} other projects",
+    "notSubscribedToNewsletter": "You are not subscribed to the newsletter.",
+    "unsubscribeMessage": "You can unsubscribe at any time by clicking on the unsubscribe link contained in each of our emails.",
+    "gotToHomePage": "Go to the home page",
+    "contactMe": "Contact me",
+    "pageNotFound": "Page not found",
+    "pageNotFoundDescription": "The page you are looking for does not exist or has been moved.",
+    "whyMe": "Why me?"
+  },
+  "Project": {
+    "visitSite": "Visit website",
+    "seeCodeSource": "See source code",
+    "projectDescription": "Project description",
+    "society": "Society",
+    "technicalStack": "Technical stack",
+    "aboutTheSociety": "About the society",
+    "technologies": "Technologies",
+    "otherProjectsOf": "Other projects of {society}",
+    "links": "Links",
+    "repositories": "Repositories",
+    "screenShot": "Screenshot",
+    "video": "Video",
+    "projects": "Projects",
+    "description": "Since 2016, I have had the opportunity to work on a variety of projects, ranging from the development of dynamic websites to the creation of complex web applications.",
+    "projectDevelopedRecently": "Projects developed recently ({count})",
+    "societyDescription": "Society description",
+    "projectsIDevelopedTitle": "Projects I have developed over my career",
+    "projectsIDevelopedOverMyCareerDescription": "Over the course of my career, I have had the opportunity to design, develop, build, and deploy a variety of applications that address real-world problems and enhance user experiences.",
+    "otherProjectsFrom": "Other projects from {society}",
+    "message": {
+      "error": {
+        "notFound": "Project not found."
+      }
+    }
+  },
+  "Footer": {
+    "contact": "Contact",
+    "contactMe": "Contact me",
+    "privacyPolicy": "Privacy Policy",
+    "termsAndConditions": "Terms of Use",
+    "allRightsReserved": "All rights reserved",
+    "moreInfo": "More information",
+    "message": "Self-confidence is gained through experience and hard work.",
+    "myProjects": "My projects",
+    "siteMap": "Site map"
+  },
+  "Contact": {
+    "email": "Email",
+    "emailSent": "An email has been sent to you.",
+    "name": "Name",
+    "message": "Message",
+    "send": "Send",
+    "contactMe": "Contact me",
+    "subject": "From website contact form",
+    "subscribe": "Subscribe",
+    "subscribeWithSuccess": "You have successfully subscribed to the newsletter.",
+    "messageSent": "Your message has been sent.",
+    "description": "For any new projects or new collaborations, I would first like to get to know you and your company through a call or a meeting. Then I would like to understand the context of your company, its goals and long-term objectives. After agreeing on the collaboration and prioritizing tasks, we write an agreement and start the mission in a few days. If you have an interesting topic in mind and want to learn more and hear my expertise, just contact me via the contact form.",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message"
+    }
+  },
+  "Error": {
+    "unknown": "Something went wrong. Please try again later.",
+    "somethingWentWrong": "Something went wrong.",
+    "tryAgain": " Please either refresh the page or try again later.",
+    "ifProblemPersist": "If the problem persists, please",
+    "contactUs": "contact us"
+  },
+  "Services": {
+    "1": {
+      "title": "Develop a Project from A to Z",
+      "description": "I handle all stages of development, including technology selection, technical architecture, development, database integration, and deployment to production environments."
+    },
+    "2": {
+      "title": "Strengthen, integrate, or lead a team",
+      "description": "Collaborate effectively within an existing team to enhance its skills, optimize processes, and ensure project success by contributing my deep technical expertise and a results-oriented approach."
+    },
+    "3": {
+      "title": "Potential CTO of a Startup",
+      "description": "As a potential CTO of a startup, I can define technology strategies and guide technical decisions to ensure the company's growth and innovation."
+    },
+    "4": {
+      "title": "Competitive Pricing",
+      "description": "I offer competitive pricing for startups and SMEs, providing expertise equivalent to premium services, while ensuring solutions tailored to specific needs and market requirements."
+    }
+  },
+  "ServerError": {
+    "articleSave": "The article could not be saved.",
+    "emailAlreadyExists": "This email is already subscribed to the newsletter.",
+    "emailRequired": "The email is required.",
+    "localeRequired": "The language is required.",
+    "paramsRequired": "The parameters are required.",
+    "reasonRequired": "The reason is required.",
+    "somethingWentWrong": "Something went wrong. Please try again later."
+  },
+  "NavBar": {
+    "home": "Home",
+    "about": "About",
+    "articles": "Articles",
+    "article": "Article",
+    "contactMe": "Contact me",
+    "blog": "Blog",
+    "contact": "Contact",
+    "toggleTheme": "Toggle theme",
+    "projects": "Projects"
+  },
+  "LanguageSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, fr {French} en {English} other {Unknown}}"
+  },
+  "Sitemap": {
+    "sitemap": "Sitemap",
+    "description": "Sitemap of {appName} website where you can navigate to the page you want by clicking on the links.",
+    "projects": "Projects",
+    "articles": "Articles"
+  },
+  "Newsletter": {
+    "subscribe": "Subscribe to the newsletter",
+    "unsubscribe": "Unsubscribe",
+    "resubscribe": "Resubscribe",
+    "email": "Email",
+    "subscribeWithSuccess": "You've been unsubscribed from our newsletter.",
+    "unsubscribeWithSuccess": "You have successfully unsubscribed from the newsletter.",
+    "alreadySubscribed": "This email is already subscribed to the newsletter.",
+    "youWillNotReceived": "You will no longer receive the latest news and articles from {appName}.",
+    "tellUsWhy": "Tell us why you want to unsubscribe",
+    "ifThisIsAMistake": "If this is a mistake, you can",
+    "resubscribeSuccess": "You have successfully resubscribed to the newsletter.",
+    "resubscribeError": "An error occurred while resubscribing to the newsletter. Please try again later.",
+    "tooFrequently": "Email are sent too frequently",
+    "notInterested": "I'm not interested in the content",
+    "notRelevant": "The content is not relevant to me",
+    "other": "Other",
+    "reason": "Reason",
+    "reasonSubmittedSuccessfully": "The reason has been submitted successfully."
+  },
+  "Metadata": {
+    "home": {
+      "metaTitle": "Home",
+      "metaDescription": "I am a Full Stack Developer with more than 6 years of experience based in Madagascar, with solid knowledge in IT development and who is dedicated to to provide its customers with applications of all kinds ready for production. My goal is to create clean, functional code that always complies with web standards."
+    },
+    "articles": {
+      "metaTitle": "My blog",
+      "metaDescription": "Articles I have written with passion."
+    },
+    "projects": {
+      "metaTitle": "My projects",
+      "metaDescription": "Projects I have developed with passion."
+    },
+    "contact": {
+      "metaTitle": "Contact us",
+      "metaDescription": "Contact us for help, for information or for suggestion. {appName} service will be happy to help you."
+    },
+    "sitemap": {
+      "metaTitle": "Sitemap",
+      "metaDescription": "Sitmap of the website {appName} where you can navigate to the page you want by clicking on the links."
+    },
+    "faq": {
+      "metaTitle": "Frequently asked questions in {appName}",
+      "metaDescription": "Questions everybody asked."
+    },
+    "unsubscribeNewsletter": {
+      "metaTitle": "Unsubscribe from the newsletter",
+      "metaDescription": "Unsubscribe from the newsletter of {appName}. You will no longer receive the latest news and articles."
+    }
+  }
+}

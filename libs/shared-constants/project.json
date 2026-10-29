@@ -1,0 +1,5 @@
+{
+  "name": "shared-constants",
+  "sourceRoot": "libs/shared-constants/src",
+  "tags": ["scope:shared-core"]
+}

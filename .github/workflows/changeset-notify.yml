@@ -1,0 +1,40 @@
+name: Changesets to Slack
+
+# Posts every changeset that reaches `develop` to the #changelog Slack channel, so the team follows
+# the changes as they land instead of waiting for the release that gathers them (posted by
+# `release-notify.yml`).
+#
+# It runs only when `.changeset/` changes. The merge of the release PR deletes the changesets
+# instead of adding any, so the script finds nothing to post then.
+#
+# The script needs nothing but Node and git, so dependencies are not installed. The full history is
+# fetched because the previous commit of the push (`github.event.before`) is compared with the new one.
+
+on:
+  push:
+    branches: [develop]
+    paths:
+      - '.changeset/*.md'
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    name: Post the new changesets to Slack
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Post the new changesets
+        env:
+          SLACK_CHANGELOG_WEBHOOK_URL: ${{ secrets.SLACK_CHANGELOG_WEBHOOK_URL }}
+          BASE_SHA: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
+        run: node scripts/post-changesets-to-slack.mjs "$BASE_SHA" "$HEAD_SHA"

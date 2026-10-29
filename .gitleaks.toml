@@ -1,0 +1,11 @@
+title = "portfolio gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Dummy values and generated files"
+paths = [
+  '''pnpm-lock\.yaml$''',
+  '''\.env\.example$''',
+]

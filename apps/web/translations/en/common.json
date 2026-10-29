@@ -1,0 +1,35 @@
+{
+  "Common": {
+    "title": "Title",
+    "greeting": "Hello",
+    "edit": "Edit",
+    "add": "Add",
+    "delete": "Delete",
+    "save": "Save",
+    "required": "Required",
+    "name": "Name",
+    "updatedAtDate": "Updated at date",
+    "newest": "Newest",
+    "confirm": "Confirm",
+    "allRightReserved": "All rights reserved",
+    "ourWebsite": "Our website",
+    "getInTouch": "Get in touch",
+    "legal": "Legal",
+    "cancel": "Cancel",
+    "addSomething": "Add {value}",
+    "seeSomething": "See {value}",
+    "editSomething": "Edit {value}",
+    "deleteSomething": "Delete {value}",
+    "returnToList": "Return to list",
+    "privacyPolicy": "Privacy policy",
+    "termsAndConditions": "Terms and conditions",
+    "seeMore": "See more",
+    "search": "Search...",
+    "noResults": "No results",
+    "shareOn": "Share on {social}",
+    "shares": "Shares"
+  },
+  "Errors": {
+    "somethingWentWrong": "Something went wrong. Please try again later."
+  }
+}

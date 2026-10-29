@@ -1,0 +1,34 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "useGitignore": false,
+  "globRoot": "./",
+  "words": [
+    "noopener",
+    "noreferrer",
+    "PREPROD",
+    "preprod",
+    "codesandbox",
+    "Shadcn",
+    "Symfony",
+    "slugified",
+    "Cutted",
+    "Segoe",
+    "Neue",
+    "uuidv",
+    "Snackbars",
+    "persistor",
+    "ISEOFields"
+  ],
+  "flagWords": [],
+  "ignorePaths": [
+    "package.json",
+    "package-lock.json",
+    "yarn.lock",
+    "tsconfig.json",
+    "node_modules/**",
+    "dev/**",
+    "dist/**",
+    "build/**"
+  ]
+}

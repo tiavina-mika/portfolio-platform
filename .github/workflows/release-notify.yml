@@ -1,0 +1,44 @@
+name: Release notes to Slack
+
+# Posts the new CHANGELOG.md entries of each app to the #changelog Slack channel.
+#
+# It runs only when a changelog changes, which happens twice per release: when the
+# "chore(release): version packages" PR is merged into `develop` (deployed to preproduction), then
+# when `develop` is merged into `main` (production). The message title says which one it is.
+#
+# The script needs nothing but Node and git, so dependencies are not installed. The full history is
+# fetched because the previous commit of the push (`github.event.before`) is compared with the new one.
+
+on:
+  push:
+    branches: [develop, main]
+    paths:
+      - 'apps/*/CHANGELOG.md'
+  workflow_dispatch:
+    inputs:
+      base:
+        description: Commit to compare from (the notes added after it are posted)
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    name: Post the release notes to Slack
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Post the release notes
+        env:
+          SLACK_CHANGELOG_WEBHOOK_URL: ${{ secrets.SLACK_CHANGELOG_WEBHOOK_URL }}
+          BASE_SHA: ${{ inputs.base || github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
+        run: node scripts/post-changelog-to-slack.mjs "$BASE_SHA" "$HEAD_SHA"

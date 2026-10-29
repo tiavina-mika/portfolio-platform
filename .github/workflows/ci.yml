@@ -1,0 +1,200 @@
+name: CI
+
+# Lint, typecheck and build every project a pull request actually touches.
+#
+# Until now the only automated gate on a PR was the server test suite: nothing checked that the
+# back-office or the website still compiled, and the lint/typecheck pass lived solely in a local
+# `pre-push` hook, which `--no-verify` skips. A branch could therefore reach `develop` with code
+# that does not build.
+#
+# `nx affected` is what keeps this cheap: on a PR touching only `apps/web`, the back-office is not
+# rebuilt. `fetch-depth: 0` is required for it — Nx compares against the base branch, which it
+# cannot see in a shallow clone.
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+  workflow_dispatch:
+
+# a new push to the same PR makes the previous run's answer irrelevant
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Lint, typecheck and build affected projects
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # tells `nx affected` which commit to compare against, on a PR and on a push alike
+      - uses: nrwl/nx-set-shas@v4
+
+      - name: Lint
+        run: pnpm nx affected -t lint
+
+      - name: Typecheck
+        run: pnpm nx affected -t typecheck
+
+      # `server:build` runs its own typecheck; `bo:build` runs `tsc` before Vite.
+      #
+      # `web` is excluded on purpose: `next build` prerenders the public pages, and doing so reads
+      # the CMS content out of the live Parse API — which no CI runner can reach. Its compilation is
+      # covered by `web:typecheck` in the step above instead, which needs nothing but the sources.
+      - name: Build
+        run: pnpm nx affected -t build --exclude=web
+
+      # the docs sites are copied into the server's `clientBuild/docs/`, which the deployment serves:
+      # `docs:build` above only proves VitePress compiles, not that this copy works
+      - name: Build docs sites
+        run: pnpm nx affected -t build-docs
+
+      # every translation key used in the code exists in every locale (see scripts/check-i18n.mjs)
+      - name: Check translations
+        run: pnpm check-i18n
+
+  # `commit-msg` is a local hook, which `--no-verify` skips: the same rule is checked here on the commits
+  # a PR adds. Merge commits are ignored by commitlint itself.
+  commits:
+    name: Conventional commit messages
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint commit messages
+        run: pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
+
+  # The server has no unit test yet,
+  # `web` has no unit test: this job covers the other unit suites.
+  test:
+    name: Unit tests of affected projects
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - uses: nrwl/nx-set-shas@v4
+
+      - name: Test
+        run: pnpm nx affected -t test --exclude=server,web
+
+  # A story nobody builds is a story nobody notices breaking: building catches a Storybook config or an import
+  # that no longer loads. Running every story as a test (render, `play`, a11y) is `storybook-tests.yml`: it
+  # is nightly and on demand for now, until it has run clean for two weeks: Chromium sometimes drops the test
+  # iframe on a two-core runner, so that run is split in shards that are run again on such a failure.
+  storybook:
+    name: Build affected Storybooks
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - uses: nrwl/nx-set-shas@v4
+
+      - name: Build Storybook
+        run: pnpm nx affected -t build-sb
+
+  # A doc that describes a behavior the code no longer has is worse than none: these two jobs catch what a machine
+  # can — a link to a file that was moved or deleted, and Markdown that is malformed. Whether the doc is still
+  # *true* stays a review matter (see the PR template).
+  docs:
+    name: Markdown lint and broken links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # the twin check compares the pull request with its base branch, which a shallow clone does not hold
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint Markdown
+        run: pnpm lint:docs
+
+      # Every relative link of the docs, and every `#anchor` pointing at a heading, resolves. Unlike lychee
+      # below, it also checks the anchors, and it fails the job: the links between docs were all repaired.
+      - name: Check doc links and anchors
+        run: pnpm check-doc-links
+
+      # A doc and its translated twin (`fr/NAME.FR.md` and `en/NAME.md`) change together: the
+      # `markdown-docs.md` rule only binds whoever reads it, an edit made by hand would leave one side stale.
+      # It checks that the twin was touched, not that the translation is right (that is a review matter).
+      - name: Check translated twins
+        if: github.event_name == 'pull_request'
+        run: pnpm check-doc-twins --base origin/${{ github.base_ref }}
+
+      # `--offline` only resolves relative links between files of the repo: no flaky failure on an external site.
+      # Links to source files are left out: docs quote code paths that a refactor moves much more often than
+      # a doc, and those are not what this check is for.
+      #
+      # Not blocking yet: some links between docs were already broken when the check was added (listed in the
+      # job summary). Switch `fail` to true once they are repaired, so a new broken link fails the PR.
+      - name: Check links between docs
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --offline --no-progress
+            --exclude '.(ts|tsx|js|jsx|mjs|cjs|json|css|html|yml|yaml)(#.*)?
+
+            'docs/**/*.md' '.claude/**/*.md' '*.md'
+          fail: false
