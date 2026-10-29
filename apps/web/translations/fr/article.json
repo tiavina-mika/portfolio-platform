@@ -1,0 +1,25 @@
+{
+  "Article": {
+    "relatedArticles": "Articles similaires",
+    "articles": "Articles",
+    "anArticle": "un article",
+    "theArticle": "l'article",
+    "categories": "Categories",
+    "category": "Categorie",
+    "title": "Titre",
+    "content": "Contenu",
+    "author": "Auteur",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le",
+    "noArticlesYet": "Aucun article pour le moment.",
+    "viewAll": "Voir tout",
+    "message": {
+      "error": {
+        "notFound": "L'article n'a pas été trouvé."
+      }
+    }
+  },
+  "Page": {
+    "pages": "Pages"
+  }
+}

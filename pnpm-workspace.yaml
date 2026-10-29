@@ -1,0 +1,49 @@
+packages:
+  - 'apps/*'
+  - 'libs/config/*'
+  - 'libs/shared-constants'
+  - 'libs/shared-domain-constants'
+  - 'libs/shared-domain-types'
+  - 'libs/shared-types'
+  - 'libs/shared-utils'
+
+nodeLinker: hoisted
+
+allowBuilds:
+  '@apollo/protobufjs': true
+  '@firebase/util': true
+  '@parcel/watcher': true
+  '@sentry/cli': true
+  '@swc/core': true
+  core-js-pure: true
+  esbuild: true
+  less: true
+  mongodb-memory-server: true
+  nx: true
+  parse-server: true
+  protobufjs: true
+  sharp: true
+  unrs-resolver: true
+
+minimumReleaseAgeExclude:
+  - '@next/bundle-analyzer@16.3.0'
+  - '@next/env@16.3.0'
+  - '@next/eslint-plugin-next@16.3.0'
+  - '@next/swc-darwin-arm64@16.3.0'
+  - '@next/swc-darwin-x64@16.3.0'
+  - '@next/swc-linux-arm64-gnu@16.3.0'
+  - '@next/swc-linux-arm64-musl@16.3.0'
+  - '@next/swc-linux-x64-gnu@16.3.0'
+  - '@next/swc-linux-x64-musl@16.3.0'
+  - '@next/swc-win32-arm64-msvc@16.3.0'
+  - '@next/swc-win32-x64-msvc@16.3.0'
+  - eslint-config-next@16.3.0
+  - next@16.3.0
+  - mui-tiptap-editor@5.1.0
+  - '@chromatic-com/storybook@5.4.0'
+
+overrides:
+  '@types/node': '24.13.2'
+
+patchedDependencies:
+  parse@8.6.2: patches/parse@8.6.2.patch

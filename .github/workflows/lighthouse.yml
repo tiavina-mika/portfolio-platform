@@ -1,0 +1,47 @@
+name: Lighthouse
+
+# Performance, accessibility and SEO budgets of the public website.
+#
+# It audits a deployed site (the `LIGHTHOUSE_URLS` repository variable, one URL per line, e.g. the
+# preprod home, blog and contact pages) rather than a build made here: `next build` reads the CMS out
+# of the live Parse API at build time, which no CI runner can reach, so a PR cannot be audited before
+# deployment. Budgets live in `lighthouserc.json`; `warn` entries only report, `error` ones fail the run.
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    name: Audit the public website
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Check the URLs are configured
+        env:
+          LIGHTHOUSE_URLS: ${{ vars.LIGHTHOUSE_URLS }}
+        run: |
+          if [ -z "$LIGHTHOUSE_URLS" ]; then
+            echo "::error::Set the LIGHTHOUSE_URLS repository variable (one URL per line)."
+            exit 1
+          fi
+
+      - name: Run Lighthouse CI
+        env:
+          LIGHTHOUSE_URLS: ${{ vars.LIGHTHOUSE_URLS }}
+        run: |
+          args=()
+          while IFS= read -r url; do
+            [ -n "$url" ] && args+=("--collect.url=$url")
+          done <<< "$LIGHTHOUSE_URLS"
+          npx --yes @lhci/cli@0.15.1 autorun "${args[@]}"

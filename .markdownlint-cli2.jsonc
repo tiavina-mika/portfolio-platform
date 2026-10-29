@@ -1,0 +1,48 @@
+{
+  // Markdown style of the project docs. Rules that fight the way these docs are written
+  // (French prose, long table rows, inline HTML, emoji status markers) are switched off.
+  "config": {
+    "default": true,
+    // table rows and prose are not wrapped
+    "MD013": false,
+    // inline HTML is used in a few docs (<details>, <br>)
+    "MD033": false,
+    // a doc starts with its title followed by a table of contents, not always a bare H1 first line
+    "MD041": false,
+    "MD024": false,
+    // trailing punctuation in headings is common in French (« Pourquoi ? »)
+    "MD026": false,
+    // ordered lists are numbered by position or all `1.`
+    "MD029": false,
+    // bold lines used as pseudo-headings in status blocks
+    "MD036": false,
+    // fenced blocks of ASCII diagrams carry no language
+    "MD040": false,
+    // a link fragment is checked by the link check job, not here
+    "MD051": false,
+    // cosmetic spacing and style rules: thousands of hits in existing docs, no effect on meaning
+    "MD004": false,
+    "MD007": false,
+    "MD010": false,
+    "MD012": false,
+    "MD022": false,
+    "MD028": false,
+    "MD031": false,
+    "MD032": false,
+    "MD034": false,
+    "MD050": false,
+    "MD055": false,
+    "MD056": false,
+    "MD058": false,
+    "MD060": false,
+    // existing docs have several H1, skipped heading levels, repeated headings and no final newline
+    "MD001": false,
+    "MD009": false,
+    "MD025": false,
+    "MD030": false,
+    "MD038": false,
+    "MD047": false
+  },
+  "globs": ["docs/**/*.md", "*.md", ".claude/**/*.md", ".changeset/*.md"],
+  "ignores": ["**/node_modules/**"]
+}

@@ -1,0 +1,181 @@
+{
+  "App": {
+    "description": "Je suis un <b>développeur Full Stack</b> avec plus de <b>8 années d'expérience</b> basé à Madagascar, possédant de solides connaissances en <b>développement informatique</b> et qui se consacre à fournir à ses clients des applications de tout genre prêtes pour la production. Mon objectif est de créer un code propre, fonctionnel et toujours conforme aux normes du web.",
+    "downloadMyCV": "Télécharger mon CV",
+    "downloadCV": "Télécharger CV",
+    "myProjects": "Mes projets",
+    "letsTalkTogether": "Discutons ensemble",
+    "doNotHesitateToContactMe": "N'hésitez pas à me contacter. Je suis toujours ouvert pour discuter de nouveaux projets, des idées innovantes ou de nouvelles opportunités.",
+    "subscribeToNewsletter": "S'abonner à ma newsletter",
+    "newsLetterDescription": "Abonnez-vous à ma newsletter pour pouvoir suivre et récevoir des offres spéciales et les articles / tutos que je publie occasionnellement sur mon blog",
+    "projectDevelopedRecently": "Projets développés récemment ({count})",
+    "seeOtherProjects": "Voir {count} autres projets",
+    "notSubscribedToNewsletter": "Vous n'êtes pas abonné à la newsletter",
+    "unsubscribeMessage": "Vous pouvez se désabonner à tout moment en cliquant sur le lien de désabonnement contenu dans chacun de nos mails.",
+    "gotToHomePage": "Aller à la page d'accueil",
+    "contactMe": "Me contacter",
+    "pageNotFound": "Page introuvable",
+    "pageNotFoundDescription": "La page que vous recherchez n'existe pas ou a été déplacée.",
+    "whyMe": "Pourquoi moi ?"
+  },
+  "Project": {
+    "visitSite": "Visiter le site Web",
+    "seeCodeSource": "Voir le code source",
+    "projectDescription": "Description du projet",
+    "society": "Société",
+    "technicalStack": "Stack technique",
+    "aboutTheSociety": "À propos de la société",
+    "technologies": "Technologies",
+    "otherProjectsOf": "Autres projets de {society}",
+    "links": "Liens",
+    "repositories": "Code source",
+    "screenShot": "Capture d'écran",
+    "video": "Video",
+    "projects": "Projets",
+    "description": "Depuis 2016 j'ai eu l'opportunité de travailler sur des projets variés, allant du développement de sites web dynamiques à la création d'applications web complexes.",
+    "projectDevelopedRecently": "Projets développés récemment ({count})",
+    "societyDescription": "Description de la société",
+    "projectsIDevelopedTitle": "Projets que j'ai développés au cours de ma carrière",
+    "projectsIDevelopedOverMyCareerDescription": "Au cours de ma carrière, j'ai eu l'opportunité de concevoir, développer, construire et déployer une variété d'applications qui répondent à des problèmes du monde réel et améliorent l'expérience utilisateur.",
+    "otherProjectsFrom": "Autres projets de {society}",
+    "message": {
+      "error": {
+        "notFound": "Page introuvable."
+      }
+    }
+  },
+  "Footer": {
+    "contact": "Contact",
+    "contactMe": "Contactez-moi",
+    "privacyPolicy": "Politique de confidentialité",
+    "termsAndConditions": "Conditions d'utilisation",
+    "allRightsReserved": "Tous droits réservés",
+    "moreInfo": "Plus d'information",
+    "message": "La confiance en soi s'acquiert par l'expérience et le travail acharné.",
+    "myProjects": "Mes projets",
+    "siteMap": "Plan du site"
+  },
+  "Contact": {
+    "email": "Email",
+    "emailSent": "Un email a été envoyé à votre adresse email",
+    "name": "Nom",
+    "message": "Message",
+    "send": "Envoyer",
+    "contactMe": "Me contacter",
+    "subject": "Formulaire de contact du site",
+    "subscribe": "S'abonner",
+    "subscribeWithSuccess": "Vous êtes maintenant abonné à notre newsletter.",
+    "messageSent": "Votre message a été envoyé.",
+    "description": "Pour tout nouveaux projets ou nouvelles collaborations, j'aimerais d'abord apprendre à vous connaître, vous et votre entreprise, par un appel ou une rencontre. Ensuite j'aimerai comprendre le contexte de votre entreprise, ses buts et objectifs à long terme. Après s'être mis d'accord sur la collaboration et la priorisation des tâches, nous rédigeons un accord et commençons la mission en quelques jours. Si vous avez un sujet intéressant en tête et souhaitez en savoir plus et entendre mon savoir-faire, il vous suffit de me contacter via le formulaire de contact.",
+    "fields": {
+      "name": "Nom",
+      "email": "Email",
+      "message": "Message"
+    }
+  },
+  "Error": {
+    "unknown": "Une erreur s'est produite. Veuillez réessayer plus tard.",
+    "somethingWentWrong": "Une erreur s'est produite.",
+    "tryAgain": "Veuillez rafraîchir la page ou réessayer plus tard.",
+    "ifProblemPersist": "Si le problème persiste, veuillez",
+    "contactUs": "nous contacter"
+  },
+  "ServerError": {
+    "articleSave": "L'article n'a pas pu être enregistré.",
+    "emailAlreadyExists": "Cet email est déjà abonné à la newsletter.",
+    "emailRequired": "L'email est requis.",
+    "localeRequired": "La language est requis.",
+    "paramsRequired": "Parmètre requis.",
+    "reasonRequired": "La raison est requise.",
+    "somethingWentWrong": "Quelque chose s'est mal passé. Veuillez réessayer plus tard."
+  },
+  "Services": {
+    "1": {
+      "title": "Monter un projet de A à Z",
+      "description": "Je gère toutes les étapes du développement, y compris le choix des technologies, l'architecture technique, le développement, l'intégration de bases de données, ainsi que le déploiement sur des environnements de production."
+    },
+    "2": {
+      "title": "Renforcer, intégrer ou diriger une équipe",
+      "description": "Collaborer efficacement au sein d’une équipe existante pour renforcer ses compétences, optimiser les processus et assurer la réussite des projets, en apportant mon expertise technique approfondie et une approche orientée vers les résultats."
+    },
+    "3": {
+      "title": "Potentiel CTO d'une startup",
+      "description": "En tant que potentiel CTO d'une startup, je suis en mesure de définir des stratégies technologiques et de guider les décisions techniques pour assurer la croissance et l'innovation au sein de l'entreprise."
+    },
+    "4": {
+      "title": "Tarifs concurrentiels",
+      "description": "Je propose des tarifs compétitifs pour startups et PME, offrant une expertise équivalente à des prestations haut de gamme, tout en garantissant des solutions adaptées aux besoins spécifiques et aux exigences du marché."
+    }
+  },
+  "NavBar": {
+    "home": "Accueil",
+    "about": "À propos",
+    "articles": "Articles",
+    "blog": "Blog",
+    "contactMe": "Me contacter",
+    "toggleTheme": "Changer de thème",
+    "projects": "Projets",
+    "article": "Article",
+    "contact": "Contact"
+  },
+  "LanguageSwitcher": {
+    "label": "Changer language",
+    "locale": "{locale, select, fr {Français} en {Anglais} other {Autres}}"
+  },
+  "Sitemap": {
+    "sitemap": "Plan du site",
+    "description": "Plan du site du site {appName} où vous pouvez naviguer vers la page que vous souhaitez en cliquant sur les liens.",
+    "projects": "Projets",
+    "articles": "Articles"
+  },
+  "Newsletter": {
+    "subscribe": "S'abonner à la newsletter",
+    "unsubscribe": "Se désabonner",
+    "resubscribe": "Se réabonner",
+    "email": "Email",
+    "subscribeWithSuccess": "Vous êtes maintenant abonné à notre newsletter.",
+    "unsubscribeWithSuccess": "Vous vous êtes désabonné avec succès de la newsletter.",
+    "alreadySubscribed": "Cet email est déjà abonné à la newsletter.",
+    "youWillNotReceived": "Vous ne recevrez plus les dernières nouvelles et articles de {appName}.",
+    "tellUsWhy": "Dites-nous pourquoi vous voulez vous désabonner",
+    "ifThisIsAMistake": "Si c'est une erreur, vous pouvez",
+    "resubscribeSuccess": "Vous vous êtes réabonné avec succès à la newsletter.",
+    "resubscribeError": "Une erreur s'est produite lors de votre réabonnement à la newsletter. Veuillez réessayer plus tard.",
+    "tooFrequently": "L'email a été envoyé trop fréquemment.",
+    "notInterested": "Je ne suis pas intéressé par le contenu",
+    "notRelevant": "Le contenu me semble pas pertinent",
+    "other": "Autre",
+    "reason": "Raison",
+    "reasonSubmittedSuccessfully": "La raison a été soumise avec succès."
+  },
+  "Metadata": {
+    "home": {
+      "metaTitle": "Accueil",
+      "metaDescription": "Je suis un développeur Full Stack avec plus de 8 années d'expérience basé à Madagascar, possédant de solides connaissances en développement informatique et qui se consacre à fournir à ses clients des applications de tout genre prêtes pour la production. Mon objectif est de créer un code propre, fonctionnel et toujours conforme aux normes du web."
+    },
+    "articles": {
+      "metaTitle": "Mon blog",
+      "metaDescription": "Liste de tous les articles que j'ai écrits avec passion."
+    },
+    "projects": {
+      "metaTitle": "Mes réalisations",
+      "metaDescription": "Liste de tous les projets que j'ai développés avec passion."
+    },
+    "contact": {
+      "metaTitle": "Contactez-nous",
+      "metaDescription": "Contactez-nous pour obtenir de l'aide, des informations ou des suggestions. Le service {appName} se fera un plaisir de vous aider."
+    },
+    "sitemap": {
+      "metaTitle": "Plan du site",
+      "metaDescription": "Plan du site du site {appName}. Vous pouvez naviguer vers la page que vous souhaitez en cliquant sur les liens."
+    },
+    "faq": {
+      "metaTitle": "Questions fréquemment posées {appName}",
+      "metaDescription": "Questions que tout le monde pose."
+    },
+    "unsubscribeNewsletter": {
+      "metaTitle": "Se désabonner de la newsletter",
+      "metaDescription": "Se désabonner de la newsletter de {appName}. Vous ne recevrez plus de notifications par email."
+    }
+  }
+}

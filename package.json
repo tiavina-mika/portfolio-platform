@@ -1,0 +1,39 @@
+{
+  "name": "portfolio-platform",
+  "packageManager": "pnpm@11.18.0+sha512.33d83c77da82f49fba836925c6f1b841181ec3132b670639bd012f7075f5c7cf634c5f870147c19aae7478fac01df09d8892e880454896edd23ee9b33757563c",
+  "private": true,
+  "scripts": {
+    "prepare": "husky",
+    "install:light": "pnpm install --frozen-lockfile --network-concurrency 4 --child-concurrency 1",
+    "lint": "pnpm nx run-many -t lint && pnpm check-i18n",
+    "check-i18n": "node scripts/check-i18n.mjs",
+    "check-doc-twins": "node scripts/check-doc-twins.mjs",
+    "check-doc-links": "node scripts/check-doc-links.mjs",
+    "lint:docs": "markdownlint-cli2",
+    "changeset": "changeset",
+    "version-packages": "changeset version"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^3.0.3",
+    "@commitlint/cli": "^21.2.3",
+    "@commitlint/config-conventional": "^21.2.3",
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.7.2",
+    "@nx/eslint": "^24.0.2",
+    "@nx/eslint-plugin": "^24.0.2",
+    "@nx/js": "^24.0.2",
+    "@nx/next": "^24.0.2",
+    "@nx/node": "^24.0.2",
+    "@nx/react": "^24.0.2",
+    "@nx/vite": "^24.0.2",
+    "@types/object-hash": "^3.0.6",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prefer-arrow-functions": "^3.10.1",
+    "eslint-plugin-prettier": "^5.5.6",
+    "globals": "^17.9.0",
+    "husky": "^9.1.7",
+    "markdownlint-cli2": "^0.23.3",
+    "nx": "24.0.2",
+    "typescript": "^6.0.3"
+  }
+}

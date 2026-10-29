@@ -1,0 +1,9 @@
+import './app.triggers';
+import './article.triggers';
+import './auth.triggers';
+import './category.triggers';
+import './contact.triggers';
+import './newsletter.triggers';
+import './page.triggers';
+import './project.triggers';
+import './user.triggers';

@@ -1,0 +1,33 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "types": ["vite/client", "@emotion/react/types/css-prop"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strictNullChecks": true,
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "jsxImportSource": "@emotion/react",
+    "paths": {
+      "@/*": ["./src/*"],
+      "assets*": ["./public/*"],
+    },
+  },
+  "include": ["src", ".prettierrc.mjs"],
+  "exclude": ["node_modules", "dist"] ,
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

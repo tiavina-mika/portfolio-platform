@@ -1,0 +1,32 @@
+{
+  "name": "web",
+  "targets": {
+    "dev": {
+      "command": "pnpm dev",
+      "options": { "cwd": "apps/web" }
+    },
+    "typecheck": {
+      "command": "pnpm typecheck",
+      "options": { "cwd": "apps/web" }
+    },
+    "build": {
+      "command": "pnpm build",
+      "options": { "cwd": "apps/web" },
+      "outputs": ["{projectRoot}/.next"]
+    },
+    "sb": {
+      "command": "pnpm sb",
+      "options": { "cwd": "apps/web" }
+    },
+    "build-sb": {
+      "command": "pnpm build-sb",
+      "options": { "cwd": "apps/web" },
+      "outputs": ["{projectRoot}/storybook-static"]
+    },
+    "test-storybook": {
+      "command": "pnpm test-storybook",
+      "options": { "cwd": "apps/web" }
+    }
+  },
+  "tags": ["scope:app", "type:app"]
+}

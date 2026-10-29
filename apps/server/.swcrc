@@ -1,0 +1,32 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true
+    },
+    // Same as tsconfig.json "compilerOptions"
+    "baseUrl": "./",
+    // Same as tsconfig.json "compilerOptions.paths"
+    // This is needed for proper path aliasing during transpilation
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "target": "esnext",
+    "experimental":{
+      // Keep 'with { type: "json" }' on JSON imports — Node requires the attribute to load them
+      "keepImportAttributes": true,
+      // Must stay false: emitting the legacy 'assert' keyword instead of 'with' throws a
+      // SyntaxError on Node 22+, where import assertions were removed
+      "emitAssertForImportAttributes": false
+    }
+  },
+  "module": {
+    "type": "nodenext",
+    // It will add .js extension to local imports during transpilation
+    "resolveFully": true
+  },
+  // Enable source maps for easier debugging
+  "sourceMaps": true,
+  // Set to false when debugging to have readable output code
+  "minify": false
+}

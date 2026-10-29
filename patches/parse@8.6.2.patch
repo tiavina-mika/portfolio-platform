@@ -1,0 +1,39 @@
+diff --git a/lib/react-native/uuid.js b/lib/react-native/uuid.js
+index 3a56d86f3fcdd35179133cb397d4114b8f6c850c..2b99d8fc25374be2e42d3d9133398a9180b6c908 100644
+--- a/lib/react-native/uuid.js
++++ b/lib/react-native/uuid.js
+@@ -2,5 +2,33 @@ Object.defineProperty(exports, "__esModule", {
+   value: true
+ });
+ exports.default = void 0;
+-var uuid = require('crypto').randomUUID;
++
++// Fallback UUID v4 generator for environments where the Web Crypto
++// randomUUID() method isn't available (e.g. Metro web bundles, where
++// require('crypto') resolves to a Node shim without randomUUID).
++// Only used for Parse's locally-generated optimistic object ids, so
++// Math.random-based entropy is sufficient (no security requirement).
++function fallbackUuid() {
++  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
++    var r = Math.random() * 16 | 0;
++    var v = c === 'x' ? r : (r & 0x3 | 0x8);
++    return v.toString(16);
++  });
++}
++
++var globalCrypto = (typeof globalThis !== 'undefined' && globalThis.crypto)
++  || (typeof self !== 'undefined' && self.crypto)
++  || (typeof window !== 'undefined' && window.crypto)
++  || (typeof require === 'function' ? (function () {
++    try {
++      return require('crypto');
++    } catch (e) {
++      return undefined;
++    }
++  })() : undefined);
++
++var uuid = (globalCrypto && typeof globalCrypto.randomUUID === 'function')
++  ? function () { return globalCrypto.randomUUID(); }
++  : fallbackUuid;
++
+ var _default = exports.default = uuid;

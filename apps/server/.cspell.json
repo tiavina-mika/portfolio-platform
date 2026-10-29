@@ -1,0 +1,30 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "useGitignore": false,  // Disable .gitignore usage to allow custom ignorePaths
+  "globRoot": "./",
+  "words": [
+    "Brevo",
+    "BREVO",
+    "backoffice",
+    "preprod",
+    "Datauri",
+    "Transac",
+    "LASTNAME",
+    "FIRSTNAME",
+    "PREPROD",
+    "Littérature",
+    "codesandbox",
+    "onrender"
+  ],
+  "flagWords": [],
+  "ignorePaths": [
+    "package.json",
+    "yarn.lock",
+    "tsconfig.json",
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    "__tests__/**"
+  ]
+}
