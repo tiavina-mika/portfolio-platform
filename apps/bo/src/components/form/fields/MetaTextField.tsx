@@ -99,7 +99,7 @@ const MetaTextField = ({
               ? 3
               : 2}
           />
-          <Stack direction="row" justifyContent="space-between">
+          <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
             {/* display error message if any */}
             {errorMessage && <FormHelperText error>{errorMessage}</FormHelperText>}
 

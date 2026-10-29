@@ -69,7 +69,7 @@ const schema = z.object({
   files: generateFileSchema(false, { extensions: ['.jpg', '.png'], multiple: false }),
 });
 
-const testOptionNumberCases = () => {
+export const testOptionNumberCases = () => {
   /*
    * const numberSchema = z.preprocess(
    *   (val) => (val === '' || val === null ? undefined : val),
@@ -102,7 +102,7 @@ const testOptionNumberCases = () => {
   console.log('------------');
 };
 
-const testDate = () => {
+export const testDate = () => {
   const optionalDateSchema = generateDateOrNumberSchema('date', false);
 
   console.log('optional undefined: ', optionalDateSchema.safeParse(undefined)); // success
@@ -132,7 +132,7 @@ const testDate = () => {
   console.log('dayjs in 2 days: ', JSON.parse(JSON.stringify(requiredDaysDateSchema.safeParse(nowDayjs.add(2, 'day').toDate()).error?.issues?.[0].message))); // Error: too big
 };
 
-const testTranslatedValue = () => {
+export const testTranslatedValue = () => {
   const categorySchema = z.object({
     'fr:title': z.string().nonempty(),
     'en:title': z.string().optional(),
@@ -154,7 +154,7 @@ const testTranslatedValue = () => {
   console.log('optional string null: ', JSON.parse(JSON.stringify(nonRequiredStringSchema.safeParse(null).error?.issues?.[0].message))); // Error: Expected string, received null
 };
 
-const testFile = () => {
+export const testFile = () => {
   /*
    * const requiredSchema = {
    *   minCheck: z.file().min(2),
@@ -183,7 +183,7 @@ const testFile = () => {
   console.log('optional file 5:', JSON.parse(JSON.stringify(fileSchema.optionalCheck.safeParse(5).error?.issues?.[0].message))); // Error: Expected file, received number
 };
 
-const testArrayOfFiles = () => {
+export const testArrayOfFiles = () => {
   /*
    * const requiredArraySchema = z.preprocess(
    *   (val) => val === null || (Array.isArray(val) && val.length === 0) ? undefined : val,
@@ -247,7 +247,7 @@ const testArrayOfFiles = () => {
   console.log('optional array of files 5:', JSON.parse(JSON.stringify(optionalArraySchema.safeParse(5).error?.issues?.[0].message))); // Error: Expected file, received number
 };
 
-const testArrayOfObjects = () => {
+export const testArrayOfObjects = () => {
   const objectArraySchema = z.array(
     z.object({
       name: z.string().nonempty(),
@@ -278,7 +278,7 @@ const translatedFieldsObj: TranslatedFieldOption[] = [
   { name: 'slug', required: false, max: 100 },
 ];
 
-const testCodecs = () => {
+export const testCodecs = () => {
   // Form initial values schema
   const formSchema = z.object({
     isActive: z.boolean(),
@@ -312,7 +312,7 @@ const testCodecs = () => {
 // Output : { "isActive": true, "fr:title": "Titre en francais", "en:title": "Title in english" }
 };
 
-const testEnum = () => {
+export const testEnum = () => {
   const requiredEnumSchema = z.enum(CategoryEntityEnum);
 
   console.log('required enum valid (page):', requiredEnumSchema.safeParse('page')); // success
@@ -411,8 +411,8 @@ const ZodTestForm = () => {
             label="Langue"
             labelId="language-select-label"
             {...form.register('language')} // Avec react-hook-form
-            value={currentLanguage}
             onChange={(e) => form.setValue('language', e.target.value)}
+            value={currentLanguage}
           >
             {languageOptions.map((option) => (
               <MenuItem key={option.value} value={option.value}>

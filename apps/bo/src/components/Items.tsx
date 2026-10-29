@@ -70,13 +70,13 @@ const Items = ({
       {items.map((item: ISelectOption<string | ReactNode | undefined>, index: number) => (
         item.hide
           ? null : (
-            <ListItem key={index} css={classes.li}>
+            <ListItem css={classes.li} key={index}>
               {item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
               <div
                 className="flexRow flex1 spaceBetween"
                 css={classes.content(alignment, item.label.length)}
               >
-                <Box alignItems="center" display="flex" flex={1}>
+                <Box sx={{ alignItems: 'center', display: 'flex', flex: 1 }}>
                   <Typography variant="body1">
                     {item.label}
                   </Typography>

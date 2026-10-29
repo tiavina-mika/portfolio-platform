@@ -22,7 +22,7 @@ export const projectFields = [
   'technologies',
 ];
 
-export const projectSingleImageFields = ['logo', 'previewImage', 'image'];
+export const projectSingleImageFields = ['logo', 'previewImage', 'image'] as const;
 
 export const ALL_PROJECT_FIELDS = [
   'editorFiles',

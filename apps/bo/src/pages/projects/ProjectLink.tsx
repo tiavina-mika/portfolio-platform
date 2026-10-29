@@ -9,7 +9,7 @@ const ProjectLink = ({
   url, icon,
 }: Props) => {
   return (
-    <Stack alignItems="center" direction="row" spacing={1}>
+    <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
       {icon}
       <a href={url} rel="noreferrer" target="_blank">{url}</a>
     </Stack>

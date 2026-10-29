@@ -90,14 +90,14 @@ const SideBarItem = ({
   const handleCloseItem = (subMenu: ISubMenu) => {
     if (!isDesktopDown) {
       // redirect to the page
-      subMenu.onClick();
+      subMenu.onClick?.();
       return;
     }
 
     // close the sidebar when clicking on it
     onClose();
     // then redirect to the page
-    subMenu.onClick();
+    subMenu.onClick?.();
   };
 
   return (
@@ -107,7 +107,7 @@ const SideBarItem = ({
       secondaryAction={
         subMenu.notification && subMenu.notification > 0
           ? (
-            <Box bgcolor="#F61011" className="flexCenter" sx={sx.notification(open)}>
+            <Box className="flexCenter" sx={[{ bgcolor: '#F61011' }, sx.notification(open)]}>
               <Typography css={{ color: '#fff', fontSize: 13, p: 0, lineHeight: 1 }}>
                 {subMenu.notification}
               </Typography>
@@ -118,8 +118,8 @@ const SideBarItem = ({
     >
       <ListItemButton
         css={classes.itemButton(open, isLevel2)}
-        selected={isSelected}
         onClick={() => handleCloseItem(subMenu)}
+        selected={isSelected}
       >
         <Tooltip
           placement="right"

@@ -35,6 +35,7 @@ export interface ICategoryAttributes {
   // each category can be linked to an article, a page, product, ...
   entity: CategoryEntityEnum;
   active: boolean;
+  itemCount?: number;
 }
 export interface ICategory extends Parse.Object<ICategoryAttributes> {
   id: string;

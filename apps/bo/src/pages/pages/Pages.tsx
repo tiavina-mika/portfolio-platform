@@ -164,7 +164,7 @@ const Pages = () => {
         id: page.id, // required even if not displayed
         name,
         title,
-        categories: getTranslatedCategoriesName(page.get(categoryFieldName), locale),
+        categories: getTranslatedCategoriesName(page.get(categoryFieldName) ?? [], locale),
 
         user: <UserCell user={page.get('user')} />,
         createdAt: displayDate(page.createdAt, false, true),
@@ -173,9 +173,9 @@ const Pages = () => {
           ? (
             <ActionsMenu
               label={name}
-              type="icon"
               onDestroy={() => handleDestroy(page.id)}
               onPreview={() => handlePreview(page.id)}
+              type="icon"
             />
           )
           : (
@@ -224,10 +224,10 @@ const Pages = () => {
         defaultFilters={searchParams}
         headCells={headCells}
         items={dataTable}
-        renderFilter={(prop: IRenderSearchProps) => <SearchPages {...prop} />}
-        tabs={recycleBinTabOptions}
         onDeleteSelected={handleDeleteSelected}
         onUpdateData={handleUpdateData}
+        renderFilter={(prop: IRenderSearchProps) => <SearchPages {...prop} />}
+        tabs={recycleBinTabOptions}
       />
 
       {canCreate && (

@@ -105,7 +105,7 @@ const JobStatus = ({
 
   return (
     <div className={cx('flexColumn', className)}>
-      <Stack alignItems="center" direction="row" spacing={3}>
+      <Stack direction="row" spacing={3} sx={{ alignItems: 'center' }}>
         <Typography variant="h5">{name}</Typography>
         { }
         <Chip

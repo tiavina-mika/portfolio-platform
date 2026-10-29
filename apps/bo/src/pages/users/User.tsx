@@ -67,7 +67,7 @@ const User = () => {
   const infosItems: ISelectOption[] = [
     {
       label: t('user:firstName'),
-      value: user.get('firstName'),
+      value: user.get('firstName') ?? '',
     },
     {
       label: t('user:lastName'),
@@ -89,20 +89,20 @@ const User = () => {
     {
       label: t('user:sex'),
       value: user.get('sex')
-        ? getSexLabelByValue(user.get('sex'))
-        : user.get('sex'),
+        ? getSexLabelByValue(user.get('sex')!)
+        : '',
     },
     {
       label: t('user:aboutTheUser'),
-      value: user.get('aboutMe'),
+      value: user.get('aboutMe') ?? '',
     },
     {
       label: t('user:birthday'),
       value: user.get('birthday')
         ? `${displayDate(
-          (user.get('birthday')).iso,
+          user.get('birthday')?.iso,
           false
-        )} (${getAgeByBirthday((user.get('birthday')).iso)})`
+        )} (${getAgeByBirthday(user.get('birthday')?.iso)})`
         : '',
     },
   ];
@@ -110,17 +110,17 @@ const User = () => {
   const contactItems: ISelectOption[] = [
     {
       label: t('user:email'),
-      value: user.get('username'),
+      value: user.get('username') ?? '',
     },
     {
       label: t('user:phoneNumber'),
       value: user.get('phone')
-        ? getFullPhoneNumber(user.get('phone'))
+        ? getFullPhoneNumber(user.get('phone')!)
         : '',
     },
     {
       label: t('user:address'),
-      value: user.get('address'),
+      value: user.get('address') ?? '',
     },
   ];
 
@@ -250,12 +250,12 @@ const User = () => {
                 {roles.length > 0
                   ? (
                     <Stack direction="row" spacing={1}>
-                      <RolesChip roles={roles} onRemove={handleRemoveRoleForUser} />
+                      <RolesChip onRemove={handleRemoveRoleForUser} roles={roles} />
                       <Chip
                         color="primary"
                         label="+"
-                        sx={{ fontSize: 22 }}
                         onClick={toggleOpenAddRoleToUser}
+                        sx={{ fontSize: 22 }}
                       />
                     </Stack>
                   )
@@ -266,7 +266,7 @@ const User = () => {
                           {t('user:role.userHasNotPost')}
                         </Typography>
                         <div>
-                          <Button size="small" startIcon={<FiPlus />} onClick={toggleOpenAddRoleToUser}>
+                          <Button onClick={toggleOpenAddRoleToUser} size="small" startIcon={<FiPlus />}>
                             {t('user:role.addPost')}
                           </Button>
                         </div>
@@ -310,7 +310,7 @@ const User = () => {
         toggle={toggleOpenAddRoleToUser}
       >
         <Box sx={{ mt: 2 }}>
-          <RoleForUserForm formId={ADD_ROLE_USER_FORM_ID} userRoles={roles} onSubmit={onSubmitRoles} />
+          <RoleForUserForm formId={ADD_ROLE_USER_FORM_ID} onSubmit={onSubmitRoles} userRoles={roles} />
         </Box>
       </Dialog>
     </Layout>

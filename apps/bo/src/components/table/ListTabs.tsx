@@ -67,8 +67,8 @@ const ListTabs = <T extends ITabSearchParams>({
   };
 
   return (
-    <Box mb={mb} sx={{ borderBottom: 1, borderColor: 'divider' }}>
-      <Tabs aria-label="list tabs" value={searchParams.tab ?? t('route.all')} onChange={handleChange}>
+    <Box sx={{ mb, borderBottom: 1, borderColor: 'divider' }}>
+      <Tabs aria-label="list tabs" onChange={handleChange} value={searchParams.tab ?? t('route.all')}>
         <Tab
           disableRipple
           css={classes.tab}
@@ -84,9 +84,9 @@ const ListTabs = <T extends ITabSearchParams>({
 
           return (
             <Tab
-              key={tab.tab + index}
               disableRipple
               css={classes.tab}
+              key={tab.tab + index}
               label={tab.label}
               value={tab.tab}
             />

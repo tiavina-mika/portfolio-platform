@@ -37,6 +37,7 @@ export interface IPageSectionAttributes {
   updatedAt?: string;
   createdAt?: string;
   deleted: boolean;
+  deletedAt?: string;
   translated: Record<string, { title: string; description?: string }>;
   active: boolean;
   pages: IPage[];
@@ -61,6 +62,8 @@ export interface IPageAttributes {
   previewImage?: IFileCloud;
   images?: IFileCloud[];
   categories?: ICategory[];
+  deletedCategories?: ICategory[];
+  sections?: IPageSection[];
   linkLocations?: ('menu' | 'footer')[];
   active: boolean;
   editorFiles?: ITranslatedFileCloud[];

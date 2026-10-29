@@ -129,19 +129,19 @@ const Home = () => {
           if (!option.show) return null;
           return (
             <Card
-              key={index}
               className="flexColumn center justifyCenter"
               css={classes.card}
+              key={index}
               onClick={option.onClick}
             >
               <CardContent>
-                <Stack alignItems="center" spacing={1.8}>
+                <Stack spacing={1.8} sx={{ alignItems: 'center' }}>
                   {option.icon}
                   <Stack
-                    alignItems="center"
                     direction="row"
-                    justifyContent="center"
                     spacing={0.5}
+
+                    sx={{ alignItems: 'center', justifyContent: 'center' }}
                   >
                     {option.type === 'list'
                       ? <FiExternalLink color={grey[800]} size={14} />

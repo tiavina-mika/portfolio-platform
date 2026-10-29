@@ -39,6 +39,8 @@ export interface IRoleAttributes {
   rights: IRightsItem[];
   ui: string[];
   children: IRole;
+  // number of users having this role
+  count?: number;
 }
 
 export interface IRole extends Parse.Role<IRoleAttributes> {

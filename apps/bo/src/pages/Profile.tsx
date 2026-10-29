@@ -45,7 +45,7 @@ const Profile = () => {
     {
       label: t('user:password'),
       value: (
-        <Stack alignItems="center" direction="row" spacing={1}>
+        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
           <Typography>********</Typography>
           <ProfileEditUserPassword />
         </Stack>

@@ -43,10 +43,10 @@ export const projectPlatforms = [
  */
 const getProjectImagesInitialValues = async (parseObj: IProject) => {
   const [logo, previewImage, image] = await Promise.all(
-    projectSingleImageFields.map(async (field: string) => {
+    projectSingleImageFields.map(async (field) => {
       if (parseObj.has(field)) {
         const file = await getFileFromUrl(
-          (parseObj.get(field) as IFileCloud).url
+          (parseObj.get(field)!).url
         );
 
         return file;

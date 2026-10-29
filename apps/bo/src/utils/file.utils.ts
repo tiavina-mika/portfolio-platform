@@ -449,7 +449,7 @@ export const downloadFile = ({
   }
 
   // e.g: http://localhost:1337/parse
-  const serverUrl = Parse.serverURL;
+  const serverUrl = Parse.serverURL ?? '';
   const lastSlash = serverUrl.lastIndexOf('/');
   // convert the data object to query params
   const queryParams = Object

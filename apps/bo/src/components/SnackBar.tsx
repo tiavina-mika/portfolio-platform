@@ -1,12 +1,12 @@
 
 import MuiAlert, { type AlertColor, type AlertProps } from '@mui/material/Alert';
-import MUISnackbar from '@mui/material/Snackbar';
+import MUISnackbar, { type SnackbarCloseReason } from '@mui/material/Snackbar';
 import { forwardRef, SyntheticEvent } from 'react';
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
   <MuiAlert
-    ref={ref}
     elevation={6}
+    ref={ref}
     variant="filled"
     {...props}
   />
@@ -23,7 +23,7 @@ type Props = {
 const SnackBar = ({
   open, toggle, message, duration = 6000, severity = 'success',
 }: Props) => {
-  const handleClose = (_?: SyntheticEvent | Event, reason?: string) => {
+  const handleClose = (_?: SyntheticEvent | Event | null, reason?: SnackbarCloseReason) => {
     // eslint-disable-next-line @cspell/spellchecker
     if (reason === 'clickaway') {
       return;
@@ -33,14 +33,14 @@ const SnackBar = ({
   };
 
   return (
-    <MUISnackbar autoHideDuration={duration} open={open} onClose={handleClose}>
+    <MUISnackbar autoHideDuration={duration} onClose={handleClose} open={open}>
       <Alert
+        onClose={handleClose}
         severity={severity}
         sx={{
           width: '100%',
           '& .MuiAlert-message, & .MuiAlert-icon, & .MuiButtonBase-root': { color: '#fff' },
         }}
-        onClose={handleClose}
       >
         {message}
       </Alert>

@@ -129,6 +129,7 @@ const TextFieldInput = forwardRef<HTMLDivElement, CustomTextFieldInputProps>(
       shrinkLabel,
       bgcolor,
       mode = 'light',
+      slotProps,
       ...otherProps
     },
     ref
@@ -150,42 +151,45 @@ const TextFieldInput = forwardRef<HTMLDivElement, CustomTextFieldInputProps>(
           />
         )}
         <MUITextField
-          ref={ref}
           className={className}
           placeholder={getPlaceholder(placeholder, otherProps.required)}
+          ref={ref}
           css={[
             mode === 'light'
               ? classes.lightTextField
               : classes.darkTextField,
             // bgcolor,
-            (left || right) && classes.rootWithIcons,
+            !!(left || right) && classes.rootWithIcons,
             { backgroundColor: bgcolor },
           ]}
-          InputLabelProps={{
-            ...(shrinkLabel && { shrink: shrinkLabel }),
-            ...otherProps.InputLabelProps,
-          }}
-          InputProps={{
-            ...otherProps.InputProps,
-            startAdornment: left
-              ? (
-                <InputAdornment className={leftClassName} position="start">
-                  <div className="flex1 flexCenter">{left}</div>
-                </InputAdornment>
-              )
-              : null,
-            endAdornment: right
-              ? (
-                <InputAdornment className={rightClassName} position="end">
-                  <div className="flex1 flexCenter">{right}</div>
-                </InputAdornment>
-              )
-              : null,
-          }}
           {...otherProps}
           label={fixedLabel
             ? ''
             : otherProps.label}
+          slotProps={{
+            ...slotProps,
+            inputLabel: {
+              ...(shrinkLabel && { shrink: shrinkLabel }),
+              ...(typeof slotProps?.inputLabel === 'function' ? {} : slotProps?.inputLabel),
+            },
+            input: {
+              ...(typeof slotProps?.input === 'function' ? {} : slotProps?.input),
+              startAdornment: left
+                ? (
+                  <InputAdornment className={leftClassName} position="start">
+                    <div className="flex1 flexCenter">{left}</div>
+                  </InputAdornment>
+                )
+                : null,
+              endAdornment: right
+                ? (
+                  <InputAdornment className={rightClassName} position="end">
+                    <div className="flex1 flexCenter">{right}</div>
+                  </InputAdornment>
+                )
+                : null,
+            },
+          }}
         />
       </div>
     );

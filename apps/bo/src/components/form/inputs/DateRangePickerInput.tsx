@@ -21,7 +21,7 @@ type Props = {
   inputFormat?: string;
   separator?: string | ReactNode;
   hasError?: boolean;
-} & TextFieldProps;
+} & Omit<TextFieldProps, 'variant'>;
 
 const DateRangeInput = ({
   onChange, value = [null, null], inputFormat, separator, hasError, ...inputProps
@@ -35,19 +35,11 @@ const DateRangeInput = ({
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Stack>
-        <Stack alignItems="center" direction="row" spacing={2}>
+        <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
           <DesktopDatePicker
             format={inputFormat ?? t('dateOnlyFormat')}
             label={t('start')}
             value={value[0]}
-            slotProps={{
-              textField: {
-                error: !!error?.start || hasError,
-                variant: 'standard',
-                className: 'flex1',
-                ...inputProps,
-              },
-            }}
             onChange={(date) => {
               const start = date;
               const end = value[1];
@@ -63,20 +55,20 @@ const DateRangeInput = ({
 
               onChange([start, end]);
             }}
+            slotProps={{
+              textField: {
+                error: !!error?.start || hasError,
+                variant: 'standard',
+                className: 'flex1',
+                ...(inputProps as object),
+              },
+            }}
           />
           {separator && <Typography>{separator}</Typography>}
           <DesktopDatePicker
             format={inputFormat ?? t('dateOnlyFormat')}
             label={t('end')}
             value={value[1]}
-            slotProps={{
-              textField: {
-                error: !!error?.start || hasError,
-                variant: 'standard',
-                className: 'flex1',
-                ...inputProps,
-              },
-            }}
             onChange={(date) => {
               const end = date;
               const start = value[0];
@@ -92,6 +84,14 @@ const DateRangeInput = ({
 
               // change value if no errors
               onChange([start, end]);
+            }}
+            slotProps={{
+              textField: {
+                error: !!error?.start || hasError,
+                variant: 'standard',
+                className: 'flex1',
+                ...(inputProps as object),
+              },
             }}
           />
         </Stack>

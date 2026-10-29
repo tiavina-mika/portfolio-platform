@@ -142,14 +142,14 @@ const PageSection = () => {
             {/* ------- tabs for translation ------- */}
             <TranslationTabs
               fixedOnScroll
-              tab={tab}
               onTabChange={onTabChange}
+              tab={tab}
             />
             {/* pages linked to this section */}
             <Layout cardTitle={t('cms:pages')}>
               {section.get('pages')?.map((page: any, index: number) => (
                 <Stack key={index + page.id} spacing={1}>
-                  <Stack direction="row" justifyContent="space-between">
+                  <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
                     <Typography>
                       {getTranslatedField(page.get('translated'), tab, 'title')}
                       &nbsp;

@@ -65,12 +65,12 @@ const CardRadioInput = ({
       <Stack direction="row" spacing={2} sx={sx}>
         {options.map((option: ICardRadio, index: number) => (
           <StyledCard
-            key={option.value + index}
             checked={value === option.value}
             className={className}
+            key={option.value + index}
             onClick={() => onChecked(option.value)}
           >
-            <Stack alignItems="center" direction="row">
+            <Stack direction="row" sx={{ alignItems: 'center' }}>
               {/* --- icon --- */}
               {option.icon && renderIcon(option.icon, value === option.value)}
               {/* --- label --- */}

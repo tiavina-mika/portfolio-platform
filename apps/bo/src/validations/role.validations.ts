@@ -13,10 +13,10 @@ export const roleSchema = object({
   (value: any) => {
     return !value.children.includes(value.name);
   },
-  () => ({
+  {
     message: 'Error',
     path: ['name'],
-  })
+  }
 );
 
 export const rolesForUserSchema = object({

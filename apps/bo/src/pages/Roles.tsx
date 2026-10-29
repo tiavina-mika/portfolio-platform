@@ -100,23 +100,23 @@ const Roles = () => {
                     <TableCell scope="row">{role.get('count') || 0}</TableCell>
                     <TableCell scope="row">
                       <ButtonActions
+                        onEdit={() => setSelectedRole(role)}
                         value={role.get('name')}
                         dialogDescription={
-                          role.get('count') > 0
+                          (role.get('count') ?? 0) > 0
                             ? t('user:role.sureToDeleteRoleWithUsers', { name: role.get('name'), userCount: role.get('count') })
                             : null
                         }
-                        onEdit={() => setSelectedRole(role)}
-                        onDelete={role.get('count') < 1
+                        onDelete={(role.get('count') ?? 0) < 1
                           ? () => handleDelete(role)
                           : undefined}
                       >
-                        {role.get('count') > 0 && (
+                        {(role.get('count') ?? 0) > 0 && (
                           <ConfirmDeletionFormModalAction
                             label={lowerFirstLetter(t('user:role.thisRole'))}
+                            onConfirmed={() => handleDelete(role)}
                             type={t('user:role.theRoleName')}
                             value={role.get('name')}
-                            onConfirmed={() => handleDelete(role)}
                           />
                         )}
                       </ButtonActions>
@@ -126,8 +126,8 @@ const Roles = () => {
               </TableBody>
               <TableFooter />
             </Table>
-            <Box className="flexRow flex1 justifyEnd" mt={2}>
-              <Button sx={{ textTransform: 'inherit', fontSize: 16 }} variant="contained" onClick={handleLoadMode}>
+            <Box className="flexRow flex1 justifyEnd" sx={{ mt: 2 }}>
+              <Button onClick={handleLoadMode} sx={{ textTransform: 'inherit', fontSize: 16 }} variant="contained">
                 {t('common:loadMore')}
               </Button>
             </Box>
@@ -151,9 +151,9 @@ const Roles = () => {
       >
         <RoleForm
           formId={ROLE_FORM_ID}
+          onSubmit={handleRoleFormSubmit}
           roles={roles}
           selectedRole={selectedRole}
-          onSubmit={handleRoleFormSubmit}
         />
       </Dialog>
     </Layout>

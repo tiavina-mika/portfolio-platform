@@ -52,12 +52,12 @@ const JobsStatus = () => {
         {status.length > 0 && (
           <Layout css={{ marginTop: 24 }}>
             <div className="flexColumn stretchSelf center" css={{ gap: 50 }}>
-              <Stack alignItems="center" className="stretchSelf" spacing={8}>
+              <Stack className="stretchSelf" spacing={8} sx={{ alignItems: 'center' }}>
                 {status.map((jobStatus: IJobStatusAttributes) => (
                   <JobStatus
-                    key={jobStatus.objectId}
                     css={classes.job}
                     jobStatus={jobStatus}
+                    key={jobStatus.objectId}
                   />
                 ))}
               </Stack>

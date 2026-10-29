@@ -100,24 +100,24 @@ const ListCardViewFilters = <IDataTable,>({
       {isTabletDown && (
         <Tooltip title={t('sort')}>
           <IconButton
+            onClick={toggle}
             sx={{
               position: 'absolute',
               right: 0,
               transform: 'rotate(90deg)',
               top: { xs: TOOLBAR_SMALL_SCREEN_HEIGHT, sm: TOOLBAR_SMALL_SCREEN_HEIGHT + 6 },
             }}
-            onClick={toggle}
           >
             <AiOutlineSwap />
           </IconButton>
         </Tooltip>
       )}
-      <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="space-between">
+      <Stack direction={{ xs: 'column', md: 'row' }} sx={{ justifyContent: 'space-between' }}>
         <Stack
-          alignItems="center"
-          alignSelf="stretch"
+
+
           direction="row"
-          sx={{ order: { xs: 1, md: 0 }, pl: { xs: 0.5, sm: 0 } }}
+          sx={{ order: { xs: 1, md: 0 }, pl: { xs: 0.5, sm: 0 }, alignItems: 'center', alignSelf: 'stretch' }}
         >
           {canMultipleSelect && (
             <FormControlLabel
@@ -129,36 +129,36 @@ const ListCardViewFilters = <IDataTable,>({
                   color="primary"
                   icon={<StyledCheckbox size={18} />}
                   indeterminate={numSelected > 0 && numSelected < rowCount}
-                  inputProps={{ 'aria-label': 'select all data' }}
                   onChange={onSelectAllClick}
+                  slotProps={{ input: { 'aria-label': 'select all data' } }}
                 />
               )}
             />
           )}
         </Stack>
         {open && (
-          <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="flex-end" spacing={{ xs: 1, xl: 3 }}>
+          <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 1, xl: 3 }} sx={{ justifyContent: 'flex-end' }}>
             <SelectInput
               direction="row"
               isMulti={false}
               isSearchable={false}
               label={t('orderBy') + ' : '}
+              onChange={handleSortBy}
               options={getOrderByOptions(headCells, t('updatedAt'))}
               styles={selectStyles}
               value={orderBy}
               width={250}
-              onChange={handleSortBy}
             />
             <SelectInput
               direction="row"
               isMulti={false}
               isSearchable={false}
               label={t('orderSort') + ' : '}
+              onChange={handleSort}
               options={orderSelectOptions}
               styles={selectStyles}
               value={order}
               width={160}
-              onChange={handleSort}
             />
             {viewsComponent}
           </Stack>

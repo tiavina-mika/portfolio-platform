@@ -161,9 +161,8 @@ const Form = ({
       autoComplete="off"
       component="form"
       id={formId}
-      sx={sx}
-      width={width}
       onSubmit={onSubmit}
+      sx={[{ width }, ...(Array.isArray(sx) ? sx : [sx ?? {}])]}
       {...formProps}
     >
       {error && (

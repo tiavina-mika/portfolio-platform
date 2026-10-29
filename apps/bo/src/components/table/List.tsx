@@ -237,8 +237,8 @@ const List = <
   const handleOrder = (order: 'asc' | 'desc'): void => {
     const state = { ...pagination, order };
 
-    setPagination(state as any);
-    handleChangeTable(pagePaginationToQueryInput(state as any));
+    setPagination(state);
+    handleChangeTable(pagePaginationToQueryInput(state));
   };
 
   const handleChangePage = (_: unknown, newPage: number): void => {
@@ -338,7 +338,7 @@ const List = <
   };
 
   const views = (
-    <Stack direction="row" justifyContent="flex-end">
+    <Stack direction="row" sx={{ justifyContent: 'flex-end' }}>
       {([
         {
           label: t('listViewTooltip'),
@@ -370,9 +370,9 @@ const List = <
         {tabs.length > 0 && (
           <ListTabs
             canDestroy={canDestroy}
+            onTabChange={handleTabChange}
             searchParams={{ tab: defaultFilters?.tab }}
             tabs={tabs}
-            onTabChange={handleTabChange}
           />
         )}
         {renderFilter && (
@@ -383,7 +383,7 @@ const List = <
               {renderFilter({ onSearch, onAdvancedSearch })}
               {/* reset filter */}
               <Tooltip title={t('resetFilters')}>
-                <IconButton sx={{ position: 'absolute', right: 0 }} onClick={onInitFilters}>
+                <IconButton onClick={onInitFilters} sx={{ position: 'absolute', right: 0 }}>
                   <MdDeleteSweep />
                 </IconButton>
               </Tooltip>
@@ -411,15 +411,15 @@ const List = <
               isItemSelected={isSelected}
               items={items}
               loading={loading}
-              pagination={pagination}
-              selectedIds={selectedIds}
-              stopCheckboxPropagation={stopCheckboxPropagation}
               onChangePage={handleChangePage}
               onChangeRowsPerPage={handleChangeRowsPerPage}
               onCheckedRow={handleCheckedRow}
               onRowClick={handleRowClick}
               onSelectAll={handleSelectAll}
               onSort={handleSort}
+              pagination={pagination}
+              selectedIds={selectedIds}
+              stopCheckboxPropagation={stopCheckboxPropagation}
             />
           )
           : (
@@ -431,12 +431,6 @@ const List = <
               headCells={headCells}
               isItemSelected={isSelected}
               items={items}
-              pagination={pagination}
-              selectedIds={selectedIds}
-              stopCheckboxPropagation={stopCheckboxPropagation}
-              viewsComponent={isDesktopDown
-                ? null
-                : views}
               onChangePage={handleChangePage}
               onChangeRowsPerPage={handleChangeRowsPerPage}
               onCheckedRow={handleCheckedRow}
@@ -444,6 +438,12 @@ const List = <
               onRowClick={handleRowClick}
               onSelectAll={handleSelectAll}
               onSort={handleSort}
+              pagination={pagination}
+              selectedIds={selectedIds}
+              stopCheckboxPropagation={stopCheckboxPropagation}
+              viewsComponent={isDesktopDown
+                ? null
+                : views}
             />
           )}
       </Box>

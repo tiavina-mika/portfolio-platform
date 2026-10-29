@@ -49,7 +49,7 @@ export const formatPhoneNumber = (str: string): string => {
  * @param user
  * @returns
  */
-export const getUserFullName = (user: Parse.User): string => {
+export const getUserFullName = (user?: Parse.User): string => {
   if (!user) return '';
   let name = user.get('lastName');
 

@@ -106,15 +106,15 @@ const ListCardsView = <IDataTable extends Record<string, any>>({
             canMultipleSelect={canMultipleSelect}
             headCells={headCells}
             numSelected={selectedIds.length}
+            onOrder={onOrder}
+            onRequestSort={onSort}
+            onSelectAllClick={onSelectAll}
             order={pagination.order}
             orderBy={pagination.orderBy}
             viewsComponent={viewsComponent}
             rowCount={disabledRowId
               ? items.length - 1
               : items.length}
-            onOrder={onOrder}
-            onRequestSort={onSort}
-            onSelectAllClick={onSelectAll}
           />
         </Box>
         <Grid container spacing={{ xs: 8, sm: 8, lg: 2 }}>
@@ -137,6 +137,7 @@ const ListCardsView = <IDataTable extends Record<string, any>>({
                   >
                     <Card
                       className="flexColumn alignSelf flex1"
+                      onClick={() => onRowClick(data)}
                       elevation={isSelected
                         ? 4
                         : 1}
@@ -148,13 +149,12 @@ const ListCardsView = <IDataTable extends Record<string, any>>({
                       } : {
                         backgroundColor: 'inherit',
                       }]}
-                      onClick={() => onRowClick(data)}
                     >
                       <CardContent sx={{ p: { xs: 0, sm: 2, md: 4 }, alignSelf: 'stretch' }}>
                         <Stack spacing={1}>
                           {getFilteredData(data, true).map((key: string, cellIndex: number) => (
                             <Stack key={cellIndex + (data)[key]} spacing={1}>
-                              <Stack alignItems="center" direction="row" justifyContent="space-between">
+                              <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
                                 {/* label (left) */}
                                 <Typography css={(theme: Theme) => ({ color: theme.palette.grey[500] })}>
                                   {headCells[cellIndex].label}
@@ -189,8 +189,8 @@ const ListCardsView = <IDataTable extends Record<string, any>>({
                                   checkedIcon={<StyledCheckedCheckbox size={18} />}
                                   color="primary"
                                   icon={<StyledCheckbox size={18} />}
-                                  inputProps={{ 'aria-labelledby': 'list-card-view-' + data.id }}
                                   onChange={() => onCheckedRow(data.id)}
+                                  slotProps={{ input: { 'aria-labelledby': 'list-card-view-' + data.id } }}
                                 />
                               </Tooltip>
                             </Box>
@@ -218,11 +218,11 @@ const ListCardsView = <IDataTable extends Record<string, any>>({
         <TablePagination
           component="div"
           count={count}
+          onPageChange={onChangePage}
+          onRowsPerPageChange={onChangeRowsPerPage}
           page={pagination.currentPage}
           rowsPerPage={(pagination as any).rowsPerPage}
           rowsPerPageOptions={PAGINATION.rowsPerPageOptions}
-          onPageChange={onChangePage}
-          onRowsPerPageChange={onChangeRowsPerPage}
         />
       )}
     </Stack>

@@ -10,7 +10,7 @@ import SelectInput, { ReactSelectProps } from '../inputs/SelectInput';
 export type SelectProps = {
   name: string;
   options: ISelectOption[];
-} & Omit<ReactSelectProps, 'value' | 'onChange'>;
+} & Omit<ReactSelectProps<string | number>, 'value' | 'onChange'>;
 
 const SelectField = ({
   name,
@@ -36,10 +36,10 @@ const SelectField = ({
       }) => (
         <Stack>
           <SelectInput
-            options={options}
-            value={value}
             onBlur={onBlur}
             onChange={onChange}
+            options={options}
+            value={value}
             {...selectProps}
           />
           {errors[name] && (

@@ -13,15 +13,15 @@ const InputActionButton = ({
   onClick, text, icon, color,
 }: Props) => {
   return (
-    <Box mt={1}>
+    <Box sx={{ mt: 1 }}>
       <Button
+        onClick={onClick}
         sx={{
           textTransform: 'none',
           display: 'flex',
           alignItems: 'center',
           color,
         }}
-        onClick={onClick}
       >
         {icon}
         <Typography sx={{ ml: 1 }}>{text}</Typography>

@@ -12,6 +12,9 @@ export interface IContactAttributes {
   user?: Parse.User;
   message: string;
   replied: boolean;
+  language?: string;
+  repliedBy?: Parse.User;
+  repliedAt?: string;
 }
 
 export interface IContact extends Parse.Object<IContactAttributes> {

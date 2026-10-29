@@ -20,10 +20,8 @@ const LabelValue = ({ label, value, priority = 'right' }: Props) => {
           }}
         >
           <Typography
+            sx={{ fontWeight: priority === 'left' ? 'bold' : 'normal' }}
             variant="body1"
-            fontWeight={priority === 'left'
-              ? 'bold'
-              : 'normal'}
           >
             {label}
           </Typography>
@@ -36,10 +34,8 @@ const LabelValue = ({ label, value, priority = 'right' }: Props) => {
           }}
         >
           <Typography
+            sx={{ fontWeight: priority === 'right' ? 'bold' : 'normal' }}
             variant="body1"
-            fontWeight={priority === 'right'
-              ? 'bold'
-              : 'normal'}
           >{value}
           </Typography>
         </Grid>

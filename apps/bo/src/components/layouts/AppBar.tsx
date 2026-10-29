@@ -112,7 +112,7 @@ const AppBar = ({
 
           {/* ----- back button ----- */}
           {location.pathname !== '/' && (
-            <IconButton sx={{ mr: { xs: 1, lg: 0 } }} onClick={handleGoBack}>
+            <IconButton onClick={handleGoBack} sx={{ mr: { xs: 1, lg: 0 } }}>
               <FiArrowLeft />
             </IconButton>
           )}
@@ -126,7 +126,7 @@ const AppBar = ({
 
           {/* responsive */}
           <Divider orientation="vertical" sx={{ height: 28, display: { xs: 'none', lg: 'block' } }} />
-          <Box ml={{ xs: 0, lg: 1 }}>
+          <Box sx={{ ml: { xs: 0, lg: 1 } }}>
             <ProfileMenu />
           </Box>
         </StyledToolbar>

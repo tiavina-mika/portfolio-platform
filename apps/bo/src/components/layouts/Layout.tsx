@@ -73,8 +73,8 @@ const Layout = ({
     <div className={className} css={{ width: '100%' }}>
       {/* page level title */}
       {title && (
-        <Box display="flex" justifyContent="space-between" py={{ xs: 2, lg: 2 }}>
-          <Stack css={classes.titleContainer} justifyContent="center" spacing={0}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', py: { xs: 2, lg: 2 } }}>
+          <Stack css={classes.titleContainer} spacing={0} sx={{ justifyContent: 'center' }}>
             <Typography gutterBottom css={classes.title} variant="h2">
               {title}
             </Typography>

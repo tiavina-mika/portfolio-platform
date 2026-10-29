@@ -197,7 +197,7 @@ const DashboardLayout = () => {
             {/* menu icon */}
             {!isSideBarOpen
               ? (
-                <Box alignSelf="stretch" className="flexCenter" flex={1}>
+                <Box className="flexCenter" sx={{ alignSelf: 'stretch', flex: 1 }}>
                   <IconButton onClick={handleDrawerOpen}>
                     <FiMenu />
                   </IconButton>
@@ -216,7 +216,7 @@ const DashboardLayout = () => {
               )}
           </DrawerHeader>
           {/* left sidebar */}
-          <SideBar open={isSideBarOpen} roles={roles} onClose={handleDrawerClose} />
+          <SideBar onClose={handleDrawerClose} open={isSideBarOpen} roles={roles} />
         </Drawer>
 
         {/* ------- right (main content ) ------- */}

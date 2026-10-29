@@ -32,16 +32,16 @@ const AccountSuccessMessage = () => {
             </Typography>
           )}
         </Box>
-        <Box mt={3}>
-          <Typography css={{ fontSize: 18, color: '#fff' }} textAlign="center">
+        <Box sx={{ mt: 3 }}>
+          <Typography css={{ fontSize: 18, color: '#fff' }} sx={{ textAlign: 'center' }}>
             {alert.message}
           </Typography>
         </Box>
         <Button
           disableElevation
+          onClick={handleGoToHome}
           sx={{ textTransform: 'capitalize' }}
           variant="contained"
-          onClick={handleGoToHome}
         >
           {t('user:login')}
         </Button>

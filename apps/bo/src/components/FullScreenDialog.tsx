@@ -15,7 +15,7 @@ import { FiX } from 'react-icons/fi';
 
 const Transition = forwardRef((props: TransitionProps & {
   children: ReactElement;
-}, ref: Ref<unknown>) => <Slide ref={ref} direction="up" {...props} />);
+}, ref: Ref<unknown>) => <Slide direction="up" ref={ref} {...props} />);
 
 type Props = {
   title?: string;
@@ -44,9 +44,9 @@ const FullScreenDialog = ({
   return (
     <Dialog
       fullScreen
-      open={!!open}
-      TransitionComponent={Transition}
       onClose={toggle}
+      open={!!open}
+      slots={{ transition: Transition }}
     >
       <AppBar color="transparent" sx={{ position: 'relative' }}>
         <Toolbar>
@@ -62,7 +62,7 @@ const FullScreenDialog = ({
             {title}
           </Typography>
           {onPrimaryButtonAction && (
-            <Button color="primary" variant="contained" onClick={handlePrimaryButtonAction}>
+            <Button color="primary" onClick={handlePrimaryButtonAction} variant="contained">
               {primaryButtonText}
             </Button>
           )}
@@ -78,7 +78,7 @@ const FullScreenDialog = ({
           )}
         </Toolbar>
       </AppBar>
-      <Box px={6} py={4}>
+      <Box sx={{ px: 6, py: 4 }}>
         {children}
       </Box>
     </Dialog>

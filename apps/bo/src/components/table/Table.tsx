@@ -120,13 +120,13 @@ const Table = <IDataTable extends Record<string, any>>({
               canMultipleSelect={canMultipleSelect}
               headCells={headCells}
               numSelected={selectedIds.length}
+              onRequestSort={onSort}
+              onSelectAllClick={onSelectAll}
               order={pagination.order}
               orderBy={pagination.orderBy}
               rowCount={disabledRowId
                 ? items.length - 1
                 : items.length}
-              onRequestSort={onSort}
-              onSelectAllClick={onSelectAll}
             />
             <TableBody>
               {items.length > 0
@@ -137,23 +137,23 @@ const Table = <IDataTable extends Record<string, any>>({
 
                     return (
                       <TableRow
-                        key={index}
                         hover
                         aria-checked={isSelected}
+                        key={index}
+                        onClick={onRowClick(data)}
                         role="checkbox"
                         selected={isSelected}
                         sx={{ cursor: disableRowClickEvent ? 'inherit' : 'pointer' }}
                         tabIndex={-1}
-                        onClick={onRowClick(data)}
                       >
                         {/* checkbox column */}
                         {canMultipleSelect && (
-                          <TableCell padding="checkbox" onClick={stopCheckboxPropagation}>
+                          <TableCell onClick={stopCheckboxPropagation} padding="checkbox">
                             <Checkbox
                               checked={isSelected}
                               color="primary"
-                              inputProps={{ 'aria-labelledby': labelId }}
                               onChange={() => onCheckedRow(data.id)}
+                              slotProps={{ input: { 'aria-labelledby': labelId } }}
                             />
                           </TableCell>
                         )}
@@ -161,11 +161,11 @@ const Table = <IDataTable extends Record<string, any>>({
                           .filter((key: string) => key !== 'id') // do not display the id in the table row
                           .map((key: string, cellIndex: number) => (
                             <TableRowCell<IDataTable>
-                              key={cellIndex + key}
                               cellIndex={cellIndex}
                               data={data}
                               field={key}
                               headCells={headCells}
+                              key={cellIndex + key}
                               labelId={labelId}
                             />
                           ))}
@@ -183,11 +183,11 @@ const Table = <IDataTable extends Record<string, any>>({
           <TablePagination
             component="div"
             count={count}
+            onPageChange={onChangePage}
+            onRowsPerPageChange={onChangeRowsPerPage}
             page={pagination.currentPage}
             rowsPerPage={(pagination as any).rowsPerPage}
             rowsPerPageOptions={PAGINATION.rowsPerPageOptions}
-            onPageChange={onChangePage}
-            onRowsPerPageChange={onChangeRowsPerPage}
           />
         )}
       </Paper>

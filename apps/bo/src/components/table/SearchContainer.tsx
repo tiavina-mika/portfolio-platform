@@ -34,12 +34,12 @@ const SearchContainer = ({
     <>
       {isSmDown && (
         <IconButton
+          onClick={toggle}
           sx={{
             position: 'absolute',
             right: 40,
             top: { xs: TOOLBAR_SMALL_SCREEN_HEIGHT, sm: TOOLBAR_SMALL_SCREEN_HEIGHT + 6 },
           }}
-          onClick={toggle}
         >
           <FiSearch />
         </IconButton>
@@ -47,10 +47,10 @@ const SearchContainer = ({
       {open && (
         <Box className={className} sx={{ my: { xs: 1, lg: 4 }, ...sx }}>
           <Stack
-            alignItems={{ xs: 'flex-start', lg: 'center' }}
             direction={{ xs: 'column', lg: 'row' }}
-            justifyContent="space-between"
             spacing={{ xs: 1, lg: 0 }}
+
+            sx={{ alignItems: { xs: 'flex-start', lg: 'center' }, justifyContent: 'space-between' }}
           >
             {children}
           </Stack>

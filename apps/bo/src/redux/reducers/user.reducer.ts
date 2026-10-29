@@ -48,7 +48,7 @@ export const user = createSlice({
       state.filters = action.payload;
     },
     updateUsersByUserSlice: (state: IUserState, action: PayloadAction<IUser>) => {
-      const newUsers = [];
+      const newUsers: IUser[] = [];
 
       for (const user of state.users) {
         if (user.id === action.payload.id) {
@@ -56,7 +56,7 @@ export const user = createSlice({
           newUsers.unshift({
             ...user,
             ...action.payload,
-          });
+          } as IUser);
         }
         else {
           newUsers.push(user);
@@ -67,7 +67,7 @@ export const user = createSlice({
       state.user = action.payload;
     },
     updateUsersByUsersSlice: (state: IUserState, action: PayloadAction<IUser[]>) => {
-      const newUsers = [];
+      const newUsers: IUser[] = [];
 
       for (const user of state.users) {
         const currentUser = action.payload.find((updatedUser: IUser) => updatedUser.id === user.id);
@@ -77,7 +77,7 @@ export const user = createSlice({
           newUsers.unshift({
             ...user,
             ...currentUser,
-          });
+          } as IUser);
         }
         else {
           newUsers.push(user);

@@ -80,20 +80,20 @@ const CodeConfirmationForm = ({
   return (
     <Stack>
       {appError && (
-        <Button color="inherit" size="small" onClick={handleResendCode}>
+        <Button color="inherit" onClick={handleResendCode} size="small">
           {resendCodeText}
         </Button>
       )}
-      <Stack alignItems="center" spacing={3}>
+      <Stack spacing={3} sx={{ alignItems: 'center' }}>
         {/* --------- code input --------- */}
         <div css={classes.verificationCodeContainer}>
           <ReactInputVerificationCode
             /* eslint-disable jsx-a11y/no-autofocus */
             autoFocus
             length={VERIFICATION_CODE_LENGTH}
+            onChange={handleCodeInputChange}
             placeholder=""
             value={code} // optional, need this only for clearing the input
-            onChange={handleCodeInputChange}
           />
         </div>
         {/* --------- links --------- */}
@@ -101,8 +101,8 @@ const CodeConfirmationForm = ({
           {onResendCode && (
             <AuthLink
               label={t('user:codeNotReceivedOrExpired')}
-              text={resendCodeText}
               onClick={handleResendCode}
+              text={resendCodeText}
             />
           )}
           <AuthLink

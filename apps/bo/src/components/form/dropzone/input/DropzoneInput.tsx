@@ -259,9 +259,9 @@ const DropzoneInput = ({
             ) : (
           // input labels
               (
-                <Stack alignItems="center" direction="column" spacing={2}>
+                <Stack direction="column" spacing={2} sx={{ alignItems: 'center' }}>
                   <FaFileUpload color={grey[600]} size={32} />
-                  <Box alignItems="center" display="flex" flexDirection="column">
+                  <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
                     <Typography>{inputLabel}</Typography>
                     <Typography
                       variant="body2"
@@ -291,8 +291,8 @@ const DropzoneInput = ({
           <InputActionButton
             color={theme.palette.primary.main}
             icon={<FiRefreshCcw size={18} />}
-            text={t('reset')}
             onClick={onReset}
+            text={t('reset')}
           />
         )}
       </div>

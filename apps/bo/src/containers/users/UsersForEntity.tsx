@@ -17,7 +17,7 @@ const UsersForEntity = <T extends Parse.Object, K extends ISelectOption[]>({
     <Grid
       size={PREVIEW_PAGE_GRID.left}
     >
-      <Grid container gap={2}>
+      <Grid container sx={{ gap: 2 }}>
         {keys.map((key) => {
           const user = object.get
             ? object.get(key.value)

@@ -44,8 +44,8 @@ const TableHead = ({
               checked={rowCount > 0 && numSelected === rowCount}
               color="primary"
               indeterminate={numSelected > 0 && numSelected < rowCount}
-              inputProps={{ 'aria-label': 'select all data' }}
               onChange={onSelectAllClick}
+              slotProps={{ input: { 'aria-label': 'select all data' } }}
             />
           </TableCell>
         )}
@@ -70,10 +70,10 @@ const TableHead = ({
               : (
                 <TableSortLabel
                   active={orderBy === headCell.id}
+                  onClick={createSortHandler(headCell.id)}
                   direction={orderBy === headCell.id
                     ? order
                     : 'asc'}
-                  onClick={createSortHandler(headCell.id)}
                 >
                   {headCell.label}
                   {orderBy === headCell.id

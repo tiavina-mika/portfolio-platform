@@ -198,7 +198,7 @@ export const destroyRole = (id: string): any => {
       throw new Error(i18n.t('user:role.roleNotFound'));
     }
 
-    if (DEFAULT_ROLES.includes(role.getName())) {
+    if (DEFAULT_ROLES.includes(role.getName() ?? '')) {
       throw new Error(i18n.t('user:role.roleCannotBeDeleted'));
     }
 

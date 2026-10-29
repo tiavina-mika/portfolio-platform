@@ -61,9 +61,7 @@ const UserInfo = ({
   return (
     <Stack
       direction={direction}
-      alignItems={direction === 'column'
-        ? 'center'
-        : 'flex-start'}
+      sx={{ alignItems: direction === 'column' ? 'center' : 'flex-start' }}
       spacing={direction === 'column'
         ? 0
         : 1}
@@ -92,10 +90,7 @@ const UserInfo = ({
         </Badge>
       </div>
       <div>
-        <Box mt={direction === 'column'
-          ? 1
-          : 0}
-        >
+        <Box sx={{ mt: direction === 'column' ? 1 : 0 }}>
           <Typography
             variant="h6"
             sx={{

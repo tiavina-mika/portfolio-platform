@@ -68,6 +68,11 @@ export interface IUserAttributes {
   bans?: IBan[];
   seen?: boolean;
   roles: IRole[];
+  sex?: ISex;
+  aboutMe?: string;
+  birthday?: { iso: string };
+  phone?: IPhone;
+  address?: string;
 }
 
 export interface IUser extends Parse.User<IUserAttributes> {
@@ -82,7 +87,7 @@ export interface IUserState {
   search: Record<string, any> | null;
   filters: Record<string, string | boolean> | null;
 }
-export type ProfileUserInfoInput = Pick<IUserAttributes, 'lastName' | 'firstName'>;
+export type ProfileUserInfoInput = Required<Pick<IUserAttributes, 'lastName' | 'firstName'>>;
 
 export interface IStoredCurrentUser extends Pick<
   IUserAttributes,

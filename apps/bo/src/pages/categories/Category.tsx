@@ -157,8 +157,8 @@ const Category = () => {
           <Stack spacing={3}>
             {/* ------- tabs for translation ------- */}
             <TranslationTabs
-              tab={tab}
               onTabChange={onTabChange}
+              tab={tab}
             />
             <Layout cardTitle={t('common:details')}>
               <Items items={infosItems} />
@@ -180,7 +180,7 @@ const Category = () => {
           </Stack>
         </Grid>
         {/* right */}
-        <Grid right={PREVIEW_PAGE_GRID.right}>
+        <Grid size={PREVIEW_PAGE_GRID.right}>
           <Stack spacing={3}>
             <Layout cardTitle={t('user:createdBy')}>
               <UserInfo user={category.get('user')} />

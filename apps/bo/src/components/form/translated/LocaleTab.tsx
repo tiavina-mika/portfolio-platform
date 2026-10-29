@@ -20,7 +20,7 @@ const LocaleTab = ({
   } = useTranslation();
 
   return (
-    <Stack alignItems="center" direction="row" spacing={0.3}>
+    <Stack direction="row" spacing={0.3} sx={{ alignItems: 'center' }}>
       <Typography>{label}</Typography>
       {locale === DEFAULT_LOCALE && (
         <Tooltip title={t('default')}>

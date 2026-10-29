@@ -224,18 +224,22 @@ const AutocompleteInput = <T extends Record<string, any>>({
           css={classes.autocomplete}
           loading={loading}
           multiple={multiple}
+          onChange={handleChange}
+          onInputChange={handleInputChange}
           slots={{ paper: AutocompletePaper }}
           sx={{ flex: 1 }}
           value={value}
           getOptionLabel={(option: ISelectOption<T> | string): string => {
             return typeof option === 'string' ? option : option.label;
           }}
-          isOptionEqualToValue={(_: ISelectOption<T>, value: ISelectOption<T>) => {
+          isOptionEqualToValue={(_: ISelectOption<T>, value: ISelectOption<T> | string) => {
+            if (typeof value === 'string') return false;
+
             const currentOptions = withPreview
               ? dynamicOptions
               : originalOptions;
 
-            return currentOptions.find(
+            return !!currentOptions.find(
               (option: ISelectOption<T>) => option.value.objectId === value.value?.objectId
             );
           }}
@@ -248,7 +252,7 @@ const AutocompleteInput = <T extends Record<string, any>>({
               className={classes.input}
               label={label}
               placeholder={placeholder}
-              right={<Right multiple={multiple} right={right} onClear={handleClearSingleValue} />}
+              right={<Right multiple={multiple} onClear={handleClearSingleValue} right={right} />}
               left={isSearch
                 ? <FiSearch />
                 : left}
@@ -268,8 +272,6 @@ const AutocompleteInput = <T extends Record<string, any>>({
               placement: 'bottom',
             },
           }}
-          onChange={handleChange}
-          onInputChange={handleInputChange}
           {...props}
         />
       </Stack>
@@ -282,7 +284,7 @@ const AutocompleteInput = <T extends Record<string, any>>({
       {multiple && value.length > 0 && (
         <Stack direction="row" spacing={1}>
           {value.map((value: ISelectOption<T>) => (
-            <Card key={value.value.objectId} className="flexRow center" css={{ padding: 4, paddingLeft: 12 }}>
+            <Card className="flexRow center" css={{ padding: 4, paddingLeft: 12 }} key={value.value.objectId}>
               <Typography>{value.label}</Typography>
               <IconButton css={{ marginLeft: 4 }} onClick={() => handleMultipleDelete(value.value.objectId)}>
                 <FiX size={16} />

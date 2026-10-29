@@ -39,14 +39,14 @@ export const category = createSlice({
       state.count = action.payload;
     },
     updateCategoriesByCategorySlice: (state: ICategoryState, action: PayloadAction<ICategory>) => {
-      const newCategories = [];
+      const newCategories: ICategory[] = [];
 
       for (const category of state.categories) {
         if (category.id === action.payload.id) {
           newCategories.unshift({
             ...category,
             ...action.payload,
-          });
+          } as ICategory);
         }
         else {
           newCategories.push(category);
