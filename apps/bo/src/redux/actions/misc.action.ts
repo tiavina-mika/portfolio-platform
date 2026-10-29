@@ -18,16 +18,3 @@ export const clearRecycleBinInCloud = (limit: number): any => {
     await Parse.Cloud.run('clearRecycleBinInCloud', { limit });
   });
 };
-
-/**
- * migrate data
- * hard coded change database data
- * the migration can be here or in the server side
- * @NOTE used only for temporary migration, the content should be removed after migration
- */
-export const migrate = (): any => {
-  return actionWithLoader(async (): Promise<void> => {
-  // maybe add some params if needed
-    await Parse.Cloud.run('migrate');
-  });
-};

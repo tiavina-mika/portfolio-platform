@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import Head from '@/components/Head';
 import { goToJobs } from '@/redux/actions/app.action';
-import { clearRecycleBinInCloud, migrate } from '@/redux/actions/misc.action';
+import { clearRecycleBinInCloud } from '@/redux/actions/misc.action';
 
 import MiscButton from './MiscButton';
 
@@ -38,7 +38,6 @@ const Misc = () => {
     );
   };
 
-  const handleMigration = () => dispatch(migrate());
   const handleGoToJobs = () => navigate(goToJobs());
   const handleClearFilesInCloud = () => dispatch(clearRecycleBinInCloud(FILES_TO_DELETE));
 
@@ -47,8 +46,6 @@ const Misc = () => {
     <>
       <Head title={t('misc.miscellaneous')} />
       <div className="flexColumn center flex1 stretchSelf" css={{ gap: 12 }}>
-        {/* button for migration */}
-        {miscButton('red', 'Migration', handleMigration, true)}
         {miscButton('green', t('misc.showJobStatus'), handleGoToJobs, true)}
         {miscButton(
           'red',

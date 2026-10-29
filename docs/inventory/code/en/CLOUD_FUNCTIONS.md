@@ -25,7 +25,7 @@ Files are in `apps/server/src/cloud/functions/`.
 | `auth.functions.ts` | `verifyAccountEmail`, `sendVerificationCode`, `sendResetPasswordVerificationCode`, `resetPassword` |
 | `category.functions.ts` | `getCategories`, `getCategory` |
 | `contact.functions.ts` | `getContacts`, `getContact` |
-| `misc.functions.ts` | `clearRecycleBinInCloud`, `migrate` |
+| `misc.functions.ts` | `clearRecycleBinInCloud` |
 | `page.functions.ts` | `getPages`, `getPage` |
 | `pageSection.functions.ts` | `getPageSections` |
 | `project.functions.ts` | `getProjects`, `getProject`, `getProjectForClient` |
