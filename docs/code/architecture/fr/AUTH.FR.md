@@ -87,7 +87,6 @@ Les routes Express hors `/parse` sont :
 |---|---|
 | `POST /files` | `protectionMiddleware({})` : en-tête `X-portfolio-key` égal à `REST_API_KEY`, et une session Parse valide (en-tête `X-Parse-Session-Token` ou paramètre `sessionToken`), contrôlée avec `getUserForSessionToken` |
 | `GET /download/cv.pdf` | publique, paramètres validés par un schéma Zod |
-| `GET /migration/pages/category-to-categories` | aucun middleware |
 | `GET /ping` | publique, utilisée par un cron pour garder l'hébergeur éveillé |
 
 Le back-office envoie la clé depuis `VITE_REST_API_KEY` (`protectRequest` dans `apps/bo/src/config/http.ts`). Les variables `VITE_*` étant exposées au navigateur, cette clé n'est pas un secret.

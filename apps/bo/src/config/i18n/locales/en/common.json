@@ -253,7 +253,6 @@
   "hello": "Hello",
   "helloUser": "Hello {{user}}",
   "welcomeToTheDashboard": "Welcom to the {{appName}} dashboard",
-  "appDescription": "{{appName}} is a carpooling mobila application that consist of sharing your personal car with other people in order to travel together.",
   "name": "Name",
   "pageNotFound": "This page could not be found.",
   "backToHome": "Back to home",

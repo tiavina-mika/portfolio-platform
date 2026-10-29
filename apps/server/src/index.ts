@@ -23,7 +23,6 @@ import { initializeCloudinary } from './config/config';
 import { getI18nOptions } from './config/i18next';
 import downloadRouter from './routes/download.route';
 import fileRouter from './routes/files.route';
-import migrationRouter from './routes/migration.route';
 import {
   BO_BUILD_FOLDER, FORCE_PREPROD, FORCE_PROD, IS_LOCAL, IS_PREPROD, IS_PROD,
 } from './utils/constants';
@@ -141,7 +140,6 @@ const init = async () => {
 
   app.use('/files', fileRouter);
   app.use('/download', downloadRouter);
-  app.use('/migration', migrationRouter);
 
   /**
    * Lightweight ping route

@@ -255,7 +255,6 @@
   "hello": "Bonjour",
   "helloUser": "Bonjour {{user}}",
   "welcomeToTheDashboard": "Bienvenu sur le tableau de bord de {{appName}}",
-  "appDescription": "{{appName}} est une appliction mobile de covoiturage qui consiste à partager sa voiture personnelle avec d’autres personnes afin d’effectuer un trajet en commun.",
   "name": "Nom",
   "pageNotFound": "Cette page est introuvable.",
   "backToHome": "Retourner à l'accueil",

@@ -255,7 +255,6 @@
   "hello": "Salama",
   "helloUser": "Salama {{user}}",
   "welcomeToTheDashboard": "Tongasoa eto amin'ny solaitra fitantanana an'ny {{appName}}",
-  "appDescription": "{{appName}} dia application mobile izay ny tanjona dia ny fizarana ny fiaranao manokana amin'ny olon-kafa mba hiarahana mandeha",
   "name": "Anarana",
   "pageNotFound": "Tsy hita io pejy io.",
   "backToHome": "Hiverina amin'ny pejy Fandraisana",
