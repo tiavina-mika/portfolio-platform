@@ -108,6 +108,18 @@ pnpm --filter portfolio-server start:preprod
 
 This runs `NODE_ENV=preProduction node --import tsx dist/index.js`.
 
+**Production version** (service on the `main` branch):
+
+```bash
+# Build Command
+mkdir -p "$HOME/.local/bin" && corepack enable --install-directory "$HOME/.local/bin" && export PATH="$HOME/.local/bin:$PATH" && pnpm install --frozen-lockfile --prod=false && pnpm --filter portfolio-bo exec vite build && pnpm --filter portfolio-server build && NODE_ENV=production pnpm --filter portfolio-server copy
+
+# Start Command
+pnpm --filter portfolio-server start
+```
+
+`copy` then writes into `clientBuild/bo/prod`, and `start` runs `NODE_ENV=production node --import tsx dist/index.js`.
+
 ### 3.3 Environment variables
 
 In **Advanced → Environment Variables** (or **Environment** once created), add:
@@ -185,6 +197,18 @@ pnpm --filter portfolio-web start:preprod
 ```
 
 This runs `APP_ENV=preProduction node server.js` (a custom Express server around Next.js, which listens on the `PORT` Render provides).
+
+**Production version** (service on the `main` branch):
+
+```bash
+# Build Command
+mkdir -p "$HOME/.local/bin" && corepack enable --install-directory "$HOME/.local/bin" && export PATH="$HOME/.local/bin:$PATH" && pnpm install --frozen-lockfile --prod=false && pnpm --filter portfolio-web build:prod
+
+# Start Command
+pnpm --filter portfolio-web start
+```
+
+`start` runs `APP_ENV=production node server.js`.
 
 ### 4.3 Environment variables
 
