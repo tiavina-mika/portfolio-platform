@@ -1,34 +1,39 @@
 'use server';
 
 import { MetadataRoute } from 'next';
+import { cacheLife, cacheTag } from 'next/cache';
 
+import { getParseServer } from '@/config/parse-server.config';
 import { defaultLocale, Locale, locales } from '@/i18n/config';
 import { ROUTES } from '@/i18n/routes';
 import { IServerResponse } from '@/types/app.type';
-import { ICategory, IProjectInputQuery } from '@/types/cms.type';
+import { IProjectInputQuery } from '@/types/cms.type';
+import { IProject } from '@/types/project.type';
 import { getAbsoluteUrl } from '@/utils/app.utils';
 import { collections } from '@/utils/constants';
 import { retrievePathnameFromDynamicPathname } from '@/utils/next.utils';
+import { serializeParseObject } from '@/utils/parse.utils';
 import { getTranslatedField } from '@/utils/translation.utils';
 import { escapeUnSlugifyText } from '@/utils/utils';
-import { getParseServer } from '@/config/parse-server.config';
-import { IProject } from '@/types/project.type';
 
 const Parse = getParseServer();
 
 export const getProject = async (
   slug: string,
   locale: Locale
-): Promise<IServerResponse<Parse.Object | undefined>> => {
+): Promise<IServerResponse<IProject | undefined>> => {
+  'use cache';
+  cacheLife('hours');
+  cacheTag('projects');
+
   try {
-    // make server side because we need to retrieve the author (user)
     const project = await Parse.Cloud.run('getProjectForClient', {
       slug,
       locale,
       defaultLocale,
     });
 
-    return project;
+    return project ? serializeParseObject<IProject>(project) : undefined;
   }
   catch (error) {
     return { error: (error as Error).message };
@@ -37,8 +42,7 @@ export const getProject = async (
 
 /**
  * get paginated projects
- * tags and categories are search params
- * NOTE: if retrieving projects author (user), should use as a cloud function
+ * tags, technologies and society are search params
  * @param param0
  * @returns
  */
@@ -46,7 +50,7 @@ export const getProjects = async ({
   limit,
   skip,
   orderedBy = 'dateStart',
-  order = 'asc',
+  order = 'desc',
   locale,
   tag,
   technologies,
@@ -55,6 +59,10 @@ export const getProjects = async ({
 }: IProjectInputQuery): Promise<
   IServerResponse<{ projects: IProject[]; count: number }>
 > => {
+  'use cache';
+  cacheLife('minutes');
+  cacheTag('projects');
+
   try {
     let query = new Parse.Query(collections.Project);
 
@@ -96,7 +104,7 @@ export const getProjects = async ({
       .skip(skip);
 
     if (orderedBy) {
-      const orderStr = order === 'asc' ? 'descending' : 'ascending';
+      const orderStr = order === 'asc' ? 'ascending' : 'descending';
 
       if (orderedBy === 'title') {
         query[orderStr](`translated.${locale}.title`);
@@ -107,10 +115,9 @@ export const getProjects = async ({
     }
 
     const result = (await query.withCount().find()) as any;
-    const projects = result.results as IProject[];
 
     return {
-      projects,
+      projects: serializeParseObject<IProject[]>(result.results),
       count: result.count,
     };
   }
@@ -120,22 +127,34 @@ export const getProjects = async ({
 };
 
 /**
- * get projects only for urls used in sitemap page
- * slug and title are the only fields needed
+ * get every published project slug for a given locale, used by `generateStaticParams` to
+ * prerender project pages at build time instead of rendering each one on first visit
+ * @param locale
  * @returns
  */
-export const getProjectsForUrls = async (): Promise<IProject[] | void> => {
+export const getProjectSlugsForLocale = async (locale: Locale): Promise<string[]> => {
   try {
-    const projects = await new Parse.Query(collections.Project)
+    const slugs: string[] = [];
+
+    await new Parse.Query(collections.Project)
       .equalTo('deleted', false)
       .equalTo('active', true)
-      .select(['translated'])
-      .find();
+      .select([`translated.${locale}.slug`])
+      .each(
+        // raw Parse.Object from `.each()` — only slugs (plain strings) leave this function
+        (project: any) => {
+          const slug = getTranslatedField(project.get('translated'), locale, 'slug');
 
-    return projects || [];
+          if (slug) slugs.push(slug);
+        },
+        { batchSize: 1000 }
+      );
+
+    return slugs;
   }
   catch (e) {
-    console.log('getProjectsForSiteMap e: ', e);
+    console.log('getProjectSlugsForLocale e: ', e);
+    return [];
   }
 };
 
@@ -147,6 +166,10 @@ export const getProjectsForUrls = async (): Promise<IProject[] | void> => {
 export const generateProjectsSitemap = async (): Promise<
   MetadataRoute.Sitemap | undefined
 > => {
+  'use cache';
+  cacheLife('hours');
+  cacheTag('projects');
+
   try {
     const siteMaps: MetadataRoute.Sitemap = [];
 
@@ -160,7 +183,8 @@ export const generateProjectsSitemap = async (): Promise<
       .equalTo('active', true)
       .select(['translated', 'updatedAt'])
       .each(
-        (project: IProject) => {
+        // raw Parse.Object from `.each()` — only sitemap entries (plain data) leave this function
+        (project: any) => {
           const siteMap: Record<string, any> = {
             lastModified: new Date(project.updatedAt as Date).toISOString(),
             alternates: { languages: {} },
@@ -168,11 +192,7 @@ export const generateProjectsSitemap = async (): Promise<
 
           // loop through all locales
           locales.forEach((locale) => {
-            const slug = getTranslatedField(
-              project.get('translated'),
-              locale,
-              'slug'
-            );
+            const slug = getTranslatedField(project.get('translated'), locale, 'slug');
             // full url
             const url = getAbsoluteUrl(`/${locale}${projectsPath}${slug}`);
 
@@ -194,37 +214,6 @@ export const generateProjectsSitemap = async (): Promise<
     return siteMaps;
   }
   catch (e) {
-    console.log('getProjectsForSiteMap e: ', e);
-  }
-};
-
-/**
- * get list of projects with the same categories as the current project
- * @param project
- * @returns
- */
-export const getRelatedProjects = async (
-  project: IProject
-): Promise<IServerResponse<IProject[]>> => {
-  try {
-    const Parse = getParseServer();
-    
-    const projects = await new Parse.Query(collections.Project)
-      .equalTo('deleted', false)
-      .equalTo('active', true)
-      .notEqualTo('objectId', project.id)
-      .containedIn(
-        'categories.objectId',
-        (project.get('categories') || []).map((category: ICategory) => category.id)
-      )
-      .select(['translated', 'previewImage', 'image'])
-      .limit(100)
-      .descending('updatedAt')
-      .find();
-
-    return projects;
-  }
-  catch (e) {
-    return { error: (e as Error).message };
+    console.log('generateProjectsSitemap e: ', e);
   }
 };

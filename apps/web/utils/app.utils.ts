@@ -1,17 +1,28 @@
 import { clsx, type ClassValue } from 'clsx';
+import { Metadata } from 'next';
 import { twMerge } from 'tailwind-merge';
 
 import env from '@/env';
-import { Locale } from '@/i18n/config';
+import { defaultLocale, Locale } from '@/i18n/config';
 import {
   ROUTES,
   translatedRoutes,
 } from '@/i18n/routes';
-import { IPaginationQuery } from '@/types/app.type';
+import { IMenu, IPaginationQuery } from '@/types/app.type';
 
 import { getCurrentLocale, getTranslatedField } from './translation.utils';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
+
+/**
+ * Whether a menu link points at the current page. A link with a `pathname` (a dynamic route)
+ * also matches the pages below it.
+ */
+export const isLinkActive = (currentPath: string, href: IMenu['value']): boolean => {
+  if (typeof href !== 'string') return currentPath.startsWith(href.pathname);
+
+  return href === currentPath;
+};
 
 export const getAbsoluteUrl = (path?: string): string => {
   return `${env.NEXT_PUBLIC_APP_URL}${path}`;
@@ -53,6 +64,26 @@ export const getTranslatedAbsoluteUrl = (
   return url;
 };
 
+/**
+ * build `alternates.canonical` (self-referenced) + `alternates.languages` (hreflang, incl.
+ * `x-default`) from a map of absolute URLs per locale — used in every `generateMetadata`
+ * @param urlsByLocale absolute URL for each locale, ex: { fr: '.../fr/blog/x', en: '.../en/blog/x' }
+ * @param currentLocale the locale of the page currently being rendered
+ * @returns
+ */
+export const getAlternates = (
+  urlsByLocale: Partial<Record<Locale, string>>,
+  currentLocale: Locale
+): Metadata['alternates'] => {
+  return {
+    canonical: urlsByLocale[currentLocale],
+    languages: {
+      ...urlsByLocale,
+      'x-default': urlsByLocale[defaultLocale] || urlsByLocale[currentLocale],
+    },
+  };
+};
+
 export const getPaginatedQuery = (
   perPage: number,
   page: number
@@ -63,8 +94,14 @@ export const getPaginatedQuery = (
   };
 };
 
+/**
+ * Extracts the video id from any common YouTube URL shape:
+ * youtube.com/watch?v=<id>, youtu.be/<id>, youtube.com/embed/<id>, youtube.com/shorts/<id>
+ */
 export const getYoutubeVideoId = (videoUrl: string): string => {
-  return videoUrl.split('v=')[1].split('&')[0];
+  const match = /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([^&?/]+)/.exec(videoUrl);
+
+  return match?.[1] ?? '';
 };
 
 export const goToItemBySlug = <T extends Record<Locale, Record<string, any>>>(
@@ -72,7 +109,13 @@ export const goToItemBySlug = <T extends Record<Locale, Record<string, any>>>(
   locale: Locale,
   routeKey: string
 ): any => {
-  return (ROUTES as any)[routeKey].preview(
-    getTranslatedField(translated, locale, 'slug')
-  );
+  const slug = getTranslatedField(translated, locale, 'slug');
+
+  /*
+   * a record missing a slug in both the current and default locale can't build a valid route —
+   * falls back home rather than emitting an unresolved `[slug]` href
+   */
+  if (!slug) return ROUTES.home;
+
+  return (ROUTES as any)[routeKey].preview(slug);
 };

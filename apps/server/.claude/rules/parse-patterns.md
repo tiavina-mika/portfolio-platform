@@ -10,13 +10,13 @@ Schema design and `select()` / `limit()` discipline apply to every app: see the 
 
 ## Server-side (Cloud Code)
 
-- Collection names come from `COLLECTIONS` (`@shared/constants`) or the Parse class constants already
-  used in the service you are editing — never hardcode a collection name string
-- Always use the `USE_MASTER_KEY` constant (`{ useMasterKey: true }`, from `@/utils/constants`) for admin operations
-- Cloud Functions use the `parseFunction()` wrapper (`cloud/utils/utils.cloud.ts`); validation goes through
+- Collection names come from `collections` (`@/constants/_core/constants`) for the core classes and from
+  `DOMAIN_COLLECTIONS` (`@shared/domain-constants`) for the domain ones — never hardcode a collection name string
+- Always use the `USE_MASTER_KEY` constant (`{ useMasterKey: true }`, from `@/constants/_core/constants`) for admin operations
+- Cloud Functions use the `parseFunction()` wrapper (`cloud/utils/_core/utils.cloud.ts`); validation goes through
   `parseFunctionValidation()` / `parseTriggerValidation()` when needed
 - `fromBO()` guards Cloud Functions that only the back-office may call
-- Use the `setValues()` utility (`src/utils/util.ts`) for bulk-setting Parse object fields
+- Use the `setValues()` utility (`src/utils/_core/utils.ts`) for bulk-setting Parse object fields
 - Master key operations only in server-side Cloud Code, **never on the client**
 
 ## Parse Query location rule
@@ -58,7 +58,7 @@ missing `select()` / `limit()` calls.
 
 **Any task that does not need to return a result to the caller immediately must be offloaded to a Parse Job.**
 
-Use `runJob()` (from `cloud/utils/job.utils.cloud.ts`) inside Cloud Functions or triggers to fire a
+Use `runJob()` (from `cloud/utils/_core/job.utils.cloud.ts`) inside Cloud Functions or triggers to fire a
 job asynchronously instead of awaiting the work inline.
 
 ```typescript

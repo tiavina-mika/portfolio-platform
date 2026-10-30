@@ -1,11 +1,11 @@
 {
   "Article": {
-    "relatedArticles": "Articles similaires",
+    "relatedArticles": "À lire aussi",
     "articles": "Articles",
     "anArticle": "un article",
     "theArticle": "l'article",
-    "categories": "Categories",
-    "category": "Categorie",
+    "categories": "Catégories",
+    "category": "Catégorie",
     "title": "Titre",
     "content": "Contenu",
     "author": "Auteur",
@@ -17,9 +17,26 @@
       "error": {
         "notFound": "L'article n'a pas été trouvé."
       }
-    }
+    },
+    "readingTime": "{minutes} min de lecture",
+    "allCategories": "Toutes",
+    "sortBy": "Trier par",
+    "newest": "Plus récents",
+    "oldest": "Plus anciens",
+    "loading": "Chargement des articles",
+    "loadError": "Les articles ne se sont pas chargés. Vérifiez votre connexion.",
+    "offline": "Vous êtes hors ligne. Les articles s’afficheront au retour de la connexion.",
+    "tags": "Étiquettes",
+    "galleryImageAlt": "{title} ({position}/{total})"
   },
   "Page": {
-    "pages": "Pages"
+    "pages": "Pages",
+    "category": "Catégorie",
+    "subcategories": "Sous-catégories",
+    "noPagesYet": "Aucune page pour le moment.",
+    "noSubcategories": "Aucune sous-catégorie pour le moment.",
+    "loadingPages": "Chargement des pages",
+    "loadingSubcategories": "Chargement des sous-catégories",
+    "viewAll": "Voir tout"
   }
 }

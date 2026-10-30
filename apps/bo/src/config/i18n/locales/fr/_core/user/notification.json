@@ -1,0 +1,298 @@
+{
+  "notifications": {
+    "from": "De",
+    "to": "À",
+    "type": "Type",
+    "seen": "Vu",
+    "deleted": "Supprimé",
+    "status": "Statut",
+    "notifications": "Notifications",
+    "notification": "Notification",
+    "noNotification": "Aucune notification",
+    "unread": "Non lu",
+    "read": "Lu",
+    "receiverSeen": "Vu par le destinataire",
+    "receiverSeenAt": "Vu par le destinataire à",
+    "readByAllAt": "Lue par tous le",
+    "senderSearchPlaceholder": "Nom ou e-mail de l'émetteur",
+    "receiverSearchPlaceholder": "Nom ou e-mail du destinataire",
+    "types": {
+      "ride": "Trajet",
+      "request": "Demande",
+      "rating": "Note",
+      "account": "Compte",
+      "rate": "Avis",
+      "ticket": "Ticket support",
+      "vehicle": "Véhicule",
+      "announcement": "Annonce"
+    },
+    "statusLabels": {
+      "RIDE": {
+        "PUBLISHED": "Trajet publié",
+        "BOOKED": "Trajet réservé",
+        "FULL": "Trajet complet",
+        "CANCELED": "Trajet annulé",
+        "IN_PROGRESS": "Trajet en cours",
+        "AWAITING_CONFIRMATION": "Trajet en attente de confirmation",
+        "COMPLETED": "Trajet terminé",
+        "ARCHIVED": "Trajet archivé",
+        "RIDE_PAYOUT_RELEASED": "Paiement conducteur versé",
+        "DRIVER_CANCELLATION_PENALTY": "Pénalité d'annulation conducteur",
+        "RIDE_DEPARTURE_REMINDER": "Rappel de départ",
+        "RIDE_COMPLETION_REMINDER": "Rappel de fin de trajet",
+        "RIDE_COMPLETION_CHECK": "Le trajet a-t-il eu lieu ?",
+        "RIDE_AUTO_COMPLETED": "Trajet clôturé automatiquement",
+        "RIDE_AUTO_COMPLETED_DRIVER": "Trajet clôturé automatiquement (conducteur)",
+        "SUSPENSION_LIFTED": "Suspension levée",
+        "RIDE_UPDATED": "Trajet modifié"
+      },
+      "REQUEST": {
+        "PENDING": "Paiement de la réservation en cours",
+        "CONFIRMED": "Réservation confirmée",
+        "CANCELED_BY_PASSENGER": "Réservation annulée",
+        "LATE_PAYMENT_REFUNDED": "Paiement tardif remboursé",
+        "REQUEST_REFUND_PAID": "Remboursement envoyé",
+        "CANCELED_BY_DRIVER": "Demande annulée par le conducteur",
+        "COMPLETED": "Demande terminée",
+        "PAYMENT_FAILED": "Paiement de la demande échoué",
+        "NO_SHOW": "Passager déclaré absent",
+        "CONTESTED_NO_SHOW": "Absence contestée",
+        "REQUEST_PAYMENT_SUCCEEDED": "Paiement de la demande réussi",
+        "PASSENGER_CANCELLATION_SUSPENSION": "Suspension passager (annulations)",
+        "DRIVER_NO_SHOW_REPORTED": "Absence du conducteur signalée",
+        "DRIVER_NO_SHOW_REPLIED": "Réponse du conducteur au signalement",
+        "DRIVER_NO_SHOW_CONFIRMED": "Absence du conducteur confirmée",
+        "DRIVER_NO_SHOW_REJECTED": "Signalement d'absence rejeté",
+        "PASSENGER_NO_SHOW_CONFIRMED": "Absence du passager confirmée",
+        "PASSENGER_NO_SHOW_REJECTED": "Absence du passager rejetée"
+      },
+      "ACCOUNT": {
+        "ACCOUNT_BANNED": "Compte banni",
+        "ACCOUNT_SUSPENDED": "Compte suspendu (signalements)",
+        "ACCOUNT_UNBANNED": "Compte réactivé",
+        "SUSPENSION_LIFTED": "Suspension levée",
+        "PASSENGER_CANCELLATION_SUSPENSION": "Suspension passager (annulations)",
+        "NEW_DEVICE_LOGIN": "Nouvelle connexion",
+        "SUPPORT_SESSION_ENDED": "Session support terminée",
+        "PASSWORD_RESET_DELAYED": "Changement de mot de passe retenu"
+      },
+      "RATE": {
+        "COMPLETED": "Nouvel avis",
+        "RATING_INVITATION": "Invitation à noter",
+        "RATING_REMINDER": "Rappel pour noter",
+        "RATING_REPLY": "Réponse à un avis"
+      },
+      "TICKET": {
+        "newReplyFromAgent": "Réponse du support",
+        "TICKET_RESOLVED": "Ticket résolu",
+        "REPORT_RECEIVED": "Signalement reçu",
+        "REPORT_RESOLVED": "Signalement traité"
+      },
+      "VEHICLE": {
+        "VEHICLE_VERIFIED": "Véhicule vérifié",
+        "VEHICLE_DOCUMENT_REJECTED": "Document véhicule refusé",
+        "VEHICLE_DOCUMENT_EXPIRING_SOON": "Document véhicule bientôt expiré",
+        "VEHICLE_DOCUMENT_EXPIRED": "Document véhicule expiré"
+      },
+      "ANNOUNCEMENT": {
+        "ANNOUNCEMENT": "Annonce"
+      }
+    },
+    "resendPush": "Renvoyer la notification",
+    "resent_one": "Notification renvoyée à 1 destinataire.",
+    "resent_other": "Notification renvoyée à {{count}} destinataires.",
+    "resendFailed": "Rien n'a été renvoyé : ce canal ne peut pas être reconstruit pour cette notification, ou elle n'est plus disponible.",
+    "search": "Rechercher un message, un émetteur (nom ou e-mail) ou un code statut",
+    "noMessage": "Aucun message",
+    "category": "Catégorie",
+    "readRate": "Lecture",
+    "readRatio": "{{seen}} / {{total}} · {{percent}} %",
+    "sentBetween": "Envoyée entre le",
+    "sentAt": "Envoyée le",
+    "statusCode": "Code statut",
+    "sendType": "Type d'envoi",
+    "sender": "Émetteur",
+    "senderName": "Nom de l'émetteur",
+    "recipient": "Destinataire",
+    "recipients": "Destinataires",
+    "recipientCount": "Nombre de destinataires",
+    "recipientsWithCount_one": "{{count}} destinataire",
+    "recipientsWithCount_other": "{{count}} destinataires",
+    "recipientsWithRemaining": "{{count}} destinataires · + {{remaining}}",
+    "moreRecipients_one": "+ {{count}} autre destinataire",
+    "moreRecipients_other": "+ {{count}} autres destinataires",
+    "system": "Système",
+    "systemInitials": "SY",
+    "automatedSend": "Envoi automatique",
+    "channelsLabel": "Canaux",
+    "channelsUntracked": "Non suivi",
+    "channelBreakdown": "{{failed}} en échec · {{pending}} en attente · {{notSent}} non envoyés",
+    "deliveryPerRecipient": "Acheminement par destinataire",
+    "resendTo": "Renvoyer à {{name}}",
+    "resendFailures": "Renvoyer les échecs",
+    "resendFailuresWithCount_one": "Renvoyer l'envoi en échec",
+    "resendFailuresWithCount_other": "Renvoyer les {{count}} envois en échec",
+    "resendUnreadWithCount_one": "Renvoyer au destinataire qui n'a pas ouvert",
+    "resendUnreadWithCount_other": "Renvoyer aux {{count}} destinataires qui n'ont pas ouvert",
+    "failedDeliveriesResent_one": "1 renvoi lancé ({{channels}}).",
+    "failedDeliveriesResent_other": "{{count}} renvois lancés ({{channels}}).",
+    "noFailedDeliveryToResend": "Aucun envoi en échec à renvoyer.",
+    "copyPayload": "Copier les références",
+    "readStates": {
+      "unread": "Non lue",
+      "partial": "Partiellement lue",
+      "read": "Entièrement lue"
+    },
+    "sendTypes": {
+      "single": "Envoi unique",
+      "multiple": "Envoi multiple"
+    },
+    "senderTypes": {
+      "system": "Système",
+      "user": "Un compte"
+    },
+    "channels": {
+      "push": "Push",
+      "email": "E-mail",
+      "sms": "SMS"
+    },
+    "channelStatuses": {
+      "pending": {
+        "label": "En attente",
+        "description": "Le message est en file d'attente, l'envoi n'a pas encore été tenté."
+      },
+      "sent": {
+        "label": "Envoyé",
+        "description": "Le message a été remis au fournisseur du canal."
+      },
+      "failed": {
+        "label": "Échec",
+        "description": "Le fournisseur a rejeté l'envoi. Une relance est possible."
+      },
+      "no_device": {
+        "label": "Aucun appareil",
+        "description": "Aucun appareil enregistré pour recevoir le push."
+      },
+      "no_template": {
+        "label": "Modèle manquant",
+        "description": "Aucun modèle de message pour ce canal : à corriger dans la configuration."
+      },
+      "disabled_by_user": {
+        "label": "Désactivé par l'utilisateur",
+        "description": "Le destinataire a désactivé ce canal dans ses préférences."
+      },
+      "no_email": {
+        "label": "E-mail absent",
+        "description": "Aucune adresse e-mail sur le compte du destinataire."
+      },
+      "no_phone": {
+        "label": "Numéro absent",
+        "description": "Aucun numéro de téléphone sur le compte du destinataire."
+      },
+      "rate_limited": {
+        "label": "Plafond atteint",
+        "description": "Le destinataire a déjà reçu son maximum de SMS de secours sur 24 heures : celui-ci n'a pas été envoyé."
+      }
+    },
+    "payloadKeys": {
+      "ride": "Trajet",
+      "request": "Demande",
+      "rating": "Avis",
+      "ticket": "Ticket",
+      "vehicle": "Véhicule"
+    },
+    "id": "ID",
+    "channel": "Canal",
+    "delivery": "Diffusion",
+    "relatedEntity": "Entité liée",
+    "noRecipient": "Aucun destinataire",
+    "seenOutOf": "{{seen}} sur {{total}} vus",
+    "senderToRecipients": "{{sender}} → {{recipients}}",
+    "channelFailures_one": "{{count}} échec {{channel}}",
+    "channelFailures_other": "{{count}} échecs {{channel}}",
+    "sentColumn": "Envoyés",
+    "seenColumn": "Vus",
+    "toHandle": "À traiter",
+    "lastAttempt": "Dernière tentative",
+    "retryChannel": "Relancer : {{channel}}",
+    "statusCount": "{{count}} {{label}}",
+    "seenAtColumn": "Vu à",
+    "providerAnswer": "Le fournisseur a répondu : {{answer}}",
+    "providerErrorWithCode": "{{message}} (code {{code}})",
+    "smsCost": {
+      "title": "SMS de secours — {{days}} derniers jours",
+      "description": "Les SMS envoyés en secours pour les événements importants, jour par jour. Chaque SMS accepté par l'opérateur est facturé : ce suivi sert à décider d'élargir ou non la liste des événements envoyés par SMS.",
+      "date": "Jour",
+      "sent": "Envoyés",
+      "rateLimited": "Retenus (plafond)",
+      "failed": "Refusés",
+      "cost": "Coût estimé",
+      "totalSent": "SMS envoyés",
+      "totalCost": "Coût estimé",
+      "totalRateLimited": "Retenus par le plafond",
+      "totalFailed": "Refusés par l'opérateur",
+      "empty": "Aucun SMS de secours sur la période",
+      "emptyDescription": "Aucun SMS de secours n'a été envoyé, retenu ou refusé sur cette période."
+    },
+    "smsCostNotice": "Chaque SMS renvoyé est facturé par l'opérateur.",
+    "confirmResendTitle": "Renvoyer les échecs ?",
+    "confirmResendDescription": "À renvoyer : {{channels}}.",
+    "confirmResendAllTitle": "Renvoyer la notification à tous ?",
+    "confirmResendAllDescription": "Le push repartira vers les {{count}} destinataires, y compris ceux qui l'ont déjà reçue ou lue.",
+    "readAt": "Lue le {{date}}",
+    "clickToResend": "Cliquer pour renvoyer.",
+    "providerAnswersLabel": "Réponse du fournisseur",
+    "channelAnswer": "{{channel}} : {{answer}}",
+    "resendsLabel": "Renvois",
+    "resendsSummary_one": "1 renvoi, le {{date}}",
+    "resendsSummary_other": "{{count}} renvois, le dernier le {{date}}",
+    "resendReasons": {
+      "all_one": "Renvoyée au destinataire ({{channel}})",
+      "all_other": "Renvoyée aux {{count}} destinataires ({{channel}})",
+      "unread_one": "Rappel au destinataire qui ne l'avait pas ouverte ({{channel}})",
+      "unread_other": "Rappel aux {{count}} destinataires qui ne l'avaient pas ouverte ({{channel}})",
+      "failed_one": "Renvoi de l'envoi en échec ({{channel}})",
+      "failed_other": "Renvoi des {{count}} envois en échec ({{channel}})",
+      "recipient_one": "Renvoyée à un destinataire ({{channel}})",
+      "recipient_other": "Renvoyée à {{count}} destinataires ({{channel}})"
+    },
+    "events": {
+      "created": "Créée",
+      "receiverSeen": "Lue par tous les destinataires",
+      "deleted": "Mise à la corbeille",
+      "undeleted": "Sortie de la corbeille"
+    },
+    "broadcast": {
+      "broadcast": "Diffusion",
+      "title": "Diffuser une annonce",
+      "subtitle": "Écrire un message à tous les membres ou à ceux d'une ville, dans les trois langues.",
+      "segment": "Destinataires",
+      "segments": {
+        "all": "Tous les membres",
+        "city": "Les membres d'une ville"
+      },
+      "city": "Ville",
+      "cityHelper": "La ville telle qu'elle apparaît dans l'adresse saisie par le membre sur son profil.",
+      "messageTitle": "Titre",
+      "messageBody": "Message",
+      "languageTab": "Français",
+      "audience": "Destinataires estimés",
+      "audienceCount_one": "{{count}} membre",
+      "audienceCount_other": "{{count}} membres",
+      "audienceUnknown": "Vérifiez les destinataires avant l'envoi",
+      "checkAudience": "Vérifier les destinataires",
+      "send": "Envoyer l'annonce",
+      "confirmTitle": "Confirmer l'envoi",
+      "confirmDescription": "Cette annonce va partir à {{count}} membre(s). Elle ne peut pas être annulée ni modifiée après l'envoi.",
+      "confirmCheckbox": "J'ai relu le message et les destinataires",
+      "confirmAction": "Envoyer définitivement",
+      "sent_one": "Annonce envoyée à {{count}} membre",
+      "sent_other": "Annonce envoyée à {{count}} membres",
+      "history": "Dernières annonces",
+      "noHistory": "Aucune annonce n'a encore été diffusée",
+      "sentBy": "Envoyée par",
+      "audienceLabel": "Audience",
+      "preview": "Aperçu"
+    }
+  }
+}

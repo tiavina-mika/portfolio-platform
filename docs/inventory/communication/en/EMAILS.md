@@ -9,18 +9,28 @@
 
 ## How emails are sent
 
-All emails go through Brevo transactional emails (see [Brevo](../../../services/brevo/en/BREVO.md)). Code: `apps/server/src/services/email.service.ts` (`sendEmail`) and `apps/server/src/cloud/utils/email.utils.cloud.ts` (the message builders). The HTML body comes from `generateEmailTemplate` in `apps/server/src/config/emails/index.ts`; texts are translated server-side (`apps/server/src/locales`) in the user's language. The default sender is `ADMIN_EMAIL_SENDER` with the application name.
+All emails go through Brevo transactional emails (see [Brevo](../../../services/brevo/en/BREVO.md)). Code: `apps/server/src/services/email.service.ts` (`sendEmail`) and `apps/server/src/cloud/utils/_core/email.utils.cloud.ts` (the message builders). The HTML body comes from `generateEmailTemplate` in `apps/server/src/config/emails/index.ts` and `apps/server/src/emails/templates/`; texts are translated server-side (`apps/server/src/config/i18n/locales`) in the user's language. The default sender is `ADMIN_EMAIL_SENDER` with the application name.
 
 ## Emails sent
 
 | Email | Builder | Sent from | Recipient |
 |---|---|---|---|
-| Account verification code | `sendEmailVerification` | Cloud Functions `sendVerificationCode` and the user creation flow | The new user |
+| Account verification code | `sendEmailVerification` (`sendVerificationCodeToEmail`) | Cloud Functions `sendVerificationCode`, `verifyAccount` flow and user creation | The new user |
 | Reset password code | `sendEmailResetPassword` | Cloud Function `sendResetPasswordVerificationCode` | The user |
-| Free message from the back-office | `sendEmailToUser` | Cloud Function `sendEmailToUser` | A user chosen by an admin |
+| Back-office invitation | `sendInvitationEmail` | Cloud Function `sendBOInvitation`, and the owner invitation at server boot | The invited person |
+| Step-up verification code | `sendStepUpVerificationEmail` | Cloud Function `requestStepUpVerification` | The logged-in user |
+| Contact change code | `sendContactChangeVerificationEmail` | Cloud Function `requestContactChange` | The user |
+| Ticket acknowledgement and reply | `sendTicketAcknowledgementEmail`, `sendTicketReplyEmail` | Contact form / `sendTicketMessage` | The visitor who wrote |
+| Newsletter confirmation (double opt-in) | `sendNewsletterConfirmationEmail` | Cloud Function `subscribeToNewsletter` | The subscriber, with the confirmation link |
+| Newsletter unsubscribe confirmation | `sendNewsletterUnsubscribeConfirmationEmail` | Cloud Function `unsubscribeNewsletter` | The subscriber |
 | New article | `sendArticleToNewsletterEmails` | Job `sendArticleToNewsletterJob`, started when an article is saved | Active newsletter subscribers, with an unsubscribe link |
+| Free message and notifications | `sendEmailToUser`, `sendNotificationEmailToUsers` | `sendMessageToUser`, notification sends and broadcasts | Users chosen by an admin |
+| Account notices | `sendWelcomeEmail`, `sendAccountReactivatedEmail`, `sendNewDeviceLoginEmail`, `sendPasswordResetDelayedEmail` | User and login triggers and services | The user |
+| Staff alerts | `sendEmailToStaffInTheirOwnLocale` | Reports, failed payments, failed jobs, large money actions | The staff (and Slack when `SLACK_ALERTS_WEBHOOK_URL` is set) |
 
-The test functions `sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest` and `sendArticleToNewsletterTest` send the same emails for checking.
+Verification texts are also sent by SMS through MMSDuck (`sendSmsVerification`, ticket and new-device SMS): in development and test they are only logged.
+
+The test functions (`sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest`, `sendArticleToNewsletterTest`, `sendInvitationTest`, `sendWelcomeEmailTest`) send the same emails for checking.
 
 ## Newsletter contacts
 
@@ -28,6 +38,5 @@ On a new `Newsletter` subscription, `createContactToCloudJob` creates the contac
 
 ## Gotchas
 
-- No email is sent to the site owner when the contact form is submitted: the message is only stored in `Contact` and shown in the back-office.
-- `SENDER_EMAIL` is in `apps/web/.env.example` but is not read by any code of `apps/web`.
+- No email is sent to the site owner when the contact form is submitted: the message is stored in `Contact` as a ticket, shown in the back-office, and the visitor gets an acknowledgement.
 - `sendEmail` rethrows Brevo errors while `createContactEmail` only logs them.

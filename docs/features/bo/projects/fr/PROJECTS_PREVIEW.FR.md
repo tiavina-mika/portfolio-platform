@@ -10,48 +10,47 @@
 - [Cas d'utilisation typiques](#cas-dutilisation-typiques)
 - [Points d'attention / limites actuelles](#points-dattention--limites-actuelles)
 
----
-
 ## Où trouver cette page
 
 Depuis la liste des projets, action **Voir l'aperçu** du menu « ... » d'une ligne. Adresse :
-`/projets/<identifiant>`. On y arrive aussi automatiquement après l'enregistrement d'un projet.
+`/projets/<identifiant>`. On y arrive aussi après l'enregistrement d'un projet, ou depuis la recherche
+globale.
 
 ## À quoi sert cette page
 
 C'est la fiche en lecture seule d'un projet : on y relit tout ce qui a été saisi, langue par langue, sans
-risque de le modifier par erreur.
+risque de le modifier par erreur, et on le publie ou le dépublie.
 
 ## Qui peut l'utiliser
 
 Le droit **Consulter** sur la ressource « Project » (page **Droits**) est nécessaire pour ouvrir la page ;
-sans lui, elle s'affiche comme « introuvable ». Les propriétaires et administrateurs l'ont toujours.
+sans lui, elle s'affiche comme « introuvable ». Les comptes Owner et Super Admin l'ont toujours.
 
 ## Ce que l'on voit à l'écran
 
-Le titre de la page est « Projet - » suivi du nom du projet. Sous le titre, des **onglets de langue**
-(français, anglais, malgache) changent la langue des textes affichés.
+Le titre de la page est le nom du projet, accompagné d'une pastille **Publié** ou **Brouillon**. Des
+**onglets de langue** (français, anglais, malgache) changent la langue des textes affichés. Un sommaire
+permet de passer d'une section à l'autre :
 
-Colonne de gauche :
-
-- **Détails** : nom, titre, description, dates de création et de modification, et période du projet.
-- **SEO** : adresse du projet sur le site public, tags, meta titre et meta description.
-- **Autres** : société, site web, Youtube, liens, dépôts, liens npm et Codesandbox (chaque adresse est un
+- **Détails** : nom, titre, description, dates de création et de modification, période du projet (et date
+  de suppression le cas échéant).
+- **Classification** : types de projet, plateformes et technologies.
+- **Liens** : société, site web, Youtube, liens, dépôts, liens npm et Codesandbox (chaque adresse est un
   lien cliquable).
-- **Description de la société** et **Description du projet** : les textes mis en forme.
-- Les **images** du projet (image principale, logo, aperçu, galerie).
-
-Colonne de droite :
-
-- **Status** : une ligne « Supprimé » et une ligne « Actif », chacune avec une coche ou une croix.
-- **Technologies**, **Types de projet** et **Plateformes** : les valeurs choisies, séparées par des virgules.
+- **SEO** : adresse du projet sur le site public, tags, meta titre et meta description.
+- **Contenu du projet** et **Description de la société** : les textes mis en forme.
+- **Images** du projet (image principale, logo, aperçu, galerie).
+- **Statut** : actif ou non.
+- **Historique** : les événements de la vie du projet (création, modifications).
 
 ## Actions possibles
 
 Le bouton **Actions** en haut de la page ouvre un menu :
 
+- **Publier / Ne pas publier** : rend le projet visible ou invisible sur le site public.
 - **Modifier** : ouvre le formulaire de modification.
 - **Voir le site web** : ouvre le projet sur le site public, dans un nouvel onglet.
+- **Télécharger en JSON**.
 - **Retourner à la liste**.
 - **Ajouter** : ouvre le formulaire de création d'un nouveau projet.
 - **Supprimer** : après confirmation, met le projet à la corbeille et revient à la liste.
@@ -65,9 +64,7 @@ Le bouton **Actions** en haut de la page ouvre un menu :
 
 ## Points d'attention / limites actuelles
 
-- Le menu **Actions** affiche toutes les entrées quel que soit le rôle ; une action pour laquelle le compte n'a
-  pas le droit est refusée (message d'erreur ou page « introuvable »).
-- L'entrée **Publier / Ne pas publier** du menu active ou désactive un projet d'un clic (même effet que
-  l'interrupteur « Actif » du formulaire) ; elle exige le droit de modification.
+- Le menu **Actions** affiche toutes les entrées quel que soit le poste ; une action pour laquelle le compte
+  n'a pas le droit est refusée (message d'erreur ou page « introuvable »).
 - La période du projet n'est affichée que si les deux dates, début et fin, sont renseignées.
-- Un projet mis à la corbeille ne peut plus être ouvert en aperçu.
+- La restauration d'une ancienne version du contenu n'est pas branchée pour les projets.

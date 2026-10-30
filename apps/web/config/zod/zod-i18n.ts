@@ -1,12 +1,12 @@
-import { capitalize } from 'string-ts';
 import * as z from 'zod';
 
 import { Locale } from '@/i18n/config';
 import { convertBytesToFileSize, convertMimeTypeToFileExtension, isMimeType } from '@/utils/file.utils';
+import { capitalizeFirstLetter } from '@/utils/utils';
 
 /**
  * Get translated error message for a given field.
- * In "globalError" section of the form.json.
+ * In "globalError" section of the zod.json.
  * E.g., "invalidStringType", "tooBigText", etc.
  */
 const getErrorMessage = (i18nData: Record<string, any>, field: string): string => {
@@ -15,15 +15,21 @@ const getErrorMessage = (i18nData: Record<string, any>, field: string): string =
 
 /**
  * Get translated field name for a given input.
- * In "name" section of the form.json.
+ * In "name" section of the zod.json.
  * E.g., "title", "name", etc.
- * @param i18nData form.json i18n data
+ * @param i18nData zod.json i18n data
  * @param field key of the field (e.g., "title", "name", etc.)
  * @param valueType optional value type (e.g., "date", "file", etc.)
  * @returns translated field name
  */
-const getInputName = (i18nData: Record<string, any>, field: string): string => {
-  return i18nData.name?.[field as keyof typeof i18nData.name] || '';
+const getInputName = (i18nData: Record<string, any>, field: string | string[]): string => {
+  if (Array.isArray(field)) {
+    const fullKey = field.join('.');
+    const lastKey = field[field.length - 1] ?? '';
+
+    return i18nData.name?.[fullKey] || i18nData.name?.[lastKey] || '';
+  }
+  return i18nData.name?.[field] || '';
 };
 
 /**
@@ -80,7 +86,7 @@ const isInvalidAsEmptyArray = (issue: z.core.$ZodIssue): boolean => {
 /**
  * Set global error messages for a given i18n data.
  * This will be applied to every Zod schema.
- * @param i18nData form.json i18n data
+ * @param i18nData zod.json i18n data
  * @returns
  */
 const setGlobalError = (i18nData: Record<string, any>): any => {
@@ -98,10 +104,11 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
           const expected = issue.expected?.charAt(0).toUpperCase() + issue.expected?.slice(1);
           const key = `invalid${expected}Type`;
 
-          // Name of the field (e.g.: "title", "name", etc.)
-          const field = issue.path?.length ? issue.path[issue.path.length - 1] as string : '';
-          // Translated field name (e.g.: "Le titre", "Le nom", etc.)
-          const fieldName = getInputName(i18nData, field);
+          /*
+           * Translated field name (e.g.: "Le titre", "Le nom", etc.)
+           * Tries "departure.country" first, falls back to "country"
+           */
+          const fieldName = getInputName(i18nData, issue.path?.map(String) ?? []);
 
           /*
            * ----------------------------------- //
@@ -126,13 +133,7 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
               message = message.replace('{{field}}', getInputName(i18nData, 'field'));
             }
 
-            /*
-             * DEBUG
-             * return JSON.stringify(issue)
-             * return issue.input + ', ' + typeof issue.input + ', ' + issue.received + ', ' + issue.expected;
-             */
-
-            return capitalize(message.trim());
+            return capitalizeFirstLetter(message.trim());
           }
 
           /*
@@ -153,25 +154,33 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
            */
           message = message.replace('{{field}}', fieldName || '');
 
-          return capitalize(message.trim());
+          return capitalizeFirstLetter(message.trim());
         }
         /**
          * Cases where the value is too big
          * (e.g., string length, number value, array length, etc.)
          */
-        case 'too_big': {
+        case 'too_big':
+        /**
+         * Cases where the value is too small
+         * (e.g., string length, number value, array length, etc.)
+         * @NOTE: it is handled both "nonempty()" and "min()" here
+         */
+        // falls through
+        case 'too_small': {
+          const isTooBig = issue.code === 'too_big';
           const valueType = issue.origin;
           // Keys in the i18n JSON for different types of values in "globalError"
           const typeKeyMap: Record<string, string> = {
-            string: 'tooBigText',
-            number: 'tooBigNumber',
-            bigint: 'tooBigNumber',
-            int: 'tooBigNumber',
-            array: 'tooBigArray',
-            date: 'tooBigDate',
-            file: 'tooBigFile',
+            string: isTooBig ? 'tooBigText' : 'tooSmallText',
+            number: isTooBig ? 'tooBigNumber' : 'tooSmallNumber',
+            bigint: isTooBig ? 'tooBigNumber' : 'tooSmallNumber',
+            int: isTooBig ? 'tooBigNumber' : 'tooSmallNumber',
+            array: isTooBig ? 'tooBigArray' : 'tooSmallArray',
+            date: isTooBig ? 'tooBigDate' : 'tooSmallDate',
+            file: isTooBig ? 'tooBigFile' : 'tooSmallFile',
           };
-          const key = typeKeyMap[valueType] || 'tooBig';
+          const key = typeKeyMap[valueType] || (isTooBig ? 'tooBig' : 'tooSmall');
           const defaultMessages: Record<string, string> = {
             tooBigText: 'Too long',
             tooBigNumber: 'Too big',
@@ -179,52 +188,6 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
             tooBigDate: 'Too big date',
             tooBigFile: 'Too big file',
             tooBig: 'Too big',
-          };
-          const limitKey = 'maximum';
-          // max value (number, length, etc.)
-          const limit = (issue as any)[limitKey]?.toString() || '255';
-          // Name of the field (e.g.: "title", "name", etc.)
-          const field = issue.path?.length ? issue.path[issue.path.length - 1] as string : '';
-          // Translated field name (e.g.: "Le titre", "Le nom", etc.)
-          const fieldName = getInputName(i18nData, field || valueType);
-          // Dynamic message with replacements for {{number}} (e.g.: Should be at most 10)
-          let message: string = getErrorMessage(i18nData, key);
-
-          let value = limit;
-
-          switch (valueType) {
-            case 'file':
-              value = convertBytesToFileSize(value, 'mb', true);
-              break;
-            // Add more cases if needed
-          }
-          message = message.replace('{{value}}', value) || defaultMessages[key] || 'Too big';
-
-          // If we have a field name, replace {{field}} in the message with the translated name
-          if (fieldName) {
-            message = message.replace('{{field}}', fieldName);
-          } else {
-            // Remove {{field}} if no field name is available
-            message = message.replace('{{field}}', '');
-          }
-
-          // return issue.input + ', ' + typeof issue.input + ', ' + issue.received + ', ' + issue.expected;
-          return capitalize(message.trim());
-        }
-        case 'too_small': {
-          const valueType = issue.origin;
-          // Keys in the i18n JSON for different types of values in "globalError"
-          const typeKeyMap: Record<string, string> = {
-            string: 'tooSmallText',
-            number: 'tooSmallNumber',
-            bigint: 'tooSmallNumber',
-            int: 'tooSmallNumber',
-            array: 'tooSmallArray',
-            date: 'tooSmallDate',
-            file: 'tooSmallFile',
-          };
-          const key = typeKeyMap[valueType] || 'tooSmall';
-          const defaultMessages: Record<string, string> = {
             tooSmallText: 'Too short',
             tooSmallNumber: 'Too small',
             tooSmallArray: 'Too few elements',
@@ -232,19 +195,17 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
             tooSmallFile: 'Too small file',
             tooSmall: 'Too small',
           };
-          const limitKey = 'minimum';
-          // min value (number, length, etc.)
-          const limit = (issue as any)[limitKey]?.toString() || '1';
+          const limitKey = isTooBig ? 'maximum' : 'minimum';
+          // max or min value (number, length, etc.)
+          const limit = (issue as any)[limitKey]?.toString() || (isTooBig ? '255' : '1');
           /*
            * if nonempty(): Required text field
            * else if min(): min length or value
            */
-          const isTextRequired = valueType === 'string' && limit === '1';
-          // Name of the field (e.g.: "title", "name", etc.)
-          const field = issue.path?.length ? issue.path[issue.path.length - 1] as string : '';
-          // Translated field name (e.g.: "Le titre", "Le nom", etc.)
-          const fieldName = getInputName(i18nData, field || valueType);
-          // Dynamic message with replacements for {{number}} (e.g.: Should be at least 1)
+          const isTextRequired = valueType === 'string' && limit === '1' && !isTooBig;
+          // Translated field name — tries "departure.country" first, falls back to "country"
+          const fieldName = getInputName(i18nData, issue.path?.length ? issue.path.map(String) : [valueType]);
+          // Dynamic message with replacements for {{number}} (e.g.: Should be at most 10)
           let message: string = getErrorMessage(i18nData, key);
 
           if (isTextRequired) {
@@ -258,7 +219,7 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
                 break;
               // Add more cases if needed
             }
-            message = message.replace('{{value}}', value) || defaultMessages[key] || 'Too small';
+            message = message.replace('{{value}}', value) || defaultMessages[key] || (isTooBig ? 'Too big' : 'Too small');
           }
 
           // If we have a field name, replace {{field}} in the message with the translated name
@@ -274,7 +235,7 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
             }
           }
 
-          return capitalize(message.trim());
+          return capitalizeFirstLetter(message.trim());
         }
         case 'custom': {
           const params = issue.params ?? {};
@@ -293,10 +254,8 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
           const input = (issue as any).input;
 
           const list = (issue as z.core.$ZodIssueInvalidValue<string>).values as string[] || [];
-          // Name of the field (e.g.: "title", "name", etc.)
-          const path = issue.path?.length ? issue.path[issue.path.length - 1] as string : '';
-          // e.g: globalError.invalidFileType or name.file in form.json
-          const field = getInputName(i18nData, path);
+          // Translated field name — tries "departure.country" first, falls back to "country"
+          const field = getInputName(i18nData, issue.path?.map(String) ?? []);
 
           if (!list.length) return;
 
@@ -306,13 +265,13 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
           if (!isMimeType(input)) {
             const key = 'InvalidEnumValue';
 
-            // form.json -> name.articleEnum, name.pageEnum, etc. (to differentiate from other fields)
-            const options = list.map((item) => getInputName(i18nData, `${item}Enum`)).join(', ');
+            // zod.json -> name.articleOption, name.pageOption, etc. (to differentiate from other fields)
+            const options = list.map((item) => getInputName(i18nData, `${item}Option`)).join(', ');
             const message = getErrorMessage(i18nData, key)
               .replace('{{options}}', options)
               .replace('{{field}}', field);
 
-            return capitalize(message.trim());
+            return capitalizeFirstLetter(message.trim());
           }
 
           // 2. File type invalid value
@@ -333,7 +292,16 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
           if (!allowedExtensions.length) return;
           message = message.replace('{{field}}', field); // Replace field name
           message = message.replace('{{value}}', allowedExtensions.join(', '));
-          return capitalize(message.trim());
+          return capitalizeFirstLetter(message.trim());
+        }
+        case 'invalid_format': {
+          const format = (issue as any).format;
+          // e.g., invalidEmailFormat, invalidUrlFormat, etc.
+          const key = `invalid${format.charAt(0).toUpperCase() + format.slice(1)}Format`;
+
+          const message = getErrorMessage(i18nData, key) || `Invalid format: ${format}`;
+
+          return capitalizeFirstLetter(message.trim());
         }
         default:
           return getErrorMessage(i18nData, 'genericError') || 'Invalid input';

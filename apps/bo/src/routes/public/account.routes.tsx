@@ -1,16 +1,22 @@
 import { Outlet, createRoute } from '@tanstack/react-router';
+import { lazy } from 'react';
 import { z } from 'zod';
 
-import AuthRouteLayout from '@/containers/auth/AuthRouteLayout';
-import ConfirmAccount from '@/pages/auth/ConfirmAccount';
-import ConfirmResetPasswordCodeSentByEmail from '@/pages/auth/ConfirmResetPasswordCodeSentByEmail';
-import ResetPassword from '@/pages/auth/ResetPassword';
-import SendEmailResetPassword from '@/pages/auth/SendEmailResetPassword';
-import { onEnterConfirmationCode, onEnterResetPassword, onEnterSendResetPasswordEmail } from '@/redux/actions/auth.action';
-import { onEnter } from '@/redux/actions/util.action';
-import { PATH_NAMES } from '@/utils/pathnames';
+// eslint-disable-next-line import/order -- pre-existing import/order + pathGroups quirk, unrelated to this task
+import { onEnterConfirmationCode, onEnterResetPassword, onEnterSendResetPasswordEmail } from '@/redux/actions/_core/auth.action';
 
-import { appLayout } from '../routes';
+const AuthRouteLayout = lazy(() => import('@/containers/_core/auth/AuthRouteLayout'));
+const ConfirmAccount = lazy(() => import('@/pages/_core/auth/ConfirmAccount'));
+const ConfirmResetPasswordCodeSentByEmail = lazy(
+  () => import('@/pages/_core/auth/ConfirmResetPasswordCodeSentByEmail')
+);
+const ResetPassword = lazy(() => import('@/pages/_core/auth/ResetPassword'));
+const SendCodeResetPassword = lazy(() => import('@/pages/_core/auth/SendCodeResetPassword'));
+
+import { onEnter } from '@/redux/actions/_core/util.action';
+import { appLayout } from '@/routes/app.routes';
+import { PATH_NAMES } from '@/utils/_core/pathnames';
+
 
 const accountPublicLayout = createRoute({
   getParentRoute: () => appLayout,
@@ -40,22 +46,22 @@ const resetPasswordPublicLayout = createRoute({
 
 const senEmailResetPasswordRoute = createRoute({
   getParentRoute: () => resetPasswordPublicLayout,
-  component: SendEmailResetPassword,
+  component: SendCodeResetPassword,
   beforeLoad: onEnter(onEnterSendResetPasswordEmail),
   path: '/',
 });
 
-const resetPasswordRoute = createRoute({
+export const resetPasswordRoute = createRoute({
   parseParams: (params: {
-    encryptedEmail: string;
+    resetToken: string;
   }) => ({
-    // string because it's encrypted encryptedEmail
-    encryptedEmail: z.string().parse(params.encryptedEmail),
+    // single-use token minted by the server when the emailed code was confirmed
+    resetToken: z.string().parse(params.resetToken),
   }),
   getParentRoute: () => resetPasswordPublicLayout,
   beforeLoad: onEnter(onEnterResetPassword),
   component: ResetPassword,
-  path: '/$encryptedEmail',
+  path: '/$resetToken',
 });
 
 const accountPublicRoutes = accountPublicLayout.addChildren([

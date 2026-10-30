@@ -13,13 +13,13 @@
 
 ## Où trouver cette page
 
-Menu de gauche → **Utilisateurs**, ou carte de l'écran d'accueil, ou l'icône d'ajout d'utilisateur avec
-pastille de nombre en haut à droite de l'écran (elle ouvre directement l'onglet « Nouveaux »).
+Menu de gauche → groupe **Communauté** → **Utilisateurs**, ou la ligne « nouveaux utilisateurs » du tableau de
+bord, ou le lien « utilisateurs » de la cloche de la barre du haut (il ouvre l'onglet « Nouveaux »).
 
 ## À quoi sert cette page
 
-Elle liste les comptes enregistrés (visiteurs inscrits et personnes qui ont accès au back-office). On y
-retrouve quelqu'un, on ouvre sa fiche, on lui écrit ou on supprime son compte.
+Elle liste les comptes enregistrés (personnes inscrites et membres de l'équipe du back-office). On y retrouve
+quelqu'un, on ouvre sa fiche, on lui écrit, on invite un collègue ou on supprime un compte.
 
 ## Qui peut l'utiliser
 
@@ -29,48 +29,59 @@ Droits de la ressource « Utilisateurs », réglés dans la page **Droits** :
 |---|---|
 | Lister | Voir la liste (sans ce droit, l'écran « introuvable » s'affiche) |
 | Consulter | Ouvrir la fiche d'un utilisateur |
+| Créer | Avec la gestion du personnel : inviter un collègue (onglet Administrateurs) |
 | Supprimer | Mettre un compte à la corbeille |
 | Supprimer définitivement | Onglet « Corbeille » |
 
-L'onglet « Administrateurs » n'est visible que des propriétaires et administrateurs, qui seuls peuvent
-aussi supprimer plusieurs comptes en une fois. Ils ont tous les droits.
+Les comptes Owner et Super Admin ont tous les droits.
 
 ## Ce que l'on voit à l'écran
 
-- Onglets : **Tout**, **Nouveaux** (comptes pas encore marqués comme vus), **Administrateurs** (comptes
-  du back-office) et **Corbeille**.
+- Onglets : **Tout**, **Nouveaux** (comptes pas encore marqués comme vus), **Administrateurs** (membres de
+  l'équipe, visible des postes autorisés), **Journaux d'audit** (traces des suppressions de comptes) et
+  **Corbeille**.
 - Un champ de recherche et un panneau de filtres avancés.
-- Un tableau : **Nom** (photo, nom de famille et prénom), **Email**, **Compte vérifié** (coche ou non),
-  **Créé le**, **Rôles** (renseignés dans l'onglet Administrateurs seulement) et **Actions**.
-- Affichage en tableau ou en vignettes (grand écran), tri par colonne, 20 lignes par écran (50 ou 75
-  au choix).
+- Un tableau : le compte (photo, nom, e-mail ou téléphone, mention de ban ou de suspension), la complétude du
+  profil, le contact, la date de création et la dernière connexion, et les **Actions**. L'onglet
+  Administrateurs ajoute les **postes** et l'état de la **double authentification**.
+- Affichage en tableau ou en vignettes, tri par colonne, 20 lignes par écran (50 ou 75 au choix) et bouton
+  **Exporter** (CSV ou Excel).
+- L'onglet **Journaux d'audit** liste, pour chaque compte supprimé : le nom et les coordonnées d'origine, qui a
+  demandé la suppression (le membre, un administrateur ou le système), la raison et la date.
 
 ## Rechercher / filtrer
 
-- Le champ « Rechercher par nom ou email ».
-- Les filtres avancés : nom, prénom, compte vérifié, date de création, date de modification, date de
-  naissance, sexe et plateforme d'inscription.
+- Le champ de recherche (nom, e-mail ou téléphone).
+- Les filtres avancés : nom, prénom, e-mail ou téléphone vérifié, dates de création et de modification, date
+  de naissance, sexe, pays et plateforme.
 - L'icône « Réinitialiser les filtres » remet la liste à zéro.
 
 ## Actions possibles
 
 - **Ouvrir la fiche** : clic sur la ligne ou icône « œil » (voir [Fiche d'un utilisateur](USERS_PREVIEW.FR.md)).
-- **Envoyer un e-mail** : l'icône d'envoi ouvre une fenêtre (adresse préremplie, objet, message). Le
-  message part depuis le site ; si l'adresse ne correspond à aucun compte, une erreur est affichée.
-- **Supprimer** : l'icône corbeille, après confirmation, met le compte à la corbeille.
-- **Supprimer plusieurs comptes** : cocher des lignes puis supprimer (réservé aux administrateurs).
+- **Envoyer un message** : l'icône d'envoi de la ligne ouvre une fenêtre (objet, message) ; le message part
+  vers le compte.
+- **Inviter un administrateur** : dans l'onglet Administrateurs, le bouton d'invitation demande l'e-mail et
+  le ou les postes à donner. La personne reçoit un lien pour créer son compte (voir
+  [Connexion et création de compte](../../auth/fr/AUTH.FR.md)). L'invitation exige la gestion du personnel.
+- **Supprimer** : l'icône corbeille, après confirmation, met le compte à la corbeille ; la suppression est
+  consignée dans les journaux d'audit.
+- **Supprimer plusieurs comptes** : cocher des lignes puis supprimer.
+- **Marquer comme vu** : retire des comptes de l'onglet « Nouveaux ».
 - **Corbeille** : chaque ligne ne propose que l'aperçu.
 
 ## Cas d'utilisation typiques
 
 1. **Accueillir les nouveaux inscrits** : onglet « Nouveaux ».
-2. **Retrouver un compte** par nom ou adresse e-mail.
-3. **Voir qui a accès au back-office** : onglet « Administrateurs » (colonne Rôles).
-4. **Écrire à un utilisateur** : icône d'envoi.
+2. **Retrouver un compte** par nom, e-mail ou téléphone.
+3. **Voir qui a accès au back-office** : onglet « Administrateurs » (postes et double authentification).
+4. **Inviter un collègue** avec les bons postes.
+5. **Retrouver qui a supprimé un compte** : onglet « Journaux d'audit ».
 
 ## Points d'attention / limites actuelles
 
-- Il est impossible de créer un utilisateur depuis cette page.
+- Il est impossible de créer un utilisateur autrement que par l'invitation d'un administrateur.
 - Il n'y a pas de bouton « Restaurer » pour un compte mis à la corbeille ; depuis la corbeille de cette
   liste, seul l'aperçu est possible.
-- Pour les comptes qui peuvent supprimer définitivement, la sélection multiple n'est pas proposée.
+- Les colonnes de profil (complétude, contact) viennent d'une application de covoiturage et peuvent rester
+  vides pour un portfolio.

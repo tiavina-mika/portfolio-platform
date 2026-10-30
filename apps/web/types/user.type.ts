@@ -1,3 +1,5 @@
+import Parse from 'parse';
+
 import { IUploadedFile } from './app.type';
 
 export interface IUserAttributes {

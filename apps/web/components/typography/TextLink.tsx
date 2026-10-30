@@ -129,6 +129,14 @@ export type TextLinkProps = {
    * @default text
    */
   variant?: 'text' | 'button';
+  /**
+   * click handler of the <a>
+   */
+  onClick?: () => void;
+  /**
+   * marks the link of the current page for assistive technologies
+   */
+  'aria-current'?: 'page' | undefined;
 } & VariantProps<typeof linkVariants> &
 LinkProps;
 
@@ -149,6 +157,8 @@ const TextLink = ({
   variant = 'text',
   translate = true,
   underline = true,
+  onClick,
+  'aria-current': ariaCurrent,
 }: TextLinkProps) => {
   const Component = translate ? TranslatedLink : Link;
   const ChildComponent = useChildSpan ? Text : Fragment;
@@ -164,8 +174,10 @@ const TextLink = ({
 
   return (
     <Component
+      aria-current={ariaCurrent}
       className={useChildSpan ? '' : className} // if no span as a direct child of <a>, then apply the className to the <a>
       href={href}
+      onClick={onClick}
       prefetch={prefetch ?? false}
       replace={replace}
       scroll={scroll}

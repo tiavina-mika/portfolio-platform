@@ -4,7 +4,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { FiTrash2 } from 'react-icons/fi';
 
-import { convertBytesToFileSize } from '@/utils/file.utils';
+import { convertBytesToFileSize } from '@/utils/_core/file.utils';
 
 import InputActionButton from './InputActionButton';
 
@@ -39,7 +39,7 @@ const FilesPreview = ({
                 primary={file.name + ' (' + convertBytesToFileSize(file.size, 'mb', true) + ')'}
                 sx={{
                   color: (file as any).path
-                    ? '#000'
+                    ? theme.palette.text.primary
                     : theme.palette.info.main,
                 }}
               />

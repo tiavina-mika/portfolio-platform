@@ -7,6 +7,9 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "dependencies": {
+    "dayjs": "^1.11.23"
+  },
   "devDependencies": {
     "@cspell/eslint-plugin": "^9.8.0",
     "@shared/eslint-config": "workspace:*",

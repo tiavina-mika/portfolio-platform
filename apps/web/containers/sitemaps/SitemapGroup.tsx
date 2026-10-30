@@ -8,6 +8,10 @@ type Props<T extends Record<string, any>> = {
   renderItemLinkText: (item: T) => string;
 };
 
+/**
+ * One group of the sitemap (projects, pages, articles, categories): a title, then every link in a
+ * list. A group without item renders nothing
+ */
 const SitemapGroup = <T extends Record<string, any>>({
   title,
   items,
@@ -17,34 +21,28 @@ const SitemapGroup = <T extends Record<string, any>>({
   if (!items.length) return null;
 
   return (
-    <div className={`
+    <section className={`
       flex flex-1 flex-col gap-3
       lg:gap-10
     `}
     >
-      <div>
-
-        <Title className="leading-6!" gutterBottom={false} level={3}>
-          {title}
-        </Title>
-      </div>
-      <div className={`
-        flex flex-col gap-1
+      <Title className="leading-6!" gutterBottom={false} level={2}>
+        {title}
+      </Title>
+      <ul className={`
+        flex list-none flex-col gap-1
         md:gap-3
       `}
       >
         {items.map((item: T, index: number) => (
-          <TextLink
-            underline
-            className="text-lg!"
-            href={renderItemUrl(item)}
-            key={item.id + index}
-          >
-            {renderItemLinkText(item)}
-          </TextLink>
+          <li key={item.id + index}>
+            <TextLink underline className="text-lg!" href={renderItemUrl(item)}>
+              {renderItemLinkText(item)}
+            </TextLink>
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </section>
   );
 };
 

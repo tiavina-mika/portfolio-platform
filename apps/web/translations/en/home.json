@@ -1,0 +1,35 @@
+{
+  "HomeHero": {
+    "loading": "Loading the introduction",
+    "error": "The introduction could not be loaded.",
+    "offline": "You are offline. The introduction will show as soon as the connection is back."
+  },
+  "HomeServices": {
+    "title": "Why me?",
+    "items": {
+      "1": {
+        "title": "Develop a Project from A to Z",
+        "description": "I handle all stages of development, including technology selection, technical architecture, development, database integration, and deployment to production environments."
+      },
+      "2": {
+        "title": "Strengthen, integrate, or lead a team",
+        "description": "Collaborate effectively within an existing team to enhance its skills, optimize processes, and ensure project success by contributing my deep technical expertise and a results-oriented approach."
+      },
+      "3": {
+        "title": "Potential CTO of a Startup",
+        "description": "As a potential CTO of a startup, I can define technology strategies and guide technical decisions to ensure the company's growth and innovation."
+      },
+      "4": {
+        "title": "Competitive Pricing",
+        "description": "I offer competitive pricing for startups and SMEs, providing expertise equivalent to premium services, while ensuring solutions tailored to specific needs and market requirements."
+      }
+    }
+  },
+  "HomeProjects": {
+    "description": "Since 2016, I have had the opportunity to work on a variety of projects, ranging from the development of dynamic websites to the creation of complex web applications."
+  },
+  "HomeContact": {
+    "title": "Let's talk together",
+    "description": "Do not hesitate to contact me. I am always open to discuss new projects, innovative ideas or new opportunities."
+  }
+}

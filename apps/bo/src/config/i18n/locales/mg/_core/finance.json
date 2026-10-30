@@ -1,0 +1,53 @@
+{
+  "overview": "Topimaso Fitantanam-bola",
+  "gmv": "GMV",
+  "gmvDescription": "Habetsaky vola nandoavan’ny mpandeha",
+  "netRevenue": "Vola azo",
+  "netRevenueDescription": "Komisiona tena notazonan’ny sehatra",
+  "gmvVsNetRevenuePerPeriod": "GMV sy vola azo",
+  "pendingOverdueDescription": "Mijanona mihoatra ny {{minutes}} minitra",
+  "overduePaymentsList": "Fandoavana miandry tara",
+  "noOverduePayments": "Tsy misy fandoavana miandry tara",
+  "unknownUser": "Mpampiasa tsy fantatra",
+  "platform": "Sehatra",
+  "table": {
+    "amount": "Vola",
+    "status": "Sata",
+    "createdAt": "Noforonina tamin'ny"
+  },
+  "recheck": {
+    "action": "Averina",
+    "done": "Naverina",
+    "stillPending": "Mbola tsy namaly ny mpikarakara momba ity fandoavana ity",
+    "settled": "Namaly ny mpikarakara: voaloa ny fandoavana"
+  },
+  "driverWallets": "Kaonty mpamily",
+  "wallet": {
+    "title": "Kaonty mpamily",
+    "pendingPenalty": "Sazy miandry",
+    "status": "Sata",
+    "active": "Mavitrika",
+    "suspended": "Voasazy",
+    "suspendedUntil": "Voasazy hatramin'ny",
+    "payoutHistory": "Tantaran'ny fandoavana — {{name}}",
+    "commission": "Kaomisiona",
+    "noPayouts": "Tsy misy fandoavana amin'ity mpamily ity",
+    "rating": "Naoty",
+    "lastPayout": "Fandoavana farany",
+    "neverPaid": "Mbola tsy nandray",
+    "suspendedUntilShort": "Hatramin'ny {{date}}",
+    "search": "Mpamily, finday, mailaka…",
+    "totals": {
+      "pendingPenalties": "Sazy miandry",
+      "suspendedDrivers": "Mpamily voasazy",
+      "trackedDrivers": "Mpamily arahina"
+    },
+    "filter": {
+      "rating": "Naotin’ny mpamily",
+      "ratingLow": "Latsaky ny 4",
+      "ratingHigh": "4 na mihoatra",
+      "minPenalty": "Sazy manomboka amin’ny ({{currency}})",
+      "maxPenalty": "Sazy hatramin’ny ({{currency}})"
+    }
+  }
+}

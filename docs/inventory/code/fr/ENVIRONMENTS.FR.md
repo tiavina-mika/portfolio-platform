@@ -20,11 +20,11 @@ Les variables de chaque app sont listées dans l'[inventaire](../../README.md#en
 
 ## Serveur
 
-- `NODE_ENV` choisit l'environnement. `IS_LOCAL`, `IS_PREPROD` et `IS_PROD` en sont dérivés dans `apps/server/src/utils/constants.ts`.
+- `NODE_ENV` choisit l'environnement. `IS_LOCAL`, `IS_PREPROD` et `IS_PROD` en sont dérivés dans `apps/server/src/constants/_core/constants.ts`.
 - Chargement du fichier en local : `.env.prod` quand la production est forcée, sinon `.env.preprod`. Dans un environnement déployé aucun fichier n'est lu : les variables sont posées sur l'hébergeur.
-- Au démarrage, `validateEnv()` (`envalid`) refuse de démarrer sans `NODE_ENV`, `PORT`, `MONGO_URL`, `PARSE_APP_ID`, `PARSE_MASTER_KEY`, `REST_API_KEY`, `SERVER_URL`, `WEBSITE_URL`, les trois variables `CRYPTO_*`, `BREVO_API_KEY` et les trois variables `CLOUDINARY_*`.
+- Au démarrage, `validateEnv()` (`apps/server/src/utils/_core/validateEnv.ts`, `envalid`) refuse de démarrer sans les variables obligatoires listées dans l'[inventaire](../../README.md#appsserver). En `preProduction` et `production`, il exige aussi `OWNERS_EMAILS` (au moins deux adresses distinctes), `MMSDUCK_API_KEY` et `WEBSITE_REVALIDATE_SECRET` ; ailleurs elles sont facultatives.
 - Le build du back-office est servi par Express depuis `clientBuild/bo/preprod` ou `clientBuild/bo/prod` selon l'environnement (`pnpm copy` les remplit, puis vérifie qu'aucune valeur `VITE_*` à allure de secret n'a fini dans le bundle).
-- Le cron de maintien en éveil tourne partout sauf en développement local.
+- Le ping de maintien en éveil tourne partout sauf en développement local et sur Cloud Run ; les jobs cron métier ne tournent qu'en production (voir les [tâches planifiées](SCHEDULED_JOBS.FR.md)).
 
 ## Web
 
@@ -36,5 +36,5 @@ Vite lit `.env.preprod` (`pnpm dev`, `build:preprod`) ou `.env.prod` (`build:pro
 
 ## Pièges
 
-- `FORCE_PROD` et `FORCE_PREPROD` dans `apps/server/src/utils/constants.ts` doivent rester à `false` au commit : ils servent à tester un environnement en local.
-- `OWNERS_EMAILS` et `ADMIN_EMAIL_SENDER` ne sont pas dans `validateEnv()` : le serveur démarre sans eux, mais aucun Owner n'est créé et les e-mails n'ont pas d'expéditeur.
+- `FORCE_PROD` et `FORCE_PREPROD` dans `apps/server/src/constants/_core/constants.ts` doivent rester à `false` au commit : ils servent à tester un environnement en local.
+- Un serveur déployé avec moins de deux adresses dans `OWNERS_EMAILS`, ou sans `MMSDUCK_API_KEY` ni `WEBSITE_REVALIDATE_SECRET`, ne démarre pas : un portfolio à un seul propriétaire doit lister une seconde adresse avant de déployer.

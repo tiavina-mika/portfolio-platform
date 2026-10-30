@@ -1,22 +1,21 @@
+import { PaymentServiceEnum } from '@shared/types';
 import { z } from 'zod';
 
-import { DEFAULT_LANGUAGE } from '@/config/i18next';
-import { getUploadBodyRequestSchema } from '@/validations/file.validation';
-import { DownloadFileInputSchema } from '@/validations/util.validation';
+import type { LanguageCode } from '@shared/constants';
 
-export type { Locale } from '@shared/types';
+import { uploadBodyRequestSchema } from '@/validations/_core/file.validations';
+import { downloadFileInputSchema } from '@/validations/_core/util.validations';
+
+export type Locale = LanguageCode;
 
 export interface IUploadedFile {
   publicId: string;
   url: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const schema = getUploadBodyRequestSchema(DEFAULT_LANGUAGE);
+export type IUploadInput = z.infer<typeof uploadBodyRequestSchema>;
 
-export type IUploadInput = z.infer<typeof schema>;
-
-export type DownloadFileInput = z.infer<typeof DownloadFileInputSchema>;
+export type DownloadFileInput = z.infer<typeof downloadFileInputSchema>;
 export class HttpException extends Error {
   public status: number;
 
@@ -27,4 +26,20 @@ export class HttpException extends Error {
     this.status = status;
     this.message = message;
   }
+}
+
+export type DBRights = 'create' | 'update' | 'get' | 'find' | 'delete' | 'destroy';
+
+export type Phone = {
+  code: string;
+  number: string;
+};
+
+export type PaymentService = `${PaymentServiceEnum}`;
+
+export enum EnvEnum {
+  DEV = 'development',
+  PROD = 'production',
+  TEST = 'test',
+  PREPROD = 'preProduction'
 }

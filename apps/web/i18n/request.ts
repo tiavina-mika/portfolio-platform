@@ -20,7 +20,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
    * Load all the translation files for the given locale
    * in the `translations` folder
    */
-  const translationFiles = ['app', 'article', 'common', 'form', 'zod'];
+  const translationFiles = ['app', 'article', 'common', 'form', 'home', 'project', 'zod'];
 
   const messages = await Promise.all(
     translationFiles.map(

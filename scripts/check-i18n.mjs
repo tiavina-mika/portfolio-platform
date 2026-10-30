@@ -28,7 +28,7 @@ const SOURCE_EXTENSIONS = ['.ts', '.tsx'];
  */
 const APPS = [
   { name: 'bo', localesDir: 'apps/bo/src/config/i18n/locales', sourceDir: 'apps/bo/src', checkUsage: true },
-  { name: 'server', localesDir: 'apps/server/src/locales', sourceDir: 'apps/server/src', checkUsage: false },
+  { name: 'server', localesDir: 'apps/server/src/config/i18n/locales', sourceDir: 'apps/server/src', checkUsage: false },
   { name: 'web', localesDir: 'apps/web/translations', sourceDir: 'apps/web', checkUsage: false },
 ];
 

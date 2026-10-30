@@ -1,0 +1,53 @@
+{
+  "overview": "Vue d'ensemble Finance",
+  "gmv": "GMV",
+  "gmvDescription": "Volume brut payé par les passagers",
+  "netRevenue": "Revenu net",
+  "netRevenueDescription": "Commission réellement retenue par la plateforme",
+  "gmvVsNetRevenuePerPeriod": "GMV vs revenu net",
+  "pendingOverdueDescription": "Bloqués depuis plus de {{minutes}} minutes",
+  "overduePaymentsList": "Paiements en attente en retard",
+  "noOverduePayments": "Aucun paiement en attente en retard",
+  "unknownUser": "Utilisateur inconnu",
+  "platform": "Plateforme",
+  "table": {
+    "amount": "Montant",
+    "status": "Statut",
+    "createdAt": "Créé le"
+  },
+  "recheck": {
+    "action": "Relancer",
+    "done": "Relancé",
+    "stillPending": "L'opérateur n'a pas encore répondu pour ce paiement",
+    "settled": "L'opérateur a répondu : le paiement est réglé"
+  },
+  "driverWallets": "Portefeuille conducteurs",
+  "wallet": {
+    "title": "Portefeuille conducteur",
+    "pendingPenalty": "Pénalité en attente",
+    "status": "Statut",
+    "active": "Actif",
+    "suspended": "Suspendu",
+    "suspendedUntil": "Suspendu jusqu'au",
+    "payoutHistory": "Historique des versements — {{name}}",
+    "commission": "Commission",
+    "noPayouts": "Aucun versement pour ce conducteur",
+    "rating": "Note",
+    "lastPayout": "Dernier versement",
+    "neverPaid": "Jamais versé",
+    "suspendedUntilShort": "Jusqu'au {{date}}",
+    "search": "Conducteur, téléphone, e-mail…",
+    "totals": {
+      "pendingPenalties": "Pénalités en attente",
+      "suspendedDrivers": "Conducteurs suspendus",
+      "trackedDrivers": "Conducteurs suivis"
+    },
+    "filter": {
+      "rating": "Note du conducteur",
+      "ratingLow": "Moins de 4",
+      "ratingHigh": "4 et plus",
+      "minPenalty": "Pénalité à partir de ({{currency}})",
+      "maxPenalty": "Pénalité jusqu'à ({{currency}})"
+    }
+  }
+}

@@ -21,6 +21,8 @@ const TextField = ({
     formState: { errors },
   } = useFormContext();
 
+  const messageId = `${name}-message`;
+
   return (
     <Controller
       control={control}
@@ -33,6 +35,8 @@ const TextField = ({
             </FieldLabel>
           )}
           <Input
+            aria-describedby={errors[name] ? messageId : undefined}
+            id={name}
             {...inputProps}
             {...field}
             error={!!errors[name]?.message}
@@ -44,7 +48,7 @@ const TextField = ({
           />
           {description && <FieldDescription>{description}</FieldDescription>}
           {errors[name] && (
-            <FieldError>{(errors as any)[name]?.message}</FieldError>
+            <FieldError id={messageId}>{(errors as any)[name]?.message}</FieldError>
           )}
         </Stack>
       )}

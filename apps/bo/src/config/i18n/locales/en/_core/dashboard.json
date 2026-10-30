@@ -1,0 +1,28 @@
+{
+  "thisWeek": "this week",
+  "today": "today",
+  "monthRevenue": "Month revenue",
+  "transactions": "transactions",
+  "updatedAt": "Updated at {{time}}",
+  "loadError": "Something went wrong. Please try again",
+  "alerts": "Alerts",
+  "failedPayments": "Failed payments",
+  "noFailedPayments": "No failed payment",
+  "seeAllPayments": "See all payments",
+  "unknownPayer": "Unknown payer",
+  "unresolvedReports": "Unresolved reports",
+  "noUnresolvedReports": "No report to handle",
+  "seeAllReports": "See all reports",
+  "recentActivity": "Recent activity",
+  "newUsers": "New users",
+  "noNewUsers": "No signup yet",
+  "seeAllUsers": "View all users",
+  "seeNewUsers_one": "See the new user",
+  "seeNewUsers_other": "See all {{count}} new users",
+  "partialNotice": "Some information is not displayed for your role.",
+  "noAccess": {
+    "title": "No information to display",
+    "description": "Your role gives no access to any dashboard data. Open one of the pages allowed for your role.",
+    "linksLabel": "Available pages"
+  }
+}

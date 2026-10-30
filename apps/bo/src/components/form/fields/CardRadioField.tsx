@@ -1,9 +1,9 @@
 import {
-  Box, FormHelperText, InputLabel, type SxProps, type Theme,
+  Box, FormHelperText, InputLabel, SxProps, Theme,
 } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { ICardRadio } from '@/types/app.type';
+import { ICardRadio } from '@/types/_core/app.type';
 
 import CardRadioInput from '../inputs/CardRadioInput';
 
@@ -29,7 +29,7 @@ const CardRadioField = ({
   return (
     <Box sx={sx}>
       {/* ----------- label ----------- */}
-      {label && <InputLabel sx={{ mb: 1, color: '#000' }}>{label}</InputLabel>}
+      {label && <InputLabel sx={{ mb: 1 }}>{label}</InputLabel>}
 
       <Controller
         control={control}

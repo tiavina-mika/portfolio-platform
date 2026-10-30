@@ -25,7 +25,7 @@
 
 ## Vue d'ensemble
 
-Les données vivent dans MongoDB et sont lues et écrites via Parse Server (`apps/server`). Les noms de collections partagés entre les apps sont dans `libs/shared-constants/src/collection.constants.ts` (`Article`, `Newsletter`, `Page`, `Category`, `Project`, `Contact`, `App`). `PageSection`, `_User` et `_Role` sont utilisés par leur nom dans le Cloud Code et ne font pas partie de cette constante. Une classe `Test` existe aussi, utilisée uniquement par les fonctions et jobs de test.
+Les données vivent dans MongoDB et sont lues et écrites via Parse Server (`apps/server`). Les noms de collections partagés entre les apps sont dans `libs/shared-constants/src/collection.constants.ts` (`Article`, `Newsletter`, `Page`, `Category`, `Project`, `Contact`, `App`) ; le serveur a aussi sa propre constante `collections` (`apps/server/src/constants/_core/constants.ts`) et les noms de classes du domaine sont dans `DOMAIN_COLLECTIONS` (`libs/shared-domain-constants`), voir [CORE_DOMAIN.FR.md](CORE_DOMAIN.FR.md). Le back-office générique ajoute des classes non détaillées ci-dessous (`Notification`, `Payment`, `Report`, `TicketMessage`, `UserAuditLog`, `RoleAuditLog`, `UserSession`, `Invitation`, `ContentVersion`, ...) : voir l'inventaire. Une classe `Test` existe aussi, utilisée uniquement par les fonctions et jobs de test.
 
 Les champs ci-dessous sont ceux que le code lit ou écrit (triggers du Cloud Code et interfaces `*Attributes` de `apps/bo`). Parse ajoute `objectId`, `createdAt`, `updatedAt` et `ACL` à chaque classe.
 
@@ -125,14 +125,15 @@ Réglages du site avec trois fichiers : `image`, `imageForDarkMode` et `cv` (ser
 
 ### Contact
 
-Un message envoyé depuis le formulaire de contact public.
+Un message envoyé depuis le formulaire de contact public ; c'est aussi le premier message d'un ticket de support traité dans le back-office (`TicketMessage` porte les réponses).
 
 | Champ | Contenu |
 |---|---|
 | `email`, `name`, `message` | saisis par le visiteur ; validés côté serveur (nom 120 caractères au plus, message 500) |
 | `locale` | locale du visiteur, transmise dans le contexte de l'enregistrement |
 | `user` | pointeur vers le `_User` ayant le même email, s'il existe |
-| `replied`, `repliedAt`, `repliedBy` | renseignés quand le back-office marque le message comme répondu |
+| `replied`, `repliedAt`, `repliedBy` | renseignés quand le back-office répond |
+| `reference`, `priority`, `subject`, `phone`, `source`, `lastMessageAt`, `seen` | champs de ticket remplis par le serveur |
 | `deleted` | suppression logique |
 
 ### Newsletter
@@ -143,7 +144,8 @@ Un abonnement à la newsletter.
 |---|---|
 | `email` | email de l'abonné |
 | `language` | locale dans laquelle les articles sont envoyés |
-| `active` | `false` une fois désabonné |
+| `confirmed`, `confirmationTokenHash` | double opt-in : un abonnement commence à `confirmed: false` et seul le hachage du jeton de confirmation est stocké |
+| `active` | `false` tant que non confirmé et une fois désabonné |
 | `unsubscribeAt`, `reason` | date et motif du désabonnement (`tooFrequent`, `notInterested`, `notRelevant`, `other`) |
 | `user` | pointeur vers le `_User` ayant le même email, s'il existe |
 | `deleted` | suppression logique |
@@ -157,7 +159,7 @@ Un utilisateur du back-office (`_User`). L'email sert aussi de nom d'utilisateur
 | Champ | Contenu |
 |---|---|
 | `email`, `username`, `password`, `firstName`, `lastName` | identité ; le mot de passe fait de 8 à 64 caractères |
-| `verified` | email confirmé |
+| `emailVerified`, `phoneVerified`, `phone` | contacts confirmés par un code (voir [AUTH.FR.md](AUTH.FR.md)) |
 | `verification` | `{ code, expiredAt }` : le code à 6 chiffres est stocké chiffré et valable 1 heure |
 | `platforms` | liste de `{ name, count, lastConnectedAt }` par plateforme de connexion (`web`, `bo`, `android`, `ios`) |
 | `locale` | langue préférée |
@@ -167,7 +169,7 @@ Un utilisateur du back-office (`_User`). L'email sert aussi de nom d'utilisateur
 
 ### Role
 
-Un rôle (`_Role`), champs Parse standard (`name`, `users`, `roles` pour les rôles parents) plus deux champs personnalisés : `rights` (par collection) et `ui` (zones du back-office). Voir [RIGHTS_ROLES.FR.md](RIGHTS_ROLES.FR.md).
+Un rôle (`_Role`), champs Parse standard (`name`, `users`, `roles` pour les rôles parents) plus les champs personnalisés `rights` (par collection), `ui` (zones du back-office), `countries` et un délai d'inactivité. Les noms de rôles sont `OWNER`, `SUPER_ADMIN`, `MANAGER`, ... Voir [RIGHTS_ROLES.FR.md](RIGHTS_ROLES.FR.md).
 
 ## Relations
 

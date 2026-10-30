@@ -48,7 +48,7 @@ const DropzoneField = ({
         <InputLabel
           label={label}
           required={required}
-          sx={{ mb: 1, color: '#000' }}
+          sx={{ mb: 1 }}
           tooltip={tooltip}
         />
       )}

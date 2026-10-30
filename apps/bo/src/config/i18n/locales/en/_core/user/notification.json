@@ -1,0 +1,298 @@
+{
+  "notifications": {
+    "from": "From",
+    "to": "To",
+    "type": "Type",
+    "seen": "Seen",
+    "deleted": "Deleted",
+    "status": "Status",
+    "notifications": "Notifications",
+    "notification": "Notification",
+    "noNotification": "No notification",
+    "unread": "Unread",
+    "read": "Read",
+    "receiverSeen": "Seen by the receiver",
+    "receiverSeenAt": "Seen by the receiver at",
+    "readByAllAt": "Read by everyone on",
+    "senderSearchPlaceholder": "Name or email of the sender",
+    "receiverSearchPlaceholder": "Name or email of the receiver",
+    "types": {
+      "ride": "Ride",
+      "request": "Request",
+      "rating": "Rating",
+      "account": "Account",
+      "rate": "Review",
+      "ticket": "Support ticket",
+      "vehicle": "Vehicle",
+      "announcement": "Announcement"
+    },
+    "statusLabels": {
+      "RIDE": {
+        "PUBLISHED": "Ride published",
+        "BOOKED": "Ride booked",
+        "FULL": "Ride full",
+        "CANCELED": "Ride canceled",
+        "IN_PROGRESS": "Ride in progress",
+        "AWAITING_CONFIRMATION": "Ride awaiting confirmation",
+        "COMPLETED": "Ride completed",
+        "ARCHIVED": "Ride archived",
+        "RIDE_PAYOUT_RELEASED": "Driver payout released",
+        "DRIVER_CANCELLATION_PENALTY": "Driver cancellation penalty",
+        "RIDE_DEPARTURE_REMINDER": "Departure reminder",
+        "RIDE_COMPLETION_REMINDER": "Ride completion reminder",
+        "RIDE_COMPLETION_CHECK": "Did the ride take place?",
+        "RIDE_AUTO_COMPLETED": "Ride closed automatically",
+        "RIDE_AUTO_COMPLETED_DRIVER": "Ride closed automatically (driver)",
+        "SUSPENSION_LIFTED": "Suspension lifted",
+        "RIDE_UPDATED": "Ride changed"
+      },
+      "REQUEST": {
+        "PENDING": "Booking payment in progress",
+        "CONFIRMED": "Booking confirmed",
+        "CANCELED_BY_PASSENGER": "Booking canceled",
+        "LATE_PAYMENT_REFUNDED": "Late payment refunded",
+        "REQUEST_REFUND_PAID": "Refund sent",
+        "CANCELED_BY_DRIVER": "Request canceled by driver",
+        "COMPLETED": "Request completed",
+        "PAYMENT_FAILED": "Request payment failed",
+        "NO_SHOW": "Passenger declared absent",
+        "CONTESTED_NO_SHOW": "Absence contested",
+        "REQUEST_PAYMENT_SUCCEEDED": "Request payment succeeded",
+        "PASSENGER_CANCELLATION_SUSPENSION": "Passenger suspension (cancellations)",
+        "DRIVER_NO_SHOW_REPORTED": "Driver absence reported",
+        "DRIVER_NO_SHOW_REPLIED": "Driver replied to the report",
+        "DRIVER_NO_SHOW_CONFIRMED": "Driver absence confirmed",
+        "DRIVER_NO_SHOW_REJECTED": "Driver absence report rejected",
+        "PASSENGER_NO_SHOW_CONFIRMED": "Passenger absence confirmed",
+        "PASSENGER_NO_SHOW_REJECTED": "Passenger absence rejected"
+      },
+      "ACCOUNT": {
+        "ACCOUNT_BANNED": "Account banned",
+        "ACCOUNT_SUSPENDED": "Account suspended (reports)",
+        "ACCOUNT_UNBANNED": "Account reactivated",
+        "SUSPENSION_LIFTED": "Suspension lifted",
+        "PASSENGER_CANCELLATION_SUSPENSION": "Passenger suspension (cancellations)",
+        "NEW_DEVICE_LOGIN": "New sign-in",
+        "SUPPORT_SESSION_ENDED": "Support session ended",
+        "PASSWORD_RESET_DELAYED": "Password change held back"
+      },
+      "RATE": {
+        "COMPLETED": "New review",
+        "RATING_INVITATION": "Invitation to rate",
+        "RATING_REMINDER": "Reminder to rate",
+        "RATING_REPLY": "Reply to a review"
+      },
+      "TICKET": {
+        "newReplyFromAgent": "Support reply",
+        "TICKET_RESOLVED": "Ticket resolved",
+        "REPORT_RECEIVED": "Report received",
+        "REPORT_RESOLVED": "Report handled"
+      },
+      "VEHICLE": {
+        "VEHICLE_VERIFIED": "Vehicle verified",
+        "VEHICLE_DOCUMENT_REJECTED": "Vehicle document rejected",
+        "VEHICLE_DOCUMENT_EXPIRING_SOON": "Vehicle document expiring soon",
+        "VEHICLE_DOCUMENT_EXPIRED": "Vehicle document expired"
+      },
+      "ANNOUNCEMENT": {
+        "ANNOUNCEMENT": "Announcement"
+      }
+    },
+    "resendPush": "Resend the notification",
+    "resent_one": "Notification sent again to 1 recipient.",
+    "resent_other": "Notification sent again to {{count}} recipients.",
+    "resendFailed": "Nothing was sent again: this channel cannot be rebuilt for this notification, or it is no longer available.",
+    "search": "Search a message, a sender (name or email) or a status code",
+    "noMessage": "No message",
+    "category": "Category",
+    "readRate": "Read rate",
+    "readRatio": "{{seen}} / {{total}} · {{percent}}%",
+    "sentBetween": "Sent between",
+    "sentAt": "Sent",
+    "statusCode": "Status code",
+    "sendType": "Send type",
+    "sender": "Sender",
+    "senderName": "Sender name",
+    "recipient": "Recipient",
+    "recipients": "Recipients",
+    "recipientCount": "Recipient count",
+    "recipientsWithCount_one": "{{count}} recipient",
+    "recipientsWithCount_other": "{{count}} recipients",
+    "recipientsWithRemaining": "{{count}} recipients · + {{remaining}}",
+    "moreRecipients_one": "+ {{count}} more recipient",
+    "moreRecipients_other": "+ {{count}} more recipients",
+    "system": "System",
+    "systemInitials": "SY",
+    "automatedSend": "Automated send",
+    "channelsLabel": "Channels",
+    "channelsUntracked": "Not tracked",
+    "channelBreakdown": "{{failed}} failed · {{pending}} pending · {{notSent}} not sent",
+    "deliveryPerRecipient": "Delivery per recipient",
+    "resendTo": "Resend to {{name}}",
+    "resendFailures": "Resend failures",
+    "resendFailuresWithCount_one": "Resend the failed send",
+    "resendFailuresWithCount_other": "Resend the {{count}} failed sends",
+    "resendUnreadWithCount_one": "Resend to the recipient who has not opened it",
+    "resendUnreadWithCount_other": "Resend to the {{count}} recipients who have not opened it",
+    "failedDeliveriesResent_one": "1 resend started ({{channels}}).",
+    "failedDeliveriesResent_other": "{{count}} resends started ({{channels}}).",
+    "noFailedDeliveryToResend": "No failed send to resend.",
+    "copyPayload": "Copy the references",
+    "readStates": {
+      "unread": "Unread",
+      "partial": "Partly read",
+      "read": "Fully read"
+    },
+    "sendTypes": {
+      "single": "Single recipient",
+      "multiple": "Multiple recipients"
+    },
+    "senderTypes": {
+      "system": "System",
+      "user": "An account"
+    },
+    "channels": {
+      "push": "Push",
+      "email": "Email",
+      "sms": "SMS"
+    },
+    "channelStatuses": {
+      "pending": {
+        "label": "Pending",
+        "description": "The message is queued; delivery has not been attempted yet."
+      },
+      "sent": {
+        "label": "Sent",
+        "description": "The message was handed over to the channel provider."
+      },
+      "failed": {
+        "label": "Failed",
+        "description": "The provider rejected the send. A retry is possible."
+      },
+      "no_device": {
+        "label": "No device",
+        "description": "No device registered to receive the push."
+      },
+      "no_template": {
+        "label": "Missing template",
+        "description": "No message template for this channel: fix it in the configuration."
+      },
+      "disabled_by_user": {
+        "label": "Disabled by the user",
+        "description": "The recipient turned this channel off in their preferences."
+      },
+      "no_email": {
+        "label": "No email address",
+        "description": "No email address on the recipient's account."
+      },
+      "no_phone": {
+        "label": "No phone number",
+        "description": "No phone number on the recipient's account."
+      },
+      "rate_limited": {
+        "label": "Daily cap reached",
+        "description": "The recipient already received their maximum of fallback SMS over 24 hours: this one was not sent."
+      }
+    },
+    "payloadKeys": {
+      "ride": "Ride",
+      "request": "Request",
+      "rating": "Review",
+      "ticket": "Ticket",
+      "vehicle": "Vehicle"
+    },
+    "id": "ID",
+    "channel": "Channel",
+    "delivery": "Delivery",
+    "relatedEntity": "Related entity",
+    "noRecipient": "No recipient",
+    "seenOutOf": "{{seen}} of {{total}} seen",
+    "senderToRecipients": "{{sender}} → {{recipients}}",
+    "channelFailures_one": "{{count}} {{channel}} failure",
+    "channelFailures_other": "{{count}} {{channel}} failures",
+    "sentColumn": "Sent",
+    "seenColumn": "Seen",
+    "toHandle": "To handle",
+    "lastAttempt": "Last attempt",
+    "retryChannel": "Retry {{channel}}",
+    "statusCount": "{{count}} {{label}}",
+    "seenAtColumn": "Seen at",
+    "providerAnswer": "Provider response: {{answer}}",
+    "providerErrorWithCode": "{{message}} (code {{code}})",
+    "smsCost": {
+      "title": "Fallback SMS — last {{days}} days",
+      "description": "The SMS sent as a fallback for important events, day by day. Every SMS the carrier accepts is billed: this tracking is what decides whether to widen the list of events sent by SMS.",
+      "date": "Day",
+      "sent": "Sent",
+      "rateLimited": "Held back (cap)",
+      "failed": "Refused",
+      "cost": "Estimated cost",
+      "totalSent": "SMS sent",
+      "totalCost": "Estimated cost",
+      "totalRateLimited": "Held back by the cap",
+      "totalFailed": "Refused by the carrier",
+      "empty": "No fallback SMS over the period",
+      "emptyDescription": "No fallback SMS was sent, held back or refused over this period."
+    },
+    "smsCostNotice": "Every SMS sent again is billed by the carrier.",
+    "confirmResendTitle": "Resend the failures?",
+    "confirmResendDescription": "To resend: {{channels}}.",
+    "confirmResendAllTitle": "Resend the notification to everyone?",
+    "confirmResendAllDescription": "The push will go out again to the {{count}} recipients, including those who already received or read it.",
+    "readAt": "Read on {{date}}",
+    "clickToResend": "Click to resend.",
+    "providerAnswersLabel": "Provider response",
+    "channelAnswer": "{{channel}}: {{answer}}",
+    "resendsLabel": "Resends",
+    "resendsSummary_one": "1 resend, on {{date}}",
+    "resendsSummary_other": "{{count}} resends, the last on {{date}}",
+    "resendReasons": {
+      "all_one": "Sent again to the recipient ({{channel}})",
+      "all_other": "Sent again to the {{count}} recipients ({{channel}})",
+      "unread_one": "Reminder to the recipient who had not opened it ({{channel}})",
+      "unread_other": "Reminder to the {{count}} recipients who had not opened it ({{channel}})",
+      "failed_one": "Failed send retried ({{channel}})",
+      "failed_other": "{{count}} failed sends retried ({{channel}})",
+      "recipient_one": "Sent again to one recipient ({{channel}})",
+      "recipient_other": "Sent again to {{count}} recipients ({{channel}})"
+    },
+    "events": {
+      "created": "Created",
+      "receiverSeen": "Read by every recipient",
+      "deleted": "Moved to the recycle bin",
+      "undeleted": "Restored from the recycle bin"
+    },
+    "broadcast": {
+      "broadcast": "Broadcast",
+      "title": "Broadcast an announcement",
+      "subtitle": "Write a message to every member, or to the members of one city, in all three languages.",
+      "segment": "Recipients",
+      "segments": {
+        "all": "Every member",
+        "city": "The members of one city"
+      },
+      "city": "City",
+      "cityHelper": "The city as it appears in the address the member typed on their profile.",
+      "messageTitle": "Title",
+      "messageBody": "Message",
+      "languageTab": "English",
+      "audience": "Estimated recipients",
+      "audienceCount_one": "{{count}} member",
+      "audienceCount_other": "{{count}} members",
+      "audienceUnknown": "Check the recipients before sending",
+      "checkAudience": "Check the recipients",
+      "send": "Send the announcement",
+      "confirmTitle": "Confirm the send",
+      "confirmDescription": "This announcement will go to {{count}} member(s). It cannot be cancelled or edited once sent.",
+      "confirmCheckbox": "I have re-read the message and the recipients",
+      "confirmAction": "Send for good",
+      "sent_one": "Announcement sent to {{count}} member",
+      "sent_other": "Announcement sent to {{count}} members",
+      "history": "Latest announcements",
+      "noHistory": "No announcement has been broadcast yet",
+      "sentBy": "Sent by",
+      "audienceLabel": "Audience",
+      "preview": "Preview"
+    }
+  }
+}

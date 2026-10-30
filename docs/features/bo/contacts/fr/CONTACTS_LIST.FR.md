@@ -1,4 +1,4 @@
-# Cas d'utilisation — Contacts (Liste)
+# Cas d'utilisation — Contacts (Boîte de réception)
 
 ## Table des matières
 
@@ -13,13 +13,14 @@
 
 ## Où trouver cette page
 
-Menu de gauche → **Contacts**, ou carte **Contacts** de l'écran d'accueil, ou l'icône de message avec
-pastille de nombre en haut à droite de l'écran (elle ouvre directement l'onglet « Nouveaux »).
+Menu de gauche → groupe **Communauté** → **Contacts**, ou la ligne « contacts » de la cloche de la barre du
+haut. Adresse : `/contacts`.
 
 ## À quoi sert cette page
 
-Elle rassemble les messages envoyés par les visiteurs depuis le formulaire de contact du site public.
-On y lit les messages, on y répond et on supprime ceux qui ne servent plus.
+C'est la boîte de réception des demandes envoyées par les visiteurs depuis le formulaire de contact du site
+public. Chaque message devient une **demande** (un ticket) qu'on lit, à laquelle on répond, qu'on classe par
+priorité, qu'on assigne à un collègue et qu'on clôt une fois traitée.
 
 ## Qui peut l'utiliser
 
@@ -27,52 +28,51 @@ Droits de la ressource « Contact », réglés dans la page **Droits** :
 
 | Droit | Ce qu'il permet ici |
 |---|---|
-| Lister | Voir la liste (sans ce droit, l'écran « introuvable » s'affiche) |
-| Supprimer | Mettre un message à la corbeille |
-| Supprimer définitivement | Onglet « Corbeille » et destruction définitive |
+| Lister | Voir la boîte (sans ce droit, l'écran « introuvable » s'affiche) |
+| Modifier | Répondre, changer le statut ou la priorité, assigner |
+| Supprimer | Mettre une demande à la corbeille |
+| Supprimer définitivement | Voir la corbeille et détruire définitivement |
 
-Ouvrir un message pour y répondre n'est conditionné par aucun droit supplémentaire à l'écran. Les
-propriétaires et administrateurs ont tous les droits.
+Les comptes Owner et Super Admin ont tous les droits.
 
 ## Ce que l'on voit à l'écran
 
-- Des onglets : **Tout**, **Nouveaux** (messages pas encore marqués comme vus) et **Corbeille**
-  (réservé aux comptes pouvant supprimer définitivement).
-- Un champ de recherche et un panneau de filtres avancés.
-- Un tableau : **Nom**, **Email**, **Message** (les 100 premiers caractères), **Répondu** (coche ou non),
-  **Date d'envoi** (avec l'heure) et **Actions**. Si l'expéditeur a un compte, c'est son nom de compte
-  qui est affiché.
-- Affichage en tableau ou en vignettes (grand écran), tri par colonne (par défaut les plus récemment
-  modifiés d'abord), 20 lignes par écran (50 ou 75 au choix).
+Une disposition en deux colonnes : à gauche la **file des demandes**, à droite la **conversation** de la
+demande ouverte (voir [Lire et répondre à une demande](CONTACTS_PREVIEW.FR.md)).
 
-Un clic sur une ligne ouvre le message (voir [Lire et répondre à un message](CONTACTS_PREVIEW.FR.md)).
+La file comporte :
+
+- des filtres de statut avec le nombre de demandes : **Tout**, **Ouvert**, **En cours**, **Résolu**,
+  **Fermé**, et **Corbeille** pour les comptes pouvant supprimer définitivement ;
+- un champ de recherche (numéro, nom, e-mail, téléphone ou message) et un panneau de filtres ;
+- pour chaque demande : le demandeur, le sujet, un extrait, le statut, la priorité, la provenance et la
+  dernière activité. Une demande non lue est mise en évidence ;
+- le nombre de demandes et de demandes non lues, la pagination et un bouton **Exporter**.
 
 ## Rechercher / filtrer
 
-- Le champ de recherche (« Nom, email ou message ») cherche dans ces trois informations.
-- Les filtres avancés : répondu ou non, date de création, date de modification, nom, e-mail.
-- L'icône « Réinitialiser les filtres » remet la liste à zéro.
+- Le champ de recherche tape-et-cherche.
+- Le panneau de filtres : date d'ajout, priorité, provenance (formulaire du site ou application), sujet et
+  pays, avec le nombre de demandes correspondantes et un bouton pour réinitialiser.
 
 ## Actions possibles
 
-- **Répondre** : l'icône d'avion en papier de la ligne (ou un clic sur la ligne) ouvre le message.
-- **Supprimer** : l'icône corbeille de la ligne, après confirmation, met le message à la corbeille.
-- **Sélection multiple** : en cochant des lignes, on peut les **marquer comme vus ou non vus** (dans
-  l'onglet « Nouveaux » : « Marquer comme vu »), ou les **supprimer** d'un coup.
-- **Corbeille** : chaque ligne propose « Supprimer » (définitif, irréversible).
+- **Ouvrir une demande** : clic sur une ligne (chaque demande a sa propre adresse).
+- **Supprimer** une demande (corbeille) ou la **détruire définitivement** depuis la corbeille.
+- **Exporter** la file telle qu'elle est filtrée, en CSV ou Excel, sans limite de page.
+- Pour répondre, changer le statut, la priorité ou l'assignation : voir la page suivante.
 
 ## Cas d'utilisation typiques
 
-1. **Traiter les nouveaux messages** : onglet « Nouveaux », ouvrir chaque message et répondre.
-2. **Retrouver un échange** : taper le nom ou l'adresse de la personne dans la recherche.
-3. **Voir ce qui reste sans réponse** : filtre avancé « Répondu » sur « non ».
-4. **Faire le ménage** : cocher les messages traités et les supprimer.
+1. **Traiter les nouvelles demandes** : filtre « Ouvert », ouvrir chaque demande et répondre.
+2. **Retrouver un échange** : taper le nom, l'e-mail ou le numéro de la demande.
+3. **Voir ce qui est urgent** : filtrer sur la priorité.
+4. **Faire le ménage** : supprimer les demandes traitées.
 
 ## Points d'attention / limites actuelles
 
-- Ouvrir un message ne le marque pas comme vu : il faut le faire par la sélection multiple. Tant que ce
-  n'est pas fait, il reste compté dans la pastille en haut de l'écran.
-- Pour les comptes qui peuvent supprimer définitivement, la sélection multiple n'est pas proposée.
-- Il n'existe pas de bouton « Restaurer » pour un message mis à la corbeille.
-- Il est impossible de créer un message depuis le back-office : la liste ne se remplit que par le
-  formulaire du site.
+- Il n'existe pas de bouton « Restaurer » pour une demande mise à la corbeille.
+- Il est impossible de créer une demande depuis le back-office : la file ne se remplit que par le formulaire
+  du site.
+- Les mentions « Application », « SOS » et plusieurs sujets (remboursement, trajet, véhicule…) viennent
+  d'une autre application et ne concernent pas le portfolio.

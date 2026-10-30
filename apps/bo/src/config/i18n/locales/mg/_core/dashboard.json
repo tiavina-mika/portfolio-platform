@@ -1,0 +1,28 @@
+{
+  "thisWeek": "ity herinandro ity",
+  "today": "androany",
+  "monthRevenue": "Vola niditra ity volana ity",
+  "transactions": "fandaniam-bola",
+  "updatedAt": "Nohavaozina tamin'ny {{time}}",
+  "loadError": "Nisy olana. Andramo indray azafady",
+  "alerts": "Fampitandremana",
+  "failedPayments": "Fandoavam-bola tsy nahomby",
+  "noFailedPayments": "Tsy misy fandoavam-bola tsy nahomby",
+  "seeAllPayments": "Hijery ny fandoavam-bola rehetra",
+  "unknownPayer": "Mpandoa tsy fantatra",
+  "unresolvedReports": "Tatitra mbola misokatra",
+  "noUnresolvedReports": "Tsy misy tatitra hokarakaraina",
+  "seeAllReports": "Hijery ny tatitra rehetra",
+  "recentActivity": "Hetsika farany",
+  "newUsers": "Mpampiasa vaovao",
+  "noNewUsers": "Tsy mbola nisy fisoratana anarana",
+  "seeAllUsers": "Hijery ny mpampiasa rehetra",
+  "seeNewUsers_one": "Hijery ilay mpampiasa vaovao",
+  "seeNewUsers_other": "Hijery ireo mpampiasa vaovao {{count}}",
+  "partialNotice": "Misy fampahalalana tsy aseho ho an'ny andraikitrao.",
+  "noAccess": {
+    "title": "Tsy misy fampahalalana aseho",
+    "description": "Tsy mahazo mijery angona amin'ny kitapom-pitantanana ny andraikitrao. Sokafy ny iray amin'ireo pejy navela ho an'ny andraikitrao.",
+    "linksLabel": "Pejy azo sokafana"
+  }
+}

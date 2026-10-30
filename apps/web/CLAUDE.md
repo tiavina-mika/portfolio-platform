@@ -41,13 +41,14 @@ pnpm format               # prettier --write
 ```
 app/
 ├── [locale]/
-│   ├── articles/     # Article listing + detail
+│   ├── blog/         # Blog listing + detail (/articles redirects here)
 │   ├── projects/     # Project listing + detail
-│   ├── contact-me/   # Contact page
-│   ├── newsletter/   # Newsletter subscription
+│   ├── contact/      # Contact page (/contact-me redirects here)
+│   ├── newsletter/   # Double opt-in confirmation and unsubscribe
 │   ├── sitemap/      # Human sitemap
-│   └── [slug]/       # Dynamic CMS pages
-├── api/              # Route handlers
+│   ├── pages/        # CMS pages sitemap
+│   └── [slug]/       # Dynamic CMS pages, nested by category (/[slug]/[subcategory]...)
+├── api/              # Route handlers (revalidate, og, download-cv)
 components/            # Generic reusable UI components
 containers/            # Domain / page containers (articles, projects, home, contact…)
 hooks/                 # Custom React hooks

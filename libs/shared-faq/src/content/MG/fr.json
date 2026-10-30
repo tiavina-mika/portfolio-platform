@@ -1,0 +1,642 @@
+{
+  "themes": [
+    {
+      "id": "trips",
+      "title": "Trajets et réservation",
+      "items": [
+        {
+          "id": "find-ride",
+          "question": "Comment trouver un trajet ?",
+          "answer": "La recherche d’un trajet se fait dans l’application 1lalana. Le site présente le service et des conseils pour bien voyager."
+        },
+        {
+          "id": "book-on-website",
+          "question": "Puis-je réserver une place depuis le site ?",
+          "answer": "Non. La réservation et le paiement se font uniquement dans l’application 1lalana."
+        },
+        {
+          "id": "driver-approval",
+          "question": "Dois-je attendre la validation du conducteur ?",
+          "answer": "Non. Dès que le paiement est confirmé, la place est à vous. Le conducteur n’a rien à valider : il reçoit une notification avec votre point de montée et de descente."
+        },
+        {
+          "id": "last-seat",
+          "question": "Que se passe-t-il si deux personnes visent la dernière place ?",
+          "answer": "Les places sont retenues dès que vous validez, avant le paiement. La seconde personne est informée tout de suite, sans avoir été débitée."
+        },
+        {
+          "id": "partial-ride",
+          "question": "Puis-je ne payer qu’une partie du trajet ?",
+          "answer": "Oui, quand le trajet propose plusieurs arrêts : vous choisissez votre point de montée et de descente et ne payez que la portion parcourue."
+        },
+        {
+          "id": "fixed-contribution",
+          "question": "La contribution demandée est-elle fixe ?",
+          "answer": "Le conducteur fixe son prix par place. Vous payez ce prix multiplié par le nombre de places, sans frais ajoutés. Les montants affichés dans l’application font foi."
+        }
+      ]
+    },
+    {
+      "id": "luggage",
+      "title": "Bagages et préférences",
+      "items": [
+        {
+          "id": "luggage-levels",
+          "question": "Quels bagages puis-je emporter ?",
+          "answer": "Le conducteur indique le niveau de bagages accepté pour chaque trajet.",
+          "table": {
+            "head": ["Niveau", "Pour le passager"],
+            "rows": [
+              ["Aucun", "Uniquement ce qu’il garde sur lui."],
+              ["Cabine", "Un sac ou un petit bagage, aux pieds ou sur les genoux."],
+              ["Soute", "Une valise standard dans le coffre."],
+              ["Porte-bagages", "Des bagages fixés sur le toit."],
+              ["Volumineux", "Un gros colis, une malle, des marchandises."]
+            ]
+          }
+        },
+        {
+          "id": "missing-luggage-info",
+          "question": "Que veut dire l’absence d’information sur les bagages ?",
+          "answer": "Que le conducteur n’a rien promis. Cela ne signifie pas « pas de bagage » : seul le niveau « Aucun » le dit."
+        },
+        {
+          "id": "large-luggage-search",
+          "question": "Puis-je chercher un trajet qui accepte les grands bagages ?",
+          "answer": "Oui, dans l’application : le filtre « Bagages acceptés » retient les trajets en soute ou volumineux."
+        },
+        {
+          "id": "animals",
+          "question": "Les animaux sont-ils acceptés ?",
+          "answer": "Cela dépend du véhicule : le conducteur déclare « animaux acceptés » parmi ses équipements, et l’information est affichée sur le trajet."
+        },
+        {
+          "id": "smoking-music",
+          "question": "Peut-on fumer ou écouter de la musique ?",
+          "answer": "Les équipements « non-fumeur » et « musique » sont déclarés par le conducteur pour son véhicule et regroupés dans les préférences du trajet."
+        },
+        {
+          "id": "vehicle-equipment",
+          "question": "Quels équipements un véhicule peut-il afficher ?",
+          "answer": "Climatisation, grand coffre, prises USB, musique, animaux acceptés, non-fumeur et « maximum 2 à l’arrière »."
+        }
+      ]
+    },
+    {
+      "id": "during",
+      "title": "Pendant le trajet",
+      "items": [
+        {
+          "id": "warn-relative",
+          "question": "Comment prévenir un proche ?",
+          "answer": "Depuis l’application, créez un lien « prévenir un proche ». Votre proche l’ouvre sans compte et voit le départ, l’arrivée et les horaires, le prénom du conducteur avec l’initiale de son nom, et le véhicule : marque, modèle, couleur et plaque complète."
+        },
+        {
+          "id": "live-position",
+          "question": "Mon proche voit-il la position du véhicule en direct ?",
+          "answer": "Non. La page indique l’état du trajet et l’heure de sa dernière mise à jour. Elle ne montre ni position en temps réel, ni prix, et ne permet pas de réserver."
+        },
+        {
+          "id": "link-duration",
+          "question": "Combien de temps le lien reste-t-il actif ?",
+          "answer": "Jusqu’à 24 heures après l’heure d’arrivée estimée. Ensuite, la page indique que le lien n’est plus actif, comme pour un lien annulé."
+        },
+        {
+          "id": "share-offer",
+          "question": "Comment partager un trajet pour trouver des passagers ?",
+          "answer": "Un conducteur peut partager une page d’offre : le trajet, un prix par place indicatif et les places libres, sans la plaque. Pour réserver, la page renvoie vers l’application."
+        },
+        {
+          "id": "sos-button",
+          "question": "À quoi sert le bouton SOS ?",
+          "answer": "Il envoie un SMS au contact d’urgence enregistré dans votre profil. Conducteur et passagers du trajet peuvent l’utiliser, jusqu’à 2 heures après l’heure d’arrivée estimée."
+        },
+        {
+          "id": "emergency-contact",
+          "question": "Qu’est-ce que le contact d’urgence ?",
+          "answer": "Une personne de confiance enregistrée dans votre profil, avec son lien avec vous. C’est elle que le SOS prévient et que le support appelle si besoin."
+        },
+        {
+          "id": "early-start",
+          "question": "Que se passe-t-il si le conducteur démarre en avance ?",
+          "answer": "Il peut déclarer le départ à partir de 30 minutes avant l’heure prévue. Dès que le départ est déclaré, ni le conducteur ni les passagers ne peuvent plus annuler."
+        }
+      ]
+    },
+    {
+      "id": "payment",
+      "title": "Paiement et versement",
+      "items": [
+        {
+          "id": "how-to-pay",
+          "question": "Comment payer une réservation ?",
+          "answer": "Par mobile money, depuis l’application, avec le numéro de téléphone du paiement."
+        },
+        {
+          "id": "extra-fees",
+          "question": "Y a-t-il des frais en plus du prix ?",
+          "answer": "Non. Aucun frais n’est ajouté côté passager. La commission de 1lalana est prélevée sur le conducteur, au moment de son versement."
+        },
+        {
+          "id": "payment-failed",
+          "question": "Que se passe-t-il si le paiement échoue ?",
+          "answer": "La réservation n’est pas confirmée et les places repartent immédiatement en vente. Vous pouvez réserver à nouveau depuis l’application."
+        },
+        {
+          "id": "driver-payout-time",
+          "question": "Quand le conducteur est-il payé ?",
+          "answer": "24 heures après la fin du trajet. Pendant ce délai, l’argent reste retenu par la plateforme, le temps de signaler un problème, par exemple un conducteur qui n’est pas venu."
+        },
+        {
+          "id": "driver-forgets-end",
+          "question": "Que se passe-t-il si le conducteur oublie de terminer le trajet ?",
+          "answer": "La plateforme relance puis clôture à sa place, à partir de l’heure d’arrivée estimée.",
+          "table": {
+            "head": ["Délai", "Ce qui se passe"],
+            "rows": [
+              ["2 heures", "Premier rappel au conducteur."],
+              ["24 heures", "Second rappel. Les passagers sont invités à dire si le trajet a eu lieu."],
+              ["72 heures", "Clôture automatique : les 24 heures de contestation s’ouvrent, puis le conducteur est payé si personne ne signale de problème."]
+            ]
+          }
+        },
+        {
+          "id": "receipts",
+          "question": "Où retrouver mes reçus ?",
+          "answer": "Dans l’historique des paiements de l’application."
+        }
+      ]
+    },
+    {
+      "id": "commission",
+      "title": "Commission",
+      "items": [
+        {
+          "id": "how-1lalana-earns",
+          "question": "Comment 1lalana gagne-t-elle de l’argent ?",
+          "answer": "Par une commission prélevée sur le conducteur, une seule fois, à la fin de chaque trajet terminé. C’est l’unique revenu direct de 1lalana. Le passager ne paie aucun frais en plus du prix de la place."
+        },
+        {
+          "id": "who-pays-commission",
+          "question": "Qui paie la commission ?",
+          "answer": "Le conducteur. Elle est prélevée une seule fois, à la fin du trajet, sur le montant total payé par les passagers. C’est l’unique revenu direct de 1lalana."
+        },
+        {
+          "id": "commission-rate",
+          "question": "Quel est le taux de commission ?",
+          "answer": "Il dépend du nombre de trajets terminés par le conducteur depuis le début du mois civil.",
+          "table": {
+            "head": ["Trajets terminés ce mois-ci", "Taux"],
+            "rows": [
+              ["1 à 5", "15 %"],
+              ["6 à 15", "13 %"],
+              ["16 à 30", "11 %"],
+              ["31 et plus", "10 %"]
+            ]
+          }
+        },
+        {
+          "id": "decreasing-rate",
+          "question": "Pourquoi le taux baisse-t-il avec le nombre de trajets ?",
+          "answer": "Le compteur repart à zéro chaque mois. Plus un conducteur est actif dans le mois, plus son taux baisse."
+        },
+        {
+          "id": "cancellation-surcharge",
+          "question": "Qu’est-ce que la majoration liée aux annulations ?",
+          "answer": "Le taux de base est majoré si le conducteur annule souvent des trajets qui avaient des passagers, sur les 90 derniers jours. La majoration ne peut jamais réduire la commission.",
+          "table": {
+            "head": ["Taux d’annulation", "Commission appliquée"],
+            "rows": [
+              ["0 à 5 %", "100 % du montant de base"],
+              ["5 à 10 %", "120 %"],
+              ["10 à 20 %", "140 %"],
+              ["20 % et plus", "160 %"]
+            ]
+          }
+        },
+        {
+          "id": "rate-variations",
+          "question": "Le taux change-t-il selon le trajet, la zone ou un code promo ?",
+          "answer": "Non. Seuls comptent le volume mensuel et le taux d’annulation du conducteur."
+        },
+        {
+          "id": "payout-calculation",
+          "question": "Comment est calculé le versement d’un conducteur ?",
+          "answer": "Exemple d’illustration pour un trajet payé 50 000 Ar au total.",
+          "table": {
+            "head": ["Étape", "Montant"],
+            "rows": [
+              ["Commission de base (8 trajets ce mois, 13 %)", "6 500 Ar"],
+              ["Majoration (annulations à 12 %, ×1,4)", "9 100 Ar"],
+              ["Versé au conducteur", "40 900 Ar"]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "passenger-cancel",
+      "title": "Annulation par le passager",
+      "items": [
+        {
+          "id": "can-cancel",
+          "question": "Puis-je annuler ma réservation ?",
+          "answer": "Oui, tant que le conducteur n’a pas démarré le trajet. Après le démarrage, une absence se déclare, elle ne s’annule pas."
+        },
+        {
+          "id": "free-cancellation",
+          "question": "L’annulation est-elle gratuite ?",
+          "answer": "Oui pendant les 15 minutes qui suivent la réservation : remboursement intégral, pour corriger une erreur d’arrêt ou de date. Elle compte tout de même dans le décompte des annulations."
+        },
+        {
+          "id": "refund-amount",
+          "question": "Combien suis-je remboursé ?",
+          "answer": "Cela dépend du temps restant avant le départ. Le montant retenu est borné : au moins 500 Ar, au plus 20 000 Ar.",
+          "table": {
+            "head": ["Délai avant le départ", "Remboursé", "Conducteur", "1lalana"],
+            "rows": [
+              ["24 h ou plus", "90 %", "0 %", "10 %"],
+              ["Entre 2 h et 24 h", "40 %", "50 %", "10 %"],
+              ["Moins de 2 h", "0 %", "100 %", "0 %"]
+            ]
+          }
+        },
+        {
+          "id": "refund-time",
+          "question": "Quand suis-je remboursé ?",
+          "answer": "Tout de suite. Si l’opérateur mobile money tarde, la réservation indique « remboursement en cours » et vous recevez une notification avec le montant."
+        },
+        {
+          "id": "driver-compensation",
+          "question": "Pourquoi le conducteur reçoit-il une compensation ?",
+          "answer": "Il a gardé la place pour vous et ne peut plus la proposer à temps. Elle lui est versée avec le versement du trajet, commission déduite."
+        }
+      ]
+    },
+    {
+      "id": "driver-cancel",
+      "title": "Annulation par le conducteur",
+      "items": [
+        {
+          "id": "driver-cancels-ride",
+          "question": "Que se passe-t-il si le conducteur annule le trajet ?",
+          "answer": "Tous les passagers sont remboursés intégralement et prévenus, sans pénalité de leur côté."
+        },
+        {
+          "id": "driver-penalty",
+          "question": "Quelle pénalité pour le conducteur ?",
+          "answer": "Elle porte sur la somme réellement réservée par les passagers du trajet, avec un minimum de 2 000 Ar et un maximum de 15 000 Ar.",
+          "table": {
+            "head": ["Annulation", "Pourcentage"],
+            "rows": [
+              ["Au moins 24 h avant le départ", "10 %"],
+              ["Moins de 24 h avant le départ", "20 %"]
+            ]
+          }
+        },
+        {
+          "id": "cancel-without-passenger",
+          "question": "Annuler un trajet sans passager coûte-t-il quelque chose ?",
+          "answer": "Non. Sans passager confirmé, il n’y a ni pénalité ni effet sur l’historique du conducteur."
+        },
+        {
+          "id": "penalty-payment",
+          "question": "Comment la pénalité est-elle payée ?",
+          "answer": "Elle n’est pas prélevée tout de suite : elle devient une dette, déduite automatiquement du ou des prochains versements, après la commission. Il n’y a pas de règlement manuel."
+        },
+        {
+          "id": "cancel-single-booking",
+          "question": "Un conducteur peut-il annuler une seule réservation ?",
+          "answer": "Oui, avec un motif obligatoire, tant que le trajet n’a pas démarré. Le passager est remboursé intégralement et la place repart en vente. La pénalité est calculée sur cette réservation, sauf dans l’heure qui suit la réservation à plus de 24 h du départ."
+        },
+        {
+          "id": "cancel-after-start",
+          "question": "Peut-on annuler après le démarrage du trajet ?",
+          "answer": "Non. Une fois le trajet démarré, ni le conducteur ni le passager ne peuvent annuler."
+        }
+      ]
+    },
+    {
+      "id": "suspension",
+      "title": "Suspension de compte",
+      "items": [
+        {
+          "id": "when-suspended",
+          "question": "Quand mon compte est-il suspendu ?",
+          "answer": "Après 3 annulations en 30 jours glissants : annulations avec passagers pour un conducteur, réservations payées pour un passager. La première suspension dure 7 jours."
+        },
+        {
+          "id": "repeat-suspension",
+          "question": "Que se passe-t-il en cas de récidive ?",
+          "answer": "La suspension est prolongée de 14 jours, à partir de la fin de la suspension en cours, ou de la date du jour si elle est terminée."
+        },
+        {
+          "id": "suspension-restrictions",
+          "question": "Que ne puis-je pas faire pendant une suspension ?",
+          "answer": "Un conducteur ne peut pas publier de trajet, un passager ne peut pas réserver. Le compte a une seule date de fin, quelle que soit la cause."
+        },
+        {
+          "id": "suspension-end",
+          "question": "Quand la suspension prend-elle fin ?",
+          "answer": "Automatiquement à la date de fin, avec une notification. Les 30 jours sont glissants : une annulation plus ancienne ne compte plus."
+        },
+        {
+          "id": "pending-penalty",
+          "question": "Une pénalité en attente bloque-t-elle mon compte ?",
+          "answer": "Non, seule une suspension active bloque. En revanche, un compte ne peut pas être supprimé tant qu’une pénalité est en attente ou qu’une suspension est en cours."
+        },
+        {
+          "id": "lift-suspension",
+          "question": "Une suspension peut-elle être levée ?",
+          "answer": "Si l’annulation avait une raison grave, écrivez-nous. Le support peut lever une suspension et, au cas par cas, effacer la dette, avec un motif conservé."
+        }
+      ]
+    },
+    {
+      "id": "absences",
+      "title": "Absences au départ",
+      "items": [
+        {
+          "id": "passenger-no-show",
+          "question": "Que se passe-t-il si je ne me présente pas ?",
+          "answer": "Vous n’êtes pas remboursé et le conducteur est payé normalement pour la place. Il n’y a aucune autre pénalité : ni frais, ni suspension."
+        },
+        {
+          "id": "mark-absent",
+          "question": "Quand le conducteur peut-il me déclarer absent ?",
+          "answer": "À partir de 10 minutes après l’heure de départ prévue, et jusqu’à la clôture du trajet."
+        },
+        {
+          "id": "dispute-absence",
+          "question": "Comment contester une absence déclarée ?",
+          "answer": "Pendant 24 heures, avec un message obligatoire, une seule fois. Le support tranche. La décision ne déplace aucun argent."
+        },
+        {
+          "id": "driver-no-show",
+          "question": "Que faire si le conducteur ne vient pas ?",
+          "answer": "Utilisez « Le conducteur n’est pas venu » dans l’application, jusqu’à 24 heures après la clôture. Le paiement est gelé. Si l’absence est confirmée, tous les passagers sont remboursés intégralement et le conducteur n’est pas payé."
+        }
+      ]
+    },
+    {
+      "id": "reviews",
+      "title": "Avis et notes",
+      "items": [
+        {
+          "id": "who-reviews",
+          "question": "Qui peut laisser un avis ?",
+          "answer": "Le conducteur et les passagers d’un trajet terminé, l’un envers l’autre, dans les 14 jours qui suivent la fin du trajet."
+        },
+        {
+          "id": "mandatory-rating",
+          "question": "Noter est-il obligatoire ?",
+          "answer": "Non. Vous pouvez ignorer l’invitation, mais après 14 jours il n’est plus possible de donner son avis."
+        },
+        {
+          "id": "review-visibility",
+          "question": "Pourquoi mon avis n’est-il pas visible tout de suite ?",
+          "answer": "Les avis sont publiés en double aveugle : ils apparaissent en même temps, quand les deux personnes ont noté ou à la fin des 14 jours, une fois le conducteur payé. Personne n’écrit son avis en ayant lu celui de l’autre."
+        },
+        {
+          "id": "edit-review",
+          "question": "Puis-je modifier ou retirer mon avis ?",
+          "answer": "Tant qu’il n’est pas publié, vous pouvez le modifier. Une fois publié, vous pouvez seulement le retirer, sans pouvoir en écrire un nouveau."
+        },
+        {
+          "id": "reply-review",
+          "question": "Puis-je répondre à un avis reçu ?",
+          "answer": "Oui, une seule fois, publiquement, en 500 caractères au plus. La réponse ne peut ni être modifiée ni supprimée."
+        },
+        {
+          "id": "refused-content",
+          "question": "Quels contenus sont refusés dans un avis ?",
+          "answer": "Les insultes, les numéros de téléphone, les adresses e-mail et les liens. Le commentaire est limité à 500 caractères."
+        },
+        {
+          "id": "report-review",
+          "question": "Comment signaler un avis abusif ?",
+          "answer": "Depuis l’application, avec le motif « contenu inapproprié » ou « spam »."
+        }
+      ]
+    },
+    {
+      "id": "safety",
+      "title": "Sécurité et signalements",
+      "items": [
+        {
+          "id": "how-to-report",
+          "question": "Comment signaler un utilisateur, un trajet ou un véhicule ?",
+          "answer": "Depuis l’application : choisissez un motif et ajoutez un commentaire. Vous recevez un accusé de réception, puis un message quand le signalement est traité. Un même élément ne peut être signalé qu’une fois par 24 heures."
+        },
+        {
+          "id": "anonymous-report",
+          "question": "Mon signalement est-il anonyme ?",
+          "answer": "Il peut l’être. Dans ce cas, personne, y compris l’équipe, ne sait qui l’a envoyé."
+        },
+        {
+          "id": "after-report",
+          "question": "Que se passe-t-il après un signalement ?",
+          "answer": "L’équipe examine le dossier. Si un même utilisateur est signalé plusieurs fois avant examen, il peut perdre temporairement la possibilité de publier des trajets, à titre de précaution."
+        },
+        {
+          "id": "ban",
+          "question": "Quand un compte est-il banni ?",
+          "answer": "Sur décision d’un administrateur : fraude, harcèlement, absences répétées, faux profil ou atteinte à la sécurité. Le bannissement est temporaire ou permanent, et la personne est déconnectée aussitôt."
+        },
+        {
+          "id": "contest-ban",
+          "question": "Comment contester un bannissement ?",
+          "answer": "Depuis le formulaire de contact du site, sans compte, ou par e-mail au support."
+        },
+        {
+          "id": "stolen-phone",
+          "question": "Mon téléphone ou ma carte SIM a été volé, que faire ?",
+          "answer": "Contactez-nous : le compte peut être protégé pendant 24 heures, 48 heures ou 7 jours. Ce n’est pas une sanction. Faites aussi bloquer votre carte SIM."
+        },
+        {
+          "id": "contact-visibility",
+          "question": "Mes coordonnées sont-elles visibles par les autres ?",
+          "answer": "Non. Elles ne sont échangées qu’une fois une réservation confirmée, et les avis ne peuvent contenir ni téléphone ni e-mail."
+        }
+      ]
+    },
+    {
+      "id": "driver",
+      "title": "Publier un trajet",
+      "items": [
+        {
+          "id": "publish-requirements",
+          "question": "Que faut-il pour publier un trajet ?",
+          "answer": "Un compte avec une photo de profil, pour que les passagers reconnaissent la personne qui les prend, et un numéro de téléphone vérifié, par lequel passagers et plateforme joignent le conducteur. Il faut aussi un véhicule enregistré."
+        },
+        {
+          "id": "driver-obligations",
+          "question": "Quelles sont les obligations du conducteur ?",
+          "answer": "Un permis valide, une assurance valide et un véhicule en état. 1lalana est une plateforme de mise en relation : le conducteur partage ses frais de route, il ne fait pas une activité commerciale."
+        },
+        {
+          "id": "set-price",
+          "question": "Comment fixer mon prix ?",
+          "answer": "Vous fixez un prix par place. Comme il s’agit d’un partage de frais, ce prix est plafonné. Le passager paie ce prix multiplié par le nombre de places, et les montants de l’application font foi."
+        },
+        {
+          "id": "add-stops",
+          "question": "Puis-je ajouter des arrêts ?",
+          "answer": "Oui. Un arrêt doit se trouver sur la route du trajet, à 5 km au plus de celle-ci. Les passagers peuvent monter et descendre à ces arrêts et ne paient que la portion parcourue."
+        },
+        {
+          "id": "message-passengers",
+          "question": "Puis-je écrire un message aux passagers ?",
+          "answer": "Oui, un commentaire de 500 caractères au plus (arrêts, ponctualité, bagages), affiché sur le détail du trajet. Sans commentaire, rien n’est affiché."
+        },
+        {
+          "id": "edit-ride",
+          "question": "Puis-je modifier mon trajet après l’avoir publié ?",
+          "answer": "Oui. Si vous changez l’heure de départ ou une place réservée par un passager, celui-ci peut annuler gratuitement pendant 24 heures, sans dépasser l’heure du départ."
+        },
+        {
+          "id": "driver-reliability",
+          "question": "Comment savoir si un conducteur est fiable ?",
+          "answer": "Un conducteur doit avoir une photo de profil et un numéro de téléphone vérifié pour publier. Son véhicule peut porter le badge « véhicule vérifié », et les avis des trajets passés sont consultables dans l’application."
+        }
+      ]
+    },
+    {
+      "id": "vehicles",
+      "title": "Conducteurs et véhicules",
+      "items": [
+        {
+          "id": "accepted-vehicles",
+          "question": "Quels véhicules sont acceptés ?",
+          "answer": "Les voitures particulières (berline, familiale, monospace, SUV, 4x4, pickup, sportive), les minibus et les 4x4 utilitaires. Le véhicule doit être postérieur à 1980 : il n’y a pas de limite haute d’âge, car c’est son état, visible sur les photos, que le passager juge."
+        },
+        {
+          "id": "vehicle-and-seat-limits",
+          "question": "Combien de véhicules et de places puis-je déclarer ?",
+          "answer": "Un véhicule déclare de 1 à 40 places, avec 3 photos au plus. Un conducteur peut enregistrer jusqu’à 5 véhicules."
+        },
+        {
+          "id": "registration-plate",
+          "question": "Quelle immatriculation est acceptée ?",
+          "answer": "Une plaque au format malgache (par exemple 1234 TBA), déclarée sur un seul véhicule de la plateforme."
+        },
+        {
+          "id": "verification-optional",
+          "question": "La vérification du véhicule est-elle obligatoire ?",
+          "answer": "Non, elle est facultative. Elle donne le badge « véhicule vérifié » que les passagers voient au moment de réserver."
+        },
+        {
+          "id": "required-documents",
+          "question": "Quels documents sont demandés ?",
+          "answer": "Les trois documents sont demandés ensemble pour obtenir le badge.",
+          "table": {
+            "head": ["Document", "À quoi il sert", "Date de fin"],
+            "rows": [
+              ["Carte grise", "Établit que le véhicule correspond à la plaque annoncée.", "Non"],
+              ["Assurance", "Atteste que les passagers sont couverts pendant le trajet.", "Oui"],
+              ["Visite technique", "Atteste de l’état mécanique du véhicule.", "Oui"]
+            ]
+          }
+        },
+        {
+          "id": "verification-time",
+          "question": "Combien de temps dure la vérification ?",
+          "answer": "L’équipe examine chaque document. L’objectif est une réponse sous 72 heures. Un document refusé s’accompagne d’un motif et peut être renvoyé : l’examen reprend alors pour ce document."
+        },
+        {
+          "id": "insurance-expiry",
+          "question": "Que se passe-t-il quand mon assurance expire ?",
+          "answer": "Un rappel est envoyé 30 jours avant l’expiration, puis une notification à l’expiration. Tant qu’un document est expiré, le badge « véhicule vérifié » n’est plus affiché."
+        },
+        {
+          "id": "vehicle-visibility",
+          "question": "Que voient les passagers de mon véhicule ?",
+          "answer": "Les photos et les équipements déclarés sont publics. La plaque n’est affichée en entier qu’au passager dont la réservation est confirmée ; ailleurs, seule la série provinciale reste lisible. Les documents ne sont jamais montrés : seuls le conducteur et l’équipe de vérification y ont accès."
+        }
+      ]
+    },
+    {
+      "id": "notifications",
+      "title": "Notifications",
+      "items": [
+        {
+          "id": "notification-types",
+          "question": "Quelles notifications puis-je recevoir ?",
+          "answer": "Dans l’application, vous êtes prévenu des événements qui vous concernent : le conducteur reçoit une notification quand une place est réservée sur son trajet, le passager quand un remboursement est effectué, et chacun quand le support répond à une demande."
+        },
+        {
+          "id": "find-notifications",
+          "question": "Où retrouver mes notifications ?",
+          "answer": "Dans l’application. Elles sont aussi incluses dans le fichier d’export de vos données personnelles."
+        },
+        {
+          "id": "sms",
+          "question": "Vais-je recevoir des SMS ?",
+          "answer": "Seulement dans deux cas : le SMS du bouton SOS, envoyé à votre contact d’urgence, et la réponse du support si vous n’avez laissé qu’un numéro de téléphone dans le formulaire de contact."
+        },
+        {
+          "id": "website-notifications",
+          "question": "Le site envoie-t-il des notifications ?",
+          "answer": "Non. Le site n’a pas de compte et n’envoie aucune notification. Le seul message qu’il peut envoyer est la newsletter, uniquement si vous vous y êtes inscrit."
+        }
+      ]
+    },
+    {
+      "id": "account",
+      "title": "Compte et données personnelles",
+      "items": [
+        {
+          "id": "collected-data",
+          "question": "Quelles données 1lalana collecte-t-elle ?",
+          "answer": "L’identité, la pièce d’identité, le numéro de téléphone, l’e-mail, la position des trajets, le numéro mobile money, les documents du véhicule, le contact d’urgence et les avis. Chaque donnée sert au fonctionnement du service."
+        },
+        {
+          "id": "location-tracking",
+          "question": "Ma position est-elle suivie ?",
+          "answer": "Non. Le conducteur saisit un point de départ et d’arrivée à la création du trajet. Il n’y a pas de suivi GPS continu ni de position en temps réel. Les autres utilisateurs voient l’adresse, pas les coordonnées exactes."
+        },
+        {
+          "id": "export-data",
+          "question": "Puis-je récupérer mes données personnelles ?",
+          "answer": "Oui, dans l’application : Profil, Paramètres, Compte, « Exporter mes données ». Vous recevez un fichier JSON avec votre profil, vos trajets, réservations, véhicules, avis, paiements, notifications et messages de contact. Trois demandes par 24 heures au plus."
+        },
+        {
+          "id": "delete-account",
+          "question": "Puis-je supprimer mon compte ?",
+          "answer": "Oui, sauf si une pénalité est en attente ou si une suspension est en cours."
+        },
+        {
+          "id": "website-account",
+          "question": "Le site utilise-t-il mon compte ?",
+          "answer": "Non. Le site n’a pas de compte : le blog, le contact et la newsletter sont accessibles à tous, même à une personne bannie de l’application."
+        }
+      ]
+    },
+    {
+      "id": "support",
+      "title": "Support et contact",
+      "items": [
+        {
+          "id": "contact-us",
+          "question": "Comment vous contacter ?",
+          "answer": "Par le formulaire de la page Contact : votre nom, votre message et, au choix, un e-mail ou un numéro de mobile malgache. Un seul des deux suffit."
+        },
+        {
+          "id": "acknowledgement",
+          "question": "Vais-je recevoir un accusé de réception ?",
+          "answer": "Oui, avec le numéro de votre demande, par e-mail, ou par SMS si vous n’avez laissé qu’un numéro."
+        },
+        {
+          "id": "answer-channel",
+          "question": "Comment recevrai-je la réponse ?",
+          "answer": "Par e-mail si vous avez laissé une adresse, par SMS si vous n’avez laissé qu’un numéro. Un SMS est limité à 300 caractères : pour une réponse plus longue, l’équipe vous appelle. Vous ne pouvez pas répondre à ce message : écrivez-nous de nouveau depuis le formulaire."
+        },
+        {
+          "id": "follow-request",
+          "question": "Comment suivre ma demande depuis l’application ?",
+          "answer": "Connecté à l’application, ouvrez « Mes demandes » : vous y retrouvez l’échange, une notification vous prévient de chaque réponse, et vous pouvez joindre jusqu’à 5 fichiers (photos ou PDF) par message. Si vous écrivez après la résolution, la demande est rouverte automatiquement."
+        }
+      ]
+    }
+  ]
+}

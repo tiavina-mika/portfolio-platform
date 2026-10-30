@@ -1,0 +1,26 @@
+{
+  "price": "Vidiny",
+  "status": "Status",
+  "current": "Ity",
+  "prices": "Vidiny",
+  "unitPrice": "Vidiny iray",
+  "phone": "Téléphone",
+  "paymentPhone": "Téléphone de paiement",
+  "receiverSeen": "Hitan'ny mpandray",
+  "at": "Fotoana",
+  "by": "Nanao azy",
+  "history": "Tantara",
+  "processHistory": "Tantara ny dingana",
+  "eventHistory": "Tantara ny zavatra",
+  "paymentHistory": "Tantara ny fandoavana",
+  "eventsHistory": {
+    "lastSeen": "Fanokafana farany",
+    "deleted": "Voafafa",
+    "seen": "Hita",
+    "unseen": "Tsy hita",
+    "undeleted": "Tsy voafafa",
+    "created": "Noforonona",
+    "updated": "Niova"
+  },
+  "platform": "Sehatra"
+}

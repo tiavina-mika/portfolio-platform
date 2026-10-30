@@ -1,16 +1,6 @@
-// used for storybook
-const getLocalLabel = (locale: string) => {
-  switch (locale) {
-    case 'fr':
-      return 'Français';
-    case 'en':
-      return 'English';
-    default:
-      return locale;
-  }
-};
+import { LANGUAGES } from '@shared/constants';
 
-// Can be imported from a shared config
+// French first: the default one. The website is translated in a subset of the platform languages
 export const locales = ['fr', 'en'] as const;
 export const defaultLocale = locales[0];
 export const localePrefix = 'always'; // Default
@@ -18,5 +8,5 @@ export type Locale = (typeof locales)[number];
 
 export const storybookLocalesOptions = locales.map(locale => ({
   value: locale,
-  title: getLocalLabel(locale),
+  title: LANGUAGES[locale].nativeName,
 }));

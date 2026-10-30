@@ -13,7 +13,7 @@
 
 ## Où trouver cette page
 
-Menu de gauche → **Catégories**, ou carte **Categories** de l'écran d'accueil.
+Menu de gauche → groupe **Contenu** → **Catégories**.
 
 ## À quoi sert cette page
 
@@ -34,7 +34,7 @@ Droits de la ressource « Catégories », réglés dans la page **Droits** :
 | Supprimer | Mettre une catégorie à la corbeille |
 | Supprimer définitivement | Onglet « Corbeille » et destruction définitive |
 
-Les propriétaires et administrateurs ont tous les droits.
+Les comptes Owner et Super Admin ont tous les droits.
 
 ## Ce que l'on voit à l'écran
 
@@ -72,7 +72,8 @@ Les propriétaires et administrateurs ont tous les droits.
 ## Points d'attention / limites actuelles
 
 - Supprimer une catégorie la retire des articles et des pages qui l'utilisaient ; ils restent
-  publiés mais sans cette catégorie, et il n'y a pas de bouton « Restaurer ».
+  publiés mais sans cette catégorie. La catégorie elle-même peut être restaurée depuis la corbeille, mais
+  les articles et pages qui la portaient ne la retrouvent pas.
 - Pour les comptes qui peuvent supprimer définitivement, la sélection de plusieurs lignes n'est pas
   proposée : les suppressions se font ligne par ligne.
 - Il n'y a que deux types de catégories : articles et pages.

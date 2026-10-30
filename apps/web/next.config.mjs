@@ -1,3 +1,4 @@
+/* eslint-disable @cspell/spellchecker */
 import { fileURLToPath } from 'node:url';
 
 import withBundleAnalyzer from '@next/bundle-analyzer';
@@ -33,11 +34,22 @@ const nextConfig = {
     ],
   },
   productionBrowserSourceMaps: false,
+  cacheComponents: true,
   experimental: {
     staleTimes: {
       dynamic: 30,
     },
   },
+  /*
+   * Permanent redirects from the paths the site used before it adopted the blog / contact route
+   * names, so the links already indexed or shared keep working
+   */
+  redirects: () => [
+    { source: '/:locale(fr|en)/articles', destination: '/:locale/blog', permanent: true },
+    { source: '/:locale(fr|en)/articles/:path*', destination: '/:locale/blog/:path*', permanent: true },
+    { source: '/en/contact-me', destination: '/en/contact', permanent: true },
+    { source: '/fr/contactez-moi', destination: '/fr/contact', permanent: true },
+  ],
   headers: () => [
     {
       source: '/(.*)',

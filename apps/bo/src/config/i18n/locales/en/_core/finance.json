@@ -1,0 +1,53 @@
+{
+  "overview": "Finance overview",
+  "gmv": "GMV",
+  "gmvDescription": "Gross volume paid by passengers",
+  "netRevenue": "Net revenue",
+  "netRevenueDescription": "Commission actually kept by the platform",
+  "gmvVsNetRevenuePerPeriod": "GMV vs net revenue",
+  "pendingOverdueDescription": "Stuck for more than {{minutes}} minutes",
+  "overduePaymentsList": "Overdue pending payments",
+  "noOverduePayments": "No overdue pending payments",
+  "unknownUser": "Unknown user",
+  "platform": "Platform",
+  "table": {
+    "amount": "Amount",
+    "status": "Status",
+    "createdAt": "Created at"
+  },
+  "recheck": {
+    "action": "Retry",
+    "done": "Retried",
+    "stillPending": "The operator has not answered for this payment yet",
+    "settled": "The operator answered: the payment is settled"
+  },
+  "driverWallets": "Driver wallets",
+  "wallet": {
+    "title": "Driver wallet",
+    "pendingPenalty": "Pending penalty",
+    "status": "Status",
+    "active": "Active",
+    "suspended": "Suspended",
+    "suspendedUntil": "Suspended until",
+    "payoutHistory": "Payout history — {{name}}",
+    "commission": "Commission",
+    "noPayouts": "No payout for this driver",
+    "rating": "Rating",
+    "lastPayout": "Last payout",
+    "neverPaid": "Never paid",
+    "suspendedUntilShort": "Until {{date}}",
+    "search": "Driver, phone, e-mail…",
+    "totals": {
+      "pendingPenalties": "Pending penalties",
+      "suspendedDrivers": "Suspended drivers",
+      "trackedDrivers": "Tracked drivers"
+    },
+    "filter": {
+      "rating": "Driver rating",
+      "ratingLow": "Under 4",
+      "ratingHigh": "4 and up",
+      "minPenalty": "Penalty from ({{currency}})",
+      "maxPenalty": "Penalty up to ({{currency}})"
+    }
+  }
+}

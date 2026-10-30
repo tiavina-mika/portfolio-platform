@@ -1,10 +1,20 @@
 import {
-  Stack, FormHelperText, Button, type Theme, IconButton, Tooltip,
+  Stack, FormHelperText, Button, Theme, IconButton, Tooltip,
 } from '@mui/material';
+import { useState } from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FiPlus, FiTrash2 } from 'react-icons/fi';
 
+import {
+  FIELDS_ARRAY_GAP, FIELDS_ARRAY_MAX_WIDTH, FIELDS_ARRAY_REMOVE_BUTTON_WIDTH,
+  FIELDS_ARRAY_ROW_PADDING, FIELDS_ARRAY_ROW_GAP,
+} from '@/constants/_core/ui/entity.constants';
+import { INPUT_HEIGHT, RADIUS } from '@/constants/_core/ui/ui.constants';
+import { useToggle } from '@/hooks/_core/useToggle';
+import { getDesignTokens } from '@/utils/_core/theme/tokens.utils';
+
+import ConfirmDeletionFormModal from '../ConfirmDeletionFormModal';
 import InputLabel from '../InputLabel';
 import TextFieldInput, { CustomTextFieldInputProps } from '../inputs/TextFieldInput';
 
@@ -21,12 +31,27 @@ type SubName = {
 const isOnlyOneField = (subNames: SubName[]): boolean => subNames.length === 1;
 
 const classes = {
+  /*
+   * an entry of the list is a bordered row on the card surface holding its inputs and the control
+   * that removes it — so the reader can tell where one entry ends and the next begins without
+   * counting fields
+   */
   card: (theme: Theme) => ({
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(2),
-    borderRadius: theme.shape.borderRadius,
-    border: `1px solid ${theme.palette.divider}`,
+    padding: FIELDS_ARRAY_ROW_PADDING,
+    borderRadius: `${RADIUS}px`,
+    border: `1px solid ${getDesignTokens(theme).border}`,
   }),
+  /*
+   * the column is capped well under the card width: an entry is one short value, and a delete
+   * button parked at the far edge of a wide screen stops reading as belonging to its own row
+   */
+  list: { maxWidth: FIELDS_ARRAY_MAX_WIDTH },
+  // a bare slot on the input row, not a button standing beside the field it removes
+  removeButton: {
+    width: FIELDS_ARRAY_REMOVE_BUTTON_WIDTH,
+    height: INPUT_HEIGHT,
+  },
 };
 
 type Props = {
@@ -64,9 +89,20 @@ const FieldsArray = ({
     name,
   });
 
+  const [indexToDelete, setIndexToDelete] = useState<number | null>(null);
+  const {
+    open: isConfirmDeleteOpen, toggle: toggleConfirmDelete,
+  } = useToggle();
+
+  const handleConfirmDelete = () => {
+    if (indexToDelete === null) return;
+    remove(indexToDelete);
+    setIndexToDelete(null);
+  };
+
   return (
     (
-      <Stack spacing={1}>
+      <Stack css={classes.list} spacing={1}>
         {/* label */}
         {label && (
           <InputLabel
@@ -79,7 +115,7 @@ const FieldsArray = ({
         {/* fields */}
         {fields.length > 0 && (
           <Stack
-            spacing={2}
+            spacing={`${FIELDS_ARRAY_GAP}px`}
             // use parent level card if there is only one field, otherwise use card for each block (see below)
             css={isOnlyOneField(subNames)
               ? classes.card
@@ -104,7 +140,7 @@ const FieldsArray = ({
                   ? 'row'
                   : subFieldsDirection}
                 spacing={isOnlyOneField(subNames)
-                  ? 1
+                  ? `${FIELDS_ARRAY_ROW_GAP}px`
                   : 2} // one field = display in row
               >
                 {/* subfields */}
@@ -149,8 +185,11 @@ const FieldsArray = ({
                   <Tooltip title={t('infoMessages.removeFields', { index: index + 1 })}>
                     <IconButton
                       color="error"
-                      css={{ alignSelf: 'flex-end' }}
-                      onClick={() => remove(index)}
+                      css={classes.removeButton}
+                      onClick={() => {
+                        setIndexToDelete(index);
+                        toggleConfirmDelete();
+                      }}
                     >
                       <FiTrash2 />
                     </IconButton>
@@ -162,7 +201,7 @@ const FieldsArray = ({
         )}
         <div>
           <Button
-            css={{ display: 'flex', gap: 8 }}
+            startIcon={<FiPlus />}
             type="button"
             variant="outlined"
             onClick={() =>
@@ -177,10 +216,19 @@ const FieldsArray = ({
                   }, {})
               )}
           >
-            <FiPlus />
             {addButtonLabel}
           </Button>
         </div>
+        {indexToDelete !== null && (
+          <ConfirmDeletionFormModal
+            label={`${label || name} #${indexToDelete + 1}`}
+            onConfirmed={handleConfirmDelete}
+            open={isConfirmDeleteOpen}
+            toggle={toggleConfirmDelete}
+            type={label || name}
+            value={`${indexToDelete + 1}`}
+          />
+        )}
       </Stack>
     )
   );
