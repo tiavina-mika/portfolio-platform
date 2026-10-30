@@ -6,6 +6,7 @@
  * @NOTE: import this using lazy import in the error.tsx file
  * @NOTE: this is a client component, so the translation should be inside a Provider
  */
+import * as Sentry from '@sentry/nextjs';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 
@@ -27,8 +28,8 @@ const ErrorBoundary = ({
   const t = useTranslations('Error');
 
   useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error);
+    // a no-op while Sentry is not initialized (local development)
+    Sentry.captureException(error);
   }, [error]);
 
   return (

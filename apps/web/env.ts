@@ -40,6 +40,9 @@ const env = createEnv({
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z.string(),
     // GA4 measurement id — absent = analytics disabled (kept unset in dev local)
     NEXT_PUBLIC_GA_MEASUREMENT_ID: z.string().optional(),
+    // Sentry DSN and environment (preProduction | production) — absent = error reporting disabled
+    NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional(),
+    NEXT_PUBLIC_SENTRY_ENVIRONMENT: z.enum(['preProduction', 'production']).optional(),
   },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
@@ -64,6 +67,8 @@ const env = createEnv({
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
     NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
     NEXT_PUBLIC_GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
+    NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
+    NEXT_PUBLIC_SENTRY_ENVIRONMENT: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT,
   },
 });
 

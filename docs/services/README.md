@@ -19,14 +19,14 @@
 | MMSDuck | server | SMS: verification codes, notices, notification fallback | `MMSDUCK_API_KEY`, `ANDROID_SMS_RETRIEVER_HASH` |
 | Expo push | server | Push notifications to the mobile app | `EXPO_ACCESS_TOKEN` |
 | Slack (alerts webhook) | server | Staff alerts and the daily summary | `SLACK_ALERTS_WEBHOOK_URL` |
-| Sentry | bo | Browser error reporting | `VITE_SENTRY_DSN`, `VITE_SENTRY_ENVIRONMENT`, `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, `SENTRY_PROJECT` |
+| Sentry | bo, web | Error reporting (browser; also the Next.js server for the web) | `VITE_SENTRY_DSN`, `VITE_SENTRY_ENVIRONMENT` (bo), `NEXT_PUBLIC_SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_ENVIRONMENT` (web), `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, `SENTRY_PROJECT` (build time) |
 | Google Analytics 4 | web | Audience measurement (off when unset) | `NEXT_PUBLIC_GA_MEASUREMENT_ID` |
 | Render | server | Hosting the server (keep-awake cron for the free plan) | none in the code |
 | GitHub (Actions) | repository | CI, security checks, release pull request | secrets and variables listed in the [inventory](../inventory/code/en/GITHUB_VARIABLES_AND_SECRETS.md) |
 | Chromatic | CI | Published Storybooks and visual tests | `CHROMATIC_PROJECT_TOKEN_WEB` (GitHub secret) |
 | Slack (changelog webhook) | CI | Changelog and release notes posts | `SLACK_CHANGELOG_WEBHOOK_URL` (GitHub secret) |
 
-Only the back-office reports its errors (Sentry); the server and the website have no error-tracking service. The Expo push and the Slack alerts webhook have no guide of their own: see the variables above and [emails](../inventory/communication/en/EMAILS.md).
+The back-office and the website report their errors (Sentry, one shared project, an `app` tag tells them apart); the server has no error-tracking service. The Expo push and the Slack alerts webhook have no guide of their own: see the variables above and [emails](../inventory/communication/en/EMAILS.md).
 
 The full list of variables, by app, is in the [inventory](../inventory/README.md).
 

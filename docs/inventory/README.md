@@ -97,6 +97,8 @@ Validated by `apps/web/env.ts`. `NEXT_PUBLIC_*` variables are exposed to the bro
 | `NEXT_PUBLIC_GOOGLE_MAP_KEY` | Google Maps public key |
 | `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` | reCAPTCHA public site key (the token is sent to the server, which verifies it) |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional: Google Analytics 4 measurement id; unset means analytics is off |
+| `NEXT_PUBLIC_SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_ENVIRONMENT` | Optional: Sentry error reporting of the browser and the Next.js server (public DSN, same project as the back-office); unset means reporting is off |
+| `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, `SENTRY_PROJECT` | Build time only: source map upload to Sentry. The token is a secret and is read only by `next.config.mjs`, never exposed to the browser |
 
 ## Cloud Code
 

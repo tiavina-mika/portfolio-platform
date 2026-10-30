@@ -129,3 +129,16 @@ export const LOCALE_NATIVE_NAMES = {
   fr: 'Français',
   en: 'English',
 } as const;
+
+// browser noise that says nothing about the site and would eat the Sentry quota
+export const SENTRY_IGNORED_ERRORS = [
+  'ResizeObserver loop limit exceeded',
+  'ResizeObserver loop completed with undelivered notifications',
+  'Non-Error promise rejection captured',
+];
+// scripts injected by browser extensions
+export const SENTRY_IGNORED_URLS = [
+  /^chrome-extension:\/\//,
+  /^moz-extension:\/\//,
+  /^safari-extension:\/\//,
+];
