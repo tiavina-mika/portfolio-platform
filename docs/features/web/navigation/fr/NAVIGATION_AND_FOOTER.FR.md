@@ -39,11 +39,12 @@ De gauche à droite :
 
 - le **logo**, qui ramène à l'accueil ;
 - une **zone de recherche** ;
-- les liens du menu : **Accueil**, **Projets**, **Articles**, **Me contacter**, puis les pages de
+- les liens du menu : **Accueil**, **Projets**, **Blog**, **Contact**, puis les pages de
   contenu que le propriétaire a placées dans le menu ([Pages de contenu](../../pages/fr/PAGES_CONTENT.FR.md)).
   Sur les écrans moyens, "Accueil" est masqué (le logo joue ce rôle) ;
 - le bouton **"Télécharger CV"**, sauf sur la page d'accueil qui a déjà le sien, et seulement si un
   CV a été ajouté dans le back-office ;
+- le sélecteur de langue (Français / Anglais) ;
 - un bouton rond **soleil / lune** pour changer de thème.
 
 ### Barre de navigation sur téléphone et tablette
@@ -67,18 +68,18 @@ menu.
 
 La zone de recherche de la barre de navigation cherche dans les **articles** et les **projets**.
 
-- Elle se lance après une courte pause dans la frappe (environ une seconde), à partir de **4 caractères**.
+- Elle se lance après une courte pause dans la frappe (une fraction de seconde), à partir de **3 caractères**.
 - Les résultats sont listés sous le champ (jusqu'à 10 articles et 10 projets), les articles d'abord.
 - La recherche porte sur le titre, les mots-clés, la description et le contenu (et, pour les
   projets, le nom et la société), dans les deux langues du site.
-- Si rien ne correspond, la mention **"Aucun résultat"** apparaît.
+- Si rien ne correspond, la mention **"Aucun résultat pour « … »"** apparaît ; si la recherche est indisponible, un message invite à réessayer dans un instant.
 - Un clic sur un résultat ouvre la page et referme la liste.
 
 ## Actions possibles
 
 ### Changer de langue
 
-Le sélecteur du pied de page bascule le site entre français et anglais. Le visiteur reste sur la même
+Le sélecteur de la barre de navigation (grand écran) ou du pied de page bascule le site entre français et anglais. Le visiteur reste sur la même
 page, dont l'adresse est traduite (par exemple `/projets` devient `/projects`). Le français est la
 langue par défaut.
 
@@ -105,9 +106,8 @@ Les liens du menu et du pied de page ouvrent les rubriques correspondantes.
 
 ## Points d'attention / limites actuelles
 
-- Le sélecteur de langue n'existe que dans le **pied de page** ; il n'est pas dans la barre du haut ni
-  dans le menu mobile.
-- Le lien "Mes projets" du pied de page ramène à la page d'accueil, pas à la liste des projets.
-- La recherche n'affiche rien en dessous de 4 caractères.
+- La recherche n'affiche rien en dessous de 3 caractères.
 - Les pages de contenu n'apparaissent dans le menu ou le pied de page que si elles sont actives et
   configurées pour (voir [Pages de contenu](../../pages/fr/PAGES_CONTENT.FR.md)).
+- Si la mesure d'audience est activée sur le site, une fenêtre **"Cookies"** propose une seule fois
+  d'**accepter** ou de **refuser** les cookies de mesure d'audience ; le choix est mémorisé un an.

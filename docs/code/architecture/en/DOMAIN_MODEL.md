@@ -25,7 +25,7 @@
 
 ## Overview
 
-Data lives in MongoDB and is read and written through Parse Server (`apps/server`). The collection names shared by the apps are in `libs/shared-constants/src/collection.constants.ts` (`Article`, `Newsletter`, `Page`, `Category`, `Project`, `Contact`, `App`). `PageSection`, `_User` and `_Role` are used by name in the Cloud Code and are not part of that constant. A `Test` class also exists, used only by the test functions and jobs.
+Data lives in MongoDB and is read and written through Parse Server (`apps/server`). The collection names shared by the apps are in `libs/shared-constants/src/collection.constants.ts` (`Article`, `Newsletter`, `Page`, `Category`, `Project`, `Contact`, `App`); the server also has its own `collections` constant (`apps/server/src/constants/_core/constants.ts`) and the domain class names are in `DOMAIN_COLLECTIONS` (`libs/shared-domain-constants`), see [CORE_DOMAIN.md](CORE_DOMAIN.md). The generic back-office adds classes not detailed below (`Notification`, `Payment`, `Report`, `TicketMessage`, `UserAuditLog`, `RoleAuditLog`, `UserSession`, `Invitation`, `ContentVersion`, ...): see the inventory. A `Test` class also exists, used only by the test functions and jobs.
 
 The fields below are the ones the code reads or writes (Cloud Code triggers and the `*Attributes` interfaces of `apps/bo`). Parse adds `objectId`, `createdAt`, `updatedAt` and `ACL` to every class.
 
@@ -125,14 +125,15 @@ Site-level settings with three files: `image`, `imageForDarkMode` and `cv` (serv
 
 ### Contact
 
-A message sent from the public contact form.
+A message sent from the public contact form; it is also the first message of a support ticket handled in the back-office (`TicketMessage` holds the replies).
 
 | Field | Content |
 |---|---|
 | `email`, `name`, `message` | submitted by the visitor; validated server-side (name 120 characters at most, message 500) |
 | `locale` | locale of the visitor, passed in the save context |
 | `user` | pointer to the `_User` having the same email, if any |
-| `replied`, `repliedAt`, `repliedBy` | set when the back-office marks the message as replied |
+| `replied`, `repliedAt`, `repliedBy` | set when the back-office replies |
+| `reference`, `priority`, `subject`, `phone`, `source`, `lastMessageAt`, `seen` | ticket fields filled by the server |
 | `deleted` | soft delete |
 
 ### Newsletter
@@ -143,7 +144,8 @@ A newsletter subscription.
 |---|---|
 | `email` | subscriber email |
 | `language` | locale in which articles are sent |
-| `active` | `false` once unsubscribed |
+| `confirmed`, `confirmationTokenHash` | double opt-in: a subscription starts `confirmed: false` and only the hash of the confirmation token is stored |
+| `active` | `false` until confirmed and once unsubscribed |
 | `unsubscribeAt`, `reason` | date and reason of the unsubscription (`tooFrequent`, `notInterested`, `notRelevant`, `other`) |
 | `user` | pointer to the `_User` having the same email, if any |
 | `deleted` | soft delete |
@@ -157,7 +159,7 @@ A back-office user (`_User`). The email is also the username.
 | Field | Content |
 |---|---|
 | `email`, `username`, `password`, `firstName`, `lastName` | identity; the password is 8 to 64 characters |
-| `verified` | email confirmed |
+| `emailVerified`, `phoneVerified`, `phone` | contacts confirmed by a code (see [AUTH.md](AUTH.md)) |
 | `verification` | `{ code, expiredAt }`: the 6-digit code is stored encrypted and valid for 1 hour |
 | `platforms` | list of `{ name, count, lastConnectedAt }` per platform of connection (`web`, `bo`, `android`, `ios`) |
 | `locale` | preferred language |
@@ -167,7 +169,7 @@ A back-office user (`_User`). The email is also the username.
 
 ### Role
 
-A role (`_Role`), standard Parse fields (`name`, `users`, `roles` for the parent roles) plus two custom fields: `rights` (per collection) and `ui` (back-office areas). See [RIGHTS_ROLES.md](RIGHTS_ROLES.md).
+A role (`_Role`), standard Parse fields (`name`, `users`, `roles` for the parent roles) plus the custom fields `rights` (per collection), `ui` (back-office areas), `countries` and an inactivity timeout. Role names are `OWNER`, `SUPER_ADMIN`, `MANAGER`, ... See [RIGHTS_ROLES.md](RIGHTS_ROLES.md).
 
 ## Relations
 

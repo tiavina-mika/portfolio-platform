@@ -21,7 +21,7 @@ Consulter la fiche complète d'une catégorie, langue par langue, et la modifier
 ## Qui peut l'utiliser
 
 Le droit **Consulter** sur la ressource « Catégories » (page **Droits**). Sans lui, ou si la catégorie
-n'existe plus, l'écran « introuvable » s'affiche. Les propriétaires et administrateurs ont tous les droits.
+n'existe plus, l'écran « introuvable » s'affiche. Les comptes Owner et Super Admin ont tous les droits.
 
 ## Ce que l'on voit à l'écran
 

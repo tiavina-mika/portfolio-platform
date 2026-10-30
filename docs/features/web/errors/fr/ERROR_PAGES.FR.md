@@ -24,7 +24,7 @@ une page blanche : ces pages expliquent ce qui se passe et ramènent vers le sit
 ## "Page introuvable" (404)
 
 S'affiche quand l'adresse demandée ne correspond à rien : un projet, un article ou une page de
-contenu désactivé ou supprimé dans le back-office, un lien mal recopié, un lien de désabonnement qui
+contenu désactivé ou supprimé dans le back-office, un lien mal recopié, un lien de désabonnement ou de confirmation de newsletter qui
 ne correspond à aucun abonné.
 
 Elle affiche, centrés sur un écran vide :
@@ -33,13 +33,14 @@ Elle affiche, centrés sur un écran vide :
 - le titre **"Page introuvable"** ;
 - l'explication **"La page que vous recherchez n'existe pas ou a été déplacée."** ;
 - le bouton **"Aller à la page d'accueil"** ;
-- le lien **"Me contacter"**, pour signaler un lien mort.
+- le lien **"Me contacter"**, pour signaler un lien mort ;
+- le lien **"Lire le blog"**.
 
 Le texte est dans la langue du visiteur (français ou anglais).
 
 ## "Une erreur s'est produite"
 
-S'affiche quand le plan du site ne parvient pas à se charger. Elle montre le titre **"Une erreur s'est
+S'affiche quand une page ne parvient pas à se charger (plan du site, blog, projets, contact, pages de contenu ou incident imprévu). Elle montre le titre **"Une erreur s'est
 produite."**, la consigne **"Veuillez rafraîchir la page ou réessayer plus tard."** et la phrase **"Si le
 problème persiste, veuillez nous contacter."**, dont "nous contacter" mène au formulaire de contact. Le
 reste de la page (menu, pied de page) reste utilisable.
@@ -50,13 +51,11 @@ reste de la page (menu, pied de page) reste utilisable.
    l'accueil.
 2. **Un visiteur** se trompe en tapant une adresse et clique sur "Aller à la page d'accueil".
 3. **Un visiteur** ouvre un lien de désabonnement périmé et peut utiliser "Me contacter".
-4. **Un visiteur** voit une erreur sur le plan du site, rafraîchit la page puis, si cela persiste,
+4. **Un visiteur** voit une erreur sur une page, rafraîchit la page puis, si cela persiste,
    écrit au propriétaire.
 
 ## Points d'attention / limites actuelles
 
 - La page "Page introuvable" propose seulement deux sorties : le retour à l'accueil et le contact.
-- Il n'y a pas de page "Une erreur s'est produite" dédiée sur les autres pages du site : si un
-  incident s'y produit, c'est l'affichage d'erreur par défaut du navigateur et du site qui apparaît.
 - Les formulaires (contact, newsletter) gèrent leurs erreurs eux-mêmes, avec un message sous ou près
   du formulaire ; ils n'utilisent pas ces pages.

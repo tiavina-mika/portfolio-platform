@@ -13,7 +13,7 @@
 
 ## Où trouver cette page
 
-Menu de gauche → **Page web** → **Pages**. Si le sous-menu est replié, un clic sur **Page web** le déplie.
+Menu de gauche → groupe **Contenu** → **Pages**.
 
 ## À quoi sert cette page
 
@@ -23,8 +23,8 @@ créer une nouvelle. Chaque page est rédigée en français, en anglais et en ma
 
 ## Qui peut l'utiliser
 
-L'accès dépend du **rôle** du compte, réglé dans la page **Droits** (ressource « Pages »). Les
-propriétaires et administrateurs ont tous les droits.
+L'accès dépend du **poste** du compte, réglé dans la page **Droits** (ressource « Pages »). Les
+comptes Owner et Super Admin ont tous les droits.
 
 | Droit | Ce qu'il permet ici |
 |---|---|
@@ -65,7 +65,7 @@ apparaissent en premier.
 
 Dans le menu **Actions** de chaque ligne : **Modifier**, **Voir l'aperçu** (fiche détaillée de la page) et
 **Voir le site web** (ouvre la page publique dans un nouvel onglet). Seules les actions autorisées par le
-rôle sont proposées.
+poste sont proposées.
 
 ### Supprimer une page
 
@@ -93,8 +93,8 @@ définitive, irréversible). Les catégories d'une page supprimée sont mises de
 
 ## Points d'attention / limites actuelles
 
-- Il n'existe pas de bouton « Restaurer » : une page placée à la corbeille ne peut qu'être consultée ou
-  détruite définitivement.
+- Dans l'onglet Corbeille, l'action **Restaurer** remet une page dans la liste ; on peut aussi la détruire
+  définitivement.
 - Un clic sur une ligne n'ouvre pas la page : il faut passer par le menu Actions.
 - Supprimer définitivement une page l'enlève aussi des sections qui la contenaient ; une section qui
   n'a plus aucune page est détruite à son tour (voir [Sections de page](PAGE_SECTIONS.FR.md)).

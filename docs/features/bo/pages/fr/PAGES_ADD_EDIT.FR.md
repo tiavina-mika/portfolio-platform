@@ -27,8 +27,8 @@ Rédiger une page du site public, ou corriger une page existante. Le contenu se 
 ## Qui peut l'utiliser
 
 Le droit **Créer** (création) ou **Modifier** (modification) sur la ressource « Pages », réglé dans la
-page **Droits**. Sans ce droit, l'écran « introuvable » s'affiche. Les propriétaires et
-administrateurs ont tous les droits.
+page **Droits**. Sans ce droit, l'écran « introuvable » s'affiche. Les comptes Owner et
+Super Admin ont tous les droits.
 
 ## Ce que l'on voit à l'écran
 

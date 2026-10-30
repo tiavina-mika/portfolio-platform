@@ -77,6 +77,8 @@ Each app has its **own** `package.json` but there is a **single** `pnpm-lock.yam
 
 ### Detailed rules
 
+The server and the back-office are split in `_core/` (generic back-office) and `_domain/` (the `Project` domain): `_core` never imports `_domain`; see `docs/code/architecture/en/CORE_DOMAIN.md`. `apps/web` is not split.
+
 Topic rules live in `.claude/rules/` (code style, naming, TypeScript, component structure, forms, theming, accessibility, Parse patterns, docs, inventory, Storybook, git branches, implementation completeness). Per-app guidance is in `apps/<name>/CLAUDE.md` and `apps/<name>/.claude/rules/`.
 
 ### Environments

@@ -4,6 +4,7 @@
 
 - [Arborescence](#arborescence)
 - [Apps](#apps)
+- [Core et domain](#core-et-domain)
 - [Bibliothèques partagées](#bibliothèques-partagées)
 - [Outillage](#outillage)
 - [Commandes](#commandes)
@@ -29,15 +30,19 @@ Chaque app garde son propre `package.json` (dépendances, `engines`) et un `proj
 
 | App | Stack | Rôle |
 |---|---|---|
-| `server` | Node.js, Express, Parse Server, TypeScript (build SWC) | Cloud Code (fonctions, triggers, jobs), emails, stockage de fichiers ; sert le build du back-office |
-| `bo` | Vite, React, Material UI, TanStack Router, Redux Toolkit | Panneau d'admin : articles, pages, projets, catégories, contacts, utilisateurs, rôles |
-| `web` | Next.js, Tailwind CSS, shadcn/ui, next-intl | Portfolio public : projets, articles, contact, newsletter |
+| `server` | Node.js, Express, Parse Server, TypeScript (build SWC) | Cloud Code (fonctions, triggers, jobs), emails et SMS, stockage de fichiers ; sert le build du back-office. Séparé en `_core` / `_domain` |
+| `bo` | Vite, React, Material UI, TanStack Router, Redux Toolkit | Panneau d'admin : contenu, projets, tickets, utilisateurs, rôles, notifications, signalements, tableaux de bord. Séparé en `_core` / `_domain` |
+| `web` | Next.js, Tailwind CSS, shadcn/ui, next-intl | Portfolio public : projets, blog, pages, contact, newsletter (pas de séparation) |
 
 Le build de `bo` est copié dans le serveur (`pnpm copy` dans `apps/server`) et servi par Express.
 
+## Core et domain
+
+`server` et `bo` séparent leur code en `_core` (back-office générique) et `_domain` (le `Project` du portfolio) ; `web` n'est pas séparé. Voir [CORE_DOMAIN.FR.md](CORE_DOMAIN.FR.md).
+
 ## Bibliothèques partagées
 
-`libs/` contient le code partagé (`shared-constants`, `shared-domain-constants`, `shared-domain-types`, `shared-types`, `shared-utils`) et les configs partagées (`@shared/eslint-config`, `@shared/prettier-config` sous `libs/config/`) utilisées par les apps.
+`libs/` contient le code partagé (`shared-constants`, `shared-domain-constants`, `shared-domain-types`, `shared-domain-utils`, `shared-faq`, `shared-types`, `shared-utils`, `shared-validations`) et les configs partagées (`@shared/eslint-config`, `@shared/prettier-config` sous `libs/config/`) utilisées par les apps.
 
 ## Outillage
 

@@ -15,9 +15,10 @@
 
 ## Où trouver cette page
 
-Lien **"Me contacter"** du menu de navigation (présent sur toutes les pages) et lien "Contactez-moi"
-du pied de page. L'adresse est `/contact-me` en anglais et `/contactez-moi` en français. Le même
-formulaire est aussi intégré à la page d'accueil, dans le bloc "Discutons ensemble". La page
+Lien **"Contact"** du menu de navigation (présent sur toutes les pages) et lien "Contactez-moi" du
+pied de page. L'adresse est `/contact` dans les deux langues. Les anciennes adresses
+(`/contact-me` en anglais, `/contactez-moi` en français) redirigent automatiquement vers `/contact`.
+Le même formulaire est aussi intégré à la page d'accueil, dans le bloc "Discutons ensemble". La page
 d'erreur "Page introuvable" propose elle aussi un lien "Me contacter".
 
 ## À quoi sert cette page
@@ -31,15 +32,16 @@ Tout visiteur, sans connexion ni compte.
 
 ## Ce que l'on voit à l'écran
 
-- **Sur la page "Me contacter"** : à gauche, le titre "Me contacter" et un texte qui explique comment
+- **Sur la page "Contact"** : à gauche, le titre "Me contacter" et un texte qui explique comment
   se déroule une collaboration (un premier échange pour se connaître, la compréhension du contexte et
-  des objectifs, puis un accord et le démarrage de la mission) ; à droite, le formulaire dans une
-  carte. Sur téléphone et tablette, le texte puis le formulaire sont empilés.
-- **Sur la page d'accueil** : le même formulaire, sans titre de champs (les indications sont écrites
-  dans les champs), suivi des icônes des réseaux et moyens de contact du propriétaire.
-- Le formulaire comporte trois champs, tous obligatoires, signalés par une étoile :
-  - **Email**
+  des objectifs, puis un accord et le démarrage de la mission) ainsi que les liens vers les réseaux du
+  propriétaire ; à droite, le formulaire dans une carte. Sur téléphone et tablette, le texte puis le
+  formulaire sont empilés.
+- **Sur la page d'accueil** : le même formulaire, suivi des icônes des réseaux et moyens de contact du
+  propriétaire.
+- Le formulaire comporte trois champs, tous obligatoires :
   - **Nom**
+  - **Email**
   - **Message** (zone de texte de plusieurs lignes)
 - Un bouton **"Envoyer"**.
 
@@ -51,11 +53,14 @@ du site.
 
 ### Envoyer un message
 
-Une fois les trois champs remplis, un clic sur "Envoyer" enregistre le message. Le texte **"Votre
-message a été envoyé."** s'affiche, et le formulaire est vidé, prêt pour un autre message. Pendant
-l'envoi, le bouton indique que l'opération est en cours.
+Une fois les trois champs remplis, un clic sur "Envoyer" enregistre le message. Pendant l'envoi, le
+bouton indique que l'opération est en cours. Le titre **"Message envoyé"** et le texte **"Votre
+message a été envoyé. Je vous répondrai dans les meilleurs délais."** remplacent ensuite le
+formulaire, avec un bouton **"Envoyer un autre message"** pour en écrire un nouveau.
 
-Si l'envoi échoue, un message d'erreur apparaît et le visiteur peut réessayer.
+Si l'envoi échoue, un message d'erreur ("Envoi impossible") apparaît et le visiteur peut réessayer.
+Hors connexion, une bannière prévient que le message ne peut pas partir tant que le réseau n'est pas
+revenu ; les champs restent utilisables pour rédiger le message en attendant.
 
 ### Utiliser les autres moyens de contact
 
@@ -66,12 +71,9 @@ page indique aussi l'adresse postale (Antananarivo, Madagascar) et l'adresse ema
 ## Ce qui se passe après l'envoi
 
 Le message est enregistré et apparaît dans la section "Contacts" du back-office, où le propriétaire
-le consulte et peut y répondre par email (voir la documentation du back-office). La langue du
-visiteur est conservée avec le message, et si l'adresse email correspond à un utilisateur déjà connu
-du système, le message est rattaché à cet utilisateur.
-
-L'adresse email du visiteur est aussi ajoutée à la liste de contacts du service d'envoi d'emails du
-propriétaire.
+le consulte et peut y répondre (voir la documentation du back-office). La langue du visiteur est
+conservée avec le message. Le visiteur reçoit par ailleurs un **accusé de réception** à l'adresse
+email indiquée.
 
 ## Cas d'utilisation typiques
 
@@ -82,11 +84,11 @@ propriétaire.
 
 ## Points d'attention / limites actuelles
 
-- Le visiteur ne reçoit **pas** d'email de confirmation après l'envoi : seul le message affiché à
-  l'écran confirme l'envoi.
 - Il n'existe pas de case pour s'abonner à la newsletter depuis ce formulaire : l'inscription se fait
   dans la zone dédiée ([Inscription à la newsletter](../../newsletter/fr/NEWSLETTER_SUBSCRIBE.FR.md)).
-- Le formulaire est protégé contre les envois automatisés par un contrôle invisible (reCAPTCHA) ; si
-  ce contrôle échoue, un message d'erreur s'affiche et rien n'est envoyé.
+- Le formulaire est protégé contre les envois automatisés par un contrôle invisible (reCAPTCHA) et par
+  une limite : au-delà de 5 messages en une heure depuis le même appareil, le message "Trop de requêtes
+  en peu de temps" s'affiche et rien n'est envoyé.
+- Si le contrôle anti-robot échoue, un message d'erreur s'affiche et rien n'est envoyé.
 - La réponse du propriétaire arrive par email à l'adresse laissée : il faut donc une adresse valide
   et consultée.

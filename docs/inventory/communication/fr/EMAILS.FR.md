@@ -9,18 +9,28 @@
 
 ## Comment les e-mails sont envoyés
 
-Tous les e-mails passent par les e-mails transactionnels de Brevo (voir [Brevo](../../../services/brevo/fr/BREVO.FR.md)). Code : `apps/server/src/services/email.service.ts` (`sendEmail`) et `apps/server/src/cloud/utils/email.utils.cloud.ts` (les constructeurs de messages). Le corps HTML vient de `generateEmailTemplate` dans `apps/server/src/config/emails/index.ts` ; les textes sont traduits côté serveur (`apps/server/src/locales`) dans la langue de l'utilisateur. L'expéditeur par défaut est `ADMIN_EMAIL_SENDER` avec le nom de l'application.
+Tous les e-mails passent par les e-mails transactionnels de Brevo (voir [Brevo](../../../services/brevo/fr/BREVO.FR.md)). Code : `apps/server/src/services/email.service.ts` (`sendEmail`) et `apps/server/src/cloud/utils/_core/email.utils.cloud.ts` (les constructeurs de messages). Le corps HTML vient de `generateEmailTemplate` dans `apps/server/src/config/emails/index.ts` et `apps/server/src/emails/templates/` ; les textes sont traduits côté serveur (`apps/server/src/config/i18n/locales`) dans la langue de l'utilisateur. L'expéditeur par défaut est `ADMIN_EMAIL_SENDER` avec le nom de l'application.
 
 ## E-mails envoyés
 
 | E-mail | Constructeur | Envoyé depuis | Destinataire |
 |---|---|---|---|
-| Code de vérification du compte | `sendEmailVerification` | Cloud Function `sendVerificationCode` et le flux de création d'utilisateur | Le nouvel utilisateur |
+| Code de vérification du compte | `sendEmailVerification` (`sendVerificationCodeToEmail`) | Cloud Functions `sendVerificationCode`, flux `verifyAccount` et création d'utilisateur | Le nouvel utilisateur |
 | Code de réinitialisation du mot de passe | `sendEmailResetPassword` | Cloud Function `sendResetPasswordVerificationCode` | L'utilisateur |
-| Message libre depuis le back-office | `sendEmailToUser` | Cloud Function `sendEmailToUser` | Un utilisateur choisi par un admin |
+| Invitation au back-office | `sendInvitationEmail` | Cloud Function `sendBOInvitation`, et l'invitation des owners au démarrage du serveur | La personne invitée |
+| Code de vérification renforcée | `sendStepUpVerificationEmail` | Cloud Function `requestStepUpVerification` | L'utilisateur connecté |
+| Code de changement de contact | `sendContactChangeVerificationEmail` | Cloud Function `requestContactChange` | L'utilisateur |
+| Accusé de réception et réponse à un ticket | `sendTicketAcknowledgementEmail`, `sendTicketReplyEmail` | Formulaire de contact / `sendTicketMessage` | Le visiteur qui a écrit |
+| Confirmation de newsletter (double opt-in) | `sendNewsletterConfirmationEmail` | Cloud Function `subscribeToNewsletter` | L'abonné, avec le lien de confirmation |
+| Confirmation de désabonnement | `sendNewsletterUnsubscribeConfirmationEmail` | Cloud Function `unsubscribeNewsletter` | L'abonné |
 | Nouvel article | `sendArticleToNewsletterEmails` | Job `sendArticleToNewsletterJob`, lancé quand un article est enregistré | Les abonnés actifs de la newsletter, avec un lien de désinscription |
+| Message libre et notifications | `sendEmailToUser`, `sendNotificationEmailToUsers` | `sendMessageToUser`, envois et diffusions de notifications | Des utilisateurs choisis par un admin |
+| Avis de compte | `sendWelcomeEmail`, `sendAccountReactivatedEmail`, `sendNewDeviceLoginEmail`, `sendPasswordResetDelayedEmail` | Triggers et services d'utilisateur et de connexion | L'utilisateur |
+| Alertes à l'équipe | `sendEmailToStaffInTheirOwnLocale` | Signalements, paiements en échec, jobs en échec, grosses opérations d'argent | L'équipe (et Slack quand `SLACK_ALERTS_WEBHOOK_URL` est renseigné) |
 
-Les fonctions de test `sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest` et `sendArticleToNewsletterTest` envoient les mêmes e-mails pour vérification.
+Les textes de vérification partent aussi par SMS via MMSDuck (`sendSmsVerification`, SMS de ticket et de nouvel appareil) : en développement et en test ils sont seulement journalisés.
+
+Les fonctions de test (`sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest`, `sendArticleToNewsletterTest`, `sendInvitationTest`, `sendWelcomeEmailTest`) envoient les mêmes e-mails pour vérification.
 
 ## Contacts de la newsletter
 
@@ -28,6 +38,5 @@ Les fonctions de test `sendVerificationCodeTest`, `sendResetPasswordVerification
 
 ## Pièges
 
-- Aucun e-mail n'est envoyé au propriétaire du site à l'envoi du formulaire de contact : le message est seulement stocké dans `Contact` et affiché dans le back-office.
-- `SENDER_EMAIL` est dans `apps/web/.env.example` mais n'est lu par aucun code de `apps/web`.
+- Aucun e-mail n'est envoyé au propriétaire du site à l'envoi du formulaire de contact : le message est stocké dans `Contact` comme un ticket, affiché dans le back-office, et le visiteur reçoit un accusé de réception.
 - `sendEmail` relance les erreurs Brevo alors que `createContactEmail` ne fait que les journaliser.

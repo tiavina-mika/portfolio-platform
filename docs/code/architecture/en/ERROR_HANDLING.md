@@ -23,7 +23,7 @@ The server throws plain `Error`s whose message is meant to be shown to a person.
 
 ### Cloud Functions and triggers
 
-Every Cloud Function and trigger is wrapped in `parseFunction` (`apps/server/src/cloud/utils/utils.cloud.ts`). It logs the start and the end of the call with the object id, the user id and the client IP, and in case of failure logs the error and rejects with `new Error(message)`: the client receives the message, not a stack. A function that returns nothing returns `'ok'`. `fromBO` adds the "must be logged in" check on top, see [RIGHTS_ROLES.md](RIGHTS_ROLES.md).
+Every Cloud Function and trigger is wrapped in `parseFunction` (`apps/server/src/cloud/utils/_core/utils.cloud.ts`). It logs the start and the end of the call with the object id, the user id and the client IP, and in case of failure logs the error and rejects with `new Error(message)`: the client receives the message, not a stack. A function that returns nothing returns `'ok'`. `fromBO` adds the "must be logged in" check on top, see [RIGHTS_ROLES.md](RIGHTS_ROLES.md).
 
 Business errors are thrown with a message of one of two forms:
 
@@ -42,7 +42,7 @@ Functions that must not fail the client return `false` instead of throwing when 
 
 ### Translated messages
 
-`translate(key, locale)` (`apps/server/src/config/i18next.ts`) reads `apps/server/src/locales/{fr,en,mg}/common.json` through i18next with `fr` as the fallback. The locale reaches triggers through the save context (`context: { locale }`, set by the website for `Contact`) and Cloud Functions through the `locale` parameter. Keys with a namespace prefix such as `user:errors.accessDenied` are not in the server files: they are the back-office's keys.
+`translate(key, locale)` (`apps/server/src/config/i18n/index.ts`) reads `apps/server/src/config/i18n/locales/{fr,en,mg}/_core/common.json` through i18next with `fr` as the fallback. The locale reaches triggers through the save context (`context: { locale }`, set by the website for `Contact`) and Cloud Functions through the `locale` parameter. Keys with a namespace prefix such as `user:errors.accessDenied` are not in the server files: they are the back-office's keys.
 
 ### Express routes
 
@@ -67,7 +67,7 @@ Jobs (`cloud/jobs/`) catch errors, log them with `logger.info` / `logger.error` 
 
 ## Back-office
 
-- Thunks are created through `actionWithLoader` (`apps/bo/src/redux/actions/util.action.ts`). It starts and stops a loading flag (global or local), checks the optional `collection` / `action` / `uiRight` rights, and catches any thrown error: the message goes through `translatedError` and is stored with `setErrorSlice`. `SnackBars.tsx` displays the error and clears it on close.
+- Thunks are created through `actionWithLoader` (`apps/bo/src/redux/actions/_core/util.action.ts`). It starts and stops a loading flag (global or local), checks the optional `collection` / `action` / `uiRight` rights, and catches any thrown error: the message goes through `translatedError` and is stored with `setErrorSlice`. `SnackBars.tsx` displays the error and clears it on close.
 - `translatedError`: when the message contains `:` it is treated as an i18next key and translated (`user:errors.userNotFound`), otherwise displayed as is. This is why server keys carry the BO namespace.
 - Parse error codes are handled where they matter: sign-up maps code 202 to "account already exists" and 142 to the server message; login maps 141 to the verification flow when the confirmation is enabled.
 - Route loaders use `onEnterActionWithLoader`, which turns the internal `Errors.notFound` into TanStack Router's `notFound()` (404 page) and `Errors.redirect` into `redirect()`. TanStack Router cannot catch these inside the generic wrapper, so loaders do not use `actionWithLoader`.

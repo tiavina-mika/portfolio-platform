@@ -15,7 +15,8 @@
 
 ## Où trouver cette page
 
-- Liste : menu de gauche → **Page web** → **Sections**.
+- Liste : elle n'a plus d'entrée dans le menu de gauche ; on atteint les sections depuis l'aperçu d'une
+  page (bloc **Sections**).
 - Création : depuis l'aperçu d'une page, bouton « + » du bloc **Sections**.
 - Modification : crayon d'une section dans l'aperçu de la page, ou dans l'aperçu de la section.
 

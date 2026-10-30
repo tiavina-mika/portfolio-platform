@@ -20,11 +20,11 @@ The variables of each app are listed in the [inventory](../../README.md#environm
 
 ## Server
 
-- `NODE_ENV` selects the environment. `IS_LOCAL`, `IS_PREPROD` and `IS_PROD` are derived from it in `apps/server/src/utils/constants.ts`.
+- `NODE_ENV` selects the environment. `IS_LOCAL`, `IS_PREPROD` and `IS_PROD` are derived from it in `apps/server/src/constants/_core/constants.ts`.
 - Local file loading: `.env.prod` when production is forced, otherwise `.env.preprod`. In a deployed environment no file is read: the variables are set on the host.
-- At boot, `validateEnv()` (`envalid`) refuses to start without `NODE_ENV`, `PORT`, `MONGO_URL`, `PARSE_APP_ID`, `PARSE_MASTER_KEY`, `REST_API_KEY`, `SERVER_URL`, `WEBSITE_URL`, the three `CRYPTO_*` variables, `BREVO_API_KEY` and the three `CLOUDINARY_*` variables.
+- At boot, `validateEnv()` (`apps/server/src/utils/_core/validateEnv.ts`, `envalid`) refuses to start without the required variables listed in the [inventory](../../README.md#appsserver). In `preProduction` and `production` it also requires `OWNERS_EMAILS` (at least two distinct addresses), `MMSDUCK_API_KEY` and `WEBSITE_REVALIDATE_SECRET`; elsewhere they are optional.
 - The back-office build is served by Express from `clientBuild/bo/preprod` or `clientBuild/bo/prod` depending on the environment (`pnpm copy` fills them, then checks that no secret-looking `VITE_*` value ended up in the bundle).
-- The keep-awake cron runs everywhere except in local development.
+- The keep-awake ping runs everywhere except in local development and on Cloud Run; the business cron jobs run in production only (see [scheduled tasks](SCHEDULED_JOBS.md)).
 
 ## Web
 
@@ -36,5 +36,5 @@ Vite reads `.env.preprod` (`pnpm dev`, `build:preprod`) or `.env.prod` (`build:p
 
 ## Gotchas
 
-- `FORCE_PROD` and `FORCE_PREPROD` in `apps/server/src/utils/constants.ts` must stay `false` when committing: they exist to test an environment locally.
-- `OWNERS_EMAILS` and `ADMIN_EMAIL_SENDER` are not in `validateEnv()`: the server starts without them but no Owner is created and emails have no sender.
+- `FORCE_PROD` and `FORCE_PREPROD` in `apps/server/src/constants/_core/constants.ts` must stay `false` when committing: they exist to test an environment locally.
+- A deployed server with fewer than two `OWNERS_EMAILS` addresses, or without `MMSDUCK_API_KEY` or `WEBSITE_REVALIDATE_SECRET`, does not start: a single-owner portfolio must list a second address before deploying.

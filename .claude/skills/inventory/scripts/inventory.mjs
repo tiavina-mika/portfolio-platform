@@ -21,7 +21,9 @@ const APPS = ['server', 'bo', 'web'];
 const CLOUD_DIR = path.join(ROOT, 'apps/server/src/cloud');
 const SKIPPED_DIRS = new Set(['node_modules', '.next', 'dist', 'build', 'coverage', 'clientBuild']);
 // provided by the runtime or the tooling, not by a `.env` file
-const RUNTIME_VARS = new Set(['NODE_ENV', 'MODE', 'DEV', 'PROD', 'SSR', 'BASE_URL', 'CI', 'PWD', 'HOME', 'TIME', 'ANALYZE', 'VITE_APP_VERSION']);
+const RUNTIME_VARS = new Set(['NODE_ENV', 'MODE', 'DEV', 'PROD', 'SSR', 'BASE_URL', 'CI', 'PWD', 'HOME', 'TIME', 'ANALYZE', 'VITE_APP_VERSION',
+  // set by the host or by the build, or only used by tests and scripts: not part of a .env file
+  'K_SERVICE', 'TZ', 'E2E', 'E2E_ALLOWED_ORIGINS', 'REAL_SIGN_UP_VERIFICATION', 'BOOKINGS_CLOSED', 'VITE_APP_RELEASE', 'VITE_APP_BUILD_TIME']);
 
 const read = (file) => fs.readFileSync(file, 'utf8');
 const rel = (file) => path.relative(ROOT, file).split(path.sep).join('/');
@@ -39,7 +41,8 @@ const walk = (dir, filter) => {
 
 const inventory = read(path.join(ROOT, 'docs/inventory/README.md'));
 const services = read(path.join(ROOT, 'docs/services/README.md'));
-const documented = new Set([...(inventory + services).matchAll(/`([A-Z][A-Z0-9_]+)`/g)].map((m) => m[1]));
+const githubPage = read(path.join(ROOT, 'docs/inventory/code/en/GITHUB_VARIABLES_AND_SECRETS.md'));
+const documented = new Set([...(inventory + services + githubPage).matchAll(/`([A-Z][A-Z0-9_]+)`/g)].map((m) => m[1]));
 
 const problems = [];
 const declaredEverywhere = new Set();
@@ -70,7 +73,7 @@ for (const app of APPS) {
 
 for (const name of documented) {
   // a documented variable-looking token that no .env.example declares: stale, or not a variable at all
-  if (/^(VITE_|NEXT_PUBLIC_)|_(KEY|URL|SECRET|ID|EMAIL|IV|NAME|SENDER|ENV|PORT|PREPROD)$/.test(name) && !declaredEverywhere.has(name)) {
+  if (!RUNTIME_VARS.has(name) && !githubPage.includes('`' + name + '`') && /^(VITE_|NEXT_PUBLIC_)|_(KEY|URL|SECRET|ID|EMAIL|IV|NAME|SENDER|ENV|PORT|PREPROD)$/.test(name) && !declaredEverywhere.has(name)) {
     problems.push(`docs: ${name} is documented but no .env.example declares it`);
   }
 }
@@ -90,7 +93,7 @@ for (const [dir, label] of Object.entries(kinds)) {
     const text = read(file);
 
     if (dir === 'functions') for (const m of text.matchAll(/Parse\.Cloud\.define\(\s*'([^']+)'/g)) names.functions.push(`${base}: ${m[1]}`);
-    if (dir === 'jobs') for (const m of text.matchAll(/Parse\.Cloud\.job\(\s*'([^']+)'/g)) names.jobs.push(`${base}: ${m[1]}`);
+    if (dir === 'jobs') for (const m of text.matchAll(/(?:Parse\.Cloud\.job|defineJob)\(\s*'([^']+)'/g)) names.jobs.push(`${base}: ${m[1]}`);
     if (dir === 'triggers') {
       for (const m of text.matchAll(/Parse\.Cloud\.(before\w+|after\w+)\(\s*([\w.'"]+)/g)) names.triggers.push(`${base}: ${m[1]} ${m[2]}`);
     }

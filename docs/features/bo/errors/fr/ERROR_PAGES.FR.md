@@ -23,7 +23,7 @@ s'affichent dans un bandeau de message.
 
 ## Qui peut l'utiliser
 
-Tout le monde peut la voir. Elle remplace aussi bien une page inexistante qu'une page que le rôle du
+Tout le monde peut la voir. Elle remplace aussi bien une page inexistante qu'une page que le poste du
 compte n'autorise pas.
 
 ## Ce que l'on voit à l'écran
@@ -38,7 +38,7 @@ Elle apparaît dans quatre situations :
 
 1. une adresse qui n'existe pas dans le back-office ;
 2. un élément qui n'existe plus ou n'a jamais existé (page, catégorie, utilisateur… ouvert par son lien) ;
-3. une rubrique pour laquelle le rôle n'a pas le droit nécessaire (par exemple ouvrir la liste des pages
+3. une rubrique pour laquelle le poste n'a pas le droit nécessaire (par exemple ouvrir la liste des pages
    sans le droit « Lister » sur les pages) ;
 4. un formulaire de création ou de modification ouvert sans le droit « Créer » ou « Modifier ».
 
@@ -53,7 +53,7 @@ action », sans quitter la page.
 ## Cas d'utilisation typiques
 
 1. **Un lien enregistré vers un élément supprimé** : la page d'erreur s'affiche ; retour à l'accueil.
-2. **Une rubrique qui disparaît du menu** : le rôle ne permet plus de la voir ; contacter un
+2. **Une rubrique qui disparaît du menu** : le poste ne permet plus de la voir ; contacter un
    administrateur pour obtenir le droit.
 3. **Une faute de frappe dans l'adresse** : retour à l'accueil, puis menu.
 
@@ -61,5 +61,5 @@ action », sans quitter la page.
 
 - Le message est le même quelle que soit la cause : on ne sait pas si la page n'existe pas ou si l'accès
   est refusé.
-- Une personne sans aucun rôle n'arrive pas sur cette page : elle est renvoyée vers la déconnexion.
+- Une personne sans aucun poste n'arrive pas sur cette page : elle est renvoyée vers la déconnexion.
 - Une personne non connectée est renvoyée vers l'écran de connexion.

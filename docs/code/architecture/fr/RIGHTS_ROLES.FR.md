@@ -5,95 +5,76 @@
 - [Vue d'ensemble](#vue-densemble)
 - [Rôles par défaut](#rôles-par-défaut)
 - [Modèle de droits](#modèle-de-droits)
-- [Attribution des rôles](#attribution-des-rôles)
+- [Attribuer des rôles](#attribuer-des-rôles)
 - [Contrôles côté serveur](#contrôles-côté-serveur)
 - [Contrôles dans le back-office](#contrôles-dans-le-back-office)
 - [Site public](#site-public)
-- [Écarts connus](#écarts-connus)
+- [Lacunes connues](#lacunes-connues)
 
 ## Vue d'ensemble
 
-Le contrôle d'accès repose sur les objets Parse `_Role`. Un rôle porte deux champs personnalisés :
+Le contrôle d'accès repose sur les objets Parse `_Role`. Un rôle porte des champs personnalisés :
 
 - `rights` : une liste de `{ className, rights: { create, find, get, update, delete, destroy } }`, une entrée par collection (booléens) ;
-- `ui` : une liste de zones du back-office que le rôle ouvre (`miscellaneous`, `tests`, issues de `UIRoleEnum` dans `apps/bo/src/types/role.type.ts`).
+- `ui` : les zones du back-office que le rôle ouvre (`UIRoleEnum` dans `apps/bo/src/types/_core/role.type.ts` : `migrations`, `cron`, `tests`, `impersonation`, `statistics`, `finance`, `broadcast`, `staff`) ;
+- `countries` : les pays auxquels le rôle est limité, et un délai d'inactivité optionnel (15 à 480 minutes).
 
-Le back-office les expose dans la page des rôles (formulaire `apps/bo/src/containers/roles/RoleForm.tsx`) : un tableau de collections (`_User`, `_Role`, `Article`, `Page`, `Project`, `Category`, `Contact`, issues de `ENTITIES_WITH_RIGHTS_OPTIONS`) avec les six droits, et la liste `ui`.
+La page des rôles du back-office (`apps/bo/src/containers/_core/roles/RoleForm.tsx`) les édite. Les collections proposées sont `ENTITIES_WITH_RIGHTS_OPTIONS` (`_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Payment`, `Notification`, `Report`, `UserAuditLog`) plus les entités que le domaine enregistre avec `registerRightsEntities` (`Project`, dans `apps/bo/src/utils/_domain/project-role.utils.ts`), voir [CORE_DOMAIN.FR.md](CORE_DOMAIN.FR.md).
 
 ## Rôles par défaut
 
-Définis dans `libs/shared-constants/src/role.constants.ts` :
+Noms dans `libs/shared-constants/src/role.constants.ts`, libellés et droits par défaut dans `apps/server/src/constants/_core/role.constants.ts`. Les noms sont en majuscules.
 
-| Rôle | Constante | Signification |
+| Rôle | Niveau | Signification |
 |---|---|---|
-| `Owner` | `HIGHEST_LEVEL_ROLES[0]` | plus haut niveau, le premier compte |
-| `Administrator` | `HIGHEST_LEVEL_ROLES[1]` | plus haut niveau |
-| `Manager` | `DEFAULT_ROLES` | rôle par défaut, avec les droits qu'un administrateur lui donne |
+| `OWNER` | le plus haut (`HIGHEST_LEVEL_ROLES[0]`) | fait les actions réservées au propriétaire (réinitialiser la MFA d'un administrateur, révoquer un super administrateur) |
+| `SUPER_ADMIN` | le plus haut (`HIGHEST_LEVEL_ROLES[1]`) | tous les droits sur toutes les collections |
+| `MANAGER` | par défaut (`DEFAULT_ROLES[0]`) | droits réglés par entité dans le back-office |
+| `SUPPORT_VIEWER` | par défaut | lecture seule, voit les statistiques |
+| `TEAM_LEAD` | par défaut | lit comme `SUPPORT_VIEWER`, peut inviter un collègue, voit la gestion du personnel |
 
-`Owner` et `Administrator` sont les rôles « de plus haut niveau » : ils sont traités comme ayant tous les droits sur toutes les collections, côté serveur (`hasRight`) comme dans le back-office (`canAccessTo`, `getRights`), sans entrée `rights`.
+Les deux rôles les plus hauts passent tous les contrôles sans entrée `rights`, côté serveur (`hasRight`) et dans le back-office. Les rôles par défaut sont créés au démarrage par `ensureDefaultRolesExist`, une fois `SUPER_ADMIN` présent.
 
-Comment les rôles apparaissent :
+Les anciennes bases contiennent `Owner`, `Administrator` et `Manager`. Aucun job ne les renomme : voir le fichier de dette de la revue de la branche.
 
-1. Un utilisateur qui s'inscrit avec un email listé dans `OWNERS_EMAILS` reçoit `Owner` (`afterSave` de `_User`) ; `createRole` crée le rôle s'il n'existe pas encore.
-2. `createRole` donne à chaque nouveau rôle une ACL en lecture publique et un accès en écriture limité aux rôles de plus haut niveau, et ajoute les rôles `Owner` et `Administrator` existants à sa relation `roles` pour qu'ils en héritent.
-3. Les autres rôles (`Manager` ou noms personnalisés) sont créés de la même façon : soit quand un administrateur en crée un dans le back-office (Cloud Function `createRole`), soit à la volée quand `addOrUpdateRolesToUser` nomme un rôle qui n'existe pas.
+Comment apparaissent les premiers propriétaires : au démarrage, `ensureOwnerInvitationsExist` envoie une invitation au back-office avec le rôle `OWNER` (valable 90 jours) à chaque adresse de `OWNERS_EMAILS` qui n'a ni compte ni invitation en attente. En `preProduction` et `production`, `validateEnv` refuse de démarrer avec moins de deux adresses distinctes.
 
 ## Modèle de droits
 
 | Concept | Où |
 |---|---|
-| entrée `rights` par collection | `_Role.rights`, modifiée dans la page des rôles |
-| entrées `ui` | `_Role.ui` |
-| hiérarchie des rôles | `_Role.roles` (rôles parents), remplie par `createRole` / `updateRole` à partir de `parentRoleNames` |
-| rôles d'un utilisateur | relation `_Role.users`, modifiée par `updateRoleForUser` / `removeRolesForUser` |
+| Entrée `rights` par collection | `_Role.rights` |
+| `ui`, `countries`, délai | `_Role.ui`, `_Role.countries` |
+| Hiérarchie | `_Role.roles` : les rôles les plus hauts sont enfants de tous les autres |
+| Rôles d'un utilisateur | relation `_Role.users` |
+| Permissions de classe | reconstruites depuis les rôles à chaque démarrage (`rebuildAllCLP`) ; les classes de `ALWAYS_LOCKED_CLASSES` ne sont jamais accordées |
 
-`updateRoleForUser(roleNames, user)` rend les rôles d'un utilisateur égaux à la liste donnée : elle ajoute les manquants et retire les autres.
+## Attribuer des rôles
 
-## Attribution des rôles
-
-Cloud Functions de `apps/server/src/cloud/functions/role.functions.ts` :
-
-| Fonction | Garde | Rôle |
-|---|---|---|
-| `getUserRoles` | `parseFunction` | rôles de l'appelant, ou de `userId` |
-| `hasRole` | `parseFunction` | indique si l'appelant a l'un des `roleNames` |
-| `addOrUpdateRolesToUser` | `fromBO` | définir les rôles d'un utilisateur |
-| `removeRolesForUser` | `fromBO` | retirer tous les rôles d'un utilisateur |
-| `createRole`, `updateRole` | `fromBO` | créer ou modifier un rôle avec ses parents, `rights` et `ui` |
-
-Les thunks du back-office sont dans `apps/bo/src/redux/actions/role.action.ts`.
+Cloud Functions dans `apps/server/src/cloud/functions/_core/role.functions.ts` : `hasRole`, `addRolesToUser`, `removeRolesForUser`, `createRole`, `updateRole`, `getRolesDelegation`, `getRoleAuditLogs`, `getHighestRoleAccounts`. Un rôle peut aussi être donné par une invitation (`sendBOInvitation`) : les rôles arrivent une fois l'adresse vérifiée. Les changements de rôles sont écrits dans un journal des rôles.
 
 ## Contrôles côté serveur
 
-Briques de `apps/server/src/cloud/utils/utils.cloud.ts` et `role.utils.cloud.ts` :
+Dans `apps/server/src/cloud/utils/_core/` :
 
-- `parseFunction(fn)` : journalise l'appel et normalise les erreurs. Elle ne vérifie pas qui appelle.
-- `fromBO(fn, rights?, className?)` : rejette l'appel s'il n'y a pas de `request.user` ; quand une liste `rights` est fournie, exige aussi `hasRight(user, className, rights)`.
-- `hasRight(user, className, operations)` : vrai pour les rôles de plus haut niveau ; sinon trouve les rôles de l'utilisateur ayant une entrée `rights` pour la classe et renvoie vrai quand chacun de ces rôles accorde chaque opération demandée.
-- `isAdministrator(user)` : vrai quand l'utilisateur a `Owner` ou `Administrator`.
-- `cloudValidationRules` : un validateur pour les définitions `Parse.Cloud` qui exige un administrateur connecté (et laisse passer les appels `isExpressApi` ou d'un contexte d'utilisateur supprimé).
-- `protectionMiddleware` : pour les routes Express, voir [AUTH.FR.md](AUTH.FR.md).
+- `parseFunction(fn)` : journalise l'appel et normalise les erreurs, aucune autorisation.
+- `fromBO(fn, rights?, className?)` : exige un utilisateur connecté ; avec `rights`, exige aussi `hasRight(user, className, rights)`.
+- `hasRight(user, className, operations)` : les rôles les plus hauts passent ; sinon chaque opération demandée doit être accordée par au moins un rôle de l'utilisateur.
+- `hasBoRight(user, uiRight)` : vérifie un droit `ui`.
+- Le trigger `country-scope` restreint les requêtes aux pays du rôle.
 
-La plupart des Cloud Functions du back-office sont enveloppées par `fromBO`, donc exigent un utilisateur connecté. Seules `getProjects` et les fonctions de test (`createBatchTest`) passent une liste `rights`. Le code serveur s'exécute ensuite en général avec la master key (`USE_MASTER_KEY`) : ce ne sont donc pas les permissions au niveau des classes qui empêchent un utilisateur connecté d'appeler une fonction.
+Les requêtes tournent ensuite avec la clé maître : ces contrôles sont la garde d'une fonction du back-office.
 
 ## Contrôles dans le back-office
 
-- Les rôles de l'utilisateur courant sont chargés à l'entrée d'une page du tableau de bord (`onDashboardEnter`), avec `isAdmin` (la Cloud Function `hasRole` avec les rôles de plus haut niveau).
-- `canAccessTo(roles, className, action, uiRight)` et `getRights(roles, className, uiRight)` (`apps/bo/src/utils/role.utils.ts`) : les rôles de plus haut niveau passent ; sinon le premier rôle ayant une entrée `rights` pour la classe décide de `canCreate`, `canFind`, `canPreview`, `canEdit`, `canDelete`, `canDestroy` ; un `uiRight` est accordé quand un rôle le liste dans `ui`.
-- `useProtect(className)` renvoie ces indicateurs à un composant pour afficher ou masquer des boutons.
-- La barre latérale (`SideBar.tsx`) affiche une entrée quand l'utilisateur peut faire `find` sur la classe, ou a le droit `ui` pour les entrées Divers et Tests.
-- Les loaders de routes utilisent `onEnterActionWithLoader` avec les options `collection` / `action` / `uiRight` : un utilisateur sans le droit mais ayant au moins un rôle est envoyé vers la page introuvable ; les thunks enveloppés par `actionWithLoader` avec les mêmes options lèvent le message traduit `common:errors.unauthorizedAction`.
-
-Ces contrôles ne font que façonner l'interface. L'application réelle des droits est côté serveur.
+`canAccessTo` et `getRights` (`apps/bo/src/utils/_core/role.utils.ts`) donnent `canCreate`, `canFind`, `canPreview`, `canEdit`, `canDelete`, `canDestroy` ; `useProtect(className)` les renvoie à un composant. Le menu (`useNavigationMenus.tsx`) affiche une entrée quand l'utilisateur peut `find` la classe ou a le droit `ui`. Les loaders de routes et les thunks appliquent les mêmes options. Ces contrôles ne font que façonner l'interface ; le serveur fait foi.
 
 ## Site public
 
-Le site n'a pas de rôles. Il lit et écrit via Parse Server comme client anonyme : requêtes serveur dans `apps/web/server/queries` et Cloud Functions comme `getArticleForClient`, qui filtrent sur `deleted: false` et `active: true`, et il crée directement des objets `Contact` et `Newsletter` (leurs triggers `beforeSave` les valident et les complètent).
+Pas de rôles. Le site lit via des Cloud Functions qui filtrent sur `deleted: false` et `active: true` (`getProjectForClient`, `getArticleForClient`, ...) et envoie le formulaire de contact et l'inscription à la newsletter par des Cloud Functions publiques (`createPublicContact`, `subscribeToNewsletter`).
 
-## Écarts connus
+## Lacunes connues
 
-Constatés dans le code, non tranchés ici :
-
-- `role.triggers.ts` (création des autres rôles par défaut après `Owner`, protection de la suppression des rôles) n'est pas importé dans `triggers/index.ts` : ces triggers ne sont donc pas enregistrés. `createDefaultRoles` n'est appelée nulle part.
-- `setCLPFromRights` (permissions au niveau des classes dérivées des droits d'un rôle) est définie mais jamais appelée, et aucune permission au niveau des classes n'est déclarée dans ce dépôt : elles dépendent de ce qui est configuré en base. Le serveur autorise aussi la création de classes par le client (`allowClientClassCreation: true`).
-- Beaucoup de fonctions de lecture sont enveloppées par `parseFunction` seulement (par exemple `getUser`, `getUserByEmail`, `sendEmailToUser`, `getObjectsCount`, `saveUserLanguage`) : elles n'exigent donc pas d'utilisateur connecté.
+- Les rôles `Owner`, `Administrator`, `Manager` d'une base existante ne sont pas renommés (voir plus haut).
+- L'entrée de menu `Diffusion` n'a pas de `hasRightName`, elle est donc masquée pour tout le monde ; `Paramètres` n'est visible que des rôles les plus hauts.
+- La restauration de version de contenu n'est pas branchée pour `Project`.

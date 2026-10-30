@@ -13,87 +13,68 @@
 
 ## Overview
 
-Access control rests on Parse `_Role` objects. A role carries two custom fields:
+Access control rests on Parse `_Role` objects. A role carries custom fields:
 
 - `rights`: a list of `{ className, rights: { create, find, get, update, delete, destroy } }`, one entry per collection (booleans);
-- `ui`: a list of back-office areas the role opens (`miscellaneous`, `tests`, from `UIRoleEnum` in `apps/bo/src/types/role.type.ts`).
+- `ui`: back-office areas the role opens (`UIRoleEnum` in `apps/bo/src/types/_core/role.type.ts`: `migrations`, `cron`, `tests`, `impersonation`, `statistics`, `finance`, `broadcast`, `staff`);
+- `countries`: countries the role is limited to, and an optional inactivity timeout (15 to 480 minutes).
 
-The back-office exposes them in the roles page (form `apps/bo/src/containers/roles/RoleForm.tsx`): a table of collections (`_User`, `_Role`, `Article`, `Page`, `Project`, `Category`, `Contact`, from `ENTITIES_WITH_RIGHTS_OPTIONS`) with the six rights, and the `ui` list.
+The roles page of the back-office (`apps/bo/src/containers/_core/roles/RoleForm.tsx`) edits them. The collections offered are `ENTITIES_WITH_RIGHTS_OPTIONS` (`_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Payment`, `Notification`, `Report`, `UserAuditLog`) plus the entities the domain registers with `registerRightsEntities` (`Project`, in `apps/bo/src/utils/_domain/project-role.utils.ts`), see [CORE_DOMAIN.md](CORE_DOMAIN.md).
 
 ## Default roles
 
-Defined in `libs/shared-constants/src/role.constants.ts`:
+Names in `libs/shared-constants/src/role.constants.ts`, labels and default rights in `apps/server/src/constants/_core/role.constants.ts`. Names are in capitals.
 
-| Role | Constant | Meaning |
+| Role | Level | Meaning |
 |---|---|---|
-| `Owner` | `HIGHEST_LEVEL_ROLES[0]` | highest level, the first account |
-| `Administrator` | `HIGHEST_LEVEL_ROLES[1]` | highest level |
-| `Manager` | `DEFAULT_ROLES` | default role, with the rights that an administrator gives it |
+| `OWNER` | highest (`HIGHEST_LEVEL_ROLES[0]`) | does the owner-only actions (reset an administrator's MFA, revoke a super administrator) |
+| `SUPER_ADMIN` | highest (`HIGHEST_LEVEL_ROLES[1]`) | every right on every collection |
+| `MANAGER` | default (`DEFAULT_ROLES[0]`) | rights set per entity in the back-office |
+| `SUPPORT_VIEWER` | default | read only, sees the statistics |
+| `TEAM_LEAD` | default | reads like `SUPPORT_VIEWER`, can invite a colleague, sees the staff management |
 
-`Owner` and `Administrator` are the "highest level" roles: they are treated as having every right on every collection, both on the server (`hasRight`) and in the back-office (`canAccessTo`, `getRights`), without any `rights` entry.
+The two highest roles pass every check without a `rights` entry, on the server (`hasRight`) and in the back-office. Default roles are created at boot by `ensureDefaultRolesExist`, once `SUPER_ADMIN` exists.
 
-How the roles come to exist:
+Older databases hold `Owner`, `Administrator` and `Manager`. No job renames them: see the review debt file of the branch.
 
-1. A user signing up with an email listed in `OWNERS_EMAILS` is given `Owner` (`afterSave` of `_User`); `createRole` creates the role if it does not exist yet.
-2. `createRole` gives every new role a public read ACL and write access limited to the highest-level roles, and adds the existing `Owner` and `Administrator` roles to its `roles` relation so they inherit it.
-3. Other roles (`Manager` or custom names) are created the same way: either when an administrator creates one in the back-office (`createRole` Cloud Function), or on the fly when `addOrUpdateRolesToUser` names a role that does not exist.
+How the first owners appear: at boot `ensureOwnerInvitationsExist` sends a back-office invitation with the `OWNER` role (valid 90 days) to every `OWNERS_EMAILS` address that has no account and no pending invitation. In `preProduction` and `production`, `validateEnv` refuses to start with fewer than two distinct addresses.
 
 ## Rights model
 
 | Concept | Where |
 |---|---|
-| `rights` entry per collection | `_Role.rights`, edited in the roles page |
-| `ui` entries | `_Role.ui` |
-| Role hierarchy | `_Role.roles` (parent roles), filled by `createRole` / `updateRole` from `parentRoleNames` |
-| Roles of a user | `_Role.users` relation, changed by `updateRoleForUser` / `removeRolesForUser` |
-
-`updateRoleForUser(roleNames, user)` makes the roles of a user equal to the given list: it adds the missing ones and removes the others.
+| `rights` entry per collection | `_Role.rights` |
+| `ui`, `countries`, timeout | `_Role.ui`, `_Role.countries` |
+| Role hierarchy | `_Role.roles`: the highest roles are children of every other role |
+| Roles of a user | `_Role.users` relation |
+| Class-level permissions | rebuilt from the roles at every boot (`rebuildAllCLP`); classes in `ALWAYS_LOCKED_CLASSES` are never granted |
 
 ## Assigning roles
 
-Cloud Functions in `apps/server/src/cloud/functions/role.functions.ts`:
-
-| Function | Guard | Purpose |
-|---|---|---|
-| `getUserRoles` | `parseFunction` | roles of the caller, or of `userId` |
-| `hasRole` | `parseFunction` | whether the caller has one of `roleNames` |
-| `addOrUpdateRolesToUser` | `fromBO` | set the roles of a user |
-| `removeRolesForUser` | `fromBO` | remove every role of a user |
-| `createRole`, `updateRole` | `fromBO` | create or update a role with its parents, `rights` and `ui` |
-
-The back-office thunks are in `apps/bo/src/redux/actions/role.action.ts`.
+Cloud Functions in `apps/server/src/cloud/functions/_core/role.functions.ts`: `hasRole`, `addRolesToUser`, `removeRolesForUser`, `createRole`, `updateRole`, `getRolesDelegation`, `getRoleAuditLogs`, `getHighestRoleAccounts`. A role can also be given by an invitation (`sendBOInvitation`): the roles land once the invited address is verified. Changes to roles are written to a roles journal.
 
 ## Checks on the server
 
-Building blocks in `apps/server/src/cloud/utils/utils.cloud.ts` and `role.utils.cloud.ts`:
+In `apps/server/src/cloud/utils/_core/`:
 
-- `parseFunction(fn)`: logs the call and normalizes errors. It does not check who is calling.
-- `fromBO(fn, rights?, className?)`: rejects the call when there is no `request.user`; when a `rights` list is given, also requires `hasRight(user, className, rights)`.
-- `hasRight(user, className, operations)`: true for the highest-level roles; otherwise finds the roles of the user that have a `rights` entry for the class and returns true when every such role grants every requested operation.
-- `isAdministrator(user)`: true when the user has `Owner` or `Administrator`.
-- `cloudValidationRules`: a validator for `Parse.Cloud` definitions that requires a logged-in administrator (and lets calls from `isExpressApi` or a deleted-user context through).
-- `protectionMiddleware`: for Express routes, see [AUTH.md](AUTH.md).
+- `parseFunction(fn)`: logs the call and normalizes errors, no authorization.
+- `fromBO(fn, rights?, className?)`: requires a logged-in user; with `rights`, also `hasRight(user, className, rights)`.
+- `hasRight(user, className, operations)`: highest roles pass; otherwise each requested operation must be granted by at least one role of the user.
+- `hasBoRight(user, uiRight)`: checks a `ui` right.
+- The `country-scope` trigger narrows queries to the countries of the role.
 
-Almost every back-office Cloud Function is wrapped with `fromBO`, so it needs a logged-in user. Only `getProjects` and the test functions (`createBatchTest`) pass a `rights` list. Server code usually runs with the master key (`USE_MASTER_KEY`) after that check, so class-level permissions are not what stops a logged-in user from calling a function.
+Queries then run with the master key, so these checks are the guard of a back-office function.
 
 ## Checks in the back-office
 
-- The roles of the current user are loaded when a dashboard page is entered (`onDashboardEnter`), together with `isAdmin` (the `hasRole` Cloud Function with the highest-level roles).
-- `canAccessTo(roles, className, action, uiRight)` and `getRights(roles, className, uiRight)` (`apps/bo/src/utils/role.utils.ts`): the highest-level roles pass; otherwise the first role with a `rights` entry for the class decides `canCreate`, `canFind`, `canPreview`, `canEdit`, `canDelete`, `canDestroy`; a `uiRight` is granted when a role lists it in `ui`.
-- `useProtect(className)` returns those flags to a component to show or hide buttons.
-- The sidebar (`SideBar.tsx`) shows an entry when the user can `find` the class, or has the `ui` right for the Miscellaneous and Tests entries.
-- Route loaders use `onEnterActionWithLoader` with `collection` / `action` / `uiRight` options: a user without the right who has at least one role is sent to the not-found page; thunks wrapped by `actionWithLoader` with the same options throw the translated `common:errors.unauthorizedAction` message.
-
-These checks only shape the interface. The enforcement is on the server.
+`canAccessTo` and `getRights` (`apps/bo/src/utils/_core/role.utils.ts`) give `canCreate`, `canFind`, `canPreview`, `canEdit`, `canDelete`, `canDestroy`; `useProtect(className)` returns them to a component. The sidebar (`useNavigationMenus.tsx`) shows an entry when the user can `find` the class or has the `ui` right. Route loaders and thunks apply the same options. These checks only shape the interface; the server enforces.
 
 ## Public website
 
-The website has no roles. It reads and writes through Parse Server as an anonymous client: server queries in `apps/web/server/queries` and Cloud Functions such as `getArticleForClient`, which filter on `deleted: false` and `active: true`, and it creates `Contact` and `Newsletter` objects directly (their `beforeSave` triggers validate and complete them).
+No roles. The website reads through Cloud Functions that filter on `deleted: false` and `active: true` (`getProjectForClient`, `getArticleForClient`, ...) and sends the contact form and the newsletter subscription through public Cloud Functions (`createPublicContact`, `subscribeToNewsletter`).
 
 ## Known gaps
 
-Observed in the code, not decided here:
-
-- `role.triggers.ts` (creation of the other default roles after `Owner`, protection of role deletion) is not imported in `triggers/index.ts`, so those triggers are not registered. `createDefaultRoles` is not called anywhere.
-- `setCLPFromRights` (class-level permissions derived from a role's rights) is defined but never called, and no class-level permission is declared in this repository: they depend on what is configured in the database. The server also allows client class creation (`allowClientClassCreation: true`).
-- Many read functions are wrapped by `parseFunction` only (for example `getUser`, `getUserByEmail`, `sendEmailToUser`, `getObjectsCount`, `saveUserLanguage`), so they do not require a logged-in user.
+- Roles `Owner`, `Administrator`, `Manager` of an existing database are not renamed (see above).
+- The `Diffusion` (broadcast) menu entry has no `hasRightName`, so it is hidden for everyone; `Settings` is visible only to the highest roles.
+- Content-version restore is not wired for `Project`.

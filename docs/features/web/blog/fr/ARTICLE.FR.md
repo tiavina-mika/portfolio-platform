@@ -16,7 +16,8 @@
 
 En cliquant sur la carte d'un article, depuis la page d'accueil, la
 [liste des articles](ARTICLES_LIST.FR.md), le plan du site, la recherche ou un lien reçu dans la
-newsletter. L'adresse se termine par un identifiant lisible propre à l'article.
+newsletter. L'adresse est de la forme `/blog/<identifiant-de-l-article>`. Les anciennes adresses en
+`/articles/…` redirigent vers la nouvelle.
 
 ## À quoi sert cette page
 
@@ -33,17 +34,16 @@ plus accessible : la page "Page introuvable" s'affiche
 
 De haut en bas :
 
-1. **L'en-tête** : les catégories de l'article (chacune est un lien vers les articles de la
-   catégorie), le titre, une description, puis l'image de couverture.
-2. **L'auteur et la date** : la photo et le nom de l'auteur, et la date de dernière mise à jour
-   (jour, mois abrégé, année).
-3. **Le contenu** : le texte complet, avec titres, listes et extraits de code.
-4. **Les images complémentaires**, quand il y en a, en deux colonnes sur grand écran.
+1. **L'en-tête** : le fil d'Ariane, les catégories de l'article (chacune est un lien vers les articles
+   de la catégorie), le titre, une description, le temps de lecture estimé, la date de publication
+   (et la date de mise à jour quand l'article a été modifié), puis l'image de couverture.
+2. **Le contenu** : le texte complet, avec titres, listes et extraits de code.
+3. **Les images complémentaires**, quand il y en a.
+4. **Les mots-clés**, sous forme de liens.
 5. **Le partage** : le nombre de partages (quand il y en a) et sept icônes — Facebook, X, LinkedIn,
    WhatsApp, Telegram, Reddit, Skype.
-6. **Les mots-clés** ("Tags"), sous forme de liens séparés par des virgules.
-7. **"Articles similaires"** : les articles qui partagent une catégorie avec celui-ci.
-8. **L'abonnement à la newsletter**, en bas de page.
+6. **"À lire aussi"** : les articles qui partagent une catégorie avec celui-ci.
+7. **L'abonnement à la newsletter**, en bas de page.
 
 Tout s'affiche dans la langue du visiteur. Les parties sans contenu (pas d'image de couverture, pas
 de mot-clé, pas d'article similaire) n'apparaissent pas.
@@ -61,7 +61,7 @@ clic est ajouté au nombre de partages affiché.
 
 ### Continuer la lecture
 
-Les cartes "Articles similaires" ouvrent d'autres articles.
+Les cartes "À lire aussi" ouvrent d'autres articles.
 
 ### S'abonner à la newsletter
 
@@ -76,10 +76,9 @@ Voir [Inscription à la newsletter](../../newsletter/fr/NEWSLETTER_SUBSCRIBE.FR.
 
 ## Points d'attention / limites actuelles
 
-- La date affichée est celle de la **dernière mise à jour**, pas celle de la première publication.
-- Le nom de l'auteur est un lien qui mène à la page d'accueil, il n'existe pas de page dédiée à
-  l'auteur.
+- Il n'existe pas de page dédiée à l'auteur.
 - Le nombre de partages compte les clics sur les icônes, pas les partages réellement effectués sur
   les réseaux.
+- Chaque ouverture de l'article est comptée comme une vue.
 - Si l'article n'a pas de version dans la langue du visiteur, son adresse en langue par défaut reste
   utilisable.

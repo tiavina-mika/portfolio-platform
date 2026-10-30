@@ -76,4 +76,4 @@ un message d'erreur l'invite à réessayer plus tard.
   réabonnement, il n'est plus pris en compte.
 - Un abonné qui a déjà donné une raison peut en soumettre une autre : la dernière remplace la
   précédente.
-- Il n'y a pas d'email de confirmation de désabonnement.
+- Un email confirme le désabonnement à l'adresse concernée.
