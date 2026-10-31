@@ -95,7 +95,7 @@
     "@chromatic-com/storybook": "^5.4.0",
     "@cspell/eslint-plugin": "^10.0.1",
     "@eslint-community/eslint-plugin-eslint-comments": "^4.7.2",
-    "@eslint/js": "^9.39.5",
+    "@eslint/js": "^10.0.1",
     "@next/eslint-plugin-next": "16.4.3",
     "@opentelemetry/api": "^1.9.1",
     "@shared/eslint-config": "workspace:*",
