@@ -6,6 +6,7 @@ import {
 } from 'react';
 
 import { cn } from '@/utils/app.utils';
+import { CARD_IMAGE_SIZES } from '@/utils/constants';
 
 import Text, { TextProps } from '../typography/Text';
 import TextLink from '../typography/TextLink';
@@ -174,7 +175,7 @@ const getObjectSizeClassName = (objectSize: CardImageProps['objectSize']) => {
   }
 };
 
-type CardComponentImageProps = ImageProps & IWithLinkProps & CardImageProps;
+type CardComponentImageProps =ImageProps & IWithLinkProps & CardImageProps;
 const CardImage = ({
   className,
   children,
@@ -200,6 +201,9 @@ const CardImage = ({
           getObjectSizeClassName(objectSize),
           className
         )}
+        // a `fill` image needs `sizes` or Next serves the largest variant; cards are at most
+        // half the viewport on desktop and full width on mobile. A caller can override it.
+        sizes={CARD_IMAGE_SIZES}
         {...props}
         alt={props.alt || ''}
       />

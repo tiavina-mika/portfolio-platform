@@ -23,6 +23,9 @@ export const ARTICLE_CATEGORIES_LIMIT = 12;
 // number of articles suggested at the end of an article
 export const RELATED_ARTICLES_COUNT = 3;
 
+// default `sizes` of a card image: half the viewport on desktop, full width on mobile
+export const CARD_IMAGE_SIZES = '(min-width: 768px) 50vw, 100vw';
+
 export const PAGINATION = {
   perPage: 12,
 };
@@ -58,9 +61,7 @@ export const SOCIALS = [
     value: 'https://www.linkedin.com/in/tiavina-michael-ralainirina/',
   },
   { label: 'whatsapp', name: 'WhatsApp', value: 'https://wa.me/+261341865749' },
-  { label: 'instagram', name: 'Instagram', value: 'https://www.instagram.com/sanzenmysteriu/' },
   { label: 'email', name: 'Email', value: 'mailto:tiavinamika@gmail.com' },
-  { label: 'skype', name: 'Skype', value: 'skype:live:ralainirinatiavina?chat' },
   { label: 'youtube', name: 'YouTube', value: 'https://www.youtube.com/@tiavina-mika' },
 ];
 
