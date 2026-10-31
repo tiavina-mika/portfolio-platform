@@ -39,6 +39,8 @@ const NavBarSearch = ({
     query, setQuery, results, isLoading, hasError, isEmpty, clear, retry,
   } = useSiteSearch({ locale, tNoResults: tCommon('noResults') });
 
+  const hasContent = results.length > 0 || isLoading || isEmpty || hasError;
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => setQuery(event.target.value);
 
   const handleNavigate = () => {
@@ -77,11 +79,11 @@ const NavBarSearch = ({
           value={query}
           className={cn(
             `
-              flex h-[50px] w-full rounded-3xl border-0 px-12 text-sm
+              flex h-[50px] w-full rounded-3xl border border-input px-12 text-sm
               placeholder:text-muted-foreground
-              focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0
+              focus-visible:border-ring focus-visible:ring-0 focus-visible:ring-transparent
+              focus-visible:ring-offset-0
               disabled:opacity-50
-              dark:border-input
               [&::-webkit-search-cancel-button]:hidden
             `,
             inputClassName
@@ -95,38 +97,39 @@ const NavBarSearch = ({
         )}
       </div>
       {/* always mounted: a live region announces what is added to it, not itself */}
-      <div
-        aria-live="polite"
-        className={`
-          absolute inset-x-0 top-full z-10 flex flex-col rounded-md border border-neutral-200 bg-white px-2
-          pt-2 pb-3 shadow-md
-          empty:hidden
-          dark:border-neutral-700 dark:bg-neutral-900
-        `}
-      >
-        {results.map(result => (
-          <div className="p-2" key={result.id}>
-            <TextLink className="font-medium" href={result.url} onClick={handleNavigate}>
-              {result.title}
-            </TextLink>
-          </div>
-        ))}
-        {isLoading && <Text className={MESSAGE_CLASS_NAME} role="status">{t('searching')}</Text>}
-        {isEmpty && !isLoading && (
-          <Text className={MESSAGE_CLASS_NAME} role="status">
-            {t('noResults', { query: query.trim() })}
-          </Text>
-        )}
-        {hasError && !isLoading && (
-          <div className="flex flex-wrap items-center gap-3 p-2" role="status">
-            <Text className="text-sm text-error">{t('searchUnavailable')}</Text>
-            <button
-              className="text-sm font-medium underline"
-              onClick={retry}
-              type="button"
-            >
-              {tCommon('tryAgain')}
-            </button>
+      <div aria-live="polite" className="absolute inset-x-0 top-full z-10">
+        {hasContent && (
+          <div
+            className={`
+              flex flex-col rounded-md border border-neutral-200 bg-white px-2 pt-2 pb-3 shadow-md
+              dark:border-neutral-700 dark:bg-neutral-900
+            `}
+          >
+            {results.map(result => (
+              <div className="p-2" key={result.id}>
+                <TextLink className="font-medium" href={result.url} onClick={handleNavigate}>
+                  {result.title}
+                </TextLink>
+              </div>
+            ))}
+            {isLoading && <Text className={MESSAGE_CLASS_NAME} role="status">{t('searching')}</Text>}
+            {isEmpty && !isLoading && (
+              <Text className={MESSAGE_CLASS_NAME} role="status">
+                {t('noResults', { query: query.trim() })}
+              </Text>
+            )}
+            {hasError && !isLoading && (
+              <div className="flex flex-wrap items-center gap-3 p-2" role="status">
+                <Text className="text-sm text-error">{t('searchUnavailable')}</Text>
+                <button
+                  className="text-sm font-medium underline"
+                  onClick={retry}
+                  type="button"
+                >
+                  {tCommon('tryAgain')}
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
