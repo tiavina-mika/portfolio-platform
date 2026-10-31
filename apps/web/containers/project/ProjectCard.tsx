@@ -53,6 +53,11 @@ const ProjectCard = ({
             loading="lazy"
             objectSize="scale-down"
             src={imageUrl}
+            className={`
+              transition-transform duration-500 ease-in-out
+              group-hover:scale-105
+              motion-reduce:transition-none motion-reduce:group-hover:scale-100
+            `}
           />
         )}
       </CardHeader>

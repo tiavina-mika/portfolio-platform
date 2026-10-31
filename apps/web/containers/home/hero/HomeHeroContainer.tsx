@@ -4,7 +4,14 @@
 import { ReactNode } from 'react';
 
 import PageHeader from '@/components/layouts/PageHeader';
+import { cn } from '@/utils/app.utils';
 import { APP_NAME } from '@/utils/constants';
+
+// the hero parts rise one after the other on load; a still page for reduced motion
+const ENTRANCE_CLASSES = `
+  animate-in duration-700 fade-in slide-in-from-bottom-4 fill-mode-backwards
+  motion-reduce:animate-none
+`;
 
 type Props = {
   /**
@@ -30,17 +37,23 @@ const HomeHeroContainer = ({
 }: Props) => {
   return (
     <PageHeader
-      description={texts}
+      description={<div className={cn(ENTRANCE_CLASSES, 'delay-150')}>{texts}</div>}
       image={image}
       imageDarkMode={imageDarkMode}
-      mainClassName="mb-[30px] md:mb-[50px] md:mt-12 flex flex-row"
       title={APP_NAME}
-      titleClassName="2xl:text-10xl!"
+      titleClassName={cn(ENTRANCE_CLASSES, '2xl:text-10xl!')}
       className={`
         md:pb-8
         xl:pb-10
         2xl:pb-10
       `}
+      mainClassName={cn(
+        ENTRANCE_CLASSES,
+        `
+          mb-[30px] flex flex-row delay-300
+          md:mt-12 md:mb-[50px]
+        `
+      )}
     >
       {action}
     </PageHeader>
