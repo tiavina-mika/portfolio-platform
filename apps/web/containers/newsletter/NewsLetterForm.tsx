@@ -83,33 +83,23 @@ const NewsletterForm = ({ locale }: Props) => {
           {t('offlineText')}
         </StatusBanner>
       )}
-      <div className={`
-        flex flex-col gap-3
-        md:flex-row md:items-start
-      `}
+      <TextField
+        autoComplete="email"
+        disabled={loading}
+        label={t('emailLabel')}
+        name="email"
+        placeholder={t('emailPlaceholder')}
+        rootClassName="min-w-0"
+        type="email"
+      />
+      <Button
+        aria-busy={loading}
+        className="px-6 py-4"
+        disabled={!isOnline}
+        type="submit"
       >
-        <TextField
-          autoComplete="email"
-          disabled={loading}
-          label={t('emailLabel')}
-          name="email"
-          placeholder={t('emailPlaceholder')}
-          rootClassName="min-w-0 flex-1"
-          type="email"
-        />
-        <Button
-          aria-busy={loading}
-          disabled={!isOnline}
-          fullWidth={false}
-          type="submit"
-          className={`
-            w-full flex-none px-6 py-4
-            md:mt-7 md:w-auto
-          `}
-        >
-          {loading ? t('sending') : t('submit')}
-        </Button>
-      </div>
+        {loading ? t('sending') : t('submit')}
+      </Button>
     </Form>
   );
 };
