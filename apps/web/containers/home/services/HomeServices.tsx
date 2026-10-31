@@ -34,7 +34,7 @@ const HomeServices = () => {
   return (
     <CardsBlock
       cardClassName="md:!pb-6"
-      cardsClassName="lg:grid-cols-2"
+      cardsClassName="lg:grid-cols-2 2xl:grid-cols-2"
       imageClassName="object-contain"
       imageContainerClassName="rounded-none w-[30px] h-[30px] md:w-[50px] md:h-[50px]"
       title={t('title')}

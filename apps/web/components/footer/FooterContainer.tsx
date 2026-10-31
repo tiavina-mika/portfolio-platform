@@ -68,7 +68,7 @@ const FooterContainer = ({
           </div>
 
           {/* ------------- center ------------- */}
-          <div className="flex flex-1 flex-col gap-[13px]">
+          <div className="flex flex-1 flex-col gap-4 md:gap-5">
             <FooterTitle text={t('moreInfo')} />
             <div className={`
               flex flex-col gap-2
@@ -85,7 +85,7 @@ const FooterContainer = ({
           </div>
 
           {/* ------------- right ------------- */}
-          <div className="flex flex-1 flex-col gap-[13px]">
+          <div className="flex flex-1 flex-col gap-4 md:gap-5">
             <FooterTitle text={t('contact')} />
             <div className={`
               flex flex-col gap-2
