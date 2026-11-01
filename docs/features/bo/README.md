@@ -9,8 +9,7 @@
 - [Administration](#administration)
 
 The sections follow the real sidebar groups, in menu order. Every sidebar entry has a page; sub-pages
-(add/edit, preview) are listed under their entry. Legacy carpooling screens kept by the shared back-office
-core are documented with their real limits.
+(add/edit, preview) are listed under their entry.
 
 ## Connexion et compte
 

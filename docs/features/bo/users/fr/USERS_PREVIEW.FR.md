@@ -41,9 +41,6 @@ rangées en sections, avec un sommaire :
 - **Échanges** : tickets au support, notifications reçues.
 - **Historique** : consultations de la fiche et journaux d'audit du compte.
 
-Les sections qui décrivent un compte de covoiturage (véhicules, trajets, demandes, avis) n'ont pas de
-contenu pour un portfolio.
-
 ## Actions possibles
 
 Menu **Actions** de l'en-tête :
@@ -78,5 +75,3 @@ Section **Postes** : ajouter ou retirer un poste (voir [Droits et postes](../../
 - Les postes ne se gèrent que pour les comptes créés dans le back-office, et pas pour soi-même.
 - Il n'y a pas de bouton de suppression dans la fiche : la suppression se fait depuis la liste.
 - La fiche est en lecture seule : on ne modifie ni le nom ni les coordonnées, seulement via l'aide au compte.
-- Une grande partie des sections (véhicules, trajets, avis, SMS de secours) vient d'une autre application et
-  reste vide.

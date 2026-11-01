@@ -15,7 +15,7 @@ import {
  * Pure CLP-shape builder — no Parse.Schema/Parse.Query I/O — so the actual permission logic
  * (role scoping, `AUTHENTICATED_READABLE_CLASSES`, `OWNER_POINTER_FIELDS`) can be unit-tested
  * against plain objects instead of a real Parse Server, and safely against disposable class
- * names instead of production classes like `Notification`/`Rating`/`Request` that other
+ * names instead of production classes like `Notification`/`Contact` that other
  * integration tests exercise concurrently.
  *
  * `roleRights`: plain `{ name, rights }` pairs (the shape of a `Parse.Role`'s `name`/`rights`),
@@ -41,8 +41,8 @@ export const buildCLPForClass = (
    * on it — Parse Server's `addField` CLP operation is otherwise master-key-only (see
    * `EXTRA_SCHEMA_FIELDS`), so without this every newly added form field would need a manual
    * schema pre-registration before the first BO save could ever write it. Deliberately NOT
-   * mirrored from the `requiresAuthentication` grant below (owner-pointer classes like
-   * Rating/Request that any signed-in end user, not just BO staff, is allowed to create) —
+   * mirrored from the `requiresAuthentication` grant below (owner-pointer classes
+   * that any signed-in end user, not just BO staff, is allowed to create) —
    * only actual role-based grants get schema-write access.
    */
   const grantAddField = (roleName: string): void => {
@@ -220,12 +220,12 @@ export const rebuildCLPForClasses = async (classNames: string[]): Promise<void> 
  * `Contact`/`Newsletter` lose the public `create` grant an existing database still carries and
  * have their columns pre-created on a new one, the third so the highest-level roles can access an
  * aliased class even before any role has an explicit rights entry, the fourth so owner pointer
- * permissions apply to privacy-sensitive classes like `Rating`/`UserSession` that have no
- * role-rights entry at all — see docs/OPTIMIZATION.md §10.2).
+ * permissions apply to privacy-sensitive classes like `UserSession` that have no
+ * role-rights entry at all).
  *
- * `Ride`/`Vehicle` are force-rebuilt too, since they are now `OWNER_POINTER_FIELDS` entries —
- * the owner-pointer + `authenticatedCreate` grants are precisely what keeps a driver able to
- * publish and edit their own ride once a BO role gains rights on the class. `_User` is the one
+ * Every `OWNER_POINTER_FIELDS` class is force-rebuilt too: the owner-pointer + `authenticatedCreate`
+ * grants are precisely what keeps an owner able to write their own records once a BO role gains
+ * rights on the class. `_User` is the one
  * `AUTHENTICATED_READABLE_CLASSES` member left out: its CLP is only rebuilt when a role already
  * references it, so a database whose `_User` schema has never been touched keeps Parse's default
  * open permissions instead of newly requiring authentication on every user read (blog author

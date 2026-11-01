@@ -13,7 +13,6 @@
   - [Bibliothèques partagées](#bibliothèques-partagées)
 - [Ajouter une entité métier](#ajouter-une-entité-métier)
 - [Ce qui n'a pas été porté](#ce-qui-na-pas-été-porté)
-- [Limites connues](#limites-connues)
 
 ## Pourquoi cette séparation
 
@@ -83,10 +82,6 @@ Les `libs/shared-*` sont neutres : `shared-domain-constants`, `shared-domain-typ
 
 ## Ce qui n'a pas été porté
 
-De 1lalana, laissés de côté volontairement : la fonctionnalité de notation, les tests unitaires et de composants, Storybook du back-office, les tests de bout en bout, l'application mobile et l'application de documentation. Les traces restantes (noms de classes, fonctions de test) sont listées dans le fichier de dette de la revue de la branche.
-
-## Limites connues
-
-- La constante `collections` du serveur et certaines listes de classes nomment encore des classes de covoiturage (`Ride`, `Request`, `Vehicle`, `Rating`, `RideShare`, `SosAlert`).
+De 1lalana, laissés de côté volontairement : la fonctionnalité de notation, les tests unitaires et de composants, Storybook du back-office, les tests de bout en bout, l'application mobile et l'application de documentation. Les traces de vocabulaire qui restent sont listées dans le fichier de dette de la revue de la branche.
 
 Voir [la revue de la branche](../../reviews/fr/261030-feat-core-domain-split.FR.md) pour la liste complète.

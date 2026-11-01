@@ -13,7 +13,6 @@
   - [Shared libraries](#shared-libraries)
 - [Adding a domain entity](#adding-a-domain-entity)
 - [What was not ported](#what-was-not-ported)
-- [Known limits](#known-limits)
 
 ## Why the split
 
@@ -83,10 +82,6 @@ No split, no registry. Domain pages (`projects`) and generic ones (`blog`, `cont
 
 ## What was not ported
 
-From 1lalana, left out on purpose: the rating feature, unit and component tests, Storybook for the back-office, end-to-end tests, the mobile app and the documentation app. The traces that remain (class names, test functions) are listed in the debt file of the branch review.
-
-## Known limits
-
-- The server `collections` constant and some class lists still name carpooling classes (`Ride`, `Request`, `Vehicle`, `Rating`, `RideShare`, `SosAlert`).
+From 1lalana, left out on purpose: the rating feature, unit and component tests, Storybook for the back-office, end-to-end tests, the mobile app and the documentation app. The wording traces that remain are listed in the debt file of the branch review.
 
 See [the branch review](../../reviews/en/261030-feat-core-domain-split.md) for the full list.
