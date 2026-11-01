@@ -12,7 +12,6 @@ export const PUBLIC_USER_PROFILE_FIELDS: string[] = [
   'objectId',
   'createdAt',
   'spokenLanguages',
-  'stats',
   'emailVerified',
   'phoneVerified',
 ];
@@ -56,7 +55,6 @@ export const SERVER_MANAGED_USER_FIELDS: string[] = [
   'country',
   // written through `updateNotificationPreferences`, which validates the shape against a schema
   'notificationPreferences',
-  'stats',
   'emailVerified',
   'phoneVerified',
   'banned',
@@ -176,8 +174,6 @@ export const USER_DETAILS_FIELDS: string[] = [
   'acceptedTermsAt', 'mfa',
   // the member's own switches (fallback text, e-mail, push…), shown read-only so the support can explain a missing text
   'notificationPreferences',
-  // activity and trust
-  'stats', 'rating',
   // moderation
   'banned', 'bans',
   // record traceability

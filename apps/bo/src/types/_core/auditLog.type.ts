@@ -3,10 +3,6 @@ import type { DateType, IUserDefaultRecord } from '@/types/_core/utils.type';
 import type { auditLogFilterSchema } from '@/validations/_core/auditLog.validations';
 import type { z } from 'zod';
 
-export type AccountStats = {
-  averageRating: number | null;
-};
-
 export type DeletionInitiatedBy = 'user' | 'admin' | 'system';
 
 export interface IUserAuditLogAttributes extends IUserDefaultRecord {
@@ -19,7 +15,6 @@ export interface IUserAuditLogAttributes extends IUserDefaultRecord {
   deletionReason?: string;
   deletionInitiatedBy: DeletionInitiatedBy;
   adminId?: string;
-  accountStats?: AccountStats;
   timestamp: DateType;
 }
 

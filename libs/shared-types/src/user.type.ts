@@ -41,18 +41,6 @@ export enum PlatformEnum {
 }
 
 /**
- * Stats related to the user, used for both driver and passenger.
- * Updated in the afterSave trigger of the Rate class.
- */
-export type UserStats = {
-  /** Average rating, recalculated whenever a new review is added or an existing review is updated. */
-  rating: number;
-  /** Total number of reviews received by the user, regardless of their rating value. */
-  reviewsCount: number;
-  lastRatingAt: Date | null;
-};
-
-/**
  * Who may read one field of a member's profile. `riders` is neutral in role on purpose: the same
  * account is a driver on one trip and a passenger on the next, and the audience is whoever it is
  * actually travelling with (a confirmed booking either way round).

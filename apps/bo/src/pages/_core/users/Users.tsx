@@ -1,5 +1,5 @@
 import {
-  Badge, Chip, IconButton, ListItem, ListItemAvatar, ListItemText, Rating, Skeleton, Stack, Tooltip,
+  Badge, Chip, IconButton, ListItem, ListItemAvatar, ListItemText, Skeleton, Stack, Tooltip,
   Typography,
 } from '@mui/material';
 import { PlatformEnum } from '@shared/types';
@@ -72,7 +72,6 @@ interface IData {
   id: string;
   fullName: ReactNode;
   contact: ReactNode;
-  rating: ReactNode;
   profileCompleteness: ReactNode;
   activity: ReactNode;
   roles?: ReactNode;
@@ -88,7 +87,7 @@ interface IDataAuditLog {
   initiatedBy: string;
   deletionReason: string;
   date: ReactNode;
-  // extra columns contributed by domains via `registerUserAuditLogColumn` (e.g. rides, avgRating)
+  // extra columns contributed by domains via `registerUserAuditLogColumn` (e.g. rides)
   [key: string]: unknown;
 }
 
@@ -104,7 +103,7 @@ interface IDataRecycleBin {
 
 /*
  * The columns answer, in order, the questions an operator asks of an account: who it is, how to
- * reach them, how the platform rates them, what a domain adds about them (the vehicles they own),
+ * reach them, what a domain adds about them (the vehicles they own),
  * how much of their profile they filled in, and since when they have been here.
  */
 const headCells: ITableHeadCell<string>[] = [
@@ -115,12 +114,6 @@ const headCells: ITableHeadCell<string>[] = [
   {
     id: 'contact',
     label: i18n.t('user:contact'),
-    disableSorting: true,
-  },
-  {
-    id: 'rating',
-    label: i18n.t('user:stats.rating'),
-    align: 'right',
     disableSorting: true,
   },
   ...getUserListColumns().map((column) => column.headCell),
@@ -168,11 +161,10 @@ const headCells: ITableHeadCell<string>[] = [
 
 /*
  * Columns that only describe an account someone actually travels with — an administrator invited
- * from the back-office is never rated, owns no vehicle and fills in no traveller profile, so on
+ * from the back-office owns no vehicle and fills in no traveller profile, so on
  * that tab they would be a screen of dashes.
  */
 const MEMBER_ONLY_COLUMN_IDS = [
-  'rating',
   'security',
   'profileCompleteness',
   ...getUserListColumns().map((column) => column.headCell.id),
@@ -473,33 +465,6 @@ const Users = () => {
             ];
           })
         ),
-        rating: user.stats && user.stats.reviewsCount > 0
-          ? (
-            <Stack
-              direction="row"
-              spacing={0.5}
-              sx={{
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-              }}
-            >
-              <Rating
-                readOnly
-                precision={0.5}
-                size="small"
-                value={user.stats.rating}
-              />
-              <Typography
-                variant="body2"
-                sx={{
-                  color: 'text.secondary',
-                }}
-              >
-                ({user.stats.reviewsCount})
-              </Typography>
-            </Stack>
-          )
-          : '—',
         activity: (
           <Stack sx={{
             alignItems: 'flex-end',

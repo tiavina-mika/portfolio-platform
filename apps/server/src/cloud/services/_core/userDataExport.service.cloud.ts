@@ -51,7 +51,7 @@ const exportUserRelation = async (
  */
 const USER_SELF_EXPORT_FIELDS = [
   'email', 'username', 'firstName', 'lastName', 'phone', 'birthday', 'sex', 'address', 'aboutMe',
-  'locale', 'image', 'stats',
+  'locale', 'image',
   'banned', 'bans', 'consentVersion', 'acceptedTermsAt', 'emailVerified', 'phoneVerified',
   'notificationPreferences', 'profileVisibility', 'hasSeenOnboarding',
   'platforms', 'createdAt', 'updatedAt',

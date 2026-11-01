@@ -1,6 +1,6 @@
 
 import {
-  BanReasonEnum, BanTypeEnum, NotificationPreferences, PlatformEnum, SexEnum, UserStats,
+  BanReasonEnum, BanTypeEnum, NotificationPreferences, PlatformEnum, SexEnum,
 } from '@shared/types';
 import { z } from 'zod';
 
@@ -100,8 +100,6 @@ export interface IUserAttributes extends IUserDefaultRecord {
   birthday?: DateType;
   address?: IAddress;
   sex?: ISex;
-  rating?: number;
-  stats?: UserStats;
   registerStep?: string;
   sexChangeCount?: number;
   lastSexChangeAt?: DateType;
@@ -136,7 +134,7 @@ export interface IUserState {
 }
 export type ProfileUserInfoInput = Pick<IUserAttributes, 'lastName' | 'firstName'>;
 
-export type UserSnapshot = Pick<IUserAttributes, 'id' | 'firstName' | 'lastName' | 'email' | 'phone' | 'image' | 'rating'>;
+export type UserSnapshot = Pick<IUserAttributes, 'id' | 'firstName' | 'lastName' | 'email' | 'phone' | 'image'>;
 export interface IStoredCurrentUser extends Pick<
   IUserAttributes,
   'objectId' | 'firstName' | 'lastName' | 'image'

@@ -43,7 +43,7 @@ defineJob('createUserAuditLogJob', async (request: Parse.Cloud.JobRequest<Create
   const user = await new Parse.Query(Parse.User)
     .select([
       'emailBefore', 'usernameBefore', 'firstNameBefore', 'lastNameBefore', 'phoneBefore',
-      'deletionReason', 'stats',
+      'deletionReason',
     ])
     .get(userId, USE_MASTER_KEY);
 
@@ -60,10 +60,6 @@ defineJob('createUserAuditLogJob', async (request: Parse.Cloud.JobRequest<Create
   auditLog.set('phoneBefore', maskPhone(user.get('phoneBefore')));
   auditLog.set('deletionReason', user.get('deletionReason') ?? 'user_requested');
   auditLog.set('deletionInitiatedBy', 'user');
-  auditLog.set('accountStats', {
-    averageRating: user.get('stats')?.rating ?? null,
-    reviewsCount: user.get('stats')?.reviewsCount ?? 0,
-  });
   auditLog.set('timestamp', dayjs().toDate());
 
   await auditLog.save(null, USE_MASTER_KEY);
