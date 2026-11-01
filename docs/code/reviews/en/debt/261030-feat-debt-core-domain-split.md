@@ -166,7 +166,7 @@
 - **Severity**: 🟡 Low · **Type**: Bug · **Status**: ⏳ to do
 - **Concerned**: `apps/bo/src/config/i18n/locales/*/_core/{finance,statistics}.json`, `user/` ticket keys, `libs/shared-faq`
 
-**What can happen** — finance and statistics texts speak of rides and drivers (the ride keys were merged into `_core` json), and a few ticket reasons still do (dangerous driving, driving license, vehicle) — the ride subjects, group and objects of the tickets are removed; `shared-faq` holds 1lalana's ride FAQ with the old brand name, unused by the website.
+**What can happen** — finance and statistics texts speak of rides and drivers (the ride keys were merged into `_core` json) (the ticket subjects, reasons and objects about rides are removed); `shared-faq` holds 1lalana's ride FAQ with the old brand name, unused by the website.
 
 **How to fix**
 

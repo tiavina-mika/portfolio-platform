@@ -104,22 +104,16 @@
     "reasons": {
       "safety": {
         "inappropriate_behavior": "Comportement inapproprié",
-        "dangerous_driving": "Conduite dangereuse",
-        "accident": "Accident",
         "harassment": "Harcèlement",
         "other": "Autre"
       },
       "report_user": {
         "fake_profile": "Faux profil",
         "behavior": "Comportement",
-        "abusive_review": "Avis abusif",
-        "fraud": "Arnaque",
-        "no_show": "Absent au rendez-vous"
+        "fraud": "Arnaque"
       },
       "verification": {
         "identity_document": "Pièce d'identité",
-        "driving_license": "Permis",
-        "vehicle": "Véhicule",
         "phone": "Téléphone",
         "email": "E-mail"
       },

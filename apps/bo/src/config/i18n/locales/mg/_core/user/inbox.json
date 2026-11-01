@@ -104,22 +104,16 @@
     "reasons": {
       "safety": {
         "inappropriate_behavior": "Fitondran-tena tsy mety",
-        "dangerous_driving": "Fitondrana mampidi-doza",
-        "accident": "Loza",
         "harassment": "Fanorisorenana",
         "other": "Hafa"
       },
       "report_user": {
         "fake_profile": "Mombamomba sandoka",
         "behavior": "Fitondran-tena",
-        "abusive_review": "Hevitra manararaotra",
-        "fraud": "Hosoka",
-        "no_show": "Tsy tonga tamin'ny fotoana"
+        "fraud": "Hosoka"
       },
       "verification": {
         "identity_document": "Karapanondro",
-        "driving_license": "Fahazoan-dalana mitondra fiara",
-        "vehicle": "Fiara",
         "phone": "Finday",
         "email": "Mailaka"
       },

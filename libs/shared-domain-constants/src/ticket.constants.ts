@@ -24,10 +24,10 @@ export const TICKET_SUBJECT_GROUPS = [
  */
 export const TICKET_SUBJECT_REASONS: Record<TicketSubjectEnum, readonly string[]> = {
   [TicketSubjectEnum.SAFETY]: [
-    'inappropriate_behavior', 'dangerous_driving', 'accident', 'harassment', 'other',
+    'inappropriate_behavior', 'harassment', 'other',
   ],
-  [TicketSubjectEnum.REPORT_USER]: ['fake_profile', 'behavior', 'abusive_review', 'fraud', 'no_show'],
-  [TicketSubjectEnum.VERIFICATION]: ['identity_document', 'driving_license', 'vehicle', 'phone', 'email'],
+  [TicketSubjectEnum.REPORT_USER]: ['fake_profile', 'behavior', 'fraud'],
+  [TicketSubjectEnum.VERIFICATION]: ['identity_document', 'phone', 'email'],
   [TicketSubjectEnum.ACCOUNT]: ['login', 'password', 'phone', 'suspension', 'deletion', 'personal_data'],
   [TicketSubjectEnum.TECH]: ['bug', 'slowness', 'security_flaw', 'other'],
   [TicketSubjectEnum.OTHER]: [],

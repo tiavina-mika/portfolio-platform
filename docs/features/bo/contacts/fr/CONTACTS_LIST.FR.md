@@ -74,5 +74,4 @@ La file comporte :
 - Il n'existe pas de bouton « Restaurer » pour une demande mise à la corbeille.
 - Il est impossible de créer une demande depuis le back-office : la file ne se remplit que par le formulaire
   du site.
-- Les mentions « Application » et quelques motifs (conduite dangereuse, permis, véhicule…) viennent
-  d'une autre application et ne concernent pas le portfolio.
+- La mention « Application » vient d'une autre application et ne concerne pas le portfolio.

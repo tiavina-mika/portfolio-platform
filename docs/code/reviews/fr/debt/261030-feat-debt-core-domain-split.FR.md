@@ -166,7 +166,7 @@
 - **Gravité** : 🟡 Faible · **Type** : Bug · **Statut** : ⏳ à faire
 - **Concerné** : `apps/bo/src/config/i18n/locales/*/_core/{finance,statistics}.json`, clés de tickets de `user/`, `libs/shared-faq`
 
-**Ce qui peut arriver** — les textes de finance et de statistiques parlent de trajets et de conducteurs (les clés de trajets ont été fusionnées dans les json de `_core`), et quelques motifs de tickets aussi (conduite dangereuse, permis, véhicule) — les sujets, le groupe et les objets de trajet des tickets sont retirés ; `shared-faq` contient la FAQ de trajets de 1lalana avec l'ancienne marque, inutilisée par le site.
+**Ce qui peut arriver** — les textes de finance et de statistiques parlent de trajets et de conducteurs (les clés de trajets ont été fusionnées dans les json de `_core`) (les sujets, motifs et objets de trajet des tickets sont retirés) ; `shared-faq` contient la FAQ de trajets de 1lalana avec l'ancienne marque, inutilisée par le site.
 
 **Comment corriger**
 

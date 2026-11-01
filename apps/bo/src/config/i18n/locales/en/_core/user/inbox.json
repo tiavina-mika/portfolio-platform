@@ -104,22 +104,16 @@
     "reasons": {
       "safety": {
         "inappropriate_behavior": "Inappropriate behavior",
-        "dangerous_driving": "Dangerous driving",
-        "accident": "Accident",
         "harassment": "Harassment",
         "other": "Other"
       },
       "report_user": {
         "fake_profile": "Fake profile",
         "behavior": "Behavior",
-        "abusive_review": "Abusive review",
-        "fraud": "Scam",
-        "no_show": "Didn't show up"
+        "fraud": "Scam"
       },
       "verification": {
         "identity_document": "ID document",
-        "driving_license": "Driving license",
-        "vehicle": "Vehicle",
         "phone": "Phone",
         "email": "Email"
       },
