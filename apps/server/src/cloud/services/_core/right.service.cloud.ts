@@ -207,11 +207,18 @@ export const createDefaultRole = async (name: string): Promise<Role> => createRo
 });
 
 /**
- * Creates the default roles a running platform does not have yet. The bootstrap trigger only runs when
- * the OWNER role is first created, so a default role added to the code later (TEAM_LEAD) would never
- * reach a database that already exists. A platform not bootstrapped yet is left to the trigger.
+ * Creates the default roles the platform does not have yet. On an empty database nothing else creates
+ * the OWNER role, and the very first owner cannot be given a role that does not exist, so it is created
+ * here: its creation trigger then creates SUPER_ADMIN and the default roles. On a database that already
+ * exists, this also brings in a default role added to the code later (TEAM_LEAD), which the trigger,
+ * only run when OWNER is first created, would never reach.
  */
 export const ensureDefaultRolesExist = async (): Promise<void> => {
+  if (!(await roleExists(HIGHEST_LEVEL_ROLES[0]!))) {
+    await createDefaultRole(HIGHEST_LEVEL_ROLES[0]!);
+    logger.info(`[bootstrapAdmin] ${HIGHEST_LEVEL_ROLES[0]} role created`);
+  }
+
   if (!(await roleExists(HIGHEST_LEVEL_ROLES[1]!))) return;
 
   for (const name of DEFAULT_ROLES) {

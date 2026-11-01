@@ -43,7 +43,7 @@ defineJob('createUserAuditLogJob', async (request: Parse.Cloud.JobRequest<Create
   const user = await new Parse.Query(Parse.User)
     .select([
       'emailBefore', 'usernameBefore', 'firstNameBefore', 'lastNameBefore', 'phoneBefore',
-      'deletionReason', 'rideStats', 'requestStats', 'stats',
+      'deletionReason',
     ])
     .get(userId, USE_MASTER_KEY);
 
@@ -60,12 +60,6 @@ defineJob('createUserAuditLogJob', async (request: Parse.Cloud.JobRequest<Create
   auditLog.set('phoneBefore', maskPhone(user.get('phoneBefore')));
   auditLog.set('deletionReason', user.get('deletionReason') ?? 'user_requested');
   auditLog.set('deletionInitiatedBy', 'user');
-  auditLog.set('accountStats', {
-    totalRidesAsDriver: user.get('rideStats')?.completed ?? 0,
-    totalRidesAsPassenger: user.get('requestStats')?.completed ?? 0,
-    averageRating: user.get('stats')?.rating ?? null,
-    reviewsCount: user.get('stats')?.reviewsCount ?? 0,
-  });
   auditLog.set('timestamp', dayjs().toDate());
 
   await auditLog.save(null, USE_MASTER_KEY);
@@ -82,7 +76,7 @@ defineJob('createUserAuditLogJob', async (request: Parse.Cloud.JobRequest<Create
 });
 
 /**
- * Destroys the device rows left with neither a push token nor a session token — see
+ * Destroys the device rows left without a session token — see
  * purgeOrphanUserSessionsService for why they pile up.
  */
 defineJob('purgeOrphanUserSessionsJob', async (): Promise<void> => {

@@ -65,18 +65,6 @@ const validateEnv = (env: Env = process.env): void => {
      */
     RECAPTCHA_SECRET_KEY: str({ devDefault: '' }),
     /*
-     * Hash of the Android build this server talks to, appended to verification SMS so the app
-     * reads the code automatically (see sms.utils.cloud.ts). Optional everywhere: without it the
-     * SMS is unchanged and the user taps the keyboard suggestion or types the code.
-     */
-    ANDROID_SMS_RETRIEVER_HASH: str({ default: '' }),
-    /*
-     * Expo access token sent with every push (see push.service.cloud.ts). Optional until
-     * "enhanced push security" is enabled in the Expo dashboard; from then on a missing token
-     * makes every push fail, so it must be set in each environment before flipping that switch.
-     */
-    EXPO_ACCESS_TOKEN: str({ default: '' }),
-    /*
      * Passwords of the documentation sites served under /docs/<section> (see docs.route.ts). A
      * section without one is closed — the route answers 404 — so they are optional everywhere and
      * a missing value can never leave a section open.
@@ -98,8 +86,8 @@ const validateEnv = (env: Env = process.env): void => {
      */
     WEBSITE_REVALIDATE_SECRET: isDeployed(env) ? nonEmptyStr() : str({ default: '' }),
     /*
-     * Incoming webhook of the staff's Slack alert channel (see slack.service.ts): SOS, tickets,
-     * failed payments, failed jobs, morning summary. Optional everywhere: without it no message is
+     * Incoming webhook of the staff's Slack alert channel (see slack.service.ts): SOS,
+     * failed jobs, morning summary. Optional everywhere: without it no message is
      * posted, and the e-mail of each alert still goes out — Slack is a second channel, not the
      * only one.
      */

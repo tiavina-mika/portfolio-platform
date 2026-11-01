@@ -4,7 +4,9 @@ import dayjs from 'dayjs';
 import type { Locale } from '@/types/app.type';
 
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
-import { RECYCLED_NUMBER_RESET_DELAY_HOURS, USE_MASTER_KEY } from '@/constants/_core/constants';
+import {
+  HIGHEST_LEVEL_ROLES, RECYCLED_NUMBER_RESET_DELAY_HOURS, USE_MASTER_KEY,
+} from '@/constants/_core/constants';
 import { ACCOUNT_NOTIFICATION_TYPE } from '@/constants/_core/notification.constants';
 import { SLACK_ALERT_ICONS } from '@/constants/_core/slack.constants';
 import { USER_BO_PATH } from '@/constants/_core/user.constants';
@@ -12,8 +14,8 @@ import { getResetAvailableAt, isAccountInactive } from '@/utils/_core/account-ac
 import { logger } from '@/utils/_core/logger';
 import { getServerUrl } from '@/utils/_core/utils';
 
-import { getTicketAgentsService } from './contact-list.service.cloud';
 import { createNotification } from './notification.service.cloud';
+import { getUsersFromRoles } from './userRole.service.cloud';
 import { sendPasswordResetDelayedEmail } from '../../emails/_core/user.email';
 import { alertStaff } from '../../utils/_core/staff-alert.utils.cloud';
 
@@ -145,7 +147,7 @@ export const getSmsResetHoldDate = async (
  */
 const warnSupportOfContestedReset = async (user: Parse.User): Promise<void> => {
   try {
-    const agents = await getTicketAgentsService();
+    const agents = await getUsersFromRoles(HIGHEST_LEVEL_ROLES);
     const name = [user.get('firstName'), user.get('lastName')].filter(Boolean).join(' ');
     const failures = await alertStaff(agents, (locale) => ({
       subject: translate('email.passwordResetContestedSubject', locale),

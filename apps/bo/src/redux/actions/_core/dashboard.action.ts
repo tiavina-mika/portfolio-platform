@@ -2,7 +2,6 @@ import dayjs from 'dayjs';
 
 import { actionWithLoader } from '@/redux/actions/_core/util.action';
 import {
-  loadDashboardAlertsSlice,
   loadDashboardKpisSlice,
   loadDashboardRecentSlice,
   setDashboardErrorSlice,
@@ -12,7 +11,7 @@ import {
 import { getSettingsMoneyCountrySelector } from '@/redux/reducers/_core/settings.reducer';
 import { AppDispatch, RootState } from '@/redux/store';
 import {
-  fetchDashboardAlerts, fetchDashboardKpis, fetchDashboardRecent,
+  fetchDashboardKpis, fetchDashboardRecent,
 } from '@/services/_core/dashboard.service';
 
 /*
@@ -26,10 +25,9 @@ export const loadDashboardStats = (): any => {
     const error = await dispatch(actionWithLoader(
       async (dispatch: AppDispatch): Promise<void> => {
         const loadKpis = async () => dispatch(loadDashboardKpisSlice(await fetchDashboardKpis(country)));
-        const loadAlerts = async () => dispatch(loadDashboardAlertsSlice(await fetchDashboardAlerts()));
         const loadRecent = async () => dispatch(loadDashboardRecentSlice(await fetchDashboardRecent()));
 
-        await Promise.all([loadKpis(), loadAlerts(), loadRecent()]);
+        await Promise.all([loadKpis(), loadRecent()]);
 
         dispatch(setDashboardUpdatedAtSlice(dayjs().toISOString()));
       },

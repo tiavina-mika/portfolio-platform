@@ -1,6 +1,6 @@
 import { getDisplayContacts, getDisplayIdentifier } from '@shared/utils';
 import {
-  FiBell, FiCode, FiCreditCard, FiFileText, FiLayers, FiLayout, FiMessageCircle, FiUsers,
+  FiBell, FiCode, FiFileText, FiLayers, FiLayout, FiMessageCircle, FiUsers,
 } from 'react-icons/fi';
 
 import type { GlobalSearchEntityKey } from '@/types/_core/globalSearch.type';
@@ -14,7 +14,7 @@ import { getTranslatedField } from '@/utils/_core/settings.utils';
 import { getUserFullName } from '@/utils/_core/user.utils';
 
 /*
- * a member who signed up by phone has no email and may have no name yet, and a ticket's requester
+ * a member who signed up by phone has no email and may have no name yet, and a contact's sender
  * may have left a number only: the result is named by what exists (name, phone, email), and its
  * second line is the next way to reach them rather than a repeat of the first
  */
@@ -90,13 +90,6 @@ export const getGlobalSearchEntityConfig = (
     path: 'projects',
     getTitle: (item) => getTranslatedField(item.translated, locale, 'name'),
     getSubtitle: (item) => item.society,
-  },
-  payment: {
-    label: t('user:payments.payments'),
-    icon: FiCreditCard,
-    path: 'payments',
-    getTitle: (item) => item.snapshot?.payer?.name,
-    getSubtitle: (item) => item.snapshot?.receiver?.name,
   },
   notification: {
     label: t('user:notifications.notifications'),

@@ -27,17 +27,10 @@
     "allRightsReserved": "Tous droits réservés",
     "contact": "Contact",
     "internalAlert": "Alerte interne",
-    "openTicket": "Ouvrir le ticket",
     "reasonRequired": "La raison est requise",
     "emailNotFound": "Email non trouvé",
-    "reportThresholdReachedSubject": "Plusieurs signalements reçus",
-    "reportThresholdReachedMessage": "{{count}} signalements non résolus ont été enregistrés sur {{targetType}} ({{targetId}}). Veuillez examiner ce dossier.",
-    "preventiveSuspensionSubject": "Votre compte a été suspendu temporairement",
-    "preventiveSuspensionMessage": "Suite à plusieurs signalements, votre compte a été suspendu pendant {{days}} jours. Notre équipe de modération examine votre dossier.",
-    "reportResolvedSubject": "Votre signalement a été traité",
-    "reportResolvedMessage": "Merci pour votre signalement. Notre équipe de modération l'a examiné et a pris les mesures appropriées.",
     "welcomeSubject": "Bienvenue sur Portfolio !",
-    "welcomeMessage": "Bonjour {{fullName}}, votre compte est maintenant vérifié. Vous pouvez chercher un trajet ou en proposer un.",
+    "welcomeMessage": "Bonjour {{fullName}}, votre compte est maintenant vérifié.",
     "accountReactivatedSubject": "Votre compte a été réactivé",
     "accountReactivatedMessage": "Bonne nouvelle ! La suspension de votre compte est terminée, vous pouvez à nouveau utiliser l'application normalement.",
     "newDeviceLoginSubject": "Nouvelle connexion détectée",
@@ -76,25 +69,12 @@
       "mfaReset": {
         "subject": "Double authentification réinitialisée pour {{target}}",
         "message": "{{actor}} a réinitialisé la double authentification de {{target}}."
-      },
-      "largeMoneyAction": {
-        "subject": "{{action}} de {{amount}}",
-        "message": "{{actor}} a effectué : {{action}} de {{amount}} (référence {{reference}})."
-      },
-      "moneyActions": {
-        "refund": "Remboursement",
-        "payoutRelease": "Versement anticipé au conducteur",
-        "ridePassengersRefund": "Remboursement des passagers d’un trajet"
       }
     },
     "invitationRolesFailedSubject": "Compte invité créé sans rôle",
     "invitationRolesFailedMessage": "{{targetEmail}} s'est inscrit depuis une invitation, mais les rôles prévus n'ont pas pu être attribués. Le compte existe sans aucun rôle : ajoutez-les depuis la fiche utilisateur.",
-    "reportSubmittedSubject": "Nous avons reçu votre signalement",
-    "reportSubmittedMessage": "Merci pour votre signalement. Notre équipe de modération va l'examiner sous peu.",
     "newsletterUnsubscribeConfirmationSubject": "Vous avez été désinscrit",
     "newsletterUnsubscribeConfirmationMessage": "Vous avez bien été désinscrit de la newsletter Portfolio. Vous ne recevrez plus ces emails.",
-    "receiptResentSubject": "Votre reçu de paiement",
-    "receiptResentMessage": "Veuillez trouver ci-joint le reçu de votre paiement.",
     "accountBannedSubject": "Votre compte a été suspendu",
     "accountBannedTemporary": "Votre compte a été suspendu jusqu'au {{until}} pour le motif suivant : {{reason}}.",
     "accountBannedPermanent": "Votre compte a été définitivement suspendu pour le motif suivant : {{reason}}.",
@@ -107,18 +87,6 @@
       "other": "autre",
       "account_protection": "protection du compte"
     },
-    "ticketReplySubject": "Réponse à votre demande — Portfolio",
-    "ticketReplyIntro": "L’équipe support a répondu à la demande que vous nous avez envoyée depuis notre site.",
-    "ticketReplyOriginalLabel": "Votre demande",
-    "ticketReplySignature": "{{agentName}} — Support Portfolio",
-    "ticketReplyTeamName": "L’équipe support",
-    "ticketReplyCannotReplyTitle": "Cet email ne peut pas recevoir de réponse",
-    "ticketReplyCannotReplyBody": "Votre demande a été envoyée depuis notre site sans compte : nous n’avons donc pas de fil de discussion où poursuivre l’échange. Si vous répondez à cet email, personne ne le recevra.",
-    "ticketReplyWriteAgain": "Nous réécrire depuis le formulaire de contact",
-    "ticketAcknowledgementSubject": "Nous avons bien reçu votre demande — Portfolio",
-    "ticketAcknowledgementIntro": "Merci de nous avoir écrit. Votre message est bien arrivé à l’équipe support, qui vous répondra par email dans les meilleurs délais.",
-    "ticketAcknowledgementReferenceLabel": "Numéro de votre demande :",
-    "ticketAcknowledgementNextSteps": "Conservez ce numéro : indiquez-le si vous nous réécrivez ou nous appelez au sujet de cette demande. Inutile de répondre à cet email.",
     "newsletterConfirmationSubject": "Confirmez votre inscription à la newsletter Portfolio",
     "newsletterConfirmationMessage": "Quelqu’un — vous, nous l’espérons — a demandé à recevoir la newsletter Portfolio à cette adresse. Confirmez avec le bouton ci-dessous pour commencer à recevoir nos actualités. Si vous n’êtes pas à l’origine de cette demande, ignorez simplement cet email : vous ne recevrez rien.",
     "newsletterConfirmationButton": "Confirmer mon inscription",
@@ -137,15 +105,7 @@
   "sms": {
     "verificationCode": "Votre code Portfolio : {{code}}",
     "contactChanged": "Portfolio : le numéro de téléphone de votre compte a été modifié. Si ce n'est pas vous, contactez le support tout de suite.",
-    "rideCancelled": "Trajet annulé : {{- departure}} - {{- destination}} du {{- date}}. Vous avez été remboursé.",
-    "newDeviceLogin": "Nouvelle connexion à votre compte Portfolio depuis : {{- deviceName}}. Si ce n'est pas vous, changez votre mot de passe.",
-    "requestConfirmed": "Portfolio : place confirmée, trajet {{- departure}} - {{- destination}} le {{- date}}. Détails dans l'application.",
-    "bookingCanceledByDriver": "Portfolio : réservation annulée par le conducteur, trajet {{- departure}} - {{- destination}} le {{- date}}. Remboursement intégral.",
-    "requestPaymentFailed": "Portfolio : paiement échoué, trajet {{- departure}} - {{- destination}} le {{- date}}. Aucune place réservée.",
-    "sosAlert": "Portfolio : {{- name}} a déclenché une alerte SOS pendant son trajet {{- departure}} - {{- destination}} ({{- vehicle}} {{- plate}}). Le support est prévenu.",
-    "sosAlertLocation": "Position : {{- url}}",
-    "ticketAcknowledgement": "Portfolio : votre demande #{{reference}} est bien enregistrée. Le support vous répondra par SMS ou par appel. Gardez ce numéro.",
-    "ticketReply": "Support Portfolio, demande #{{reference}} : {{- message}}"
+    "newDeviceLogin": "Nouvelle connexion à votre compte Portfolio depuis : {{- deviceName}}. Si ce n'est pas vous, changez votre mot de passe."
   },
   "error": {
     "invalidStringType": "Devrait être une chaîne de caractère",
@@ -174,11 +134,6 @@
     "fileSizeTooBig": "La taille du fichier doit être inférieure à {{size}}",
     "acceptedFileTypes": "Les types de fichiers acceptés sont {{fileTypes}}",
     "notificationReadOnly": "Seul le serveur peut modifier une notification.",
-    "reportAlreadySubmitted": "Vous avez déjà signalé cet élément récemment.",
-    "tooManyReports": "Trop de signalements en peu de temps. Réessayez plus tard.",
-    "reportDetailsRequired": "Veuillez préciser les détails de votre signalement.",
-    "reportNotOpen": "Ce signalement est déjà clos et ne peut plus être pris en charge.",
-    "reportTargetIsNotAUser": "Seul un signalement visant un compte utilisateur peut donner lieu à une suspension.",
     "sessionNotFound": "Session introuvable.",
     "tooManyDeviceRegistrations": "Trop d'enregistrements d'appareil en peu de temps. Réessayez dans quelques minutes.",
     "userNotFound": "Utilisateur introuvable.",
@@ -189,9 +144,9 @@
     "cannotImpersonateStaffAccount": "Vous ne pouvez pas vous connecter en tant qu'un compte membre du staff.",
     "actionBlockedDuringImpersonation": "Cette action n'est pas autorisée pendant une session support.",
     "pleaseLogin": "Vous devez vous connecter pour effectuer cette action",
-    "receiptRecipientHasNoEmail": "Ce membre n'a pas d'adresse email : le reçu ne peut pas être envoyé.",
-    "receiptEmailNotSent": "Le reçu n'a pas pu être envoyé. Réessayez plus tard.",
     "cannotActOnHigherRole": "Vous ne pouvez pas agir sur le compte d’un propriétaire ou d’un super-administrateur.",
+    "cannotDeleteOwnAccount": "Vous ne pouvez pas supprimer votre propre compte depuis le back-office.",
+    "cannotDeleteLastOwner": "Le dernier propriétaire de la plateforme ne peut pas être supprimé.",
     "unauthorizedToDoThisAction": "Vous n'êtes pas autorisé à effectuer cette action",
     "unauthorized": "Non autorisé",
     "positiveNumber": "Nombre positif",
@@ -200,8 +155,8 @@
     "notificationBroadcastMissingCity": "Choisissez la ville concernée par l'annonce.",
     "userText": {
       "profanity": "Ce texte contient des mots qui ne peuvent pas être publiés. Reformulez-le sans eux.",
-      "phone": "Un numéro de téléphone ne peut pas être publié ici. Retirez-le : les coordonnées sont échangées dans l’application une fois la réservation confirmée.",
-      "email": "Une adresse email ne peut pas être publiée ici. Retirez-la : les coordonnées sont échangées dans l’application une fois la réservation confirmée.",
+      "phone": "Un numéro de téléphone ne peut pas être publié ici. Retirez-le.",
+      "email": "Une adresse email ne peut pas être publiée ici. Retirez-la.",
       "url": "Un lien ne peut pas être publié ici. Retirez-le."
     }
   },
@@ -220,8 +175,6 @@
     "phoneNumberAlreadyUsed": "Ce numéro de téléphone est déjà associé à un compte. Veuillez vous connecter.",
     "invalidSignUp": "Inscription invalide. Veuillez réessayer depuis l'application.",
     "noVerificationPending": "Aucune vérification en attente pour ce compte.",
-    "payoutPhoneAlreadyVerified": "Ce numéro est déjà confirmé pour vos versements.",
-    "payoutPhoneLimitReached": "Vous avez atteint le nombre maximum de numéros de versement. Contactez le support pour en changer un.",
     "accountHelpPhoneNotPending": "Le numéro de ce membre est déjà vérifié ou absent : il n'y a aucun code à renvoyer.",
     "accountHelpNoContactForReset": "Ce membre n'a ni numéro vérifié ni email : changez d'abord son contact.",
     "verificationLocked": "Trop de tentatives échouées. Veuillez demander un nouveau code.",
@@ -245,34 +198,8 @@
     "phoneAlreadyUsedByAnotherAccount": "Ce numéro est déjà utilisé par un autre compte.",
     "contactUnchanged": "C'est déjà la valeur enregistrée sur votre compte."
   },
-  "project": {
-    "ride": {
-      "departure": "Départ",
-      "destination": "Destination",
-      "hasNoRightToDelete": "Vous n'avez pas le droit de supprimer cette course"
-    },
-    "request": {
-      "comment": "Commentaire"
-    }
-  },
-  "ticket": {
-    "reopenedSystemMessage": "Demande rouverte",
-    "reportWithoutDetails": "Signalement envoyé sans précision.",
-    "reportClosedSystemMessage": "Notre équipe a examiné votre signalement. Écrivez-nous ici si vous avez une question."
-  },
   "cms": {
     "codeAlreadyUsed": "Ce code technique est déjà utilisé par « {{- name}} ». Choisissez-en un autre."
-  },
-  "receipt": {
-    "title": "Reçu de paiement",
-    "recipient": "Destinataire",
-    "issuedAt": "Émis le",
-    "amount": "Montant",
-    "service": "Moyen de paiement",
-    "transactionId": "Référence de transaction",
-    "rideDate": "Date du trajet",
-    "totalPrice": "Prix total du trajet",
-    "disclaimer": "Ce document est un reçu attestant qu'un paiement a eu lieu. Il ne s'agit pas d'une facture."
   },
   "docsAccess": {
     "sections": {
@@ -285,16 +212,10 @@
   },
   "slack": {
     "openInBackOffice": "Ouvrir dans le back-office",
-    "newTicketFromWeb": "Nouvelle demande au support n° {{- reference}} (site web)",
-    "newTicketFromApp": "Nouvelle demande au support n° {{- reference}} (application)",
-    "newReportTicket": "Nouveau signalement — demande n° {{- reference}}",
     "scheduledJobFailed": "Échec du job planifié {{- jobName}}",
     "scheduledJobFailedDetails": "Erreur : {{- kind}} — le détail est dans les logs du serveur",
     "dailySummaryTitle": "Hier sur Portfolio ({{- date}})",
     "dailySummaryFigure": "{{- label}} : {{- value}}",
-    "dailySummaryNewUsers": "Inscrits",
-    "dailySummaryRidesPublished": "Trajets publiés",
-    "dailySummaryBookings": "Réservations confirmées",
-    "dailySummarySosAlerts": "Alertes SOS"
+    "dailySummaryNewUsers": "Inscrits"
   }
 }

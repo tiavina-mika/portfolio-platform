@@ -130,7 +130,6 @@ export const IMAGES = {
   defaultLogo: '/images/logo.svg',
 };
 
-
 const DEFAULT_LIMIT = 20;
 
 export const PAGINATION: IDefaultPagination = {
@@ -181,17 +180,11 @@ export const WEBSITE_URL = {
   local: `http://${LOCAL_NETWORK_HOSTNAME}:${WEBSITE_PORT}`,
 };
 
-export const NOTIFICATIONS_COUNT = 10;
-
-export const SHOW_NOTIFICATIONS_APP_BAR = false;
-
 /*
  * port of the local server the BO talks to when it runs on localhost — 8090 is the dev one; the
  * E2E suite runs its own server on another port and passes it through VITE_LOCAL_SERVER_PORT
  */
 export const SERVER_PORT = Number(import.meta.env.VITE_LOCAL_SERVER_PORT) || 8090;
-export const FORCE_DEBUG = false; // show console.log for important data
-export const FORCE_DELETE_STORED_DATA = false; // force to delete local stored data
 
 export const DOWNLOAD_ALERTS_LIMIT = 8;
 
@@ -203,16 +196,13 @@ export const COLLECTIONS = {
   role: '_Role',
   user: '_User',
   notification: 'Notification',
-  payment: 'Payment',
-  rating: 'Rating',
-  report: 'Report',
   ...DOMAIN_COLLECTIONS,
 };
 
 /*
  * how often the badges that cannot be pushed are refetched instead (see
  * LIVE_QUERY_SUBSCRIBABLE_CLASSES). Slow enough that an admin left on a screen all day costs a
- * handful of count queries an hour, quick enough that a new support ticket or report is noticed
+ * handful of count queries an hour, quick enough that a new contact message is noticed
  * within the minute it takes someone to walk back to their desk.
  */
 export const NOTIFICATION_COUNT_POLL_INTERVAL_MS = 60_000;
@@ -232,10 +222,8 @@ export const NOTIFICATION_BADGE_MAX = 99;
 export const NOTIFICATION_COUNT_DEBOUNCE_MS = 200;
 
 export const NOTIFICATION_COLLECTIONS = [
-  COLLECTIONS.payment,
   COLLECTIONS.contact,
   COLLECTIONS.user,
-  COLLECTIONS.report,
 ];
 
 // the address the support team answers at — the about page offers it as a link

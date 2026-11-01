@@ -65,8 +65,12 @@ Les comptes Owner et Super Admin ont tous les droits.
   le ou les postes à donner. La personne reçoit un lien pour créer son compte (voir
   [Connexion et création de compte](../../auth/fr/AUTH.FR.md)). L'invitation exige la gestion du personnel.
 - **Supprimer** : l'icône corbeille, après confirmation, met le compte à la corbeille ; la suppression est
-  consignée dans les journaux d'audit.
-- **Supprimer plusieurs comptes** : cocher des lignes puis supprimer.
+  consignée dans les journaux d'audit. L'icône n'est pas proposée sur sa propre ligne : on ne peut pas
+  supprimer son propre compte depuis le back-office.
+- **Supprimer plusieurs comptes** : cocher des lignes puis supprimer. La suppression est refusée, et
+  **rien n'est supprimé**, si la sélection contient son propre compte, le compte d'un Propriétaire ou d'un
+  Super Administrateur alors que la personne qui supprime n'a pas elle-même l'un de ces deux rôles, ou si
+  elle supprimerait le dernier Propriétaire encore actif. Un message explique le refus.
 - **Marquer comme vu** : retire des comptes de l'onglet « Nouveaux ».
 - **Corbeille** : chaque ligne ne propose que l'aperçu.
 

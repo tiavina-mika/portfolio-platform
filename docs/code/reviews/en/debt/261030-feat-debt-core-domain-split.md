@@ -9,7 +9,6 @@
 - [Summary](#summary)
 - [1. Existing roles are not renamed](#1-existing-roles-are-not-renamed)
 - [2. A deployed server needs two owners and an SMS key](#2-a-deployed-server-needs-two-owners-and-an-sms-key)
-- [3. Carpooling class names remain in the core](#3-carpooling-class-names-remain-in-the-core)
 - [4. Project gaps in the dashboard, search and versions](#4-project-gaps-in-the-dashboard-search-and-versions)
 - [5. Back-office screens without a server or data source](#5-back-office-screens-without-a-server-or-data-source)
 - [6. The website build needs a Parse server](#6-the-website-build-needs-a-parse-server)
@@ -24,7 +23,6 @@
 |---|---|---|---|---|
 | 1 | 🟠 Medium | Regression | Roles `Owner` / `Administrator` / `Manager` of an existing database are not recognised | ⏳ to do |
 | 2 | 🟠 Medium | Bug | `validateEnv` blocks a single-owner portfolio and requires an SMS key | ⏳ product decision |
-| 3 | 🟡 Low | Bug | Carpooling classes still listed in `collections` and security class lists | ⏳ to do |
 | 4 | 🟡 Low | Bug | Project dashboard column, search by author, version restore | ⏳ to do |
 | 5 | 🟡 Low | Bug | Screens calling Cloud Functions that do not exist, hidden menu entry | ⏳ to do |
 | 6 | 🟡 Low | Bug | `next build` needs a reachable Parse server | ⏳ to do |
@@ -66,23 +64,6 @@
 1. **(recommended)** Make `MIN_OWNERS_COUNT` and the SMS key requirement configurable by the domain (1 owner, no SMS for the portfolio) and keep the strict values as the core default.
    *Why*: keeps the safe default for a generic back-office, unblocks the portfolio.
 2. Keep the rule and ask the user to add a second address and an SMS account — safest, but costs a service the portfolio does not use.
-
-## 3. Carpooling class names remain in the core
-
-- **Severity**: 🟡 Low · **Type**: Bug · **Status**: ⏳ to do
-- **Concerned**: `apps/server/src/constants/_core/constants.ts` (`collections`), `security.constants.ts`, `country-scope.constants.ts`, `user.constants.ts`, `test.functions.ts` (`createRideMock`)
-
-**What can happen** — `Ride`, `Request`, `Vehicle`, `Rating`, `RideShare`, `SosAlert` are still named in the class lists, so the class-permission rebuild at boot may create empty locked classes in MongoDB, and the test function `createRideMock` is still exposed.
-
-**Why** — the core was copied without the ride domain and these names were not removed.
-
-**How to check** — start the server on an empty database and list the Parse classes.
-
-**How to fix**
-
-1. **(recommended)** Remove the names from the lists and delete `createRideMock`; run lint and the typecheck.
-   *Why*: smallest change, no data involved.
-2. Keep them and filter the rebuild on classes that exist in the schema — hides the problem instead of removing it.
 
 ## 4. Project gaps in the dashboard, search and versions
 
@@ -166,7 +147,7 @@
 - **Severity**: 🟡 Low · **Type**: Bug · **Status**: ⏳ to do
 - **Concerned**: `apps/bo/src/config/i18n/locales/*/_core/{finance,statistics}.json`, `user/` ticket keys, `libs/shared-faq`
 
-**What can happen** — finance, statistics and ticket texts speak of rides and drivers (the ride keys were merged into `_core` json); `shared-faq` holds 1lalana's ride FAQ with the old brand name, unused by the website.
+**What can happen** — finance and statistics texts speak of rides and drivers (the ride keys were merged into `_core` json) (the ticket subjects, reasons and objects about rides are removed); `shared-faq` holds 1lalana's ride FAQ with the old brand name, unused by the website.
 
 **How to fix**
 

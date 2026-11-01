@@ -1,4 +1,4 @@
-import { formatAmount, formatAmountInCurrency } from '@shared/utils';
+import { getCurrencySymbol } from '@shared/utils';
 import escapeRegExp from 'lodash/escapeRegExp';
 import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
@@ -55,17 +55,6 @@ export const generateToken = (n = 22): string => {
   return token;
 };
 
-/**
- * An amount as a member reads it ("40 000 Ar") — the same formatter as the apps and the e-mails.
- * `currency` is the ISO code the amount is stored in (a payment's, a ride's, a booking's); left out,
- * the amount is read in the default country's currency, which only suits a figure that adds up
- * several payments.
- */
-export const formatPriceWithCurrency = (price = 0, currency?: string | null): string => (
-  currency ? formatAmountInCurrency(price, currency) : formatAmount(price)
-);
-
-// add distance unit to distance
 export const formatDistanceWithUnit = (distance = 0, unit = 'km'): string => {
   return distance + ' ' + unit;
 };
@@ -475,3 +464,11 @@ export const getServerHost = (): string => {
     return '';
   }
 };
+
+/**
+ * A price as a member reads it ("40 000 Ar"): thousands grouped by a space, then the currency's
+ * symbol. `currency` is the ISO code the price is stored in; left out, the default country's.
+ */
+export const formatPriceWithCurrency = (price = 0, currency?: string | null): string => (
+  `${String(Math.round(price)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} ${getCurrencySymbol(currency)}`
+);

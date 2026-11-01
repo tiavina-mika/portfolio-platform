@@ -5,14 +5,11 @@
 - [Connexion et compte](#connexion-et-compte)
 - [Opérations](#opérations)
 - [Communauté](#communauté)
-- [Analytique](#analytique)
-- [Finance](#finance)
 - [Contenu](#contenu)
 - [Administration](#administration)
 
 The sections follow the real sidebar groups, in menu order. Every sidebar entry has a page; sub-pages
-(add/edit, preview) are listed under their entry. Legacy carpooling screens kept by the shared back-office
-core (reports, payments, finance, statistics) are documented with their real limits.
+(add/edit, preview) are listed under their entry.
 
 ## Connexion et compte
 
@@ -34,20 +31,9 @@ core (reports, payments, finance, statistics) are documented with their real lim
   - [Liste](users/fr/USERS_LIST.FR.md)
   - [Fiche](users/fr/USERS_PREVIEW.FR.md)
 - Contacts
-  - [Boîte de réception](contacts/fr/CONTACTS_LIST.FR.md)
-  - [Lire et répondre à une demande](contacts/fr/CONTACTS_PREVIEW.FR.md)
-- [Signalements](reports/fr/REPORTS.FR.md)
+  - [Messages reçus](contacts/fr/CONTACTS_LIST.FR.md)
 - [Notifications](notifications/fr/NOTIFICATIONS.FR.md)
 - [Diffusion d'une annonce](notifications/fr/BROADCAST.FR.md)
-- [Paiements](payments/fr/PAYMENTS.FR.md)
-
-## Analytique
-
-- [Statistiques](statistics/fr/STATISTICS.FR.md)
-
-## Finance
-
-- [Finance](finance/fr/FINANCE.FR.md)
 
 ## Contenu
 

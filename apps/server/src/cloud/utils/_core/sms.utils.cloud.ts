@@ -3,32 +3,9 @@ import type { ChannelSendResult } from '@/types/notification.type';
 import type { ISendSmsResponse } from '@/types/sms.type';
 
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
-import { SMS_RETRIEVER_APP_HASH_PATTERN } from '@/constants/_core/constants';
 import { sendSms, sendSmsWithResult } from '@/services/sms.service';
-import { logger } from '@/utils/_core/logger';
 
 const isSmsSentResponse = (data: ISendSmsResponse): boolean => !!data?.success;
-
-/**
- * Android's SMS Retriever API hands a verification SMS to the app — which then fills the code with
- * no tap at all — only when the message ends with the app's own 11-character hash. The hash
- * depends on the package name and the signing key, so each server environment carries the hash
- * of the build that talks to it. It is appended after the translation, not written into the
- * i18n string: it is not text to translate, and every locale gets it at once. Harmless on iOS,
- * on the web, and on Android phones without Google Play Services: just one more line of text.
- */
-const withSmsRetrieverHash = (message: string): string => {
-  const hash = process.env.ANDROID_SMS_RETRIEVER_HASH;
-
-  if (!hash) return message;
-
-  if (!SMS_RETRIEVER_APP_HASH_PATTERN.test(hash)) {
-    logger.warn('ANDROID_SMS_RETRIEVER_HASH ignored — not an 11-character app hash');
-    return message;
-  }
-
-  return `${message}\n\n${hash}`;
-};
 
 /**
  * @param dialCode the dial code of the number's country, which picks the provider. Required, so a
@@ -41,9 +18,7 @@ export const sendSmsVerification = async (
   locale: Locale | undefined,
   dialCode: string | undefined
 ): Promise<boolean> => {
-  const message = withSmsRetrieverHash(
-    translate('sms.verificationCode', locale ?? DEFAULT_LANGUAGE, { code })
-  );
+  const message = translate('sms.verificationCode', locale ?? DEFAULT_LANGUAGE, { code });
 
   const data = await sendSms({ to: phoneNumber, message, dialCode });
 

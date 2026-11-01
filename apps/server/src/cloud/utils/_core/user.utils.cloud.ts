@@ -2,7 +2,7 @@ import { BanReasonEnum, BanTypeEnum, PlatformEnum } from '@shared/types';
 import dayjs from 'dayjs';
 
 
-import type { Locale, Phone } from '@/types/app.type';
+import type { Locale } from '@/types/app.type';
 import type { ICode, IPlatform, VerificationChannel } from '@/types/auth.type';
 import type { EmailRecipient } from '@/types/email.type';
 import type { ActorSnapshot, IBan } from '@/types/user.type';
@@ -86,8 +86,7 @@ export type VerificationField =
   | 'verification' |
   'stepUpVerification' |
   'resetPasswordVerification' |
-  'contactChangeVerification' |
-  'payoutPhoneVerification';
+  'contactChangeVerification';
 
 /**
  * decrypt the user code
@@ -295,45 +294,6 @@ export const createNewsletter = async (email: string, locale: string): Promise<P
 
   return savedNewsletter;
 };
-
-/**
- * get the payment phone number
- * if the payment phone number is not set, it will return the contact phone number
- * @param parseObj
- * @returns
- */
-export const getPaymentPhone = (
-  parseObj: Parse.Object,
-  userType: 'driver' | 'passenger' = 'driver',
-  defaultPhoneNumber?: Phone
-): Phone => {
-  if (defaultPhoneNumber) return defaultPhoneNumber;
-  // related user
-  const user = parseObj.get(userType);
-  const currentPaymentPhone = parseObj.get('paymentPhone');
-
-  if (currentPaymentPhone) {
-    return currentPaymentPhone;
-  }
-
-  const userPaymentPhones = user?.get('paymentPhones') || [];
-  const userPaymentPhone = userPaymentPhones ? userPaymentPhones[0] : null;
-
-  return (
-    parseObj.get('paymentPhone') ||
-    parseObj.get('phone') ||
-    userPaymentPhone
-  );
-};
-
-/**
- * Whether a payment number is one the user has saved on their profile. A booking is debited from
- * the number it names, so a number that is not the passenger own must never reach the gateway.
- */
-export const isPhoneOfUser = (user: Parse.User, phone?: Phone | null): boolean => !!phone &&
-  (user.get('paymentPhones') || []).some(
-    (savedPhone: Phone) => savedPhone.code === phone.code && savedPhone.number === phone.number
-  );
 
 /**
  * Whether the user is currently blocked from accessing the platform.

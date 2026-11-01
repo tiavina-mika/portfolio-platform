@@ -4,19 +4,15 @@ import { useTranslation } from 'react-i18next';
 import { capitalize } from 'string-ts';
 
 import {
-  BarChartIcon,
   BellIcon,
   BriefcaseIcon,
   CodeIcon,
   ColumnsIcon,
-  CreditCardIcon,
   DashboardIcon,
-  FlagIcon,
   FolderIcon,
   LayoutIcon,
   MegaphoneIcon,
   MessageCircleIcon,
-  ReceiptIcon,
   ServerIcon,
   SettingsIcon,
   UserIcon,
@@ -25,11 +21,9 @@ import { COLLECTIONS } from '@/constants/_core/app.constants';
 import { goToHome, goToMisc, goToSettings } from '@/redux/actions/_core/app.action';
 import { goToArticles } from '@/redux/actions/_core/article.action';
 import { goToCategories } from '@/redux/actions/_core/category.action';
-import { goToFinanceOverview } from '@/redux/actions/_core/finance.action';
 import { goToNotificationBroadcast } from '@/redux/actions/_core/notification.action';
 import { goToPages } from '@/redux/actions/_core/page.action';
 import { goToRoles } from '@/redux/actions/_core/role.action';
-import { goToStatisticsOverview } from '@/redux/actions/_core/statistics.action';
 import { goToUsers } from '@/redux/actions/_core/user.action';
 import { goToList } from '@/redux/actions/_core/util.action';
 import { goToProjects } from '@/redux/actions/_domain/project.action';
@@ -46,7 +40,7 @@ const ICON_SIZE = 18;
  * never drift apart (see `naming-conventions.md` / DRY).
  */
 export const useNavigationMenus = (): ISidebarMenu[] => {
-  const { t } = useTranslation(['common', 'route', 'user', 'statistics', 'finance', 'project']);
+  const { t } = useTranslation(['common', 'route', 'user', 'statistics', 'project']);
   const navigate = useNavigate();
 
   return useMemo(() => [
@@ -90,14 +84,6 @@ export const useNavigationMenus = (): ISidebarMenu[] => {
           hasRightName: 'canFind',
         },
         {
-          id: PATH_NAMES.reports,
-          label: t('user:reports.reports'),
-          onClick: () => navigate(goToList('reports')),
-          icon: <FlagIcon size={ICON_SIZE} />,
-          className: COLLECTIONS.report,
-          hasRightName: 'canFind',
-        },
-        {
           id: PATH_NAMES.notifications,
           label: t('user:notifications.notifications'),
           onClick: () => navigate(goToList('notifications')),
@@ -116,45 +102,6 @@ export const useNavigationMenus = (): ISidebarMenu[] => {
            * handful of people should be able to take (the server checks it again)
            */
           uiRight: UIRoleEnum.BROADCAST,
-        },
-        {
-          id: PATH_NAMES.payments,
-          label: t('user:payments.payments'),
-          onClick: () => navigate(goToList('payments')),
-          icon: <CreditCardIcon size={ICON_SIZE} />,
-          className: COLLECTIONS.payment,
-          hasRightName: 'canFind',
-        },
-      ],
-    },
-    {
-      title: t('common:sidebar.analytics'),
-      subMenus: [
-        {
-          id: PATH_NAMES.statistics.root,
-          label: t('common:statistics'),
-          onClick: () => navigate(goToStatisticsOverview()),
-          icon: <BarChartIcon size={ICON_SIZE} />,
-          uiRight: UIRoleEnum.STATISTICS,
-          hasRightName: 'canFind',
-          /*
-           * one entry for the whole section: the views (overview, users, rides…) are switched from
-           * the navigation inside the statistics page itself, and every one of them sits under this
-           * entry's address segment, so it stays highlighted whichever view is open
-           */
-        },
-      ],
-    },
-    {
-      title: t('common:sidebar.finance'),
-      subMenus: [
-        {
-          id: PATH_NAMES.finance.root,
-          label: t('common:finance'),
-          onClick: () => navigate(goToFinanceOverview()),
-          icon: <ReceiptIcon size={ICON_SIZE} />,
-          uiRight: UIRoleEnum.FINANCE,
-          hasRightName: 'canFind',
         },
       ],
     },

@@ -9,7 +9,7 @@ paths:
 
 | Folder | Pattern | Example |
 |---|---|---|
-| `api/` | `domain.api.ts` | `cloudinary.api.ts`, `payment.api.ts` |
+| `api/` | `domain.api.ts` | `cloudinary.api.ts` |
 | `cloud/functions/` | `domain.functions.ts` | `article.functions.ts`, `project.functions.ts` |
 | `cloud/triggers/` | `domain.triggers.ts` | `article.triggers.ts`, `project.triggers.ts` |
 | `cloud/jobs/` | `domain.jobs.ts` | `newsletter.jobs.ts`, `category.jobs.ts` |

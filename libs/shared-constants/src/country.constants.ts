@@ -53,23 +53,6 @@ export type Country = {
     prefixes: readonly string[];
   };
   /**
-   * Money rules written in the country's currency, so each country sets its own bounds instead of
-   * inheriting the ariary figures: a floor of 500 is a deterrent in ariary and nothing in euros.
-   */
-  pricing: {
-    /**
-     * Bounds of the total withheld from a passenger who cancels (platform penalty plus driver
-     * compensation): a pure percentage has no floor on a cheap booking and no ceiling on a dear one.
-     */
-    passengerCancellationPenalty: { min: number; max: number };
-    /** Bounds of the penalty a driver owes for cancelling a ride that had passengers */
-    driverCancellationPenalty: { min: number; max: number };
-    /** Step by which a driver moves the price of one stop up or down */
-    stopPriceAdjustmentStep: number;
-    /** Step of the price filter of the ride search */
-    searchPriceStep: number;
-  };
-  /**
    * National emergency numbers the SOS offers: free, and reachable without mobile data. Fixed keys,
    * so each app can name them in its own language.
    */
@@ -99,14 +82,6 @@ export type Country = {
      */
     placeholderPhones: Readonly<Record<string, string>>;
   };
-  /**
-   * What a receipt printed for a payment in this country carries beyond the payment itself.
-   * Lines of the company's legal identity (registration, tax number…) as the country requires
-   * them — none until the company's details exist.
-   */
-  receipt: {
-    legalMentions: readonly string[];
-  };
   /** How the company is reached publicly in this country: website footer, contact page, metadata. */
   contact: {
     email: string;
@@ -135,12 +110,6 @@ export const COUNTRIES = {
       trunkPrefix: '0',
       prefixes: ['32', '33', '34', '37', '38'],
     },
-    pricing: {
-      passengerCancellationPenalty: { min: 500, max: 20000 },
-      driverCancellationPenalty: { min: 2000, max: 15000 },
-      stopPriceAdjustmentStep: 500,
-      searchPriceStep: 5000,
-    },
     emergencyNumbers: {
       police: '117',
       firefighters: '118',
@@ -156,8 +125,6 @@ export const COUNTRIES = {
         orange: '+261 32 00 000 03',
       },
     },
-    // TODO: the company's legal identity lines (registration, tax number) once the company exists
-    receipt: { legalMentions: [] },
     // TODO: dummy contact info until real contact details are provided
     contact: {
       email: 'contact@example.com',

@@ -1,5 +1,5 @@
 import {
-  BanReasonEnum, BanTypeEnum, SuspensionSourceEnum, VerificationSmsErrorEnum,
+  BanReasonEnum, BanTypeEnum, VerificationSmsErrorEnum,
 } from '@shared/types';
 import dayjs from 'dayjs';
 
@@ -12,28 +12,27 @@ import type { BanReason, BanType, IBan } from '@/types/user.type';
 import { moveFileToRecycleBin } from '@/api/_core/cloudinary.api';
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
 import {
-  collections, DEFAULT_BAN_DURATION_DAYS, DEFAULT_QUERY_LIMIT, DISABLE_TRIGGERS_CONTEXT, IS_LOCAL, IS_TEST,
-  SKIP_SIGN_UP_VERIFICATION, UNVERIFIED_PHONE_SIGNUP_RETENTION_HOURS, USE_MASTER_KEY,
+  DEFAULT_BAN_DURATION_DAYS, DEFAULT_QUERY_LIMIT, DISABLE_TRIGGERS_CONTEXT, HIGHEST_LEVEL_ROLES, IS_LOCAL,
+  IS_TEST, SKIP_SIGN_UP_VERIFICATION, UNVERIFIED_PHONE_SIGNUP_RETENTION_HOURS, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 import {
-  ACCOUNT_BANNED_STATUS, ACCOUNT_NOTIFICATION_TYPE, ACCOUNT_SUSPENDED_STATUS, ACCOUNT_UNBANNED_STATUS,
+  ACCOUNT_BANNED_STATUS, ACCOUNT_NOTIFICATION_TYPE, ACCOUNT_UNBANNED_STATUS,
 } from '@/constants/_core/notification.constants';
 import {
   USER_DETAILS_FIELDS, USER_DETAILS_POINTER_FIELDS, USER_DETAILS_POINTER_SUBFIELDS,
 } from '@/constants/_core/user.constants';
-import { NotificationChannelStatusEnum, type NotificationChannelRecipient } from '@/types/notification.type';
 import { OwnerAlertEventEnum } from '@/types/ownerAlert.type';
 import { RegisterStepEnum, UserModerationActionEnum } from '@/types/user.type';
 import { logger } from '@/utils/_core/logger';
 import { normalizePhoneNumber } from '@/utils/_core/phone.utils';
 import { consumeSmsSendQuota } from '@/utils/_core/sms-quota.utils';
-import { applyUserSuspension } from '@/utils/_core/suspension.utils';
 import { appendBan, closeBanInForce } from '@/utils/_core/user.utils';
 import { escapeText } from '@/utils/_core/utils';
 
 import { createNotification, removeRecipientFromNotifications } from './notification.service.cloud';
 import { alertOwners } from './ownerAlert.service.cloud';
 import { createUserModerationLog } from './userModerationLog.service.cloud';
+import { getUserIdsFromRoles } from './userRole.service.cloud';
 import { revokeAllUserSessionsService } from './userSession.service.cloud';
 import { sendAccountReactivatedEmail } from '../../emails/_core/user.email';
 import { createContactToCloud, sendEmailToUser, sendEmailVerification } from '../../utils/_core/email.utils.cloud';
@@ -287,29 +286,6 @@ const sendBanEmail = async (user: Parse.User, locale: Locale): Promise<boolean> 
 };
 
 /**
- * Whether the ban push reached a device. The push fan-out writes its outcome on the notification
- * row after the row is saved, so the row is read again rather than trusting the saved object.
- */
-const wasBanPushed = async (notification: Parse.Object | undefined, userId: string): Promise<boolean> => {
-  if (!notification) return false;
-
-  try {
-    const stored = await new Parse.Query(collections.Notification)
-      .select(['channels'])
-      .get(notification.id, USE_MASTER_KEY);
-    const push: NotificationChannelRecipient[] = stored.get('channels')?.push ?? [];
-
-    return push.some((recipient) => (
-      recipient.toId === userId && recipient.status === NotificationChannelStatusEnum.SENT
-    ));
-  }
-  catch (error) {
-    logger.error('Could not read the ban push outcome', { userId, error: (error as Error).message });
-    return false;
-  }
-};
-
-/**
  * Stamps the entry of the ban just applied as "member notified". Done once a channel really
  * delivered: a ban against a member with no address and no reachable device used to claim they had
  * been told, which is the one thing support relies on when they say they were never warned.
@@ -365,88 +341,25 @@ export const banUser = async (
     banType: type,
   });
 
-  /*
-   * sent, and waited for, before the sessions are revoked: the push goes to the devices those
-   * sessions hold, and it is fired in the background by default — so the revocation destroyed the
-   * device rows while it was still looking for them, and a member without an e-mail was told nothing.
-   * The e-mail (or the login refusal message) stays the channel the ban is really read through.
-   */
-  const notification = await createNotification({
+  // the in-app row; the e-mail (or the login refusal message) is the channel the ban is really read through
+  await createNotification({
     type: ACCOUNT_NOTIFICATION_TYPE,
     to: [updatedUser],
     status: ACCOUNT_BANNED_STATUS,
-  }, { awaitPush: true });
-  const isPushed = await wasBanPushed(notification, updatedUser.id);
+  });
 
   await revokeAllUserSessionsService(updatedUser);
 
   // the ban is already effective: a failing email never fails it, it only leaves `notifiedAt` unset
   const isEmailed = await sendBanEmail(updatedUser, locale);
 
-  if (!isPushed && !isEmailed) return updatedUser;
+  if (!isEmailed) return updatedUser;
 
   const bans: IBan[] = updatedUser.get('bans') || [];
 
   updatedUser.set('bans', markBanNotified(bans, ban.bannedAt));
 
   return updatedUser.save(null, { ...USE_MASTER_KEY, ...DISABLE_TRIGGERS_CONTEXT });
-};
-
-/**
- * Blocks a user's account for a number of days and tells them why. Shared by every moderation
- * path that ends in a temporary block — the automatic report threshold, the manual decision an
- * operator makes from a report file, and the same decision made from a review — so a suspension
- * looks the same to the person receiving it whichever of them reached it.
- * @param userId the account to suspend
- * @param days how long the suspension lasts
- * @param trace who decided it and what from. `source` is **required** and stored on the account, so
- * the member can be told why they are suspended; `performedBy` is absent on an automatic threshold,
- * which nobody decided.
- * @param locale language of the notification email
- * @returns the suspended user
- */
-export const suspendUserForDays = async (
-  userId: string,
-  days: number,
-  trace: { performedBy?: Parse.User; source: SuspensionSourceEnum; reason?: string },
-  locale: Locale = DEFAULT_LANGUAGE
-): Promise<Parse.User> => {
-  const user = await new Parse.Query(Parse.User).get(userId, USE_MASTER_KEY);
-  const suspensionEnd = dayjs().add(days, 'day').toDate();
-  // the person's own language: the caller's locale is the moderator's, not theirs
-  const recipientLocale = (user.get('locale') ?? locale) as Locale;
-
-  applyUserSuspension(user, {
-    until: suspensionEnd,
-    source: trace.source,
-    reason: trace.reason,
-  });
-  await user.save(null, USE_MASTER_KEY);
-
-  await createUserModerationLog({
-    targetUser: user,
-    action: UserModerationActionEnum.SUSPENDED_BY_POLICY,
-    performedBy: trace.performedBy,
-    // the log's reason is the moderator's wording when there is one, the trigger otherwise
-    reason: trace.reason ?? trace.source,
-    until: suspensionEnd,
-  });
-
-  // the e-mail never reached an account signed up by phone number: the app says it as well
-  await createNotification({
-    type: ACCOUNT_NOTIFICATION_TYPE,
-    to: [user],
-    status: ACCOUNT_SUSPENDED_STATUS,
-    payload: { suspension: { until: suspensionEnd, source: trace.source } },
-  });
-
-  await sendEmailToUser(user, {
-    subject: translate('email.preventiveSuspensionSubject', recipientLocale),
-    message: translate('email.preventiveSuspensionMessage', recipientLocale, { days: String(days) }),
-    locale: recipientLocale,
-  });
-
-  return user;
 };
 
 /**
@@ -534,6 +447,41 @@ export const liftExpiredBans = async (): Promise<void> => {
         });
       }
     }, USE_MASTER_KEY);
+};
+
+/**
+ * Refuses a back-office deletion that would cost the platform its way in: an admin erasing their own
+ * account from the list (one misplaced click ends their session and anonymises them), an account of
+ * a higher role by an admin who lacks it, or the last active owner, who nobody could replace.
+ * Checked for the whole batch before the first account is touched, so a refusal halfway never leaves
+ * the earlier accounts already deleted.
+ * @param actor the back-office user deleting
+ * @param users the accounts to delete
+ * @param locale language of the refusal message
+ */
+export const assertCanDeleteUsers = async (
+  actor: Parse.User,
+  users: Parse.User[],
+  locale: Locale = DEFAULT_LANGUAGE
+): Promise<void> => {
+  for (const user of users) {
+    if (user.id === actor.id) throw new Error(translate('error.cannotDeleteOwnAccount', locale));
+
+    await assertCanActOnUser(actor, user, locale);
+  }
+
+  const deletedIds = new Set(users.map((user) => user.id));
+  const ownerIds = await getUserIdsFromRoles([HIGHEST_LEVEL_ROLES[0]!]);
+
+  if (!ownerIds.some((ownerId) => deletedIds.has(ownerId))) return;
+
+  const remainingOwner = await new Parse.Query(Parse.User)
+    .containedIn('objectId', ownerIds.filter((ownerId) => !deletedIds.has(ownerId)))
+    .notEqualTo('deleted', true)
+    .select(['objectId'])
+    .first(USE_MASTER_KEY);
+
+  if (!remainingOwner) throw new Error(translate('error.cannotDeleteLastOwner', locale));
 };
 
 export const deleteUser = async (

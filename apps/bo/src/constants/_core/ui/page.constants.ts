@@ -32,29 +32,11 @@ export const PAGE_HEAD_DESCRIPTION_GAP = 4;
  * the heading is one row of type and marks
  */
 export const PAGE_HEAD_TITLE_GAP = 10;
-/*
- * a glyph standing next to the title is a mark on the heading, not a control: it sits at the
- * caption size rather than at the title's own
- */
-export const PAGE_HEAD_TITLE_BADGE_SIZE = 16;
 export const PAGE_HEAD_ACTIONS_GAP = 8;
 export const PAGE_HEAD_ACTIONS_OFFSET = 14;
 // stacked under the title, the row only needs air between two blocks, not the title's own offset
 export const PAGE_HEAD_ACTIONS_MOBILE_OFFSET = 10;
 export const PAGE_HEAD_ACTION_ICON_SIZE = 15;
-// the pretitle can carry a control of its own, next to a reference an operator copies
-export const PAGE_HEAD_PRETITLE_CONTROL_GAP = 4;
-/*
- * width the placeholder of a page-head action takes while its figure is still loading — wide
- * enough that the button does not jump sideways once the number lands next to its label
- */
-export const PAGE_HEAD_ACTION_SKELETON_WIDTH = 200;
-/*
- * the line of figures a detail page states under its title — what the record is worth, how long it
- * has been going on. They are read as one sentence, so the middle dot between two of them sits
- * closer to either side than the facts stand from one another
- */
-export const PAGE_HEAD_META_GAP = 10;
 
 /*
  * THE PAGE FOOTER — the line closing the content column, standing on the same rail the app bar
@@ -375,20 +357,6 @@ export const CARD_STAT_VALUE_LINE_HEIGHT = 1.1;
 // the placeholder stands in for the figure's own box, so the grid does not jump when data lands
 export const CARD_STAT_SKELETON_VALUE_HEIGHT = 32;
 
-/*
- * THE STATUS STAT CARD — the summary form of the card above, sized to stand five to a row over a
- * list rather than four to a row at the top of a page. It drops the icon slot: what the figure
- * counts is a state, and the state is already named by the tinted dot in front of its label. The
- * caption sits on the figure's own baseline instead of under it, so the card stays two lines tall
- * whatever it holds.
- */
-export const CARD_STATUS_STAT_PADDING_X = 14;
-export const CARD_STATUS_STAT_PADDING_Y = 12;
-export const CARD_STATUS_STAT_GAP = 6;
-export const CARD_STATUS_STAT_VALUE_GAP = 6;
-// the label is the one place a state's own tint is carried by text rather than by a dot alone
-export const CARD_STATUS_STAT_LABEL_WEIGHT = 500;
-
 // page placeholder drawn while a page's chunk or the dashboard guard is on its way
 export const PAGE_SKELETON_PRETITLE_WIDTH = 90;
 export const PAGE_SKELETON_PRETITLE_HEIGHT = 10;
@@ -460,62 +428,6 @@ export const STATUS_PAGE_TITLE_FONT_SIZE_MOBILE = 19;
 export const STATUS_PAGE_ACTION_ICON_SIZE = 15;
 export const STATUS_PAGE_ACTION_HEIGHT = 44;
 export const STATUS_PAGE_ACTION_HEIGHT_MOBILE = 48;
-
-/*
- * THE NO-SHOW THREAD — a booking's no-show report read as the exchange it was: the passenger's
- * account on the left, the answers to it (the driver's reply, then support's ruling) closing on the
- * right. The bubble keeps one squared corner on the side of its author, which is what ties a bubble
- * to the avatar beside it once several of them stack.
- */
-export const NO_SHOW_THREAD_GAP = 16;
-// the report's status chip stands beside the block title the way the page status stands beside its own
-export const NO_SHOW_TITLE_GAP = PAGE_HEAD_TITLE_GAP;
-export const NO_SHOW_MESSAGE_MAX_WIDTH = '78%';
-export const NO_SHOW_MESSAGE_GAP = 10;
-export const NO_SHOW_MESSAGE_BODY_GAP = 5;
-export const NO_SHOW_AVATAR_SIZE = 32;
-export const NO_SHOW_AVATAR_FONT_SIZE = 12;
-export const NO_SHOW_AUTHOR_GAP = 8;
-// the author's role is a tag, not a status: square-cornered and neutral, so it never reads as one
-export const NO_SHOW_ROLE_TAG_HEIGHT = 18;
-export const NO_SHOW_ROLE_TAG_PADDING_X = 6;
-export const NO_SHOW_ROLE_TAG_FONT_SIZE = 11;
-export const NO_SHOW_ROLE_TAG_LETTER_SPACING = '.3px';
-export const NO_SHOW_ROLE_TAG_RADIUS = 3;
-export const NO_SHOW_BUBBLE_PADDING_Y = 11;
-export const NO_SHOW_BUBBLE_PADDING_X = 14;
-export const NO_SHOW_BUBBLE_RADIUS = 8;
-export const NO_SHOW_BUBBLE_TAIL_RADIUS = 3;
-export const NO_SHOW_BUBBLE_TITLE_GAP = 4;
-// what the ruling did to the ride, set under the reason by a rule rather than as a second bubble
-export const NO_SHOW_BUBBLE_FOOTNOTE_GAP = 6;
-// the photos joined to a message or a report: large enough to tell a meeting point at a glance
-export const IMAGE_ATTACHMENT_SIZE = 72;
-export const IMAGE_ATTACHMENT_GAP = 8;
-export const IMAGE_ATTACHMENT_RADIUS = 6;
-/*
- * the two parties who are not the passenger get solid discs rather than the accent gradient: the
- * driver a slate one, support the navy of the sidebar it works from — so the three voices of the
- * thread can be told apart before any name is read
- */
-export const NO_SHOW_DRIVER_AVATAR_COLOR = '#3A4759';
-export const NO_SHOW_SUPPORT_AVATAR_COLOR = '#1A2332';
-
-/*
- * THE PAYMENT PAGE — the two sides of a movement of money, and the chain it belongs to (passenger →
- * platform → driver). The steps of the chain share one row on a wide screen and are stacked on a
- * phone, so their padding stays small enough for three of them to sit side by side in the content
- * column.
- */
-export const PAYMENT_PARTY_GAP = 12;
-export const PAYMENT_PARTY_AVATAR_SIZE = 40;
-export const PAYMENT_CYCLE_GAP = 12;
-export const PAYMENT_CYCLE_STEP_GAP = 4;
-export const PAYMENT_CYCLE_STEP_PADDING_Y = 12;
-export const PAYMENT_CYCLE_STEP_PADDING_X = 14;
-export const PAYMENT_CYCLE_ARROW_SIZE = 18;
-export const PAYMENT_CYCLE_NOTE_GAP = 8;
-export const PAYMENT_CYCLE_NOTE_ICON_SIZE = 15;
 
 /*
  * THE DASHBOARD PLACEHOLDER — the content zone of the shell drawn before the guard has loaded the

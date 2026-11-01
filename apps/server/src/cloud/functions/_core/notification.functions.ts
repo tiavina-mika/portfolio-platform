@@ -211,13 +211,11 @@ Parse.Cloud.define(
       /*
        * the back-office notification page: list fields (see getNotifications) plus `updatedAt`,
        * `deletedAt`/`deletedBy` for its history, `receiverSeenDates` for when each recipient opened
-       * it, and `ride`/`request`/`rating` — live Parse pointers
-       * only pre-"decoupling" notifications ever had set (see INotificationAttributes in the BO) —
-       * matching the field name the BO reads
+       * it
        */
       .select([
         ...NOTIFICATION_LIST_FIELDS, 'updatedAt', 'deletedAt', 'deletedBy', 'undeletedAt', 'undeletedBy',
-        'receiverSeenDates', 'ride', 'request', 'rating',
+        'receiverSeenDates',
         /*
          * the back-office account behind a hand-written announcement — the one notification nobody
          * raised automatically, and the only one whose history has an author to name
@@ -225,7 +223,7 @@ Parse.Cloud.define(
         'broadcastBy',
       ])
       .include([
-        'from', 'to', 'deletedBy', 'undeletedBy', 'broadcastBy', 'ride', 'request', 'rating', ...include,
+        'from', 'to', 'deletedBy', 'undeletedBy', 'broadcastBy', ...include,
       ])
       .first(USE_MASTER_KEY);
 

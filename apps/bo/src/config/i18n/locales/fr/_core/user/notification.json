@@ -17,82 +17,17 @@
     "senderSearchPlaceholder": "Nom ou e-mail de l'émetteur",
     "receiverSearchPlaceholder": "Nom ou e-mail du destinataire",
     "types": {
-      "ride": "Trajet",
-      "request": "Demande",
-      "rating": "Note",
       "account": "Compte",
-      "rate": "Avis",
-      "ticket": "Ticket support",
-      "vehicle": "Véhicule",
       "announcement": "Annonce"
     },
     "statusLabels": {
-      "RIDE": {
-        "PUBLISHED": "Trajet publié",
-        "BOOKED": "Trajet réservé",
-        "FULL": "Trajet complet",
-        "CANCELED": "Trajet annulé",
-        "IN_PROGRESS": "Trajet en cours",
-        "AWAITING_CONFIRMATION": "Trajet en attente de confirmation",
-        "COMPLETED": "Trajet terminé",
-        "ARCHIVED": "Trajet archivé",
-        "RIDE_PAYOUT_RELEASED": "Paiement conducteur versé",
-        "DRIVER_CANCELLATION_PENALTY": "Pénalité d'annulation conducteur",
-        "RIDE_DEPARTURE_REMINDER": "Rappel de départ",
-        "RIDE_COMPLETION_REMINDER": "Rappel de fin de trajet",
-        "RIDE_COMPLETION_CHECK": "Le trajet a-t-il eu lieu ?",
-        "RIDE_AUTO_COMPLETED": "Trajet clôturé automatiquement",
-        "RIDE_AUTO_COMPLETED_DRIVER": "Trajet clôturé automatiquement (conducteur)",
-        "SUSPENSION_LIFTED": "Suspension levée",
-        "RIDE_UPDATED": "Trajet modifié"
-      },
-      "REQUEST": {
-        "PENDING": "Paiement de la réservation en cours",
-        "CONFIRMED": "Réservation confirmée",
-        "CANCELED_BY_PASSENGER": "Réservation annulée",
-        "LATE_PAYMENT_REFUNDED": "Paiement tardif remboursé",
-        "REQUEST_REFUND_PAID": "Remboursement envoyé",
-        "CANCELED_BY_DRIVER": "Demande annulée par le conducteur",
-        "COMPLETED": "Demande terminée",
-        "PAYMENT_FAILED": "Paiement de la demande échoué",
-        "NO_SHOW": "Passager déclaré absent",
-        "CONTESTED_NO_SHOW": "Absence contestée",
-        "REQUEST_PAYMENT_SUCCEEDED": "Paiement de la demande réussi",
-        "PASSENGER_CANCELLATION_SUSPENSION": "Suspension passager (annulations)",
-        "DRIVER_NO_SHOW_REPORTED": "Absence du conducteur signalée",
-        "DRIVER_NO_SHOW_REPLIED": "Réponse du conducteur au signalement",
-        "DRIVER_NO_SHOW_CONFIRMED": "Absence du conducteur confirmée",
-        "DRIVER_NO_SHOW_REJECTED": "Signalement d'absence rejeté",
-        "PASSENGER_NO_SHOW_CONFIRMED": "Absence du passager confirmée",
-        "PASSENGER_NO_SHOW_REJECTED": "Absence du passager rejetée"
-      },
       "ACCOUNT": {
         "ACCOUNT_BANNED": "Compte banni",
-        "ACCOUNT_SUSPENDED": "Compte suspendu (signalements)",
         "ACCOUNT_UNBANNED": "Compte réactivé",
         "SUSPENSION_LIFTED": "Suspension levée",
-        "PASSENGER_CANCELLATION_SUSPENSION": "Suspension passager (annulations)",
         "NEW_DEVICE_LOGIN": "Nouvelle connexion",
         "SUPPORT_SESSION_ENDED": "Session support terminée",
         "PASSWORD_RESET_DELAYED": "Changement de mot de passe retenu"
-      },
-      "RATE": {
-        "COMPLETED": "Nouvel avis",
-        "RATING_INVITATION": "Invitation à noter",
-        "RATING_REMINDER": "Rappel pour noter",
-        "RATING_REPLY": "Réponse à un avis"
-      },
-      "TICKET": {
-        "newReplyFromAgent": "Réponse du support",
-        "TICKET_RESOLVED": "Ticket résolu",
-        "REPORT_RECEIVED": "Signalement reçu",
-        "REPORT_RESOLVED": "Signalement traité"
-      },
-      "VEHICLE": {
-        "VEHICLE_VERIFIED": "Véhicule vérifié",
-        "VEHICLE_DOCUMENT_REJECTED": "Document véhicule refusé",
-        "VEHICLE_DOCUMENT_EXPIRING_SOON": "Document véhicule bientôt expiré",
-        "VEHICLE_DOCUMENT_EXPIRED": "Document véhicule expiré"
       },
       "ANNOUNCEMENT": {
         "ANNOUNCEMENT": "Annonce"
@@ -194,13 +129,7 @@
         "description": "Le destinataire a déjà reçu son maximum de SMS de secours sur 24 heures : celui-ci n'a pas été envoyé."
       }
     },
-    "payloadKeys": {
-      "ride": "Trajet",
-      "request": "Demande",
-      "rating": "Avis",
-      "ticket": "Ticket",
-      "vehicle": "Véhicule"
-    },
+    "payloadKeys": {},
     "id": "ID",
     "channel": "Canal",
     "delivery": "Diffusion",

@@ -17,8 +17,8 @@ Names are defined in `libs/shared-constants/src/role.constants.ts` (shared by th
 | `OWNER` | Highest | First of `HIGHEST_LEVEL_ROLES`; the role that does the OWNER-only actions (reset an administrator's MFA, revoke a super administrator) |
 | `SUPER_ADMIN` | Highest | Second of `HIGHEST_LEVEL_ROLES` |
 | `MANAGER` | Default | `DEFAULT_ROLES[0]`; rights are set per entity in the back-office |
-| `SUPPORT_VIEWER` | Default | Read-only (`find`, `get`) on every class except the always-locked ones; sees the statistics page |
-| `TEAM_LEAD` | Default | What `SUPPORT_VIEWER` reads, plus creating an account (used to invite a colleague); sees statistics and the staff management |
+| `SUPPORT_VIEWER` | Default | Read-only (`find`, `get`) on every class except the always-locked ones |
+| `TEAM_LEAD` | Default | What `SUPPORT_VIEWER` reads, plus creating an account (used to invite a colleague); sees the staff management |
 
 The default roles are created at boot by `ensureDefaultRolesExist` once the `SUPER_ADMIN` role exists. Other roles can be created from the back-office (`createRole`, `updateRole`). Roles are stored in the Parse `_Role` collection; the highest roles are children of every other role.
 
@@ -27,11 +27,11 @@ The default roles are created at boot by `ensureDefaultRolesExist` once the `SUP
 A role carries custom fields:
 
 - `rights`: a list of `{ className, rights }` where `rights` is a map of booleans for the operations `create`, `update`, `get`, `find`, `delete`, `destroy`.
-- `ui`: the back-office "ui" rights (`UIRoleEnum` in `apps/bo/src/types/_core/role.type.ts`): `migrations`, `cron`, `tests` (the tabs of the miscellaneous page), `impersonation`, `statistics`, `finance`, `broadcast`, `staff`. The server mirrors the ones it must enforce (for example `IMPERSONATION_UI_RIGHT`).
+- `ui`: the back-office "ui" rights (`UIRoleEnum` in `apps/bo/src/types/_core/role.type.ts`): `migrations`, `cron`, `tests` (the tabs of the miscellaneous page), `impersonation`, `broadcast`, `staff`. The server mirrors the ones it must enforce (for example `IMPERSONATION_UI_RIGHT`).
 - `countries`: the countries the role is limited to (the `country-scope` trigger narrows queries accordingly).
 - a custom back-office inactivity timeout, bounded between 15 and 480 minutes.
 
-Entities that can receive rights in the back-office form: `_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Payment`, `Notification`, `Report`, `UserAuditLog` (`ENTITIES_WITH_RIGHTS_OPTIONS` in `apps/bo/src/constants/_core/user.constants.ts`), plus the entities a domain registers with `registerRightsEntities` (the `Project` domain does it in `apps/bo/src/utils/_domain/project-role.utils.ts`).
+Entities that can receive rights in the back-office form: `_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Notification`, `UserAuditLog` (`ENTITIES_WITH_RIGHTS_OPTIONS` in `apps/bo/src/constants/_core/user.constants.ts`), plus the entities a domain registers with `registerRightsEntities` (the `Project` domain does it in `apps/bo/src/utils/_domain/project-role.utils.ts`).
 
 ## How a check works
 

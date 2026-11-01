@@ -59,16 +59,6 @@ export const DESIGN_TOKENS = {
     shadowModal: '0 24px 48px rgba(15,23,42,.26)',
     // tinted chip/alert backgrounds are ~8% of the base color on light surfaces
     tintOpacity: 0.08,
-    /*
-     * an SOS is drawn in its own muted red rather than in the error palette's alert tone: it is read
-     * for minutes while the agent works the ticket, so its label is a darker red that stays calm on
-     * the tinted ground, and its edges are the error red at fixed strengths — a full outline, a
-     * fainter rule between its bands, and a ground just under the chip tint
-     */
-    sosText: '#9D3B3B',
-    sosTintOpacity: 0.06,
-    sosBorderOpacity: 0.4,
-    sosDividerOpacity: 0.15,
   },
   dark: {
     bodyBg: '#0F1623',
@@ -91,24 +81,8 @@ export const DESIGN_TOKENS = {
     shadowModal: '0 24px 48px #000000a6, 0 0 0 1px #ffffff1f',
     // dark surfaces need a stronger tint (~16%) for the color to stay readable
     tintOpacity: 0.16,
-    sosText: '#F2A0A0',
-    sosTintOpacity: 0.15,
-    sosBorderOpacity: 0.5,
-    sosDividerOpacity: 0.24,
   },
 } as const;
-
-/*
- * stars keep their own amber in both modes: they rate a thing rather than warn about it, so they
- * must not shift with the warning palette (whose `main` is reserved for alert surfaces)
- */
-export const RATING_COLOR = '#E0A800';
-/*
- * a score low enough to matter is drawn in its own muted red rather than in the error palette: it
- * reports a standing built over months, not a failure the operator has to act on right now, and
- * the alert red beside it would read as the louder of the two
- */
-export const RATING_LOW_COLOR = '#9D3B3B';
 
 // unitless, so every size in the scale keeps the same proportion between its glyphs and its leading
 export const BODY_LINE_HEIGHT = 1.4286;
@@ -129,7 +103,6 @@ export const INPUT_LABEL_OFFSET_Y = Math.round(
   (INPUT_HEIGHT - (INPUT_FONT_SIZE * BODY_LINE_HEIGHT)) / 2
 );
 
-export const DASHBOARD_BACKGROUND_COLOR = DESIGN_TOKENS.light.bodyBg;
 export const DEFAULT_THEME_COLOR = 'green';
 
 /*

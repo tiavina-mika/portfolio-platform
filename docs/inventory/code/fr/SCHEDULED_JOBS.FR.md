@@ -18,16 +18,13 @@ Le ping d'éveil tourne hors développement local et hors Cloud Run. Les jobs m�
 | Planification (heure du serveur sauf mention) | Job | Rôle |
 |---|---|---|
 | `*/14 * * * *` | aucun (appelle `/ping`) | Garde éveillé un hébergement gratuit. Pas en développement local, pas sur Cloud Run |
-| `*/2 * * * *` | `reconcilePendingPaymentsJob` | Règle les paiements encore en attente de leur opérateur |
 | `*/5 * * * *` | `revokeExpiredImpersonationSessionsJob` | Révoque les sessions « se connecter en tant que » expirées |
-| `0 * * * *` | `processPushReceiptsJob` | Traite les reçus de push Expo et nettoie les jetons de push périmés |
-| `25 * * * *` | `retryFailedPlatformPaymentsJob` | Relance les paiements dus et non envoyés |
 | `0 2 * * *` | `expireOldNotificationsJob` | Supprime logiquement les notifications de plus de 365 jours |
 | `30 2 * * *` | `purgeOrphanedEditorFilesJob` | Supprime les images Cloudinary de l'éditeur du CMS que plus aucune Page ni aucun Article ne référence (de plus de 24 heures seulement) |
 | `30 3 * * *` | `purgeUnverifiedPhoneSignupsJob` | Détruit les inscriptions dont le téléphone n'a jamais été confirmé |
-| `40 3 * * *` | `purgeOrphanUserSessionsJob` | Détruit les appareils sans jeton de push ni session |
+| `40 3 * * *` | `purgeOrphanUserSessionsJob` | Détruit les appareils sans jeton de session |
 | `30 4 * * 0` | `purgeOldNotificationsJob` | Purge hebdomadaire des anciennes notifications (dimanche) |
-| `45 4 * * 0` | `purgeOldLogsJob` | Destruction hebdomadaire des lignes d'audit, de modération et de tickets au-delà de leur durée de conservation |
+| `45 4 * * 0` | `purgeOldLogsJob` | Destruction hebdomadaire des lignes d'audit, de modération et de liens expirés au-delà de leur durée de conservation |
 | `30 7 * * *` (fuseau du pays par défaut) | `postDailySlackSummaryJob` | Publie les chiffres de la veille sur le canal Slack de l'équipe |
 | `15 8 * * *` (fuseau du pays par défaut) | `liftExpiredBansJob` | Lève les bannissements temporaires expirés |
 

@@ -12,17 +12,13 @@ import categoryReducer from '@/redux/reducers/_core/category.reducer';
 import contactReducer from '@/redux/reducers/_core/contact.reducer';
 import contentVersionReducer from '@/redux/reducers/_core/contentVersion.reducer';
 import dashboardReducer from '@/redux/reducers/_core/dashboard.reducer';
-import financeReducer from '@/redux/reducers/_core/finance.reducer';
 import globalSearchReducer from '@/redux/reducers/_core/globalSearch.reducer';
 import impersonationReducer from '@/redux/reducers/_core/impersonation.reducer';
 import notificationReducer from '@/redux/reducers/_core/notification.reducer';
 import pageReducer from '@/redux/reducers/_core/page.reducer';
-import paymentReducer, { paymentLedgerReducer } from '@/redux/reducers/_core/payment.reducer';
-import reportReducer from '@/redux/reducers/_core/report.reducer';
 import roleReducer from '@/redux/reducers/_core/role.reducer';
 import roleAuditLogReducer from '@/redux/reducers/_core/roleAuditLog.reducer';
 import settingsReducer from '@/redux/reducers/_core/settings.reducer';
-import statisticsReducer from '@/redux/reducers/_core/statistics.reducer';
 import userReducer from '@/redux/reducers/_core/user.reducer';
 import userBlockReducer from '@/redux/reducers/_core/userBlock.reducer';
 import userSessionReducer from '@/redux/reducers/_core/userSession.reducer';
@@ -55,13 +51,8 @@ const reducers = {
   page: pageReducer,
   project: projectReducer,
   notification: notificationReducer,
-  payment: paymentReducer,
-  paymentLedger: paymentLedgerReducer,
-  report: reportReducer,
   globalSearch: globalSearchReducer,
   impersonation: impersonationReducer,
-  statistics: statisticsReducer,
-  finance: financeReducer,
 };
 
 const persistConfig = {

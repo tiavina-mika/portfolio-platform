@@ -17,10 +17,8 @@ const HomeHeroTexts = ({ description }: Props) => {
    */
   return (
     <div className={`
-      [&_p]:text-xl
-      [&_p]:leading-loose!
-      [&_p_*]:text-[length:inherit]!
-      [&_p_*]:leading-[inherit]!
+      [&_p]:text-xl [&_p]:leading-loose!
+      [&_p_*]:text-[length:inherit]! [&_p_*]:leading-[inherit]!
     `}
     >
       <ReadOnlyTextCodeEditor content={description} />

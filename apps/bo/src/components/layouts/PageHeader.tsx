@@ -69,7 +69,7 @@ type Props = {
    * the line above the title, naming where the page sits. It defaults to the sidebar group the
    * route belongs to — the same label the app bar's breadcrumb opens with — so a page only passes
    * it when it is reached from somewhere that group does not name. It can hold a control of its
-   * own when the label is something an operator quotes, like a payment's reference.
+   * own when the label is something an operator quotes, like a record's reference.
    */
   pretitle?: ReactNode;
   description?: ReactNode;

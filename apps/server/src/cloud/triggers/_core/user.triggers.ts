@@ -12,10 +12,9 @@ import {
 import { SIGN_UP_IDENTITY_FIELDS } from '@/constants/_core/user.constants';
 import { RegisterStepEnum } from '@/types/user.type';
 import { logger } from '@/utils/_core/logger';
-import { normalizePhone } from '@/utils/_core/phone.utils';
 import { resolveSignUpIdentity } from '@/utils/_core/signup-identity.utils';
 import { isOwnerEmail } from '@/utils/_core/user.utils';
-import { emergencyContactSchema, profileVisibilitySchema } from '@/validations/_core/user.validations';
+import { profileVisibilitySchema } from '@/validations/_core/user.validations';
 
 import { isImpersonatedSessionService } from '../../services/_core/impersonation.service.cloud';
 import {
@@ -137,23 +136,6 @@ Parse.Cloud.beforeSave(
        * absent — leaving it unset made every freshly registered account invisible to both
        */
       user.set('seen', false);
-      /*
-       * the home screen's one-off "have a car?" invitation: the app removes the field as soon as
-       * it has shown it. Removed rather than set to false so accounts that predate it (no field)
-       * and accounts that already saw it read the same way.
-       */
-      user.set('showDriverBanner', true);
-      /*
-       * seeded with the counters the app and the back office read on a profile. No refusal
-       * counter any more: a driver cannot turn a passenger away before the booking, so what is
-       * counted is the bookings they confirmed and the ones they called off afterwards.
-       */
-      user.set('requestStats', {
-        canceled: 0, completed: 0, confirmed: 0, canceledByDriver: 0, totalDistance: 0,
-      });
-      user.set('rideStats', { canceled: 0, completed: 0, totalDistance: 0 });
-      // flipped once by the first ride the account publishes, never back: it decides the app's role tabs
-      user.set('hasPublishedRide', false);
       if (user.has('platform')) {
         user.set('platforms', [
           {
@@ -239,21 +221,6 @@ Parse.Cloud.beforeSave(
       await parseTriggerValidation(profileVisibilitySchema, ['profileVisibility'])(request);
     }
 
-    /*
-     * written straight from the profile like the payment numbers, but checked here because this
-     * number is the one the SOS texts: normalized first so every way of typing it is stored — and
-     * compared with the account's own number — the same way
-     */
-    if (dirtyKeys.includes('emergencyContact')) {
-      const emergencyContact = user.get('emergencyContact');
-
-      if (emergencyContact?.phone) {
-        user.set('emergencyContact', { ...emergencyContact, phone: normalizePhone(emergencyContact.phone) });
-      }
-
-      await parseTriggerValidation(emergencyContactSchema, ['emergencyContact', 'phone'])(request);
-    }
-
     // sex and birthday change count and date are always in edition
     if (dirtyKeys.includes('sex') && user.get('sex')) {
       user.increment('sexChangeCount', 1);
@@ -335,8 +302,6 @@ Parse.Cloud.beforeSave(
       user.unset('lastName');
       user.unset('phone');
       user.unset('birthday');
-      // a third party's number, with no audit value once the account is gone — not kept aside
-      user.unset('emergencyContact');
       /*
        * the number is gone, so the flag saying it was confirmed has nothing left to describe —
        * and left behind it would keep the row inside the unique verified-number index

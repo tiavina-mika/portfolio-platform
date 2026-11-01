@@ -124,7 +124,9 @@ export const parseFunction =
 
         logger.error(
           ` ============== ${logName} ${request.triggerName} ${object?.id} ==============, ` +
-          message
+          message,
+          // the rethrown Error below gets a fresh stack pointing at this wrapper: keep the original one
+          { stack: (error as Error | undefined)?.stack }
         );
 
         /*
@@ -142,7 +144,7 @@ export const parseFunction =
           return Promise.reject(error);
         }
 
-        return Promise.reject(new Error(message));
+        return Promise.reject(new Error(message, { cause: error }));
       }
     };
 
@@ -436,8 +438,8 @@ export const setStatusFields = (
  *
  * The owner pointer permissions give a booking's passenger and driver, and a ride's driver, write
  * access to the whole row — Parse has no per-column CLP. The columns listed by the caller carry
- * money or identity (amounts, seats, payout state, who the row belongs to): written straight from
- * the SDK, they let a passenger raise their own refund or a driver inflate their payout. Throwing
+ * money or identity (seats, who the row belongs to): written straight from
+ * the SDK, they let a passenger edit what only the server may set. Throwing
  * rather than reverting keeps a forged save from looking like a success to whoever sent it.
  * @NOTE call it only for saves made without the master key — every server flow uses it
  */

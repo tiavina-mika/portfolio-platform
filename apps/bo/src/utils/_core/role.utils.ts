@@ -4,11 +4,10 @@ import {
 import dayjs from 'dayjs';
 import clamp from 'lodash/clamp';
 
-import { COLLECTIONS, DEFAULT_LOCALE } from '@/constants/_core/app.constants';
+import { DEFAULT_LOCALE } from '@/constants/_core/app.constants';
 import {
   MINUTES_PER_HOUR, MS_PER_MINUTE, SESSION_INACTIVITY_TIMEOUT_MS,
 } from '@/constants/_core/auth.constants';
-import { PAYMENT_FAILED_NOTIFICATION_KEY } from '@/constants/_core/payment.constants';
 import { HIGHEST_LEVEL_ROLES, HIGHEST_ROLE_STALE_LOGIN_DAYS } from '@/constants/_core/user.constants';
 import { ITabSearchParams } from '@/types/_core/app.type';
 import { ISidebarSubMenu } from '@/types/_core/navigation.type';
@@ -39,13 +38,10 @@ const roleHasUiRight = (role: IRole, right: string): boolean => {
 /**
  * classes/keys that must always be governed by another class's rights instead of having their
  * own entry in the role rights UI — the class aliases are shared with the server (`SHARED_CLASS_ALIASES`,
- * kept in sync with `CLP_CLASS_ALIASES`); `PAYMENT_FAILED_NOTIFICATION_KEY` is BO-only since it's
- * a status-filtered subset of Payment, not a real Parse class — it follows the same rights as
- * Payment (see the notifications audit §8.2)
+ * kept in sync with `CLP_CLASS_ALIASES`)
  */
 const RIGHTS_CLASS_ALIASES: Record<string, string> = {
   ...SHARED_CLASS_ALIASES,
-  [PAYMENT_FAILED_NOTIFICATION_KEY]: COLLECTIONS.payment,
 };
 
 const resolveRightsClassName = (className?: string): string | undefined => (

@@ -18,10 +18,6 @@
   "create": "hamorona",
   "update": "hanova",
   "blocks": "blocs",
-  "statistics": "antontanisa",
-  "statisticsUsers": "mpampiasa",
-  "statisticsPayments": "fandoavana",
-  "statisticsReports": "fitarainana",
   "account": "kaonty",
   "confirmCode": "kaody/hamarinina",
   "verifyAccount": "hamarinina",
@@ -31,15 +27,10 @@
   "notFound": "tsy-hita",
   "unauthorized": "tsy-mahazo-miditra",
   "administration": "fitantanana",
-  "factures": "faktiora",
   "categories": "sokajy",
   "miscellaneous": "hafa",
   "notifications": "fampahafantarana",
   "broadcast": "fandefasana",
-  "reports": "fitarainana",
-  "ratings": "hevitra",
-  "payments": "fandoavana",
-  "finance": "fitantanam-bola",
   "website": {
     "articles": "lahatsoratra",
     "blog": "blogy"
@@ -51,19 +42,6 @@
     "pending": "mandeha",
     "failed": "tsy-nahomby",
     "users": "mpampiasa",
-    "rides": "dia",
-    "ratings": "hevitra",
-    "vehicles": "fiara",
-    "collections": "vola-voaray",
-    "payouts": "vola-naloa",
-    "driverNoShows": "tsy-fahatongavan-mpamily",
-    "contestedNoShows": "tsy-fahatongavana-notoherina"
-  },
-  "statisticsRides": "lalana",
-  "statisticsVehicles": "fiara",
-  "statisticsCancellations": "fanafoanana",
-  "rides": "làlana",
-  "requests": "fangatahana",
-  "vehicles": "fiara",
-  "financeDrivers": "mpamily"
+    "collections": "vola-voaray"
+  }
 }

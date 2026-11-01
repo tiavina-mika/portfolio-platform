@@ -1,6 +1,6 @@
 /*
- * Allowance of `registerSession` / `registerPushToken`. The app calls each of them once per login
- * and once per launch, so a real member stays far below these; the caps only stop a script from
+ * Allowance of `registerSession`. The app calls it once per login and once per launch, so a real
+ * member stays far below these; the caps only stop a script from
  * inventing device ids in a loop — every new device id can trigger a "new device" alert, and for an
  * account without an e-mail address that alert is a paid SMS. The address cap is much wider:
  * mobile carriers put many subscribers behind one address, so it only catches a script spreading
@@ -17,9 +17,3 @@ export const DEVICE_REGISTRATION_RATE_LIMIT_PREFIX = 'ratelimit:deviceRegistrati
  * member who reinstalls the app a few times in a day has already been warned.
  */
 export const NEW_DEVICE_LOGIN_ALERTS_MAX_PER_DAY = 3;
-
-/*
- * Device rows reached by one `registerPushToken` that still carry the same token under another
- * account (a shared phone, an account switch). One or two in practice; the cap bounds the query.
- */
-export const SHARED_PUSH_TOKEN_ROWS_LIMIT = 20;

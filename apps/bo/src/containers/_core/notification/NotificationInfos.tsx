@@ -24,7 +24,7 @@ type Props = {
 };
 
 /**
- * What a send is, in the order a support ticket quotes it: the reference, what it was about, the
+ * What a send is, in the order a bug report quotes it: the reference, what it was about, the
  * state it announced, the words the recipient read, and who raised it.
  */
 const NotificationInfos = ({ notification }: Props) => {

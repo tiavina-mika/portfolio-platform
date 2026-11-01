@@ -10,8 +10,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import { FaCheck, FaCheckDouble } from 'react-icons/fa';
 import {
-  FiActivity, FiAlertTriangle, FiClock, FiCreditCard, FiEye, FiFileText, FiFlag, FiInbox, FiLifeBuoy, FiList,
-  FiLock, FiLogOut, FiMail, FiMessageSquare, FiMonitor, FiPauseCircle, FiPhone, FiShield, FiShieldOff,
+  FiActivity, FiClock, FiEye, FiFileText, FiInbox, FiLifeBuoy, FiList,
+  FiLock, FiLogOut, FiMail, FiMonitor, FiPauseCircle, FiPhone, FiShield, FiShieldOff,
   FiSlash, FiSmartphone, FiUser, FiUserCheck,
 } from 'react-icons/fi';
 import { IoWarning } from 'react-icons/io5';
@@ -41,25 +41,20 @@ import UserAuditTrailTable from '@/containers/_core/users/user/UserAuditTrailTab
 import UserBans from '@/containers/_core/users/user/UserBans';
 import UserContactDetails from '@/containers/_core/users/user/UserContactDetails';
 import UserDetails from '@/containers/_core/users/user/UserDetails';
-import UserEmergencyContact from '@/containers/_core/users/user/UserEmergencyContact';
 import UserHeaderFacts from '@/containers/_core/users/user/UserHeaderFacts';
 import UserNotificationsTable from '@/containers/_core/users/user/UserNotificationsTable';
 import UserPageTitle from '@/containers/_core/users/user/UserPageTitle';
-import UserPaymentsTable from '@/containers/_core/users/user/UserPaymentsTable';
 import UserPlatforms from '@/containers/_core/users/user/UserPlatforms';
 import UserRecordHistory from '@/containers/_core/users/user/UserRecordHistory';
 import UserRecordViews from '@/containers/_core/users/user/UserRecordViews';
-import UserReportsTable from '@/containers/_core/users/user/UserReportsTable';
 import UserRoles from '@/containers/_core/users/user/UserRoles';
 import UserSessions from '@/containers/_core/users/user/UserSessions';
 import UserSmsFallbackStatus from '@/containers/_core/users/user/UserSmsFallbackStatus';
 import UserSuspensionBanner from '@/containers/_core/users/user/UserSuspensionBanner';
 import UserSuspensionSummary from '@/containers/_core/users/user/UserSuspensionSummary';
-import UserTicketsTable from '@/containers/_core/users/user/UserTicketsTable';
 import { useToggle } from '@/hooks/_core/useToggle';
 import { useUserBlock } from '@/hooks/_core/useUserBlock';
 import { loadAuditLogByUserId } from '@/redux/actions/_core/auditLog.action';
-import { goToContact } from '@/redux/actions/_core/contact.action';
 import {
   endImpersonationSessionById, impersonateUserById,
 } from '@/redux/actions/_core/impersonation.action';
@@ -74,7 +69,6 @@ import {
 import {
   loadUserSessions, revokeAllUserSessionsById, revokeUserSessionById, suspendUserById,
 } from '@/redux/actions/_core/userSession.action';
-import { goToList, goToPreview } from '@/redux/actions/_core/util.action';
 import { getAppCurrentUserSelector } from '@/redux/reducers/_core/app.reducer';
 import { getAuditLogCurrentSelector } from '@/redux/reducers/_core/auditLog.reducer';
 import {
@@ -90,17 +84,11 @@ import {
   getUserSessionsHasErrorSelector, getUserSessionsLoadingSelector, getUserSessionsSelector,
 } from '@/redux/reducers/_core/userSession.reducer';
 import {
-  fetchUserAuditTrail, fetchUserNotifications, fetchUserPayments, fetchUserReportsAgainst,
-  fetchUserReportsMade,
-  fetchUserTickets,
-  UserReportsExtra, UserTicketsExtra,
+  fetchUserAuditTrail, fetchUserNotifications,
 } from '@/services/_core/userBlock.service';
 import { IPreviewGroup, IPreviewSection } from '@/types/_core/app.type';
-import { IContact } from '@/types/_core/contact.type';
 import { ImpersonateUserInput } from '@/types/_core/impersonation.type';
 import { INotification } from '@/types/_core/notification.type';
-import { IPayment } from '@/types/_core/payment.type';
-import { IReport, ReportTargetTypeEnum } from '@/types/_core/report.type';
 import { IRole, RolesForUserInput, UIRoleEnum } from '@/types/_core/role.type';
 import {
   AccountHelpReasonInput, BanUserInput, ChangeMemberContactFormInput, ChangeMemberCountryFormInput, IUser,
@@ -110,7 +98,7 @@ import {
 import { SuspendUserInput } from '@/types/_core/userSession.type';
 import { canAccessTo, getRoleLabel } from '@/utils/_core/role.utils';
 import {
-  getActiveTeamBan, getUserExtensions, getUserFullName, getUserSectionExtensions, getUserSuspensionSources,
+  getActiveTeamBan, getUserExtensions, getUserFullName, getUserSectionExtensions,
   isUserFromBO, isUserSmsFallbackEnabled,
 } from '@/utils/_core/user.utils';
 
@@ -178,12 +166,6 @@ const User = () => {
   const { open: isOpenResetPasswordDialog, toggle: toggleOpenResetPasswordDialog } = useToggle();
 
   const userId = user?.id;
-  const payments = useUserBlock<IPayment>('payments', userId, fetchUserPayments);
-  const reportsAgainst = useUserBlock<IReport, UserReportsExtra>(
-    'reportsAgainst', userId, fetchUserReportsAgainst
-  );
-  const reportsMade = useUserBlock<IReport>('reportsMade', userId, fetchUserReportsMade);
-  const tickets = useUserBlock<IContact, UserTicketsExtra>('tickets', userId, fetchUserTickets);
   const notifications = useUserBlock<INotification>('notifications', userId, fetchUserNotifications);
   const auditTrail = useUserBlock<IUserAuditTrailEntry>('auditTrail', userId, fetchUserAuditTrail);
 
@@ -219,22 +201,13 @@ const User = () => {
   const userFullName = (isDeleted && currentAuditLog?.fullNameBefore) ||
     getUserFullName(user, t('user:unnamedMember'));
 
-  // what keeps the account out of the platform right now: a ban by the team, and any domain policy
+  // what keeps the account out of the platform right now: a ban by the team
   const teamBan = getActiveTeamBan(user);
-  const suspensionSources = getUserSuspensionSources();
-  const policyRows = suspensionSources.map((source) => ({
-    key: source.key,
-    label: source.label,
-    suspension: source.getActive(user),
-  }));
-  const activePolicySuspensions = policyRows.flatMap((row) => (row.suspension ? [row.suspension] : []));
-  const isSuspended = !!teamBan || activePolicySuspensions.length > 0;
+  const isSuspended = !!teamBan;
   const isPermanentlyBanned = teamBan?.type === BanTypeEnum.PERMANENT;
   const canSuspend = canUpdateUser && !isDeleted && !isSuspended;
   const canLift = canUpdateUser && !isDeleted && isSuspended;
 
-  const openReportsCount = reportsAgainst.extra?.openCount ?? 0;
-  const openTicketsCount = tickets.extra?.openCount ?? 0;
 
   /*
    * ---------------------------------------- //
@@ -243,13 +216,8 @@ const User = () => {
    */
   const handleGoToList = () => navigate(goToUsers());
 
-  // lifting the suspension lifts every cause of it at once: the team's ban and each policy's
   const handleLiftSuspension = () => {
     if (user.banned) dispatch(liftUserBanById(user.id));
-
-    suspensionSources
-      .filter((source) => !!source.getActive(user))
-      .forEach((source) => dispatch(source.lift(user)));
   };
 
   const onBanFormSubmit = (values: BanUserInput) => {
@@ -343,8 +311,6 @@ const User = () => {
     navigate(goToUsers({ tab: auditLogTab?.tab }));
   };
 
-  const handleGoToUserPayments = () => navigate(goToList('payments', { user: user.id }));
-
   const menus = [
     {
       onClick: toggleOpenSuspendDialog,
@@ -392,12 +358,6 @@ const User = () => {
       icon: <FiUserCheck />,
     },
     {
-      onClick: handleGoToUserPayments,
-      display: true,
-      label: t('user:detail.menu.viewPayments'),
-      icon: <FiCreditCard />,
-    },
-    {
       onClick: handleGoToAuditLog,
       display: isDeleted,
       label: t('user:detail.menu.viewAudit'),
@@ -427,14 +387,6 @@ const User = () => {
       label: t('user:detail.sections.contact'),
       icon: <FiPhone />,
       content: <UserContactDetails user={user} />,
-    },
-    {
-      id: 'emergencyContact',
-      group: 'profile',
-      order: 30,
-      label: t('user:detail.sections.emergencyContact'),
-      icon: <FiAlertTriangle />,
-      content: <UserEmergencyContact emergencyContact={user.emergencyContact} />,
     },
     // ------------- access ------------- //
     {
@@ -508,25 +460,10 @@ const User = () => {
         />
       ),
     },
-    // ------------- activity ------------- //
-    {
-      id: 'payments',
-      group: 'activity',
-      order: 60,
-      label: t('user:detail.sections.payments'),
-      icon: <FiCreditCard />,
-      status: payments.status,
-      onRetry: payments.retry,
-      content: (
-        <UserPaymentsTable
-          count={payments.count}
-          onOpen={(payment: IPayment) => navigate(goToPreview('payments', payment.id))}
-          onViewAll={handleGoToUserPayments}
-          payments={payments.items}
-        />
-      ),
-    },
-    // ------------- moderation ------------- //
+    /*
+     * ------------- activity ------------- //
+     * ------------- moderation ------------- //
+     */
     {
       id: 'suspension',
       group: 'moderation',
@@ -544,7 +481,7 @@ const User = () => {
           {canLift ? t('user:detail.menu.lift') : t('user:detail.menu.suspend')}
         </Button>
       ),
-      content: <UserSuspensionSummary policyRows={policyRows} teamBan={teamBan} />,
+      content: <UserSuspensionSummary teamBan={teamBan} />,
     },
     {
       id: 'bans',
@@ -555,61 +492,7 @@ const User = () => {
       count: user.bans?.length || undefined,
       content: <UserBans bans={user.bans} />,
     },
-    {
-      id: 'reportsAgainst',
-      group: 'moderation',
-      order: 30,
-      label: t('user:detail.sections.reportsAgainst'),
-      icon: <FiFlag />,
-      status: reportsAgainst.status,
-      onRetry: reportsAgainst.retry,
-      count: openReportsCount || undefined,
-      countLoading: reportsAgainst.status === 'loading',
-      alertBadge: true,
-      subtitle: openReportsCount > 0
-        ? t('user:detail.reports.subtitlePending', { count: openReportsCount })
-        : undefined,
-      content: (
-        <UserReportsTable
-          count={reportsAgainst.count}
-          direction="against"
-          reports={reportsAgainst.items}
-          onViewAll={() => navigate(goToList('reports', {
-            targetType: ReportTargetTypeEnum.USER, targetId: user.id,
-          }))}
-        />
-      ),
-    },
-    {
-      id: 'reportsMade',
-      group: 'moderation',
-      order: 40,
-      label: t('user:detail.sections.reportsMade'),
-      icon: <FiAlertTriangle />,
-      status: reportsMade.status,
-      onRetry: reportsMade.retry,
-      content: <UserReportsTable count={reportsMade.count} direction="made" reports={reportsMade.items} />,
-    },
     // ------------- exchanges ------------- //
-    {
-      id: 'tickets',
-      group: 'exchanges',
-      order: 10,
-      label: t('user:detail.sections.tickets'),
-      icon: <FiMessageSquare />,
-      status: tickets.status,
-      onRetry: tickets.retry,
-      count: openTicketsCount || undefined,
-      countLoading: tickets.status === 'loading',
-      alertBadge: true,
-      content: (
-        <UserTicketsTable
-          onOpen={(ticket: IContact) => navigate(goToContact(ticket.id))}
-          tickets={tickets.items}
-          userId={user.id}
-        />
-      ),
-    },
     {
       id: 'notifications',
       group: 'exchanges',
@@ -694,19 +577,14 @@ const User = () => {
   // the figures worth checking before a page is opened: the devices signed in, and what needs acting on
   const accessGroup = groups.find((group) => group.key === 'access')!;
   const moderationGroup = groups.find((group) => group.key === 'moderation')!;
-  const exchangesGroup = groups.find((group) => group.key === 'exchanges')!;
 
   if (!isDeleted) {
     accessGroup.count = sessions.length || undefined;
     accessGroup.countLoading = isSessionsLoading && sessions.length === 0;
   }
 
-  moderationGroup.count = (openReportsCount + (isSuspended ? 1 : 0)) || undefined;
-  moderationGroup.countLoading = reportsAgainst.status === 'loading';
+  moderationGroup.count = isSuspended ? 1 : undefined;
   moderationGroup.alertBadge = true;
-  exchangesGroup.count = openTicketsCount || undefined;
-  exchangesGroup.countLoading = tickets.status === 'loading';
-  exchangesGroup.alertBadge = true;
 
   return (
     <Layout
@@ -758,7 +636,6 @@ const User = () => {
             canLift={canLift}
             deletedAt={isDeleted ? user.deletedAt : undefined}
             onLift={handleLiftSuspension}
-            policySuspensions={activePolicySuspensions}
             teamBan={teamBan}
           />
         )}

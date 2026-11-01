@@ -16,8 +16,7 @@
 | Google reCAPTCHA | web (token), server (check) | Bot protection of the contact and newsletter forms | `RECAPTCHA_SECRET_KEY` (server), `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` (web) |
 | Google Maps | web | Map display | `NEXT_PUBLIC_GOOGLE_MAP_KEY` |
 | Upstash Redis | server, web | Rate limits, Parse Server cache and LiveQuery, scheduled job lock | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `UPSTASH_REDIS_URL` |
-| MMSDuck | server | SMS: verification codes, notices, notification fallback | `MMSDUCK_API_KEY`, `ANDROID_SMS_RETRIEVER_HASH` |
-| Expo push | server | Push notifications to the mobile app | `EXPO_ACCESS_TOKEN` |
+| MMSDuck | server | SMS: verification codes, notices, notification fallback | `MMSDUCK_API_KEY` |
 | Slack (alerts webhook) | server | Staff alerts and the daily summary | `SLACK_ALERTS_WEBHOOK_URL` |
 | Sentry | bo, web | Error reporting (browser; also the Next.js server for the web) | `VITE_SENTRY_DSN`, `VITE_SENTRY_ENVIRONMENT` (bo), `NEXT_PUBLIC_SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_ENVIRONMENT` (web), `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, `SENTRY_PROJECT` (build time) |
 | Google Analytics 4 | web | Audience measurement (off when unset) | `NEXT_PUBLIC_GA_MEASUREMENT_ID` |
@@ -26,7 +25,7 @@
 | Chromatic | CI | Published Storybooks and visual tests | `CHROMATIC_PROJECT_TOKEN_WEB` (GitHub secret) |
 | Slack (changelog webhook) | CI | Changelog and release notes posts | `SLACK_CHANGELOG_WEBHOOK_URL` (GitHub secret) |
 
-The back-office and the website report their errors (Sentry, one shared project, an `app` tag tells them apart); the server has no error-tracking service. The Expo push and the Slack alerts webhook have no guide of their own: see the variables above and [emails](../inventory/communication/en/EMAILS.md).
+The back-office and the website report their errors (Sentry, one shared project, an `app` tag tells them apart); the server has no error-tracking service. The Slack alerts webhook has no guide of its own: see the variables above and [emails](../inventory/communication/en/EMAILS.md).
 
 The full list of variables, by app, is in the [inventory](../inventory/README.md).
 

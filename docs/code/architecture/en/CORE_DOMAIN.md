@@ -13,17 +13,16 @@
   - [Shared libraries](#shared-libraries)
 - [Adding a domain entity](#adding-a-domain-entity)
 - [What was not ported](#what-was-not-ported)
-- [Known limits](#known-limits)
 
 ## Why the split
 
-`apps/server` and `apps/bo` are the generic back-office of the 1lalana platform (accounts, roles, CMS, notifications, tickets, reports, audit log, dashboards) with the portfolio's own business added on top. Keeping the two apart means the generic part can be reused or upgraded without touching the portfolio, and the portfolio's business (`Project`) sits in one place.
+`apps/server` and `apps/bo` are the generic back-office of the 1lalana platform (accounts, roles, CMS, notifications, audit log, dashboards) with the portfolio's own business added on top. Keeping the two apart means the generic part can be reused or upgraded without touching the portfolio, and the portfolio's business (`Project`) sits in one place.
 
 ## What is core, what is domain
 
 | Side | Holds |
 |---|---|
-| `_core/` | Code that still works if `_domain/` is deleted: auth, MFA, users, roles and rights, CMS (article, page, page section, category, contact, newsletter), notifications, payments, tickets, reports, audit log, dashboards and statistics as registries |
+| `_core/` | Code that still works if `_domain/` is deleted: auth, MFA, users, roles and rights, CMS (article, page, page section, category, contact, newsletter), notifications, audit log, dashboards as registries |
 | `_domain/` | What is specific to the portfolio: the `Project` entity and anything that cannot run without knowing it |
 
 Today `_domain/` holds only `Project`: on the server `project.functions.ts` (`getProjects`, `getProject`, `getProjectForClient`), `project.triggers.ts`, services, utils, constants and validations; in the back-office the pages, containers, redux, service, types, validations and translations of projects.
@@ -57,7 +56,7 @@ When `_core` must show domain data, it exposes a registry (`registerXxx(...)`) a
 | `registerDashboardKpiProvider(className, fn)` | `project-dashboard.service.cloud.ts` |
 | `registerGlobalSearchEntity(key, config)` | `project-search.service.cloud.ts` |
 
-Other registries exist and are unused by the portfolio (statistics overview, report targets, notification channels, user list enrichers, account deletion hooks, data export targets, payment handlers).
+Other registries exist and are unused by the portfolio (notification channels, user list enrichers, account deletion hooks, data export targets).
 
 Composition points: `cloud/services/index.ts`, `cloud/functions/index.ts`, `cloud/triggers/index.ts`, `cloud/jobs/index.ts` (each imports the `_core` files, then the `_domain` ones) and `src/index.ts`.
 
@@ -83,11 +82,6 @@ No split, no registry. Domain pages (`projects`) and generic ones (`blog`, `cont
 
 ## What was not ported
 
-From 1lalana, left out on purpose: the rating feature, unit and component tests, Storybook for the back-office, end-to-end tests, the mobile app and the documentation app. The traces that remain (class names, test functions) are listed in the debt file of the branch review.
-
-## Known limits
-
-- The server `collections` constant and some class lists still name carpooling classes (`Ride`, `Request`, `Vehicle`, `Rating`, `RideShare`, `SosAlert`).
-- Payments, finance and some statistics screens exist in `_core` without a real data source in the portfolio.
+From 1lalana, left out on purpose: the rating feature, unit and component tests, Storybook for the back-office, end-to-end tests, the mobile app and the documentation app. The wording traces that remain are listed in the debt file of the branch review.
 
 See [the branch review](../../reviews/en/261030-feat-core-domain-split.md) for the full list.

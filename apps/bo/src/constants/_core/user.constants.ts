@@ -56,44 +56,12 @@ export const userPlatformOptions: ISelectOption[] = [
 
 export const notificationTypeOptions: ISelectOption[] = [
   {
-    label: i18n.t('user:notifications.types.ride'),
-    value: NotificationTypeEnum.RIDE,
-  },
-  {
-    label: i18n.t('user:notifications.types.request'),
-    value: NotificationTypeEnum.REQUEST,
-  },
-  {
-    label: i18n.t('user:notifications.types.rate'),
-    value: NotificationTypeEnum.RATE,
-  },
-  {
     label: i18n.t('user:notifications.types.account'),
     value: NotificationTypeEnum.ACCOUNT,
   },
   {
-    label: i18n.t('user:notifications.types.ticket'),
-    value: NotificationTypeEnum.TICKET,
-  },
-  {
-    label: i18n.t('user:notifications.types.vehicle'),
-    value: NotificationTypeEnum.VEHICLE,
-  },
-  {
     label: i18n.t('user:notifications.types.announcement'),
     value: NotificationTypeEnum.ANNOUNCEMENT,
-  },
-];
-
-// Not used
-export const repliedOptions: ISelectOption<boolean>[] = [
-  {
-    label: i18n.t('user:contacts.replied'),
-    value: true,
-  },
-  {
-    label: i18n.t('user:contacts.notReplied'),
-    value: false,
   },
 ];
 
@@ -176,7 +144,6 @@ export const usersTabOptions = [
   ...recycleBinTabOptions,
 ];
 
-
 export const roleTranslatedFieldsObj: TranslatedFieldOption[] = [
   { name: 'label', required: true, max: 100, transform: capitalize },
 ];
@@ -201,13 +168,13 @@ export const RIGHTS_DISPLAY_ORDER: (keyof IRights)[] = [
 
 /**
  * The sidebar group each entity belongs to, in the order the rights panel lists them — an admin
- * looks for "Payments" where they find it in the menu, not in an alphabetical wall of resources.
+ * looks for "Articles" where they find it in the menu, not in an alphabetical wall of resources.
  */
 /** the sections of the role form, in the order its summary lists them */
 export const ROLE_FORM_SECTIONS = ['identity', 'access', 'rights'] as const;
 export type RoleFormSection = typeof ROLE_FORM_SECTIONS[number];
 
-export const RIGHTS_GROUPS = ['operations', 'community', 'content', 'finance', 'admin'] as const;
+export const RIGHTS_GROUPS = ['operations', 'community', 'content', 'admin'] as const;
 export type RightsGroup = typeof RIGHTS_GROUPS[number];
 
 /**
@@ -224,12 +191,10 @@ export const RIGHTS_PRESETS: Record<'none' | 'read' | 'manage' | 'all', (keyof I
 const rightsEntityGroups: Record<string, RightsGroup> = {
   _User: 'community',
   Contact: 'community',
-  Report: 'community',
   Notification: 'community',
   Article: 'content',
   Page: 'content',
   Category: 'content',
-  Payment: 'finance',
   _Role: 'admin',
   UserAuditLog: 'admin',
 };
@@ -264,16 +229,8 @@ export const ENTITIES_WITH_RIGHTS_OPTIONS: Omit<IRightsItem, 'rights'>[] = [
     className: 'Contact',
   },
   {
-    label: i18n.t('user:payments.payments'),
-    className: 'Payment',
-  },
-  {
     label: i18n.t('user:notifications.notifications'),
     className: 'Notification',
-  },
-  {
-    label: i18n.t('user:reports.reports'),
-    className: 'Report',
   },
   {
     label: i18n.t('user:auditLogs.auditLogs'),
@@ -303,8 +260,6 @@ export const getRightsEntities = (): Omit<IRightsItem, 'rights'>[] => [
   ...extraRightsEntities,
 ];
 
-export const SIGNUP_TOTAL_STEP = 3;
-
 export const ROLE_DEFAULT_LIMIT = 10;
 
 /*
@@ -323,8 +278,6 @@ export const RELATION_OPTIONS_LIMIT = 200;
 export const USER_DETAIL_BLOCK_LIMIT = 5;
 // the audit trail mixes five kinds of actions, so a few more rows are needed to see a pattern
 export const USER_AUDIT_TRAIL_LIMIT = 8;
-// a ticket thread read inline under its row: the whole of it, a support thread stays short
-export const USER_TICKET_THREAD_LIMIT = 50;
 
 export const DISABLE_USER_ACCOUNT_CONFIRMATION = false;
 export const VERIFICATION_CODE_LENGTH = 6;

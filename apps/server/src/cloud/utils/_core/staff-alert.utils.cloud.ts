@@ -1,12 +1,9 @@
 import type { Locale } from '@/types/app.type';
 
 import { translate } from '@/config/i18n';
-import { SLACK_ALERT_ICONS, SLACK_ALERT_LOCALE } from '@/constants/_core/slack.constants';
-import { TICKET_BO_PATH } from '@/constants/_core/ticket.constants';
+import { SLACK_ALERT_LOCALE } from '@/constants/_core/slack.constants';
 import { postSlackAlert } from '@/services/slack.service';
-import { TicketSourceEnum } from '@/types/ticket.type';
 import { buildSlackAlertText } from '@/utils/_core/slack.utils';
-import { getServerUrl } from '@/utils/_core/utils';
 
 import { type NotificationEmail, sendEmailToStaffInTheirOwnLocale } from './email.utils.cloud';
 
@@ -51,31 +48,4 @@ export const alertStaff = async (
   ]);
 
   return failures;
-};
-
-// a report opened from a ride carries its `report`; the other tickets say where they were written
-const getNewTicketTitle = (ticket: Parse.Object): string => {
-  const options = { reference: String(ticket.get('reference') ?? '') };
-
-  if (ticket.get('report')) return translate('slack.newReportTicket', SLACK_ALERT_LOCALE, options);
-  if (ticket.get('source') === TicketSourceEnum.APP) {
-    return translate('slack.newTicketFromApp', SLACK_ALERT_LOCALE, options);
-  }
-  return translate('slack.newTicketFromWeb', SLACK_ALERT_LOCALE, options);
-};
-
-/**
- * Tells the Slack alert channel that a member wrote to support, so a new request is seen without
- * opening the back-office. Slack only: support works the queue from the back-office, there is no
- * e-mail to send. An SOS is left out — it raises its own, louder alert — and the message never
- * quotes what the member wrote.
- */
-export const alertSlackOfNewTicket = async (ticket: Parse.Object): Promise<void> => {
-  if (ticket.get('source') === TicketSourceEnum.SOS) return;
-
-  await postSlackAlert(buildSlackAlertText({
-    icon: ticket.get('report') ? SLACK_ALERT_ICONS.report : SLACK_ALERT_ICONS.ticket,
-    title: getNewTicketTitle(ticket),
-    link: buildBackOfficeLink(`${getServerUrl()}/${TICKET_BO_PATH}/${ticket.id}`),
-  }));
 };

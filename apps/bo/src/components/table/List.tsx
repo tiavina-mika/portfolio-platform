@@ -134,7 +134,7 @@ export type ListProps<IDataTable, IQuery> = {
   /*
    * what a row states when it is opened, drawn in a band under it (in the table) or inside the
    * card (in the grid). Pass it when the reader has to decide on a row without leaving the list —
-   * a payment ledger where the failure message and the actions on it are what the decision needs.
+   * a queue where the failure message and the actions on it are what the decision needs.
    * Left out, rows do not open at all and no caret gutter is drawn.
    */
   renderRowDetail?: (data: IDataTable) => ReactNode;

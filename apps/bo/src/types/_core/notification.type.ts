@@ -5,7 +5,6 @@ import { z } from 'zod';
 import type { IListTabCounts } from '@/types/_core/app.type';
 import type { IUser } from '@/types/_core/user.type';
 import type { DateType, IUserDefaultRecord } from '@/types/_core/utils.type';
-import type { RequestStatusEnum, RideStatusEnum } from '@shared/domain-types';
 import type {
   NotificationChannel, NotificationChannels, NotificationReadState, NotificationRecipientSeenDate,
   NotificationResendReason, NotificationSnapshot, NotificationTypeEnum,
@@ -14,13 +13,12 @@ import type {
 import { notificationFilterSchema } from '@/validations/_core/user.validations';
 
 /*
- * a ride or booking state, or one of the event codes the server writes for what is not a state
- * change (a reminder, a penalty, a ticket reply, a vehicle review). The event codes are left open
- * rather than listed: the server adds them as features ship, and a row carrying a code the
- * back-office does not know yet must still be typed, labelled with its raw code, and filterable.
+ * the state a notification reports, or one of the event codes the server writes for what is not a state
+ * change (a reminder, a penalty). It stays an open string rather than a list: the
+ * server adds codes as features ship, and a row carrying a code the back-office does not know yet
+ * must still be typed, labelled with its raw code, and filterable.
  */
-export type NotificationStatus = `${RequestStatusEnum}` | `${RideStatusEnum}` |
-  (string & Record<never, never>);
+export type NotificationStatus = string;
 
 /*
  * the domain-owned data of a notification travels in `payload`, so this generic core type does not
@@ -37,7 +35,7 @@ export interface INotificationAttributes extends IUserDefaultRecord {
   /**
    * Whether EVERY recipient has opened it. Derived from `receiverSeenIds` by the server rather
    * than written directly — it used to be the only record of reading, which meant the first of
-   * four passengers to open a send marked it read for the other three as well.
+   * four recipients to open a send marked it read for the other three as well.
    */
   receiverSeen?: boolean;
   receiverSeenAt?: DateType;

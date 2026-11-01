@@ -34,7 +34,6 @@ export const FONT_SIZE_BODY = 14;
 export const FONT_SIZE_META = 13;
 export const FONT_SIZE_OVERLINE = 12;
 
-export const LAYOUT_CONTENT_PADDING = 24;
 export const SPACING = 16;
 export const RESPONSIVE_BREAKPOINT = 'lg';
 /*
@@ -63,21 +62,6 @@ export const APPBAR_COMPACT_BREAKPOINT = 'xl';
 export const FIELD_ROW_PADDING_Y = 11;
 export const FIELD_ROW_GAP = 16;
 export const FIELD_LABEL_MIN_WIDTH = 120;
-/*
- * the vehicle line under the driver of a ride: a colour swatch, then the plate, year and seat
- * count as one sentence. It is a second fact about the same person, so it stands further from the
- * identity above it than the words inside it stand from one another
- */
-export const RIDE_VEHICLE_LINE_GAP = 18;
-export const RIDE_VEHICLE_COLOR_DOT_SIZE = 14;
-// the two figures a driver wallet opens on: what it owes, and whether it can still pay out
-export const WALLET_STAT_CARDS_COUNT = 2;
-// what the driver wallet list opens on: the debt owed, how many drivers are suspended, how many owe
-export const DRIVER_WALLETS_TOTALS_COUNT = 3;
-// room for the phone column next to the name, the penalty and the status without squeezing them
-export const DRIVER_WALLETS_TABLE_MIN_WIDTH = 1180;
-// the "until <date>" line standing under a driver's suspended chip
-export const DRIVER_WALLET_STATUS_GAP = 3;
 export const COLORS = {
   authBackground: '#000',
   authTextFieldPlaceholder: '#fff',
@@ -113,11 +97,6 @@ export const DIALOG_FULLSCREEN_TOOLBAR_HEIGHT = 52;
  * than standing on a band of its own — it is closer to the rule above it than to the body below
  */
 export const DIALOG_SUB_HEADER_PADDING_TOP = 8;
-/*
- * a header that says more than a name stacks its lines tight: the pretitle, the subject and the
- * badges qualifying it are one block being read at once, not three facts spaced apart
- */
-export const DIALOG_TITLE_LINE_GAP = 6;
 // the destructive confirmation draws its glyph one step above body copy so it leads the sentence
 export const DIALOG_SEVERITY_ICON_SIZE = 20;
 /*
@@ -329,7 +308,6 @@ export const TEXT_TO_CHIPS_INPUT_MIN_WIDTH_TABLET = 140;
 export const TEXT_TO_CHIPS_INPUT_HEIGHT = TEXT_TO_CHIPS_CHIP_HEIGHT;
 export const TEXT_TO_CHIPS_INPUT_HEIGHT_TABLET = TEXT_TO_CHIPS_CHIP_HEIGHT_TABLET;
 export const TEXT_TO_CHIPS_INPUT_HEIGHT_TOUCH = 34;
-export const RATING_ICON_SIZE = 18;
 
 /*
  * THE TABS — one template carries every tab strip in the back-office, whatever it switches: the
@@ -365,9 +343,6 @@ export const TAB_SCROLL_BUTTON_WIDTH = 34;
  * 44px as the underlined strip — 3px of padding around a 38px slot — so both can stand on one row.
  */
 export const PILL_TABS_PADDING = 3;
-export const PILL_TABS_GAP = 2;
-export const PILL_TAB_HEIGHT = INPUT_HEIGHT_SMALL;
-export const PILL_TAB_PADDING_X = 16;
 
 /*
  * THE RIGHTS PANEL — the entities listed on the left, the six rights of the chosen one on the right.
@@ -535,11 +510,6 @@ export const SIDEBAR_SKELETON_LOGO_HEIGHT = 24;
  */
 export const ROUTE_PENDING_MS = 150;
 export const ROUTE_PENDING_MIN_MS = 300;
-// the state of the paper on show, standing in the header beside the way out of the panel
-export const DIALOG_HEAD_RIGHT_GAP = 10;
-// the arrow between the two points of a booking's route, sized to the chip's caption, not to an icon slot
-export const REQUEST_ROUTE_CHIP_GAP = 6;
-export const REQUEST_ROUTE_CHIP_ARROW_SIZE = 13;
 /*
  * THE AUTH SCREENS — the sign-in and sign-up pages are a two-column split (a navy brand panel and
  * the form on the surface), every other public page is a logo above a 500px card. The brand panel

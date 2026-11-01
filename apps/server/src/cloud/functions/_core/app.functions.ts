@@ -91,7 +91,7 @@ Parse.Cloud.define(
 );
 
 /**
- * Back-office badge counts. Left open, it reported how many accounts, failed payments or pending
+ * Back-office badge counts. Left open, it reported how many accounts or pending
  * reports the platform holds to anyone who could reach the API — only the BO ever asks.
  */
 Parse.Cloud.define(

@@ -1,6 +1,6 @@
 import {
   NotificationChannel, NotificationChannelEnum, NotificationChannelRecipient, NotificationChannelStatus,
-  NotificationChannelStatusEnum, NotificationReadStateEnum, NotificationTypeEnum,
+  NotificationChannelStatusEnum, NotificationReadStateEnum,
   type NotificationType,
 } from '@shared/types';
 import {
@@ -31,7 +31,6 @@ import {
 } from '@/types/_core/notification.type';
 import { displayDate, getParseDateValue } from '@/utils/_core/date.utils';
 import { getUserFullName } from '@/utils/_core/user.utils';
-import { formatPriceWithCurrency } from '@/utils/_core/utils';
 
 /**
  * Open registry: a business domain (ride/request/rating) contributes the "related entity" section of
@@ -148,8 +147,6 @@ export const getNotificationStatusColorByValue = (
 
     if (resolver) return resolver.getColor(status);
   }
-
-  if (type === NotificationTypeEnum.RATE) return 'info';
 
   return 'default';
 };
@@ -731,7 +728,6 @@ export const getNotificationMessage = (notification: INotification): string => {
     surface: NotificationMessageSurfaceEnum.PUSH,
     locale: toNotificationMessageLocale(i18n.language),
     formatDate: (value) => displayDate(value, true),
-    formatPrice: (value) => formatPriceWithCurrency(value),
   });
 
   return text ?? notification.message?.[i18n.language] ?? notification.message?.[DEFAULT_LOCALE] ?? '';
@@ -744,7 +740,7 @@ export const getNotificationMessage = (notification: INotification): string => {
  * Only the id of each is stated. The payload is domain-owned and its shape is whatever the domain
  * that wrote it chose, so rendering it field by field would make this generic list depend on every
  * domain that can raise a notification; the id is the one key every entry carries and the one
- * thing a support ticket is written around.
+ * thing a bug report is written around.
  */
 export const getNotificationPayloadFacts = (
   notification: INotification

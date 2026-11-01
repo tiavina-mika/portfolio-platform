@@ -71,9 +71,8 @@ page indique aussi l'adresse postale (Antananarivo, Madagascar) et l'adresse ema
 ## Ce qui se passe après l'envoi
 
 Le message est enregistré et apparaît dans la section "Contacts" du back-office, où le propriétaire
-le consulte et peut y répondre (voir la documentation du back-office). La langue du visiteur est
-conservée avec le message. Le visiteur reçoit par ailleurs un **accusé de réception** à l'adresse
-email indiquée.
+le consulte (voir la documentation du back-office). La langue du visiteur est conservée avec le
+message. Le visiteur ne reçoit pas d'accusé de réception automatique.
 
 ## Cas d'utilisation typiques
 
@@ -90,5 +89,5 @@ email indiquée.
   une limite : au-delà de 5 messages en une heure depuis le même appareil, le message "Trop de requêtes
   en peu de temps" s'affiche et rien n'est envoyé.
 - Si le contrôle anti-robot échoue, un message d'erreur s'affiche et rien n'est envoyé.
-- La réponse du propriétaire arrive par email à l'adresse laissée : il faut donc une adresse valide
-  et consultée.
+- Le propriétaire répond depuis sa propre messagerie, à l'adresse laissée : il faut donc une adresse
+  valide et consultée.

@@ -34,7 +34,7 @@ const defaultTheme = {
      * secondary is the design's seventh chip tone — a violet. It used to be a red one shade off
      * `error`, which made a "waiting" chip and a "cancelled" chip read as the same state; the
      * violet is the only tone in the palette that carries no severity of its own, which is exactly
-     * what a neutral-but-distinct state (waiting, refund to passenger) needs.
+     * what a neutral-but-distinct state (waiting) needs.
      */
     secondary: {
       light: '#E9B8F4',

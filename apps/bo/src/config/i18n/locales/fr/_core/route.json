@@ -27,19 +27,10 @@
   "notFound": "introuvable",
   "unauthorized": "acces-refuse",
   "administration": "administration",
-  "factures": "factures",
   "categories": "categories",
   "miscellaneous": "divers",
-  "statistics": "statistiques",
-  "statisticsUsers": "utilisateurs",
-  "statisticsPayments": "paiements",
-  "statisticsReports": "signalements",
   "notifications": "notifications",
   "broadcast": "diffusion",
-  "reports": "signalements",
-  "ratings": "avis",
-  "payments": "paiements",
-  "finance": "finance",
   "website": {
     "articles": "articles",
     "blog": "blog"
@@ -51,19 +42,6 @@
     "pending": "en-cours",
     "failed": "echec",
     "users": "utilisateurs",
-    "rides": "trajets",
-    "ratings": "avis",
-    "vehicles": "vehicules",
-    "collections": "encaissements",
-    "payouts": "reversements",
-    "driverNoShows": "absences-conducteur",
-    "contestedNoShows": "absences-contestees"
-  },
-  "rides": "trajets",
-  "requests": "demandes",
-  "vehicles": "vehicules",
-  "statisticsRides": "trajets",
-  "statisticsVehicles": "vehicules",
-  "statisticsCancellations": "annulations",
-  "financeDrivers": "conducteurs"
+    "collections": "encaissements"
+  }
 }

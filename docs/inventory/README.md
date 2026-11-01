@@ -55,12 +55,10 @@ Required only in the deployed environments (`preProduction` and `production`); o
 | `WEBSITE_REVALIDATE_SECRET` | Shared secret to invalidate the website CMS cache (must equal the web `REVALIDATE_SECRET`) |
 | `RECAPTCHA_SECRET_KEY` | reCAPTCHA v3 secret: the server verifies the token of the contact and newsletter forms. Skipped in development and test, fails closed elsewhere |
 | `MMSDUCK_API_KEY` | MMSDuck SMS provider key |
-| `EXPO_ACCESS_TOKEN`, `ANDROID_SMS_RETRIEVER_HASH` | Optional: Expo push token (needed once "enhanced push security" is on) and Android SMS auto-read hash |
 | `SLACK_ALERTS_WEBHOOK_URL` | Optional: Slack incoming webhook of the staff alert channel; empty means nothing is posted |
-| `PAYMENT_MOCK_MODE`, `PAYMENT_MOCK_CONFIRM_SECONDS`, `ALLOW_MOCK_PAYMENT_GATEWAY` | Optional switches of the simulated payment gateway; `ALLOW_MOCK_PAYMENT_GATEWAY` must be set by hand to use it in production |
 | `DOCS_FEATURES_PASSWORD`, `DOCS_BUSINESS_PASSWORD` | Optional, validated by `validateEnv()` but not in `.env.example`: passwords of the documentation sections served by the server; a section without one stays closed (404) |
 
-Also read by the code and set by the host or by tests only: `K_SERVICE` (Cloud Run marker), `TZ`, `E2E`, `E2E_ALLOWED_ORIGINS`, `REAL_SIGN_UP_VERIFICATION`, `BOOKINGS_CLOSED`.
+Also read by the code and set by the host or by tests only: `K_SERVICE` (Cloud Run marker), `TZ`, `E2E`, `E2E_ALLOWED_ORIGINS`, `REAL_SIGN_UP_VERIFICATION`.
 
 ### `apps/bo`
 
@@ -106,13 +104,13 @@ Source: `apps/server/src/cloud/`. Each kind has a `_core/` folder (generic) and 
 
 | Kind | Files |
 |---|---|
-| Functions | `_core/`: `accountHelp`, `admins`, `app`, `article`, `auditLog`, `auth`, `category`, `contact`, `contactChange`, `contentVersion`, `dashboard`, `faq`, `globalSearch`, `impersonation`, `invitation`, `mfa`, `misc`, `notification`, `page`, `pageSection`, `passwordResetDelay`, `payment`, `payoutPhone`, `receipt`, `report`, `role`, `statistics`, `stepUpVerification`, `ticket-message`, `user`, `userSession`, `utils` (and `test`, local and test only). `_domain/`: `project` |
-| Triggers | `_core/`: `app`, `article`, `auth`, `category`, `contact`, `country-scope`, `newsletter`, `notification`, `page`, `pageSection`, `payment`, `report`, `role`, `ticket-message`, `user`. `_domain/`: `project` |
-| Jobs | `_core/`: `category`, `cms`, `email`, `impersonation`, `misc`, `newsletter`, `notification`, `payment`, `push`, `retention`, `slack`, `user` (and `test`). `_domain/`: none |
+| Functions | `_core/`: `accountHelp`, `admins`, `app`, `article`, `auditLog`, `auth`, `category`, `contact`, `contactChange`, `contentVersion`, `dashboard`, `faq`, `globalSearch`, `impersonation`, `invitation`, `mfa`, `misc`, `notification`, `page`, `pageSection`, `passwordResetDelay`, `role`, `stepUpVerification`, `user`, `userSession`, `utils` (and `test`, local and test only). `_domain/`: `project` |
+| Triggers | `_core/`: `app`, `article`, `auth`, `category`, `contact`, `country-scope`, `newsletter`, `notification`, `page`, `pageSection`, `role`, `user`. `_domain/`: `project` |
+| Jobs | `_core/`: `category`, `cms`, `email`, `impersonation`, `misc`, `newsletter`, `notification`, `retention`, `slack`, `user` (and `test`). `_domain/`: none |
 
 ## Scheduled tasks
 
-Thirteen `node-cron` tasks registered by `apps/server/src/config/scheduled-jobs.ts`: a keep-awake ping outside local development and Cloud Run, and twelve business jobs that only run in production. A Redis lock makes only one server instance run each tick. GitHub workflows run on schedules too. Details: [scheduled tasks](code/en/SCHEDULED_JOBS.md).
+Twelve `node-cron` tasks registered by `apps/server/src/config/scheduled-jobs.ts`: a keep-awake ping outside local development and Cloud Run, and eleven business jobs that only run in production. A Redis lock makes only one server instance run each tick. GitHub workflows run on schedules too. Details: [scheduled tasks](code/en/SCHEDULED_JOBS.md).
 
 ## Roles and permissions
 
@@ -120,11 +118,11 @@ Roles `OWNER` and `SUPER_ADMIN` (highest level), and the default roles `MANAGER`
 
 ## Collections and indexes
 
-Domain collection `Project`; core collections `Article`, `Page`, `PageSection`, `Category`, `Contact`, `Newsletter`, `App`, `Notification`, `Payment`, `Report`, the audit and session logs, and Parse's `_User`, `_Role` and `_Session`. Indexes are declared in code (`apps/server/src/config/db-indexes.ts`). Details: [collections and indexes](code/en/COLLECTIONS_AND_INDEXES.md).
+Domain collection `Project`; core collections `Article`, `Page`, `PageSection`, `Category`, `Contact`, `Newsletter`, `App`, `Notification`, the audit and session logs, and Parse's `_User`, `_Role` and `_Session`. Indexes are declared in code (`apps/server/src/config/db-indexes.ts`). Details: [collections and indexes](code/en/COLLECTIONS_AND_INDEXES.md).
 
 ## Emails
 
-Verification and reset codes, invitations, step-up and contact-change codes, ticket replies, newsletter confirmation and new-article mailing, and account security notices, all sent through Brevo (SMS through MMSDuck). Details: [emails](communication/en/EMAILS.md).
+Verification and reset codes, invitations, step-up and contact-change codes, newsletter confirmation and new-article mailing, and account security notices, all sent through Brevo (SMS through MMSDuck). Details: [emails](communication/en/EMAILS.md).
 
 ## GitHub workflows
 

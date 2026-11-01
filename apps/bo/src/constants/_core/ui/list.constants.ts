@@ -136,7 +136,6 @@ export const LIST_FILTERS_DRAWER_GAP = 16;
  */
 export const LIST_FILTERS_DRAWER_Z_INDEX = 3;
 
-
 /*
  * the count pinned to the "filters" trigger — a small tinted pill reading as part of the label,
  * which is why it is rounder and quieter than the badge a notification icon carries
@@ -188,8 +187,8 @@ export const TABLE_HEAD_LETTER_SPACING = 0.3;
 export const TABLE_CHECKBOX_COLUMN_WIDTH = 44;
 /*
  * THE ROW THAT OPENS — a list whose rows carry more than a row can show, and whose reader has to
- * decide on one without leaving the list (a payment ledger: the failure message, the attempts, the
- * two accounts the money moved between, then the actions). The caret takes a gutter of its own
+ * decide on one without leaving the list (the failure message, the attempts, the
+ * accounts involved, then the actions). The caret takes a gutter of its own
  * rather than sitting inside the first cell: the head row leaves the same gutter empty, so every
  * column label stays over its own column whether a row is open or not.
  */
@@ -210,9 +209,6 @@ export const ROW_DETAIL_FACTS_COLUMNS = 4;
 export const ROW_DETAIL_FACTS_GAP_X = 20;
 export const ROW_DETAIL_FACTS_GAP_Y = 12;
 export const ROW_DETAIL_FACT_LINE_GAP = 2;
-export const ROW_DETAIL_NOTICE_GAP = 9;
-export const ROW_DETAIL_NOTICE_PADDING_X = 12;
-export const ROW_DETAIL_NOTICE_PADDING_Y = 9;
 /*
  * the sort arrow belongs to the column label rather than sitting beside it, and it is drawn under
  * the label's cap height, so an active column never stands a pixel taller than the ones beside it
@@ -235,13 +231,6 @@ export const ROW_ACTIONS_BUTTON_SIZE = 30;
  */
 export const TABLE_CELL_LINE_GAP = 3;
 export const TABLE_CELL_INLINE_GAP = 6;
-// a glyph joining two words inside a cell (the route arrow), sized under the text it sits between
-export const TABLE_CELL_GLYPH_SIZE = 12;
-/*
- * the warning a row carries about itself (an open report): one step larger than the inline glyph
- * above, since it has to be caught while scanning the column rather than read inside a phrase
- */
-export const TABLE_CELL_ALERT_GLYPH_SIZE = 15;
 // smaller than the list's own avatar: it stands inside a row, next to a name, not on its own line
 export const TABLE_CELL_AVATAR_SIZE = 28;
 export const TABLE_CELL_AVATAR_GAP = 8;
@@ -249,12 +238,6 @@ export const TABLE_CELL_AVATAR_GAP = 8;
 export const TABLE_CELL_AVATAR_FONT_SIZE = 12;
 export const TABLE_CELL_AVATAR_FONT_WEIGHT = 600;
 
-/*
- * how many lines of free text a row may spend on one cell before it is cut off. Two: enough for a
- * complaint's first sentence to be read from the list, and few enough that a page of rows keeps a
- * uniform height — the full text is one click away in the row's own file.
- */
-export const TABLE_CELL_TEXT_CLAMP_LINES = 2;
 export const TABLE_CELL_TEXT_MAX_WIDTH = 340;
 
 /*
@@ -268,30 +251,6 @@ export const ROW_METER_HEIGHT = 4;
 export const ROW_METER_RADIUS = 2;
 export const ROW_METER_GAP = 4;
 
-/*
- * THE INLINE RATING — a person's score standing next to their name inside a table row: a star and
- * one decimal, nothing more. It is a fact about the person, not the subject of the cell, so it is
- * drawn at the meta rung under the name rather than as a row of five stars — a five-star widget
- * repeated twice per row is the widest thing on the list for a value read as a single number.
- */
-export const INLINE_RATING_GLYPH_SIZE = 11;
-export const INLINE_RATING_GAP = 3;
-/*
- * under this score the rating stops being background and becomes something the operator has to
- * take into account before acting on the row, so it is tinted and weighted rather than muted
- */
-export const INLINE_RATING_LOW_THRESHOLD = 4;
-export const INLINE_RATING_LOW_FONT_WEIGHT = 600;
-
-/*
- * COUNT PILL — a figure standing alone in a table cell (the bookings a ride still owes an answer
- * for). It is wider and taller than the badge pinned to an icon corner: nothing else in the cell
- * says what it counts, so it has to hold the column on its own.
- */
-export const COUNT_PILL_MIN_WIDTH = 26;
-export const COUNT_PILL_HEIGHT = 24;
-export const COUNT_PILL_PADDING_X = 7;
-export const COUNT_PILL_RADIUS = 12;
 export const ROW_ACTIONS_ICON_SIZE = 15;
 export const ROW_ACTIONS_GAP = 4;
 
@@ -361,8 +320,6 @@ export const COMPACT_PAGER_GAP = 8;
 export const COMPACT_PAGER_BUTTON_SIZE = 30;
 export const COMPACT_PAGER_ICON_SIZE = 15;
 
-// the chevron column of a short list whose rows unfold what they hold (a ticket's thread)
-export const COMPACT_TABLE_EXPAND_CELL_WIDTH = 48;
 // the band closing a block of a detail page: a note on the left, the way to the full list on the right
 export const SECTION_FOOTER_GAP = 12;
 export const SECTION_FOOTER_PADDING_TOP = 12;

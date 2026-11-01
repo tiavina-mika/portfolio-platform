@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 /*
  * Sidebar glyphs transcribed verbatim from the design reference. They are not taken from
- * `react-icons` on purpose: several of them (dashboard, car, receipt, wallet, columns) exist in no
+ * `react-icons` on purpose: several of them (dashboard, car, columns) exist in no
  * icon pack, and the Feather-derived ones ship with `stroke-width: 2` there, whereas the design
  * draws every sidebar glyph at 1.5 — mixing the two sources makes the stroke weight visibly uneven.
  */
@@ -163,48 +163,10 @@ export const MegaphoneIcon = (props: SidebarIconProps) => (
   </Svg>
 );
 
-export const CreditCardIcon = (props: SidebarIconProps) => (
-  <Svg {...props}>
-    <rect
-      height="16"
-      rx="2"
-      width="22"
-      x="1"
-      y="4"
-    />
-    <line
-      x1="1"
-      x2="23"
-      y1="10"
-      y2="10"
-    />
-  </Svg>
-);
-
-export const BarChartIcon = (props: SidebarIconProps) => (
-  <Svg {...props}>
-    <path d="M4 19V5M8 19v-8M12 19V9M16 19v-5M20 19v-9" />
-  </Svg>
-);
 
 export const CodeIcon = (props: SidebarIconProps) => (
   <Svg {...props}>
     <path d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
-  </Svg>
-);
-
-export const ReceiptIcon = (props: SidebarIconProps) => (
-  <Svg {...props}>
-    <path d="M5 21V3h14v18l-3-2-3 2-3-2-3 2-2-2z" />
-    <path d="M9 8h6M9 12h6M9 16h4" />
-  </Svg>
-);
-
-export const WalletIcon = (props: SidebarIconProps) => (
-  <Svg {...props}>
-    <path d="M21 12V7H5a2 2 0 010-4h14v4" />
-    <path d="M3 5v14a2 2 0 002 2h16v-5" />
-    <path d="M18 12a2 2 0 000 4h4v-4z" />
   </Svg>
 );
 

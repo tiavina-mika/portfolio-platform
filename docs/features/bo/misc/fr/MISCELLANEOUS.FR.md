@@ -43,4 +43,3 @@ Chaque bouton lance l'opération directement ; un message confirme le résultat.
 ## Points d'attention / limites actuelles
 
 - Ces outils agissent sur les vraies données : à réserver à l'équipe technique.
-- Le bouton « Créer un trajet fictif avec véhicule » vient d'une autre application et ne sert pas ici.

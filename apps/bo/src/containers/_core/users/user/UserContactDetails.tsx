@@ -25,8 +25,7 @@ const classes = {
 
 /**
  * How to reach the member, and whether each way was proven theirs: support writes to an unverified
- * email or calls an unverified number knowing it may not be them. The payment numbers are the ones
- * payouts and refunds are sent to — not necessarily the contact number. A deleted account's contacts
+ * email or calls an unverified number knowing it may not be them. A deleted account's contacts
  * were erased with it.
  */
 const UserContactDetails = ({ user }: Props) => {
@@ -47,8 +46,6 @@ const UserContactDetails = ({ user }: Props) => {
       />
     </Box>
   );
-
-  const paymentPhones = (user.paymentPhones ?? []).map(getFullPhoneNumber).filter(Boolean);
 
   const items: ISelectOption<ReactNode>[] = [
     {
@@ -73,11 +70,6 @@ const UserContactDetails = ({ user }: Props) => {
         t('user:phoneVerified'),
         t('user:phoneNotVerified')
       ),
-      hide: isDeleted,
-    },
-    {
-      label: t('user:paymentPhone'),
-      value: paymentPhones.length > 0 ? paymentPhones.join(', ') : t('user:detail.contact.noPaymentPhone'),
       hide: isDeleted,
     },
     {

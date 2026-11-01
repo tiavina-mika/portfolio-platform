@@ -1,5 +1,5 @@
 import {
-  Badge, Chip, IconButton, ListItem, ListItemAvatar, ListItemText, Rating, Skeleton, Stack, Tooltip,
+  Badge, Chip, IconButton, ListItem, ListItemAvatar, ListItemText, Skeleton, Stack, Tooltip,
   Typography,
 } from '@mui/material';
 import { PlatformEnum } from '@shared/types';
@@ -43,6 +43,7 @@ import {
   deleteUserById, deleteUsersById, exportUsers, goToUser, loadUsers, sendMessageToUser,
   toggleUsersNotification,
 } from '@/redux/actions/_core/user.action';
+import { getAppCurrentUserSelector } from '@/redux/reducers/_core/app.reducer';
 import { getAuditLogCountSelector, getAuditLogLogsSelector } from '@/redux/reducers/_core/auditLog.reducer';
 import { getRoleCanManageStaffSelector, getRoleRolesSelector } from '@/redux/reducers/_core/role.reducer';
 import {
@@ -59,7 +60,7 @@ import {
 import { isCurrentTab } from '@/utils/_core/app.utils';
 import { displayDate } from '@/utils/_core/date.utils';
 import {
-  getAuditLogContactLines, getFullPhoneNumber, getUserActiveSuspensionUntil, getUserAuditLogColumns,
+  getAuditLogContactLines, getFullPhoneNumber, getUserAuditLogColumns,
   getUserFullName, getUserLastConnectedAt, getUserLastPlatformLabel, getUserListColumns, getUserNameLines,
 } from '@/utils/_core/user.utils';
 
@@ -72,7 +73,6 @@ interface IData {
   id: string;
   fullName: ReactNode;
   contact: ReactNode;
-  rating: ReactNode;
   profileCompleteness: ReactNode;
   activity: ReactNode;
   roles?: ReactNode;
@@ -88,7 +88,7 @@ interface IDataAuditLog {
   initiatedBy: string;
   deletionReason: string;
   date: ReactNode;
-  // extra columns contributed by domains via `registerUserAuditLogColumn` (e.g. rides, avgRating)
+  // extra columns contributed by domains via `registerUserAuditLogColumn` (e.g. rides)
   [key: string]: unknown;
 }
 
@@ -104,7 +104,7 @@ interface IDataRecycleBin {
 
 /*
  * The columns answer, in order, the questions an operator asks of an account: who it is, how to
- * reach them, how the platform rates them, what a domain adds about them (the vehicles they own),
+ * reach them, what a domain adds about them (the vehicles they own),
  * how much of their profile they filled in, and since when they have been here.
  */
 const headCells: ITableHeadCell<string>[] = [
@@ -115,12 +115,6 @@ const headCells: ITableHeadCell<string>[] = [
   {
     id: 'contact',
     label: i18n.t('user:contact'),
-    disableSorting: true,
-  },
-  {
-    id: 'rating',
-    label: i18n.t('user:stats.rating'),
-    align: 'right',
     disableSorting: true,
   },
   ...getUserListColumns().map((column) => column.headCell),
@@ -168,11 +162,10 @@ const headCells: ITableHeadCell<string>[] = [
 
 /*
  * Columns that only describe an account someone actually travels with — an administrator invited
- * from the back-office is never rated, owns no vehicle and fills in no traveller profile, so on
+ * from the back-office owns no vehicle and fills in no traveller profile, so on
  * that tab they would be a screen of dashes.
  */
 const MEMBER_ONLY_COLUMN_IDS = [
-  'rating',
   'security',
   'profileCompleteness',
   ...getUserListColumns().map((column) => column.headCell.id),
@@ -273,6 +266,7 @@ const Users = () => {
   const auditLogs = useSelector(getAuditLogLogsSelector);
   const auditLogCount = useSelector(getAuditLogCountSelector);
   const roles = useSelector(getRoleRolesSelector);
+  const currentUser = useSelector(getAppCurrentUserSelector);
   // the server lets an owner, a super administrator or the staff right invite an admin: the button follows
   const canManageStaff = useSelector(getRoleCanManageStaffSelector);
   // whether this visit already read the roles for the invite form — see handleOpenInviteDialog
@@ -414,15 +408,9 @@ const Users = () => {
     return users.map((user: IUser) => {
       const lastConnectedAt = getUserLastConnectedAt(user);
       const platformLabel = getUserLastPlatformLabel(user);
-      const suspendedUntil = user.banned ? undefined : getUserActiveSuspensionUntil(user);
-      const suspendedLabel = suspendedUntil
-        ? t('user:suspendedUntil', { date: displayDate(suspendedUntil, false) })
-        : '';
       const security = user.banned
         ? { label: t('user:banned'), color: 'error.main' }
-        : suspendedUntil
-          ? { label: suspendedLabel, color: 'warning.main' }
-          : { label: t('common:active'), color: 'text.primary' };
+        : { label: t('common:active'), color: 'text.primary' };
 
       const cells: Record<string, ReactNode> = {
         // `component="div"`: a cell of the table, not a row of a list — an `li` outside any `ul`
@@ -441,13 +429,6 @@ const Users = () => {
             </ListItemAvatar>
             <ListItemText {...getUserNameLines(user, t('user:unnamedMember'))} />
             {user.banned && <Chip color="error" label={t('user:banned')} size="small" />}
-            {suspendedUntil && (
-              <Chip
-                color="warning"
-                label={suspendedLabel}
-                size="small"
-              />
-            )}
             {isAdminTab && user.mfa?.enabled && (
               <Chip
                 color="primary"
@@ -469,7 +450,12 @@ const Users = () => {
         ),
         contact: <UserContacts user={user} />,
         profileCompleteness: <UserProfileCompletenessCell user={user} />,
-        roles: <RolesChip roles={user.roles || []} />,
+        // the column is right-aligned like its header: the chips' own flex row would hug the left edge
+        roles: (
+          <Stack sx={{ alignItems: 'flex-end' }}>
+            <RolesChip roles={user.roles || []} />
+          </Stack>
+        ),
         ...Object.fromEntries(
           getUserListColumns().map((column) => {
             const { Component } = column;
@@ -486,33 +472,6 @@ const Users = () => {
             ];
           })
         ),
-        rating: user.stats && user.stats.reviewsCount > 0
-          ? (
-            <Stack
-              direction="row"
-              spacing={0.5}
-              sx={{
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-              }}
-            >
-              <Rating
-                readOnly
-                precision={0.5}
-                size="small"
-                value={user.stats.rating}
-              />
-              <Typography
-                variant="body2"
-                sx={{
-                  color: 'text.secondary',
-                }}
-              >
-                ({user.stats.reviewsCount})
-              </Typography>
-            </Stack>
-          )
-          : '—',
         activity: (
           <Stack sx={{
             alignItems: 'flex-end',
@@ -546,7 +505,7 @@ const Users = () => {
                 </IconButton>
               </Tooltip>
             )}
-            onDelete={canDelete
+            onDelete={canDelete && user.id !== currentUser?.id
               ? () => handleDelete(user)
               : undefined}
             onPreview={canPreview
@@ -574,6 +533,7 @@ const Users = () => {
     filteredHeadCells,
     isAdminTab,
     handleDelete,
+    currentUser?.id,
     handlePreview,
     t,
     canDelete,

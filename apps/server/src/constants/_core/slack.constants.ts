@@ -9,12 +9,9 @@ export const SLACK_ALERT_LOCALE: Locale = 'fr';
 /** One icon per kind of alert, so the channel can be scanned at a glance. */
 export const SLACK_ALERT_ICONS = {
   urgent: '🚨',
-  payment: '💸',
   document: '📄',
-  report: '⚠️',
   sms: '📵',
   security: '🔐',
-  ticket: '💬',
   job: '⚙️',
   summary: '☀️',
   newUsers: '👤',
@@ -22,6 +19,6 @@ export const SLACK_ALERT_ICONS = {
 
 /*
  * Slack answers a webhook in well under a second: past this, the alert is given up rather than
- * holding the action that raised it (an SOS, a ticket being filed)
+ * holding the action that raised it (an SOS, a document being sent)
  */
 export const SLACK_TIMEOUT_MS = 5_000;

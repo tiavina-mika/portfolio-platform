@@ -27,17 +27,10 @@
     "allRightsReserved": "All right reserved",
     "contact": "Contact",
     "internalAlert": "Internal alert",
-    "openTicket": "Open the ticket",
     "reasonRequired": "Reason is required",
     "emailNotFound": "Email not found",
-    "reportThresholdReachedSubject": "Multiple reports received",
-    "reportThresholdReachedMessage": "{{count}} unresolved reports have been recorded on {{targetType}} ({{targetId}}). Please review this case.",
-    "preventiveSuspensionSubject": "Your account has been temporarily suspended",
-    "preventiveSuspensionMessage": "Following multiple reports, your account has been suspended for {{days}} days. Our moderation team is reviewing your case.",
-    "reportResolvedSubject": "Your report has been processed",
-    "reportResolvedMessage": "Thank you for your report. Our moderation team has reviewed it and taken the appropriate action.",
     "welcomeSubject": "Welcome to Portfolio!",
-    "welcomeMessage": "Hi {{fullName}}, your account is now verified. You're all set to search for a ride or offer one.",
+    "welcomeMessage": "Hi {{fullName}}, your account is now verified.",
     "accountReactivatedSubject": "Your account has been reactivated",
     "accountReactivatedMessage": "Good news! Your account suspension has ended and you can now use the app normally again.",
     "newDeviceLoginSubject": "New login detected",
@@ -76,25 +69,12 @@
       "mfaReset": {
         "subject": "Two-factor authentication reset for {{target}}",
         "message": "{{actor}} reset the two-factor authentication of {{target}}."
-      },
-      "largeMoneyAction": {
-        "subject": "{{action}} of {{amount}}",
-        "message": "{{actor}} made: {{action}} of {{amount}} (reference {{reference}})."
-      },
-      "moneyActions": {
-        "refund": "Refund",
-        "payoutRelease": "Early payout to the driver",
-        "ridePassengersRefund": "Refund of the passengers of a ride"
       }
     },
     "invitationRolesFailedSubject": "Invited account created without a role",
     "invitationRolesFailedMessage": "{{targetEmail}} signed up from an invitation, but the invited roles could not be given. The account exists without any role: please add them from the user page.",
-    "reportSubmittedSubject": "We received your report",
-    "reportSubmittedMessage": "Thank you for your report. Our moderation team will review it shortly.",
     "newsletterUnsubscribeConfirmationSubject": "You have been unsubscribed",
     "newsletterUnsubscribeConfirmationMessage": "You have successfully unsubscribed from the Portfolio newsletter. You will no longer receive these emails.",
-    "receiptResentSubject": "Your payment receipt",
-    "receiptResentMessage": "Please find your payment receipt attached.",
     "accountBannedSubject": "Your account has been banned",
     "accountBannedTemporary": "Your account has been banned until {{until}} for the following reason: {{reason}}.",
     "accountBannedPermanent": "Your account has been permanently banned for the following reason: {{reason}}.",
@@ -107,18 +87,6 @@
       "other": "other",
       "account_protection": "account protection"
     },
-    "ticketReplySubject": "A reply to your request — Portfolio",
-    "ticketReplyIntro": "The support team has answered the request you sent us from our website.",
-    "ticketReplyOriginalLabel": "Your request",
-    "ticketReplySignature": "{{agentName}} — Portfolio Support",
-    "ticketReplyTeamName": "The support team",
-    "ticketReplyCannotReplyTitle": "This email cannot receive a reply",
-    "ticketReplyCannotReplyBody": "Your request was sent from our website without an account, so we have no thread to continue the conversation in. If you reply to this email, nobody will receive it.",
-    "ticketReplyWriteAgain": "Write to us again from the contact form",
-    "ticketAcknowledgementSubject": "We received your request — Portfolio",
-    "ticketAcknowledgementIntro": "Thank you for writing to us. Your message has reached the support team, who will answer you by email as soon as possible.",
-    "ticketAcknowledgementReferenceLabel": "Your request number:",
-    "ticketAcknowledgementNextSteps": "Keep this number: quote it if you write to us or call us again about the same request. There is no need to reply to this email.",
     "newsletterConfirmationSubject": "Confirm your subscription to the Portfolio newsletter",
     "newsletterConfirmationMessage": "Someone — hopefully you — asked to receive the Portfolio newsletter at this address. Confirm with the button below to start receiving our news. If you did not ask for it, simply ignore this email: you will receive nothing.",
     "newsletterConfirmationButton": "Confirm my subscription",
@@ -137,15 +105,7 @@
   "sms": {
     "verificationCode": "Your Portfolio code: {{code}}",
     "contactChanged": "Portfolio: the phone number of your account was changed. If this wasn't you, contact support right away.",
-    "rideCancelled": "Ride cancelled: {{- departure}} - {{- destination}} on {{- date}}. You've been refunded.",
-    "newDeviceLogin": "New login to your Portfolio account from: {{- deviceName}}. If this wasn't you, change your password.",
-    "requestConfirmed": "Portfolio: seat confirmed, ride {{- departure}} - {{- destination}} on {{- date}}. Details in the app.",
-    "bookingCanceledByDriver": "Portfolio: booking cancelled by the driver, ride {{- departure}} - {{- destination}} on {{- date}}. You have been fully refunded.",
-    "requestPaymentFailed": "Portfolio: payment failed, ride {{- departure}} - {{- destination}} on {{- date}}. No seat booked.",
-    "sosAlert": "Portfolio: {{- name}} raised an SOS alert during their ride {{- departure}} - {{- destination}} ({{- vehicle}} {{- plate}}). Support has been alerted.",
-    "sosAlertLocation": "Location: {{- url}}",
-    "ticketAcknowledgement": "Portfolio: we received your request #{{reference}}. Support will answer you by SMS or phone call. Keep this number.",
-    "ticketReply": "Portfolio support, request #{{reference}}: {{- message}}"
+    "newDeviceLogin": "New login to your Portfolio account from: {{- deviceName}}. If this wasn't you, change your password."
   },
   "error": {
     "invalidStringType": "Excepted text",
@@ -177,15 +137,10 @@
     "unauthorized": "Unauthorized",
     "unauthorizedToDoThisAction": "You are not authorized to perform this action",
     "pleaseLogin": "You need to login to perform this action",
-    "receiptRecipientHasNoEmail": "This member has no email address: the receipt cannot be sent.",
-    "receiptEmailNotSent": "The receipt could not be sent. Please try again later.",
     "cannotActOnHigherRole": "You cannot act on the account of an owner or a super administrator.",
+    "cannotDeleteOwnAccount": "You cannot delete your own account from the back-office.",
+    "cannotDeleteLastOwner": "The last owner of the platform cannot be deleted.",
     "notificationReadOnly": "Notifications can only be changed by the server.",
-    "reportAlreadySubmitted": "You have already reported this item recently.",
-    "tooManyReports": "Too many reports in a short time. Please try again later.",
-    "reportDetailsRequired": "Please provide details for your report.",
-    "reportNotOpen": "This report is already closed and can no longer be taken in charge.",
-    "reportTargetIsNotAUser": "Only a report filed against a user account can lead to a suspension.",
     "sessionNotFound": "Session not found.",
     "tooManyDeviceRegistrations": "Too many device registrations in a short time. Please try again in a few minutes.",
     "userNotFound": "User not found.",
@@ -200,8 +155,8 @@
     "notificationBroadcastMissingCity": "Choose the city the announcement is for.",
     "userText": {
       "profanity": "This text contains words that cannot be published. Rewrite it without them.",
-      "phone": "A phone number cannot be published here. Remove it: contact details are exchanged through the app once a booking is confirmed.",
-      "email": "An email address cannot be published here. Remove it: contact details are exchanged through the app once a booking is confirmed.",
+      "phone": "A phone number cannot be published here. Remove it.",
+      "email": "An email address cannot be published here. Remove it.",
       "url": "A link cannot be published here. Remove it."
     }
   },
@@ -220,8 +175,6 @@
     "phoneNumberAlreadyUsed": "This phone number is already linked to an account. Please log in instead.",
     "invalidSignUp": "Invalid sign-up. Please try again from the app.",
     "noVerificationPending": "No verification is pending for this account.",
-    "payoutPhoneAlreadyVerified": "This number is already confirmed for your payouts.",
-    "payoutPhoneLimitReached": "You have reached the maximum number of payout numbers. Contact support to change one.",
     "accountHelpPhoneNotPending": "This member's phone number is already verified or missing: there is no code to resend.",
     "accountHelpNoContactForReset": "This member has no verified phone number and no email: change their contact first.",
     "verificationLocked": "Too many failed attempts. Please request a new verification code.",
@@ -245,34 +198,8 @@
     "phoneAlreadyUsedByAnotherAccount": "This phone number is already used by another account.",
     "contactUnchanged": "This is already the value saved on your account."
   },
-  "project": {
-    "ride": {
-      "departure": "Departure",
-      "destination": "Destination",
-      "hasNoRightToDelete": "You have no right to delete this ride"
-    },
-    "request": {
-      "comment": "Comment"
-    }
-  },
-  "ticket": {
-    "reopenedSystemMessage": "Request reopened",
-    "reportWithoutDetails": "Report sent without details.",
-    "reportClosedSystemMessage": "Our team has reviewed your report. Write to us here if you have a question."
-  },
   "cms": {
     "codeAlreadyUsed": "This technical code is already used by \"{{- name}}\". Choose another one."
-  },
-  "receipt": {
-    "title": "Payment receipt",
-    "recipient": "Recipient",
-    "issuedAt": "Issued on",
-    "amount": "Amount",
-    "service": "Payment method",
-    "transactionId": "Transaction reference",
-    "rideDate": "Ride date",
-    "totalPrice": "Ride total price",
-    "disclaimer": "This document is a receipt attesting that a payment took place. It is not an invoice."
   },
   "docsAccess": {
     "sections": {
@@ -285,16 +212,10 @@
   },
   "slack": {
     "openInBackOffice": "Open in the back-office",
-    "newTicketFromWeb": "New support request #{{- reference}} (website)",
-    "newTicketFromApp": "New support request #{{- reference}} (app)",
-    "newReportTicket": "New report — request #{{- reference}}",
     "scheduledJobFailed": "Scheduled job {{- jobName}} failed",
     "scheduledJobFailedDetails": "Error: {{- kind}} — the detail is in the server logs",
     "dailySummaryTitle": "Yesterday on Portfolio ({{- date}})",
     "dailySummaryFigure": "{{- label}}: {{- value}}",
-    "dailySummaryNewUsers": "Sign-ups",
-    "dailySummaryRidesPublished": "Rides published",
-    "dailySummaryBookings": "Confirmed bookings",
-    "dailySummarySosAlerts": "SOS alerts"
+    "dailySummaryNewUsers": "Sign-ups"
   }
 }

@@ -21,7 +21,6 @@
   "sex": "Sexe",
   "phoneNumber": "Numéro téléphone",
   "contactPhone": "Téléphone de contact",
-  "paymentPhone": "Téléphone de paiement",
   "address": "Adresse",
   "male": "Homme",
   "female": "Femme",
@@ -125,17 +124,17 @@
       "verifyEmail": {
         "label": "Vérifiez votre adresse email",
         "subject": "Vérifiez votre adresse email",
-        "message": "Bonjour, votre adresse email n'est pas encore vérifiée. Confirmez-la depuis l'application pour continuer à réserver et à publier des trajets."
+        "message": "Bonjour, votre adresse email n'est pas encore vérifiée. Merci de la confirmer."
       },
       "verifyPhone": {
         "label": "Vérifiez votre numéro de téléphone",
         "subject": "Vérifiez votre numéro de téléphone",
-        "message": "Bonjour, votre numéro de téléphone n'est pas encore vérifié. Confirmez-le depuis l'application : c'est ce qui permet aux autres membres de vous contacter le jour du trajet."
+        "message": "Bonjour, votre numéro de téléphone n'est pas encore vérifié. Merci de le confirmer."
       },
       "completeProfile": {
         "label": "Complétez votre profil",
         "subject": "Complétez votre profil",
-        "message": "Bonjour, votre profil est encore incomplet. Ajoutez votre photo et vos informations : un profil complet inspire confiance et obtient bien plus de réservations."
+        "message": "Bonjour, votre profil est encore incomplet. Ajoutez votre photo et vos informations pour le compléter."
       }
     }
   },
@@ -151,7 +150,6 @@
     "insufficientAuth": "Vous n'avez pas le droit de faire ça",
     "canNotDeleteUser": "Vous ne pouvez pas supprimer un utilisateur",
     "canNotUpdateUser": "Vous ne pouvez pas update un utilisateur",
-    "canNotUpdatePayment": "Vous ne pouvez pas modifier un paiement",
     "userNotVerified": "Votre compte n'a pas encore été verifié. Un email vous a été envoyé. Veuillez entrer le code contenu dans l'email.",
     "invalidEmail": "Email invalide",
     "noAccountByEmail": "Compte introuvable ou inexistant avec cet email",
@@ -184,23 +182,8 @@
   "aboutTheUser": "A propos de l'utilisateur",
   "banned": "Banni(e)",
   "security": "Sécurité",
-  "suspendedUntil": "Suspendu(e) jusqu’au {{date}}",
   "ban": "Bannir",
   "accountInformation": "Information du compte",
-  "emergencyContact": {
-    "title": "Contact d'urgence",
-    "name": "Nom",
-    "relationship": "Lien",
-    "phone": "Numéro",
-    "none": "Aucun contact d'urgence enregistré",
-    "relationships": {
-      "family": "Famille",
-      "partner": "Conjoint(e)",
-      "friend": "Ami(e)",
-      "colleague": "Collègue",
-      "other": "Autre"
-    }
-  },
   "updateAboutMe": "Modifier mes informations",
   "numberOfUsers": "Nombre d'utilisateurs",
   "role": {
@@ -458,50 +441,7 @@
       "account_protection": "Protection du compte"
     }
   },
-  "stats": {
-    "statsAndTrustSafety": "Stats & confiance/sécurité",
-    "rating": "Note",
-    "reviewsCount": "Nombre d'avis",
-    "lastRatingAt": "Dernier avis le",
-    "notRatedYet": "Non noté",
-    "asDriver": "En tant que conducteur",
-    "asPassenger": "En tant que passager",
-    "completed": "Terminées",
-    "canceled": "Annulées",
-    "bookingsConfirmed": "Réservations confirmées en tant que conducteur",
-    "bookingsCanceledByDriver": "Réservations annulées en tant que conducteur",
-    "totalDistance": "Distance totale",
-    "trustAndSafety": "Confiance & sécurité",
-    "pendingPenalty": "Pénalité en attente",
-    "isSuspendedUntil": "Suspendu jusqu'au",
-    "notSuspended": "Non suspendu",
-    "lastDriverCancellations": "Annulations récentes en tant que conducteur (30 jours)",
-    "noDriverCancellation": "Aucune annulation récente en tant que conducteur",
-    "lastPassengerCancellations": "Annulations récentes en tant que passager (30 jours)",
-    "noPassengerCancellation": "Aucune annulation récente en tant que passager",
-    "completedRidesThisMonth": "Trajets terminés ce mois-ci",
-    "lastCompletedRideMonth": "Dernier mois de trajet terminé",
-    "noShowConfirmed": "Absences confirmées en tant que conducteur",
-    "driverNoShowRejected": "Signalements d'absence du conducteur rejetés",
-    "passengerNoShow": "Absences en tant que passager",
-    "noShowDeclarationsRejected": "Déclarations d'absence de passager rejetées",
-    "countWithRate": "{{count}} ({{rate}})",
-    "sosAlertsCount": "SOS déclenchés"
-  },
-  "activity": {
-    "activity": "Activité",
-    "ridesAndRequestsPerMonth": "Trajets et demandes par mois",
-    "ratingEvolution": "Évolution de la note",
-    "ridesCompleted": "Trajets terminés",
-    "ridesCanceled": "Trajets annulés",
-    "requestsCompleted": "Demandes terminées",
-    "requestsCanceled": "Demandes annulées",
-    "averageRating": "Note moyenne",
-    "ratingsCount": "Nombre de notes",
-    "noData": "Aucune donnée disponible sur cette période"
-  },
   "accountDeleted": "Compte supprimé",
-  "accountDeletionBlocked": "Suppression bloquée (pénalité/suspension)",
   "deletionReason": "Raison de suppression",
   "originalEmail": "Email original",
   "originalUsername": "Nom d'utilisateur original",
@@ -518,8 +458,6 @@
     "action": "Action",
     "initiatedBy": "Initié par",
     "deletionReason": "Raison",
-    "rides": "Trajets / Réservations",
-    "avgRating": "Note moy.",
     "accountDeleted": "Compte supprimé",
     "byUser": "Utilisateur",
     "byAdmin": "Admin",
@@ -537,7 +475,7 @@
     "loginAsThisUser": "Se connecter en tant que {{name}}",
     "startSession": "Démarrer la session",
     "reason": "Motif",
-    "reasonHelper": "Obligatoire et conservé dans l'historique : numéro de ticket ou description du problème à reproduire.",
+    "reasonHelper": "Obligatoire et conservé dans l'historique : une référence ou une description du problème à reproduire.",
     "scanHelper": "Scannez ce QR code avec le téléphone qui servira à la session. L'application s'ouvrira directement connectée en tant que {{name}}.",
     "expiresAt": "Ce lien expire le {{date}} et ne peut servir qu'une fois.",
     "copyLink": "Copier le lien",
@@ -609,24 +547,14 @@
     "sections": {
       "details": "Détails",
       "contact": "Contact",
-      "emergencyContact": "Contact d'urgence",
       "sessions": "Sessions actives",
       "platforms": "Plate-formes",
       "roles": "Postes",
-      "stats": "Stats",
       "trust": "Confiance & sécurité",
-      "vehicles": "Véhicules",
-      "rides": "Trajets",
-      "requests": "Demandes",
-      "payments": "Paiements",
-      "refunds": "Remboursements",
       "ratingsReceived": "Avis reçus",
       "ratingsGiven": "Avis donnés",
       "suspension": "Suspension",
       "bans": "Historique des bannissements",
-      "reportsAgainst": "Signalements contre le membre",
-      "reportsMade": "Signalements faits par le membre",
-      "tickets": "Tickets au support",
       "notifications": "Notifications",
       "history": "Historique",
       "views": "Consultations de la fiche",
@@ -648,17 +576,10 @@
       "emailHidden": "Email masqué",
       "memberSince": "Membre depuis le {{date}}"
     },
-    "roleSummary": {
-      "driverAndPassenger": "Conducteur et passager",
-      "driver": "Conducteur",
-      "passenger": "Passager"
-    },
     "banner": {
       "teamUntil": "Suspendu par l'équipe jusqu'au {{date}}",
       "teamPermanent": "Banni(e) définitivement depuis le {{date}}",
-      "policyUntil": "Suspendu automatiquement jusqu'au {{date}}",
       "by": "par {{name}}",
-      "bothCauses": "Les deux causes sont actives : lever la suspension lève les deux.",
       "liftSuspension": "Lever la suspension",
       "deleted": "Compte supprimé le {{date}} par le membre",
       "deletedDescription": "L'email d'origine est masqué. Plus de session ni de connexion en tant que ce compte ; l'historique et le journal restent consultables."
@@ -666,7 +587,6 @@
     "menu": {
       "suspend": "Suspendre le compte",
       "lift": "Lever la suspension",
-      "viewPayments": "Voir les paiements",
       "viewAudit": "Voir l'audit"
     },
     "details": {
@@ -676,7 +596,6 @@
       "age": "{{count}} ans"
     },
     "contact": {
-      "noPaymentPhone": "Aucun téléphone de paiement",
       "noEmail": "Aucun email — inscrit avec son téléphone"
     },
     "smsFallback": {
@@ -685,9 +604,6 @@
       "disabled": "Désactivé par le membre",
       "enabledHint": "Le membre recevra un SMS pour les événements importants quand il n'a pas pu être prévenu autrement, dans la limite quotidienne.",
       "disabledHint": "Le membre a coupé les SMS de secours dans son application : il n'en recevra aucun. Lecture seule, seul le membre peut changer ce réglage."
-    },
-    "emergencyContact": {
-      "note": "Choisi par le membre, non modifiable depuis le back-office."
     },
     "roles": {
       "note": "Compte créé dans le back-office : lui seul peut recevoir des postes.",
@@ -729,57 +645,6 @@
       },
       "empty": "Aucun bannissement",
       "note": "Sur les bannissements anciens, l'auteur et la levée ne sont pas connus."
-    },
-    "payments": {
-      "reference": "Référence",
-      "date": "Date",
-      "type": "Type",
-      "method": "Moyen",
-      "status": "Statut",
-      "amount": "Montant",
-      "empty": "Aucun paiement"
-    },
-    "refunds": {
-      "ride": "Trajet",
-      "reason": "Motif",
-      "empty": "Aucun remboursement"
-    },
-    "ratings": {
-      "rating": "Note",
-      "author": "Auteur",
-      "recipient": "Destinataire",
-      "comment": "Commentaire",
-      "date": "Date",
-      "emptyReceived": "Aucun avis reçu",
-      "emptyGiven": "Aucun avis donné",
-      "subtitle": "{{rating}} / 5 · {{count}} avis"
-    },
-    "reports": {
-      "reason": "Motif",
-      "reportedBy": "Signalé par",
-      "against": "Contre",
-      "age": "Ancienneté",
-      "status": "Statut",
-      "anonymous": "Anonyme",
-      "emptyAgainst": "Aucun signalement contre ce membre",
-      "emptyMade": "Aucun signalement fait par ce membre",
-      "subtitlePending_one": "{{count}} en attente",
-      "subtitlePending_other": "{{count}} en attente"
-    },
-    "tickets": {
-      "message": "Message",
-      "status": "Statut",
-      "priority": "Priorité",
-      "lastActivity": "Dernière activité",
-      "reference": "T-{{reference}}",
-      "messagesCount_one": "{{count}} message",
-      "messagesCount_other": "{{count}} messages",
-      "support": "{{name}} · support",
-      "internalNote": "Note interne",
-      "system": "Système",
-      "empty": "Aucun ticket au support",
-      "threadEmpty": "Aucun message dans ce ticket pour l'instant",
-      "open": "Ouvrir le ticket"
     },
     "notifications": {
       "title": "Titre",
@@ -848,70 +713,7 @@
         "country_changed_by_admin": "Pays modifié par l'équipe",
         "password_reset_sent": "Code de réinitialisation du mot de passe envoyé"
       },
-      "until": "jusqu'au {{date}}",
-      "reasons": {
-        "report_threshold": "Plusieurs signalements en attente",
-        "report_decision": "Signalement retenu par l'équipe",
-        "rating_author": "Avis abusifs",
-        "driver_cancellations": "Annulations répétées en tant que conducteur",
-        "passenger_cancellations": "Annulations répétées en tant que passager"
-      }
-    },
-    "stats": {
-      "ridesSummary": "{{completed}} terminées · {{canceled}} annulées",
-      "ridesSummaryWithRate": "{{completed}} terminées · {{canceled}} annulées ({{rate}})",
-      "travelledOn": "parcourus sur Portfolio",
-      "viewAllRatings": "Voir tous les avis"
-    },
-    "trust": {
-      "pendingPenaltyNote": "retenue sur le prochain versement",
-      "none": "Aucune"
-    },
-    "vehicles": {
-      "vehicle": "Véhicule",
-      "typeYear": "Type et année",
-      "mileage": "Kilométrage",
-      "documents": "Documents",
-      "verification": "Vérification",
-      "empty": "Aucun véhicule enregistré",
-      "subtitle_one": "{{count}} véhicule",
-      "subtitle_other": "{{count}} véhicules",
-      "toVerify_one": "{{count}} à vérifier",
-      "toVerify_other": "{{count}} à vérifier"
-    },
-    "rides": {
-      "filters": {
-        "all": "Tout",
-        "driver": "Conducteur · {{count}}",
-        "passenger": "Passager · {{count}}"
-      },
-      "ride": "Trajet",
-      "departure": "Départ",
-      "role": "Rôle",
-      "status": "Statut",
-      "amount": "Montant",
-      "gain": "gain",
-      "paid": "payé",
-      "roles": {
-        "driver": "Conducteur",
-        "passenger": "Passager"
-      },
-      "note": "Montant : gain du conducteur ou prix payé par le passager, selon le rôle.",
-      "empty": "Aucun trajet, ni comme conducteur ni comme passager",
-      "emptyRole": "Aucun trajet de ce côté"
-    },
-    "requests": {
-      "ride": "Trajet",
-      "driver": "conducteur {{name}}",
-      "departure": "Départ",
-      "seats": "Places",
-      "status": "Statut",
-      "price": "Prix",
-      "empty": "Aucune demande"
-    },
-    "suspensionSources": {
-      "policy": "Suspension automatique",
-      "policyCause": "Après des annulations répétées"
+      "until": "jusqu'au {{date}}"
     },
     "accountHelp": {
       "intro": "Pour aider un membre qui n'arrive plus à accéder à son compte. Chaque action demande un motif et est inscrite dans l'historique du membre.",
@@ -943,7 +745,7 @@
       },
       "changeCountry": {
         "title": "Changer le pays du compte",
-        "description": "Le compte appartient aujourd'hui à : {{country}}. Le pays décide de la devise des trajets publiés, du fournisseur de SMS et des langues proposées. Les trajets et réservations déjà créés gardent leur pays.",
+        "description": "Le compte appartient aujourd'hui à : {{country}}. Le pays décide du fournisseur de SMS et des langues proposées.",
         "action": "Changer le pays",
         "dialogTitle": "Changer le pays de {{name}}",
         "country": "Nouveau pays"
@@ -969,16 +771,5 @@
   "searchByNameEmailOrPhone": "Rechercher par nom, email ou téléphone",
   "nameEmailOrPhone": "Nom, email ou téléphone",
   "originalPhone": "Téléphone d'origine",
-  "suspension": {
-    "title": "Suspension",
-    "source": {
-      "driver_cancellations": "Annulations de trajets (conducteur)",
-      "passenger_cancellations": "Annulations de réservations (passager)",
-      "report_threshold": "Seuil de signalements",
-      "report_decision": "Décision sur signalement",
-      "rating_author": "Avis abusif",
-      "unknown": "Inconnu"
-    }
-  },
   "codeDigit": "Chiffre {{position}} sur {{total}}"
 }

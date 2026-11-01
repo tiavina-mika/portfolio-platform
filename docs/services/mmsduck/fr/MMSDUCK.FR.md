@@ -10,7 +10,7 @@
 
 ## À quoi il sert
 
-MMSDuck est le fournisseur de SMS. Il envoie les codes de vérification du téléphone et de réinitialisation du mot de passe, les avis de ticket et de nouvel appareil, et le SMS de repli des notifications.
+MMSDuck est le fournisseur de SMS. Il envoie les codes de vérification du téléphone et de réinitialisation du mot de passe, les avis de nouvel appareil, et le SMS de repli des notifications.
 
 ## Où est le code
 
@@ -23,7 +23,6 @@ MMSDuck est le fournisseur de SMS. Il envoie les codes de vérification du tél�
 | Variable | App | Rôle |
 |---|---|---|
 | `MMSDUCK_API_KEY` | server | Clé du fournisseur (secret). Obligatoire et non vide en `preProduction` et `production` ; facultative ailleurs |
-| `ANDROID_SMS_RETRIEVER_HASH` | server | Facultatif : empreinte ajoutée aux SMS de vérification pour qu'une application Android lise le code |
 
 ## Mise en place
 

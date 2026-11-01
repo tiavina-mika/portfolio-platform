@@ -5,13 +5,11 @@ import { useNavigate } from '@tanstack/react-router';
 import { MouseEvent, ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  FiAlertOctagon, FiBell, FiCreditCard, FiFlag, FiMessageCircle, FiUserPlus, FiXCircle,
+  FiBell, FiMessageCircle, FiUserPlus,
 } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 
 import { COLLECTIONS, NOTIFICATION_COLLECTIONS } from '@/constants/_core/app.constants';
-import { PAYMENT_FAILED_NOTIFICATION_KEY } from '@/constants/_core/payment.constants';
-import { SOS_NOTIFICATION_KEY } from '@/constants/_core/ticket.constants';
 import { NOTIFICATION_MENU_WIDTH } from '@/constants/_core/ui/inbox.constants';
 import { APPBAR_ICON_BUTTON_SIZE, BADGE_FONT_SIZE, FONT_SIZE_BODY } from '@/constants/_core/ui/ui.constants';
 import { goToList } from '@/redux/actions/_core/util.action';
@@ -40,9 +38,6 @@ const sx = {
       border: (theme: Theme) => `1.5px solid ${theme.palette.background.paper}`,
     },
   },
-  // the SOS pill and the bell side by side, the pill first: it is the one read before anything else
-  root: { gap: 1 },
-  sosChip: { fontWeight: 600 },
   menuPaper: { width: NOTIFICATION_MENU_WIDTH, mt: 1 },
   menuTitle: {
     px: 1.75,
@@ -59,12 +54,7 @@ const sx = {
 interface IOption {
   icon: ReactNode;
   color: 'info' | 'error' | 'secondary' | 'primary' | 'success' | 'warning';
-  key:
-    | typeof NOTIFICATION_COLLECTIONS[number] |
-    typeof PAYMENT_FAILED_NOTIFICATION_KEY |
-    typeof SOS_NOTIFICATION_KEY;
-  // the collection whose rights gate a badge key that is not a class of its own
-  rightsClassName?: string;
+  key: typeof NOTIFICATION_COLLECTIONS[number];
   label: string;
   onClick: () => void;
 }
@@ -87,47 +77,15 @@ const NotificationCenter = () => {
 
   const allNotificationOptions: IOption[] = [
     {
-      icon: <FiAlertOctagon />,
-      // someone in danger right now — listed first, above every queue
-      color: 'error',
-      key: SOS_NOTIFICATION_KEY,
-      rightsClassName: COLLECTIONS.contact,
-      label: t('user:contacts.sos.openAlerts'),
-      onClick: goToInbox,
-    },
-    {
-      icon: <FiCreditCard />,
-      color: 'secondary',
-      key: COLLECTIONS.payment, // collection name
-      label: t('user:payments.payments'),
-      onClick: () => navigate(goToList('payments', { tab: t('route:tabs.news') })),
-    },
-    {
-      icon: <FiXCircle />,
-      // trust & operational risk — kept visually distinct (red), same idea as the report entry below
-      color: 'error',
-      key: PAYMENT_FAILED_NOTIFICATION_KEY,
-      label: t('user:payments.failedPayments'),
-      onClick: () => navigate(goToList('payments', { tab: t('route:tabs.failed') })),
-    },
-    {
       icon: <FiMessageCircle />,
       color: 'primary',
       key: COLLECTIONS.contact, // collection name
       label: t('user:contacts.contacts'),
       /*
-       * the inbox has no "new tickets" scope to open: unread tickets already stand in bold at the
-       * top of its queue, and its header states how many there are
+       * the contacts page has no "new messages" scope to open: unread messages already stand in
+       * bold at the top of its list
        */
       onClick: goToInbox,
-    },
-    {
-      icon: <FiFlag />,
-      // trust & safety — kept visually distinct (red) even without the full "urgent" digest
-      color: 'error',
-      key: COLLECTIONS.report, // collection name
-      label: t('user:reports.reports'),
-      onClick: () => navigate(goToList('reports', { tab: t('route:tabs.news') })),
     },
     {
       icon: <FiUserPlus />,
@@ -140,19 +98,10 @@ const NotificationCenter = () => {
 
   // only show/count collections the admin's role(s) grant read access to — same rule as SideBar
   const notificationOptions = allNotificationOptions.filter(
-    (option) => canAccessTo(roles, option.rightsClassName ?? option.key)
+    (option) => canAccessTo(roles, option.key)
   );
 
-  /*
-   * an open SOS is also an unread ticket, already counted under the inbox, and it has a pill of its
-   * own beside the bell — adding it here again would count the same alert twice
-   */
-  const totalCount = notificationOptions
-    .filter((option) => option.key !== SOS_NOTIFICATION_KEY)
-    .reduce((sum, option) => sum + (notifications[option.key] ?? 0), 0);
-
-  const canSeeSosAlerts = canAccessTo(roles, COLLECTIONS.contact);
-  const sosCount = canSeeSosAlerts ? notifications[SOS_NOTIFICATION_KEY] ?? 0 : 0;
+  const totalCount = notificationOptions.reduce((sum, option) => sum + (notifications[option.key] ?? 0), 0);
 
   const handleOpen = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -163,24 +112,7 @@ const NotificationCenter = () => {
   };
 
   return (
-    <Box className="flexRow alignCenter" sx={sx.root}>
-      {/*
-        * shown outside the menu, where no one has to open anything to see it: an SOS is the one
-        * notification that cannot wait for someone to wonder what the bell's number is made of
-        */}
-      {sosCount > 0 && (
-        <Tooltip title={t('user:contacts.sos.openAlertsTooltip', { count: sosCount })}>
-          <Chip
-            clickable
-            color="error"
-            icon={<FiAlertOctagon />}
-            label={t('user:contacts.sos.openAlertsCount', { count: sosCount })}
-            onClick={goToInbox}
-            size="small"
-            sx={sx.sosChip}
-          />
-        </Tooltip>
-      )}
+    <Box className="flexRow alignCenter">
       <Tooltip title={t('common:notifications')}>
         <IconButton color="inherit" onClick={handleOpen} sx={sx.bellButton}>
           <Badge badgeContent={totalCount} color="error" max={99}>

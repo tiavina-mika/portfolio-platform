@@ -12,7 +12,7 @@
 
 ## Vue d'ensemble
 
-Les emails sont des emails transactionnels envoyés par le serveur via [Brevo](https://www.brevo.com). Les textes de vérification peuvent aussi partir par SMS via MMSDuck, et les notifications push via Expo. Les apps `web` et `bo` n'envoient jamais rien : elles appellent une Cloud Function ou enregistrent un objet, et le serveur fait le reste. La liste complète des emails est dans [l'inventaire](../../../inventory/communication/fr/EMAILS.FR.md).
+Les emails sont des emails transactionnels envoyés par le serveur via [Brevo](https://www.brevo.com). Les textes de vérification peuvent aussi partir par SMS via MMSDuck. Les apps `web` et `bo` n'envoient jamais rien : elles appellent une Cloud Function ou enregistrent un objet, et le serveur fait le reste. La liste complète des emails est dans [l'inventaire](../../../inventory/communication/fr/EMAILS.FR.md).
 
 | Fichier | Rôle |
 |---|---|
@@ -26,11 +26,11 @@ Les emails sont des emails transactionnels envoyés par le serveur via [Brevo](h
 - `BREVO_API_KEY`, `WEBSITE_URL` et `ADMIN_EMAIL_SENDER` sont requis au démarrage (`validateEnv`). Les liens des emails pointent vers `WEBSITE_URL`.
 - Les SMS exigent `MMSDUCK_API_KEY` en `preProduction` et `production` ; en développement ils sont seulement journalisés.
 - Les textes sont traduits avec l'i18n du serveur, voir [I18N.FR.md](I18N.FR.md) ; la locale vient du paramètre de la fonction ou du contexte d'enregistrement, `fr` par défaut.
-- Une alerte pour l'équipe (signalements, paiements en échec, jobs en échec) part par email vers l'équipe et vers Slack si `SLACK_ALERTS_WEBHOOK_URL` est défini.
+- Une alerte pour l'équipe (jobs en échec) part par email vers l'équipe et vers Slack si `SLACK_ALERTS_WEBHOOK_URL` est défini.
 
 ## Emails envoyés
 
-Compte (codes de vérification et de réinitialisation, invitation, code de vérification renforcée, changement de contact, bienvenue, nouvel appareil), tickets de support (accusé de réception au visiteur qui a utilisé le formulaire de contact, réponses), newsletter (confirmation, confirmation de désabonnement, nouvel article), notifications et diffusions, alertes pour l'équipe. Constructeurs, déclencheurs et destinataires sont dans la page d'inventaire ci-dessus.
+Compte (codes de vérification et de réinitialisation, invitation, code de vérification renforcée, changement de contact, bienvenue, nouvel appareil), newsletter (confirmation, confirmation de désabonnement, nouvel article), notifications et diffusions, alertes pour l'équipe. Constructeurs, déclencheurs et destinataires sont dans la page d'inventaire ci-dessus.
 
 ## Newsletter
 
@@ -52,4 +52,3 @@ Le back-office a un système de notifications (classe `Notification`, pages de n
 - Seul un article nouvellement créé lance le job de newsletter : un article créé inactif n'est pas envoyé quand il est activé plus tard.
 - `resubscribeNewsletter` met `active: true` directement depuis un lien de désabonnement valide, même pour une adresse jamais confirmée.
 - `sendArticleToNewsletterTest` lance le job avec `articleId` alors que le job lit `id`.
-- Plusieurs fonctions de test parlent encore de covoiturage (`createRideMock`).

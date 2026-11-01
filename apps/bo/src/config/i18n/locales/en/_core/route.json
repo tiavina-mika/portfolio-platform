@@ -29,16 +29,8 @@
   "administration": "administration",
   "categories": "categories",
   "miscellaneous": "miscellaneous",
-  "statistics": "statistics",
-  "statisticsUsers": "users",
-  "statisticsPayments": "payments",
-  "statisticsReports": "reports",
   "notifications": "notifications",
   "broadcast": "broadcast",
-  "reports": "reports",
-  "ratings": "ratings",
-  "payments": "payments",
-  "finance": "finance",
   "website": {
     "articles": "articles",
     "blog": "blog"
@@ -50,20 +42,6 @@
     "pending": "in-progress",
     "failed": "failed",
     "users": "users",
-    "rides": "rides",
-    "ratings": "ratings",
-    "vehicles": "vehicles",
-    "collections": "collections",
-    "payouts": "payouts",
-    "driverNoShows": "driver-no-shows",
-    "contestedNoShows": "contested-no-shows"
-  },
-  "factures": "invoices",
-  "rides": "rides",
-  "requests": "requests",
-  "vehicles": "vehicles",
-  "statisticsRides": "rides",
-  "statisticsVehicles": "vehicles",
-  "statisticsCancellations": "cancellations",
-  "financeDrivers": "drivers"
+    "collections": "collections"
+  }
 }

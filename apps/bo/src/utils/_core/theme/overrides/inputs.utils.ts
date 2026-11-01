@@ -4,14 +4,14 @@ import { createElement } from 'react';
 import {
   CheckboxCheckedIcon, CheckboxIcon, CheckboxIndeterminateIcon, RadioCheckedIcon, RadioIcon,
 } from '@/components/icons/FormIcons';
-import { INPUT_LABEL_OFFSET_Y, RATING_COLOR } from '@/constants/_core/theme.constants';
+import { INPUT_LABEL_OFFSET_Y } from '@/constants/_core/theme.constants';
 import {
   BUTTON_FONT_SIZE, BUTTON_HEIGHT, BUTTON_PADDING_X, BUTTON_TOUCH_HEIGHT, CHECKBOX_LABEL_GAP,
   CHECKBOX_RADIUS, CHECKBOX_ROW_MIN_HEIGHT, CHECKBOX_SIZE, CHECKBOX_TOUCH_SIZE,
   INPUT_CHIP_FONT_SIZE, INPUT_CHIP_HEIGHT, INPUT_CHIP_PADDING_X, INPUT_CHIP_RADIUS, INPUT_FONT_SIZE,
   INPUT_HEIGHT, INPUT_HEIGHT_SMALL, INPUT_HELPER_FONT_SIZE, INPUT_LABEL_FONT_SIZE,
   INPUT_MULTI_VALUE_PADDING, INPUT_OPTION_PADDING_X, INPUT_OPTION_PADDING_Y, INPUT_PADDING_X,
-  RADIUS, RADIUS_SM, RATING_ICON_SIZE, TOGGLE_BUTTON_PADDING_X,
+  RADIUS, RADIUS_SM, TOGGLE_BUTTON_PADDING_X,
 } from '@/constants/_core/ui/ui.constants';
 import { getButtonFocusRing, getInputFocusRing } from '@/utils/_core/theme/styles.utils';
 import { getDesignTokens, getTintedBackground } from '@/utils/_core/theme/tokens.utils';
@@ -267,17 +267,6 @@ export const inputsComponentOverrides = {
           color: getDesignTokens(theme).textSecondary,
         },
       }),
-    },
-  },
-  MuiRating: {
-    styleOverrides: {
-      root: {
-        fontSize: RATING_ICON_SIZE,
-        gap: 4,
-        color: RATING_COLOR,
-      },
-      // an unfilled star is the same amber outline, not a grey ghost of the filled one
-      iconEmpty: { color: RATING_COLOR },
     },
   },
   MuiToggleButtonGroup: {

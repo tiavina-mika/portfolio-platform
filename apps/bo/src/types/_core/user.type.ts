@@ -1,7 +1,6 @@
 
 import {
-  BanReasonEnum, BanTypeEnum, EmergencyContact, NotificationPreferences, PlatformEnum, SexEnum,
-  UserStats, UserSuspension,
+  BanReasonEnum, BanTypeEnum, NotificationPreferences, PlatformEnum, SexEnum,
 } from '@shared/types';
 import { z } from 'zod';
 
@@ -84,11 +83,6 @@ export interface IUserAttributes extends IUserDefaultRecord {
   lastName: string;
   phone: IPhone;
   banned?: boolean;
-  /*
-   * The suspension in force: its end date, what applied it, and the moderator's wording if any.
-   * Written together with `isSuspendedUntil`, which every query and permission check still reads.
-   */
-  suspension?: UserSuspension;
   deleted: boolean;
   emailVerified?: boolean;
   phoneVerified?: boolean;
@@ -98,7 +92,6 @@ export interface IUserAttributes extends IUserDefaultRecord {
   // set by the server on every sign-in: absent on an account that predates it and has not signed in since
   lastLoginAt?: DateType;
   // date until which a policy or a report keeps the account suspended, absent on a free account
-  isSuspendedUntil?: DateType;
   platforms: IPlatform[];
   image?: IFileCloud;
   bans?: IBan[];
@@ -107,16 +100,11 @@ export interface IUserAttributes extends IUserDefaultRecord {
   birthday?: DateType;
   address?: IAddress;
   sex?: ISex;
-  rating?: number;
-  stats?: UserStats;
   registerStep?: string;
   sexChangeCount?: number;
   lastSexChangeAt?: DateType;
   birthdayChangeCount?: number;
   lastBirthdayChangeAt?: DateType;
-  paymentPhones?: IPhone[];
-  /** Who support calls if a trip goes wrong — set by the member from the app, read-only here. */
-  emergencyContact?: EmergencyContact;
   /**
    * What the member chose to receive, set from their app and read-only here. A missing key means
    * "on", and so does a member who never opened the settings: the field is absent on old accounts.
@@ -146,7 +134,7 @@ export interface IUserState {
 }
 export type ProfileUserInfoInput = Pick<IUserAttributes, 'lastName' | 'firstName'>;
 
-export type UserSnapshot = Pick<IUserAttributes, 'id' | 'firstName' | 'lastName' | 'email' | 'phone' | 'image' | 'rating'>;
+export type UserSnapshot = Pick<IUserAttributes, 'id' | 'firstName' | 'lastName' | 'email' | 'phone' | 'image'>;
 export interface IStoredCurrentUser extends Pick<
   IUserAttributes,
   'objectId' | 'firstName' | 'lastName' | 'image'

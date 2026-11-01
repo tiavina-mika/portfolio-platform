@@ -145,12 +145,6 @@ export enum UIRoleEnum {
    * who holds this right (see impersonation.service.cloud.ts)
    */
   IMPERSONATION = 'impersonation',
-  STATISTICS = 'statistics',
-  /**
-   * gates the Finance module (GMV vs net revenue, reconciliation) — distinct from STATISTICS so a
-   * role can see operational stats without seeing the platform's actual retained revenue
-   */
-  FINANCE = 'finance',
   /**
    * lets a role's users write an announcement to a whole segment of the members at once (an
    * operator incident, a new feature). Its own right rather than the `create` right on

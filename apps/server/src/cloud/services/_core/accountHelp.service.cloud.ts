@@ -208,9 +208,8 @@ export const changeMemberContactService = async (
 /**
  * Moves a member's account to another country, after support checked it is the right one — a member
  * who signed up with a foreign SIM, or who moved. The country decides the rules read from the
- * account (currency of the trips they publish, SMS provider, clock of the morning notices, languages
- * offered), so it only moves here. Trips and bookings already made keep the country they were made
- * in: a ride is priced and paid in one currency from start to end.
+ * account (SMS provider, clock of the morning notices, languages
+ * offered), so it only moves here. Trips and bookings already made keep the country they were made in.
  * @throws when the country is the account's own, or one the platform does not run in
  */
 export const changeMemberCountryService = async (

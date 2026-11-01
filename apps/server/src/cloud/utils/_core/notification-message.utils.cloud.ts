@@ -1,7 +1,5 @@
-import { type Country } from '@shared/constants';
-import { formatAmount, type NotificationMessageData } from '@shared/utils';
+import { type NotificationMessageData } from '@shared/utils';
 import omit from 'lodash/omit.js';
-
 
 import { formatDateInAppTimezone } from '@/utils/_core/date.utils';
 
@@ -28,12 +26,3 @@ export const formatNotificationDate = (value: Date | string | number): string =>
 
   return formatDateInAppTimezone(raw);
 };
-
-/**
- * An amount as the app prints it — grouped thousands followed by the currency — so a penalty reads
- * the same in a notification as it does on the screen it sends the member to. Written in the
- * currency of the recipient's country.
- */
-export const formatNotificationPrice = (value: number, country?: Country): string => (
-  formatAmount(value, country)
-);

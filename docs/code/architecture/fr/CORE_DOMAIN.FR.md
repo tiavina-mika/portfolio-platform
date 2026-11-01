@@ -13,17 +13,16 @@
   - [Bibliothèques partagées](#bibliothèques-partagées)
 - [Ajouter une entité métier](#ajouter-une-entité-métier)
 - [Ce qui n'a pas été porté](#ce-qui-na-pas-été-porté)
-- [Limites connues](#limites-connues)
 
 ## Pourquoi cette séparation
 
-`apps/server` et `apps/bo` sont le back-office générique de la plateforme 1lalana (comptes, rôles, CMS, notifications, tickets, signalements, journal d'audit, tableaux de bord) auquel s'ajoute le métier du portfolio. Séparer les deux permet de réutiliser ou de mettre à jour la partie générique sans toucher au portfolio, et garde le métier (`Project`) à un seul endroit.
+`apps/server` et `apps/bo` sont le back-office générique de la plateforme 1lalana (comptes, rôles, CMS, notifications, journal d'audit, tableaux de bord) auquel s'ajoute le métier du portfolio. Séparer les deux permet de réutiliser ou de mettre à jour la partie générique sans toucher au portfolio, et garde le métier (`Project`) à un seul endroit.
 
 ## Ce qui est core, ce qui est domain
 
 | Côté | Contenu |
 |---|---|
-| `_core/` | Le code qui fonctionne encore si `_domain/` est supprimé : authentification, MFA, utilisateurs, rôles et droits, CMS (article, page, section de page, catégorie, contact, newsletter), notifications, paiements, tickets, signalements, journal d'audit, tableaux de bord et statistiques sous forme de registres |
+| `_core/` | Le code qui fonctionne encore si `_domain/` est supprimé : authentification, MFA, utilisateurs, rôles et droits, CMS (article, page, section de page, catégorie, contact, newsletter), notifications, journal d'audit, tableaux de bord sous forme de registres |
 | `_domain/` | Ce qui est propre au portfolio : l'entité `Project` et tout ce qui ne peut pas tourner sans elle |
 
 Aujourd'hui `_domain/` ne contient que `Project` : côté serveur `project.functions.ts` (`getProjects`, `getProject`, `getProjectForClient`), `project.triggers.ts`, services, utils, constantes et validations ; côté back-office les pages, containers, redux, service, types, validations et traductions des projets.
@@ -57,7 +56,7 @@ Quand `_core` doit afficher des données du domaine, il expose un registre (`reg
 | `registerDashboardKpiProvider(className, fn)` | `project-dashboard.service.cloud.ts` |
 | `registerGlobalSearchEntity(key, config)` | `project-search.service.cloud.ts` |
 
-D'autres registres existent et ne sont pas utilisés par le portfolio (vue d'ensemble des statistiques, cibles de signalement, canaux de notification, enrichissement de la liste d'utilisateurs, suppression de compte, export de données, gestionnaires de paiement).
+D'autres registres existent et ne sont pas utilisés par le portfolio (canaux de notification, enrichissement de la liste d'utilisateurs, suppression de compte, export de données).
 
 Points de composition : `cloud/services/index.ts`, `cloud/functions/index.ts`, `cloud/triggers/index.ts`, `cloud/jobs/index.ts` (chacun importe les fichiers `_core` puis `_domain`) et `src/index.ts`.
 
@@ -83,11 +82,6 @@ Les `libs/shared-*` sont neutres : `shared-domain-constants`, `shared-domain-typ
 
 ## Ce qui n'a pas été porté
 
-De 1lalana, laissés de côté volontairement : la fonctionnalité de notation, les tests unitaires et de composants, Storybook du back-office, les tests de bout en bout, l'application mobile et l'application de documentation. Les traces restantes (noms de classes, fonctions de test) sont listées dans le fichier de dette de la revue de la branche.
-
-## Limites connues
-
-- La constante `collections` du serveur et certaines listes de classes nomment encore des classes de covoiturage (`Ride`, `Request`, `Vehicle`, `Rating`, `RideShare`, `SosAlert`).
-- Les écrans paiements, finance et certaines statistiques existent dans `_core` sans vraie source de données dans le portfolio.
+De 1lalana, laissés de côté volontairement : la fonctionnalité de notation, les tests unitaires et de composants, Storybook du back-office, les tests de bout en bout, l'application mobile et l'application de documentation. Les traces de vocabulaire qui restent sont listées dans le fichier de dette de la revue de la branche.
 
 Voir [la revue de la branche](../../reviews/fr/261030-feat-core-domain-split.FR.md) pour la liste complète.

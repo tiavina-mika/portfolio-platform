@@ -50,8 +50,8 @@ const storeNotificationCount = async (
 
 /**
  * loads the "new items" count of a collection (seen = false), or a `status`-filtered subset of it
- * stored under a distinct `key` instead of `className` (ex: failed payments — see
- * PAYMENT_FAILED_NOTIFICATION_KEY), in the background — no global loader, and a failure is dropped
+ * stored under a distinct `key` instead of `className` (ex: the open reports), in the
+ * background — no global loader, and a failure is dropped
  * rather than surfaced. Every caller is a load the reader never asked for (the first load once the
  * shell is up, a LiveQuery push, coming back to the tab, the polling fallback), so flashing the full-page loader over whatever they are
  * doing, or interrupting them with an error banner, would both be wrong.

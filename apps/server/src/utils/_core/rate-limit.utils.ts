@@ -2,7 +2,7 @@ import { Ratelimit } from '@upstash/ratelimit';
 
 import { getRedis } from '@/config/redis';
 import {
-  IS_TEST, REPORT_RATE_LIMIT_PER_USER, REPORT_RATE_LIMIT_PREFIX, REPORT_RATE_LIMIT_WINDOW,
+  IS_TEST,
 } from '@/constants/_core/constants';
 import {
   DEVICE_REGISTRATION_RATE_LIMIT_PER_IP, DEVICE_REGISTRATION_RATE_LIMIT_PER_USER,
@@ -60,33 +60,6 @@ export const consumeDeviceRegistrationQuota = async (userId: string, ip?: string
     logger.error('consumeDeviceRegistrationQuota: rate limiter unavailable', {
       error: (error as Error).message,
     });
-    return true;
-  }
-};
-
-let reportPerUserLimiter: Ratelimit | undefined;
-
-/**
- * Spends one unit of a member's report allowance (`createReport`). Keyed on the
- * account, not the session token, which a new login would reset. Like the device-registration quota,
- * it is off in tests and lets the call through when Redis is down: a report is a safety feature and
- * must not be refused because of an outage.
- * @returns whether the report may proceed
- */
-export const consumeReportQuota = async (userId: string): Promise<boolean> => {
-  if (IS_TEST) return true;
-
-  try {
-    reportPerUserLimiter ??= new Ratelimit({
-      redis: getRedis(),
-      limiter: Ratelimit.slidingWindow(REPORT_RATE_LIMIT_PER_USER, REPORT_RATE_LIMIT_WINDOW),
-      prefix: REPORT_RATE_LIMIT_PREFIX,
-    });
-
-    return (await reportPerUserLimiter.limit(userId)).success;
-  }
-  catch (error) {
-    logger.error('consumeReportQuota: rate limiter unavailable', { error: (error as Error).message });
     return true;
   }
 };

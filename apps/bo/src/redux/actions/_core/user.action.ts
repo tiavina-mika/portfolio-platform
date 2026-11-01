@@ -43,7 +43,6 @@ import {
 import { clearUserBlocksSlice } from '@/redux/reducers/_core/userBlock.reducer';
 import { clearUserSessionsSlice } from '@/redux/reducers/_core/userSession.reducer';
 import { AppDispatch, AppThunkAction } from '@/redux/store';
-import { clearUserSuspensionInCloud } from '@/services/_core/statistics.service';
 import {
   banUserInCloud,
   changeMemberContactInCloud,
@@ -321,27 +320,6 @@ export const liftUserBanById = (userId: string): any => {
 
     dispatch(updateUsersByUserSlice(updatedUser));
     dispatch(setMessageSlice(i18n.t('user:messages.liftUserBanSuccess')));
-  },
-  // rights
-  {
-    collection,
-    action: 'update',
-    hasNoRightErrorMessage: i18n.t('user:errors:canNotUpdateUser'),
-  });
-};
-
-/**
- * Ends an automatic suspension a policy put on the account, from its own record. The fine that came
- * with it is kept: lifting it from the record is a decision on the suspension, not on the penalty —
- * the cancellations page is where both are written off together.
- * @param user the account on screen, updated in place once the suspension is gone
- */
-export const clearUserPolicySuspension = (user: IUser): any => {
-  return actionWithLoader(async (dispatch: AppDispatch): Promise<void> => {
-    await clearUserSuspensionInCloud(user.id, false);
-
-    dispatch(loadUserSlice({ ...user, isSuspendedUntil: undefined }));
-    dispatch(setMessageSlice(i18n.t('user:detail.suspension.lifted')));
   },
   // rights
   {

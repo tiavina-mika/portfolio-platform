@@ -13,8 +13,7 @@ import {
   MAX_MARK_ALL_SEEN_LIMIT, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 import {
-  ACCOUNT_NOTIFICATION_TYPE, DRIVER_CANCELLATION_PENALTY_STATUS, NOTIFICATION_HARD_DELETE_GRACE_DAYS,
-  PASSENGER_CANCELLATION_SUSPENSION_STATUS, SUSPENSION_LIFTED_STATUS,
+  ACCOUNT_NOTIFICATION_TYPE, NOTIFICATION_HARD_DELETE_GRACE_DAYS, SUSPENSION_LIFTED_STATUS,
 } from '@/constants/_core/notification.constants';
 import { NotificationChannelEnum, NotificationChannelStatusEnum } from '@/types/notification.type';
 import { logger } from '@/utils/_core/logger';
@@ -63,8 +62,8 @@ const getChannelSenderKey = (type: string, channel: NotificationChannel): string
 /**
  * Lets each business domain declare how one of its notifications is sent again on a channel whose
  * copy it composes itself — an e-mail or an SMS — without this generic service knowing about rides
- * or requests. The push needs none: its body is the notification's own message. A channel no domain
- * registered for a type cannot be retried, and the back-office does not offer it.
+ * or requests. A channel no domain registered for a type cannot be retried, and the back-office does
+ * not offer it.
  */
 export const registerNotificationChannelSender = (
   type: string,
@@ -80,15 +79,10 @@ export const getNotificationChannelSender = (
 ): NotificationChannelSender | undefined => channelSendersByKey[getChannelSenderKey(type, channel)];
 
 /*
- * sanctions a user must know about whatever they switched off: a fine they owe, a suspension that
- * blocks them, and the end of one. ACCOUNT notifications (security alerts, bans) are mandatory as a
- * whole type, see isMandatoryNotification.
+ * sanctions a user must know about whatever they switched off: the end of a suspension. ACCOUNT
+ * notifications (security alerts, bans) are mandatory as a whole type, see isMandatoryNotification.
  */
-const MANDATORY_NOTIFICATION_STATUSES = new Set<string>([
-  DRIVER_CANCELLATION_PENALTY_STATUS,
-  PASSENGER_CANCELLATION_SUSPENSION_STATUS,
-  SUSPENSION_LIFTED_STATUS,
-]);
+const MANDATORY_NOTIFICATION_STATUSES = new Set<string>([SUSPENSION_LIFTED_STATUS]);
 
 const isMandatoryNotification = (type: string, status?: string): boolean => (
   type === ACCOUNT_NOTIFICATION_TYPE || (!!status && MANDATORY_NOTIFICATION_STATUSES.has(status))
@@ -144,23 +138,6 @@ export const getNotificationPreferencesByUserId = async (
   return new Map(users.map((user) => [user.id, user.get('notificationPreferences')]));
 };
 
-/** The recipients of a notification who switched its push off, for the push fan-out to skip. */
-export const getPushDisabledRecipientIds = async (
-  notification: Parse.Object,
-  recipientIds: string[]
-): Promise<Set<string>> => {
-  const type: string = notification.get('type');
-  const status: string | undefined = notification.get('status');
-
-  if (isMandatoryNotification(type, status)) return new Set();
-
-  const preferencesById = await getNotificationPreferencesByUserId(recipientIds);
-
-  return new Set(recipientIds.filter((id) => (
-    !isChannelEnabledForPreferences(preferencesById.get(id), type, status, NotificationChannelEnum.PUSH)
-  )));
-};
-
 /** Whether this person accepts this notification by e-mail — see isChannelEnabledForPreferences. */
 export const isEmailEnabledForRecipient = async (
   recipient: Parse.User,
@@ -201,32 +178,14 @@ const getNotificationByIdempotencyKey = (idempotencyKey: string): Promise<Parse.
 );
 
 export const createNotification = async (
-  values: INotificationValues,
-  /*
-   * `awaitPush`: hold the returned promise until the push fan-out has run. For a caller that is about
-   * to destroy what the push needs (a ban revokes the sessions, which carry the push tokens) — every
-   * other caller lets the push run in the background so it never delays the notification
-   */
-  options: { awaitPush?: boolean } = {}
+  values: INotificationValues
 ): Promise<Parse.Object | undefined> => {
   const notification = new Notification();
 
-  // push is attempted for every notification by the afterSave trigger, so it is always targeted
-  const channels: NotificationChannels = {
-    [NotificationChannelEnum.PUSH]: values.to.map((recipient) => ({
-      toId: recipient.id,
-      status: NotificationChannelStatusEnum.PENDING,
-    })),
-    ...values.channels,
-  };
-
-  setValues(notification, { ...values, channels }, NOTIFICATION_PROPERTIES);
+  setValues(notification, values, NOTIFICATION_PROPERTIES);
 
   try {
-    return await notification.save(null, {
-      ...USE_MASTER_KEY,
-      ...(options.awaitPush && { context: { awaitPush: true } }),
-    });
+    return await notification.save(null, USE_MASTER_KEY);
   }
   catch (error) {
     /*
@@ -433,7 +392,7 @@ export const removeRecipientFromNotifications = async (user: Parse.User): Promis
 
 /**
  * Marks every notification addressed to this person that they have not opened yet as opened —
- * optionally only the ones `narrowQuery` keeps (the notifications of one ticket, say). Only their
+ * optionally only the ones `narrowQuery` keeps (the notifications of one kind, say). Only their
  * own entry is added: the other recipients of a shared send keep their own read state.
  * @returns how many notifications were marked
  */

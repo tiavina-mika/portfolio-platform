@@ -11,7 +11,7 @@ export type LogRetentionRule = {
 /** Security trails of the members: long enough to investigate an incident, short enough to hold no PII for ever */
 const SECURITY_LOG_RETENTION_MONTHS = 12;
 
-/** Records of a moderation, a penalty or an emergency: kept as long as the rides and bookings they relate to */
+/** Records of a moderation or a support exchange: kept long enough to answer a contestation */
 const CASE_RECORD_RETENTION_MONTHS = 24;
 
 /** Links and invitations nobody can use any more: kept a short while so support can still explain "it expired" */
@@ -28,12 +28,8 @@ export const LOG_RETENTION_RULES: LogRetentionRule[] = [
   { collection: collections.SessionAuditLog, dateField: 'createdAt', months: SECURITY_LOG_RETENTION_MONTHS },
   { collection: collections.MfaAuditLog, dateField: 'createdAt', months: SECURITY_LOG_RETENTION_MONTHS },
   { collection: collections.UserModerationLog, dateField: 'createdAt', months: CASE_RECORD_RETENTION_MONTHS },
-  { collection: collections.PenaltyLog, dateField: 'createdAt', months: CASE_RECORD_RETENTION_MONTHS },
-  { collection: collections.SosAlert, dateField: 'createdAt', months: CASE_RECORD_RETENTION_MONTHS },
-  { collection: collections.TicketMessage, dateField: 'createdAt', months: CASE_RECORD_RETENTION_MONTHS },
   // the history of a send is destroyed with its notification; this catches the ones left behind
   { collection: collections.NotificationResend, dateField: 'createdAt', months: EXPIRED_LINK_RETENTION_MONTHS },
-  { collection: collections.RideShare, dateField: 'expiresAt', months: EXPIRED_LINK_RETENTION_MONTHS },
   { collection: collections.Invitation, dateField: 'expiresAt', months: EXPIRED_LINK_RETENTION_MONTHS },
   {
     collection: collections.ImpersonationSession,

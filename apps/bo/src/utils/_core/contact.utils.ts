@@ -1,40 +1,30 @@
-import type { IContact, ITicketSosContext } from '@/types/_core/contact.type';
-import type { ComponentType, ReactNode } from 'react';
+import { getDisplayIdentifier, getDisplayName } from '@shared/utils';
 
-export type ContactDetailRow = { label: string; value: ReactNode };
-
-type ContactDetailRowBuilder = (contact: IContact) => ContactDetailRow | undefined;
-
-const detailRowBuilders: ContactDetailRowBuilder[] = [];
+import { IContact } from '@/types/_core/contact.type';
+import { getUserFullName } from '@/utils/_core/user.utils';
 
 /**
- * Lets the business domain add a fact to the generic ticket details card (the booking a ticket is
- * about), from a composition point outside `_core/`.
+ * Who sent the message: the account when there is one (the name the rest of the back-office knows
+ * this person by), else the name typed in the form, else the number or the email they left.
  */
-export const registerContactDetailRow = (builder: ContactDetailRowBuilder): void => {
-  detailRowBuilders.push(builder);
-};
-
-export const getContactDetailRows = (contact: IContact): ContactDetailRow[] =>
-  detailRowBuilders
-    .map((builder) => builder(contact))
-    .filter((row): row is ContactDetailRow => !!row);
+export const getContactName = (contact: IContact, fallbackLabel = ''): string => (
+  (contact.user ? getUserFullName(contact.user) : '') ||
+  getDisplayIdentifier({ lastName: contact.name, phone: contact.phone, email: contact.email }, fallbackLabel)
+);
 
 /**
- * Open registry: how a domain that raises SOS alerts shows them on a ticket — the badge in the
- * queue and the thread header, the bar under the header and the card beside the thread. The generic
- * ticket screens draw nothing for an SOS until a domain registers it.
+ * The two letters standing in for a sender with no picture. Only a name has initials: a sender known
+ * by a number alone gets none, and the avatar keeps its default pictogram.
  */
-export type ContactSosExtension = {
-  Badge: ComponentType<{ isClosed?: boolean; variant?: 'badge' | 'chip' }>;
-  Bar: ComponentType<{ sosAlert: ITicketSosContext }>;
-  Card: ComponentType<{ sosAlert: ITicketSosContext }>;
+export const getContactInitials = (contact: IContact): string => {
+  const personName = (contact.user ? getDisplayName(contact.user) : '') ||
+    getDisplayName({ lastName: contact.name });
+
+  const initials = personName
+    .split(' ')
+    .filter(Boolean)
+    .map((part: string) => part.charAt(0))
+    .join('');
+
+  return initials.slice(0, 2).toUpperCase();
 };
-
-let contactSosExtension: ContactSosExtension | undefined;
-
-export const registerContactSos = (extension: ContactSosExtension): void => {
-  contactSosExtension = extension;
-};
-
-export const getContactSosExtension = (): ContactSosExtension | undefined => contactSosExtension;

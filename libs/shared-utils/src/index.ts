@@ -1,4 +1,3 @@
-export * from './amount.utils';
 export * from './contact-verification.utils';
 export * from './country.utils';
 export * from './date.utils';
@@ -9,7 +8,6 @@ export * from './name.utils';
 export * from './notification-message/account-notification-message.constants';
 export * from './notification-message/notification-message.type';
 export * from './notification-message/notification-message.utils';
-export * from './payment.utils';
 export * from './sentry.utils';
 export * from './sms.utils';
 export * from './support.utils';

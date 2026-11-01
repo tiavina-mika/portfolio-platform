@@ -25,7 +25,7 @@ export const createContact = action
      * The token is forwarded rather than checked here: Google accepts it exactly once, and the
      * check has to happen on the side that performs the write. Writing the row from here meant
      * the Contact class had to be publicly creatable, which handed the same write to anyone
-     * holding the app id — with no token to show for it. The ticket's source is stamped by the
+     * holding the app id — with no token to show for it. The contact's source is stamped by the
      * Cloud Function for the same reason. It throws `recaptchaVerificationFailed`, which
      * handleServerError translates through the `ServerError` namespace.
      */

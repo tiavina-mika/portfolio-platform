@@ -12,7 +12,7 @@
 
 ## Overview
 
-Emails are transactional emails sent by the server through [Brevo](https://www.brevo.com). Verification texts can also go by SMS through MMSDuck, and push notifications through Expo. The apps `web` and `bo` never send anything: they call a Cloud Function or save an object, and the server does the rest. The full list of emails is in [the inventory](../../../inventory/communication/en/EMAILS.md).
+Emails are transactional emails sent by the server through [Brevo](https://www.brevo.com). Verification texts can also go by SMS through MMSDuck. The apps `web` and `bo` never send anything: they call a Cloud Function or save an object, and the server does the rest. The full list of emails is in [the inventory](../../../inventory/communication/en/EMAILS.md).
 
 | File | Role |
 |---|---|
@@ -26,11 +26,11 @@ Emails are transactional emails sent by the server through [Brevo](https://www.b
 - `BREVO_API_KEY`, `WEBSITE_URL` and `ADMIN_EMAIL_SENDER` are required at startup (`validateEnv`). Links in emails point to `WEBSITE_URL`.
 - SMS need `MMSDUCK_API_KEY` in `preProduction` and `production`; in development they are only logged.
 - Texts are translated with the server i18n, see [I18N.md](I18N.md); the locale comes from the function parameter or the save context, default `fr`.
-- A staff alert (reports, failed payments, failed jobs) goes to the staff by e-mail and to Slack when `SLACK_ALERTS_WEBHOOK_URL` is set.
+- A staff alert (failed jobs) goes to the staff by e-mail and to Slack when `SLACK_ALERTS_WEBHOOK_URL` is set.
 
 ## Emails sent
 
-Account (verification and reset codes, invitation, step-up code, contact change, welcome, new device), support tickets (acknowledgement to the visitor who used the contact form, replies), newsletter (confirmation, unsubscribe confirmation, new article), notifications and broadcasts, staff alerts. Builders, triggers and recipients are in the inventory page above.
+Account (verification and reset codes, invitation, step-up code, contact change, welcome, new device), newsletter (confirmation, unsubscribe confirmation, new article), notifications and broadcasts, staff alerts. Builders, triggers and recipients are in the inventory page above.
 
 ## Newsletter
 
@@ -52,4 +52,3 @@ The back-office has a notification system (`Notification` class, notification pa
 - Only a newly created article starts the newsletter job: an article created inactive is not sent when activated later.
 - `resubscribeNewsletter` sets `active: true` directly from a valid unsubscribe link, even for an address that never confirmed.
 - `sendArticleToNewsletterTest` starts the job with `articleId` while the job reads `id`.
-- Several test functions still mention carpooling (`createRideMock`).

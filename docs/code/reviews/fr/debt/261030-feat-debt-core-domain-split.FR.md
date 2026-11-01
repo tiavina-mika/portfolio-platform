@@ -9,7 +9,6 @@
 - [Résumé](#résumé)
 - [1. Les rôles existants ne sont pas renommés](#1-les-rôles-existants-ne-sont-pas-renommés)
 - [2. Un serveur déployé exige deux propriétaires et une clé SMS](#2-un-serveur-déployé-exige-deux-propriétaires-et-une-clé-sms)
-- [3. Des noms de classes de covoiturage restent dans le core](#3-des-noms-de-classes-de-covoiturage-restent-dans-le-core)
 - [4. Trous sur les projets dans le tableau de bord, la recherche et les versions](#4-trous-sur-les-projets-dans-le-tableau-de-bord-la-recherche-et-les-versions)
 - [5. Écrans du back-office sans serveur ni source de données](#5-écrans-du-back-office-sans-serveur-ni-source-de-données)
 - [6. Le build du site exige un serveur Parse](#6-le-build-du-site-exige-un-serveur-parse)
@@ -24,7 +23,6 @@
 |---|---|---|---|---|
 | 1 | 🟠 Moyenne | Régression | Les rôles `Owner` / `Administrator` / `Manager` d'une base existante ne sont pas reconnus | ⏳ à faire |
 | 2 | 🟠 Moyenne | Bug | `validateEnv` bloque un portfolio à un seul propriétaire et exige une clé SMS | ⏳ décision produit |
-| 3 | 🟡 Faible | Bug | Classes de covoiturage encore listées dans `collections` et les listes de sécurité | ⏳ à faire |
 | 4 | 🟡 Faible | Bug | Colonne du tableau de bord, recherche par auteur, restauration de version | ⏳ à faire |
 | 5 | 🟡 Faible | Bug | Écrans qui appellent des Cloud Functions inexistantes, entrée de menu masquée | ⏳ à faire |
 | 6 | 🟡 Faible | Bug | `next build` exige un serveur Parse joignable | ⏳ à faire |
@@ -66,23 +64,6 @@
 1. **(recommandé)** Rendre `MIN_OWNERS_COUNT` et l'exigence de clé SMS configurables par le domaine (1 propriétaire, pas de SMS pour le portfolio) et garder les valeurs strictes comme défaut du core.
    *Pourquoi* : garde le défaut sûr d'un back-office générique, débloque le portfolio.
 2. Garder la règle et demander d'ajouter une seconde adresse et un compte SMS — le plus sûr, mais coûte un service que le portfolio n'utilise pas.
-
-## 3. Des noms de classes de covoiturage restent dans le core
-
-- **Gravité** : 🟡 Faible · **Type** : Bug · **Statut** : ⏳ à faire
-- **Concerné** : `apps/server/src/constants/_core/constants.ts` (`collections`), `security.constants.ts`, `country-scope.constants.ts`, `user.constants.ts`, `test.functions.ts` (`createRideMock`)
-
-**Ce qui peut arriver** — `Ride`, `Request`, `Vehicle`, `Rating`, `RideShare`, `SosAlert` sont encore nommés dans les listes de classes, donc la reconstruction des permissions de classe au démarrage peut créer des classes vides et verrouillées dans MongoDB, et la fonction de test `createRideMock` reste exposée.
-
-**Pourquoi** — le core a été copié sans le domaine des trajets et ces noms n'ont pas été retirés.
-
-**Comment vérifier** — démarrer le serveur sur une base vide et lister les classes Parse.
-
-**Comment corriger**
-
-1. **(recommandé)** Retirer les noms des listes et supprimer `createRideMock` ; lancer le lint et le typecheck.
-   *Pourquoi* : plus petit changement, aucune donnée en jeu.
-2. Les garder et filtrer la reconstruction sur les classes présentes dans le schéma — cache le problème au lieu de le retirer.
 
 ## 4. Trous sur les projets dans le tableau de bord, la recherche et les versions
 
@@ -166,7 +147,7 @@
 - **Gravité** : 🟡 Faible · **Type** : Bug · **Statut** : ⏳ à faire
 - **Concerné** : `apps/bo/src/config/i18n/locales/*/_core/{finance,statistics}.json`, clés de tickets de `user/`, `libs/shared-faq`
 
-**Ce qui peut arriver** — les textes de finance, statistiques et tickets parlent de trajets et de conducteurs (les clés de trajets ont été fusionnées dans les json de `_core`) ; `shared-faq` contient la FAQ de trajets de 1lalana avec l'ancienne marque, inutilisée par le site.
+**Ce qui peut arriver** — les textes de finance et de statistiques parlent de trajets et de conducteurs (les clés de trajets ont été fusionnées dans les json de `_core`) (les sujets, motifs et objets de trajet des tickets sont retirés) ; `shared-faq` contient la FAQ de trajets de 1lalana avec l'ancienne marque, inutilisée par le site.
 
 **Comment corriger**
 

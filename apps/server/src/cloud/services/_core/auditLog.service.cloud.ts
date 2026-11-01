@@ -14,7 +14,7 @@ type GetAuditLogsParams = {
 const AUDIT_LOG_FIELDS = [
   'userId', 'action', 'emailBefore', 'usernameBefore', 'fullNameBefore',
   'phoneBefore', 'deletionReason', 'deletionInitiatedBy', 'adminId',
-  'accountStats', 'timestamp',
+  'timestamp',
 ];
 
 export const getAuditLogByUserId = async (userId: string): Promise<Parse.Object | undefined> => {

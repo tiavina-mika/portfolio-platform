@@ -21,7 +21,6 @@
   "sex": "Sex",
   "phoneNumber": "Phone number",
   "contactPhone": "Contact phone",
-  "paymentPhone": "Payment phone",
   "address": "Address",
   "male": "Male",
   "female": "Female",
@@ -125,17 +124,17 @@
       "verifyEmail": {
         "label": "Verify your email address",
         "subject": "Verify your email address",
-        "message": "Hello, your email address is not verified yet. Confirm it from the app to keep booking and publishing rides."
+        "message": "Hello, your email address is not verified yet. Please confirm it."
       },
       "verifyPhone": {
         "label": "Verify your phone number",
         "subject": "Verify your phone number",
-        "message": "Hello, your phone number is not verified yet. Confirm it from the app: it is how other members reach you on the day of the ride."
+        "message": "Hello, your phone number is not verified yet. Please confirm it."
       },
       "completeProfile": {
         "label": "Complete your profile",
         "subject": "Complete your profile",
-        "message": "Hello, your profile is still incomplete. Add your photo and your details: a complete profile builds trust and gets many more bookings."
+        "message": "Hello, your profile is still incomplete. Add your photo and your details to complete it."
       }
     }
   },
@@ -151,7 +150,6 @@
     "insufficientAuth": "You have no right to do this action",
     "canNotDeleteUser": "You can not delete an user",
     "canNotUpdateUser": "You can not update an user",
-    "canNotUpdatePayment": "You can not update a payment",
     "userNotVerified": "Your account is not verified yet. An email has been sent to you. Please check your email and enter the code in that email.",
     "invalidEmail": "Invalid email",
     "noAccountByEmail": "No account found with matching email",
@@ -184,23 +182,8 @@
   "aboutTheUser": "About the user",
   "banned": "Banned",
   "security": "Security",
-  "suspendedUntil": "Suspended until {{date}}",
   "ban": "Ban",
   "accountInformation": "Account information",
-  "emergencyContact": {
-    "title": "Emergency contact",
-    "name": "Name",
-    "relationship": "Relationship",
-    "phone": "Number",
-    "none": "No emergency contact saved",
-    "relationships": {
-      "family": "Family",
-      "partner": "Partner",
-      "friend": "Friend",
-      "colleague": "Colleague",
-      "other": "Other"
-    }
-  },
   "updateAboutMe": "Modify my informations",
   "numberOfUsers": "Number of users",
   "role": {
@@ -457,50 +440,7 @@
       "account_protection": "Account protection"
     }
   },
-  "stats": {
-    "statsAndTrustSafety": "Stats & trust/safety",
-    "rating": "Rating",
-    "reviewsCount": "Reviews count",
-    "lastRatingAt": "Last rating at",
-    "notRatedYet": "Not rated",
-    "asDriver": "As driver",
-    "asPassenger": "As passenger",
-    "completed": "Completed",
-    "canceled": "Canceled",
-    "bookingsConfirmed": "Bookings confirmed as a driver",
-    "bookingsCanceledByDriver": "Bookings cancelled as a driver",
-    "totalDistance": "Total distance",
-    "trustAndSafety": "Trust & safety",
-    "pendingPenalty": "Pending penalty",
-    "isSuspendedUntil": "Suspended until",
-    "notSuspended": "Not suspended",
-    "lastDriverCancellations": "Recent cancellations as driver (30 days)",
-    "noDriverCancellation": "No recent cancellation as driver",
-    "lastPassengerCancellations": "Recent cancellations as passenger (30 days)",
-    "noPassengerCancellation": "No recent cancellation as passenger",
-    "completedRidesThisMonth": "Completed rides this month",
-    "lastCompletedRideMonth": "Last completed-ride month",
-    "noShowConfirmed": "Confirmed no-shows as driver",
-    "driverNoShowRejected": "Rejected driver no-show reports",
-    "passengerNoShow": "No-shows as passenger",
-    "noShowDeclarationsRejected": "Rejected passenger no-show declarations",
-    "countWithRate": "{{count}} ({{rate}})",
-    "sosAlertsCount": "SOS raised"
-  },
-  "activity": {
-    "activity": "Activity",
-    "ridesAndRequestsPerMonth": "Rides and requests per month",
-    "ratingEvolution": "Rating evolution",
-    "ridesCompleted": "Rides completed",
-    "ridesCanceled": "Rides canceled",
-    "requestsCompleted": "Requests completed",
-    "requestsCanceled": "Requests canceled",
-    "averageRating": "Average rating",
-    "ratingsCount": "Ratings count",
-    "noData": "No data available for this period"
-  },
   "accountDeleted": "Account deleted",
-  "accountDeletionBlocked": "Deletion blocked (penalty/suspension)",
   "deletionReason": "Deletion reason",
   "originalEmail": "Original email",
   "originalUsername": "Original username",
@@ -517,8 +457,6 @@
     "action": "Action",
     "initiatedBy": "Initiated by",
     "deletionReason": "Reason",
-    "rides": "Rides / Requests",
-    "avgRating": "Avg. rating",
     "accountDeleted": "Account deleted",
     "byUser": "User",
     "byAdmin": "Admin",
@@ -536,7 +474,7 @@
     "loginAsThisUser": "Log in as {{name}}",
     "startSession": "Start the session",
     "reason": "Reason",
-    "reasonHelper": "Mandatory and kept in the audit trail: ticket number or a description of the issue to reproduce.",
+    "reasonHelper": "Mandatory and kept in the audit trail: a reference or a description of the issue to reproduce.",
     "scanHelper": "Scan this QR code with the phone that will run the session. The app opens already signed in as {{name}}.",
     "expiresAt": "This link expires on {{date}} and can only be used once.",
     "copyLink": "Copy the link",
@@ -609,24 +547,14 @@
     "sections": {
       "details": "Details",
       "contact": "Contact",
-      "emergencyContact": "Emergency contact",
       "sessions": "Active sessions",
       "platforms": "Platforms",
       "roles": "Roles",
-      "stats": "Stats",
       "trust": "Trust & safety",
-      "vehicles": "Vehicles",
-      "rides": "Rides",
-      "requests": "Requests",
-      "payments": "Payments",
-      "refunds": "Refunds",
       "ratingsReceived": "Reviews received",
       "ratingsGiven": "Reviews given",
       "suspension": "Suspension",
       "bans": "Ban history",
-      "reportsAgainst": "Reports against the member",
-      "reportsMade": "Reports made by the member",
-      "tickets": "Support tickets",
       "notifications": "Notifications",
       "history": "History",
       "views": "Record views",
@@ -648,17 +576,10 @@
       "emailHidden": "Email hidden",
       "memberSince": "Member since {{date}}"
     },
-    "roleSummary": {
-      "driverAndPassenger": "Driver and passenger",
-      "driver": "Driver",
-      "passenger": "Passenger"
-    },
     "banner": {
       "teamUntil": "Suspended by the team until {{date}}",
       "teamPermanent": "Permanently banned since {{date}}",
-      "policyUntil": "Automatically suspended until {{date}}",
       "by": "by {{name}}",
-      "bothCauses": "Both causes are active: lifting the suspension lifts both.",
       "liftSuspension": "Lift the suspension",
       "deleted": "Account deleted on {{date}} by the member",
       "deletedDescription": "The original email is hidden. No more sessions nor logging in as this account; history and the audit log remain available."
@@ -666,7 +587,6 @@
     "menu": {
       "suspend": "Suspend the account",
       "lift": "Lift the suspension",
-      "viewPayments": "View payments",
       "viewAudit": "View the audit"
     },
     "details": {
@@ -676,7 +596,6 @@
       "age": "{{count}} years old"
     },
     "contact": {
-      "noPaymentPhone": "No payment phone",
       "noEmail": "No email — signed up with their phone"
     },
     "smsFallback": {
@@ -685,9 +604,6 @@
       "disabled": "Turned off by the member",
       "enabledHint": "The member will get a text for important events when they could not be reached any other way, within the daily limit.",
       "disabledHint": "The member turned the fallback SMS off in their app: they will not get any. Read-only, only the member can change this setting."
-    },
-    "emergencyContact": {
-      "note": "Chosen by the member, cannot be edited from the back-office."
     },
     "roles": {
       "note": "Account created in the back-office: only such accounts can hold roles.",
@@ -729,57 +645,6 @@
       },
       "empty": "No ban",
       "note": "For older bans, the author and the lift are unknown."
-    },
-    "payments": {
-      "reference": "Reference",
-      "date": "Date",
-      "type": "Type",
-      "method": "Method",
-      "status": "Status",
-      "amount": "Amount",
-      "empty": "No payment"
-    },
-    "refunds": {
-      "ride": "Ride",
-      "reason": "Reason",
-      "empty": "No refund"
-    },
-    "ratings": {
-      "rating": "Rating",
-      "author": "Author",
-      "recipient": "Recipient",
-      "comment": "Comment",
-      "date": "Date",
-      "emptyReceived": "No review received",
-      "emptyGiven": "No review given",
-      "subtitle": "{{rating}} / 5 · {{count}} reviews"
-    },
-    "reports": {
-      "reason": "Reason",
-      "reportedBy": "Reported by",
-      "against": "Against",
-      "age": "Age",
-      "status": "Status",
-      "anonymous": "Anonymous",
-      "emptyAgainst": "No report against this member",
-      "emptyMade": "No report made by this member",
-      "subtitlePending_one": "{{count}} pending",
-      "subtitlePending_other": "{{count}} pending"
-    },
-    "tickets": {
-      "message": "Message",
-      "status": "Status",
-      "priority": "Priority",
-      "lastActivity": "Last activity",
-      "reference": "T-{{reference}}",
-      "messagesCount_one": "{{count}} message",
-      "messagesCount_other": "{{count}} messages",
-      "support": "{{name}} · support",
-      "internalNote": "Internal note",
-      "system": "System",
-      "empty": "No support ticket",
-      "threadEmpty": "No message in this ticket yet",
-      "open": "Open the ticket"
     },
     "notifications": {
       "title": "Title",
@@ -848,70 +713,7 @@
         "country_changed_by_admin": "Country changed by the team",
         "password_reset_sent": "Password reset code sent"
       },
-      "until": "until {{date}}",
-      "reasons": {
-        "report_threshold": "Several reports waiting for a decision",
-        "report_decision": "Report upheld by the team",
-        "rating_author": "Abusive reviews",
-        "driver_cancellations": "Repeated cancellations as a driver",
-        "passenger_cancellations": "Repeated cancellations as a passenger"
-      }
-    },
-    "stats": {
-      "ridesSummary": "{{completed}} completed · {{canceled}} canceled",
-      "ridesSummaryWithRate": "{{completed}} completed · {{canceled}} canceled ({{rate}})",
-      "travelledOn": "travelled on Portfolio",
-      "viewAllRatings": "View all reviews"
-    },
-    "trust": {
-      "pendingPenaltyNote": "withheld from the next payout",
-      "none": "None"
-    },
-    "vehicles": {
-      "vehicle": "Vehicle",
-      "typeYear": "Type and year",
-      "mileage": "Mileage",
-      "documents": "Documents",
-      "verification": "Verification",
-      "empty": "No vehicle registered",
-      "subtitle_one": "{{count}} vehicle",
-      "subtitle_other": "{{count}} vehicles",
-      "toVerify_one": "{{count}} to verify",
-      "toVerify_other": "{{count}} to verify"
-    },
-    "rides": {
-      "filters": {
-        "all": "All",
-        "driver": "Driver · {{count}}",
-        "passenger": "Passenger · {{count}}"
-      },
-      "ride": "Ride",
-      "departure": "Departure",
-      "role": "Role",
-      "status": "Status",
-      "amount": "Amount",
-      "gain": "earned",
-      "paid": "paid",
-      "roles": {
-        "driver": "Driver",
-        "passenger": "Passenger"
-      },
-      "note": "Amount: the driver's earnings or the price paid by the passenger, depending on the role.",
-      "empty": "No ride, neither as driver nor as passenger",
-      "emptyRole": "No ride on this side"
-    },
-    "requests": {
-      "ride": "Ride",
-      "driver": "driver {{name}}",
-      "departure": "Departure",
-      "seats": "Seats",
-      "status": "Status",
-      "price": "Price",
-      "empty": "No request"
-    },
-    "suspensionSources": {
-      "policy": "Automatic suspension",
-      "policyCause": "After repeated cancellations"
+      "until": "until {{date}}"
     },
     "accountHelp": {
       "intro": "To help a member who can no longer get into their account. Every action asks for a reason and is recorded in the member's history.",
@@ -943,7 +745,7 @@
       },
       "changeCountry": {
         "title": "Change the account's country",
-        "description": "The account currently belongs to: {{country}}. The country sets the currency of the rides published, the SMS provider and the languages offered. Rides and bookings already made keep their country.",
+        "description": "The account currently belongs to: {{country}}. The country sets the SMS provider and the languages offered.",
         "action": "Change country",
         "dialogTitle": "Change {{name}}'s country",
         "country": "New country"
@@ -969,16 +771,5 @@
   "searchByNameEmailOrPhone": "Search by name, email or phone",
   "nameEmailOrPhone": "Name, email or phone",
   "originalPhone": "Original phone",
-  "suspension": {
-    "title": "Suspension",
-    "source": {
-      "driver_cancellations": "Ride cancellations (driver)",
-      "passenger_cancellations": "Booking cancellations (passenger)",
-      "report_threshold": "Reports threshold",
-      "report_decision": "Report decision",
-      "rating_author": "Abusive review",
-      "unknown": "Unknown"
-    }
-  },
   "codeDigit": "Digit {{position}} of {{total}}"
 }

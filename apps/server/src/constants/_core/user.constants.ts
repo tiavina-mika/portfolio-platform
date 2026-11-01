@@ -1,5 +1,4 @@
 import { DEFAULT_COUNTRY } from '@shared/constants';
-import { RequestStatusEnum } from '@shared/domain-types';
 import { ProfileFieldEnum } from '@shared/types';
 
 /**
@@ -13,19 +12,8 @@ export const PUBLIC_USER_PROFILE_FIELDS: string[] = [
   'objectId',
   'createdAt',
   'spokenLanguages',
-  'stats',
-  'rideStats',
-  'requestStats',
   'emailVerified',
   'phoneVerified',
-  'trustedDriver',
-  /*
-   * the badge the app renders on a public profile and on a search result. Missing from this list
-   * until now, which is why the reliability card could not be shown to the passenger it is for:
-   * `computeTrustedDriverBadge` writes `badges.trustedDriver`, not the legacy `trustedDriver` flag
-   */
-  'badges',
-  'completedRidesThisMonth',
 ];
 
 /**
@@ -44,18 +32,6 @@ export const PROFILE_FIELD_COLUMNS: Record<`${ProfileFieldEnum}`, string[]> = {
   address: ['address'],
   aboutMe: ['aboutMe'],
 };
-
-/**
- * Booking statuses that count as "these two are travelling together" for the `riders` visibility
- * above. A pending or refused booking never unlocks a phone number.
- */
-export const CONFIRMED_BOOKING_STATUSES = [
-  RequestStatusEnum.CONFIRMED,
-  RequestStatusEnum.COMPLETED,
-  // an absence can be contested: both sides may still need to reach each other while it is examined
-  RequestStatusEnum.NO_SHOW,
-  RequestStatusEnum.CONTESTED_NO_SHOW,
-];
 
 /**
  * Fields a user may never write on their own account, even though `_User` is self-managed (the
@@ -79,36 +55,18 @@ export const SERVER_MANAGED_USER_FIELDS: string[] = [
   'country',
   // written through `updateNotificationPreferences`, which validates the shape against a schema
   'notificationPreferences',
-  'rideStats',
-  'sosAlertsCount',
-  'requestStats',
-  'stats',
-  'completedRidesThisMonth',
-  'lastCompletedRideMonth',
-  'lastCompletedRideYear',
-  'totalGain',
-  'hasPublishedRide',
   'emailVerified',
   'phoneVerified',
-  'trustedDriver',
-  'trustedDriverSince',
   'banned',
   'bans',
   'bannedAt',
   'bannedBy',
   'suspendedUntil',
-  'isSuspendedUntil',
-  'suspension',
-  'pendingPenalty',
-  'penalties',
   'verification',
   'resetPasswordVerification',
   'stepUpVerification',
   'stepUpVerifiedAt',
   'contactChangeVerification',
-  'payoutPhoneVerification',
-  // the numbers the driver proved to control by a code: only a server write may add one
-  'verifiedPayoutPhones',
   // why the sign-up code SMS did not go out — written by the server, read by the app
   'verificationSmsError',
   'passwordResetToken',
@@ -156,17 +114,12 @@ export const USER_PROTECTED_FIELDS: string[] = [
   // a phone-signup account's username IS its number (`+261…`), and an email account's is its email
   'username',
   'phone',
-  'paymentPhones',
-  'verifiedPayoutPhones',
-  // someone else's number, who has no account here and never agreed to be listed
-  'emergencyContact',
   'mfa',
   'mfaBackupCodes',
   'verification',
   'resetPasswordVerification',
   'stepUpVerification',
   'contactChangeVerification',
-  'payoutPhoneVerification',
   'passwordResetToken',
   'passwordResetDelay',
   // when someone last signed in is not for other members to read
@@ -180,21 +133,18 @@ export const USER_PROTECTED_FIELDS: string[] = [
   'phoneBefore',
   'deletionReason',
   'bans',
-  'penalties',
-  // why an account was suspended is a moderation decision: its holder reads it, nobody else does
-  'suspension',
 ];
 
 /**
  * The default country's dial code as phone numbers store it: bare, without the '+'. What a number
- * typed with no dial code is read with — the website's contact form, a phone search in the
+ * typed with no dial code is read with — a phone search in the
  * back-office. Which numbers a text can reach is decided by each country's SMS provider instead.
  */
 export const DEFAULT_DIAL_CODE = DEFAULT_COUNTRY.dialCode.replace('+', '');
 
 /**
  * A free-text search of digits, spaces and separators is read as a phone number as well as as text.
- * Accounts and tickets keep a number in a normalized form while an operator types it the way the
+ * Accounts keep a number in a normalized form while an operator types it the way the
  * member quotes it (`034 12 345 67`, `+261 34 12 345 67`), so the search is made on the bare
  * national digits.
  */
@@ -202,14 +152,6 @@ export const PHONE_SEARCH_PATTERN = /^[\d\s+\-.()]+$/;
 
 /** Fewer digits than this is a reference or a fragment, not a number worth a phone match. */
 export const PHONE_SEARCH_MIN_DIGITS = 6;
-
-/**
- * Written in the `details` of a lifted suspension's moderation log row when the fine was written
- * off with it. A bare marker, not a sentence: it is what tells a lifting that cost the platform
- * money from one that only ended a suspension. The agent's wording goes in `reason`, the amount
- * in the driver's penalty history.
- */
-export const PENALTY_CLEARED_DETAILS = 'penalty_cleared';
 
 /** The back-office audit trail of one member: rows shown by default, and the most one call returns. */
 export const USER_AUDIT_TRAIL_DEFAULT_LIMIT = 20;
@@ -225,18 +167,15 @@ export const USER_AUDIT_TRAIL_MAX_LIMIT = 100;
 export const USER_DETAILS_FIELDS: string[] = [
   // profile
   'username', 'email', 'firstName', 'lastName', 'phone', 'image', 'aboutMe', 'birthday', 'sex', 'address',
-  'locale', 'spokenLanguages', 'paymentPhones', 'emergencyContact', 'profileVisibility', 'country',
+  'locale', 'spokenLanguages', 'profileVisibility', 'country',
   'sexChangeCount', 'lastSexChangeAt', 'birthdayChangeCount', 'lastBirthdayChangeAt',
   // account and access
   'platform', 'platforms', 'fromBO', 'registerStep', 'emailVerified', 'phoneVerified', 'isOnline',
   'acceptedTermsAt', 'mfa',
   // the member's own switches (fallback text, e-mail, push…), shown read-only so the support can explain a missing text
   'notificationPreferences',
-  // activity and trust
-  'stats', 'rideStats', 'requestStats', 'rating', 'trustedDriver', 'trustedDriverSince',
-  'completedRidesThisMonth', 'totalGain', 'sosAlertsCount',
   // moderation
-  'banned', 'bans', 'isSuspendedUntil', 'suspension', 'pendingPenalty', 'lastCancellations',
+  'banned', 'bans',
   // record traceability
   'createdAt', 'updatedAt', 'seen', 'seenAt', 'lastSeenAt', 'seenCount', 'unseenAt',
   'deleted', 'deletedAt', 'deletionReason',
@@ -251,9 +190,6 @@ export const USER_DETAILS_POINTER_FIELDS: string[] = [
   'createdBy', 'updatedBy', 'deletedBy', 'seenBy', 'lastSeenBy', 'unseenBy',
 ];
 export const USER_DETAILS_POINTER_SUBFIELDS: string[] = ['firstName', 'lastName', 'email', 'image'];
-
-/** How many numbers a driver can be paid on — enough for a few operators, too few to farm texts */
-export const MAX_VERIFIED_PAYOUT_PHONES = 5;
 
 /** Back-office path of a member's page (`<server>/<path>/<userId>`), linked from the staff alerts. */
 export const USER_BO_PATH = 'utilisateurs';

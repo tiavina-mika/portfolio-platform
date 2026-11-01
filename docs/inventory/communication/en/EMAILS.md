@@ -20,15 +20,14 @@ All emails go through Brevo transactional emails (see [Brevo](../../../services/
 | Back-office invitation | `sendInvitationEmail` | Cloud Function `sendBOInvitation`, and the owner invitation at server boot | The invited person |
 | Step-up verification code | `sendStepUpVerificationEmail` | Cloud Function `requestStepUpVerification` | The logged-in user |
 | Contact change code | `sendContactChangeVerificationEmail` | Cloud Function `requestContactChange` | The user |
-| Ticket acknowledgement and reply | `sendTicketAcknowledgementEmail`, `sendTicketReplyEmail` | Contact form / `sendTicketMessage` | The visitor who wrote |
 | Newsletter confirmation (double opt-in) | `sendNewsletterConfirmationEmail` | Cloud Function `subscribeToNewsletter` | The subscriber, with the confirmation link |
 | Newsletter unsubscribe confirmation | `sendNewsletterUnsubscribeConfirmationEmail` | Cloud Function `unsubscribeNewsletter` | The subscriber |
 | New article | `sendArticleToNewsletterEmails` | Job `sendArticleToNewsletterJob`, started when an article is saved | Active newsletter subscribers, with an unsubscribe link |
 | Free message and notifications | `sendEmailToUser`, `sendNotificationEmailToUsers` | `sendMessageToUser`, notification sends and broadcasts | Users chosen by an admin |
 | Account notices | `sendWelcomeEmail`, `sendAccountReactivatedEmail`, `sendNewDeviceLoginEmail`, `sendPasswordResetDelayedEmail` | User and login triggers and services | The user |
-| Staff alerts | `sendEmailToStaffInTheirOwnLocale` | Reports, failed payments, failed jobs, large money actions | The staff (and Slack when `SLACK_ALERTS_WEBHOOK_URL` is set) |
+| Staff alerts | `sendEmailToStaffInTheirOwnLocale` | Failed jobs | The staff (and Slack when `SLACK_ALERTS_WEBHOOK_URL` is set) |
 
-Verification texts are also sent by SMS through MMSDuck (`sendSmsVerification`, ticket and new-device SMS): in development and test they are only logged.
+Verification texts are also sent by SMS through MMSDuck (`sendSmsVerification` and the new-device SMS): in development and test they are only logged.
 
 The test functions (`sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest`, `sendArticleToNewsletterTest`, `sendInvitationTest`, `sendWelcomeEmailTest`) send the same emails for checking.
 
@@ -38,5 +37,5 @@ On a new `Newsletter` subscription, `createContactToCloudJob` creates the contac
 
 ## Gotchas
 
-- No email is sent to the site owner when the contact form is submitted: the message is stored in `Contact` as a ticket, shown in the back-office, and the visitor gets an acknowledgement.
+- No email is sent to the site owner when the contact form is submitted: the message is stored in `Contact` and shown in the back-office. The visitor gets no acknowledgement and there is no reply from the back-office.
 - `sendEmail` rethrows Brevo errors while `createContactEmail` only logs them.

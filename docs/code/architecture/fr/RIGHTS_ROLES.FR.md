@@ -16,10 +16,10 @@
 Le contrôle d'accès repose sur les objets Parse `_Role`. Un rôle porte des champs personnalisés :
 
 - `rights` : une liste de `{ className, rights: { create, find, get, update, delete, destroy } }`, une entrée par collection (booléens) ;
-- `ui` : les zones du back-office que le rôle ouvre (`UIRoleEnum` dans `apps/bo/src/types/_core/role.type.ts` : `migrations`, `cron`, `tests`, `impersonation`, `statistics`, `finance`, `broadcast`, `staff`) ;
+- `ui` : les zones du back-office que le rôle ouvre (`UIRoleEnum` dans `apps/bo/src/types/_core/role.type.ts` : `migrations`, `cron`, `tests`, `impersonation`, `broadcast`, `staff`) ;
 - `countries` : les pays auxquels le rôle est limité, et un délai d'inactivité optionnel (15 à 480 minutes).
 
-La page des rôles du back-office (`apps/bo/src/containers/_core/roles/RoleForm.tsx`) les édite. Les collections proposées sont `ENTITIES_WITH_RIGHTS_OPTIONS` (`_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Payment`, `Notification`, `Report`, `UserAuditLog`) plus les entités que le domaine enregistre avec `registerRightsEntities` (`Project`, dans `apps/bo/src/utils/_domain/project-role.utils.ts`), voir [CORE_DOMAIN.FR.md](CORE_DOMAIN.FR.md).
+La page des rôles du back-office (`apps/bo/src/containers/_core/roles/RoleForm.tsx`) les édite. Les collections proposées sont `ENTITIES_WITH_RIGHTS_OPTIONS` (`_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Notification`, `UserAuditLog`) plus les entités que le domaine enregistre avec `registerRightsEntities` (`Project`, dans `apps/bo/src/utils/_domain/project-role.utils.ts`), voir [CORE_DOMAIN.FR.md](CORE_DOMAIN.FR.md).
 
 ## Rôles par défaut
 
@@ -30,7 +30,7 @@ Noms dans `libs/shared-constants/src/role.constants.ts`, libellés et droits par
 | `OWNER` | le plus haut (`HIGHEST_LEVEL_ROLES[0]`) | fait les actions réservées au propriétaire (réinitialiser la MFA d'un administrateur, révoquer un super administrateur) |
 | `SUPER_ADMIN` | le plus haut (`HIGHEST_LEVEL_ROLES[1]`) | tous les droits sur toutes les collections |
 | `MANAGER` | par défaut (`DEFAULT_ROLES[0]`) | droits réglés par entité dans le back-office |
-| `SUPPORT_VIEWER` | par défaut | lecture seule, voit les statistiques |
+| `SUPPORT_VIEWER` | par défaut | lecture seule |
 | `TEAM_LEAD` | par défaut | lit comme `SUPPORT_VIEWER`, peut inviter un collègue, voit la gestion du personnel |
 
 Les deux rôles les plus hauts passent tous les contrôles sans entrée `rights`, côté serveur (`hasRight`) et dans le back-office. Les rôles par défaut sont créés au démarrage par `ensureDefaultRolesExist`, une fois `SUPER_ADMIN` présent.

@@ -13,7 +13,7 @@
 ## Où trouver cette page
 
 Liste des **Utilisateurs** → clic sur une ligne, ou icône « œil » de la colonne Actions. On y arrive aussi
-depuis la recherche globale, une notification ou un signalement.
+depuis la recherche globale ou une notification.
 
 ## À quoi sert cette page
 
@@ -34,16 +34,12 @@ Un en-tête avec le nom, l'état (compte vérifié ou non, en ligne, suspendu, b
 d'arrivée. Un bandeau signale un compte suspendu, banni ou supprimé par le membre. Les informations sont
 rangées en sections, avec un sommaire :
 
-- **Profil** : détails, contact, contact d'urgence (non modifiable depuis le back-office).
+- **Profil** : détails, contact.
 - **Accès** : **sessions actives** (appareil, système, mode de connexion, dernière connexion), **aide au
   compte**, plate-formes utilisées, **postes** (seulement pour un compte créé dans le back-office).
-- **Activité** : paiements.
-- **Modération** : suspension, historique des bannissements, signalements contre le membre et faits par lui.
-- **Échanges** : tickets au support, notifications reçues.
+- **Modération** : suspension, historique des bannissements.
+- **Échanges** : notifications reçues.
 - **Historique** : consultations de la fiche et journaux d'audit du compte.
-
-Les sections qui décrivent un compte de covoiturage (véhicules, trajets, demandes, avis) n'ont pas de
-contenu pour un portfolio.
 
 ## Actions possibles
 
@@ -57,7 +53,7 @@ Menu **Actions** de l'en-tête :
   reconfigurer à sa prochaine connexion.
 - **Se connecter en tant que** : démarre une session de support sur ce compte, avec un motif obligatoire
   conservé dans l'historique ; jamais possible sur un compte Owner ou Super Admin.
-- **Voir les paiements** et **Voir l'audit** : raccourcis vers ces listes filtrées sur le compte.
+- **Voir l'audit** : raccourci vers cette liste filtrée sur le compte.
 - **Écrire à l'utilisateur** : bouton d'envoi de message.
 
 Section **Aide au compte** (chaque action demande un motif, consigné dans l'historique) : renvoyer le code
@@ -69,7 +65,7 @@ Section **Postes** : ajouter ou retirer un poste (voir [Droits et postes](../../
 ## Cas d'utilisation typiques
 
 1. **Donner l'accès au back-office** : fiche d'un compte de l'équipe → ajouter un poste.
-2. **Suspendre un compte** après un signalement, puis lever la suspension.
+2. **Suspendre un compte**, puis lever la suspension.
 3. **Aider quelqu'un qui n'accède plus à son compte** : section Aide au compte.
 4. **Couper un appareil perdu** : déconnecter ses sessions.
 5. **Reproduire un problème** : session « Se connecter en tant que ».
@@ -79,6 +75,3 @@ Section **Postes** : ajouter ou retirer un poste (voir [Droits et postes](../../
 - Les postes ne se gèrent que pour les comptes créés dans le back-office, et pas pour soi-même.
 - Il n'y a pas de bouton de suppression dans la fiche : la suppression se fait depuis la liste.
 - La fiche est en lecture seule : on ne modifie ni le nom ni les coordonnées, seulement via l'aide au compte.
-- Le bouton « Lever la suspension » de la page Statistiques > Annulations ne fonctionne pas pour l'instant.
-- Une grande partie des sections (véhicules, trajets, avis, SMS de secours) vient d'une autre application et
-  reste vide.

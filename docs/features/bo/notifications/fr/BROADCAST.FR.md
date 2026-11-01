@@ -48,5 +48,5 @@ serveur le contrôle aussi.
 
 - Dans l'état actuel du menu, l'entrée **Diffusion** n'apparaît pour aucun poste : la page n'est atteignable
   que par son adresse. Un défaut de configuration du menu est à corriger.
-- Les membres du portfolio sont peu nombreux ; l'audience « ville » repose sur l'adresse saisie dans un
-  profil de covoiturage.
+- Les membres du portfolio sont peu nombreux ; l'audience « ville » repose sur l'adresse saisie dans le
+  profil.

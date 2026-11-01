@@ -11,13 +11,5 @@ export enum OwnerAlertEventEnum {
   ELEVATED_ROLE_REVOKED = 'elevatedRoleRevoked',
   IMPERSONATION_STARTED = 'impersonationStarted',
   USERS_DESTROYED = 'usersDestroyed',
-  MFA_RESET = 'mfaReset',
-  // a refund or an early payout release at or above LARGE_MONEY_ACTION_ALERT_AMOUNTS
-  LARGE_MONEY_ACTION = 'largeMoneyAction'
+  MFA_RESET = 'mfaReset'
 }
-
-/**
- * the money actions of the back-office the owners hear of past a threshold — each names its
- * `email.ownerAlert.moneyActions.<value>` label
- */
-export type LargeMoneyActionType = 'refund' | 'payoutRelease' | 'ridePassengersRefund';

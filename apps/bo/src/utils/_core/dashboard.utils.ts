@@ -1,15 +1,15 @@
 import { ComponentType } from 'react';
 
 import {
-  DASHBOARD_ALERT_FIELDS, DASHBOARD_KPI_FIELDS, DASHBOARD_RECENT_FIELDS,
+  DASHBOARD_KPI_FIELDS, DASHBOARD_RECENT_FIELDS,
 } from '@/constants/_core/dashboard.constants';
 import { IDashboardKpis, IDashboardRecent, IDashboardStats } from '@/types/_core/dashboard.type';
 
 /**
- * Open registries: a business domain (ride/request, or a future non-carpooling domain)
+ * Open registries: a business domain (the project domain, or any future domain)
  * contributes extra KPI cards / recent-activity columns to the generic dashboard
  * (`pages/Home.tsx`, `containers/dashboard/`) instead of `KpiSection.tsx`/`RecentSection.tsx`
- * hard-importing ride/request fields, so the generic core stays reusable by a non-carpooling clone.
+ * hard-importing domain fields, so the generic core stays reusable by another domain.
  */
 export type DashboardKpiCardComponent = ComponentType<{ kpis: IDashboardKpis }>;
 
@@ -55,11 +55,10 @@ export type DashboardCoverage = 'full' | 'partial' | 'none';
  * How much of the dashboard the account sees, from the parts the server sent: every part of every
  * band (`full`), some of them (`partial`) or none (`none`) — in which case there is nothing to draw.
  */
-export const getDashboardCoverage = ({ kpis, alerts, recent }: IDashboardStats): DashboardCoverage => {
+export const getDashboardCoverage = ({ kpis, recent }: IDashboardStats): DashboardCoverage => {
   const parts = [
     ...[...DASHBOARD_KPI_FIELDS, ...getDashboardKpiCards().map((card) => card.field)]
       .map((field) => kpis[field]),
-    ...DASHBOARD_ALERT_FIELDS.map((field) => alerts[field]),
     ...[...DASHBOARD_RECENT_FIELDS, ...getDashboardRecentColumns().map((column) => column.field)]
       .map((field) => recent[field]),
   ];

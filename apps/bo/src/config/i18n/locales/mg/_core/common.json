@@ -18,7 +18,6 @@
     "support": "Fanampiana",
     "supportEmail": "Mailaka",
     "supportPhone": "Telefaona {{operator}}",
-    "payments": "Fandoavana",
     "website": "Tranokala"
   },
   "refresh": "Manavao",
@@ -88,7 +87,6 @@
   "year": "Year",
   "hour": "Ora",
   "addImage": "Ampidirina sary",
-  "placesCount": "Toerana {{number}}",
   "save": "Enregistrer",
   "edit": "Modifier",
   "delete": "Fafàna",
@@ -125,8 +123,6 @@
   "terminateAndSaveStep": "Taperina sy tehirizina ({{step}}/{{total}})",
   "cancel": "Ajanona",
   "confirm": "Ekena",
-  "seatsMinimumNumberError": "Tokony ho 1 farafahakeliny ny isan'ny seza",
-  "seatsMaximumNumberError": "Tsy tokony mihoatra ny {{count}} ny isan'ny seza",
   "address": "Adresy",
   "step": "Etape",
   "stepOf": "Etape {{step}} @ {{total}}",
@@ -312,7 +308,6 @@
   "moreAction": "Hetsika fanampiny ho an'ny {{value}}",
   "total": "Fitambarany",
   "welcomeToTheDashboard": "Tongasoa eto amin'ny solaitra fitantanana an'ny {{appName}}",
-  "appDescription": "{{appName}} dia application mobile izay ny tanjona dia ny fizarana ny fiaranao manokana amin'ny olon-kafa mba hiarahana mandeha",
   "name": "Anarana",
   "pageNotFound": "Tsy hita io pejy io.",
   "backToHome": "Hiverina amin'ny pejy Fandraisana",
@@ -373,8 +368,6 @@
   "category": "Sokajy",
   "subject": "Antony",
   "noFound": "Tsy misy {{value}}",
-  "statistics": "Antontan'isa",
-  "finance": "Fitantanam-bola",
   "dark": "Maizina",
   "light": "Mazava",
   "themeColors": "Lokon'ny theme",
@@ -454,7 +447,6 @@
     "showJobStatus": "Aseho ny status ny jobs",
     "createBatchTest": "Hamorona test en batch",
     "createArticle": "Hamorona lahatsoratra",
-    "createRideMock": "Hamorona trajet mody misy fiara",
     "deleteBatchTest": "Hamafa test en batch",
     "sendEmailVerification": "Alefa mailaka fanamarianana",
     "sendArticleToNewsletter": "Alefa @ ny newsletter ny lahatsoratra",
@@ -482,10 +474,8 @@
   },
   "sidebar": {
     "content": "Votoaty",
-    "analytics": "Antontan'isa",
     "operations": "Fandidiana",
     "community": "Fiaraha-monina",
-    "finance": "Fitantanam-bola",
     "admin": "Fitantanana"
   },
   "app": {
@@ -500,24 +490,6 @@
     "quoteDescription": "Citation aseho eo amin'ny tongotry ny pejy ambanin'ny logo"
   },
   "user": "Mpampiasa",
-  "welcome": {
-    "step1": {
-      "title": "Fisoratana anarana maimaim-poana",
-      "description": "Tsy mandoa saram-pisoratana anarana na fandraisana anjara ny mpamily sy ny mpandeha."
-    },
-    "step2": {
-      "title": "Amin'ny maha-tompon'ny fiara",
-      "description": "Lazao izay alehanao, izay tianao hakana sy hampidinana mpandeha, ary ny fotoana."
-    },
-    "step3": {
-      "title": "Amin'ny maha-mpandeha",
-      "description": "Ampidiro ny toerana iaingana, ny alehanao ary ny daty tianao handehanana. Aseho anao avy eo ny dia rehetra mifanaraka amin'izany."
-    },
-    "step4": {
-      "title": "Rehefa vita ny dia",
-      "description": "Aloavy amin'ny mobile money na vola an-tanana ny mpamily. Afaka manome naoty ny tsirairay avy eo."
-    }
-  },
   "book": "Hamandrika",
   "rate": "Naoty",
   "textToChips": {
@@ -529,8 +501,6 @@
   "previewSection": {
     "loadError": "Nisy olana nitranga. Andramo indray"
   },
-  "expandRow": "Asehoy ny antsipiriany",
-  "collapseRow": "Afeno ny antsipiriany",
   "opened": "Nosokafana",
   "timesCount_one": "im-{{count}}",
   "timesCount_other": "im-{{count}}"

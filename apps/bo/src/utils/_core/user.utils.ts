@@ -5,7 +5,6 @@ import { ComponentType, ReactNode } from 'react';
 import type { IPreviewSection, ISelectOption, ITableHeadCell } from '@/types/_core/app.type';
 import type { IUserAuditLog } from '@/types/_core/auditLog.type';
 import type { UserSectionGroup } from '@/types/_core/user.type';
-import type { DateType } from '@/types/_core/utils.type';
 
 import { StatusDotColor } from '@/components/StatusDot';
 import {
@@ -29,10 +28,9 @@ export const getNotificationTypeLabelByValue = (type: NotificationType): string 
 };
 
 /**
- * Open registry: the ride/request domain (and any future domain producing extra content
- * for the generic user detail page) registers additional UI here instead of `pages/users/User.tsx`
- * hard-importing ride/request stats and penalty rules, so the core user page stays reusable in an
- * app that has no rides at all.
+ * Open registry: a business domain (any domain producing extra content for the generic user
+ * detail page) registers additional UI here instead of `pages/users/User.tsx` hard-importing its
+ * stats and rules, so the core user page stays reusable in an app that has no such domain.
  */
 export type UserExtensionSlot = 'headerFact';
 
@@ -57,8 +55,8 @@ export const getUserExtensions = (slot: UserExtensionSlot): UserExtension[] =>
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
 /**
- * Open registry: whole blocks of the user detail page contributed by a domain (the vehicles an
- * account owns, the rides it drove or booked…), placed among the page's own blocks by `group` and
+ * Open registry: whole blocks of the user detail page contributed by a domain (the projects an
+ * account owns…), placed among the page's own blocks by `group` and
  * `order`. Each one brings the hook reading what the block needs for the account — called on every
  * render of the page, in registration order, which the registry never changes once the app runs.
  */
@@ -79,36 +77,8 @@ export const registerUserSection = (extension: UserSectionExtension): void => {
 export const getUserSectionExtensions = (): UserSectionExtension[] => [...userSectionExtensions];
 
 /**
- * Open registry: the ways an account can be kept out of the platform besides a ban by the team (a
- * suspension a domain policy puts on it after repeated cancellations). The page states every active
- * one in its banner and its suspension block, and lifting the suspension lifts all of them.
- */
-export type UserSuspension = {
-  until?: DateType;
-  // what put it on the account, in the words of the one reading the page
-  cause: string;
-};
-
-export type UserSuspensionSource = {
-  key: string;
-  // the row naming it in the suspension block, whether it is active or not
-  label: string;
-  getActive: (user: IUser) => UserSuspension | null;
-  // the thunk lifting it
-  lift: (user: IUser) => any;
-};
-
-const userSuspensionSources: UserSuspensionSource[] = [];
-
-export const registerUserSuspensionSource = (source: UserSuspensionSource): void => {
-  userSuspensionSources.push(source);
-};
-
-export const getUserSuspensionSources = (): UserSuspensionSource[] => [...userSuspensionSources];
-
-/**
  * Open registry: extra columns for the "audit log" (recycle bin) tab of the generic users list —
- * lets a domain (ride/request) contribute columns without `pages/users/Users.tsx` importing
+ * lets a domain contribute columns without `pages/users/Users.tsx` importing
  * domain-specific audit log fields directly.
  */
 export type UserAuditLogColumn = {
@@ -128,7 +98,7 @@ export const getUserAuditLogColumns = (): UserAuditLogColumn[] =>
 
 /**
  * Open registry: extra columns for the generic users list (`pages/_core/users/Users.tsx`) — lets a
- * domain contribute a per-row fact of its own (the vehicles an account owns) without the core list
+ * domain contribute a per-row fact of its own (the projects an account owns) without the core list
  * importing anything domain-specific. The registered columns are inserted as a block between the
  * user's rating and the completeness of their profile.
  */
@@ -223,8 +193,8 @@ export const getUserNameLines = (
 };
 
 /**
- * full name for a partial user snapshot (firstName/lastName only, e.g. a `Payment.snapshot`
- * payer/receiver or a paginated list projection) — unlike `getUserFullName`, does not require a
+ * full name for a partial user snapshot (firstName/lastName only, e.g. a record snapshot
+ * owner or a paginated list projection) — unlike `getUserFullName`, does not require a
  * full `IUser`
  * @param user
  * @returns
@@ -330,13 +300,6 @@ export const getUserLastPlatformLabel = (user: IUser): string | undefined => {
   );
 
   return userPlatformOptions.find((option) => option.value === lastPlatform?.name)?.label;
-};
-
-// when the suspension in force ends — undefined once it has lapsed or when there is none
-export const getUserActiveSuspensionUntil = (user: IUser): DateType | undefined => {
-  const until = user.suspension?.until;
-
-  return until && !isDateExpired(until) ? until : undefined;
 };
 
 export type ProfileCompletenessLevel = 'complete' | 'partial' | 'toComplete';

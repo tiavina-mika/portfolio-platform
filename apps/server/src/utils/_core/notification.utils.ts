@@ -167,7 +167,7 @@ export const getNotificationSeenDates = (
  * `subject` is what makes the event unique, not merely what it is about: a vehicle document that is
  * renewed expires again, so its key carries the new expiry date and the reminder goes out again.
  * The audience is part of the key because the same event is announced separately to each side of a
- * ride (the driver's payout, the passengers' cancellation), and those are different sends.
+ * ride (the driver's cancellation, the passengers' cancellation), and those are different sends.
  */
 export const buildNotificationIdempotencyKey = ({
   type,

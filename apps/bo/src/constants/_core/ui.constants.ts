@@ -36,7 +36,6 @@ export const FONT_SIZE_BODY = 14;
 export const FONT_SIZE_META = 13;
 export const FONT_SIZE_OVERLINE = 12;
 
-export const LAYOUT_CONTENT_PADDING = 24;
 export const SPACING = 16;
 export const RESPONSIVE_BREAKPOINT = 'lg';
 // below this breakpoint the app bar switches to its compact layout (icon-only search, logo instead of breadcrumb group)
@@ -74,27 +73,11 @@ export const PAGE_HEAD_DESCRIPTION_GAP = 4;
  * the heading is one row of type and marks
  */
 export const PAGE_HEAD_TITLE_GAP = 10;
-/*
- * a glyph standing next to the title is a mark on the heading, not a control: it sits at the
- * caption size rather than at the title's own
- */
-export const PAGE_HEAD_TITLE_BADGE_SIZE = 16;
 export const PAGE_HEAD_ACTIONS_GAP = 8;
 export const PAGE_HEAD_ACTIONS_OFFSET = 14;
 // stacked under the title, the row only needs air between two blocks, not the title's own offset
 export const PAGE_HEAD_ACTIONS_MOBILE_OFFSET = 10;
 export const PAGE_HEAD_ACTION_ICON_SIZE = 15;
-/*
- * width the placeholder of a page-head action takes while its figure is still loading — wide
- * enough that the button does not jump sideways once the number lands next to its label
- */
-export const PAGE_HEAD_ACTION_SKELETON_WIDTH = 200;
-/*
- * the line of figures a detail page states under its title — what the record is worth, how long it
- * has been going on. They are read as one sentence, so the middle dot between two of them sits
- * closer to either side than the facts stand from one another
- */
-export const PAGE_HEAD_META_GAP = 10;
 
 /*
  * THE PAGE FOOTER — the line closing the content column, standing on the same rail the app bar
@@ -258,30 +241,12 @@ export const LIGHTBOX_COUNTER_PADDING_BOTTOM = 16;
 export const LIGHTBOX_ICON_SIZE = 18;
 export const LIGHTBOX_ACTION_ICON_SIZE = 15;
 export const LIGHTBOX_CLOSE_ICON_SIZE = 16;
-/*
- * the vehicle line under the driver of a ride: a colour swatch, then the plate, year and seat
- * count as one sentence. It is a second fact about the same person, so it stands further from the
- * identity above it than the words inside it stand from one another
- */
-export const RIDE_VEHICLE_LINE_GAP = 18;
-export const RIDE_VEHICLE_COLOR_DOT_SIZE = 14;
-/*
- * PERSON ROW — a party to the record standing on their own row inside a detail block (the driver
- * of a ride, each of its passengers). The face is larger than the one a table cell carries: the
- * row is about that person rather than merely naming them, and it holds a second line of facts
- * under the name plus the way to their account at the far end
- */
-export const PERSON_ROW_AVATAR_SIZE = 42;
 export const PERSON_ROW_IDENTITY_GAP = 8;
-// the facts under the name are read as one sentence, so the middle dot sits close to either side
-export const PERSON_ROW_FACTS_GAP = 6;
 /*
  * the chip that opens the post picker stands at the end of the posts an account already holds, and
  * carries a single "+" — the glyph is set large enough to read as a control rather than as a label
  */
 export const ROLE_ADD_CHIP_FONT_SIZE = 22;
-// the two figures a driver wallet opens on: what it owes, and whether it can still pay out
-export const WALLET_STAT_CARDS_COUNT = 2;
 /*
  * a label and its value standing on one row inside a dialog, splitting the width in two under `sm`
  * and stacking below it
@@ -330,11 +295,6 @@ export const DIALOG_FULLSCREEN_TITLE_GAP = 2;
  * than standing on a band of its own — it is closer to the rule above it than to the body below
  */
 export const DIALOG_SUB_HEADER_PADDING_TOP = 8;
-/*
- * a header that says more than a name stacks its lines tight: the pretitle, the subject and the
- * badges qualifying it are one block being read at once, not three facts spaced apart
- */
-export const DIALOG_TITLE_LINE_GAP = 6;
 // the destructive confirmation draws its glyph one step above body copy so it leads the sentence
 export const DIALOG_SEVERITY_ICON_SIZE = 20;
 /*
@@ -346,8 +306,6 @@ export const DIALOG_RECIPIENT_AVATAR_SIZE = 34;
 export const DIALOG_RECIPIENT_PADDING_Y = 10;
 export const DIALOG_RECIPIENT_PADDING_X = 12;
 export const DIALOG_RECIPIENT_GAP = 10;
-// the floating send action draws its glyph well above a row action's — it stands alone on the page
-export const SEND_FAB_ICON_SIZE = 24;
 
 /*
  * every action button stands on one row height whatever its variant, so a toolbar or dialog footer
@@ -561,7 +519,6 @@ export const TEXT_TO_CHIPS_INPUT_MIN_WIDTH_TABLET = 140;
 export const TEXT_TO_CHIPS_INPUT_HEIGHT = TEXT_TO_CHIPS_CHIP_HEIGHT;
 export const TEXT_TO_CHIPS_INPUT_HEIGHT_TABLET = TEXT_TO_CHIPS_CHIP_HEIGHT_TABLET;
 export const TEXT_TO_CHIPS_INPUT_HEIGHT_TOUCH = 34;
-export const RATING_ICON_SIZE = 18;
 /*
  * the drop area has two drawings, not one. Empty, it is a field like any other — a solid outline on
  * the card surface, standing on a block of its own rather than on the input row, so the prompt is
@@ -615,9 +572,6 @@ export const TAB_SCROLL_BUTTON_WIDTH = 34;
  * 44px as the underlined strip — 3px of padding around a 38px slot — so both can stand on one row.
  */
 export const PILL_TABS_PADDING = 3;
-export const PILL_TABS_GAP = 2;
-export const PILL_TAB_HEIGHT = INPUT_HEIGHT_SMALL;
-export const PILL_TAB_PADDING_X = 16;
 
 /*
  * THE LIST TABS — the strip that scopes a list rather than navigating anywhere: every row against
@@ -685,15 +639,6 @@ export const TRANSLATION_TAB_INK_DARKEN = 0.35;
 export const TRANSLATION_TAB_TOOLTIP_STATE_LIGHTEN = 0.45;
 export const TRANSLATION_TAB_TOOLTIP_GAP = 6;
 export const TRANSLATION_TAB_PANEL_PADDING = 16;
-
-/*
- * THE RIGHTS MATRIX — entities down, right types across. Both axes are fixed columns: the entity
- * name column must not soak up the leftover width and push the tick columns off the right edge, and
- * every right-type column takes the same width so a long translated header wraps onto a second line
- * instead of widening its own column past the others.
- */
-export const RIGHTS_ENTITY_COLUMN_WIDTH = 220;
-export const RIGHTS_TYPE_COLUMN_WIDTH = 110;
 
 /*
  * REPEATABLE FIELDS — each entry of a list-valued field (the stops of a ride, a set of phone
@@ -826,43 +771,6 @@ export const CARD_STAT_SKELETON_VALUE_HEIGHT = 32;
 export const AUDIENCE_METER_HEIGHT = 6;
 export const AUDIENCE_METER_RADIUS = 3;
 
-/*
- * THE STATUS STAT CARD — the summary form of the card above, sized to stand five to a row over a
- * list rather than four to a row at the top of a page. It drops the icon slot: what the figure
- * counts is a state, and the state is already named by the tinted dot in front of its label. The
- * caption sits on the figure's own baseline instead of under it, so the card stays two lines tall
- * whatever it holds.
- */
-export const CARD_STATUS_STAT_PADDING_X = 14;
-export const CARD_STATUS_STAT_PADDING_Y = 12;
-export const CARD_STATUS_STAT_GAP = 6;
-export const CARD_STATUS_STAT_VALUE_GAP = 6;
-// the label is the one place a state's own tint is carried by text rather than by a dot alone
-export const CARD_STATUS_STAT_LABEL_WEIGHT = 500;
-
-/*
- * THE KPI ROW — the figures a page opens on, read as one row of cards of equal width rather than
- * as a set of blocks each sized by its own number. The row is tighter than the column it stands in
- * (CONTENT_GAP above): the cards belong to one another, where the bands of the page do not.
- *
- * It folds by halving rather than by going straight to one card per row — two figures side by side
- * still compare, a single column of figures is a list.
- */
-/*
- * THE HEALTH BAND — one strip stating what a ledger is worth on the left and how each of its
- * channels is behaving on the right. Half the height of a row of four counter cards, because it
- * qualifies the list under it rather than being the page: the totals are read once on arrival,
- * the channels are what is scanned.
- */
-export const HEALTH_BAND_TOTALS_WIDTH = 240;
-export const HEALTH_BAND_PADDING_X = 18;
-export const HEALTH_BAND_PADDING_Y = 14;
-export const HEALTH_BAND_CHANNEL_GAP = 7;
-export const HEALTH_BAND_TOTALS_GAP = 2;
-// the segmented share of a channel's traffic — a hairline, read as a proportion and not as a chart
-export const HEALTH_BAR_HEIGHT = 6;
-export const HEALTH_BAR_RADIUS = 3;
-
 export const KPI_GRID_GAP = 14;
 export const KPI_GRID_COLUMNS = 4;
 export const KPI_GRID_FOLDED_COLUMNS = 2;
@@ -877,10 +785,7 @@ export const DASHBOARD_SECTION_GAP = 20;
 export const DASHBOARD_SECTION_GAP_MOBILE = 14;
 export const DASHBOARD_SECTION_TITLE_GAP = 12;
 export const DASHBOARD_SECTION_TITLE_ICON_GAP = 8;
-export const DASHBOARD_SECTION_TITLE_ICON_SIZE = 18;
 export const DASHBOARD_CARDS_GAP = 16;
-// the two alert cards — failed payments and open reports — stand side by side on a wide screen
-export const DASHBOARD_ALERTS_COLUMNS = 2;
 // an activity column is titled from above, closer to its card than the band heading is to the columns
 export const DASHBOARD_COLUMN_TITLE_GAP = 10;
 export const DASHBOARD_CARD_HEADER_GAP = 10;
@@ -904,8 +809,6 @@ export const DASHBOARD_ALERT_BODY_PADDING_TOP = 4;
 export const DASHBOARD_ALERT_BODY_PADDING_BOTTOM = 8;
 export const DASHBOARD_ALERT_ROW_PADDING_Y = 11;
 export const DASHBOARD_ALERT_ROW_GAP = 10;
-// a gateway failure message is free text — it is cut rather than allowed to push the amount out
-export const DASHBOARD_ALERT_CHIP_MAX_WIDTH = 200;
 export const DASHBOARD_ACTIVITY_BODY_PADDING_Y = 8;
 export const DASHBOARD_ACTIVITY_BODY_PADDING_X = 12;
 export const DASHBOARD_ACTIVITY_ROW_PADDING_Y = 8;
@@ -916,7 +819,6 @@ export const DASHBOARD_EMPTY_PADDING_X = 20;
 export const DASHBOARD_ERROR_PADDING_Y = 20;
 export const DASHBOARD_ERROR_PADDING_X = 16;
 export const DASHBOARD_ERROR_GAP = 14;
-export const DASHBOARD_ALERT_SKELETON_ROWS = 3;
 export const DASHBOARD_ACTIVITY_SKELETON_ROWS = 4;
 export const DASHBOARD_SKELETON_TITLE_WIDTH = 170;
 export const DASHBOARD_SKELETON_TITLE_HEIGHT = 14;
@@ -1059,7 +961,6 @@ export const LIST_FILTERS_DRAWER_GAP = 16;
  */
 export const LIST_FILTERS_DRAWER_Z_INDEX = 3;
 
-
 /*
  * the count pinned to the "filters" trigger — a small tinted pill reading as part of the label,
  * which is why it is rounder and quieter than the badge a notification icon carries
@@ -1111,8 +1012,8 @@ export const TABLE_HEAD_LETTER_SPACING = 0.3;
 export const TABLE_CHECKBOX_COLUMN_WIDTH = 44;
 /*
  * THE ROW THAT OPENS — a list whose rows carry more than a row can show, and whose reader has to
- * decide on one without leaving the list (a payment ledger: the failure message, the attempts, the
- * two accounts the money moved between, then the actions). The caret takes a gutter of its own
+ * decide on one without leaving the list (the failure message, the attempts, the
+ * accounts involved, then the actions). The caret takes a gutter of its own
  * rather than sitting inside the first cell: the head row leaves the same gutter empty, so every
  * column label stays over its own column whether a row is open or not.
  */
@@ -1140,9 +1041,6 @@ export const ROW_DETAIL_FACTS_COLUMNS = 4;
 export const ROW_DETAIL_FACTS_GAP_X = 20;
 export const ROW_DETAIL_FACTS_GAP_Y = 12;
 export const ROW_DETAIL_FACT_LINE_GAP = 2;
-export const ROW_DETAIL_NOTICE_GAP = 9;
-export const ROW_DETAIL_NOTICE_PADDING_X = 12;
-export const ROW_DETAIL_NOTICE_PADDING_Y = 9;
 /*
  * the sort arrow belongs to the column label rather than sitting beside it, and it is drawn under
  * the label's cap height, so an active column never stands a pixel taller than the ones beside it
@@ -1165,13 +1063,6 @@ export const ROW_ACTIONS_BUTTON_SIZE = 30;
  */
 export const TABLE_CELL_LINE_GAP = 3;
 export const TABLE_CELL_INLINE_GAP = 6;
-// a glyph joining two words inside a cell (the route arrow), sized under the text it sits between
-export const TABLE_CELL_GLYPH_SIZE = 12;
-/*
- * the warning a row carries about itself (an open report): one step larger than the inline glyph
- * above, since it has to be caught while scanning the column rather than read inside a phrase
- */
-export const TABLE_CELL_ALERT_GLYPH_SIZE = 15;
 // smaller than the list's own avatar: it stands inside a row, next to a name, not on its own line
 export const TABLE_CELL_AVATAR_SIZE = 28;
 export const TABLE_CELL_AVATAR_GAP = 8;
@@ -1201,12 +1092,6 @@ export const IDENTITY_CONTACT_OFFSET_Y = 7;
 export const IDENTITY_CONTACT_ICON_SIZE = 14;
 export const IDENTITY_CONTACT_ICON_GAP = 7;
 
-/*
- * how many lines of free text a row may spend on one cell before it is cut off. Two: enough for a
- * complaint's first sentence to be read from the list, and few enough that a page of rows keeps a
- * uniform height — the full text is one click away in the row's own file.
- */
-export const TABLE_CELL_TEXT_CLAMP_LINES = 2;
 export const TABLE_CELL_TEXT_MAX_WIDTH = 340;
 
 /*
@@ -1221,21 +1106,6 @@ export const ROW_METER_RADIUS = 2;
 export const ROW_METER_GAP = 4;
 
 /*
- * THE INLINE RATING — a person's score standing next to their name inside a table row: a star and
- * one decimal, nothing more. It is a fact about the person, not the subject of the cell, so it is
- * drawn at the meta rung under the name rather than as a row of five stars — a five-star widget
- * repeated twice per row is the widest thing on the list for a value read as a single number.
- */
-export const INLINE_RATING_GLYPH_SIZE = 11;
-export const INLINE_RATING_GAP = 3;
-/*
- * under this score the rating stops being background and becomes something the operator has to
- * take into account before acting on the row, so it is tinted and weighted rather than muted
- */
-export const INLINE_RATING_LOW_THRESHOLD = 4;
-export const INLINE_RATING_LOW_FONT_WEIGHT = 600;
-
-/*
  * THE PROFILE COMPLETENESS BAR — how much of a user's profile is filled in, given as a percentage
  * and drawn as the same percentage. Wider and slightly thicker than the occupancy bar because it
  * carries a label on either end above it rather than one short phrase, and fixed for the same
@@ -1246,15 +1116,6 @@ export const PROFILE_COMPLETENESS_BAR_HEIGHT = 5;
 export const PROFILE_COMPLETENESS_BAR_RADIUS = 3;
 export const PROFILE_COMPLETENESS_GAP = 4;
 
-/*
- * COUNT PILL — a figure standing alone in a table cell (the bookings a ride still owes an answer
- * for). It is wider and taller than the badge pinned to an icon corner: nothing else in the cell
- * says what it counts, so it has to hold the column on its own.
- */
-export const COUNT_PILL_MIN_WIDTH = 26;
-export const COUNT_PILL_HEIGHT = 24;
-export const COUNT_PILL_PADDING_X = 7;
-export const COUNT_PILL_RADIUS = 12;
 export const ROW_ACTIONS_ICON_SIZE = 15;
 export const ROW_ACTIONS_GAP = 4;
 
@@ -1454,115 +1315,6 @@ export const PROFILE_ACCOUNT_ROW_DESCRIPTION_MAX_WIDTH = 460;
 export const PROFILE_PASSWORD_MASK = '••••••••';
 
 /*
- * THE INBOX — the contacts page is not a table of tickets, it is one conversation with the queue
- * beside it and what is known about the person on the other side: three columns read left to
- * right as "which ticket", "what was said", "who is saying it". The two side columns are fixed so
- * the thread — the only column whose content is prose — takes every pixel the screen adds.
- *
- * Nothing here scrolls the page: each column scrolls inside itself, so the composer stays put
- * while the thread above it moves, and the queue stays put while the thread is read.
- */
-export const INBOX_QUEUE_WIDTH = 308;
-export const INBOX_CONTEXT_WIDTH = 292;
-export const INBOX_COLUMN_GAP = 14;
-/*
- * the columns are as tall as what is left of the viewport under the page head, not as tall as
- * their contents: a queue of two hundred tickets must not stretch the page, and the thread must
- * end where the composer starts
- */
-export const INBOX_MIN_HEIGHT = 560;
-export const INBOX_VIEWPORT_OFFSET = 232;
-
-/*
- * a row of the queue states four things at once — who wrote, how urgent it is, when it last moved
- * and what it says — so it is a two-line block rather than a list item, and the open one is marked
- * by a rail on its leading edge instead of by a fill that would fight the status pill it holds
- */
-export const INBOX_ITEM_PADDING = 12;
-export const INBOX_ITEM_GAP = 5;
-export const INBOX_ITEM_RAIL_WIDTH = 3;
-export const INBOX_ITEM_HEAD_GAP = 8;
-export const INBOX_AVATAR_SIZE = 32;
-export const INBOX_AVATAR_FONT_SIZE = FONT_SIZE_OVERLINE;
-// the priority of a queued ticket is a dot, not a pill: the row already carries one pill for status
-export const INBOX_PRIORITY_DOT_SIZE = 7;
-
-/*
- * where a ticket was written from is a fact of the row, not a status: in the queue it is a glyph
- * beside the name (a globe for the public website, a handset for the app), and only the open
- * ticket's header spells it out as a chip. A second pill per row would compete with the one that
- * says where the ticket stands, which is what the reader is actually scanning for.
- */
-export const INBOX_SOURCE_ICON_SIZE = 13;
-export const INBOX_SOURCE_CHIP_HEIGHT = 24;
-export const INBOX_SOURCE_CHIP_GAP = 5;
-
-/*
- * the banner warning that the reply leaves as a one-way email. It is a note on the ground of the
- * card rather than an alert: nothing has gone wrong, the agent simply has to know the answer they
- * are about to write cannot be answered back before they write it — so it sits directly above the
- * field, not at the top of the page where it would be read once and forgotten.
- */
-export const INBOX_ONE_WAY_PADDING_Y = 10;
-export const INBOX_ONE_WAY_PADDING_X = 12;
-export const INBOX_ONE_WAY_GAP = 8;
-export const INBOX_ONE_WAY_ICON_SIZE = 15;
-
-export const INBOX_SEARCH_PADDING = 12;
-export const INBOX_SCOPES_PADDING_Y = 8;
-export const INBOX_SCOPES_GAP = 2;
-export const INBOX_SCOPE_HEIGHT = 28;
-export const INBOX_SCOPE_PADDING_X = 10;
-export const INBOX_SCOPE_GAP = 5;
-export const INBOX_SCOPE_RADIUS = 14;
-
-/*
- * THE THREAD — bubbles on the recessed ground, the agent's own answers closing on the right. A
- * system line is neither side's speech: it is centred and outlined rather than filled, so it reads
- * as something that happened to the ticket rather than as something someone said.
- */
-export const INBOX_THREAD_PADDING_Y = 18;
-export const INBOX_THREAD_PADDING_X = 16;
-export const INBOX_THREAD_GAP = 12;
-export const INBOX_BUBBLE_MAX_WIDTH = '74%';
-export const INBOX_BUBBLE_PADDING_Y = 11;
-export const INBOX_BUBBLE_PADDING_X = 14;
-export const INBOX_BUBBLE_RADIUS = 10;
-export const INBOX_BUBBLE_META_GAP = 4;
-export const INBOX_SYSTEM_BUBBLE_PADDING_Y = 8;
-export const INBOX_SYSTEM_BUBBLE_PADDING_X = 12;
-export const INBOX_SYSTEM_BUBBLE_RADIUS = 14;
-export const INBOX_ATTACHMENT_SIZE = 72;
-
-/*
- * THE COMPOSER — one field with a switch above it, not two forms: replying and noting are the same
- * gesture aimed at two different readers, and the switch is what says which. The note keeps the
- * warning tone of the badge it writes, so the agent can see at a glance that what they are about
- * to send is not going out.
- */
-export const INBOX_COMPOSER_PADDING_Y = 12;
-export const INBOX_COMPOSER_PADDING_X = 16;
-export const INBOX_COMPOSER_GAP = 10;
-export const INBOX_COMPOSER_MIN_HEIGHT = 46;
-export const INBOX_COMPOSER_ROWS = 2;
-export const INBOX_QUICK_REPLY_GAP = 6;
-export const INBOX_QUICK_REPLY_HEIGHT = 26;
-export const INBOX_QUICK_REPLY_PADDING_X = 9;
-export const INBOX_QUICK_REPLY_RADIUS = 13;
-
-/*
- * THE CONTEXT COLUMN — three small cards saying who this is, what they have already asked, and who
- * owes them an answer. Each is a block title over a key/value list, closed by a rule per row: the
- * figures are read down the right edge, so they line up whatever the labels say.
- */
-export const INBOX_CONTEXT_GAP = 12;
-export const INBOX_CONTEXT_CARD_PADDING = 14;
-export const INBOX_CONTEXT_TITLE_GAP = 10;
-export const INBOX_CONTEXT_ROW_PADDING_Y = 7;
-export const INBOX_CONTEXT_ROW_GAP = 10;
-export const INBOX_CONTEXT_ACTIONS_GAP = 6;
-
-/*
  * the backup codes are read off the screen and written down, so they are drawn as a block of even
  * tiles rather than as a list: two columns of monospaced text, each code loose enough to be
  * transcribed character by character without losing the place
@@ -1613,147 +1365,6 @@ export const UNAUTHORIZED_ACCOUNT_GAP = 10;
 export const UNAUTHORIZED_ACCOUNT_AVATAR_SIZE = 30;
 export const UNAUTHORIZED_ACTIONS_GAP = 10;
 export const UNAUTHORIZED_ACTION_ICON_SIZE = 15;
-
-/*
- * THE REPORT FILE — the dialog one report is read and ruled on in. Its body is not a form of
- * labelled fields but a quoted block: what was reported, why, in the reporter's own words and
- * signed with their name, drawn on the recessed ground inside its own edge so the complaint reads
- * as the thing being judged rather than as the dialog's own copy.
- *
- * The other reports the same target has drawn repeat that block one step tighter and one step
- * quieter — they are context for the decision, not the case being decided.
- */
-export const REPORT_FILE_CARD_PADDING = 14;
-// chips standing side by side name one thing between them — the reason and what was done about it
-export const REPORT_FILE_CHIP_GAP = 6;
-export const REPORT_FILE_CARD_GAP = 10;
-export const REPORT_FILE_HISTORY_GAP = 8;
-export const REPORT_FILE_HISTORY_PADDING_Y = 10;
-export const REPORT_FILE_HISTORY_PADDING_X = 12;
-export const REPORT_FILE_HISTORY_LINE_GAP = 5;
-/*
- * the decision row: the two ways out of a report share the footer evenly, since neither is the
- * expected one — a report is closed by ruling on it, not by confirming a default
- */
-export const REPORT_FILE_ACTIONS_GAP = 8;
-
-/*
- * THE VEHICLE PAPERS — the three markers a vehicle row carries for its registration, insurance and
- * technical inspection, and the panel one of them opens.
- *
- * Each marker is a two-or-three letter tile rather than a labelled chip: the cell states which of
- * the three papers is missing, and three full names side by side would be the widest column of the
- * list for a fact read at a glance. They sit tight together so the trio reads as one status, not
- * as three separate values.
- */
-export const VEHICLE_DOCUMENT_BADGE_HEIGHT = 20;
-export const VEHICLE_DOCUMENT_BADGE_MIN_WIDTH = 30;
-export const VEHICLE_DOCUMENT_BADGE_RADIUS = 5;
-export const VEHICLE_DOCUMENT_BADGE_FONT_SIZE = FONT_SIZE_OVERLINE;
-export const VEHICLE_DOCUMENT_BADGE_GAP = 4;
-// the tint a marker takes from its own status, faint enough for the letters to stay the loud part
-export const VEHICLE_DOCUMENT_BADGE_BORDER_OPACITY = 0.4;
-/*
- * the review panel: the paper on the left at the size a plate number can be read off it, the facts
- * and the two decisions on the right
- */
-/*
- * THE DOCUMENT REVIEW PANEL — one of a vehicle's papers opened for a decision. It is built as two
- * panes rather than as a stack: the moderator rules by comparing the dates written beside the scan
- * against the scan itself, and a layout that put one under the other would have them scrolling
- * between the two halves of a single comparison.
- *
- * The paper's pane is recessed and the facts stand on the dialog's own surface, so the picture
- * reads as the thing being examined and the column beside it as what is known about it.
- */
-export const VEHICLE_DOCUMENT_REVIEW_GAP = 12;
-export const VEHICLE_DOCUMENT_REVIEW_PANE_PADDING = 16;
-export const VEHICLE_DOCUMENT_REVIEW_PREVIEW_GAP = 10;
-export const VEHICLE_DOCUMENT_REVIEW_PREVIEW_HEIGHT = 240;
-export const VEHICLE_DOCUMENT_REVIEW_META_WIDTH = 248;
-export const VEHICLE_DOCUMENT_REVIEW_FIELDS_GAP = 9;
-export const VEHICLE_DOCUMENT_REVIEW_FIELD_GAP = 2;
-export const VEHICLE_DOCUMENT_REVIEW_ACTIONS_GAP = 6;
-/*
- * the empty frame is hatched rather than left flat: an empty grey rectangle where a scan should be
- * reads as a picture that failed to load, where the diagonal banding says there is nothing to load
- */
-export const VEHICLE_DOCUMENT_REVIEW_HATCH_BAND = 10;
-export const VEHICLE_DOCUMENT_REVIEW_EMPTY_GAP = 8;
-export const VEHICLE_DOCUMENT_REVIEW_EMPTY_ICON_SIZE = 34;
-export const VEHICLE_DOCUMENT_REVIEW_ACTION_ICON_SIZE = 15;
-// the state of each paper, carried on its own tab so the queue is read without opening all three
-export const VEHICLE_DOCUMENT_REVIEW_TAB_DOT_SIZE = 7;
-// the state of the paper on show, standing in the header beside the way out of the panel
-export const DIALOG_HEAD_RIGHT_GAP = 10;
-
-/*
- * THE DOCKED REVIEW PANEL — the same three-paper review as the dialog above, docked inside the
- * vehicle page's own "Vérification" section instead of a modal, with a thumbnail rail replacing
- * the tab strip and a zoom control replacing rotate — a picture already at the size the moderator
- * chose does not need enlarging into a lightbox.
- */
-export const VEHICLE_DOCUMENT_PANEL_GAP = 16;
-export const VEHICLE_DOCUMENT_PANEL_THUMB_RAIL_WIDTH = 132;
-export const VEHICLE_DOCUMENT_PANEL_THUMB_HEIGHT = 56;
-export const VEHICLE_DOCUMENT_PANEL_THUMB_GAP = 12;
-export const VEHICLE_DOCUMENT_PANEL_META_WIDTH = 262;
-export const VEHICLE_DOCUMENT_PANEL_PREVIEW_HEIGHT = 340;
-export const VEHICLE_DOCUMENT_PANEL_HATCH_BAND = 10;
-export const VEHICLE_DOCUMENT_PANEL_STATUS_DOT_SIZE = 8;
-// the scale a moderator can read a scan at — a plate or a signature is checked well past 100%
-export const VEHICLE_DOCUMENT_PANEL_ZOOM_MIN = 50;
-export const VEHICLE_DOCUMENT_PANEL_ZOOM_MAX = 200;
-export const VEHICLE_DOCUMENT_PANEL_ZOOM_STEP = 25;
-export const VEHICLE_DOCUMENT_PANEL_ZOOM_DEFAULT = 100;
-export const VEHICLE_DOCUMENT_PANEL_ZOOM_BUTTON_SIZE = 28;
-export const VEHICLE_DOCUMENT_PANEL_ZOOM_ICON_SIZE = 15;
-
-/*
- * THE PHOTOS GRID — the pictures a driver uploaded of the vehicle itself (not a document), shown as
- * a responsive grid of thumbnails that open in the shared lightbox.
- */
-export const VEHICLE_PHOTO_MIN_WIDTH = 200;
-export const VEHICLE_PHOTO_GRID_GAP = 14;
-export const VEHICLE_PHOTO_THUMB_HEIGHT = 132;
-export const VEHICLE_PHOTO_CAPTION_PADDING = 10;
-export const VEHICLE_PHOTO_CAPTION_GAP = 2;
-export const VEHICLE_PHOTO_ZOOM_ICON_SIZE = 18;
-export const VEHICLE_PHOTO_ZOOM_SCRIM_OPACITY = 0.32;
-export const VEHICLE_PHOTO_ZOOM_GLYPH_OPACITY = 0.92;
-
-/*
- * THE CORRECTED EXPIRY — the end of validity is the driver's own reading of the paper, and nothing
- * upstream checks it beyond "not already past". So it is the one fact of the panel the moderator
- * can rewrite, and it is rewritten in place, on the line that states it, with the scan open beside
- * it — not in a form under the decisions, which would read as a setting of the approval rather
- * than as a correction of what was declared.
- */
-export const VEHICLE_DOCUMENT_EXPIRY_BLOCK_GAP = 5;
-export const VEHICLE_DOCUMENT_EXPIRY_LINE_GAP = 8;
-export const VEHICLE_DOCUMENT_EXPIRY_VALUE_GAP = 7;
-export const VEHICLE_DOCUMENT_EXPIRY_EDIT_SIZE = 30;
-export const VEHICLE_DOCUMENT_EXPIRY_EDIT_GLYPH_SIZE = 15;
-export const VEHICLE_DOCUMENT_EXPIRY_HINT_FONT_SIZE = FONT_SIZE_OVERLINE;
-/*
- * the badge saying this date is no longer the one the driver typed. It is a word and not just a
- * mark: the line it sits on already carries a date, and a lone glyph next to one would read as
- * decoration of that date rather than as a statement that it was overwritten
- */
-export const VEHICLE_DOCUMENT_EXPIRY_TAG_GAP = 4;
-export const VEHICLE_DOCUMENT_EXPIRY_TAG_FONT_SIZE = 11;
-export const VEHICLE_DOCUMENT_EXPIRY_TAG_GLYPH_SIZE = 11;
-export const VEHICLE_DOCUMENT_EXPIRY_TAG_PADDING_Y = 1;
-// the glyph leads, so the badge is trimmed a little tighter on that side than after the word
-export const VEHICLE_DOCUMENT_EXPIRY_TAG_PADDING_LEFT = 5;
-export const VEHICLE_DOCUMENT_EXPIRY_TAG_PADDING_RIGHT = 7;
-export const VEHICLE_DOCUMENT_EXPIRY_TAG_RADIUS = 99;
-/*
- * the tinted slot deepens under the pointer where the toolbar's own tinted slot darkens its edge
- * instead: this one is a lone square at the end of a line of text, with no neighbours for a change
- * of edge to read against
- */
-export const VEHICLE_DOCUMENT_EXPIRY_EDIT_HOVER_OPACITY = 0.15;
 
 /*
  * NOTIFICATION DELIVERY — a send's channels shown as one tinted slot per channel, each carrying a
@@ -1829,183 +1440,11 @@ export const NOTIFICATION_MESSAGE_LINE_HEIGHT = 1.35;
 export const NOTIFICATION_MESSAGE_CODE_FONT_SIZE = 11;
 export const NOTIFICATION_MESSAGE_CODE_LETTER_SPACING = 0.2;
 
-/*
- * the cards a sender and a recipient list open into. Wide enough for a full name and the state
- * beside it on one line — a name that wraps turns a two-line card into a four-line one.
- */
-export const NOTIFICATION_SENDER_CARD_WIDTH = 264;
 export const NOTIFICATION_RECIPIENTS_CARD_WIDTH = 300;
-export const NOTIFICATION_CARD_ROW_PADDING_Y = 8;
 export const NOTIFICATION_CARD_ROW_GAP = 10;
 /* the panel a failed cell opens, wide enough to explain the refusal before offering to retry it */
 export const NOTIFICATION_RETRY_POPOVER_WIDTH = 250;
 export const NOTIFICATION_RETRY_POPOVER_GAP = 8;
-
-/*
- * THE STATISTICS PAGE — one screen for every analytics view: a navigation rail on the left, then a
- * bar naming the open view with its period switch, then a column of chart cards. Under `lg` the rail
- * becomes a row of tabs above the content, since a rail would take a third of a tablet. On a wide
- * screen the rail and the bar stay pinned under the app bar while the cards scroll, so the view and
- * its period stay in sight on a page a dozen charts long. On a phone the cards run edge to edge.
- */
-export const STATISTICS_RAIL_WIDTH = 232;
-export const STATISTICS_LAYOUT_GAP = 20;
-export const STATISTICS_LAYOUT_GAP_COMPACT = 14;
-export const STATISTICS_CONTENT_GAP = 16;
-export const STATISTICS_CONTENT_GAP_MOBILE = 12;
-// the air a pinned band keeps under the app bar
-export const STATISTICS_STICKY_OFFSET = 12;
-// above the cards scrolling under the bar, far below the app bar and its menus
-export const STATISTICS_STICKY_Z_INDEX = 5;
-export const STATISTICS_RAIL_PADDING = 8;
-export const STATISTICS_RAIL_GAP = 2;
-export const STATISTICS_RAIL_TITLE_PADDING_TOP = 8;
-export const STATISTICS_RAIL_TITLE_PADDING_X = 10;
-export const STATISTICS_RAIL_TITLE_PADDING_BOTTOM = 6;
-export const STATISTICS_RAIL_ITEM_MIN_HEIGHT = 38;
-export const STATISTICS_RAIL_ITEM_PADDING_X = 12;
-export const STATISTICS_TAB_HEIGHT = 40;
-export const STATISTICS_TAB_PADDING_X = 14;
-export const STATISTICS_TABS_GAP = 6;
-export const STATISTICS_TOOLBAR_PADDING_X = 16;
-export const STATISTICS_TOOLBAR_PADDING_Y = 12;
-export const STATISTICS_TOOLBAR_PADDING_X_COMPACT = 14;
-export const STATISTICS_TOOLBAR_PADDING_Y_COMPACT = 10;
-export const STATISTICS_TOOLBAR_GAP = 16;
-export const STATISTICS_TOOLBAR_GAP_MOBILE = 10;
-export const STATISTICS_BLOCK_PADDING_TOP = 16;
-export const STATISTICS_BLOCK_PADDING_X = 18;
-export const STATISTICS_BLOCK_PADDING_BOTTOM = 18;
-export const STATISTICS_BLOCK_PADDING_TOP_COMPACT = 14;
-export const STATISTICS_BLOCK_PADDING_X_COMPACT = 16;
-export const STATISTICS_BLOCK_PADDING_BOTTOM_COMPACT = 16;
-export const STATISTICS_BLOCK_PADDING_X_MOBILE = 12;
-export const STATISTICS_BLOCK_GAP = 12;
-export const STATISTICS_BLOCK_GAP_COMPACT = 10;
-export const STATISTICS_BLOCK_HEADER_GAP = 10;
-export const STATISTICS_BLOCK_HEADER_GAP_MOBILE = 8;
-// the CSV action is a footnote of its card, a step under the button row — it grows back to a touch target on a phone
-export const STATISTICS_CSV_BUTTON_HEIGHT = 28;
-export const STATISTICS_CSV_BUTTON_HEIGHT_COMPACT = 30;
-export const STATISTICS_CSV_BUTTON_HEIGHT_MOBILE = 36;
-export const STATISTICS_CSV_BUTTON_PADDING_X = 9;
-export const STATISTICS_CSV_BUTTON_GAP = 5;
-export const STATISTICS_CSV_ICON_SIZE = 13;
-export const STATISTICS_CSV_BUTTON_HOVER_BORDER_OPACITY = 0.4;
-export const STATISTICS_SKELETON_BLOCKS = 3;
-export const STATISTICS_SKELETON_TITLE_WIDTH = 220;
-export const STATISTICS_SKELETON_TITLE_HEIGHT = 16;
-// a table wider than a phone scrolls inside its card rather than squeezing four columns into 360px
-export const STATISTICS_TABLE_MIN_WIDTH_MOBILE = 520;
-
-/*
- * THE SEGMENTED SWITCH — a handful of mutually exclusive values (a period) read as one control: a
- * recessed track holding its options, the picked one tinted rather than raised. On a phone the
- * track takes the width and its options share it, each a full touch target.
- */
-export const SEGMENTED_CONTROL_PADDING = 3;
-export const SEGMENTED_CONTROL_GAP = 2;
-export const SEGMENTED_CONTROL_ITEM_HEIGHT = 28;
-export const SEGMENTED_CONTROL_ITEM_PADDING_X = 11;
-export const SEGMENTED_CONTROL_SELECTED_OPACITY = 0.12;
-
-/*
- * THE DELTA CHIP — the change of a figure against the previous period, tinted by whether that change
- * is good news rather than by its sign: a falling failure rate is drawn in the brand tone.
- */
-export const DELTA_CHIP_HEIGHT = 22;
-export const DELTA_CHIP_PADDING_X = 9;
-export const DELTA_CHIP_BORDER_OPACITY = 0.2;
-
-/*
- * THE CHARTS — every plot is drawn at one height so the cards of a view line up, with its y-axis in
- * a fixed gutter the legend under the plot is aligned to, and three horizontal grid lines faint
- * enough to stay behind the series.
- */
-export const CHART_HEIGHT = 220;
-export const CHART_Y_AXIS_WIDTH = 52;
-export const CHART_Y_TICK_COUNT = 3;
-export const CHART_MARGIN_TOP = 8;
-export const CHART_MARGIN_RIGHT = 8;
-export const CHART_GAP = 8;
-export const CHART_LEGEND_GAP_X = 16;
-export const CHART_LEGEND_GAP_Y = 6;
-export const CHART_LEGEND_ITEM_GAP = 6;
-export const CHART_LEGEND_SWATCH_SIZE = 10;
-export const CHART_LEGEND_SWATCH_RADIUS = 2;
-export const CHART_BAR_RADIUS = 2;
-export const CHART_REFERENCE_LINE_DASH = '6 5';
-export const DONUT_CHART_SIZE = 190;
-export const DONUT_CHART_INNER_RADIUS = '59%';
-export const DONUT_CHART_OUTER_RADIUS = '92%';
-export const DONUT_CHART_GAP = 28;
-export const DONUT_CHART_LEGEND_MIN_WIDTH = 180;
-export const DONUT_CHART_LEGEND_GAP = 10;
-export const HEATMAP_CELL_HEIGHT = 22;
-export const HEATMAP_CELL_RADIUS = 3;
-export const HEATMAP_GAP = 6;
-export const HEATMAP_DAY_LABEL_WIDTH = 46;
-// an empty slot keeps the recessed ground; the faintest filled one still has to read as filled
-export const HEATMAP_MIN_OPACITY = 0.18;
-export const BAR_LIST_ROW_GAP = 10;
-export const BAR_LIST_LABEL_WIDTH = 220;
-export const BAR_LIST_LABEL_WIDTH_MOBILE = 132;
-export const BAR_LIST_VALUE_WIDTH = 64;
-export const BAR_LIST_VALUE_WIDTH_MOBILE = 52;
-export const BAR_LIST_EXTRA_WIDTH = 104;
-export const BAR_LIST_EXTRA_WIDTH_MOBILE = 78;
-export const BAR_LIST_TRACK_HEIGHT = 22;
-export const BAR_LIST_TRACK_RADIUS = 3;
-// a stack is one bar per bucket and takes half its slot; two bars side by side need the room between buckets
-export const CHART_BAR_CATEGORY_GAP_RATIO_STACKED = 0.48;
-export const CHART_BAR_CATEGORY_GAP_RATIO_GROUPED = 0.3;
-export const CHART_BAR_GAP_RATIO = 0.1;
-// the room a horizontally scrolling row of tabs keeps for the scrollbar under it
-export const STATISTICS_TABS_SCROLL_PADDING = 2;
-// the action a table row carries: a step under the button row, it sits on a 44px row
-export const STATISTICS_ROW_BUTTON_HEIGHT = 30;
-export const STATISTICS_ROW_BUTTON_PADDING_X = 12;
-export const STATISTICS_ROW_BUTTON_BORDER_OPACITY = 0.2;
-export const STATISTICS_ROW_ACTIONS_GAP = 8;
-
-/*
- * THE NO-SHOW THREAD — a booking's no-show report read as the exchange it was: the passenger's
- * account on the left, the answers to it (the driver's reply, then support's ruling) closing on the
- * right. The bubble keeps one squared corner on the side of its author, which is what ties a bubble
- * to the avatar beside it once several of them stack.
- */
-export const NO_SHOW_THREAD_GAP = 16;
-// the report's status chip stands beside the block title the way the page status stands beside its own
-export const NO_SHOW_TITLE_GAP = PAGE_HEAD_TITLE_GAP;
-export const NO_SHOW_MESSAGE_MAX_WIDTH = '78%';
-export const NO_SHOW_MESSAGE_GAP = 10;
-export const NO_SHOW_MESSAGE_BODY_GAP = 5;
-export const NO_SHOW_AVATAR_SIZE = 32;
-export const NO_SHOW_AVATAR_FONT_SIZE = 12;
-export const NO_SHOW_AUTHOR_GAP = 8;
-// the author's role is a tag, not a status: square-cornered and neutral, so it never reads as one
-export const NO_SHOW_ROLE_TAG_HEIGHT = 18;
-export const NO_SHOW_ROLE_TAG_PADDING_X = 6;
-export const NO_SHOW_ROLE_TAG_FONT_SIZE = 11;
-export const NO_SHOW_ROLE_TAG_LETTER_SPACING = '.3px';
-export const NO_SHOW_ROLE_TAG_RADIUS = 3;
-export const NO_SHOW_BUBBLE_PADDING_Y = 11;
-export const NO_SHOW_BUBBLE_PADDING_X = 14;
-export const NO_SHOW_BUBBLE_RADIUS = 8;
-export const NO_SHOW_BUBBLE_TAIL_RADIUS = 3;
-export const NO_SHOW_BUBBLE_TITLE_GAP = 4;
-// what the ruling did to the ride, set under the reason by a rule rather than as a second bubble
-export const NO_SHOW_BUBBLE_FOOTNOTE_GAP = 6;
-/*
- * the two parties who are not the passenger get solid discs rather than the accent gradient: the
- * driver a slate one, support the navy of the sidebar it works from — so the three voices of the
- * thread can be told apart before any name is read
- */
-export const NO_SHOW_DRIVER_AVATAR_COLOR = '#3A4759';
-export const NO_SHOW_SUPPORT_AVATAR_COLOR = '#1A2332';
-// the arrow between the two points of a booking's route, sized to the chip's caption, not to an icon slot
-export const REQUEST_ROUTE_CHIP_GAP = 6;
-export const REQUEST_ROUTE_CHIP_ARROW_SIZE = 13;
 
 /*
  * THE FORM WORKBENCH — the layout a long editorial form is written in: the summary rail naming its
@@ -2089,7 +1528,6 @@ export const FORM_WORKBENCH_FOOTER_PADDING_X = 16;
 export const FORM_WORKBENCH_PROGRESS_PADDING_Y = 14;
 export const FORM_WORKBENCH_PROGRESS_PADDING_X = 16;
 export const FORM_WORKBENCH_PROGRESS_GAP = 6;
-export const FORM_WORKBENCH_PROGRESS_POPOVER_WIDTH = 260;
 /*
  * THE PREVIEW COLUMN — what the section being filled produces, drawn next to it: the search result
  * and the social card for the SEO section, the page as the site will render it for the content and
@@ -2299,28 +1737,3 @@ export const CATEGORY_FORM_PATH_BOX_PADDING_Y = 12;
 export const CATEGORY_FORM_PATH_BOX_PADDING_X = 14;
 export const CATEGORY_FORM_PATH_BOX_GAP = 4;
 export const CATEGORY_FORM_ACTION_ICON_SIZE = 15;
-
-/*
- * The finance pages are dashboards — a row of figures, then a chart, then a table — so they are
- * capped and centred rather than stretched across a wide screen, where the eye has to travel
- * between a figure and the label under it. Shared by the pages rather than written on each: two
- * dashboards of the platform's own money reading at different widths looks like a mistake.
- */
-export const FINANCE_PAGE_MAX_WIDTH = 1400;
-/*
- * The overview reads in two columns — the figures and their chart, then the payments someone has
- * to chase — so the chase list stays in view next to the figures instead of under a long chart.
- * The side column keeps one width whatever the screen, which is what lets a row fit its payer, its
- * type, its amount and its button; under the breakpoint it would be squeezed, so it stacks.
- */
-export const FINANCE_OVERVIEW_SIDE_WIDTH = 440;
-export const FINANCE_OVERVIEW_GAP = 20;
-export const FINANCE_OVERVIEW_KPI_COLUMNS = 2;
-export const FINANCE_CHART_HEIGHT = 220;
-export const FINANCE_CHART_CARD_GAP = 12;
-export const FINANCE_CHART_CARD_PADDING_TOP = 16;
-export const FINANCE_CHART_CARD_PADDING_X = 18;
-export const FINANCE_CHART_CARD_PADDING_BOTTOM = 18;
-export const FINANCE_QUEUE_SKELETON_ROWS = 3;
-export const FINANCE_QUEUE_ROW_SIDE_GAP = 4;
-export const FINANCE_QUEUE_ROW_TITLE_GAP = 8;

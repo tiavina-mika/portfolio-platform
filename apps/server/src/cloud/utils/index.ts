@@ -9,7 +9,6 @@ import './_core/file.utils.cloud';
 import './_core/job.utils.cloud';
 import './_core/parse.utils.cloud';
 import './_core/role.utils.cloud';
-import './_core/snapshot.utils.cloud';
 import './_core/user.utils.cloud';
 import './_core/utils.cloud';
 

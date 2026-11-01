@@ -21,7 +21,7 @@ const isOutOfScope = (allowed: string[], object: Parse.Object): boolean => (
 /**
  * Refuses rows of a country the acting back-office agent's roles do not cover. The functions that
  * open an object by its id read with the master key, which the country triggers never narrow, so
- * knowing the id of a payment from another country would otherwise be enough to open it.
+ * knowing the id of a ride from another country would otherwise be enough to open it.
  *
  * A row that does not exist is left to the caller, which already answers it its own way. Costs one
  * read, and only for an agent whose roles are limited to some countries.

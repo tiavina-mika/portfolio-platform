@@ -13,7 +13,6 @@ import {
   appSchema,
   autoCompleteOptionSchema,
   confirmDeletionSchema,
-  periodRouteSearchParams,
   settingsRouteSearchParams,
   settingsSchema,
   tabAndCategoryRouteSearchParams,
@@ -31,7 +30,6 @@ export type ISettingsInput = z.infer<typeof settingsSchema>;
 export type ConfirmDeletionInput = z.infer<typeof confirmDeletionSchema>;
 export type ITabAndCategorySearchParams = z.infer<typeof tabAndCategoryRouteSearchParams>;
 export type ISettingsSearchParams = z.infer<typeof settingsRouteSearchParams>;
-export type IPeriodSearchParams = z.infer<typeof periodRouteSearchParams>;
 export type IAutocompleteOption = z.infer<typeof autoCompleteOptionSchema>;
 
 export type IAppInput = z.infer<typeof appSchema>;

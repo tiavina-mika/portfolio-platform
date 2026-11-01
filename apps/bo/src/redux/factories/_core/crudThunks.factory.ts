@@ -32,7 +32,7 @@ interface ICrudSliceActions<TEntity extends IEntityWithId> {
   clearCountSlice: ActionCreatorWithoutPayload;
   // omit when the entity has no single soft-delete (ex: vehicle, page section — bulk-toggle only)
   removeFromListSlice?: ActionCreatorWithPayload<string>;
-  // omit when the entity has no bulk-toggle (ex: payment, notification)
+  // omit when the entity has no bulk-toggle (ex: notification)
   removeManyFromListSlice?: ActionCreatorWithPayload<string[]>;
   /*
    * omit when the list endpoint does not report per-tab totals — the strip then carries labels
@@ -146,8 +146,8 @@ export const createCrudThunks = <TEntity extends IEntityWithId>(config: ICrudThu
 
   /*
    * list pages keep their rows once left (see `clearListUnlessLoadedWith`) — this is for the one
-   * that must not: the contacts inbox, whose ticket route tells an arrival from outside the inbox
-   * by its queue being empty
+   * that must not: the contacts page, whose detail route tells an arrival from outside the page
+   * by its list being empty
    */
   const onListLeave = (): AppThunkAction => {
     return (dispatch: AppDispatch): void => {

@@ -10,7 +10,7 @@
 
 ## What it is used for
 
-MMSDuck is the SMS provider. It sends the phone verification and password reset codes, ticket and new-device notices, and the SMS fallback of notifications.
+MMSDuck is the SMS provider. It sends the phone verification and password reset codes, new-device notices, and the SMS fallback of notifications.
 
 ## Where the code is
 
@@ -23,7 +23,6 @@ MMSDuck is the SMS provider. It sends the phone verification and password reset 
 | Variable | App | Purpose |
 |---|---|---|
 | `MMSDUCK_API_KEY` | server | Provider key (secret). Required and non-empty in `preProduction` and `production`; optional elsewhere |
-| `ANDROID_SMS_RETRIEVER_HASH` | server | Optional: hash appended to verification SMS so an Android app can read the code |
 
 ## Setup
 

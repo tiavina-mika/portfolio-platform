@@ -5,7 +5,6 @@ export type GlobalSearchEntityKey =
   'contact' |
   'user' |
   'project' |
-  'payment' |
   'notification';
 
 export type IGlobalSearchResults = Partial<Record<GlobalSearchEntityKey, Record<string, any>[]>>;

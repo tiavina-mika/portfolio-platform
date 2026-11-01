@@ -143,7 +143,7 @@ const NotificationRowDetail = ({
           </RowDetailFact>
         )}
         {/*
-          * what the send was about, as the reference a support ticket is written around — the
+          * what the send was about, as the reference a bug report is written around — the
           * payload is domain-owned, so only the id every entry carries is stated
           */}
         {payloadFacts.map((fact) => (

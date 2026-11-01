@@ -2,17 +2,12 @@ import {
   APP_NAME, DEFAULT_COUNTRY, DEFAULT_ROLES, HIGHEST_LEVEL_ROLES, LANGUAGE_CODES,
   LIVE_QUERY_SUBSCRIBABLE_CLASSES,
 } from '@shared/constants';
-import { CurrencyEnum } from '@shared/types';
-
-import type { ReportReason, ReportStatus } from '@/types/report.type';
 
 import { EnvEnum } from '@/types/app.type';
-import { ReportReasonEnum, ReportStatusEnum } from '@/types/report.type';
 
 export {
   APP_NAME, DEFAULT_COUNTRY, DEFAULT_ROLES, HIGHEST_LEVEL_ROLES,
 };
-
 
 /*
  * ---------------------------------------------- //
@@ -64,20 +59,6 @@ export const SKIP_SIGN_UP_VERIFICATION =
   IS_TEST && !IS_E2E && process.env.REAL_SIGN_UP_VERIFICATION !== 'true';
 
 /*
- * The one way to stop charging passengers without a redeployment.
- *
- * Under instant booking the debit is on the critical path of every single booking: there is no
- * longer a human step between the passenger paying and their seat being theirs, so a failure on
- * the money path is not an isolated bad click, it is every booking of the night. This closes the
- * booking tunnel at its entrance — the seats are never taken, nothing is debited, and the
- * passenger is told the ride cannot be booked right now.
- *
- * It is an operations lever, not a product option: no member ever sees it, no driver can set it,
- * and it is off by default. Set BOOKINGS_CLOSED=true on the server to pull it.
- */
-export const ARE_BOOKINGS_CLOSED = process.env.BOOKINGS_CLOSED === 'true';
-
-/*
  * ---------------------------------------------- //
  * ------------ Parse Server options ------------ //
  * ---------------------------------------------- //
@@ -86,8 +67,6 @@ export const USE_MASTER_KEY = { useMasterKey: true };
 export const WITHOUT_CASCADE_SAVE = { cascadeSave: false };
 export const USE_MASTER_KEY_WITHOUT_CASCADE_SAVE = { useMasterKey: true, cascadeSave: false };
 export const USE_READ_PREFERENCE = { readPreference: 'SECONDARY' };
-
-export const DEFAULT_CURRENCY = DEFAULT_COUNTRY.currency as CurrencyEnum;
 
 export const DEFAULT_QUERY_LIMIT = 50;
 
@@ -199,17 +178,9 @@ export const SMS_UNREACHABLE_COUNTRY_CODE = 'unreachable_country';
 export const SMS_OUT_OF_CREDIT_ALERT_INTERVAL_SECONDS = 6 * 60 * 60;
 
 /**
- * Shape of the Android app hash the SMS Retriever API looks for at the end of a verification SMS:
- * 11 base64 characters. Anything else in the env var is a copy-paste mistake — appending it would
- * only add noise to every SMS without ever triggering the automatic read.
- */
-export const SMS_RETRIEVER_APP_HASH_PATTERN = /^[A-Za-z0-9+/]{11}$/;
-
-/**
  * The most characters a fixed SMS template may reach once its variables are filled with the longest
  * realistic values. A GSM-7 segment holds 160 characters and an operator bills each extra segment:
- * 20 are kept free for the sender prefix the provider prepends and for the Android app hash
- * appended to a verification code (a blank line, then its 11 characters). A character outside the
+ * 20 are kept free for the sender prefix the provider prepends. A character outside the
  * GSM-7 set (a curly apostrophe, for instance) turns the whole message into UCS-2, 70 characters
  * per segment, so the templates stay inside that set as well.
  */
@@ -285,30 +256,18 @@ export const collections = {
   Category: 'Category',
   Contact: 'Contact',
   App: 'App',
-  Ride: 'Ride',
-  Request: 'Request',
-  Vehicle: 'Vehicle',
   Notification: 'Notification',
-  Payment: 'Payment',
   User: '_User',
-  Rating: 'Rating',
-  Report: 'Report',
   UserAuditLog: 'UserAuditLog',
   RoleAuditLog: 'RoleAuditLog',
   SessionAuditLog: 'SessionAuditLog',
   UserSession: 'UserSession',
-  PushReceipt: 'PushReceipt',
   ContentVersion: 'ContentVersion',
   Invitation: 'Invitation',
   ImpersonationSession: 'ImpersonationSession',
-  TicketMessage: 'TicketMessage',
   MfaAuditLog: 'MfaAuditLog',
   UserModerationLog: 'UserModerationLog',
-  PenaltyLog: 'PenaltyLog',
   NotificationResend: 'NotificationResend',
-  RideShare: 'RideShare',
-  SosAlert: 'SosAlert',
-  Counter: 'Counter',
 };
 
 /**
@@ -336,102 +295,9 @@ export const IMPERSONATION_SESSION_TTL_MINUTES = 30;
  */
 export const IMPERSONATION_UI_RIGHT = 'impersonation';
 
-/**
- * Number of distinct members with an unresolved report on the same target before notifying admins.
- */
-export const REPORT_ADMIN_NOTIFICATION_THRESHOLD = 3;
-
-/**
- * Number of distinct members with an unresolved report on the same target before applying a
- * preventive suspension. Distinct authors, not reports: one member repeating the same report every
- * day must not be able to suspend someone alone.
- */
-export const REPORT_AUTO_SUSPENSION_THRESHOLD = 5;
-
-/**
- * Duration of the preventive suspension applied when REPORT_AUTO_SUSPENSION_THRESHOLD is reached.
- */
-export const REPORT_AUTO_SUSPENSION_DAYS = 7;
-
-/**
- * Window during which a user cannot report the same target twice.
- */
-export const REPORT_DUPLICATE_WINDOW_HOURS = 24;
-
-/**
- * Reports a member may file per window (all targets together). Generous for honest use, tight enough
- * to stop a script flooding the moderation queue.
- */
-export const REPORT_RATE_LIMIT_PER_USER = 10;
-/**
- * Most open reports read to count the distinct members behind a target's complaints. Far above the
- * suspension threshold, so reaching it means the threshold was crossed long ago.
- */
-export const UNRESOLVED_REPORTS_SCAN_LIMIT = 200;
-export const REPORT_RATE_LIMIT_WINDOW = '1 h';
-export const REPORT_RATE_LIMIT_PREFIX = 'ratelimit:createReport';
-
-/**
- * Report statuses that still owe someone a decision. Grouped here rather than redeclared next to
- * each query that needs them: the ride list, the review moderation screen and the report queue all
- * ask the same question of a report, and a list that drifted from the others would silently show a
- * different backlog than the one the operator is being told to work through.
- */
-export const OPEN_REPORT_STATUSES: ReportStatus[] = [
-  ReportStatusEnum.PENDING,
-  ReportStatusEnum.UNDER_REVIEW,
-];
-
 /** Back-office path of the report queue (`<server>/<path>`), linked from the staff alerts. */
-export const REPORT_BO_PATH = 'signalements';
 
-/**
- * Reasons that touch someone's physical safety or money rather than the quality of a piece of
- * content. They set the order the report queue opens in and drive the "handle first" counter, so
- * they are a single list here rather than a judgement made again at each call site.
- */
-export const URGENT_REPORT_REASONS: ReportReason[] = [
-  ReportReasonEnum.HARASSMENT,
-  ReportReasonEnum.DANGEROUS_DRIVING,
-  ReportReasonEnum.FRAUD,
-];
-
-/**
- * How many rows each list of the back-office dashboard carries. The dashboard is read at a glance,
- * not worked through: an alert card names the few latest items and links to the full queue, and the
- * recent activity columns stay short enough for the three of them to sit side by side.
- */
-export const DASHBOARD_ALERT_ROWS_LIMIT = 3;
 export const DASHBOARD_RECENT_ROWS_LIMIT = 4;
-
-/**
- * Duration of the suspension a back-office operator applies from a report file. Same length as the
- * automatic one so a target does not get a longer or shorter ban depending on whether a human or
- * the threshold rule reached the decision.
- */
-export const REPORT_MANUAL_SUSPENSION_DAYS = REPORT_AUTO_SUSPENSION_DAYS;
-
-/**
- * The reasons a review can actually be reported for. The mobile report dialog offers exactly
- * these on a review, so the back-office filter that narrows the moderation list by reason offers
- * the same ones — a panel listing the others would be filters that can never match a row.
- */
-export const RATING_REPORT_REASONS: ReportReason[] = [
-  ReportReasonEnum.FAKE_REVIEW,
-  ReportReasonEnum.INAPPROPRIATE_CONTENT,
-  ReportReasonEnum.SPAM,
-  ReportReasonEnum.HARASSMENT,
-  ReportReasonEnum.PERSONAL_DATA,
-  ReportReasonEnum.COERCED_REVIEW,
-  ReportReasonEnum.OTHER,
-];
-
-/**
- * Duration of the suspension an operator applies to the author of a review from the moderation
- * list. Same length as the one reached from a report file, so the person receiving it gets the
- * same block whichever screen the decision was made on.
- */
-export const RATING_AUTHOR_SUSPENSION_DAYS = REPORT_AUTO_SUSPENSION_DAYS;
 
 /**
  * Default duration of a temporary ban when no explicit duration is provided.
@@ -510,60 +376,6 @@ export const DISABLE_USER_ACCOUNT_CONFIRMATION = IS_LOCAL || IS_TEST;
  */
 export const ENFORCE_HIGHEST_ROLES_MFA = !IS_LOCAL && !IS_TEST;
 
-export enum ERRORS {
-  NOT_ENOUGH_BALANCE = 'Not enough balance',
-  PAYMENT_FAILED = 'Payment failed',
-  PAYER_PHONE_NOT_FOUND = 'Payer phone not found',
-  RECEIVER_PHONE_NOT_FOUND = 'Receiver phone not found',
-  PAYMENT_NOT_FOUND = 'Payment not found',
-  PAYMENT_NOT_FAILED = 'Only a failed payment can be retried',
-  PAYMENT_NOT_PENDING = 'Only a payment still waiting for the operator can be checked again',
-  PAYMENT_NOT_SUCCESS = 'Only a successful payment can be reversed',
-  PAYMENT_NOT_REFUNDABLE = 'Only a settled passenger collection can be refunded',
-  PAYMENT_ALREADY_REFUNDED = 'This payment has already been refunded in full',
-  /*
-   * a booking still standing is paid out to its driver on the whole fare: refunding its collection
-   * by hand would have the platform pay the same seat twice. It is cancelled instead.
-   */
-  PAYMENT_DRIVER_ALREADY_PAID = 'The driver of this booking was already paid for the ride: it can no longer be refunded by hand',
-  /*
-   * a payout only goes to a number the driver proved to control with a code: the ride stays waiting
-   * for its payout until they confirm one, instead of sending money to an unproven number
-   */
-  PAYOUT_PHONE_NOT_VERIFIED = 'The payout number of this ride was never confirmed by its driver',
-  PAYMENT_REFUND_AMOUNT_TOO_HIGH = 'A refund cannot exceed what is left of the payment',
-  RECEIPT_NOT_AVAILABLE = 'Only a successful payment has a receipt',
-  PAYMENT_CONFIRMATION_TIMEOUT = 'The payment was not confirmed in time',
-  /*
-   * the call to the operator never came back, so nothing tells which of its transactions this was:
-   * support has to check the operator's statement before anything else is done with it
-   */
-  PAYMENT_OUTCOME_UNKNOWN = 'The operator never answered: check its statement before retrying',
-  PAYMENT_AMOUNT_MISMATCH = 'The operator confirmed another amount than the one requested',
-  /* the first attempt of a payment went through at the operator after all: sending it again would pay twice */
-  PAYMENT_ALREADY_SETTLED_AT_OPERATOR = 'The first attempt of this payment went through at the operator',
-  /* the first attempt of a payment is still waiting at the operator: sending it again would pay twice */
-  PAYMENT_STILL_PENDING_AT_OPERATOR = 'The first attempt of this payment is still waiting at the operator',
-  /* another payout of the same ride went through, or is still waiting for its operator */
-  PAYMENT_RIDE_ALREADY_PAID = 'This ride has already been paid to its driver',
-  /*
-   * the booking this collection was for is refused, expired or cancelled: paying it now would
-   * debit a passenger who has no seat, and the money would answer to no booking
-   */
-  BOOKING_CLOSED_BOOK_AGAIN = 'This booking is closed: book the ride again instead of paying again',
-  /* another refund of the same booking is already under way, or it has already been given back */
-  REQUEST_REFUND_ALREADY_CLAIMED = 'This booking is already being refunded',
-  /* nothing was ever collected for this booking, so there is no amount a refund could come out of */
-  REQUEST_COLLECTION_NOT_FOUND = 'No settled collection found for this booking',
-  REQUEST_NOT_FOUND = 'Booking not found',
-  /* settled by someone else meanwhile, or never charged: neither confirming nor refunding applies */
-  REQUEST_NOT_CHARGED_PENDING = 'This booking is not a charged booking waiting to be settled',
-  /* the booking stays open and listed, so the refund can be tried again or the seat confirmed */
-  REQUEST_REFUND_REFUSED = 'The operator refused the refund: the booking was left open',
-  /* writing off a driver's debt gives up real revenue: nothing is erased without a recorded why */
-  PENALTY_WRITE_OFF_REASON_REQUIRED = 'A reason is required to write off a driver penalty'
-}
-
 export const DISABLE_TRIGGERS_CONTEXT = {
   context: {
     disableBeforeSave: true,
@@ -615,16 +427,6 @@ export const CREDENTIAL_RATE_LIMITED_PATHS = [
 export const BROADCAST_UI_RIGHT = 'broadcast';
 
 /**
- * BO "ui" right gating the Finance module — must match apps/bo's `UIRoleEnum.FINANCE`
- * (apps/bo/src/types/_core/role.type.ts).
- *
- * Kept independent from the `find` right on Payment on purpose: a role may be allowed to look up
- * an individual payment for support without seeing the platform's own retained revenue, its
- * drivers' outstanding debt or its reconciliation backlog.
- */
-export const FINANCE_UI_RIGHT = 'finance';
-
-/**
  * BO "ui" right gating the "Divers" migrations tab (data migration, recycle bin and orphaned
  * editor files purge) — must match apps/bo's `UIRoleEnum.MIGRATIONS`.
  *
@@ -644,12 +446,6 @@ export const TESTS_UI_RIGHT = 'tests';
  * `UIRoleEnum.CRON`.
  */
 export const CRON_UI_RIGHT = 'cron';
-
-/**
- * BO "ui" right gating the overview statistics — must match apps/bo's `UIRoleEnum.STATISTICS`. The
- * per-domain statistics stay gated by the `find` right on their own collection.
- */
-export const STATISTICS_UI_RIGHT = 'statistics';
 
 /**
  * BO "ui" right letting a role manage the staff without holding a highest role: invite a colleague,

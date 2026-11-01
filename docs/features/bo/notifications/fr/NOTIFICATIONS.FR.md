@@ -15,7 +15,7 @@
 Menu de gauche → groupe **Communauté** → **Notifications**. Adresse : `/notifications`.
 
 À ne pas confondre avec la **cloche** de la barre du haut, qui résume ce qui est nouveau dans le back-office
-(contacts, utilisateurs, signalements, paiements).
+(contacts, utilisateurs).
 
 ## À quoi sert cette page
 
@@ -53,7 +53,6 @@ droits.
 
 ## Points d'attention / limites actuelles
 
-- Les types et statuts (trajet, réservation, véhicule, avis…) viennent d'une application de covoiturage ;
-  sur le portfolio, les seules notifications réellement émises sont celles liées aux comptes, aux demandes
+- Sur le portfolio, les seules notifications réellement émises sont celles liées aux comptes, aux messages
   de contact et aux annonces.
 - Le renvoi par SMS dépend d'un fournisseur externe qui doit être configuré.
