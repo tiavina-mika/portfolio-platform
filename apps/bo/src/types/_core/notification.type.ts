@@ -35,7 +35,7 @@ export interface INotificationAttributes extends IUserDefaultRecord {
   /**
    * Whether EVERY recipient has opened it. Derived from `receiverSeenIds` by the server rather
    * than written directly — it used to be the only record of reading, which meant the first of
-   * four passengers to open a send marked it read for the other three as well.
+   * four recipients to open a send marked it read for the other three as well.
    */
   receiverSeen?: boolean;
   receiverSeenAt?: DateType;

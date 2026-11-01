@@ -80,7 +80,7 @@ export type NotificationChannelStatus = `${NotificationChannelStatusEnum}`;
 
 /**
  * One recipient's outcome on one channel. `to` is a list, and the same send can reach one
- * passenger and fail on the next, so the outcome is stored per recipient rather than aggregated
+ * recipient and fail on the next, so the outcome is stored per recipient rather than aggregated
  * into a single value that would hide the half that failed.
  */
 export type NotificationChannelRecipient = {

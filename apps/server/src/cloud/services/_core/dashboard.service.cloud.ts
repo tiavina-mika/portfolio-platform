@@ -28,9 +28,9 @@ const kpiProviders: Registered<DashboardKpiProvider>[] = [];
 const recentActivityProviders: Registered<DashboardRecentActivityProvider>[] = [];
 
 /**
- * Lets each business domain (ride/request, or any other transaction-based domain)
+ * Lets each business domain
  * contribute its own dashboard KPIs/recent activity, without this generic
- * service knowing about domain-specific types (e.g. ride.type.ts).
+ * service knowing about domain-specific types (e.g. project.type.ts).
  * @param className the collection the provider reads, whose `find` right gates it
  */
 export const registerDashboardKpiProvider = (className: string, provider: DashboardKpiProvider): void => {
@@ -59,7 +59,7 @@ const getUserDashboardKpis = async ({ weekAgo }: IDashboardKpiContext): Promise<
   /*
    * staff accounts (any Parse.Role, including dynamically created custom roles) are excluded
    * from user-facing counts even when they also hold a real platform account (e.g. an admin
-   * who also rides as a passenger)
+   * who also owns a project)
    */
   const staffUserIds = await getAllRoleUserIds();
 

@@ -28,10 +28,9 @@ export const getNotificationTypeLabelByValue = (type: NotificationType): string 
 };
 
 /**
- * Open registry: the ride/request domain (and any future domain producing extra content
- * for the generic user detail page) registers additional UI here instead of `pages/users/User.tsx`
- * hard-importing ride/request stats and penalty rules, so the core user page stays reusable in an
- * app that has no rides at all.
+ * Open registry: a business domain (any domain producing extra content for the generic user
+ * detail page) registers additional UI here instead of `pages/users/User.tsx` hard-importing its
+ * stats and rules, so the core user page stays reusable in an app that has no such domain.
  */
 export type UserExtensionSlot = 'headerFact';
 
@@ -56,8 +55,8 @@ export const getUserExtensions = (slot: UserExtensionSlot): UserExtension[] =>
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
 /**
- * Open registry: whole blocks of the user detail page contributed by a domain (the vehicles an
- * account owns, the rides it drove or booked…), placed among the page's own blocks by `group` and
+ * Open registry: whole blocks of the user detail page contributed by a domain (the projects an
+ * account owns…), placed among the page's own blocks by `group` and
  * `order`. Each one brings the hook reading what the block needs for the account — called on every
  * render of the page, in registration order, which the registry never changes once the app runs.
  */
@@ -79,7 +78,7 @@ export const getUserSectionExtensions = (): UserSectionExtension[] => [...userSe
 
 /**
  * Open registry: extra columns for the "audit log" (recycle bin) tab of the generic users list —
- * lets a domain (ride/request) contribute columns without `pages/users/Users.tsx` importing
+ * lets a domain contribute columns without `pages/users/Users.tsx` importing
  * domain-specific audit log fields directly.
  */
 export type UserAuditLogColumn = {
@@ -99,7 +98,7 @@ export const getUserAuditLogColumns = (): UserAuditLogColumn[] =>
 
 /**
  * Open registry: extra columns for the generic users list (`pages/_core/users/Users.tsx`) — lets a
- * domain contribute a per-row fact of its own (the vehicles an account owns) without the core list
+ * domain contribute a per-row fact of its own (the projects an account owns) without the core list
  * importing anything domain-specific. The registered columns are inserted as a block between the
  * user's rating and the completeness of their profile.
  */
