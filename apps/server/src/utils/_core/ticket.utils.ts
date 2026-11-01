@@ -8,8 +8,6 @@ import { TicketPriorityEnum, type ContactObjectIds } from '@/types/ticket.type';
 
 /** The `createContact` parameter that carries each kind of attached record. */
 const CONTACT_OBJECT_ID_KEYS: Record<TicketObjectEnum, keyof ContactObjectIds> = {
-  [TicketObjectEnum.RIDE]: 'rideId',
-  [TicketObjectEnum.BOOKING]: 'requestId',
   [TicketObjectEnum.USER]: 'reportedUserId',
 };
 
@@ -25,9 +23,8 @@ export const getContactPriority = (subject: TicketSubjectEnum, reason?: string):
 
 /**
  * Whether the records sent with a request are the ones its subject attaches: every required one
- * present, and none the subject does not take — a ride on an account question would only mislead
- * the agent reading it. A passenger's booking travels with the ride it was made on, so it is
- * accepted beside a ride as well as on its own subject.
+ * present, and none the subject does not take — a reported user on an account question would only
+ * mislead the agent reading it.
  * @param subject what the request is about
  * @param ids the record ids the caller sent
  * @returns whether the set of records fits the subject
@@ -36,7 +33,6 @@ export const areContactObjectsValid = (subject: TicketSubjectEnum, ids: ContactO
   const objects = TICKET_SUBJECT_OBJECTS[subject] ?? [];
   const allowedKeys = new Set(objects.map(({ object }) => CONTACT_OBJECT_ID_KEYS[object]));
 
-  if (ids.rideId && allowedKeys.has('rideId')) allowedKeys.add('requestId');
 
   const hasStrayObject = Object.values(CONTACT_OBJECT_ID_KEYS)
     .some((key) => !!ids[key] && !allowedKeys.has(key));

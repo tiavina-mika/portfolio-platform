@@ -17,7 +17,6 @@ import {
   SKELETON_ENTRY_COUNT, SKELETON_ENTRY_HEIGHT,
 } from '@/constants/_core/ui/ui.constants';
 import ContactDetailsCard from '@/containers/_core/contacts/ContactDetailsCard';
-import ContactObjectsCard from '@/containers/_core/contacts/ContactObjectsCard';
 import TicketPrioritySelect from '@/containers/_core/tickets/TicketPrioritySelect';
 import TicketStatusChip from '@/containers/_core/tickets/TicketStatusChip';
 import TicketStatusSelect from '@/containers/_core/tickets/TicketStatusSelect';
@@ -90,9 +89,8 @@ const ContactContextPanel = ({
 
   return (
     <Box css={classes.column}>
-      {/* what the ticket is comes first, then the object it points at, then what was asked before */}
+      {/* what the ticket is comes first, then what was asked before */}
       <ContactDetailsCard contact={contact} />
-      <ContactObjectsCard contact={contact} />
 
       <Card css={classes.card}>
         <Typography css={classes.title} variant="overline">

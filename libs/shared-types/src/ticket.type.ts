@@ -4,10 +4,6 @@
  * language, and so a label can be reworded without touching the tickets already written.
  */
 export enum TicketSubjectEnum {
-  BOOKING = 'booking',
-  RIDE_ISSUE = 'ride_issue',
-  PUBLISH = 'publish',
-  LOST_ITEM = 'lost_item',
   SAFETY = 'safety',
   REPORT_USER = 'report_user',
   VERIFICATION = 'verification',
@@ -20,7 +16,6 @@ export type TicketSubject = `${TicketSubjectEnum}`;
 
 /** The headings the subjects are listed under, in the app's subject picker. */
 export enum TicketSubjectGroupEnum {
-  RIDE = 'ride',
   TRUST = 'trust',
   ACCOUNT_AND_APP = 'account_and_app'
 }
@@ -28,12 +23,9 @@ export enum TicketSubjectGroupEnum {
 export type TicketSubjectGroup = `${TicketSubjectGroupEnum}`;
 
 /**
- * The kinds of record a request can be attached to ("the ride concerned", "the booking
- * concerned"…). Which ones a subject asks for is declared in `TICKET_SUBJECT_OBJECTS`.
+ * The kinds of record a request can be attached to ("the user reported"…). Which ones a subject asks for is declared in `TICKET_SUBJECT_OBJECTS`.
  */
 export enum TicketObjectEnum {
-  RIDE = 'ride',
-  BOOKING = 'booking',
   USER = 'user'
 }
 

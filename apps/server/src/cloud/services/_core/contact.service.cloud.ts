@@ -88,7 +88,7 @@ export const countRecentTicketsByPhoneService = async (phone: string, since: Dat
 
 /**
  * Checks the records a request is attached to against its author and returns them as pointers.
- * Rides and bookings are the domain's business, so the domain registers the resolver; with none
+ * The records are the domain's business, so the domain registers the resolver; with none
  * registered, a request can attach nothing.
  */
 type ContactObjectsResolver = (
@@ -104,8 +104,8 @@ export const registerContactObjectsResolver = (resolver: ContactObjectsResolver)
 };
 
 /**
- * The records a request is about, once proven to be its author's own: a ticket pointing at
- * someone else's ride would hand that record to whoever reads the ticket.
+ * The records a request is about, once checked against its author: a ticket must not point at a
+ * record its author has no business naming.
  * @param author the member filing the request
  * @param ids the record ids they sent
  * @param locale the language of the error, when a record is not theirs
@@ -252,7 +252,7 @@ export const getContactByIdService = async (
      */
     .include([
       'user', 'updatedBy', 'assignedTo', 'seenBy', 'lastSeenBy',
-      'ride', 'request', 'reportedUser', ...include,
+      'reportedUser', ...include,
     ])
     .first(USE_MASTER_KEY);
 

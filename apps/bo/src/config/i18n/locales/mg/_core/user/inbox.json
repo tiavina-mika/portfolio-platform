@@ -94,10 +94,6 @@
     "subject": "Lohahevitra",
     "reason": "Antony",
     "subjects": {
-      "booking": "Famandrihana",
-      "ride_issue": "Olana nandritra ny dia",
-      "publish": "Famoahana dia",
-      "lost_item": "Zavatra adino",
       "safety": "Fiarovana",
       "report_user": "Hitatitra mpampiasa",
       "verification": "Fanamarinana",
@@ -106,33 +102,6 @@
       "other": "Hafa"
     },
     "reasons": {
-      "booking": {
-        "no_response": "Tsy nisy valiny",
-        "refused": "Nolavina",
-        "invitation": "Fanasana",
-        "change": "Hanova",
-        "cancel": "Hanafoana"
-      },
-      "ride_issue": {
-        "driver_no_show": "Tsy tonga ny mpamily",
-        "delay": "Tara",
-        "route_changed": "Niova ny lalana",
-        "passenger_no_show": "Tsy tonga ny mpandeha",
-        "different_vehicle": "Fiara hafa",
-        "different_price": "Vidiny hafa no nangatahina"
-      },
-      "publish": {
-        "price": "Vidiny",
-        "commission": "Kaomisiona",
-        "seats": "Toerana",
-        "change": "Hanova",
-        "cancel": "Hanafoana",
-        "passengers": "Mpandeha"
-      },
-      "lost_item": {
-        "lost": "Very tamiko",
-        "found": "Hitako"
-      },
       "safety": {
         "inappropriate_behavior": "Fitondran-tena tsy mety",
         "dangerous_driving": "Fitondrana mampidi-doza",
@@ -169,10 +138,6 @@
         "other": "Hafa"
       }
     },
-    "objects": {
-      "title": "Dia mifandray",
-      "ride": "Dia"
-    },
     "details": {
       "title": "Antsipiriany momba ny fangatahana",
       "reference": "Laharana",
@@ -184,8 +149,6 @@
       "subject": "Lohahevitra",
       "reason": "Antony",
       "reportedUser": "Mpampiasa notaterina",
-      "relatedRequest": "Fangatahana mifandray",
-      "openBooking": "Hijery ny famandrihana",
       "firstOpened": "Fanokafana voalohany",
       "lastOpened": "Fanokafana farany",
       "visits": "Fidirana",

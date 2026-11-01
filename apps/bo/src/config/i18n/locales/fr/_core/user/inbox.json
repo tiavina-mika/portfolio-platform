@@ -94,10 +94,6 @@
     "subject": "Sujet",
     "reason": "Motif",
     "subjects": {
-      "booking": "Réservation",
-      "ride_issue": "Problème pendant un trajet",
-      "publish": "Publier un trajet",
-      "lost_item": "Objet oublié",
       "safety": "Sécurité",
       "report_user": "Signaler un utilisateur",
       "verification": "Vérification",
@@ -106,33 +102,6 @@
       "other": "Autre"
     },
     "reasons": {
-      "booking": {
-        "no_response": "Pas de réponse",
-        "refused": "Refusée",
-        "invitation": "Invitation",
-        "change": "Modifier",
-        "cancel": "Annuler"
-      },
-      "ride_issue": {
-        "driver_no_show": "Chauffeur absent",
-        "delay": "Retard",
-        "route_changed": "Itinéraire changé",
-        "passenger_no_show": "Passager absent",
-        "different_vehicle": "Véhicule différent",
-        "different_price": "Prix demandé différent"
-      },
-      "publish": {
-        "price": "Prix",
-        "commission": "Commission",
-        "seats": "Places",
-        "change": "Modifier",
-        "cancel": "Annuler",
-        "passengers": "Passagers"
-      },
-      "lost_item": {
-        "lost": "Je l'ai perdu",
-        "found": "Je l'ai trouvé"
-      },
       "safety": {
         "inappropriate_behavior": "Comportement inapproprié",
         "dangerous_driving": "Conduite dangereuse",
@@ -169,10 +138,6 @@
         "other": "Autre"
       }
     },
-    "objects": {
-      "title": "Trajet lié",
-      "ride": "Trajet"
-    },
     "details": {
       "title": "Détails de la demande",
       "reference": "Référence",
@@ -184,8 +149,6 @@
       "subject": "Sujet",
       "reason": "Motif",
       "reportedUser": "Utilisateur signalé",
-      "relatedRequest": "Demande liée",
-      "openBooking": "Voir la réservation",
       "firstOpened": "Première ouverture",
       "lastOpened": "Dernière ouverture",
       "visits": "Visites",

@@ -36,16 +36,11 @@ export type CreatedContact = {
 
 /** The ids of the records an app request is attached to, as `createContact` receives them. */
 export type ContactObjectIds = {
-  rideId?: string;
-  /** the booking itself, or the passenger's booking on `rideId` */
-  requestId?: string;
   reportedUserId?: string;
 };
 
 /** The same records once checked against their author, as the pointers the ticket stores. */
 export type ContactObjects = {
-  ride?: Parse.Object;
-  request?: Parse.Object;
   reportedUser?: Parse.Object;
 };
 

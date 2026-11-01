@@ -6,15 +6,6 @@ import { TicketObjectEnum, TicketSubjectEnum, TicketSubjectGroupEnum } from '@sh
  */
 export const TICKET_SUBJECT_GROUPS = [
   {
-    group: TicketSubjectGroupEnum.RIDE,
-    subjects: [
-      TicketSubjectEnum.BOOKING,
-      TicketSubjectEnum.RIDE_ISSUE,
-      TicketSubjectEnum.PUBLISH,
-      TicketSubjectEnum.LOST_ITEM,
-    ],
-  },
-  {
     group: TicketSubjectGroupEnum.TRUST,
     subjects: [TicketSubjectEnum.SAFETY, TicketSubjectEnum.REPORT_USER, TicketSubjectEnum.VERIFICATION],
   },
@@ -32,12 +23,6 @@ export const TICKET_SUBJECT_GROUPS = [
  * dilute the back-office statistics.
  */
 export const TICKET_SUBJECT_REASONS: Record<TicketSubjectEnum, readonly string[]> = {
-  [TicketSubjectEnum.BOOKING]: ['cancelled_by_driver', 'invitation', 'change', 'cancel'],
-  [TicketSubjectEnum.RIDE_ISSUE]: [
-    'driver_no_show', 'delay', 'route_changed', 'passenger_no_show', 'different_vehicle', 'different_price',
-  ],
-  [TicketSubjectEnum.PUBLISH]: ['price', 'commission', 'seats', 'change', 'cancel', 'passengers'],
-  [TicketSubjectEnum.LOST_ITEM]: ['lost', 'found'],
   [TicketSubjectEnum.SAFETY]: [
     'inappropriate_behavior', 'dangerous_driving', 'accident', 'harassment', 'other',
   ],
@@ -69,14 +54,6 @@ type TicketSubjectObject = {
  * verification or an account question is about the account itself).
  */
 export const TICKET_SUBJECT_OBJECTS: Partial<Record<TicketSubjectEnum, readonly TicketSubjectObject[]>> = {
-  [TicketSubjectEnum.BOOKING]: [{ object: TicketObjectEnum.BOOKING, required: true }],
-  [TicketSubjectEnum.RIDE_ISSUE]: [{ object: TicketObjectEnum.RIDE, required: true }],
-  [TicketSubjectEnum.PUBLISH]: [{ object: TicketObjectEnum.RIDE, required: false }],
-  [TicketSubjectEnum.LOST_ITEM]: [{ object: TicketObjectEnum.RIDE, required: true }],
-  [TicketSubjectEnum.SAFETY]: [{ object: TicketObjectEnum.RIDE, required: false }],
-  [TicketSubjectEnum.REPORT_USER]: [
-    { object: TicketObjectEnum.USER, required: true },
-    { object: TicketObjectEnum.RIDE, required: false },
-  ],
+  [TicketSubjectEnum.REPORT_USER]: [{ object: TicketObjectEnum.USER, required: true }],
 };
 

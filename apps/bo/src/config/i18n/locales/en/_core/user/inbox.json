@@ -94,10 +94,6 @@
     "subject": "Subject",
     "reason": "Reason",
     "subjects": {
-      "booking": "Booking",
-      "ride_issue": "Problem during a ride",
-      "publish": "Publishing a ride",
-      "lost_item": "Lost item",
       "safety": "Safety",
       "report_user": "Report a user",
       "verification": "Verification",
@@ -106,33 +102,6 @@
       "other": "Other"
     },
     "reasons": {
-      "booking": {
-        "no_response": "No response",
-        "refused": "Refused",
-        "invitation": "Invitation",
-        "change": "Change",
-        "cancel": "Cancel"
-      },
-      "ride_issue": {
-        "driver_no_show": "Driver didn't show up",
-        "delay": "Delay",
-        "route_changed": "Route changed",
-        "passenger_no_show": "Passenger didn't show up",
-        "different_vehicle": "Different vehicle",
-        "different_price": "Different price asked"
-      },
-      "publish": {
-        "price": "Price",
-        "commission": "Commission",
-        "seats": "Seats",
-        "change": "Change",
-        "cancel": "Cancel",
-        "passengers": "Passengers"
-      },
-      "lost_item": {
-        "lost": "I lost it",
-        "found": "I found it"
-      },
       "safety": {
         "inappropriate_behavior": "Inappropriate behavior",
         "dangerous_driving": "Dangerous driving",
@@ -169,10 +138,6 @@
         "other": "Other"
       }
     },
-    "objects": {
-      "title": "Related trip",
-      "ride": "Ride"
-    },
     "details": {
       "title": "Ticket details",
       "reference": "Reference",
@@ -184,8 +149,6 @@
       "subject": "Subject",
       "reason": "Reason",
       "reportedUser": "Reported user",
-      "relatedRequest": "Related request",
-      "openBooking": "Open the booking",
       "firstOpened": "First opened",
       "lastOpened": "Last opened",
       "visits": "Visits",

@@ -10,8 +10,6 @@ export type IncludedRecord<T> = T & { objectId: string };
 
 export interface IContactAttributes {
   objectId: string;
-  // the record a ticket points at, when a domain attaches one (its shape is the domain's own)
-  ride?: IncludedRecord<Record<string, any>>;
   /*
    * the short number the app shows the requester, and the one they quote over the phone or in a
    * chat — absent on the tickets opened before the sequence existed

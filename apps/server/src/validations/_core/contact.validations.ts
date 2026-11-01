@@ -22,8 +22,6 @@ export const createContactSchema = z.object({
   reason: z.string().max(40).optional(),
   message: z.string().trim().min(1).max(CONTACT_MESSAGE_MAX_LENGTH),
   // the records the request is about — whose they are is checked against the session, not here
-  rideId: objectIdFieldSchema.optional(),
-  requestId: objectIdFieldSchema.optional(),
   reportedUserId: objectIdFieldSchema.optional(),
   locale: z.string().optional(),
 }).refine(
