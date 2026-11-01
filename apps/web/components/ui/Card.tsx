@@ -196,14 +196,16 @@ const CardImage = ({
     >
       <Image
         fill
+        /*
+         * a `fill` image needs `sizes` or Next serves the largest variant; cards are at most
+         * half the viewport on desktop and full width on mobile. A caller can override it.
+         */
+        sizes={CARD_IMAGE_SIZES}
         className={cn(
           'object-center',
           getObjectSizeClassName(objectSize),
           className
         )}
-        // a `fill` image needs `sizes` or Next serves the largest variant; cards are at most
-        // half the viewport on desktop and full width on mobile. A caller can override it.
-        sizes={CARD_IMAGE_SIZES}
         {...props}
         alt={props.alt || ''}
       />
