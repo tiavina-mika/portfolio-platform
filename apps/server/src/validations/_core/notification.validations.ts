@@ -106,7 +106,6 @@ export const updateNotificationPreferencesSchema = z.object({
     rideNotifications: z.boolean().optional(),
     requestNotifications: z.boolean().optional(),
     rateNotifications: z.boolean().optional(),
-    ticketNotifications: z.boolean().optional(),
     pushEnabled: z.boolean().optional(),
     emailEnabled: z.boolean().optional(),
     smsEnabled: z.boolean().optional(),

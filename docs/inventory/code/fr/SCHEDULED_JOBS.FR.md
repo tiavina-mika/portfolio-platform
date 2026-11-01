@@ -24,7 +24,7 @@ Le ping d'éveil tourne hors développement local et hors Cloud Run. Les jobs m�
 | `30 3 * * *` | `purgeUnverifiedPhoneSignupsJob` | Détruit les inscriptions dont le téléphone n'a jamais été confirmé |
 | `40 3 * * *` | `purgeOrphanUserSessionsJob` | Détruit les appareils sans jeton de session |
 | `30 4 * * 0` | `purgeOldNotificationsJob` | Purge hebdomadaire des anciennes notifications (dimanche) |
-| `45 4 * * 0` | `purgeOldLogsJob` | Destruction hebdomadaire des lignes d'audit, de modération et de tickets au-delà de leur durée de conservation |
+| `45 4 * * 0` | `purgeOldLogsJob` | Destruction hebdomadaire des lignes d'audit, de modération et de liens expirés au-delà de leur durée de conservation |
 | `30 7 * * *` (fuseau du pays par défaut) | `postDailySlackSummaryJob` | Publie les chiffres de la veille sur le canal Slack de l'équipe |
 | `15 8 * * *` (fuseau du pays par défaut) | `liftExpiredBansJob` | Lève les bannissements temporaires expirés |
 

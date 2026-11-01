@@ -20,7 +20,6 @@ Tous les e-mails passent par les e-mails transactionnels de Brevo (voir [Brevo](
 | Invitation au back-office | `sendInvitationEmail` | Cloud Function `sendBOInvitation`, et l'invitation des owners au démarrage du serveur | La personne invitée |
 | Code de vérification renforcée | `sendStepUpVerificationEmail` | Cloud Function `requestStepUpVerification` | L'utilisateur connecté |
 | Code de changement de contact | `sendContactChangeVerificationEmail` | Cloud Function `requestContactChange` | L'utilisateur |
-| Accusé de réception et réponse à un ticket | `sendTicketAcknowledgementEmail`, `sendTicketReplyEmail` | Formulaire de contact / `sendTicketMessage` | Le visiteur qui a écrit |
 | Confirmation de newsletter (double opt-in) | `sendNewsletterConfirmationEmail` | Cloud Function `subscribeToNewsletter` | L'abonné, avec le lien de confirmation |
 | Confirmation de désabonnement | `sendNewsletterUnsubscribeConfirmationEmail` | Cloud Function `unsubscribeNewsletter` | L'abonné |
 | Nouvel article | `sendArticleToNewsletterEmails` | Job `sendArticleToNewsletterJob`, lancé quand un article est enregistré | Les abonnés actifs de la newsletter, avec un lien de désinscription |
@@ -28,7 +27,7 @@ Tous les e-mails passent par les e-mails transactionnels de Brevo (voir [Brevo](
 | Avis de compte | `sendWelcomeEmail`, `sendAccountReactivatedEmail`, `sendNewDeviceLoginEmail`, `sendPasswordResetDelayedEmail` | Triggers et services d'utilisateur et de connexion | L'utilisateur |
 | Alertes à l'équipe | `sendEmailToStaffInTheirOwnLocale` | Jobs en échec | L'équipe (et Slack quand `SLACK_ALERTS_WEBHOOK_URL` est renseigné) |
 
-Les textes de vérification partent aussi par SMS via MMSDuck (`sendSmsVerification`, SMS de ticket et de nouvel appareil) : en développement et en test ils sont seulement journalisés.
+Les textes de vérification partent aussi par SMS via MMSDuck (`sendSmsVerification` et SMS de nouvel appareil) : en développement et en test ils sont seulement journalisés.
 
 Les fonctions de test (`sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest`, `sendArticleToNewsletterTest`, `sendInvitationTest`, `sendWelcomeEmailTest`) envoient les mêmes e-mails pour vérification.
 
@@ -38,5 +37,5 @@ Les fonctions de test (`sendVerificationCodeTest`, `sendResetPasswordVerificatio
 
 ## Pièges
 
-- Aucun e-mail n'est envoyé au propriétaire du site à l'envoi du formulaire de contact : le message est stocké dans `Contact` comme un ticket, affiché dans le back-office, et le visiteur reçoit un accusé de réception.
+- Aucun e-mail n'est envoyé au propriétaire du site à l'envoi du formulaire de contact : le message est stocké dans `Contact` et affiché dans le back-office. Le visiteur ne reçoit pas d'accusé de réception et le back-office ne permet pas de répondre.
 - `sendEmail` relance les erreurs Brevo alors que `createContactEmail` ne fait que les journaliser.

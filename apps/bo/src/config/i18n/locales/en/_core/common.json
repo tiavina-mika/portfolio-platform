@@ -501,8 +501,6 @@
   "previewSection": {
     "loadError": "Something went wrong. Please try again"
   },
-  "expandRow": "Show the details",
-  "collapseRow": "Hide the details",
   "opened": "Opened",
   "timesCount_one": "{{count}} time",
   "timesCount_other": "{{count}} times"

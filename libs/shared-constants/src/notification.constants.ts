@@ -28,12 +28,6 @@ export const PASSWORD_RESET_DELAYED_STATUS = 'PASSWORD_RESET_DELAYED';
 /** Sent to an account once a back-office support session on it has ended. */
 export const SUPPORT_SESSION_ENDED_STATUS = 'SUPPORT_SESSION_ENDED';
 
-/** An agent answered the user's support ticket. */
-export const TICKET_NEW_REPLY_FROM_AGENT_STATUS = 'newReplyFromAgent';
-
-/** Support marked the user's ticket resolved or closed. */
-export const TICKET_RESOLVED_STATUS = 'TICKET_RESOLVED';
-
 /**
  * An announcement written by the back-office and sent to a segment of the members (an operator
  * incident, a new feature). Its text is not composed from a template like every other notification:

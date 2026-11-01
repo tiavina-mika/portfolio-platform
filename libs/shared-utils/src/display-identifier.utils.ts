@@ -11,7 +11,7 @@ export type DisplayPhone = {
 export type DisplayIdentifierSource = {
   firstName?: string | null;
   lastName?: string | null;
-  // a ticket keeps the number as one string, an account as its dial code and its national number
+  // a contact keeps the number as one string, an account as its dial code and its national number
   phone?: DisplayPhone | string | null;
   email?: string | null;
 };

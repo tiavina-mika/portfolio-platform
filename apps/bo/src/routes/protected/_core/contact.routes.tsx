@@ -28,9 +28,9 @@ export const contactsRoute = createRoute({
 });
 
 /*
- * a ticket is not a page of its own: it is the inbox with that ticket open, so both routes render
- * the same screen. The address still names the ticket, which is what the notification centre, the
- * global search and a link pasted into a chat all point at.
+ * a message is not a page of its own: it is the list with that message open, so both routes
+ * render the same screen. The address still names the message, which is what the notification
+ * centre, the global search and a link pasted into a chat all point at.
  */
 export const contactRoute = createRoute({
   parseParams: (params: IIdParams) => ({ id: z.string().parse(params.id) }),

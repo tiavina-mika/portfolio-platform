@@ -7,7 +7,7 @@ export * from './liveQuery.constants';
 export * from './notification.constants';
 export * from './role.constants';
 export * from './sentry.constants';
-export * from './ticket.constants';
+export * from './contact.constants';
 export * from './user.constants';
 export * from './sms.constants';
 export * from './support.constants';

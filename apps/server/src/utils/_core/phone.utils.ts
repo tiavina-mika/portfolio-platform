@@ -52,20 +52,6 @@ export const toPhoneUsername = (phone: Phone): string => {
   return `+${code}${number}`;
 };
 
-/**
- * A number typed by a person in the international form a ticket keeps: the dial code of the country
- * its `+` names, the default country's for a number typed the way it is written at home.
- * @example toTypedPhoneUsername('+261 34 12 345 67') => '+261341234567'
- */
-export const toTypedPhoneUsername = (value: string): string => {
-  const split = splitTypedPhoneNumber(value);
-
-  return toPhoneUsername({
-    code: (split?.country ?? DEFAULT_COUNTRY).dialCode,
-    number: split?.digits ?? value,
-  });
-};
-
 /** What a person types a number with: digits, a leading `+`, and the separators people put in. */
 const PHONE_TYPED_CHARACTERS_PATTERN = /^[\d\s+\-.()]+$/;
 

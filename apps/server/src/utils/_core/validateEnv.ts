@@ -86,7 +86,7 @@ const validateEnv = (env: Env = process.env): void => {
      */
     WEBSITE_REVALIDATE_SECRET: isDeployed(env) ? nonEmptyStr() : str({ default: '' }),
     /*
-     * Incoming webhook of the staff's Slack alert channel (see slack.service.ts): SOS, tickets,
+     * Incoming webhook of the staff's Slack alert channel (see slack.service.ts): SOS,
      * failed jobs, morning summary. Optional everywhere: without it no message is
      * posted, and the e-mail of each alert still goes out — Slack is a second channel, not the
      * only one.

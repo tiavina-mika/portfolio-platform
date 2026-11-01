@@ -104,8 +104,8 @@ Source: `apps/server/src/cloud/`. Each kind has a `_core/` folder (generic) and 
 
 | Kind | Files |
 |---|---|
-| Functions | `_core/`: `accountHelp`, `admins`, `app`, `article`, `auditLog`, `auth`, `category`, `contact`, `contactChange`, `contentVersion`, `dashboard`, `faq`, `globalSearch`, `impersonation`, `invitation`, `mfa`, `misc`, `notification`, `page`, `pageSection`, `passwordResetDelay`, `role`, `stepUpVerification`, `ticket-message`, `user`, `userSession`, `utils` (and `test`, local and test only). `_domain/`: `project` |
-| Triggers | `_core/`: `app`, `article`, `auth`, `category`, `contact`, `country-scope`, `newsletter`, `notification`, `page`, `pageSection`, `role`, `ticket-message`, `user`. `_domain/`: `project` |
+| Functions | `_core/`: `accountHelp`, `admins`, `app`, `article`, `auditLog`, `auth`, `category`, `contact`, `contactChange`, `contentVersion`, `dashboard`, `faq`, `globalSearch`, `impersonation`, `invitation`, `mfa`, `misc`, `notification`, `page`, `pageSection`, `passwordResetDelay`, `role`, `stepUpVerification`, `user`, `userSession`, `utils` (and `test`, local and test only). `_domain/`: `project` |
+| Triggers | `_core/`: `app`, `article`, `auth`, `category`, `contact`, `country-scope`, `newsletter`, `notification`, `page`, `pageSection`, `role`, `user`. `_domain/`: `project` |
 | Jobs | `_core/`: `category`, `cms`, `email`, `impersonation`, `misc`, `newsletter`, `notification`, `retention`, `slack`, `user` (and `test`). `_domain/`: none |
 
 ## Scheduled tasks
@@ -122,7 +122,7 @@ Domain collection `Project`; core collections `Article`, `Page`, `PageSection`, 
 
 ## Emails
 
-Verification and reset codes, invitations, step-up and contact-change codes, ticket replies, newsletter confirmation and new-article mailing, and account security notices, all sent through Brevo (SMS through MMSDuck). Details: [emails](communication/en/EMAILS.md).
+Verification and reset codes, invitations, step-up and contact-change codes, newsletter confirmation and new-article mailing, and account security notices, all sent through Brevo (SMS through MMSDuck). Details: [emails](communication/en/EMAILS.md).
 
 ## GitHub workflows
 

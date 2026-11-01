@@ -10,7 +10,7 @@
 
 ## What it is used for
 
-MMSDuck is the SMS provider. It sends the phone verification and password reset codes, ticket and new-device notices, and the SMS fallback of notifications.
+MMSDuck is the SMS provider. It sends the phone verification and password reset codes, new-device notices, and the SMS fallback of notifications.
 
 ## Where the code is
 

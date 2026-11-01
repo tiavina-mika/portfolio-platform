@@ -1,7 +1,6 @@
 import { collections, GLOBAL_SEARCH_RESULT_LIMIT_PER_ENTITY, USE_MASTER_KEY } from '@/constants/_core/constants';
 import { CONTENT_CLASSES, COUNTRY_SCOPED_BULK_CLASSES } from '@/constants/_core/country-scope.constants';
 import { getAgentAllowedCountries } from '@/utils/_core/agent-context.utils';
-import { toPhoneSearchDigits } from '@/utils/_core/phone.utils';
 import { escapeText } from '@/utils/_core/utils';
 
 import { buildClassQuery } from './badgeCount.service.cloud';
@@ -55,17 +54,14 @@ const searchPages: GlobalSearchQuery = (rawText, locales) => {
 
 const searchContacts: GlobalSearchQuery = (rawText) => {
   const text = escapeText(rawText);
-  // a requester who wrote with a number only is found by it, whatever way the operator types it
-  const phoneDigits = toPhoneSearchDigits(rawText);
 
   return Parse.Query.or(
     new Parse.Query(Contact).matches('name', text),
     new Parse.Query(Contact).matches('email', text),
-    new Parse.Query(Contact).matches('message', text),
-    ...(phoneDigits ? [new Parse.Query(Contact).matches('phone', escapeText(phoneDigits))] : [])
+    new Parse.Query(Contact).matches('message', text)
   )
     .equalTo('deleted', false)
-    .select(['name', 'email', 'phone', 'message', 'createdAt'])
+    .select(['name', 'email', 'message', 'createdAt'])
     .limit(GLOBAL_SEARCH_RESULT_LIMIT_PER_ENTITY)
     .find(USE_MASTER_KEY);
 };

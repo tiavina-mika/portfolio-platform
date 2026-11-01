@@ -53,6 +53,6 @@ droits.
 
 ## Points d'attention / limites actuelles
 
-- Sur le portfolio, les seules notifications réellement émises sont celles liées aux comptes, aux demandes
+- Sur le portfolio, les seules notifications réellement émises sont celles liées aux comptes, aux messages
   de contact et aux annonces.
 - Le renvoi par SMS dépend d'un fournisseur externe qui doit être configuré.

@@ -30,7 +30,7 @@ Les emails sont des emails transactionnels envoyés par le serveur via [Brevo](h
 
 ## Emails envoyés
 
-Compte (codes de vérification et de réinitialisation, invitation, code de vérification renforcée, changement de contact, bienvenue, nouvel appareil), tickets de support (accusé de réception au visiteur qui a utilisé le formulaire de contact, réponses), newsletter (confirmation, confirmation de désabonnement, nouvel article), notifications et diffusions, alertes pour l'équipe. Constructeurs, déclencheurs et destinataires sont dans la page d'inventaire ci-dessus.
+Compte (codes de vérification et de réinitialisation, invitation, code de vérification renforcée, changement de contact, bienvenue, nouvel appareil), newsletter (confirmation, confirmation de désabonnement, nouvel article), notifications et diffusions, alertes pour l'équipe. Constructeurs, déclencheurs et destinataires sont dans la page d'inventaire ci-dessus.
 
 ## Newsletter
 

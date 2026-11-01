@@ -10,7 +10,7 @@
 
 ## À quoi il sert
 
-MMSDuck est le fournisseur de SMS. Il envoie les codes de vérification du téléphone et de réinitialisation du mot de passe, les avis de ticket et de nouvel appareil, et le SMS de repli des notifications.
+MMSDuck est le fournisseur de SMS. Il envoie les codes de vérification du téléphone et de réinitialisation du mot de passe, les avis de nouvel appareil, et le SMS de repli des notifications.
 
 ## Où est le code
 

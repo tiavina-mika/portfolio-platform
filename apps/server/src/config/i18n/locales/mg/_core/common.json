@@ -27,7 +27,6 @@
     "allRightsReserved": "Efa voatokana",
     "contact": "Mifandraisa",
     "internalAlert": "Fanairana anatiny",
-    "openTicket": "Sokafy ny tapakila",
     "reasonRequired": "Tsy maintsy misy antony",
     "emailNotFound": "Mailaka tsy hita",
     "welcomeSubject": "Tongasoa eto amin'ny Portfolio!",
@@ -88,18 +87,6 @@
       "other": "hafa",
       "account_protection": "fiarovana ny kaonty"
     },
-    "ticketReplySubject": "Valiny amin’ny fangatahanao — Portfolio",
-    "ticketReplyIntro": "Namaly ny fangatahana nalefanao tamin’ny tranonkalanay ny ekipan’ny fanohanana.",
-    "ticketReplyOriginalLabel": "Ny fangatahanao",
-    "ticketReplySignature": "{{agentName}} — Fanohanana Portfolio",
-    "ticketReplyTeamName": "Ny ekipan’ny fanohanana",
-    "ticketReplyCannotReplyTitle": "Tsy azo valiana ity mailaka ity",
-    "ticketReplyCannotReplyBody": "Nalefa avy amin’ny tranonkalanay tsy nisy kaonty ny fangatahanao, ka tsy misy toerana ahafahana manohy ny resaka. Raha mamaly ity mailaka ity ianao, tsy hisy handray azy.",
-    "ticketReplyWriteAgain": "Manoratra aminay indray amin’ny taratasy fifandraisana",
-    "ticketAcknowledgementSubject": "Voaray ny fangatahanao — Portfolio",
-    "ticketAcknowledgementIntro": "Misaotra anao nanoratra tamintsika. Tonga tany amin’ny ekipa mpanampy ny hafatrao, ary hamaly anao amin’ny mailaka izy ireo haingana araka izay azo atao.",
-    "ticketAcknowledgementReferenceLabel": "Laharan’ny fangatahanao:",
-    "ticketAcknowledgementNextSteps": "Tehirizo ity laharana ity: tononina izany raha manoratra na miantso anay indray momba io fangatahana io ianao. Tsy ilaina ny mamaly ity mailaka ity.",
     "newsletterConfirmationSubject": "Hamafiso ny fisoratanao anarana amin’ny newsletter Portfolio",
     "newsletterConfirmationMessage": "Nisy olona — ianao angamba — nangataka handray ny newsletter Portfolio amin’ity adiresy ity. Hamafiso amin’ny bokotra etsy ambany mba hanombohana handray ny vaovaonay. Raha tsy ianao no nangataka, aza raharahiana ity mailaka ity: tsy hisy zavatra horaisinao.",
     "newsletterConfirmationButton": "Hamafiso ny fisoratako anarana",
@@ -118,9 +105,7 @@
   "sms": {
     "verificationCode": "Ny kaodinao Portfolio : {{code}}",
     "contactChanged": "Portfolio : niova ny laharana finday amin'ny kaontinao. Raha tsy ianao no nanao izany, mifandraisa avy hatrany amin'ny fanohanana.",
-    "newDeviceLogin": "Fidirana vaovao tamin'ny kaontinao Portfolio avy amin'ny : {{- deviceName}}. Raha tsy ianao, ovay ny tenimiafinao.",
-    "ticketAcknowledgement": "Portfolio: voaray ny fangatahanao #{{reference}}. Hamaly anao amin'ny SMS na amin'ny antso an-telefaona ny mpanampy. Tehirizo ity laharana ity.",
-    "ticketReply": "Mpanampy Portfolio, fangatahana #{{reference}}: {{- message}}"
+    "newDeviceLogin": "Fidirana vaovao tamin'ny kaontinao Portfolio avy amin'ny : {{- deviceName}}. Raha tsy ianao, ovay ny tenimiafinao."
   },
   "error": {
     "invalidStringType": "Tokony ho teny",
@@ -211,9 +196,6 @@
     "phoneAlreadyUsedByAnotherAccount": "Efa ampiasain'ny kaonty hafa io laharana finday io.",
     "contactUnchanged": "Io efa ny sanda voatahiry ao amin'ny kaontinao."
   },
-  "ticket": {
-    "reopenedSystemMessage": "Nosokafana indray ny fangatahana"
-  },
   "cms": {
     "codeAlreadyUsed": "Efa ampiasain'i « {{- name}} » io kaody teknika io. Misafidiana hafa."
   },
@@ -228,8 +210,6 @@
   },
   "slack": {
     "openInBackOffice": "Sokafy ao amin'ny back-office",
-    "newTicketFromWeb": "Fangatahana vaovao ho an'ny fanohanana laharana {{- reference}} (tranonkala)",
-    "newTicketFromApp": "Fangatahana vaovao ho an'ny fanohanana laharana {{- reference}} (fampiharana)",
     "scheduledJobFailed": "Tsy nahomby ny asa voalahatra {{- jobName}}",
     "scheduledJobFailedDetails": "Hadisoana: {{- kind}} — ao amin'ny logs an'ny serivera ny antsipiriany",
     "dailySummaryTitle": "Omaly tao amin'ny Portfolio ({{- date}})",

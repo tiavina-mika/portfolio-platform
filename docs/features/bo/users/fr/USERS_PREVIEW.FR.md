@@ -38,7 +38,7 @@ rangées en sections, avec un sommaire :
 - **Accès** : **sessions actives** (appareil, système, mode de connexion, dernière connexion), **aide au
   compte**, plate-formes utilisées, **postes** (seulement pour un compte créé dans le back-office).
 - **Modération** : suspension, historique des bannissements.
-- **Échanges** : tickets au support, notifications reçues.
+- **Échanges** : notifications reçues.
 - **Historique** : consultations de la fiche et journaux d'audit du compte.
 
 ## Actions possibles

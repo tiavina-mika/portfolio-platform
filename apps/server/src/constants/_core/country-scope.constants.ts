@@ -6,7 +6,6 @@ import { collections } from './constants';
  * the user lists are scoped in their functions instead.
  */
 export const COUNTRY_SCOPED_CLASSES: string[] = [
-  collections.Contact,
   collections.Article,
   collections.Page,
 ];

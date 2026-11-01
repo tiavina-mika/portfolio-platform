@@ -14,7 +14,7 @@ import { getTranslatedField } from '@/utils/_core/settings.utils';
 import { getUserFullName } from '@/utils/_core/user.utils';
 
 /*
- * a member who signed up by phone has no email and may have no name yet, and a ticket's requester
+ * a member who signed up by phone has no email and may have no name yet, and a contact's sender
  * may have left a number only: the result is named by what exists (name, phone, email), and its
  * second line is the next way to reach them rather than a repeat of the first
  */

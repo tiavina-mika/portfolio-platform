@@ -320,8 +320,6 @@ export const COMPACT_PAGER_GAP = 8;
 export const COMPACT_PAGER_BUTTON_SIZE = 30;
 export const COMPACT_PAGER_ICON_SIZE = 15;
 
-// the chevron column of a short list whose rows unfold what they hold (a ticket's thread)
-export const COMPACT_TABLE_EXPAND_CELL_WIDTH = 48;
 // the band closing a block of a detail page: a note on the left, the way to the full list on the right
 export const SECTION_FOOTER_GAP = 12;
 export const SECTION_FOOTER_PADDING_TOP = 12;

@@ -1,7 +1,6 @@
 import {
   ACCOUNT_BANNED_STATUS, ACCOUNT_UNBANNED_STATUS, ANNOUNCEMENT_STATUS,
   NEW_DEVICE_LOGIN_STATUS, SUPPORT_SESSION_ENDED_STATUS, SUSPENSION_LIFTED_STATUS,
-  TICKET_NEW_REPLY_FROM_AGENT_STATUS, TICKET_RESOLVED_STATUS,
 } from '@shared/constants';
 import { NotificationTypeEnum } from '@shared/types';
 
@@ -10,7 +9,6 @@ import { NotificationTypeEnum } from '@shared/types';
  * route on the literal the server actually writes.
  */
 export const ACCOUNT_NOTIFICATION_TYPE = NotificationTypeEnum.ACCOUNT;
-export const TICKET_NOTIFICATION_TYPE = NotificationTypeEnum.TICKET;
 /** An announcement an operator wrote in the back-office and sent to a segment of the members. */
 export const ANNOUNCEMENT_NOTIFICATION_TYPE = NotificationTypeEnum.ANNOUNCEMENT;
 
@@ -21,7 +19,6 @@ export const ANNOUNCEMENT_NOTIFICATION_TYPE = NotificationTypeEnum.ANNOUNCEMENT;
 export {
   ACCOUNT_BANNED_STATUS, ACCOUNT_UNBANNED_STATUS, ANNOUNCEMENT_STATUS,
   NEW_DEVICE_LOGIN_STATUS, SUPPORT_SESSION_ENDED_STATUS, SUSPENSION_LIFTED_STATUS,
-  TICKET_NEW_REPLY_FROM_AGENT_STATUS, TICKET_RESOLVED_STATUS,
 };
 
 /**

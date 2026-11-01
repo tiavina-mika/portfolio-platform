@@ -18,7 +18,6 @@
     "receiverSearchPlaceholder": "Name or email of the receiver",
     "types": {
       "account": "Account",
-      "ticket": "Support ticket",
       "announcement": "Announcement"
     },
     "statusLabels": {
@@ -29,10 +28,6 @@
         "NEW_DEVICE_LOGIN": "New sign-in",
         "SUPPORT_SESSION_ENDED": "Support session ended",
         "PASSWORD_RESET_DELAYED": "Password change held back"
-      },
-      "TICKET": {
-        "newReplyFromAgent": "Support reply",
-        "TICKET_RESOLVED": "Ticket resolved"
       },
       "ANNOUNCEMENT": {
         "ANNOUNCEMENT": "Announcement"
@@ -134,9 +129,7 @@
         "description": "The recipient already received their maximum of fallback SMS over 24 hours: this one was not sent."
       }
     },
-    "payloadKeys": {
-      "ticket": "Ticket"
-    },
+    "payloadKeys": {},
     "id": "ID",
     "channel": "Channel",
     "delivery": "Delivery",

@@ -501,8 +501,6 @@
   "previewSection": {
     "loadError": "Nisy olana nitranga. Andramo indray"
   },
-  "expandRow": "Asehoy ny antsipiriany",
-  "collapseRow": "Afeno ny antsipiriany",
   "opened": "Nosokafana",
   "timesCount_one": "im-{{count}}",
   "timesCount_other": "im-{{count}}"

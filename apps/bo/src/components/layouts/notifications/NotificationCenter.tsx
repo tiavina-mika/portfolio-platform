@@ -82,8 +82,8 @@ const NotificationCenter = () => {
       key: COLLECTIONS.contact, // collection name
       label: t('user:contacts.contacts'),
       /*
-       * the inbox has no "new tickets" scope to open: unread tickets already stand in bold at the
-       * top of its queue, and its header states how many there are
+       * the contacts page has no "new messages" scope to open: unread messages already stand in
+       * bold at the top of its list
        */
       onClick: goToInbox,
     },

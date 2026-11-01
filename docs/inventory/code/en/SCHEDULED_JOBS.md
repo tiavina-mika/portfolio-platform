@@ -24,7 +24,7 @@ The keep-awake ping runs outside local development and outside Cloud Run. The bu
 | `30 3 * * *` | `purgeUnverifiedPhoneSignupsJob` | Destroys sign-ups that never confirmed their phone number |
 | `40 3 * * *` | `purgeOrphanUserSessionsJob` | Destroys device rows without a session token |
 | `30 4 * * 0` | `purgeOldNotificationsJob` | Weekly purge of old notifications (Sundays) |
-| `45 4 * * 0` | `purgeOldLogsJob` | Weekly destruction of audit, moderation and ticket rows past their retention |
+| `45 4 * * 0` | `purgeOldLogsJob` | Weekly destruction of audit, moderation and expired-link rows past their retention |
 | `30 7 * * *` (default country time zone) | `postDailySlackSummaryJob` | Posts yesterday's figures to the staff Slack channel |
 | `15 8 * * *` (default country time zone) | `liftExpiredBansJob` | Lifts expired temporary bans |
 

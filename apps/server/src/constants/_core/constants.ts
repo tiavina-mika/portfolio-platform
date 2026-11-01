@@ -265,11 +265,9 @@ export const collections = {
   ContentVersion: 'ContentVersion',
   Invitation: 'Invitation',
   ImpersonationSession: 'ImpersonationSession',
-  TicketMessage: 'TicketMessage',
   MfaAuditLog: 'MfaAuditLog',
   UserModerationLog: 'UserModerationLog',
   NotificationResend: 'NotificationResend',
-  Counter: 'Counter',
 };
 
 /**

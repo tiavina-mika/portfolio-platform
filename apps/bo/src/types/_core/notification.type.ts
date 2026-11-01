@@ -14,7 +14,7 @@ import { notificationFilterSchema } from '@/validations/_core/user.validations';
 
 /*
  * the state a notification reports, or one of the event codes the server writes for what is not a state
- * change (a reminder, a penalty, a ticket reply). It stays an open string rather than a list: the
+ * change (a reminder, a penalty). It stays an open string rather than a list: the
  * server adds codes as features ship, and a row carrying a code the back-office does not know yet
  * must still be typed, labelled with its raw code, and filterable.
  */

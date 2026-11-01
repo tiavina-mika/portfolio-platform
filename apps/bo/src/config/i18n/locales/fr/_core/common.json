@@ -501,8 +501,6 @@
   "previewSection": {
     "loadError": "Une erreur s'est produite. Veuillez réessayer"
   },
-  "expandRow": "Afficher le détail",
-  "collapseRow": "Masquer le détail",
   "opened": "Ouvert",
   "timesCount_one": "{{count}} fois",
   "timesCount_other": "{{count}} fois"

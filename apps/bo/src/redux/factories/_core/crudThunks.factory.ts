@@ -146,8 +146,8 @@ export const createCrudThunks = <TEntity extends IEntityWithId>(config: ICrudThu
 
   /*
    * list pages keep their rows once left (see `clearListUnlessLoadedWith`) — this is for the one
-   * that must not: the contacts inbox, whose ticket route tells an arrival from outside the inbox
-   * by its queue being empty
+   * that must not: the contacts page, whose detail route tells an arrival from outside the page
+   * by its list being empty
    */
   const onListLeave = (): AppThunkAction => {
     return (dispatch: AppDispatch): void => {

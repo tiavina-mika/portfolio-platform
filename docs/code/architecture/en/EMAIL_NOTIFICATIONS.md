@@ -30,7 +30,7 @@ Emails are transactional emails sent by the server through [Brevo](https://www.b
 
 ## Emails sent
 
-Account (verification and reset codes, invitation, step-up code, contact change, welcome, new device), support tickets (acknowledgement to the visitor who used the contact form, replies), newsletter (confirmation, unsubscribe confirmation, new article), notifications and broadcasts, staff alerts. Builders, triggers and recipients are in the inventory page above.
+Account (verification and reset codes, invitation, step-up code, contact change, welcome, new device), newsletter (confirmation, unsubscribe confirmation, new article), notifications and broadcasts, staff alerts. Builders, triggers and recipients are in the inventory page above.
 
 ## Newsletter
 

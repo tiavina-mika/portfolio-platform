@@ -17,7 +17,6 @@ export type NotificationSnapshot = {
     id: string;
     image: string;
   }[];
-  ticket?: { id: string; status?: string };
   /** carried by a suspension: when it ends */
   suspension?: { until?: DateType };
   /**
@@ -40,7 +39,6 @@ export type NotificationSnapshot = {
  */
 export enum NotificationTypeEnum {
   ACCOUNT = 'ACCOUNT',
-  TICKET = 'TICKET',
   /** written by an operator in the back-office and sent to a segment of the members */
   ANNOUNCEMENT = 'ANNOUNCEMENT'
 }

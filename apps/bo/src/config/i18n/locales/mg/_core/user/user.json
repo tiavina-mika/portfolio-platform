@@ -472,7 +472,7 @@
     "loginAsThisUser": "Hiditra amin'ny anaran'i {{name}}",
     "startSession": "Hanomboka ny fotoana",
     "reason": "Antony",
-    "reasonHelper": "Tsy maintsy atao ary tehirizina ao amin'ny tantara: laharan'ny tapakila na famaritana ny olana.",
+    "reasonHelper": "Tsy maintsy atao ary tehirizina ao amin'ny tantara: tondro na famaritana ny olana.",
     "scanHelper": "Tsindrio amin'ny finday hampiasaina ity QR code ity. Hisokatra mivantana ho an'i {{name}} ny application.",
     "expiresAt": "Lany daty amin'ny {{date}} ity rohy ity ary indray mandeha ihany no azo ampiasaina.",
     "copyLink": "Adikao ny rohy",
@@ -555,7 +555,6 @@
       "ratingsGiven": "Hevitra nomena",
       "suspension": "Fampiatoana",
       "bans": "Tantaran'ny fandrarana",
-      "tickets": "Tapakila amin'ny mpanampy",
       "notifications": "Fampandrenesana",
       "history": "Tantara",
       "views": "Fijerena ny taratasy",
@@ -646,21 +645,6 @@
       },
       "empty": "Tsy misy fandrarana",
       "note": "Amin'ny fandrarana taloha, tsy fantatra ny mpanao sy ny fanesorana."
-    },
-    "tickets": {
-      "message": "Hafatra",
-      "status": "Toe-javatra",
-      "priority": "Laharam-pahamehana",
-      "lastActivity": "Asa farany",
-      "reference": "T-{{reference}}",
-      "messagesCount_one": "hafatra {{count}}",
-      "messagesCount_other": "hafatra {{count}}",
-      "support": "{{name}} · mpanampy",
-      "internalNote": "Fanamarihana anatiny",
-      "system": "Rafitra",
-      "empty": "Tsy misy tapakila",
-      "threadEmpty": "Mbola tsy misy hafatra amin'ity tapakila ity",
-      "open": "Sokafy ny tapakila"
     },
     "notifications": {
       "title": "Lohateny",

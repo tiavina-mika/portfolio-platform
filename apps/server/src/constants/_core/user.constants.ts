@@ -137,14 +137,14 @@ export const USER_PROTECTED_FIELDS: string[] = [
 
 /**
  * The default country's dial code as phone numbers store it: bare, without the '+'. What a number
- * typed with no dial code is read with — the website's contact form, a phone search in the
+ * typed with no dial code is read with — a phone search in the
  * back-office. Which numbers a text can reach is decided by each country's SMS provider instead.
  */
 export const DEFAULT_DIAL_CODE = DEFAULT_COUNTRY.dialCode.replace('+', '');
 
 /**
  * A free-text search of digits, spaces and separators is read as a phone number as well as as text.
- * Accounts and tickets keep a number in a normalized form while an operator types it the way the
+ * Accounts keep a number in a normalized form while an operator types it the way the
  * member quotes it (`034 12 345 67`, `+261 34 12 345 67`), so the search is made on the bare
  * national digits.
  */

@@ -1,7 +1,7 @@
-import { ANNOUNCEMENT_STATUS, TICKET_NEW_REPLY_FROM_AGENT_STATUS } from '@shared/constants';
+import { ANNOUNCEMENT_STATUS } from '@shared/constants';
 import { NotificationTypeEnum } from '@shared/types';
 
-import { ACCOUNT_NOTIFICATION_MESSAGES, TICKET_NOTIFICATION_MESSAGES } from './account-notification-message.constants';
+import { ACCOUNT_NOTIFICATION_MESSAGES } from './account-notification-message.constants';
 import {
   DEFAULT_NOTIFICATION_MESSAGE_LOCALE, NOTIFICATION_MESSAGE_LOCALES, NotificationMessageSurfaceEnum,
 } from './notification-message.type';
@@ -88,8 +88,6 @@ export const localizeNotificationText = (
 const resolveNotificationType = (input: NotificationMessageInput): string | undefined => {
   if (input.type) return input.type;
 
-  if (input.data?.ticket) return NotificationTypeEnum.TICKET;
-
   return NotificationTypeEnum.ACCOUNT;
 };
 
@@ -104,9 +102,7 @@ export type NotificationMessageValuesBuilder = (
 ) => NotificationMessageValues;
 
 /** The catalogue of each notification type; the ones that name the domain register themselves. */
-const CATALOGUES_BY_TYPE: Record<string, NotificationMessageCatalogue> = {
-  [NotificationTypeEnum.TICKET]: TICKET_NOTIFICATION_MESSAGES,
-};
+const CATALOGUES_BY_TYPE: Record<string, NotificationMessageCatalogue> = {};
 
 const valuesBuilders: NotificationMessageValuesBuilder[] = [];
 
@@ -163,12 +159,7 @@ export const getNotificationMessageEntry = (
 ): NotificationMessageEntry | undefined => {
   const { status } = input;
 
-  if (!status) {
-    /* a ticket row written before the status was set is an agent's answer — the only one there was */
-    return input.data?.ticket
-      ? TICKET_NOTIFICATION_MESSAGES[TICKET_NEW_REPLY_FROM_AGENT_STATUS]
-      : undefined;
-  }
+  if (!status) return undefined;
 
   const variant = resolveVariant(input);
   const catalogues = [ACCOUNT_NOTIFICATION_MESSAGES, getCatalogueForType(resolveNotificationType(input))];

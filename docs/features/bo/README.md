@@ -31,8 +31,7 @@ The sections follow the real sidebar groups, in menu order. Every sidebar entry 
   - [Liste](users/fr/USERS_LIST.FR.md)
   - [Fiche](users/fr/USERS_PREVIEW.FR.md)
 - Contacts
-  - [Boîte de réception](contacts/fr/CONTACTS_LIST.FR.md)
-  - [Lire et répondre à une demande](contacts/fr/CONTACTS_PREVIEW.FR.md)
+  - [Messages reçus](contacts/fr/CONTACTS_LIST.FR.md)
 - [Notifications](notifications/fr/NOTIFICATIONS.FR.md)
 - [Diffusion d'une annonce](notifications/fr/BROADCAST.FR.md)
 

@@ -31,7 +31,7 @@ Each app keeps its own `package.json` (dependencies, `engines`) and a `project.j
 | App | Stack | Role |
 |---|---|---|
 | `server` | Node.js, Express, Parse Server, TypeScript (SWC build) | Cloud Code (functions, triggers, jobs), emails and SMS, file storage; serves the back-office build. Split in `_core` / `_domain` |
-| `bo` | Vite, React, Material UI, TanStack Router, Redux Toolkit | Admin panel: content, projects, tickets, users, roles, notifications, dashboards. Split in `_core` / `_domain` |
+| `bo` | Vite, React, Material UI, TanStack Router, Redux Toolkit | Admin panel: content, projects, contacts, users, roles, notifications, dashboards. Split in `_core` / `_domain` |
 | `web` | Next.js, Tailwind CSS, shadcn/ui, next-intl | Public portfolio: projects, blog, pages, contact, newsletter (no split) |
 
 The build of `bo` is copied into the server (`pnpm copy` in `apps/server`) and served by Express.

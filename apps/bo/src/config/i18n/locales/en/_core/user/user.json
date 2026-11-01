@@ -474,7 +474,7 @@
     "loginAsThisUser": "Log in as {{name}}",
     "startSession": "Start the session",
     "reason": "Reason",
-    "reasonHelper": "Mandatory and kept in the audit trail: ticket number or a description of the issue to reproduce.",
+    "reasonHelper": "Mandatory and kept in the audit trail: a reference or a description of the issue to reproduce.",
     "scanHelper": "Scan this QR code with the phone that will run the session. The app opens already signed in as {{name}}.",
     "expiresAt": "This link expires on {{date}} and can only be used once.",
     "copyLink": "Copy the link",
@@ -555,7 +555,6 @@
       "ratingsGiven": "Reviews given",
       "suspension": "Suspension",
       "bans": "Ban history",
-      "tickets": "Support tickets",
       "notifications": "Notifications",
       "history": "History",
       "views": "Record views",
@@ -646,21 +645,6 @@
       },
       "empty": "No ban",
       "note": "For older bans, the author and the lift are unknown."
-    },
-    "tickets": {
-      "message": "Message",
-      "status": "Status",
-      "priority": "Priority",
-      "lastActivity": "Last activity",
-      "reference": "T-{{reference}}",
-      "messagesCount_one": "{{count}} message",
-      "messagesCount_other": "{{count}} messages",
-      "support": "{{name}} · support",
-      "internalNote": "Internal note",
-      "system": "System",
-      "empty": "No support ticket",
-      "threadEmpty": "No message in this ticket yet",
-      "open": "Open the ticket"
     },
     "notifications": {
       "title": "Title",

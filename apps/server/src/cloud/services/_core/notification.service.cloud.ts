@@ -392,7 +392,7 @@ export const removeRecipientFromNotifications = async (user: Parse.User): Promis
 
 /**
  * Marks every notification addressed to this person that they have not opened yet as opened —
- * optionally only the ones `narrowQuery` keeps (the notifications of one ticket, say). Only their
+ * optionally only the ones `narrowQuery` keeps (the notifications of one kind, say). Only their
  * own entry is added: the other recipients of a shared send keep their own read state.
  * @returns how many notifications were marked
  */

@@ -2,8 +2,7 @@ import {
   ACCOUNT_BANNED_STATUS, ACCOUNT_UNBANNED_STATUS, LANGUAGE_CODES,
   NEW_DEVICE_LOGIN_STATUS,
   PASSWORD_RESET_DELAYED_STATUS,
-  SUPPORT_SESSION_ENDED_STATUS, SUSPENSION_LIFTED_STATUS, TICKET_NEW_REPLY_FROM_AGENT_STATUS,
-  TICKET_RESOLVED_STATUS,
+  SUPPORT_SESSION_ENDED_STATUS, SUSPENSION_LIFTED_STATUS,
 } from '@shared/constants';
 import {
   NotificationChannelEnum, NotificationChannelStatusEnum, NotificationReadStateEnum, NotificationTypeEnum,
@@ -146,11 +145,10 @@ export const NOTIFICATION_ROW_RECIPIENTS_SHOWN = 3;
 export const NOTIFICATION_DETAIL_RECIPIENTS_SHOWN = 6;
 
 /*
- * The tone each account or ticket notification takes in the list. These announce an event rather
- * than the state of an entity — what happened to the person's own account, an answer on their
- * ticket — so they have no domain colour scale of their own to borrow, and it is stated here. A
- * status not listed reads neutral rather than as an alert: an unknown state is not something to
- * raise, and any domain may add one.
+ * The tone each account notification takes in the list. These announce an event rather
+ * than the state of an entity — what happened to the person's own account — so they have no
+ * domain colour scale of their own to borrow, and it is stated here. A status not listed reads neutral rather than as an alert:
+ * an unknown state is not something to raise, and any domain may add one.
  */
 export const CORE_NOTIFICATION_EVENT_STATUS_COLORS: Record<string, StatusDotColor> = {
   [ACCOUNT_BANNED_STATUS]: 'error',
@@ -159,12 +157,10 @@ export const CORE_NOTIFICATION_EVENT_STATUS_COLORS: Record<string, StatusDotColo
   [NEW_DEVICE_LOGIN_STATUS]: 'warning',
   [PASSWORD_RESET_DELAYED_STATUS]: 'warning',
   [SUPPORT_SESSION_ENDED_STATUS]: 'info',
-  [TICKET_NEW_REPLY_FROM_AGENT_STATUS]: 'info',
-  [TICKET_RESOLVED_STATUS]: 'success',
 };
 
 /*
- * the account and ticket event codes the server writes, each with the type it is filed under — the
+ * the account event codes the server writes, each with the type it is filed under — the
  * pair is what names its label, since the same code could one day be reused by another type
  */
 export const CORE_NOTIFICATION_EVENT_STATUSES: { type: NotificationType; status: string }[] = [
@@ -174,8 +170,6 @@ export const CORE_NOTIFICATION_EVENT_STATUSES: { type: NotificationType; status:
   { type: NotificationTypeEnum.ACCOUNT, status: NEW_DEVICE_LOGIN_STATUS },
   { type: NotificationTypeEnum.ACCOUNT, status: PASSWORD_RESET_DELAYED_STATUS },
   { type: NotificationTypeEnum.ACCOUNT, status: SUPPORT_SESSION_ENDED_STATUS },
-  { type: NotificationTypeEnum.TICKET, status: TICKET_NEW_REPLY_FROM_AGENT_STATUS },
-  { type: NotificationTypeEnum.TICKET, status: TICKET_RESOLVED_STATUS },
 ];
 
 /*

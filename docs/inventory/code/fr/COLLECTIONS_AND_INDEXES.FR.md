@@ -18,8 +18,7 @@ Les noms de classes du domaine sont dans `libs/shared-domain-constants` (`DOMAIN
 | `Page` | Pages éditoriales | server, bo, web |
 | `PageSection` | Sections regroupant les pages | server, bo, web |
 | `Category` | Catégories d'articles et de pages | server, bo, web |
-| `Contact` | Messages du formulaire de contact du site, aussi les tickets de support | server, bo, web |
-| `TicketMessage` | Réponses d'un ticket (lues et écrites uniquement via des Cloud Functions) | server, bo |
+| `Contact` | Messages du formulaire de contact du site | server, bo, web |
 | `Newsletter` | Abonnements à la newsletter (double opt-in, confirmé par un jeton haché) | server, web |
 | `App` | Réglages du site, dont les fichiers `image`, `imageForDarkMode` et `cv` (les anciens fichiers sont supprimés de Cloudinary au changement) | server, bo, web |
 | `Notification`, `NotificationResend` | Notifications envoyées depuis le back-office et leurs renvois | server, bo |
@@ -28,7 +27,6 @@ Les noms de classes du domaine sont dans `libs/shared-domain-constants` (`DOMAIN
 | `Invitation` | Invitations au back-office (jeton, rôle, expiration) | server, bo |
 | `ImpersonationSession` | Sessions « se connecter en tant que » | server, bo |
 | `ContentVersion` | Historique des contenus du CMS (Page, Article…) | server, bo |
-| `Counter` | Séquences nommées | server |
 | `_User` | Utilisateurs du back-office | server, bo |
 | `_Role` | Rôles et leurs champs `rights`, `ui` et `countries` | server, bo |
 | `_Session` | Sessions Parse | server |
@@ -41,7 +39,7 @@ Les index sont déclarés dans le code, dans `apps/server/src/config/db-indexes.
 - `Newsletter` : `email`, et `confirmationTokenHash` (sparse) pour le lien de confirmation.
 - `Notification` : liste par destinataire, filtres d'état de lecture et de type d'envoi, `idempotencyKey` (unique, sparse).
 - `Invitation` : `token` (unique, sparse) et `email`.
-- `User`, `Contact`, `Category`, `Page` (`code`, unique quand renseigné), `ContentVersion`, `Counter` (`name`, unique), `UserSession` et les journaux d'audit ont leurs propres index.
+- `User`, `Contact`, `Category`, `Page` (`code`, unique quand renseigné), `ContentVersion`, `UserSession` et les journaux d'audit ont leurs propres index.
 - `_Join:users:_Role` : `relatedId` et `owningId`.
 
 `allowClientClassCreation` vaut `false`, et les permissions de classe sont reconstruites à chaque démarrage à partir des rôles (voir [rôles et permissions](ROLES_AND_PERMISSIONS.FR.md)). Un nouvel index va dans `db-indexes.ts`, jamais à la main dans Atlas ou Compass (`.claude/rules/parse-patterns.md`), et les champs Pointer utilisent leur nom de colonne Mongo (`_p_<champ>`).

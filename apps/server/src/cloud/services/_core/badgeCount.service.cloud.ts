@@ -22,9 +22,8 @@ export const buildClassQuery = (className: string): Parse.Query => {
 /**
  * The query behind every back-office badge: what is still waiting in this collection's queue.
  *
- * Most classes track that with `seen: false`, but a support ticket answers the same question with a
- * field of its own (`unreadByAdmin`, the new admin-facing activity). Any other class can ask for a
- * `status`-scoped count instead of the default (a subset of the default queue, tracked as its own badge).
+ * Classes track that with `seen: false`; any class can ask for a `status`-scoped count instead of the
+ * default (a subset of the default queue, tracked as its own badge).
  *
  * Kept as one function rather than inlined in `getObjectsCount` because the bulk "mark as seen"
  * actions have to recompute the very same figure to hand back a badge value the client does not
@@ -33,7 +32,6 @@ export const buildClassQuery = (className: string): Parse.Query => {
 export const buildBadgeCountQuery = (className: string, status?: string): Parse.Query => {
   const query = buildClassQuery(className).equalTo('deleted', false);
 
-  if (className === collections.Contact) return query.equalTo('unreadByAdmin', true);
   if (status) return query.equalTo('status', status);
 
   return query.equalTo('seen', false);

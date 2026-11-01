@@ -1,7 +1,6 @@
 import {
   ACCOUNT_BANNED_STATUS, ACCOUNT_UNBANNED_STATUS, NEW_DEVICE_LOGIN_STATUS,
   PASSWORD_RESET_DELAYED_STATUS, SUPPORT_SESSION_ENDED_STATUS, SUSPENSION_LIFTED_STATUS,
-  TICKET_NEW_REPLY_FROM_AGENT_STATUS, TICKET_RESOLVED_STATUS,
 } from '@shared/constants';
 
 import type { NotificationMessageEntry } from './notification-message.type';
@@ -120,37 +119,6 @@ export const ACCOUNT_NOTIFICATION_MESSAGES: Record<string, NotificationMessageEn
         'get in touch with us.',
       mg: 'Nijery ny kaontinao ny ekipan\'ny support mba hikarakara ny fangatahanao. Raha tsy ' +
         'nifandray taminay ianao, mifandraisa aminay.',
-    },
-  },
-};
-
-/**
- * Support tickets — the team's answer to something the member sent. A row with no status at all is
- * an agent's answer — the only one there was.
- */
-export const TICKET_NOTIFICATION_MESSAGES: Record<string, NotificationMessageEntry> = {
-  [TICKET_RESOLVED_STATUS]: {
-    push: {
-      fr: 'Votre demande de support a été traitée. Vous pouvez la rouvrir en répondant si besoin',
-      en: 'Your support request has been resolved. You can reopen it by replying if needed',
-      mg: 'Voavaha ny fangatahana fanampiana nataonao. Azonao sokafana indray amin\'ny famaliana raha ilaina',
-    },
-    app: {
-      fr: 'Votre demande au support est résolue.',
-      en: 'Your support request has been resolved.',
-      mg: 'Voavaha ny fangatahanao tany amin\'ny support.',
-    },
-  },
-  [TICKET_NEW_REPLY_FROM_AGENT_STATUS]: {
-    push: {
-      fr: 'Vous avez reçu une nouvelle réponse à votre demande de support',
-      en: 'You have received a new reply to your support request',
-      mg: 'Nahazo valiny vaovao ho an\'ny fangatahana fanampiana nataonao ianao',
-    },
-    app: {
-      fr: 'Le support a répondu à votre demande.',
-      en: 'Support replied to your request.',
-      mg: 'Namaly ny fangatahanao ny support.',
     },
   },
 };

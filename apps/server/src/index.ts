@@ -328,7 +328,7 @@ const init = async () => {
 
   /*
    * The non-credential limiters, on a direct call and on each sub-request of a `POST /parse/batch` —
-   * these routes send an SMS or e-mail, open a ticket, create a row or run a heavy export, so a batch
+   * these routes send an SMS or e-mail, create a row or run a heavy export, so a batch
    * of 100 must not multiply their cap by 100.
    */
   app.post('/parse/batch', batchRateLimiter);

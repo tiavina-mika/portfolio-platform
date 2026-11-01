@@ -2,144 +2,20 @@
   "contacts": {
     "contacts": "Contacts",
     "contact": "Contact",
-    "reply": "Valiana",
     "message": "Hafatra",
-    "messages": "Hafatra",
-    "sendTo": "Alefa any amin'i {{name}}",
     "hasNoRightToDeleteContact": "Tsy afaka mamafa ity contact ity",
-    "thisMessageOf": "ity hafatra avy amin'i {{name}} ity",
     "sentDate": "Daty nampidirina",
-    "messageBy": "Hafatr'i {{name}}",
-    "replySubject": "Re:{{subject}} nalefa tamin'ny {{date}}",
-    "send": "Alefa",
-    "notReplied": "Tsy voavaly",
-    "replied": "Voavaly",
-    "repliedBy": "Novalian'i",
-    "repliedAt": "Novaliana tamin'ny",
-    "acceptNewsLetter": "Nisoratra anarana amin'ny newsletter",
     "search": "Anarana, mailaka, laharana finday na hafatra",
-    "status": "Sata",
-    "priority": "Laharam-pahamehana",
-    "lastMessageAt": "Fihetsiketsehana farany",
-    "referenceLabel": "Lah. {{reference}}",
-    "requester": "Mpangataka",
-    "noMessages": "Mbola tsy misy hafatra",
-    "replyPlaceholder": "Soraty ny valinteninao…",
-    "addAttachment": "Manampy rakitra",
-    "attachment": "Rakitra nampiarahina",
-    "statuses": {
-      "open": "Misokatra",
-      "in_progress": "Eo am-panatanterahana",
-      "resolved": "Voavaha",
-      "closed": "Voarindra"
-    },
-    "priorities": {
-      "low": "Ambany",
-      "medium": "Antonony",
-      "high": "Avo",
-      "urgent": "Maika"
-    },
-    "internalNote": "Naoty anatiny",
-    "internalNoteBy": "Naoty anatiny avy amin’i {{value}}",
-    "internalNotePlaceholder": "Naoty anatiny, tsy hitan’ny mpangataka…",
-    "addNote": "Hanampy naoty",
-    "resolve": "Vahana",
-    "assignment": "Fanendrena",
-    "unassigned": "Tsy voatendry",
-    "previousTickets": "Fangatahana teo aloha",
-    "noPreviousTicket": "Tsy misy fangatahana teo aloha",
-    "noTicketMatchesSearch": "Tsy misy fangatahana mifanaraka amin’io fikarohana io.",
-    "selectTicket": "Tsy misy fangatahana misokatra",
-    "selectTicketDescription": "Safidio ny fangatahana iray ao amin’ny lisitra mba hamakiana sy hamaliana azy.",
-    "ticketsWithCount_one": "Fangatahana {{count}}, {{unread}} tsy mbola vakiana",
-    "ticketsWithCount_other": "Fangatahana {{count}}, {{unread}} tsy mbola vakiana",
-    "memberSince": "Mpikambana hatramin’ny",
-    "verifiedAccount": "Voamarina",
-    "unverifiedAccount": "Miandry fanamarinana",
-    "requesterHasNoAccount": "Nalefa tsy nisy kaonty mifandray io fangatahana io.",
-    "viewAccount": "Hijery ny kaonty",
-    "quickReplies": {
-      "checking": {
-        "label": "Fanamarinana an-dalana",
-        "body": "Salama, amarinako amin’ny mpandraharaha ny antontan-taratasinao ary hiverina aminao aho ao anatin’ny 24 ora."
-      },
-      "missingDocument": {
-        "label": "Taratasy tsy ampy",
-        "body": "Mba hanohizana, alefaso aminay ny sarin’ny fahazoan-dalana mivantana sy ambadika, mazava tsara."
-      },
-      "closing": {
-        "label": "Fanakatonana",
-        "body": "Raha tsy misy valiny avy aminao ao anatin’ny 7 andro, hakatona ho azy ny fangatahana."
-      }
-    },
-    "handling": "Fikarakarana",
-    "source": "Niaviana",
-    "addedAt": "Daty nanampiana",
-    "addedToday": "Androany",
-    "addedLastDays_one": "{{count}} andro farany",
-    "addedLastDays_other": "{{count}} andro farany",
-    "matchingTickets_one": "Fangatahana {{count}} mifanaraka",
-    "matchingTickets_other": "Fangatahana {{count}} mifanaraka",
-    "sourceWeb": "Taratasy ampahibemaso",
-    "sourceApp": "Fampiharana",
-    "sourceWebLong": "Taratasin’ny tranonkala",
-    "sourceAppLong": "Fampiharana finday",
-    "sourceWebHint": "Noraisina tamin’ny taratasy fifandraisan’ny tranonkala ampahibemaso",
-    "sourceAppHint": "Noraisina avy amin’ny fampiharana, manana kaonty ny mpangataka",
-    "oneWayTicketNotice": "Fangatahana tokana lalana : tsy manana kaonty io olona io. Handeha amin’ny mailaka ny valinteninao ary mijanona eo ny resaka — raha manoratra indray izy, dia fangatahana vaovao no ho azy.",
-    "oneWayTicketNoticeSms": "Tsy manana mailaka io olona io: handeha amin’ny SMS ny valinteninao, tapahina aorian’ny litera {{count}}, ary mijanona eo ny resaka. Raha lava kokoa, antsoy amin’ny laharana aseho.",
-    "newActivityAlert_one": "Hafatra vaovao ao amin'ny boaty fandraisana",
-    "newActivityAlert_other": "Hafatra vaovao {{count}} ao amin'ny boaty fandraisana",
-    "openInbox": "Sokafy ny boaty",
-    "subject": "Lohahevitra",
-    "reason": "Antony",
-    "subjects": {
-      "safety": "Fiarovana",
-      "verification": "Fanamarinana",
-      "account": "Kaonty",
-      "tech": "Olana ara-teknika",
-      "other": "Hafa"
-    },
-    "reasons": {
-      "safety": {
-        "inappropriate_behavior": "Fitondran-tena tsy mety",
-        "harassment": "Fanorisorenana",
-        "other": "Hafa"
-      },
-      "verification": {
-        "identity_document": "Karapanondro",
-        "phone": "Finday",
-        "email": "Mailaka"
-      },
-      "account": {
-        "login": "Fidirana",
-        "password": "Tenimiafina",
-        "phone": "Finday",
-        "suspension": "Fampiatoana",
-        "deletion": "Famafana",
-        "personal_data": "Angona manokana"
-      },
-      "tech": {
-        "bug": "Bug",
-        "slowness": "Miadana",
-        "security_flaw": "Lesoka ara-piarovana",
-        "other": "Hafa"
-      }
-    },
+    "noContactMatchesSearch": "Tsy misy hafatra mifanaraka amin’io fikarohana io.",
+    "selectContact": "Tsy misy hafatra misokatra",
+    "selectContactDescription": "Safidio ny hafatra iray ao amin’ny lisitra mba hamakiana azy.",
     "details": {
-      "title": "Antsipiriany momba ny fangatahana",
-      "reference": "Laharana",
+      "title": "Antsipiriany momba ny hafatra",
       "email": "Mailaka",
       "phone": "Finday",
       "createdAt": "Noforonina tamin’ny",
       "language": "Fiteny",
       "newsletter": "Gazetiboky",
-      "subject": "Lohahevitra",
-      "reason": "Antony",
-      "firstOpened": "Fanokafana voalohany",
-      "lastOpened": "Fanokafana farany",
-      "visits": "Fidirana",
-      "firstReply": "Valiny voalohany",
       "notProvided": "Tsy voasoratra"
     }
   }

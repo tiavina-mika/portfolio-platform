@@ -740,7 +740,7 @@ export const getNotificationMessage = (notification: INotification): string => {
  * Only the id of each is stated. The payload is domain-owned and its shape is whatever the domain
  * that wrote it chose, so rendering it field by field would make this generic list depend on every
  * domain that can raise a notification; the id is the one key every entry carries and the one
- * thing a support ticket is written around.
+ * thing a bug report is written around.
  */
 export const getNotificationPayloadFacts = (
   notification: INotification

@@ -18,7 +18,6 @@
     "receiverSearchPlaceholder": "Nom ou e-mail du destinataire",
     "types": {
       "account": "Compte",
-      "ticket": "Ticket support",
       "announcement": "Annonce"
     },
     "statusLabels": {
@@ -29,10 +28,6 @@
         "NEW_DEVICE_LOGIN": "Nouvelle connexion",
         "SUPPORT_SESSION_ENDED": "Session support terminée",
         "PASSWORD_RESET_DELAYED": "Changement de mot de passe retenu"
-      },
-      "TICKET": {
-        "newReplyFromAgent": "Réponse du support",
-        "TICKET_RESOLVED": "Ticket résolu"
       },
       "ANNOUNCEMENT": {
         "ANNOUNCEMENT": "Annonce"
@@ -134,9 +129,7 @@
         "description": "Le destinataire a déjà reçu son maximum de SMS de secours sur 24 heures : celui-ci n'a pas été envoyé."
       }
     },
-    "payloadKeys": {
-      "ticket": "Ticket"
-    },
+    "payloadKeys": {},
     "id": "ID",
     "channel": "Canal",
     "delivery": "Diffusion",

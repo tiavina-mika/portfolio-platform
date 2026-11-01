@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { FaCheck, FaCheckDouble } from 'react-icons/fa';
 import {
   FiActivity, FiClock, FiEye, FiFileText, FiInbox, FiLifeBuoy, FiList,
-  FiLock, FiLogOut, FiMail, FiMessageSquare, FiMonitor, FiPauseCircle, FiPhone, FiShield, FiShieldOff,
+  FiLock, FiLogOut, FiMail, FiMonitor, FiPauseCircle, FiPhone, FiShield, FiShieldOff,
   FiSlash, FiSmartphone, FiUser, FiUserCheck,
 } from 'react-icons/fi';
 import { IoWarning } from 'react-icons/io5';
@@ -52,11 +52,9 @@ import UserSessions from '@/containers/_core/users/user/UserSessions';
 import UserSmsFallbackStatus from '@/containers/_core/users/user/UserSmsFallbackStatus';
 import UserSuspensionBanner from '@/containers/_core/users/user/UserSuspensionBanner';
 import UserSuspensionSummary from '@/containers/_core/users/user/UserSuspensionSummary';
-import UserTicketsTable from '@/containers/_core/users/user/UserTicketsTable';
 import { useToggle } from '@/hooks/_core/useToggle';
 import { useUserBlock } from '@/hooks/_core/useUserBlock';
 import { loadAuditLogByUserId } from '@/redux/actions/_core/auditLog.action';
-import { goToContact } from '@/redux/actions/_core/contact.action';
 import {
   endImpersonationSessionById, impersonateUserById,
 } from '@/redux/actions/_core/impersonation.action';
@@ -87,11 +85,8 @@ import {
 } from '@/redux/reducers/_core/userSession.reducer';
 import {
   fetchUserAuditTrail, fetchUserNotifications,
-  fetchUserTickets,
-  UserTicketsExtra,
 } from '@/services/_core/userBlock.service';
 import { IPreviewGroup, IPreviewSection } from '@/types/_core/app.type';
-import { IContact } from '@/types/_core/contact.type';
 import { ImpersonateUserInput } from '@/types/_core/impersonation.type';
 import { INotification } from '@/types/_core/notification.type';
 import { IRole, RolesForUserInput, UIRoleEnum } from '@/types/_core/role.type';
@@ -171,7 +166,6 @@ const User = () => {
   const { open: isOpenResetPasswordDialog, toggle: toggleOpenResetPasswordDialog } = useToggle();
 
   const userId = user?.id;
-  const tickets = useUserBlock<IContact, UserTicketsExtra>('tickets', userId, fetchUserTickets);
   const notifications = useUserBlock<INotification>('notifications', userId, fetchUserNotifications);
   const auditTrail = useUserBlock<IUserAuditTrailEntry>('auditTrail', userId, fetchUserAuditTrail);
 
@@ -214,7 +208,6 @@ const User = () => {
   const canSuspend = canUpdateUser && !isDeleted && !isSuspended;
   const canLift = canUpdateUser && !isDeleted && isSuspended;
 
-  const openTicketsCount = tickets.extra?.openCount ?? 0;
 
   /*
    * ---------------------------------------- //
@@ -501,25 +494,6 @@ const User = () => {
     },
     // ------------- exchanges ------------- //
     {
-      id: 'tickets',
-      group: 'exchanges',
-      order: 10,
-      label: t('user:detail.sections.tickets'),
-      icon: <FiMessageSquare />,
-      status: tickets.status,
-      onRetry: tickets.retry,
-      count: openTicketsCount || undefined,
-      countLoading: tickets.status === 'loading',
-      alertBadge: true,
-      content: (
-        <UserTicketsTable
-          onOpen={(ticket: IContact) => navigate(goToContact(ticket.id))}
-          tickets={tickets.items}
-          userId={user.id}
-        />
-      ),
-    },
-    {
       id: 'notifications',
       group: 'exchanges',
       order: 20,
@@ -603,7 +577,6 @@ const User = () => {
   // the figures worth checking before a page is opened: the devices signed in, and what needs acting on
   const accessGroup = groups.find((group) => group.key === 'access')!;
   const moderationGroup = groups.find((group) => group.key === 'moderation')!;
-  const exchangesGroup = groups.find((group) => group.key === 'exchanges')!;
 
   if (!isDeleted) {
     accessGroup.count = sessions.length || undefined;
@@ -612,9 +585,6 @@ const User = () => {
 
   moderationGroup.count = isSuspended ? 1 : undefined;
   moderationGroup.alertBadge = true;
-  exchangesGroup.count = openTicketsCount || undefined;
-  exchangesGroup.countLoading = tickets.status === 'loading';
-  exchangesGroup.alertBadge = true;
 
   return (
     <Layout

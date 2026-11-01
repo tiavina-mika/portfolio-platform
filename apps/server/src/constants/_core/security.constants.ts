@@ -138,13 +138,6 @@ export const ALWAYS_LOCKED_CLASSES: string[] = [
   // written only by the admin session functions, with the master key
   collections.SessionAuditLog,
   /*
-   * TicketMessage is only ever read/written through Cloud Functions (sendTicketMessage,
-   * getTicketMessages) using the master key — its access is governed by `Contact`'s role
-   * rights inside those functions (`fromBO(..., ['update'], collections.Contact)`), never by
-   * its own CLP. No BO role is ever granted rights on TicketMessage directly.
-   */
-  collections.TicketMessage,
-  /*
    * UserModerationLog records bans, lifts and suspensions: written by the moderation services and
    * read by the back-office audit trail function, both with the master key only.
    */
@@ -164,7 +157,7 @@ export const ALWAYS_LOCKED_CLASSES: string[] = [
   collections.ImpersonationSession,
   /*
    * Audit and moderation trails (account changes, MFA events), the content version
-   * history and the id counters: all read and written by Cloud Functions, jobs and triggers with
+   * history: all read and written by Cloud Functions, jobs and triggers with
    * the master key, and no client ever queries them. They were only protected when a role happened
    * to cite them (the default support role does) — a database without that role left them with
    * Parse's default public CLP. Role rights granted on them (the BO audit screens) still apply:
@@ -173,7 +166,6 @@ export const ALWAYS_LOCKED_CLASSES: string[] = [
   collections.UserAuditLog,
   collections.MfaAuditLog,
   collections.ContentVersion,
-  collections.Counter,
 ];
 
 /**
@@ -214,23 +206,15 @@ export const EXTRA_SCHEMA_FIELDS: Record<
     active: 'Boolean',
     code: 'String',
   },
-  // public contact form: the visitor's fields, then everything the ticket beforeSave adds
+  // public contact form: the visitor's fields, then everything the beforeSave adds
   [collections.Contact]: {
     email: 'String',
     name: 'String',
     message: 'String',
-    phone: 'String',
     acceptNewsLetter: 'Boolean',
     deleted: 'Boolean',
     seen: 'Boolean',
-    replied: 'Boolean',
-    status: 'String',
-    priority: 'String',
-    lastMessageAt: 'Date',
-    unreadByAdmin: 'Boolean',
-    unreadByUser: 'Boolean',
     locale: 'String',
-    user: 'Pointer',
   },
   // public newsletter form, same split: submitted fields then trigger-set ones
   [collections.Newsletter]: {

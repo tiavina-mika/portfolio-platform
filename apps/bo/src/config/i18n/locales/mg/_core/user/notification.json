@@ -18,7 +18,6 @@
     "receiverSearchPlaceholder": "Anarana na mailaky ny mpandray",
     "types": {
       "account": "Kaonty",
-      "ticket": "Tapakila fanampiana",
       "announcement": "Fanambarana"
     },
     "statusLabels": {
@@ -29,10 +28,6 @@
         "NEW_DEVICE_LOGIN": "Fidirana vaovao",
         "SUPPORT_SESSION_ENDED": "Vita ny fanampiana",
         "PASSWORD_RESET_DELAYED": "Fanovana teny miafina voatazona"
-      },
-      "TICKET": {
-        "newReplyFromAgent": "Valin'ny fanampiana",
-        "TICKET_RESOLVED": "Tapakila voavaha"
       },
       "ANNOUNCEMENT": {
         "ANNOUNCEMENT": "Fanambarana"
@@ -134,9 +129,7 @@
         "description": "Efa nahazo ny SMS fanampiny faratampony ao anatin'ny 24 ora ny mpandray: tsy nalefa ity."
       }
     },
-    "payloadKeys": {
-      "ticket": "Tapakila"
-    },
+    "payloadKeys": {},
     "id": "ID",
     "channel": "Fantsona",
     "delivery": "Fandefasana",

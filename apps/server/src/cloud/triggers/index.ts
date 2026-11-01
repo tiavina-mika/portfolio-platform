@@ -10,7 +10,6 @@ import './_core/notification.triggers';
 import './_core/page.triggers';
 import './_core/pageSection.triggers';
 import './_core/role.triggers';
-import './_core/ticket-message.triggers';
 import './_core/user.triggers';
 
 // _domain = business-domain triggers (the portfolio projects)

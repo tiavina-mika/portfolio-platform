@@ -66,7 +66,7 @@ const collection = 'Notification';
  * since — resends included.
  *
  * The list row already opens onto most of this; the page exists for the cases a row cannot carry —
- * a fan-out whose recipients have to be read one by one, an address to paste into a support ticket,
+ * a fan-out whose recipients have to be read one by one, an address to paste into a bug report,
  * and a channel incident read across every person it touched.
  */
 const Notification = () => {

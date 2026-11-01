@@ -60,24 +60,8 @@ export const notificationTypeOptions: ISelectOption[] = [
     value: NotificationTypeEnum.ACCOUNT,
   },
   {
-    label: i18n.t('user:notifications.types.ticket'),
-    value: NotificationTypeEnum.TICKET,
-  },
-  {
     label: i18n.t('user:notifications.types.announcement'),
     value: NotificationTypeEnum.ANNOUNCEMENT,
-  },
-];
-
-// Not used
-export const repliedOptions: ISelectOption<boolean>[] = [
-  {
-    label: i18n.t('user:contacts.replied'),
-    value: true,
-  },
-  {
-    label: i18n.t('user:contacts.notReplied'),
-    value: false,
   },
 ];
 
@@ -294,8 +278,6 @@ export const RELATION_OPTIONS_LIMIT = 200;
 export const USER_DETAIL_BLOCK_LIMIT = 5;
 // the audit trail mixes five kinds of actions, so a few more rows are needed to see a pattern
 export const USER_AUDIT_TRAIL_LIMIT = 8;
-// a ticket thread read inline under its row: the whole of it, a support thread stays short
-export const USER_TICKET_THREAD_LIMIT = 50;
 
 export const DISABLE_USER_ACCOUNT_CONFIRMATION = false;
 export const VERIFICATION_CODE_LENGTH = 6;

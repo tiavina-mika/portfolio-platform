@@ -475,7 +475,7 @@
     "loginAsThisUser": "Se connecter en tant que {{name}}",
     "startSession": "Démarrer la session",
     "reason": "Motif",
-    "reasonHelper": "Obligatoire et conservé dans l'historique : numéro de ticket ou description du problème à reproduire.",
+    "reasonHelper": "Obligatoire et conservé dans l'historique : une référence ou une description du problème à reproduire.",
     "scanHelper": "Scannez ce QR code avec le téléphone qui servira à la session. L'application s'ouvrira directement connectée en tant que {{name}}.",
     "expiresAt": "Ce lien expire le {{date}} et ne peut servir qu'une fois.",
     "copyLink": "Copier le lien",
@@ -555,7 +555,6 @@
       "ratingsGiven": "Avis donnés",
       "suspension": "Suspension",
       "bans": "Historique des bannissements",
-      "tickets": "Tickets au support",
       "notifications": "Notifications",
       "history": "Historique",
       "views": "Consultations de la fiche",
@@ -646,21 +645,6 @@
       },
       "empty": "Aucun bannissement",
       "note": "Sur les bannissements anciens, l'auteur et la levée ne sont pas connus."
-    },
-    "tickets": {
-      "message": "Message",
-      "status": "Statut",
-      "priority": "Priorité",
-      "lastActivity": "Dernière activité",
-      "reference": "T-{{reference}}",
-      "messagesCount_one": "{{count}} message",
-      "messagesCount_other": "{{count}} messages",
-      "support": "{{name}} · support",
-      "internalNote": "Note interne",
-      "system": "Système",
-      "empty": "Aucun ticket au support",
-      "threadEmpty": "Aucun message dans ce ticket pour l'instant",
-      "open": "Ouvrir le ticket"
     },
     "notifications": {
       "title": "Titre",

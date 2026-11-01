@@ -176,7 +176,7 @@ export const scheduleJobs = (serverUrl: string): void => {
     schedule('30 4 * * 0', () => runScheduledJob('purgeOldNotificationsJob'));
 
     /*
-     * Destroy the audit, moderation, ticket-message and expired-link rows past their retention
+     * Destroy the audit, moderation and expired-link rows past their retention
      * period (LOG_RETENTION_RULES) — runs weekly on Sunday at 04:45, after the purges above
      * so the heaviest deletions never overlap. Retention is counted in months, so weekly is plenty
      */

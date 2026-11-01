@@ -19,7 +19,7 @@ const PENDING_BLOCK: IUserBlockState = {
 
 /**
  * The lists the user detail page reads apart from the account itself — its reviews,
- * its tickets, its vehicles… — one entry per block, keyed by the block's name. Each block is read on
+ * its notifications, its vehicles… — one entry per block, keyed by the block's name. Each block is read on
  * its own and can be on its way or have failed while the others are drawn, so each one carries its
  * own state rather than sharing the page's.
  *

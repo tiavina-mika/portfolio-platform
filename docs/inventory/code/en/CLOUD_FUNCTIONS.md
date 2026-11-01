@@ -27,7 +27,7 @@ Files are in `apps/server/src/cloud/functions/_core/` unless noted.
 | `auditLog.functions.ts` | `getAuditLogs`, `getAuditLogByUserId`, `getUserAuditTrail` |
 | `auth.functions.ts` | `verifyAccount`, `changePassword`, `sendVerificationCode`, `sendResetPasswordVerificationCode`, `loginWithPhone`, `loginWithEmail`, `resetPassword` |
 | `category.functions.ts` | `getCategories`, `getCategory` |
-| `contact.functions.ts` | `createPublicContact`, `subscribeToNewsletter`, `confirmNewsletterSubscription`, `getContacts`, `getContact`, `getContactSummary`, `getTicketContext`, `getTicketAgents`, `getMyTickets`, `getMyTicket`, `reopenMyTicket` |
+| `contact.functions.ts` | `createPublicContact`, `subscribeToNewsletter`, `confirmNewsletterSubscription`, `getContacts`, `getContact` |
 | `contactChange.functions.ts` | `requestContactChange`, `confirmContactChange` |
 | `contentVersion.functions.ts` | `getContentVersions`, `getContentVersionSnapshot` |
 | `dashboard.functions.ts` | `getDashboardKpis`, `getDashboardAlerts`, `getDashboardRecentActivity` |
@@ -43,7 +43,6 @@ Files are in `apps/server/src/cloud/functions/_core/` unless noted.
 | `passwordResetDelay.functions.ts` | `cancelPasswordResetDelay` |
 | `role.functions.ts` | `hasRole`, `addRolesToUser`, `getRolesDelegation`, `removeRolesForUser`, `createRole`, `updateRole`, `getRoleAuditLogs`, `getHighestRoleAccounts` |
 | `stepUpVerification.functions.ts` | `requestStepUpVerification`, `verifyStepUpCode` |
-| `ticket-message.functions.ts` | `sendTicketMessage`, `getTicketMessages`, `updateTicketStatus`, `updateTicketPriority`, `assignTicket` |
 | `user.functions.ts` | `getUserProfile`, `deleteAccount`, `exportMyData`, `saveUserLanguage` |
 | `userSession.functions.ts` | `registerSession`, `getUserSessions`, `revokeSession`, `revokeOtherSessions`, `adminGetUserSessions`, `adminRevokeUserSession`, `adminRevokeAllUserSessions` |
 | `utils.functions.ts` | `getJobStatus`, `destroyObjects` |
@@ -67,7 +66,6 @@ Files are in `apps/server/src/cloud/triggers/_core/` unless noted.
 | `page.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `Page` |
 | `pageSection.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `PageSection` |
 | `role.triggers.ts` | `beforeSave`, `afterSave`, `beforeDelete`, `afterDelete` `_Role` |
-| `ticket-message.triggers.ts` | `beforeSave`, `afterSave` `TicketMessage` |
 | `user.triggers.ts` | `beforeSave`, `afterSave`, `beforeDelete`, `afterDelete` `_User` |
 | `_domain/project.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `Project` |
 

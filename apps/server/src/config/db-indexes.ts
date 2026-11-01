@@ -175,36 +175,8 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
      */
     { spec: { deleted: 1, banned: 1, address: 1 } },
   ],
-  [collections.Contact]: [
-    // the ticket inbox counts admin-unread tickets rather than the generic `seen`
-    { spec: { deleted: 1, unreadByAdmin: 1 } },
-    /*
-     * the short number the app shows its author and support is quoted over the phone: unique so a
-     * lost race on the sequence surfaces as a rejected save instead of two tickets sharing a
-     * reference, sparse so the rows written before the sequence existed do not all collide on the
-     * missing value
-     */
-    { spec: { reference: 1 }, options: { unique: true, sparse: true } },
-    // the ticket inbox narrows its queue by subject, then by status
-    { spec: { deleted: 1, subject: 1, status: 1 } },
-    // the ticket inbox, read one country at a time
-    { spec: { country: 1, deleted: 1, status: 1 } },
-    /*
-     * the app's "my requests" list: one author's tickets, latest activity first — its status,
-     * last-writer and subject filters narrow what is already a single person's handful of rows
-     */
-    { spec: { _p_user: 1, deleted: 1, lastMessageAt: -1 } },
-    /*
-     * the tickets of one phone number, newest first: the cap on the texts sent to a number counts
-     * its recent tickets, and the inbox's "previous tickets" of a requester with no email reads
-     * them. Sparse: only the tickets that carry a number are worth an entry.
-     */
-    { spec: { phone: 1, _created_at: -1 }, options: { sparse: true } },
-  ],
-  // getTicketMessagesService — one ticket's thread, oldest first (the leading field is the pointer)
-  [collections.TicketMessage]: [
-    { spec: { _p_ticket: 1, deleted: 1, _created_at: 1 } },
-  ],
+  // the back-office badge counts the unread contacts
+  [collections.Contact]: [BADGE_COUNT_INDEX],
   [collections.Category]: [
     /*
      * the technical code the apps read a category by (`equalTo('code', …).first()`): unique across
@@ -247,7 +219,6 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
     { spec: { entityType: 1, entityId: 1, _created_at: -1 } },
   ],
   // one row per named sequence — the uniqueness is what makes a concurrent first draw safe
-  [collections.Counter]: [{ spec: { name: 1 }, options: { unique: true } }],
   [collections.UserSession]: [
     /*
      * a member's devices (profile screen, BO "active sessions", device registration by deviceId).

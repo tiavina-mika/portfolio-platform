@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 
 import SnackBar from '@/components/SnackBar';
-import { useContactMessageAlert } from '@/hooks/_core/useContactMessageAlert';
 import { useDownloadSnackbar } from '@/hooks/_core/useDownloadSnackbar';
 import {
   clearErrorSlice,
@@ -19,7 +18,6 @@ const SnackBars = () => {
   const dispatch = useDispatch();
 
   useDownloadSnackbar();
-  useContactMessageAlert();
 
   // clear message or error
   const toggleSnackBar = () => {

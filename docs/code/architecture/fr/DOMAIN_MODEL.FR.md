@@ -25,7 +25,7 @@
 
 ## Vue d'ensemble
 
-Les données vivent dans MongoDB et sont lues et écrites via Parse Server (`apps/server`). Les noms de collections partagés entre les apps sont dans `libs/shared-constants/src/collection.constants.ts` (`Article`, `Newsletter`, `Page`, `Category`, `Project`, `Contact`, `App`) ; le serveur a aussi sa propre constante `collections` (`apps/server/src/constants/_core/constants.ts`) et les noms de classes du domaine sont dans `DOMAIN_COLLECTIONS` (`libs/shared-domain-constants`), voir [CORE_DOMAIN.FR.md](CORE_DOMAIN.FR.md). Le back-office générique ajoute des classes non détaillées ci-dessous (`Notification`, `TicketMessage`, `UserAuditLog`, `RoleAuditLog`, `UserSession`, `Invitation`, `ContentVersion`, ...) : voir l'inventaire. Une classe `Test` existe aussi, utilisée uniquement par les fonctions et jobs de test.
+Les données vivent dans MongoDB et sont lues et écrites via Parse Server (`apps/server`). Les noms de collections partagés entre les apps sont dans `libs/shared-constants/src/collection.constants.ts` (`Article`, `Newsletter`, `Page`, `Category`, `Project`, `Contact`, `App`) ; le serveur a aussi sa propre constante `collections` (`apps/server/src/constants/_core/constants.ts`) et les noms de classes du domaine sont dans `DOMAIN_COLLECTIONS` (`libs/shared-domain-constants`), voir [CORE_DOMAIN.FR.md](CORE_DOMAIN.FR.md). Le back-office générique ajoute des classes non détaillées ci-dessous (`Notification`, `UserAuditLog`, `RoleAuditLog`, `UserSession`, `Invitation`, `ContentVersion`, ...) : voir l'inventaire. Une classe `Test` existe aussi, utilisée uniquement par les fonctions et jobs de test.
 
 Les champs ci-dessous sont ceux que le code lit ou écrit (triggers du Cloud Code et interfaces `*Attributes` de `apps/bo`). Parse ajoute `objectId`, `createdAt`, `updatedAt` et `ACL` à chaque classe.
 
@@ -125,16 +125,15 @@ Réglages du site avec trois fichiers : `image`, `imageForDarkMode` et `cv` (ser
 
 ### Contact
 
-Un message envoyé depuis le formulaire de contact public ; c'est aussi le premier message d'un ticket de support traité dans le back-office (`TicketMessage` porte les réponses).
+Un message envoyé depuis le formulaire de contact public. Le back-office ne fait que le lire (et le mettre à la corbeille) : il n'y a ni réponse, ni statut, ni assignation.
 
 | Champ | Contenu |
 |---|---|
 | `email`, `name`, `message` | saisis par le visiteur ; validés côté serveur (nom 120 caractères au plus, message 500) |
 | `locale` | locale du visiteur, transmise dans le contexte de l'enregistrement |
-| `user` | pointeur vers le `_User` ayant le même email, s'il existe |
-| `replied`, `repliedAt`, `repliedBy` | renseignés quand le back-office répond |
-| `reference`, `priority`, `subject`, `phone`, `source`, `lastMessageAt`, `seen` | champs de ticket remplis par le serveur |
-| `deleted` | suppression logique |
+| `acceptNewsLetter` | indique si le visiteur a aussi demandé à s'abonner à la newsletter |
+| `seen` | `false` à la création (non lu) ; passe à `true` quand un utilisateur du back-office ouvre le message, avec `seenAt`, `seenBy`, `lastSeenAt`, `lastSeenBy` et `seenCount` |
+| `deleted` | suppression logique, avec `deletedAt` et `deletedBy` |
 
 ### Newsletter
 

@@ -27,7 +27,6 @@
     "allRightsReserved": "All right reserved",
     "contact": "Contact",
     "internalAlert": "Internal alert",
-    "openTicket": "Open the ticket",
     "reasonRequired": "Reason is required",
     "emailNotFound": "Email not found",
     "welcomeSubject": "Welcome to Portfolio!",
@@ -88,18 +87,6 @@
       "other": "other",
       "account_protection": "account protection"
     },
-    "ticketReplySubject": "A reply to your request — Portfolio",
-    "ticketReplyIntro": "The support team has answered the request you sent us from our website.",
-    "ticketReplyOriginalLabel": "Your request",
-    "ticketReplySignature": "{{agentName}} — Portfolio Support",
-    "ticketReplyTeamName": "The support team",
-    "ticketReplyCannotReplyTitle": "This email cannot receive a reply",
-    "ticketReplyCannotReplyBody": "Your request was sent from our website without an account, so we have no thread to continue the conversation in. If you reply to this email, nobody will receive it.",
-    "ticketReplyWriteAgain": "Write to us again from the contact form",
-    "ticketAcknowledgementSubject": "We received your request — Portfolio",
-    "ticketAcknowledgementIntro": "Thank you for writing to us. Your message has reached the support team, who will answer you by email as soon as possible.",
-    "ticketAcknowledgementReferenceLabel": "Your request number:",
-    "ticketAcknowledgementNextSteps": "Keep this number: quote it if you write to us or call us again about the same request. There is no need to reply to this email.",
     "newsletterConfirmationSubject": "Confirm your subscription to the Portfolio newsletter",
     "newsletterConfirmationMessage": "Someone — hopefully you — asked to receive the Portfolio newsletter at this address. Confirm with the button below to start receiving our news. If you did not ask for it, simply ignore this email: you will receive nothing.",
     "newsletterConfirmationButton": "Confirm my subscription",
@@ -118,9 +105,7 @@
   "sms": {
     "verificationCode": "Your Portfolio code: {{code}}",
     "contactChanged": "Portfolio: the phone number of your account was changed. If this wasn't you, contact support right away.",
-    "newDeviceLogin": "New login to your Portfolio account from: {{- deviceName}}. If this wasn't you, change your password.",
-    "ticketAcknowledgement": "Portfolio: we received your request #{{reference}}. Support will answer you by SMS or phone call. Keep this number.",
-    "ticketReply": "Portfolio support, request #{{reference}}: {{- message}}"
+    "newDeviceLogin": "New login to your Portfolio account from: {{- deviceName}}. If this wasn't you, change your password."
   },
   "error": {
     "invalidStringType": "Excepted text",
@@ -211,9 +196,6 @@
     "phoneAlreadyUsedByAnotherAccount": "This phone number is already used by another account.",
     "contactUnchanged": "This is already the value saved on your account."
   },
-  "ticket": {
-    "reopenedSystemMessage": "Request reopened"
-  },
   "cms": {
     "codeAlreadyUsed": "This technical code is already used by \"{{- name}}\". Choose another one."
   },
@@ -228,8 +210,6 @@
   },
   "slack": {
     "openInBackOffice": "Open in the back-office",
-    "newTicketFromWeb": "New support request #{{- reference}} (website)",
-    "newTicketFromApp": "New support request #{{- reference}} (app)",
     "scheduledJobFailed": "Scheduled job {{- jobName}} failed",
     "scheduledJobFailedDetails": "Error: {{- kind}} — the detail is in the server logs",
     "dailySummaryTitle": "Yesterday on Portfolio ({{- date}})",

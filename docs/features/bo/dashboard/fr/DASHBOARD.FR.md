@@ -54,7 +54,7 @@ Les entrées sont regroupées ; un groupe sans aucune entrée autorisée n'appar
 - **Contenu** : **Articles**, **Pages**, **Catégories**.
 - **Administration** : **Droits** (appelée « Postes » dans l'écran), **Paramètres**, **Divers**.
 
-Des pastilles de nombre signalent les éléments nouveaux (utilisateurs, contacts, notifications, etc.). Le bouton à trois barres réduit le menu à ses icônes ou le déploie. Sur téléphone, le menu
+Des pastilles de nombre signalent les éléments nouveaux (utilisateurs, contacts, etc.). Le bouton à trois barres réduit le menu à ses icônes ou le déploie. Sur téléphone, le menu
 occupe tout l'écran et se referme après un choix.
 
 ### La barre du haut

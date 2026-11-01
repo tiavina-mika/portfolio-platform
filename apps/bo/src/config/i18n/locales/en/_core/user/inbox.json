@@ -3,143 +3,19 @@
     "contacts": "Contacts",
     "contact": "Contact",
     "message": "Message",
-    "messages": "Messages",
-    "reply": "Reply",
-    "sendTo": "Send to {{name}}",
     "hasNoRightToDeleteContact": "You can not delete this contact",
-    "thisMessageOf": "this message of {{name}}",
     "sentDate": "Sent date",
-    "messageBy": "Message by {{name}}",
-    "replySubject": "Re:{{subject}} sent at {{date}}",
-    "send": "Send",
-    "replied": "Replied",
-    "notReplied": "Not replied",
-    "repliedBy": "Replied by",
-    "repliedAt": "Replied at",
-    "acceptNewsLetter": "Newsletter opt-in",
-    "search": "No., name, email, phone or message",
-    "status": "Status",
-    "priority": "Priority",
-    "lastMessageAt": "Last activity",
-    "referenceLabel": "No. {{reference}}",
-    "requester": "Requester",
-    "noMessages": "No messages yet",
-    "replyPlaceholder": "Write a reply…",
-    "addAttachment": "Add attachment",
-    "attachment": "Attachment",
-    "statuses": {
-      "open": "Open",
-      "in_progress": "In progress",
-      "resolved": "Resolved",
-      "closed": "Closed"
-    },
-    "priorities": {
-      "low": "Low",
-      "medium": "Medium",
-      "high": "High",
-      "urgent": "Urgent"
-    },
-    "internalNote": "Internal note",
-    "internalNoteBy": "Internal note by {{value}}",
-    "internalNotePlaceholder": "Internal note, not visible to the requester…",
-    "addNote": "Add note",
-    "resolve": "Resolve",
-    "assignment": "Assignment",
-    "unassigned": "Unassigned",
-    "previousTickets": "Previous tickets",
-    "noPreviousTicket": "No previous ticket",
-    "noTicketMatchesSearch": "No ticket matches this search.",
-    "selectTicket": "No ticket open",
-    "selectTicketDescription": "Pick a ticket from the list to read the conversation and answer it.",
-    "ticketsWithCount_one": "{{count}} ticket, {{unread}} unread",
-    "ticketsWithCount_other": "{{count}} tickets, {{unread}} unread",
-    "memberSince": "Member since",
-    "verifiedAccount": "Verified",
-    "unverifiedAccount": "Pending verification",
-    "requesterHasNoAccount": "This ticket was sent without a linked account.",
-    "viewAccount": "View account",
-    "quickReplies": {
-      "checking": {
-        "label": "Checking now",
-        "body": "Hello, I am checking your case with the operator and will come back to you within 24 hours."
-      },
-      "missingDocument": {
-        "label": "Missing document",
-        "body": "To move forward, please send us a readable photo of your licence, front and back."
-      },
-      "closing": {
-        "label": "Closing",
-        "body": "Without an answer from you within 7 days, this ticket will be closed automatically."
-      }
-    },
-    "handling": "Handling",
-    "source": "Channel",
-    "addedAt": "Date added",
-    "addedToday": "Today",
-    "addedLastDays_one": "Last {{count}} day",
-    "addedLastDays_other": "Last {{count}} days",
-    "matchingTickets_one": "{{count}} matching ticket",
-    "matchingTickets_other": "{{count}} matching tickets",
-    "sourceWeb": "Public form",
-    "sourceApp": "App",
-    "sourceWebLong": "Website form",
-    "sourceAppLong": "Mobile app",
-    "sourceWebHint": "Received through the public website contact form",
-    "sourceAppHint": "Received from the app, the requester has an account",
-    "oneWayTicketNotice": "One-way request: this person has no account. Your reply goes out as an email and the exchange ends there — if they write again, it will be a new request.",
-    "oneWayTicketNoticeSms": "This person has no email: your reply will go out by SMS, cut after {{count}} characters, and the exchange ends there. For anything longer, call them on the number shown.",
-    "newActivityAlert_one": "New message in the inbox",
-    "newActivityAlert_other": "{{count}} new messages in the inbox",
-    "openInbox": "Open inbox",
-    "subject": "Subject",
-    "reason": "Reason",
-    "subjects": {
-      "safety": "Safety",
-      "verification": "Verification",
-      "account": "Account",
-      "tech": "Technical problem",
-      "other": "Other"
-    },
-    "reasons": {
-      "safety": {
-        "inappropriate_behavior": "Inappropriate behavior",
-        "harassment": "Harassment",
-        "other": "Other"
-      },
-      "verification": {
-        "identity_document": "ID document",
-        "phone": "Phone",
-        "email": "Email"
-      },
-      "account": {
-        "login": "Login",
-        "password": "Password",
-        "phone": "Phone",
-        "suspension": "Suspension",
-        "deletion": "Deletion",
-        "personal_data": "Personal data"
-      },
-      "tech": {
-        "bug": "Bug",
-        "slowness": "Slowness",
-        "security_flaw": "Security flaw",
-        "other": "Other"
-      }
-    },
+    "search": "Name, email, phone or message",
+    "noContactMatchesSearch": "No message matches this search.",
+    "selectContact": "No message open",
+    "selectContactDescription": "Pick a message from the list to read it.",
     "details": {
-      "title": "Ticket details",
-      "reference": "Reference",
+      "title": "Message details",
       "email": "Email",
       "phone": "Phone",
       "createdAt": "Created",
       "language": "Language",
       "newsletter": "Newsletter",
-      "subject": "Subject",
-      "reason": "Reason",
-      "firstOpened": "First opened",
-      "lastOpened": "Last opened",
-      "visits": "Visits",
-      "firstReply": "First reply",
       "notProvided": "Not provided"
     }
   }

@@ -16,13 +16,13 @@
 
 ## Why the split
 
-`apps/server` and `apps/bo` are the generic back-office of the 1lalana platform (accounts, roles, CMS, notifications, tickets, audit log, dashboards) with the portfolio's own business added on top. Keeping the two apart means the generic part can be reused or upgraded without touching the portfolio, and the portfolio's business (`Project`) sits in one place.
+`apps/server` and `apps/bo` are the generic back-office of the 1lalana platform (accounts, roles, CMS, notifications, audit log, dashboards) with the portfolio's own business added on top. Keeping the two apart means the generic part can be reused or upgraded without touching the portfolio, and the portfolio's business (`Project`) sits in one place.
 
 ## What is core, what is domain
 
 | Side | Holds |
 |---|---|
-| `_core/` | Code that still works if `_domain/` is deleted: auth, MFA, users, roles and rights, CMS (article, page, page section, category, contact, newsletter), notifications, tickets, audit log, dashboards as registries |
+| `_core/` | Code that still works if `_domain/` is deleted: auth, MFA, users, roles and rights, CMS (article, page, page section, category, contact, newsletter), notifications, audit log, dashboards as registries |
 | `_domain/` | What is specific to the portfolio: the `Project` entity and anything that cannot run without knowing it |
 
 Today `_domain/` holds only `Project`: on the server `project.functions.ts` (`getProjects`, `getProject`, `getProjectForClient`), `project.triggers.ts`, services, utils, constants and validations; in the back-office the pages, containers, redux, service, types, validations and translations of projects.

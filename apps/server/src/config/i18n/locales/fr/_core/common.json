@@ -27,7 +27,6 @@
     "allRightsReserved": "Tous droits réservés",
     "contact": "Contact",
     "internalAlert": "Alerte interne",
-    "openTicket": "Ouvrir le ticket",
     "reasonRequired": "La raison est requise",
     "emailNotFound": "Email non trouvé",
     "welcomeSubject": "Bienvenue sur Portfolio !",
@@ -88,18 +87,6 @@
       "other": "autre",
       "account_protection": "protection du compte"
     },
-    "ticketReplySubject": "Réponse à votre demande — Portfolio",
-    "ticketReplyIntro": "L’équipe support a répondu à la demande que vous nous avez envoyée depuis notre site.",
-    "ticketReplyOriginalLabel": "Votre demande",
-    "ticketReplySignature": "{{agentName}} — Support Portfolio",
-    "ticketReplyTeamName": "L’équipe support",
-    "ticketReplyCannotReplyTitle": "Cet email ne peut pas recevoir de réponse",
-    "ticketReplyCannotReplyBody": "Votre demande a été envoyée depuis notre site sans compte : nous n’avons donc pas de fil de discussion où poursuivre l’échange. Si vous répondez à cet email, personne ne le recevra.",
-    "ticketReplyWriteAgain": "Nous réécrire depuis le formulaire de contact",
-    "ticketAcknowledgementSubject": "Nous avons bien reçu votre demande — Portfolio",
-    "ticketAcknowledgementIntro": "Merci de nous avoir écrit. Votre message est bien arrivé à l’équipe support, qui vous répondra par email dans les meilleurs délais.",
-    "ticketAcknowledgementReferenceLabel": "Numéro de votre demande :",
-    "ticketAcknowledgementNextSteps": "Conservez ce numéro : indiquez-le si vous nous réécrivez ou nous appelez au sujet de cette demande. Inutile de répondre à cet email.",
     "newsletterConfirmationSubject": "Confirmez votre inscription à la newsletter Portfolio",
     "newsletterConfirmationMessage": "Quelqu’un — vous, nous l’espérons — a demandé à recevoir la newsletter Portfolio à cette adresse. Confirmez avec le bouton ci-dessous pour commencer à recevoir nos actualités. Si vous n’êtes pas à l’origine de cette demande, ignorez simplement cet email : vous ne recevrez rien.",
     "newsletterConfirmationButton": "Confirmer mon inscription",
@@ -118,9 +105,7 @@
   "sms": {
     "verificationCode": "Votre code Portfolio : {{code}}",
     "contactChanged": "Portfolio : le numéro de téléphone de votre compte a été modifié. Si ce n'est pas vous, contactez le support tout de suite.",
-    "newDeviceLogin": "Nouvelle connexion à votre compte Portfolio depuis : {{- deviceName}}. Si ce n'est pas vous, changez votre mot de passe.",
-    "ticketAcknowledgement": "Portfolio : votre demande #{{reference}} est bien enregistrée. Le support vous répondra par SMS ou par appel. Gardez ce numéro.",
-    "ticketReply": "Support Portfolio, demande #{{reference}} : {{- message}}"
+    "newDeviceLogin": "Nouvelle connexion à votre compte Portfolio depuis : {{- deviceName}}. Si ce n'est pas vous, changez votre mot de passe."
   },
   "error": {
     "invalidStringType": "Devrait être une chaîne de caractère",
@@ -211,9 +196,6 @@
     "phoneAlreadyUsedByAnotherAccount": "Ce numéro est déjà utilisé par un autre compte.",
     "contactUnchanged": "C'est déjà la valeur enregistrée sur votre compte."
   },
-  "ticket": {
-    "reopenedSystemMessage": "Demande rouverte"
-  },
   "cms": {
     "codeAlreadyUsed": "Ce code technique est déjà utilisé par « {{- name}} ». Choisissez-en un autre."
   },
@@ -228,8 +210,6 @@
   },
   "slack": {
     "openInBackOffice": "Ouvrir dans le back-office",
-    "newTicketFromWeb": "Nouvelle demande au support n° {{- reference}} (site web)",
-    "newTicketFromApp": "Nouvelle demande au support n° {{- reference}} (application)",
     "scheduledJobFailed": "Échec du job planifié {{- jobName}}",
     "scheduledJobFailedDetails": "Erreur : {{- kind}} — le détail est dans les logs du serveur",
     "dailySummaryTitle": "Hier sur Portfolio ({{- date}})",
