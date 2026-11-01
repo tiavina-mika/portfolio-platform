@@ -36,8 +36,6 @@
     "vehicleYearInFuture": "Tsy azo atao ho any aoriana ny taona nivoahan'ny fiara",
     "vehicleDocumentExpiryMismatch": "Ilaina ny daty fiafaran'ny fanontaniana ho an'ny fiantohana sy ny fitiliana ara-teknika, ary tsy tokony hofenoina ho an'ny taratasy fiaraha-miasa",
     "vehicleDocumentExpiryInPast": "Tsy maintsy ho amin'ny hoavy ny daty fiafaran'ny taratasy",
-    "invalidEmergencyContactPhone": "Tsy maintsy laharana finday manan-kery avy amin'ny firenena alefantsika SMS ny an'ny olona hampandrenesina raha misy loza",
-    "emergencyContactIsOwnPhone": "Tsy maintsy olona hafa ankoatra anao ny olona hampandrenesina raha misy loza",
     "invalidContactPhone": "Tsy maintsy laharana finday manan-kery avy amin'ny firenena alefantsika SMS ny laharana",
     "contactEmailOrPhoneRequired": "Ampidiro ny mailaka na ny laharan-telefaona mba hahafahanay mamaly anao"
   },

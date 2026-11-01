@@ -36,8 +36,6 @@
     "vehicleYearInFuture": "L'année de mise en circulation ne peut pas être dans le futur",
     "vehicleDocumentExpiryMismatch": "La date de fin de validité est requise pour l'assurance et la visite technique, et ne doit pas être renseignée pour la carte grise",
     "vehicleDocumentExpiryInPast": "La date de fin de validité du document doit être dans le futur",
-    "invalidEmergencyContactPhone": "Le numéro du contact d'urgence doit être un numéro mobile valide d'un pays où nous envoyons des SMS",
-    "emergencyContactIsOwnPhone": "Le contact d'urgence doit être une autre personne que vous",
     "invalidContactPhone": "Le numéro doit être un numéro mobile valide d'un pays où nous envoyons des SMS",
     "contactEmailOrPhoneRequired": "Indiquez un email ou un numéro de téléphone pour que nous puissions vous répondre"
   },

@@ -23,7 +23,7 @@ Domain class names are in `libs/shared-domain-constants` (`DOMAIN_COLLECTIONS`);
 | `Newsletter` | Newsletter subscriptions (double opt-in, confirmed through a hashed token) | server, web |
 | `App` | Site-wide settings, including the `image`, `imageForDarkMode` and `cv` files (old files are deleted from Cloudinary on change) | server, bo, web |
 | `Notification`, `NotificationResend` | Notifications sent from the back-office and their re-sends | server, bo |
-| `UserAuditLog`, `RoleAuditLog`, `SessionAuditLog`, `MfaAuditLog`, `UserModerationLog`, `PenaltyLog` | Audit trails (locked, written by the server only) | server, bo |
+| `UserAuditLog`, `RoleAuditLog`, `SessionAuditLog`, `MfaAuditLog`, `UserModerationLog` | Audit trails (locked, written by the server only) | server, bo |
 | `UserSession` | Devices and sessions | server |
 | `Invitation` | Back-office invitations (token, role, expiry) | server, bo |
 | `ImpersonationSession` | "Login as" sessions | server, bo |

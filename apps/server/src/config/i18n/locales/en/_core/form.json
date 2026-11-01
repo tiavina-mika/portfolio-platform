@@ -36,8 +36,6 @@
     "vehicleYearInFuture": "The production year cannot be in the future",
     "vehicleDocumentExpiryMismatch": "An expiry date is required for insurance and technical inspection, and must not be set for the registration",
     "vehicleDocumentExpiryInPast": "The document's expiry date must be in the future",
-    "invalidEmergencyContactPhone": "The emergency contact must have a valid mobile number of a country we send texts to",
-    "emergencyContactIsOwnPhone": "The emergency contact must be someone other than you",
     "invalidContactPhone": "The number must be a valid mobile number of a country we send texts to",
     "contactEmailOrPhoneRequired": "Enter an email or a phone number so that we can answer you"
   },

@@ -23,7 +23,7 @@ Les noms de classes du domaine sont dans `libs/shared-domain-constants` (`DOMAIN
 | `Newsletter` | Abonnements à la newsletter (double opt-in, confirmé par un jeton haché) | server, web |
 | `App` | Réglages du site, dont les fichiers `image`, `imageForDarkMode` et `cv` (les anciens fichiers sont supprimés de Cloudinary au changement) | server, bo, web |
 | `Notification`, `NotificationResend` | Notifications envoyées depuis le back-office et leurs renvois | server, bo |
-| `UserAuditLog`, `RoleAuditLog`, `SessionAuditLog`, `MfaAuditLog`, `UserModerationLog`, `PenaltyLog` | Journaux d'audit (verrouillés, écrits par le serveur seul) | server, bo |
+| `UserAuditLog`, `RoleAuditLog`, `SessionAuditLog`, `MfaAuditLog`, `UserModerationLog` | Journaux d'audit (verrouillés, écrits par le serveur seul) | server, bo |
 | `UserSession` | Appareils et sessions | server |
 | `Invitation` | Invitations au back-office (jeton, rôle, expiration) | server, bo |
 | `ImpersonationSession` | Sessions « se connecter en tant que » | server, bo |

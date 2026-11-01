@@ -334,7 +334,7 @@ export const getUserLastPlatformLabel = (user: IUser): string | undefined => {
 
 // when the suspension in force ends — undefined once it has lapsed or when there is none
 export const getUserActiveSuspensionUntil = (user: IUser): DateType | undefined => {
-  const until = user.suspension?.until;
+  const until = user.isSuspendedUntil;
 
   return until && !isDateExpired(until) ? until : undefined;
 };

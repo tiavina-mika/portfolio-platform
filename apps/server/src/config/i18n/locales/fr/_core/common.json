@@ -30,8 +30,6 @@
     "openTicket": "Ouvrir le ticket",
     "reasonRequired": "La raison est requise",
     "emailNotFound": "Email non trouvé",
-    "preventiveSuspensionSubject": "Votre compte a été suspendu temporairement",
-    "preventiveSuspensionMessage": "Suite à plusieurs signalements, votre compte a été suspendu pendant {{days}} jours. Notre équipe de modération examine votre dossier.",
     "welcomeSubject": "Bienvenue sur Portfolio !",
     "welcomeMessage": "Bonjour {{fullName}}, votre compte est maintenant vérifié. Vous pouvez chercher un trajet ou en proposer un.",
     "accountReactivatedSubject": "Votre compte a été réactivé",

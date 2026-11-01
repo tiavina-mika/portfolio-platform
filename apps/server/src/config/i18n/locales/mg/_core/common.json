@@ -30,8 +30,6 @@
     "openTicket": "Sokafy ny tapakila",
     "reasonRequired": "Tsy maintsy misy antony",
     "emailNotFound": "Mailaka tsy hita",
-    "preventiveSuspensionSubject": "Voahidy vonjimaika ny kaontinao",
-    "preventiveSuspensionMessage": "Noho ny fitoriana maro, voahidy nandritra ny {{days}} andro ny kaontinao. Ny ekipan'ny fanaraha-maso miandry mandinika ny tantaranao.",
     "welcomeSubject": "Tongasoa eto amin'ny Portfolio!",
     "welcomeMessage": "Manao ahoana {{fullName}}, voamarina ny kaontinao. Afaka mitady na manolotra dia ianao izao.",
     "accountReactivatedSubject": "Naverina ny kaontinao",

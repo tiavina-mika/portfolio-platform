@@ -24,49 +24,6 @@ export enum BanTypeEnum {
 }
 
 /**
- * What suspended an account. `isSuspendedUntil` is written by four independent triggers and keeps
- * no memory of which one: the member read "account suspended" with no way of knowing what for, and
- * the back-office could not tell a cancellation suspension from a report one without opening the
- * moderation log.
- *
- * The values are the same strings the moderation log already writes as its `reason`, so one
- * suspension reads the same whether it is looked up on the account or in the audit trail.
- */
-export enum SuspensionSourceEnum {
-  /** A driver reached the ride-cancellation threshold of the cancellation policy. */
-  DRIVER_CANCELLATIONS = 'driver_cancellations',
-  /** A passenger reached the booking-cancellation threshold. */
-  PASSENGER_CANCELLATIONS = 'passenger_cancellations',
-  /** Enough unresolved reports piled up on the account for the preventive suspension to fire. */
-  REPORT_THRESHOLD = 'report_threshold',
-  /** A moderator ruled on a report and suspended the account as the decision. */
-  REPORT_DECISION = 'report_decision',
-  /** The author of a review a moderator judged abusive. */
-  RATING_AUTHOR = 'rating_author'
-}
-
-/**
- * The suspension in force on an account, as the app and the back-office read it.
- *
- * Kept alongside `isSuspendedUntil` rather than replacing it: every query, job and permission check
- * filters on that date, and the two are written and cleared together. `until` is the same date —
- * duplicated here so one object answers "is it on, until when, and what for" without a second read.
- */
-export type UserSuspension = {
-  /** End of the suspension — the same value as `isSuspendedUntil`. */
-  until: Date;
-  /** Which trigger applied it. */
-  source: SuspensionSourceEnum;
-  /** When it was applied, so an extension can be told from the original. */
-  appliedAt: Date;
-  /**
-   * The moderator's own wording, when a human wrote one. Absent on an automatic suspension, whose
-   * `source` says everything there is to say about it.
-   */
-  reason?: string;
-};
-
-/**
  * How a back-office administrator reaches a user directly: their mailbox, or their handset. Which
  * one is available depends on the account — an account with no phone number can only be emailed.
  */
@@ -142,29 +99,6 @@ export enum VerificationSmsErrorEnum {
   /** the number or the connection already used up its daily allowance of verification texts */
   RATE_LIMITED = 'rateLimited'
 }
-
-/** How the member knows the person they want warned if something goes wrong on a trip. */
-export enum EmergencyContactRelationshipEnum {
-  FAMILY = 'family',
-  PARTNER = 'partner',
-  FRIEND = 'friend',
-  COLLEAGUE = 'colleague',
-  OTHER = 'other'
-}
-
-/**
- * Stored on the user as `emergencyContact`: the one person support calls, and the SOS texts, when
- * a trip goes wrong. The number belongs to someone without an account, so it is never shown to
- * another member. Malagasy only — the SMS provider only reaches local numbers.
- */
-export type EmergencyContact = {
-  name: string;
-  relationship: `${EmergencyContactRelationshipEnum}`;
-  phone: {
-    code: string;
-    number: string;
-  };
-};
 
 /**
  * What a row of a member's audit trail records. One flat list across every log collection that

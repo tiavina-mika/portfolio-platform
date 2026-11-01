@@ -34,7 +34,7 @@ Un en-tête avec le nom, l'état (compte vérifié ou non, en ligne, suspendu, b
 d'arrivée. Un bandeau signale un compte suspendu, banni ou supprimé par le membre. Les informations sont
 rangées en sections, avec un sommaire :
 
-- **Profil** : détails, contact, contact d'urgence (non modifiable depuis le back-office).
+- **Profil** : détails, contact.
 - **Accès** : **sessions actives** (appareil, système, mode de connexion, dernière connexion), **aide au
   compte**, plate-formes utilisées, **postes** (seulement pour un compte créé dans le back-office).
 - **Modération** : suspension, historique des bannissements.

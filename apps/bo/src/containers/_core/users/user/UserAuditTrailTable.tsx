@@ -31,12 +31,11 @@ const UserAuditTrailTable = ({ entries, onViewAll }: Props) => {
   const renderDetails = (entry: IUserAuditTrailEntry): string => {
     /*
      * a moderation row starts with the reason code it was taken for, then the free text typed with
-     * it: the code is read as its label, a ban reason or a suspension reason alike
+     * it: the code is read as its ban reason label
      */
     const [firstSegment, ...rest] = (entry.details ?? '').split(' — ');
-    const reasonKey = [`user:bans.reasons.${firstSegment}`, `user:detail.auditTrail.reasons.${firstSegment}`]
-      .find((key) => i18n.exists(key));
-    const details = reasonKey
+    const reasonKey = `user:bans.reasons.${firstSegment}`;
+    const details = i18n.exists(reasonKey)
       ? [t(reasonKey), ...rest.map((text) => `« ${text} »`)].join(' · ')
       : entry.details;
 

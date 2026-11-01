@@ -163,7 +163,7 @@ export const ALWAYS_LOCKED_CLASSES: string[] = [
    */
   collections.ImpersonationSession,
   /*
-   * Audit and moderation trails (account changes, MFA events, penalties), the content version
+   * Audit and moderation trails (account changes, MFA events), the content version
    * history and the id counters: all read and written by Cloud Functions, jobs and triggers with
    * the master key, and no client ever queries them. They were only protected when a role happened
    * to cite them (the default support role does) — a database without that role left them with
@@ -172,7 +172,6 @@ export const ALWAYS_LOCKED_CLASSES: string[] = [
    */
   collections.UserAuditLog,
   collections.MfaAuditLog,
-  collections.PenaltyLog,
   collections.ContentVersion,
   collections.Counter,
 ];
@@ -256,9 +255,6 @@ export const EXTRA_SCHEMA_FIELDS: Record<
     consentVersion: 'String',
     deleted: 'Boolean',
     seen: 'Boolean',
-    requestStats: 'Object',
-    rideStats: 'Object',
-    hasPublishedRide: 'Boolean',
     platforms: 'Array',
     acceptedTermsAt: 'Date',
   },

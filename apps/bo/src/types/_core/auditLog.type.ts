@@ -4,8 +4,6 @@ import type { auditLogFilterSchema } from '@/validations/_core/auditLog.validati
 import type { z } from 'zod';
 
 export type AccountStats = {
-  totalRidesAsDriver: number;
-  totalRidesAsPassenger: number;
   averageRating: number | null;
 };
 

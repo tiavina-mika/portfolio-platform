@@ -30,8 +30,6 @@
     "openTicket": "Open the ticket",
     "reasonRequired": "Reason is required",
     "emailNotFound": "Email not found",
-    "preventiveSuspensionSubject": "Your account has been temporarily suspended",
-    "preventiveSuspensionMessage": "Following multiple reports, your account has been suspended for {{days}} days. Our moderation team is reviewing your case.",
     "welcomeSubject": "Welcome to Portfolio!",
     "welcomeMessage": "Hi {{fullName}}, your account is now verified. You're all set to search for a ride or offer one.",
     "accountReactivatedSubject": "Your account has been reactivated",

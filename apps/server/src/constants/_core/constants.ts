@@ -282,7 +282,6 @@ export const collections = {
   TicketMessage: 'TicketMessage',
   MfaAuditLog: 'MfaAuditLog',
   UserModerationLog: 'UserModerationLog',
-  PenaltyLog: 'PenaltyLog',
   NotificationResend: 'NotificationResend',
   Counter: 'Counter',
 };
@@ -392,12 +391,6 @@ export const DISABLE_USER_ACCOUNT_CONFIRMATION = IS_LOCAL || IS_TEST;
  * authenticator app.
  */
 export const ENFORCE_HIGHEST_ROLES_MFA = !IS_LOCAL && !IS_TEST;
-
-export enum ERRORS {
-  REQUEST_NOT_FOUND = 'Booking not found',
-  /* writing off a driver's debt gives up real revenue: nothing is erased without a recorded why */
-  PENALTY_WRITE_OFF_REASON_REQUIRED = 'A reason is required to write off a driver penalty'
-}
 
 export const DISABLE_TRIGGERS_CONTEXT = {
   context: {

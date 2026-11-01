@@ -10,7 +10,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { FaCheck, FaCheckDouble } from 'react-icons/fa';
 import {
-  FiActivity, FiAlertTriangle, FiClock, FiEye, FiFileText, FiInbox, FiLifeBuoy, FiList,
+  FiActivity, FiClock, FiEye, FiFileText, FiInbox, FiLifeBuoy, FiList,
   FiLock, FiLogOut, FiMail, FiMessageSquare, FiMonitor, FiPauseCircle, FiPhone, FiShield, FiShieldOff,
   FiSlash, FiSmartphone, FiUser, FiUserCheck,
 } from 'react-icons/fi';
@@ -41,7 +41,6 @@ import UserAuditTrailTable from '@/containers/_core/users/user/UserAuditTrailTab
 import UserBans from '@/containers/_core/users/user/UserBans';
 import UserContactDetails from '@/containers/_core/users/user/UserContactDetails';
 import UserDetails from '@/containers/_core/users/user/UserDetails';
-import UserEmergencyContact from '@/containers/_core/users/user/UserEmergencyContact';
 import UserHeaderFacts from '@/containers/_core/users/user/UserHeaderFacts';
 import UserNotificationsTable from '@/containers/_core/users/user/UserNotificationsTable';
 import UserPageTitle from '@/containers/_core/users/user/UserPageTitle';
@@ -407,14 +406,6 @@ const User = () => {
       label: t('user:detail.sections.contact'),
       icon: <FiPhone />,
       content: <UserContactDetails user={user} />,
-    },
-    {
-      id: 'emergencyContact',
-      group: 'profile',
-      order: 30,
-      label: t('user:detail.sections.emergencyContact'),
-      icon: <FiAlertTriangle />,
-      content: <UserEmergencyContact emergencyContact={user.emergencyContact} />,
     },
     // ------------- access ------------- //
     {

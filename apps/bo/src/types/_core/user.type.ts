@@ -1,7 +1,6 @@
 
 import {
-  BanReasonEnum, BanTypeEnum, EmergencyContact, NotificationPreferences, PlatformEnum, SexEnum,
-  UserStats, UserSuspension,
+  BanReasonEnum, BanTypeEnum, NotificationPreferences, PlatformEnum, SexEnum, UserStats,
 } from '@shared/types';
 import { z } from 'zod';
 
@@ -84,11 +83,6 @@ export interface IUserAttributes extends IUserDefaultRecord {
   lastName: string;
   phone: IPhone;
   banned?: boolean;
-  /*
-   * The suspension in force: its end date, what applied it, and the moderator's wording if any.
-   * Written together with `isSuspendedUntil`, which every query and permission check still reads.
-   */
-  suspension?: UserSuspension;
   deleted: boolean;
   emailVerified?: boolean;
   phoneVerified?: boolean;
@@ -114,8 +108,6 @@ export interface IUserAttributes extends IUserDefaultRecord {
   lastSexChangeAt?: DateType;
   birthdayChangeCount?: number;
   lastBirthdayChangeAt?: DateType;
-  /** Who support calls if a trip goes wrong — set by the member from the app, read-only here. */
-  emergencyContact?: EmergencyContact;
   /**
    * What the member chose to receive, set from their app and read-only here. A missing key means
    * "on", and so does a member who never opened the settings: the field is absent on old accounts.

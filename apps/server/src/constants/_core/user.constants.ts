@@ -13,18 +13,8 @@ export const PUBLIC_USER_PROFILE_FIELDS: string[] = [
   'createdAt',
   'spokenLanguages',
   'stats',
-  'rideStats',
-  'requestStats',
   'emailVerified',
   'phoneVerified',
-  'trustedDriver',
-  /*
-   * the badge the app renders on a public profile and on a search result. Missing from this list
-   * until now, which is why the reliability card could not be shown to the passenger it is for:
-   * `computeTrustedDriverBadge` writes `badges.trustedDriver`, not the legacy `trustedDriver` flag
-   */
-  'badges',
-  'completedRidesThisMonth',
 ];
 
 /**
@@ -66,27 +56,15 @@ export const SERVER_MANAGED_USER_FIELDS: string[] = [
   'country',
   // written through `updateNotificationPreferences`, which validates the shape against a schema
   'notificationPreferences',
-  'rideStats',
-  'requestStats',
   'stats',
-  'completedRidesThisMonth',
-  'lastCompletedRideMonth',
-  'lastCompletedRideYear',
-  'totalGain',
-  'hasPublishedRide',
   'emailVerified',
   'phoneVerified',
-  'trustedDriver',
-  'trustedDriverSince',
   'banned',
   'bans',
   'bannedAt',
   'bannedBy',
   'suspendedUntil',
   'isSuspendedUntil',
-  'suspension',
-  'pendingPenalty',
-  'penalties',
   'verification',
   'resetPasswordVerification',
   'stepUpVerification',
@@ -139,8 +117,6 @@ export const USER_PROTECTED_FIELDS: string[] = [
   // a phone-signup account's username IS its number (`+261…`), and an email account's is its email
   'username',
   'phone',
-  // someone else's number, who has no account here and never agreed to be listed
-  'emergencyContact',
   'mfa',
   'mfaBackupCodes',
   'verification',
@@ -160,9 +136,6 @@ export const USER_PROTECTED_FIELDS: string[] = [
   'phoneBefore',
   'deletionReason',
   'bans',
-  'penalties',
-  // why an account was suspended is a moderation decision: its holder reads it, nobody else does
-  'suspension',
 ];
 
 /**
@@ -183,14 +156,6 @@ export const PHONE_SEARCH_PATTERN = /^[\d\s+\-.()]+$/;
 /** Fewer digits than this is a reference or a fragment, not a number worth a phone match. */
 export const PHONE_SEARCH_MIN_DIGITS = 6;
 
-/**
- * Written in the `details` of a lifted suspension's moderation log row when the fine was written
- * off with it. A bare marker, not a sentence: it is what tells a lifting that cost the platform
- * money from one that only ended a suspension. The agent's wording goes in `reason`, the amount
- * in the driver's penalty history.
- */
-export const PENALTY_CLEARED_DETAILS = 'penalty_cleared';
-
 /** The back-office audit trail of one member: rows shown by default, and the most one call returns. */
 export const USER_AUDIT_TRAIL_DEFAULT_LIMIT = 20;
 export const USER_AUDIT_TRAIL_MAX_LIMIT = 100;
@@ -205,7 +170,7 @@ export const USER_AUDIT_TRAIL_MAX_LIMIT = 100;
 export const USER_DETAILS_FIELDS: string[] = [
   // profile
   'username', 'email', 'firstName', 'lastName', 'phone', 'image', 'aboutMe', 'birthday', 'sex', 'address',
-  'locale', 'spokenLanguages', 'emergencyContact', 'profileVisibility', 'country',
+  'locale', 'spokenLanguages', 'profileVisibility', 'country',
   'sexChangeCount', 'lastSexChangeAt', 'birthdayChangeCount', 'lastBirthdayChangeAt',
   // account and access
   'platform', 'platforms', 'fromBO', 'registerStep', 'emailVerified', 'phoneVerified', 'isOnline',
@@ -213,10 +178,9 @@ export const USER_DETAILS_FIELDS: string[] = [
   // the member's own switches (fallback text, e-mail, push…), shown read-only so the support can explain a missing text
   'notificationPreferences',
   // activity and trust
-  'stats', 'rideStats', 'requestStats', 'rating', 'trustedDriver', 'trustedDriverSince',
-  'completedRidesThisMonth', 'totalGain',
+  'stats', 'rating',
   // moderation
-  'banned', 'bans', 'isSuspendedUntil', 'suspension', 'pendingPenalty', 'lastCancellations',
+  'banned', 'bans', 'isSuspendedUntil',
   // record traceability
   'createdAt', 'updatedAt', 'seen', 'seenAt', 'lastSeenAt', 'seenCount', 'unseenAt',
   'deleted', 'deletedAt', 'deletionReason',

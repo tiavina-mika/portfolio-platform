@@ -174,17 +174,8 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
      * index can seek on, but the scan is still over index keys rather than over fetched accounts.
      */
     { spec: { deleted: 1, banned: 1, address: 1 } },
-    /*
-     * The drivers who still owe the platform money, largest debt first — the Finance wallet list
-     * (getDriversWithPendingDebt, driver-wallet.service.cloud.ts). Sparse: a debt is the exception,
-     * and an index over every account that never had one would be mostly empty keys.
-     */
-    { spec: { pendingPenalty: -1 }, options: { sparse: true } },
-    /*
-     * The daily sweep that notifies the accounts whose suspension has run out
-     * (checkAndNotifySuspensionLifted, driver.service.cloud.ts), and the back-office list of the
-     * ones still suspended. Sparse for the same reason.
-     */
+    // the back-office list of the accounts still suspended. Sparse: a suspension is the exception
+
     { spec: { isSuspendedUntil: 1 }, options: { sparse: true } },
   ],
   [collections.Contact]: [

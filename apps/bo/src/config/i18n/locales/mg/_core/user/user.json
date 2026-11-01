@@ -183,20 +183,6 @@
   "suspendedUntil": "Naato hatramin’ny {{date}}",
   "ban": "Ràràna",
   "accountInformation": "Mombamomba ny kaonty",
-  "emergencyContact": {
-    "title": "Olona hampandrenesina",
-    "name": "Anarana",
-    "relationship": "Fifandraisana",
-    "phone": "Laharana",
-    "none": "Tsy misy olona hampandrenesina voatahiry",
-    "relationships": {
-      "family": "Fianakaviana",
-      "partner": "Vady",
-      "friend": "Namana",
-      "colleague": "Mpiara-miasa",
-      "other": "Hafa"
-    }
-  },
   "updateAboutMe": "Hanova ny mombamomba aho",
   "numberOfUsers": "Isan'ny mpampiasa",
   "role": {
@@ -454,7 +440,6 @@
     }
   },
   "stats": {
-    "statsAndTrustSafety": "Stats & fitokisana/fiarovana",
     "rating": "Naoty",
     "reviewsCount": "Isan'ny naoty",
     "lastRatingAt": "Naoty farany tamin'ny",
@@ -467,7 +452,6 @@
     "bookingsCanceledByDriver": "Famandrihana nofoanana amin'ny maha-mpamily",
     "totalDistance": "Lavitra totaly",
     "trustAndSafety": "Fitokisana & fiarovana",
-    "pendingPenalty": "Sazy mbola tsy aloa",
     "isSuspendedUntil": "Voasazy mandra-pahatongan'ny",
     "notSuspended": "Tsy voasazy",
     "lastDriverCancellations": "Fanafoanana vao haingana amin'ny maha-mpamily (30 andro)",
@@ -606,11 +590,9 @@
     "sections": {
       "details": "Antsipiriany",
       "contact": "Fifandraisana",
-      "emergencyContact": "Olona antsoina raha misy vonjy taitra",
       "sessions": "Fidirana mandeha",
       "platforms": "Sehatra",
       "roles": "Andraikitra",
-      "stats": "Antontanisa",
       "trust": "Fahatokisana & fiarovana",
       "vehicles": "Fiara",
       "rides": "Dia",
@@ -676,9 +658,6 @@
       "disabled": "Novonoin'ny mpikambana",
       "enabledHint": "Handray SMS ny mpikambana raha misy hetsika manan-danja ary tsy azo nampahafantarina tamin'ny fomba hafa, ao anatin'ny fetra isan'andro.",
       "disabledHint": "Novonoin'ny mpikambana tao amin'ny fampiharana ny SMS famonjena : tsy handray na iray aza izy. Famakiana fotsiny, ny mpikambana ihany no afaka manova an'io fanamafisana io."
-    },
-    "emergencyContact": {
-      "note": "Ilay mpikambana no nisafidy, tsy azo ovaina avy amin'ny back-office."
     },
     "roles": {
       "note": "Kaonty noforonina tao amin'ny back-office: izy irery ihany no afaka mahazo andraikitra.",
@@ -813,24 +792,7 @@
         "country_changed_by_admin": "Firenena novain'ny ekipa",
         "password_reset_sent": "Kaody fanavaozana teny miafina nalefa"
       },
-      "until": "hatramin'ny {{date}}",
-      "reasons": {
-        "report_threshold": "Fitarainana maromaro miandry",
-        "report_decision": "Fitarainana neken'ny ekipa",
-        "rating_author": "Hevitra tsy mety",
-        "driver_cancellations": "Fanafoanana miverimberina amin'ny maha mpamily",
-        "passenger_cancellations": "Fanafoanana miverimberina amin'ny maha mpandeha"
-      }
-    },
-    "stats": {
-      "ridesSummary": "{{completed}} vita · {{canceled}} nofoanana",
-      "ridesSummaryWithRate": "{{completed}} vita · {{canceled}} nofoanana ({{rate}})",
-      "travelledOn": "nalehany tamin'ny Portfolio",
-      "viewAllRatings": "Hijery ny hevitra rehetra"
-    },
-    "trust": {
-      "pendingPenaltyNote": "hesorina amin'ny fandoavana manaraka",
-      "none": "Tsy misy"
+      "until": "hatramin'ny {{date}}"
     },
     "vehicles": {
       "vehicle": "Fiara",
@@ -873,10 +835,6 @@
       "status": "Toe-javatra",
       "price": "Vidiny",
       "empty": "Tsy misy fangatahana"
-    },
-    "suspensionSources": {
-      "policy": "Fampiatoana ho azy",
-      "policyCause": "Taorian'ny fanafoanana miverimberina"
     },
     "accountHelp": {
       "intro": "Hanampiana mpikambana tsy afaka miditra amin'ny kaontiny intsony. Ny hetsika tsirairay dia mitaky anton-javatra ary voasoratra ao amin'ny tantaran'ny mpikambana.",
@@ -934,16 +892,5 @@
   "searchByNameEmailOrPhone": "Fitadiavana anarana, mailaka na finday",
   "nameEmailOrPhone": "Anarana, mailaka na finday",
   "originalPhone": "Finday tany am-boalohany",
-  "suspension": {
-    "title": "Fampiatoana",
-    "source": {
-      "driver_cancellations": "Fanafoanana dia (mpamily)",
-      "passenger_cancellations": "Fanafoanana fanokanana (mpandeha)",
-      "report_threshold": "Tokonam-pitoriana",
-      "report_decision": "Fanapahan-kevitra momba ny fitoriana",
-      "rating_author": "Hevitra mandratra",
-      "unknown": "Tsy fantatra"
-    }
-  },
   "codeDigit": "Isa faha-{{position}} amin'ny {{total}}"
 }

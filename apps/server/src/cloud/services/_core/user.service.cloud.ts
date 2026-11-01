@@ -1,5 +1,5 @@
 import {
-  BanReasonEnum, BanTypeEnum, SuspensionSourceEnum, VerificationSmsErrorEnum,
+  BanReasonEnum, BanTypeEnum, VerificationSmsErrorEnum,
 } from '@shared/types';
 import dayjs from 'dayjs';
 
@@ -16,7 +16,7 @@ import {
   SKIP_SIGN_UP_VERIFICATION, UNVERIFIED_PHONE_SIGNUP_RETENTION_HOURS, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 import {
-  ACCOUNT_BANNED_STATUS, ACCOUNT_NOTIFICATION_TYPE, ACCOUNT_SUSPENDED_STATUS, ACCOUNT_UNBANNED_STATUS,
+  ACCOUNT_BANNED_STATUS, ACCOUNT_NOTIFICATION_TYPE, ACCOUNT_UNBANNED_STATUS,
 } from '@/constants/_core/notification.constants';
 import {
   USER_DETAILS_FIELDS, USER_DETAILS_POINTER_FIELDS, USER_DETAILS_POINTER_SUBFIELDS,
@@ -26,7 +26,6 @@ import { RegisterStepEnum, UserModerationActionEnum } from '@/types/user.type';
 import { logger } from '@/utils/_core/logger';
 import { normalizePhoneNumber } from '@/utils/_core/phone.utils';
 import { consumeSmsSendQuota } from '@/utils/_core/sms-quota.utils';
-import { applyUserSuspension } from '@/utils/_core/suspension.utils';
 import { appendBan, closeBanInForce } from '@/utils/_core/user.utils';
 import { escapeText } from '@/utils/_core/utils';
 
@@ -360,63 +359,6 @@ export const banUser = async (
   updatedUser.set('bans', markBanNotified(bans, ban.bannedAt));
 
   return updatedUser.save(null, { ...USE_MASTER_KEY, ...DISABLE_TRIGGERS_CONTEXT });
-};
-
-/**
- * Blocks a user's account for a number of days and tells them why. Shared by every moderation
- * path that ends in a temporary block — the automatic report threshold, the manual decision an
- * operator makes from a report file, and the same decision made from a review — so a suspension
- * looks the same to the person receiving it whichever of them reached it.
- * @param userId the account to suspend
- * @param days how long the suspension lasts
- * @param trace who decided it and what from. `source` is **required** and stored on the account, so
- * the member can be told why they are suspended; `performedBy` is absent on an automatic threshold,
- * which nobody decided.
- * @param locale language of the notification email
- * @returns the suspended user
- */
-export const suspendUserForDays = async (
-  userId: string,
-  days: number,
-  trace: { performedBy?: Parse.User; source: SuspensionSourceEnum; reason?: string },
-  locale: Locale = DEFAULT_LANGUAGE
-): Promise<Parse.User> => {
-  const user = await new Parse.Query(Parse.User).get(userId, USE_MASTER_KEY);
-  const suspensionEnd = dayjs().add(days, 'day').toDate();
-  // the person's own language: the caller's locale is the moderator's, not theirs
-  const recipientLocale = (user.get('locale') ?? locale) as Locale;
-
-  applyUserSuspension(user, {
-    until: suspensionEnd,
-    source: trace.source,
-    reason: trace.reason,
-  });
-  await user.save(null, USE_MASTER_KEY);
-
-  await createUserModerationLog({
-    targetUser: user,
-    action: UserModerationActionEnum.SUSPENDED_BY_POLICY,
-    performedBy: trace.performedBy,
-    // the log's reason is the moderator's wording when there is one, the trigger otherwise
-    reason: trace.reason ?? trace.source,
-    until: suspensionEnd,
-  });
-
-  // the e-mail never reached an account signed up by phone number: the app says it as well
-  await createNotification({
-    type: ACCOUNT_NOTIFICATION_TYPE,
-    to: [user],
-    status: ACCOUNT_SUSPENDED_STATUS,
-    payload: { suspension: { until: suspensionEnd, source: trace.source } },
-  });
-
-  await sendEmailToUser(user, {
-    subject: translate('email.preventiveSuspensionSubject', recipientLocale),
-    message: translate('email.preventiveSuspensionMessage', recipientLocale, { days: String(days) }),
-    locale: recipientLocale,
-  });
-
-  return user;
 };
 
 /**

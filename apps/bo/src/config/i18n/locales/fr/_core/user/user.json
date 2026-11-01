@@ -185,20 +185,6 @@
   "suspendedUntil": "Suspendu(e) jusqu’au {{date}}",
   "ban": "Bannir",
   "accountInformation": "Information du compte",
-  "emergencyContact": {
-    "title": "Contact d'urgence",
-    "name": "Nom",
-    "relationship": "Lien",
-    "phone": "Numéro",
-    "none": "Aucun contact d'urgence enregistré",
-    "relationships": {
-      "family": "Famille",
-      "partner": "Conjoint(e)",
-      "friend": "Ami(e)",
-      "colleague": "Collègue",
-      "other": "Autre"
-    }
-  },
   "updateAboutMe": "Modifier mes informations",
   "numberOfUsers": "Nombre d'utilisateurs",
   "role": {
@@ -457,7 +443,6 @@
     }
   },
   "stats": {
-    "statsAndTrustSafety": "Stats & confiance/sécurité",
     "rating": "Note",
     "reviewsCount": "Nombre d'avis",
     "lastRatingAt": "Dernier avis le",
@@ -470,7 +455,6 @@
     "bookingsCanceledByDriver": "Réservations annulées en tant que conducteur",
     "totalDistance": "Distance totale",
     "trustAndSafety": "Confiance & sécurité",
-    "pendingPenalty": "Pénalité en attente",
     "isSuspendedUntil": "Suspendu jusqu'au",
     "notSuspended": "Non suspendu",
     "lastDriverCancellations": "Annulations récentes en tant que conducteur (30 jours)",
@@ -606,11 +590,9 @@
     "sections": {
       "details": "Détails",
       "contact": "Contact",
-      "emergencyContact": "Contact d'urgence",
       "sessions": "Sessions actives",
       "platforms": "Plate-formes",
       "roles": "Postes",
-      "stats": "Stats",
       "trust": "Confiance & sécurité",
       "vehicles": "Véhicules",
       "rides": "Trajets",
@@ -676,9 +658,6 @@
       "disabled": "Désactivé par le membre",
       "enabledHint": "Le membre recevra un SMS pour les événements importants quand il n'a pas pu être prévenu autrement, dans la limite quotidienne.",
       "disabledHint": "Le membre a coupé les SMS de secours dans son application : il n'en recevra aucun. Lecture seule, seul le membre peut changer ce réglage."
-    },
-    "emergencyContact": {
-      "note": "Choisi par le membre, non modifiable depuis le back-office."
     },
     "roles": {
       "note": "Compte créé dans le back-office : lui seul peut recevoir des postes.",
@@ -813,24 +792,7 @@
         "country_changed_by_admin": "Pays modifié par l'équipe",
         "password_reset_sent": "Code de réinitialisation du mot de passe envoyé"
       },
-      "until": "jusqu'au {{date}}",
-      "reasons": {
-        "report_threshold": "Plusieurs signalements en attente",
-        "report_decision": "Signalement retenu par l'équipe",
-        "rating_author": "Avis abusifs",
-        "driver_cancellations": "Annulations répétées en tant que conducteur",
-        "passenger_cancellations": "Annulations répétées en tant que passager"
-      }
-    },
-    "stats": {
-      "ridesSummary": "{{completed}} terminées · {{canceled}} annulées",
-      "ridesSummaryWithRate": "{{completed}} terminées · {{canceled}} annulées ({{rate}})",
-      "travelledOn": "parcourus sur Portfolio",
-      "viewAllRatings": "Voir tous les avis"
-    },
-    "trust": {
-      "pendingPenaltyNote": "retenue sur le prochain versement",
-      "none": "Aucune"
+      "until": "jusqu'au {{date}}"
     },
     "vehicles": {
       "vehicle": "Véhicule",
@@ -873,10 +835,6 @@
       "status": "Statut",
       "price": "Prix",
       "empty": "Aucune demande"
-    },
-    "suspensionSources": {
-      "policy": "Suspension automatique",
-      "policyCause": "Après des annulations répétées"
     },
     "accountHelp": {
       "intro": "Pour aider un membre qui n'arrive plus à accéder à son compte. Chaque action demande un motif et est inscrite dans l'historique du membre.",
@@ -934,16 +892,5 @@
   "searchByNameEmailOrPhone": "Rechercher par nom, email ou téléphone",
   "nameEmailOrPhone": "Nom, email ou téléphone",
   "originalPhone": "Téléphone d'origine",
-  "suspension": {
-    "title": "Suspension",
-    "source": {
-      "driver_cancellations": "Annulations de trajets (conducteur)",
-      "passenger_cancellations": "Annulations de réservations (passager)",
-      "report_threshold": "Seuil de signalements",
-      "report_decision": "Décision sur signalement",
-      "rating_author": "Avis abusif",
-      "unknown": "Inconnu"
-    }
-  },
   "codeDigit": "Chiffre {{position}} sur {{total}}"
 }

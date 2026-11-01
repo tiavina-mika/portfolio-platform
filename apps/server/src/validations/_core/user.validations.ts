@@ -1,16 +1,13 @@
 import {
-  CONSENT_VERSION, DEFAULT_PROFILE_VISIBILITY, EMERGENCY_CONTACT_NAME_MAX_LENGTH,
-  FIXED_VISIBILITY_PROFILE_FIELDS,
+  CONSENT_VERSION, DEFAULT_PROFILE_VISIBILITY, FIXED_VISIBILITY_PROFILE_FIELDS,
 } from '@shared/constants';
 import {
-  ContactChangeTypeEnum, EmergencyContactRelationshipEnum, ProfileFieldEnum, ProfileVisibilityEnum, SexEnum,
+  ContactChangeTypeEnum, ProfileFieldEnum, ProfileVisibilityEnum, SexEnum,
 } from '@shared/types';
-import { getSmsCountryByDialCode, isNationalMobileNumber } from '@shared/utils';
 import { isAtLeastMinimumAge } from '@shared/validations';
 import { z } from 'zod';
 
 
-import { isSamePhone } from '@/utils/_core/phone.utils';
 import { capitalizeFirstLetter } from '@/utils/_core/utils';
 import { localeFieldSchema, objectIdFieldSchema } from '@/validations/_core/util.validations';
 
@@ -126,35 +123,6 @@ export const profileVisibilitySchema = z.object({
     )
   ),
 });
-
-/**
- * `emergencyContact` as the member writes it on their own account (absent once removed), read with
- * the account's own `phone` so the member cannot list themselves: the whole point is someone else
- * to warn. The number is expected normalized (bare dial code, no leading 0) — the trigger does it.
- */
-export const emergencyContactSchema = z.object({
-  emergencyContact: z.object({
-    name: z.string().trim().nonempty().max(EMERGENCY_CONTACT_NAME_MAX_LENGTH),
-    relationship: z.enum(EmergencyContactRelationshipEnum),
-    phone: z.object({
-      code: z.string(),
-      number: z.string(),
-    }).refine(
-      // the SOS texts this number: only a country an SMS provider reaches, its code stored bare
-      (phone) => {
-        const country = getSmsCountryByDialCode(phone.code);
-
-        return !!country && !phone.code.startsWith('+') && isNationalMobileNumber(phone.number, country);
-      },
-      { params: { key: 'invalidEmergencyContactPhone' } }
-    ),
-  }).optional(),
-  phone: phoneFieldSchema.optional(),
-}).refine(
-  ({ emergencyContact, phone }) => !emergencyContact || !phone ||
-    !isSamePhone(emergencyContact.phone, { code: phone.code, number: String(phone.number) }),
-  { params: { key: 'emergencyContactIsOwnPhone' }, path: ['emergencyContact'] }
-);
 
 /**
  * A new login email or phone number, sent a code before it replaces the current one. One object

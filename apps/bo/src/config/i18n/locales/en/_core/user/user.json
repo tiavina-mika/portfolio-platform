@@ -185,20 +185,6 @@
   "suspendedUntil": "Suspended until {{date}}",
   "ban": "Ban",
   "accountInformation": "Account information",
-  "emergencyContact": {
-    "title": "Emergency contact",
-    "name": "Name",
-    "relationship": "Relationship",
-    "phone": "Number",
-    "none": "No emergency contact saved",
-    "relationships": {
-      "family": "Family",
-      "partner": "Partner",
-      "friend": "Friend",
-      "colleague": "Colleague",
-      "other": "Other"
-    }
-  },
   "updateAboutMe": "Modify my informations",
   "numberOfUsers": "Number of users",
   "role": {
@@ -456,7 +442,6 @@
     }
   },
   "stats": {
-    "statsAndTrustSafety": "Stats & trust/safety",
     "rating": "Rating",
     "reviewsCount": "Reviews count",
     "lastRatingAt": "Last rating at",
@@ -469,7 +454,6 @@
     "bookingsCanceledByDriver": "Bookings cancelled as a driver",
     "totalDistance": "Total distance",
     "trustAndSafety": "Trust & safety",
-    "pendingPenalty": "Pending penalty",
     "isSuspendedUntil": "Suspended until",
     "notSuspended": "Not suspended",
     "lastDriverCancellations": "Recent cancellations as driver (30 days)",
@@ -606,11 +590,9 @@
     "sections": {
       "details": "Details",
       "contact": "Contact",
-      "emergencyContact": "Emergency contact",
       "sessions": "Active sessions",
       "platforms": "Platforms",
       "roles": "Roles",
-      "stats": "Stats",
       "trust": "Trust & safety",
       "vehicles": "Vehicles",
       "rides": "Rides",
@@ -676,9 +658,6 @@
       "disabled": "Turned off by the member",
       "enabledHint": "The member will get a text for important events when they could not be reached any other way, within the daily limit.",
       "disabledHint": "The member turned the fallback SMS off in their app: they will not get any. Read-only, only the member can change this setting."
-    },
-    "emergencyContact": {
-      "note": "Chosen by the member, cannot be edited from the back-office."
     },
     "roles": {
       "note": "Account created in the back-office: only such accounts can hold roles.",
@@ -813,24 +792,7 @@
         "country_changed_by_admin": "Country changed by the team",
         "password_reset_sent": "Password reset code sent"
       },
-      "until": "until {{date}}",
-      "reasons": {
-        "report_threshold": "Several reports waiting for a decision",
-        "report_decision": "Report upheld by the team",
-        "rating_author": "Abusive reviews",
-        "driver_cancellations": "Repeated cancellations as a driver",
-        "passenger_cancellations": "Repeated cancellations as a passenger"
-      }
-    },
-    "stats": {
-      "ridesSummary": "{{completed}} completed · {{canceled}} canceled",
-      "ridesSummaryWithRate": "{{completed}} completed · {{canceled}} canceled ({{rate}})",
-      "travelledOn": "travelled on Portfolio",
-      "viewAllRatings": "View all reviews"
-    },
-    "trust": {
-      "pendingPenaltyNote": "withheld from the next payout",
-      "none": "None"
+      "until": "until {{date}}"
     },
     "vehicles": {
       "vehicle": "Vehicle",
@@ -873,10 +835,6 @@
       "status": "Status",
       "price": "Price",
       "empty": "No request"
-    },
-    "suspensionSources": {
-      "policy": "Automatic suspension",
-      "policyCause": "After repeated cancellations"
     },
     "accountHelp": {
       "intro": "To help a member who can no longer get into their account. Every action asks for a reason and is recorded in the member's history.",
@@ -934,16 +892,5 @@
   "searchByNameEmailOrPhone": "Search by name, email or phone",
   "nameEmailOrPhone": "Name, email or phone",
   "originalPhone": "Original phone",
-  "suspension": {
-    "title": "Suspension",
-    "source": {
-      "driver_cancellations": "Ride cancellations (driver)",
-      "passenger_cancellations": "Booking cancellations (passenger)",
-      "report_threshold": "Reports threshold",
-      "report_decision": "Report decision",
-      "rating_author": "Abusive review",
-      "unknown": "Unknown"
-    }
-  },
   "codeDigit": "Digit {{position}} of {{total}}"
 }

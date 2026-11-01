@@ -35,6 +35,3 @@ export const DEFAULT_PROFILE_VISIBILITY = {
  * to other members. The age stays adjustable: what is shared is the age in years, never the date.
  */
 export const FIXED_VISIBILITY_PROFILE_FIELDS = ['photo', 'name', 'phone', 'email', 'address'] as const;
-
-/** Longest name accepted for an emergency contact — the same cap as a first or last name. */
-export const EMERGENCY_CONTACT_NAME_MAX_LENGTH = 112;
