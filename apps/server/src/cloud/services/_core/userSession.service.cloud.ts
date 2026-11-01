@@ -10,10 +10,7 @@ import {
   collections, DEFAULT_QUERY_LIMIT, DISABLE_TRIGGERS_CONTEXT, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 import { ACCOUNT_NOTIFICATION_TYPE, NEW_DEVICE_LOGIN_STATUS } from '@/constants/_core/notification.constants';
-import { PUSH_SESSIONS_PAGE_SIZE } from '@/constants/_core/push.constants';
-import {
-  NEW_DEVICE_LOGIN_ALERTS_MAX_PER_DAY, SHARED_PUSH_TOKEN_ROWS_LIMIT,
-} from '@/constants/_core/userSession.constants';
+import { NEW_DEVICE_LOGIN_ALERTS_MAX_PER_DAY } from '@/constants/_core/userSession.constants';
 import { NotificationChannelEnum, NotificationChannelStatusEnum } from '@/types/notification.type';
 import { logger } from '@/utils/_core/logger';
 import { getSessionSignInMethod } from '@/utils/_core/session.utils';
@@ -32,7 +29,7 @@ import { toUserSnapshot } from '../../utils/_core/user-snapshot.utils.cloud';
 export const UserSession = Parse.Object.extend('UserSession');
 
 const USER_SESSION_PROPERTIES = [
-  'user', 'sessionToken', 'deviceId', 'deviceName', 'platform', 'appVersion', 'lastActiveAt', 'pushToken',
+  'user', 'sessionToken', 'deviceId', 'deviceName', 'platform', 'appVersion', 'lastActiveAt',
 ];
 
 type RegisterSessionInput = {
@@ -53,15 +50,13 @@ const findUserSessionForDevice = async (
 
 /**
  * Writes `values` on the UserSession row keyed by (user, deviceId), creating it on the device's
- * first registration — shared by registerSessionService and registerPushTokenService so push
- * permission granted before/after registerSession still lands on the same row.
+ * first registration.
  *
- * The app fires both calls in parallel at login, so both can find no row and both try to create
- * one. The unique (user, deviceId) index lets only one insert through; the loser gets a duplicate
- * error and applies its values to the row the winner created instead of leaving a second row
- * behind — a second row is how a push token ended up on a row no logout would ever clear.
- * @returns the saved row, and whether registerSession had already named this device before the
- * write — a row only registerPushToken wrote names no device
+ * Two registrations of the same device can run in parallel at login, so both can find no row and
+ * both try to create one. The unique (user, deviceId) index lets only one insert through; the loser
+ * gets a duplicate error and applies its values to the row the winner created instead of leaving a
+ * second row behind.
+ * @returns the saved row, and whether this device had already been named before the write
  */
 const upsertUserSessionForDevice = async (
   user: Parse.User,
@@ -93,27 +88,6 @@ const upsertUserSessionForDevice = async (
 };
 
 /**
- * Removes a push token from every device row holding it, except `exceptSessionId`. A token names
- * one phone, not one account: after an account switch or on a shared phone the previous account's
- * row still carried it, and every push meant for that account landed on the new one.
- */
-const clearPushTokenFromSessions = async (pushToken: string, exceptSessionId?: string): Promise<void> => {
-  const query = new Parse.Query(collections.UserSession)
-    .equalTo('pushToken', pushToken)
-    .select(['objectId'])
-    .limit(SHARED_PUSH_TOKEN_ROWS_LIMIT);
-
-  if (exceptSessionId) query.notEqualTo('objectId', exceptSessionId);
-
-  const sessions = await query.find(USE_MASTER_KEY);
-
-  await Promise.all(sessions.map(async (session) => {
-    session.unset('pushToken');
-    await session.save(null, USE_MASTER_KEY);
-  }));
-};
-
-/**
  * How many "new device" alerts this account was sent over the last 24 hours — soft-deleted ones
  * included, so hiding an alert in the app does not make room for another SMS.
  */
@@ -127,7 +101,7 @@ const countRecentNewDeviceLoginAlerts = async (user: Parse.User): Promise<number
 );
 
 /**
- * Alerts the user (push always, plus email or SMS as the second channel) that their account was
+ * Alerts the user (by e-mail, or by SMS when there is none) that their account was
  * just used to log in from a device never seen before. Never sent for a user's very first-ever
  * session (that's just their signup, not a suspicious login).
  *
@@ -142,8 +116,7 @@ const countRecentNewDeviceLoginAlerts = async (user: Parse.User): Promise<number
  *
  * `message`/`snapshot` are set explicitly rather than left to the generic beforeSave/afterSave
  * triggers: this alert has no entry in the type/status message registry the beforeSave reads, and
- * the row should already carry who it is about before the afterSave saves its own copy. The push
- * itself is left to the afterSave — sending it here too would push the same alert twice.
+ * the row should already carry who it is about before the afterSave saves its own copy.
  */
 const notifyNewDeviceLogin = async (
   user: Parse.User,
@@ -217,10 +190,6 @@ export const registerSessionService = async (
   values: RegisterSessionInput,
   locale: Locale = DEFAULT_LANGUAGE
 ): Promise<Parse.Object> => {
-  /*
-   * a row only registerPushToken has written (it names no device) still counts as a new device:
-   * the push permission simply won the race against registerSession at login
-   */
   const { session: savedSession, isDeviceKnown } = await upsertUserSessionForDevice(
     user,
     values.deviceId,
@@ -254,88 +223,8 @@ export const registerSessionService = async (
 };
 
 /**
- * Stores this device's Expo push token on its UserSession row. Kept per-device (not on
- * Parse.User) so a user logged in on several devices gets pushed on all of them, and so the
- * token is destroyed for free when the session is (afterLogout — see auth.triggers.ts). The
- * session token is written too: a row created here before registerSession ran would otherwise
- * name no session, and the logout cleanup — which finds rows by session token — would miss it.
- */
-export const registerPushTokenService = async (
-  user: Parse.User,
-  deviceId: string,
-  pushToken: string
-): Promise<Parse.Object> => {
-  const { session } = await upsertUserSessionForDevice(user, deviceId, {
-    pushToken,
-    sessionToken: user.getSessionToken(),
-  });
-
-  await clearPushTokenFromSessions(pushToken, session.id);
-
-  return session;
-};
-
-/**
- * Forgets this device's push token for the signed-in user — called by the app right before it
- * logs out, so a phone handed over or switched to another account stops receiving this account's
- * pushes even when the logout request itself never reaches the server.
- */
-export const unregisterPushTokenService = async (user: Parse.User, deviceId: string): Promise<void> => {
-  const session = await findUserSessionForDevice(user, deviceId);
-
-  if (!session?.get('pushToken')) return;
-
-  session.unset('pushToken');
-  await session.save(null, USE_MASTER_KEY);
-};
-
-/**
- * Every device row of these users that holds a push token. Read page by page: the recipients of
- * one notification can hold more rows than a single query returns, and stopping at the first page
- * silently left the remaining devices without their push.
- */
-export const getUserSessionsWithPushTokenService = async (users: Parse.User[]): Promise<Parse.Object[]> => {
-  if (users.length === 0) return [];
-
-  const sessions: Parse.Object[] = [];
-  let lastId: string | undefined;
-
-  while (true) {
-    // keyset pagination on the id: stable even if a row is written while the pages are read
-    const query = new Parse.Query(collections.UserSession)
-      .containedIn('user', users)
-      .exists('pushToken')
-      .select(['user', 'pushToken'])
-      .include('user')
-      .ascending('objectId')
-      .limit(PUSH_SESSIONS_PAGE_SIZE);
-
-    if (lastId) query.greaterThan('objectId', lastId);
-
-    const page = await query.find(USE_MASTER_KEY);
-
-    sessions.push(...page);
-
-    if (page.length < PUSH_SESSIONS_PAGE_SIZE) break;
-    lastId = page.at(-1)?.id;
-  }
-
-  return sessions;
-};
-
-/**
- * Clears a stale Expo push token (e.g. after an Expo push receipt reports
- * DeviceNotRegistered) without touching the rest of the UserSession row — the session itself
- * may still be valid, only push delivery to it is broken.
- */
-export const clearStalePushTokenService = async (pushToken: string): Promise<void> => {
-  await clearPushTokenFromSessions(pushToken);
-};
-
-/**
- * Destroys the device rows that hold neither a push token nor a session token: nothing can be
- * pushed to them and no live session names them. They pile up as tokens are cleared
- * (DeviceNotRegistered, account switch, logout from the app) on devices that never log in again.
+ * Destroys the device rows that hold no session token: no live session names them. They pile up
+ * as sessions end (logout from the app) on devices that never log in again.
  * @returns the number of rows destroyed
  */
 export const purgeOrphanUserSessionsService = async (): Promise<number> => {
@@ -344,7 +233,6 @@ export const purgeOrphanUserSessionsService = async (): Promise<number> => {
   while (true) {
     // always the first page: every row found is destroyed, so the next ones move up to offset 0
     const batch = await new Parse.Query(collections.UserSession)
-      .doesNotExist('pushToken')
       .doesNotExist('sessionToken')
       .select(['objectId'])
       .limit(DEFAULT_QUERY_LIMIT)

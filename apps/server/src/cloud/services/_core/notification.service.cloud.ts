@@ -63,8 +63,8 @@ const getChannelSenderKey = (type: string, channel: NotificationChannel): string
 /**
  * Lets each business domain declare how one of its notifications is sent again on a channel whose
  * copy it composes itself — an e-mail or an SMS — without this generic service knowing about rides
- * or requests. The push needs none: its body is the notification's own message. A channel no domain
- * registered for a type cannot be retried, and the back-office does not offer it.
+ * or requests. A channel no domain registered for a type cannot be retried, and the back-office does
+ * not offer it.
  */
 export const registerNotificationChannelSender = (
   type: string,
@@ -144,23 +144,6 @@ export const getNotificationPreferencesByUserId = async (
   return new Map(users.map((user) => [user.id, user.get('notificationPreferences')]));
 };
 
-/** The recipients of a notification who switched its push off, for the push fan-out to skip. */
-export const getPushDisabledRecipientIds = async (
-  notification: Parse.Object,
-  recipientIds: string[]
-): Promise<Set<string>> => {
-  const type: string = notification.get('type');
-  const status: string | undefined = notification.get('status');
-
-  if (isMandatoryNotification(type, status)) return new Set();
-
-  const preferencesById = await getNotificationPreferencesByUserId(recipientIds);
-
-  return new Set(recipientIds.filter((id) => (
-    !isChannelEnabledForPreferences(preferencesById.get(id), type, status, NotificationChannelEnum.PUSH)
-  )));
-};
-
 /** Whether this person accepts this notification by e-mail — see isChannelEnabledForPreferences. */
 export const isEmailEnabledForRecipient = async (
   recipient: Parse.User,
@@ -201,32 +184,14 @@ const getNotificationByIdempotencyKey = (idempotencyKey: string): Promise<Parse.
 );
 
 export const createNotification = async (
-  values: INotificationValues,
-  /*
-   * `awaitPush`: hold the returned promise until the push fan-out has run. For a caller that is about
-   * to destroy what the push needs (a ban revokes the sessions, which carry the push tokens) — every
-   * other caller lets the push run in the background so it never delays the notification
-   */
-  options: { awaitPush?: boolean } = {}
+  values: INotificationValues
 ): Promise<Parse.Object | undefined> => {
   const notification = new Notification();
 
-  // push is attempted for every notification by the afterSave trigger, so it is always targeted
-  const channels: NotificationChannels = {
-    [NotificationChannelEnum.PUSH]: values.to.map((recipient) => ({
-      toId: recipient.id,
-      status: NotificationChannelStatusEnum.PENDING,
-    })),
-    ...values.channels,
-  };
-
-  setValues(notification, { ...values, channels }, NOTIFICATION_PROPERTIES);
+  setValues(notification, values, NOTIFICATION_PROPERTIES);
 
   try {
-    return await notification.save(null, {
-      ...USE_MASTER_KEY,
-      ...(options.awaitPush && { context: { awaitPush: true } }),
-    });
+    return await notification.save(null, USE_MASTER_KEY);
   }
   catch (error) {
     /*

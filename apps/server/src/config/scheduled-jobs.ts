@@ -183,13 +183,6 @@ export const scheduleJobs = (serverUrl: string): void => {
     schedule('15 8 * * *', () => runScheduledJob('liftExpiredBansJob'), LOCAL_MORNING_SCHEDULE);
 
     /*
-     * Process pending Expo push receipts and clear stale device push tokens — runs hourly,
-     * comfortably after PUSH_RECEIPT_MIN_AGE_MINUTES (15) so receipts are ready by the time a batch
-     * is picked up, and well inside the PUSH_RECEIPT_MAX_AGE_HOURS (24) Expo keeps them for
-     */
-    schedule('0 * * * *', () => runScheduledJob('processPushReceiptsJob'));
-
-    /*
      * Revoke expired impersonation ("login as") sessions — runs every 5 minutes
      * The TTL is short (IMPERSONATION_SESSION_TTL_MINUTES) by design, so a tight cadence here
      * keeps a stale support session from lingering on the member's account past its TTL
@@ -214,9 +207,8 @@ export const scheduleJobs = (serverUrl: string): void => {
     schedule('30 3 * * *', () => runScheduledJob('purgeUnverifiedPhoneSignupsJob'));
 
     /*
-     * Destroy device rows that can neither be pushed to nor name a live session (no push token, no
-     * session token) — runs daily at 03:40 (server time), between the two 03:30/03:45 jobs. Every
-     * reinstall leaves one behind, and the push fan-out would otherwise keep paging through them.
+     * Destroy device rows that name no live session (no session token) — runs daily at 03:40
+     * (server time), between the two 03:30/03:45 jobs. Every reinstall leaves one behind.
      */
     schedule('40 3 * * *', () => runScheduledJob('purgeOrphanUserSessionsJob'));
   }

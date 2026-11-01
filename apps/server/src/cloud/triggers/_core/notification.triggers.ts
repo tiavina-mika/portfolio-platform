@@ -10,7 +10,6 @@ import {
 } from '@/utils/_core/notification.utils';
 
 import { getNotificationMessageTemplate } from '../../services/_core/notification.service.cloud';
-import { sendPushNotificationsForNotification } from '../../services/_core/push.service.cloud';
 import { getUserSnapshotsById } from '../../utils/_core/user-snapshot.utils.cloud';
 import {
   getActingUser, parseFunction, setBooleanFields, shouldSkipTriggerCascade,
@@ -92,7 +91,7 @@ Parse.Cloud.beforeSave(
     /*
      * every legitimate write (creation by a domain service, reading, resend, soft delete) runs
      * with the master key — a client saving a row directly could rewrite its message or
-     * recipients and have the afterSave push that text to them, so it is refused whatever the CLP
+     * recipients, so it is refused whatever the CLP
      */
     if (!request.master) {
       throw new Error(translate('error.notificationReadOnly', DEFAULT_LANGUAGE));
@@ -101,7 +100,7 @@ Parse.Cloud.beforeSave(
     /*
      * never `request.user`: almost every notification is written by Cloud Code with the master key
      * and no session, so a `request.user` guard here would skip the defaults, the message template
-     * and the push fan-out for every notification a job or a trigger creates. `getActingUser` is
+     * for every notification a job or a trigger creates. `getActingUser` is
      * the admin/user the caller declared through the context when there is one, and simply absent
      * for a job — which is a legitimate author, not a reason to stop.
      */
@@ -170,16 +169,6 @@ Parse.Cloud.afterSave(
        * co-passenger already sees in the app — a name and a photo, never their e-mail address
        */
       snapshot.to = to.map((recipient) => omit(snapshotsById.get(recipient.id), ['email']));
-
-      const push = sendPushNotificationsForNotification(notification);
-
-      /*
-       * fire-and-forget — must never delay/block notification creation, see push.service.cloud.ts —
-       * unless the master-key caller asked to wait: it is about to destroy the sessions the push
-       * reads its device tokens from. The push never throws, so waiting cannot fail the save.
-       */
-      if (request.master && context.awaitPush === true) await push;
-      else void push;
     }
 
     if (from) {

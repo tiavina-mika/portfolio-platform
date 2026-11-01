@@ -6,7 +6,6 @@ import './_core/impersonation.jobs';
 import './_core/misc.jobs';
 import './_core/newsletter.jobs';
 import './_core/notification.jobs';
-import './_core/push.jobs';
 import './_core/retention.jobs';
 import './_core/slack.jobs';
 import './_core/test.jobs';

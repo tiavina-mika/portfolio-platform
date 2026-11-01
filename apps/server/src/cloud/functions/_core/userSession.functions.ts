@@ -5,15 +5,15 @@ import { translate, DEFAULT_LANGUAGE } from '@/config/i18n';
 import { collections } from '@/constants/_core/constants';
 import { consumeDeviceRegistrationQuota } from '@/utils/_core/rate-limit.utils';
 import {
-  registerSessionSchema, revokeSessionSchema, getUserSessionsSchema, registerPushTokenSchema,
+  registerSessionSchema, revokeSessionSchema, getUserSessionsSchema,
   revokeOtherSessionsSchema, adminGetUserSessionsSchema, adminRevokeUserSessionSchema,
-  adminRevokeAllUserSessionsSchema, unregisterPushTokenSchema,
+  adminRevokeAllUserSessionsSchema,
 } from '@/validations/_core/userSession.validations';
 
 import {
-  getUserSessionsService, registerSessionService, revokeSessionService, registerPushTokenService,
+  getUserSessionsService, registerSessionService, revokeSessionService,
   revokeOtherSessionsService, getActiveSessionsForAdminService, revokeSessionForAdminService,
-  revokeAllSessionsForAdminService, unregisterPushTokenService,
+  revokeAllSessionsForAdminService,
 } from '../../services/_core/userSession.service.cloud';
 import { assertInAgentCountries } from '../../utils/_core/agent-scope.utils.cloud';
 import { getClientIp } from '../../utils/_core/parse.utils.cloud';
@@ -21,8 +21,8 @@ import { fromBO, parseFunction } from '../../utils/_core/utils.cloud';
 import { parseFunctionValidation } from '../../utils/_core/validation.utils.cloud';
 
 /**
- * The two login-time device registrations share one allowance per account and per address — each
- * new device id they accept can send a "new device" alert, by SMS for an account with no e-mail.
+ * The login-time device registration has its own allowance per account and per address — each
+ * new device id it accepts can send a "new device" alert, by SMS for an account with no e-mail.
  */
 const assertDeviceRegistrationAllowed = async (
   request: Parse.Cloud.FunctionRequest,
@@ -78,42 +78,6 @@ Parse.Cloud.define(
     return { results };
   }),
   parseFunctionValidation(getUserSessionsSchema)
-);
-
-Parse.Cloud.define(
-  'registerPushToken',
-  parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<Parse.Object> => {
-    const { deviceId, pushToken, locale = DEFAULT_LANGUAGE } = request.params;
-    const { user } = request;
-
-    if (!user) {
-      throw new Error(translate('error.pleaseLogin', locale));
-    }
-
-    await assertDeviceRegistrationAllowed(request, user, locale);
-
-    return registerPushTokenService(user, deviceId, pushToken);
-  }),
-  parseFunctionValidation(registerPushTokenSchema)
-);
-
-/**
- * Called by the app right before it logs out: this device stops receiving the account's pushes
- * even if the logout request that follows never reaches the server.
- */
-Parse.Cloud.define(
-  'unregisterPushToken',
-  parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<void> => {
-    const { deviceId, locale = DEFAULT_LANGUAGE } = request.params;
-    const { user } = request;
-
-    if (!user) {
-      throw new Error(translate('error.pleaseLogin', locale));
-    }
-
-    await unregisterPushTokenService(user, deviceId);
-  }),
-  parseFunctionValidation(unregisterPushTokenSchema)
 );
 
 Parse.Cloud.define(

@@ -12,7 +12,7 @@ import type { BanReason, BanType, IBan } from '@/types/user.type';
 import { moveFileToRecycleBin } from '@/api/_core/cloudinary.api';
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
 import {
-  collections, DEFAULT_BAN_DURATION_DAYS, DEFAULT_QUERY_LIMIT, DISABLE_TRIGGERS_CONTEXT, IS_LOCAL, IS_TEST,
+  DEFAULT_BAN_DURATION_DAYS, DEFAULT_QUERY_LIMIT, DISABLE_TRIGGERS_CONTEXT, IS_LOCAL, IS_TEST,
   SKIP_SIGN_UP_VERIFICATION, UNVERIFIED_PHONE_SIGNUP_RETENTION_HOURS, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 import {
@@ -21,7 +21,6 @@ import {
 import {
   USER_DETAILS_FIELDS, USER_DETAILS_POINTER_FIELDS, USER_DETAILS_POINTER_SUBFIELDS,
 } from '@/constants/_core/user.constants';
-import { NotificationChannelStatusEnum, type NotificationChannelRecipient } from '@/types/notification.type';
 import { OwnerAlertEventEnum } from '@/types/ownerAlert.type';
 import { RegisterStepEnum, UserModerationActionEnum } from '@/types/user.type';
 import { logger } from '@/utils/_core/logger';
@@ -287,29 +286,6 @@ const sendBanEmail = async (user: Parse.User, locale: Locale): Promise<boolean> 
 };
 
 /**
- * Whether the ban push reached a device. The push fan-out writes its outcome on the notification
- * row after the row is saved, so the row is read again rather than trusting the saved object.
- */
-const wasBanPushed = async (notification: Parse.Object | undefined, userId: string): Promise<boolean> => {
-  if (!notification) return false;
-
-  try {
-    const stored = await new Parse.Query(collections.Notification)
-      .select(['channels'])
-      .get(notification.id, USE_MASTER_KEY);
-    const push: NotificationChannelRecipient[] = stored.get('channels')?.push ?? [];
-
-    return push.some((recipient) => (
-      recipient.toId === userId && recipient.status === NotificationChannelStatusEnum.SENT
-    ));
-  }
-  catch (error) {
-    logger.error('Could not read the ban push outcome', { userId, error: (error as Error).message });
-    return false;
-  }
-};
-
-/**
  * Stamps the entry of the ban just applied as "member notified". Done once a channel really
  * delivered: a ban against a member with no address and no reachable device used to claim they had
  * been told, which is the one thing support relies on when they say they were never warned.
@@ -365,25 +341,19 @@ export const banUser = async (
     banType: type,
   });
 
-  /*
-   * sent, and waited for, before the sessions are revoked: the push goes to the devices those
-   * sessions hold, and it is fired in the background by default — so the revocation destroyed the
-   * device rows while it was still looking for them, and a member without an e-mail was told nothing.
-   * The e-mail (or the login refusal message) stays the channel the ban is really read through.
-   */
-  const notification = await createNotification({
+  // the in-app row; the e-mail (or the login refusal message) is the channel the ban is really read through
+  await createNotification({
     type: ACCOUNT_NOTIFICATION_TYPE,
     to: [updatedUser],
     status: ACCOUNT_BANNED_STATUS,
-  }, { awaitPush: true });
-  const isPushed = await wasBanPushed(notification, updatedUser.id);
+  });
 
   await revokeAllUserSessionsService(updatedUser);
 
   // the ban is already effective: a failing email never fails it, it only leaves `notifiedAt` unset
   const isEmailed = await sendBanEmail(updatedUser, locale);
 
-  if (!isPushed && !isEmailed) return updatedUser;
+  if (!isEmailed) return updatedUser;
 
   const bans: IBan[] = updatedUser.get('bans') || [];
 

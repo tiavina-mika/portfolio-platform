@@ -12,7 +12,7 @@
 
 ## Vue d'ensemble
 
-Les emails sont des emails transactionnels envoyés par le serveur via [Brevo](https://www.brevo.com). Les textes de vérification peuvent aussi partir par SMS via MMSDuck, et les notifications push via Expo. Les apps `web` et `bo` n'envoient jamais rien : elles appellent une Cloud Function ou enregistrent un objet, et le serveur fait le reste. La liste complète des emails est dans [l'inventaire](../../../inventory/communication/fr/EMAILS.FR.md).
+Les emails sont des emails transactionnels envoyés par le serveur via [Brevo](https://www.brevo.com). Les textes de vérification peuvent aussi partir par SMS via MMSDuck. Les apps `web` et `bo` n'envoient jamais rien : elles appellent une Cloud Function ou enregistrent un objet, et le serveur fait le reste. La liste complète des emails est dans [l'inventaire](../../../inventory/communication/fr/EMAILS.FR.md).
 
 | Fichier | Rôle |
 |---|---|

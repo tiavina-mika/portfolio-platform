@@ -26,7 +26,7 @@ Domain class names are in `libs/shared-domain-constants` (`DOMAIN_COLLECTIONS`);
 | `Payment` | Payments (simulated gateway) | server, bo |
 | `Report` | Reports raised on a user or a content | server, bo |
 | `UserAuditLog`, `RoleAuditLog`, `SessionAuditLog`, `MfaAuditLog`, `UserModerationLog`, `PenaltyLog` | Audit trails (locked, written by the server only) | server, bo |
-| `UserSession`, `PushReceipt` | Devices, sessions and Expo push tickets | server |
+| `UserSession` | Devices and sessions | server |
 | `Invitation` | Back-office invitations (token, role, expiry) | server, bo |
 | `ImpersonationSession` | "Login as" sessions | server, bo |
 | `ContentVersion` | History of the CMS content (Page, Article…) | server, bo |

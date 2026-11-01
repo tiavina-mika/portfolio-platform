@@ -43,7 +43,7 @@ export const PAYMENT_LATE_CHECK_INTERVAL_MINUTES = 10;
 
 /**
  * Seconds before the mock gateway confirms a payment in its asynchronous modes — how long a
- * customer would take to type their code. `PAYMENT_MOCK_CONFIRM_SECONDS` overrides it.
+ * customer would take to type their code.
  */
 export const PAYMENT_MOCK_CONFIRM_SECONDS = 5;
 

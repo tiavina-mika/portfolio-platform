@@ -26,7 +26,7 @@ Les noms de classes du domaine sont dans `libs/shared-domain-constants` (`DOMAIN
 | `Payment` | Paiements (passerelle simulée) | server, bo |
 | `Report` | Signalements d'un utilisateur ou d'un contenu | server, bo |
 | `UserAuditLog`, `RoleAuditLog`, `SessionAuditLog`, `MfaAuditLog`, `UserModerationLog`, `PenaltyLog` | Journaux d'audit (verrouillés, écrits par le serveur seul) | server, bo |
-| `UserSession`, `PushReceipt` | Appareils, sessions et tickets de push Expo | server |
+| `UserSession` | Appareils et sessions | server |
 | `Invitation` | Invitations au back-office (jeton, rôle, expiration) | server, bo |
 | `ImpersonationSession` | Sessions « se connecter en tant que » | server, bo |
 | `ContentVersion` | Historique des contenus du CMS (Page, Article…) | server, bo |

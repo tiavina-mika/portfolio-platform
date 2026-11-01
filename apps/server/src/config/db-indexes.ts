@@ -353,9 +353,8 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
   [collections.UserSession]: [
     /*
      * a member's devices (profile screen, BO "active sessions", device registration by deviceId).
-     * Unique: registerSession and registerPushToken run in parallel at login, and each used to
-     * create its own row for the same device — the losing one kept a push token that no logout
-     * cleared. The duplicates an older database already holds are collapsed first.
+     * Unique: two registrations of one device can run in parallel at login, and each used to
+     * create its own row. The duplicates an older database already holds are collapsed first.
      */
     {
       spec: { _p_user: 1, deviceId: 1 },
@@ -368,12 +367,6 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
     },
     // the device row behind a Parse session, when that session is revoked
     { spec: { sessionToken: 1 } },
-    // the push fan-out's lookup and the token hand-over between accounts on one phone
-    { spec: { pushToken: 1 }, options: { sparse: true } },
-  ],
-  [collections.PushReceipt]: [
-    // processPushReceiptsJob: the tickets old enough for Expo to have their receipt, oldest first
-    { spec: { _created_at: 1 } },
   ],
   /*
    * getUserAuditTrail (userAuditTrail.service.cloud.ts) — one member's rows of each log, newest

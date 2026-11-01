@@ -23,17 +23,6 @@ export const getUserSessionsSchema = z.object({
   locale: localeFieldSchema.optional(),
 });
 
-export const registerPushTokenSchema = z.object({
-  deviceId: z.string().nonempty(),
-  pushToken: z.string().nonempty(),
-  locale: localeFieldSchema.optional(),
-});
-
-export const unregisterPushTokenSchema = z.object({
-  deviceId: z.string().nonempty(),
-  locale: localeFieldSchema.optional(),
-});
-
 // back-office: the sessions of the user whose file is open
 export const adminGetUserSessionsSchema = z.object({
   userId: z.string().nonempty(),

@@ -10,7 +10,6 @@ import { logger } from '@/utils/_core/logger';
 import {
   getNotificationChannelSender, mergeNotificationChannelRecipients,
 } from './notification.service.cloud';
-import { sendPushNotificationsForNotification } from './push.service.cloud';
 import { withComputedFields } from '../../utils/_core/parse.utils.cloud';
 
 export const NotificationResend = Parse.Object.extend(collections.NotificationResend);
@@ -22,8 +21,7 @@ const NOTIFICATION_RESEND_FIELDS = [
 
 /**
  * The targets a channel actually addressed. A resend only ever goes to them: a channel entry is the
- * proof the domain meant this person to be reached that way — the driver of a cancelled ride is a
- * recipient of the push, not of the passengers' cancellation e-mail.
+ * proof the domain meant this person to be reached that way.
  */
 const getChannelTargets = (
   notification: Parse.Object,
@@ -37,17 +35,13 @@ const getChannelTargets = (
 };
 
 /**
- * Whether a send can go out again on a channel: the push always can, since its body is the
- * notification's own message; an e-mail or an SMS only when the domain that raised it registered how
+ * Whether a send can go out again on a channel: only when the domain that raised it registered how
  * to write it again.
  */
 export const isNotificationChannelResendable = (
   notification: Parse.Object,
   channel: NotificationChannel
-): boolean => (
-  channel === NotificationChannelEnum.PUSH ||
-  !!getNotificationChannelSender(notification.get('type'), channel)
-);
+): boolean => !!getNotificationChannelSender(notification.get('type'), channel);
 
 /**
  * Sends one channel of a notification again to some of its recipients, folds how it ended into what
@@ -55,8 +49,7 @@ export const isNotificationChannelResendable = (
  * for this send, or when none of the targets was addressed on it.
  *
  * The notification has to be loaded with its recipients (`to` included), its `channels`, and whatever
- * the channel is rebuilt from: `message`/`payload`/`from` for the push, `type`/`status`/`payload`
- * for a domain sender.
+ * the channel is rebuilt from: `type`/`status`/`payload` for a domain sender.
  */
 export const resendNotificationChannel = async (
   notification: Parse.Object,
@@ -66,13 +59,6 @@ export const resendNotificationChannel = async (
   const recipients = getChannelTargets(notification, channel, targets);
 
   if (recipients.length === 0) return [];
-
-  if (channel === NotificationChannelEnum.PUSH) {
-    // records its own outcome over the channel, the way every push does
-    await sendPushNotificationsForNotification(notification, recipients);
-
-    return recipients.map((recipient) => recipient.id);
-  }
 
   const sender = getNotificationChannelSender(notification.get('type'), channel);
 

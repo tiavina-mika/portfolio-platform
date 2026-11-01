@@ -10,7 +10,7 @@ import {
   TICKET_RESOLVED_STATUS, VEHICLE_DOCUMENT_EXPIRED_STATUS, VEHICLE_DOCUMENT_EXPIRING_SOON_STATUS,
   VEHICLE_DOCUMENT_REJECTED_STATUS, VEHICLE_VERIFIED_STATUS,
 } from '@shared/constants';
-import { NotificationChannelStatusEnum, NotificationTypeEnum } from '@shared/types';
+import { NotificationTypeEnum } from '@shared/types';
 
 /**
  * Notification type tags, taken from the enum shared with the app and the back-office so the three
@@ -62,25 +62,11 @@ export {
 export const NOTIFICATION_HARD_DELETE_GRACE_DAYS = 90;
 
 /**
- * Expo push receipts (the actual APNs/FCM delivery result, as opposed to the immediate send
- * ticket) only become available roughly 15 minutes after a push is sent — processPushReceiptsJob
- * only looks at PushReceipt rows older than this to avoid querying Expo before they exist.
- */
-export const PUSH_RECEIPT_MIN_AGE_MINUTES = 15;
-
-/**
  * How much of a provider's refusal is kept on a recipient entry. The code is what support quotes and
  * the wording is a sentence at most — a provider answering with a whole HTML error page must not be
  * copied into every recipient of a fan-out.
  */
 export const NOTIFICATION_CHANNEL_ERROR_MAX_LENGTH = 300;
-
-/**
- * SMS sent as a fallback to one member over a rolling 24 hours, counted on the notifications of the
- * fallback events whose SMS channel reached them. Past it the notification is still written and the
- * push was still attempted — only the paid SMS is not repeated, since each one costs 50 Ar.
- */
-export const MAX_FALLBACK_SMS_PER_USER_PER_DAY = 5;
 
 /** What one SMS costs the platform, in Ariary — what the daily SMS counts are priced with. */
 export const SMS_UNIT_COST_AR = 50;
@@ -88,12 +74,3 @@ export const SMS_UNIT_COST_AR = 50;
 /** How many days of SMS counts the staff can ask for at most, and get when they ask for none. */
 export const SMS_DAILY_COUNTS_MAX_DAYS = 90;
 export const SMS_DAILY_COUNTS_DEFAULT_DAYS = 30;
-
-/**
- * The push outcomes that mean the member may not have been told: no device to push to, or the push
- * provider refused it. Every other outcome either reached them or is a choice they made.
- */
-export const SMS_FALLBACK_PUSH_STATUSES: string[] = [
-  NotificationChannelStatusEnum.PUSH_NO_DEVICE,
-  NotificationChannelStatusEnum.FAILED,
-];

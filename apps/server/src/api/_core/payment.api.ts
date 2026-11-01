@@ -6,31 +6,13 @@ import type {
   PaymentProcessInput, PaymentOutput,
 } from '@/types/payment.type';
 
-import { DEFAULT_CURRENCY, FORCE_PROD, IS_PROD } from '@/constants/_core/constants';
+import { DEFAULT_CURRENCY } from '@/constants/_core/constants';
 import { PAYMENT_MOCK_CONFIRM_SECONDS } from '@/constants/_core/payment.constants';
 import { PaymentMockModeEnum, ProviderPaymentStatusEnum } from '@/types/payment.type';
 import { logger } from '@/utils/_core/logger';
 import { getPaymentServiceByPhoneNumber } from '@/utils/_core/payment.utils';
 import { maskPhone } from '@/utils/_core/pii.utils';
 import { wait } from '@/utils/_core/utils';
-
-/** True while `processPaymentAPI` is the simulation: set to false once a real operator replaces it */
-export const IS_PAYMENT_GATEWAY_MOCK = true;
-
-/**
- * A simulated gateway confirms every payment without moving a single ariary: it must never serve
- * production traffic unless somebody chose that explicitly, with `ALLOW_MOCK_PAYMENT_GATEWAY=true`.
- * Pre-production is out of scope: its end-to-end tests run on the simulation.
- */
-export const assertPaymentGatewayIsReal = ({
-  isMock = IS_PAYMENT_GATEWAY_MOCK,
-  isProduction = IS_PROD || FORCE_PROD,
-  isMockAllowed = process.env.ALLOW_MOCK_PAYMENT_GATEWAY === 'true',
-} = {}): void => {
-  if (isMock && isProduction && !isMockAllowed) {
-    throw new Error('The payment gateway is a simulation: refusing to start in production');
-  }
-};
 
 const MOCK_REFERENCE_PREFIX = 'mock';
 // a dot, since the mode names hold underscores and a UUID holds dashes
@@ -45,28 +27,12 @@ export type ProviderPaymentStatusOutput = {
   amount?: number;
 };
 
-/**
- * Read at every call rather than once at startup, so a test can switch the gateway's behaviour
- * without restarting the server. An unknown value falls back to the synchronous behaviour.
- */
-const getMockMode = (): PaymentMockModeEnum => {
-  const mode = process.env.PAYMENT_MOCK_MODE as PaymentMockModeEnum | undefined;
-
-  return mode && Object.values(PaymentMockModeEnum).includes(mode) ? mode : PaymentMockModeEnum.SYNC;
-};
-
-const getMockConfirmSeconds = (): number => {
-  const seconds = Number(process.env.PAYMENT_MOCK_CONFIRM_SECONDS);
-
-  return Number.isFinite(seconds) && seconds >= 0 ? seconds : PAYMENT_MOCK_CONFIRM_SECONDS;
-};
-
 /*
  * The mock keeps no state: its transaction reference carries the mode it was issued in and the
  * moment it confirms, so its status API can answer after a restart as a real operator would.
  */
 const createMockReference = (mode: PaymentMockModeEnum, merchantReference?: string): string => {
-  const confirmAt = Date.now() + (getMockConfirmSeconds() * 1000);
+  const confirmAt = Date.now() + (PAYMENT_MOCK_CONFIRM_SECONDS * 1000);
 
   // the merchant's own reference takes the place of the random part, as a real operator echoes it back
   return [MOCK_REFERENCE_PREFIX, mode, merchantReference ?? crypto.randomUUID(), confirmAt]
@@ -75,7 +41,7 @@ const createMockReference = (mode: PaymentMockModeEnum, merchantReference?: stri
 
 /**
  * API to process payment from different payment providers
- * For now it's a mock: see PaymentMockModeEnum for how it answers
+ * For now it's a mock that confirms every payment at once
  * @NOTE a PENDING answer is not a failure: the customer has not confirmed yet, and
  * `getPaymentStatusAPI` tells later what became of the transaction
  */
@@ -88,7 +54,7 @@ export const processPaymentAPI = async ({
   paymentType,
   reference,
 }: PaymentProcessInput): Promise<PaymentOutput> => {
-  const mode = getMockMode();
+  const mode = PaymentMockModeEnum.SYNC;
 
   logger.info('Start process payment', {
     amount,

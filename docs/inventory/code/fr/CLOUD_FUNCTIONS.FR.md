@@ -50,7 +50,7 @@ Les fichiers sont dans `apps/server/src/cloud/functions/_core/` sauf mention con
 | `stepUpVerification.functions.ts` | `requestStepUpVerification`, `verifyStepUpCode` |
 | `ticket-message.functions.ts` | `sendTicketMessage`, `getTicketMessages`, `updateTicketStatus`, `updateTicketPriority`, `assignTicket` |
 | `user.functions.ts` | `getUserProfile`, `deleteAccount`, `exportMyData`, `saveUserLanguage` |
-| `userSession.functions.ts` | `registerSession`, `getUserSessions`, `registerPushToken`, `unregisterPushToken`, `revokeSession`, `revokeOtherSessions`, `adminGetUserSessions`, `adminRevokeUserSession`, `adminRevokeAllUserSessions` |
+| `userSession.functions.ts` | `registerSession`, `getUserSessions`, `revokeSession`, `revokeOtherSessions`, `adminGetUserSessions`, `adminRevokeUserSession`, `adminRevokeAllUserSessions` |
 | `utils.functions.ts` | `getJobStatus`, `destroyObjects` |
 | `test.functions.ts` | `getTestEmailSendersOptions`, `createBatchTest`, `destroyBatchTest`, `sendArticleToNewsletterTest`, `sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest`, `sendInvitationTest`, `sendWelcomeEmailTest`, `sendVerificationCodeSmsTest`, `createRideMock` (aides de test, importées seulement en développement local et en test) |
 | `_domain/project.functions.ts` | `getProjects`, `getProject`, `getProjectForClient` |
@@ -92,7 +92,6 @@ Les fichiers sont dans `apps/server/src/cloud/jobs/_core/` (`_domain/` n'a aucun
 | `newsletter.jobs.ts` | `sendArticleToNewsletterJob` |
 | `notification.jobs.ts` | `expireOldNotificationsJob`, `purgeOldNotificationsJob` |
 | `payment.jobs.ts` | `updatePaymentAfterSaveJob`, `retryFailedPlatformPaymentsJob`, `reconcilePendingPaymentsJob` |
-| `push.jobs.ts` | `processPushReceiptsJob` |
 | `retention.jobs.ts` | `purgeOldLogsJob` |
 | `slack.jobs.ts` | `postDailySlackSummaryJob` |
 | `user.jobs.ts` | `deleteOrDestroyUserRelationsJob`, `liftExpiredBansJob`, `createUserAuditLogJob`, `purgeOrphanUserSessionsJob`, `purgeUnverifiedPhoneSignupsJob` |

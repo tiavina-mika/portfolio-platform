@@ -82,7 +82,7 @@ defineJob('createUserAuditLogJob', async (request: Parse.Cloud.JobRequest<Create
 });
 
 /**
- * Destroys the device rows left with neither a push token nor a session token — see
+ * Destroys the device rows left without a session token — see
  * purgeOrphanUserSessionsService for why they pile up.
  */
 defineJob('purgeOrphanUserSessionsJob', async (): Promise<void> => {

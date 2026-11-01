@@ -20,12 +20,11 @@ The keep-awake ping runs outside local development and outside Cloud Run. The bu
 | `*/14 * * * *` | none (calls `/ping`) | Keeps a free hosting plan awake. Not in local development, not on Cloud Run |
 | `*/2 * * * *` | `reconcilePendingPaymentsJob` | Settles the payments still waiting for their operator |
 | `*/5 * * * *` | `revokeExpiredImpersonationSessionsJob` | Revokes expired "login as" sessions |
-| `0 * * * *` | `processPushReceiptsJob` | Processes Expo push receipts and clears stale push tokens |
 | `25 * * * *` | `retryFailedPlatformPaymentsJob` | Retries the payments owed and not sent |
 | `0 2 * * *` | `expireOldNotificationsJob` | Soft-deletes notifications older than 365 days |
 | `30 2 * * *` | `purgeOrphanedEditorFilesJob` | Deletes the Cloudinary images of the CMS editor that no Page or Article references (older than 24 hours only) |
 | `30 3 * * *` | `purgeUnverifiedPhoneSignupsJob` | Destroys sign-ups that never confirmed their phone number |
-| `40 3 * * *` | `purgeOrphanUserSessionsJob` | Destroys device rows with neither a push token nor a session |
+| `40 3 * * *` | `purgeOrphanUserSessionsJob` | Destroys device rows without a session token |
 | `30 4 * * 0` | `purgeOldNotificationsJob` | Weekly purge of old notifications (Sundays) |
 | `45 4 * * 0` | `purgeOldLogsJob` | Weekly destruction of audit, moderation and ticket rows past their retention |
 | `30 7 * * *` (default country time zone) | `postDailySlackSummaryJob` | Posts yesterday's figures to the staff Slack channel |

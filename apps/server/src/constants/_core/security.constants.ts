@@ -195,13 +195,10 @@ export const ALWAYS_LOCKED_CLASSES: string[] = [
    */
   collections.UserModerationLog,
   /*
-   * PushReceipt holds Expo push tickets next to the device token they were sent to, and
-   * NotificationResend logs who re-sent what to whom: both are written by the push service and
-   * the resend Cloud Functions with the master key, and no role is ever granted rights on them —
-   * without this entry they kept Parse's default public CLP and the push tokens were listable by
-   * anyone holding the app id.
+   * NotificationResend logs who re-sent what to whom: it is written by the resend Cloud Functions
+   * with the master key, and no role is ever granted rights on it — without this entry it kept
+   * Parse's default public CLP and was listable by anyone holding the app id.
    */
-  collections.PushReceipt,
   collections.NotificationResend,
   /*
    * ImpersonationSession stores the `sessionToken` of the session handed to the admin: written by

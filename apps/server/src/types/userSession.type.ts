@@ -9,8 +9,6 @@ export interface IUserSessionAttributes {
   platform: Platform;
   appVersion?: string;
   lastActiveAt: Date;
-  /** Expo push token for this device — undefined until the user grants push permission */
-  pushToken?: string;
 }
 
 export interface IUserSession extends Parse.Object<IUserSessionAttributes> {

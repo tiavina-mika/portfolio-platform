@@ -12,7 +12,7 @@
 
 ## Overview
 
-Emails are transactional emails sent by the server through [Brevo](https://www.brevo.com). Verification texts can also go by SMS through MMSDuck, and push notifications through Expo. The apps `web` and `bo` never send anything: they call a Cloud Function or save an object, and the server does the rest. The full list of emails is in [the inventory](../../../inventory/communication/en/EMAILS.md).
+Emails are transactional emails sent by the server through [Brevo](https://www.brevo.com). Verification texts can also go by SMS through MMSDuck. The apps `web` and `bo` never send anything: they call a Cloud Function or save an object, and the server does the rest. The full list of emails is in [the inventory](../../../inventory/communication/en/EMAILS.md).
 
 | File | Role |
 |---|---|

@@ -23,7 +23,6 @@ MMSDuck is the SMS provider. It sends the phone verification and password reset 
 | Variable | App | Purpose |
 |---|---|---|
 | `MMSDUCK_API_KEY` | server | Provider key (secret). Required and non-empty in `preProduction` and `production`; optional elsewhere |
-| `ANDROID_SMS_RETRIEVER_HASH` | server | Optional: hash appended to verification SMS so an Android app can read the code |
 
 ## Setup
 

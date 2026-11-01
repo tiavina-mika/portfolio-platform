@@ -50,7 +50,7 @@ Files are in `apps/server/src/cloud/functions/_core/` unless noted.
 | `stepUpVerification.functions.ts` | `requestStepUpVerification`, `verifyStepUpCode` |
 | `ticket-message.functions.ts` | `sendTicketMessage`, `getTicketMessages`, `updateTicketStatus`, `updateTicketPriority`, `assignTicket` |
 | `user.functions.ts` | `getUserProfile`, `deleteAccount`, `exportMyData`, `saveUserLanguage` |
-| `userSession.functions.ts` | `registerSession`, `getUserSessions`, `registerPushToken`, `unregisterPushToken`, `revokeSession`, `revokeOtherSessions`, `adminGetUserSessions`, `adminRevokeUserSession`, `adminRevokeAllUserSessions` |
+| `userSession.functions.ts` | `registerSession`, `getUserSessions`, `revokeSession`, `revokeOtherSessions`, `adminGetUserSessions`, `adminRevokeUserSession`, `adminRevokeAllUserSessions` |
 | `utils.functions.ts` | `getJobStatus`, `destroyObjects` |
 | `test.functions.ts` | `getTestEmailSendersOptions`, `createBatchTest`, `destroyBatchTest`, `sendArticleToNewsletterTest`, `sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest`, `sendInvitationTest`, `sendWelcomeEmailTest`, `sendVerificationCodeSmsTest`, `createRideMock` (test helpers, imported only in local development and tests) |
 | `_domain/project.functions.ts` | `getProjects`, `getProject`, `getProjectForClient` |
@@ -92,7 +92,6 @@ Files are in `apps/server/src/cloud/jobs/_core/` (`_domain/` has no job). A job 
 | `newsletter.jobs.ts` | `sendArticleToNewsletterJob` |
 | `notification.jobs.ts` | `expireOldNotificationsJob`, `purgeOldNotificationsJob` |
 | `payment.jobs.ts` | `updatePaymentAfterSaveJob`, `retryFailedPlatformPaymentsJob`, `reconcilePendingPaymentsJob` |
-| `push.jobs.ts` | `processPushReceiptsJob` |
 | `retention.jobs.ts` | `purgeOldLogsJob` |
 | `slack.jobs.ts` | `postDailySlackSummaryJob` |
 | `user.jobs.ts` | `deleteOrDestroyUserRelationsJob`, `liftExpiredBansJob`, `createUserAuditLogJob`, `purgeOrphanUserSessionsJob`, `purgeUnverifiedPhoneSignupsJob` |

@@ -199,17 +199,9 @@ export const SMS_UNREACHABLE_COUNTRY_CODE = 'unreachable_country';
 export const SMS_OUT_OF_CREDIT_ALERT_INTERVAL_SECONDS = 6 * 60 * 60;
 
 /**
- * Shape of the Android app hash the SMS Retriever API looks for at the end of a verification SMS:
- * 11 base64 characters. Anything else in the env var is a copy-paste mistake — appending it would
- * only add noise to every SMS without ever triggering the automatic read.
- */
-export const SMS_RETRIEVER_APP_HASH_PATTERN = /^[A-Za-z0-9+/]{11}$/;
-
-/**
  * The most characters a fixed SMS template may reach once its variables are filled with the longest
  * realistic values. A GSM-7 segment holds 160 characters and an operator bills each extra segment:
- * 20 are kept free for the sender prefix the provider prepends and for the Android app hash
- * appended to a verification code (a blank line, then its 11 characters). A character outside the
+ * 20 are kept free for the sender prefix the provider prepends. A character outside the
  * GSM-7 set (a curly apostrophe, for instance) turns the whole message into UCS-2, 70 characters
  * per segment, so the templates stay inside that set as well.
  */
@@ -297,7 +289,6 @@ export const collections = {
   RoleAuditLog: 'RoleAuditLog',
   SessionAuditLog: 'SessionAuditLog',
   UserSession: 'UserSession',
-  PushReceipt: 'PushReceipt',
   ContentVersion: 'ContentVersion',
   Invitation: 'Invitation',
   ImpersonationSession: 'ImpersonationSession',
