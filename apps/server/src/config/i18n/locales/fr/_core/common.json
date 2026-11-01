@@ -31,7 +31,7 @@
     "reasonRequired": "La raison est requise",
     "emailNotFound": "Email non trouvé",
     "welcomeSubject": "Bienvenue sur Portfolio !",
-    "welcomeMessage": "Bonjour {{fullName}}, votre compte est maintenant vérifié. Vous pouvez chercher un trajet ou en proposer un.",
+    "welcomeMessage": "Bonjour {{fullName}}, votre compte est maintenant vérifié.",
     "accountReactivatedSubject": "Votre compte a été réactivé",
     "accountReactivatedMessage": "Bonne nouvelle ! La suspension de votre compte est terminée, vous pouvez à nouveau utiliser l'application normalement.",
     "newDeviceLoginSubject": "Nouvelle connexion détectée",
@@ -118,10 +118,7 @@
   "sms": {
     "verificationCode": "Votre code Portfolio : {{code}}",
     "contactChanged": "Portfolio : le numéro de téléphone de votre compte a été modifié. Si ce n'est pas vous, contactez le support tout de suite.",
-    "rideCancelled": "Trajet annulé : {{- departure}} - {{- destination}} du {{- date}}. Vous avez été remboursé.",
     "newDeviceLogin": "Nouvelle connexion à votre compte Portfolio depuis : {{- deviceName}}. Si ce n'est pas vous, changez votre mot de passe.",
-    "requestConfirmed": "Portfolio : place confirmée, trajet {{- departure}} - {{- destination}} le {{- date}}. Détails dans l'application.",
-    "bookingCanceledByDriver": "Portfolio : réservation annulée par le conducteur, trajet {{- departure}} - {{- destination}} le {{- date}}. Remboursement intégral.",
     "ticketAcknowledgement": "Portfolio : votre demande #{{reference}} est bien enregistrée. Le support vous répondra par SMS ou par appel. Gardez ce numéro.",
     "ticketReply": "Support Portfolio, demande #{{reference}} : {{- message}}"
   },
@@ -171,8 +168,8 @@
     "notificationBroadcastMissingCity": "Choisissez la ville concernée par l'annonce.",
     "userText": {
       "profanity": "Ce texte contient des mots qui ne peuvent pas être publiés. Reformulez-le sans eux.",
-      "phone": "Un numéro de téléphone ne peut pas être publié ici. Retirez-le : les coordonnées sont échangées dans l’application une fois la réservation confirmée.",
-      "email": "Une adresse email ne peut pas être publiée ici. Retirez-la : les coordonnées sont échangées dans l’application une fois la réservation confirmée.",
+      "phone": "Un numéro de téléphone ne peut pas être publié ici. Retirez-le.",
+      "email": "Une adresse email ne peut pas être publiée ici. Retirez-la.",
       "url": "Un lien ne peut pas être publié ici. Retirez-le."
     }
   },
@@ -214,16 +211,6 @@
     "phoneAlreadyUsedByAnotherAccount": "Ce numéro est déjà utilisé par un autre compte.",
     "contactUnchanged": "C'est déjà la valeur enregistrée sur votre compte."
   },
-  "project": {
-    "ride": {
-      "departure": "Départ",
-      "destination": "Destination",
-      "hasNoRightToDelete": "Vous n'avez pas le droit de supprimer cette course"
-    },
-    "request": {
-      "comment": "Commentaire"
-    }
-  },
   "ticket": {
     "reopenedSystemMessage": "Demande rouverte"
   },
@@ -247,8 +234,6 @@
     "scheduledJobFailedDetails": "Erreur : {{- kind}} — le détail est dans les logs du serveur",
     "dailySummaryTitle": "Hier sur Portfolio ({{- date}})",
     "dailySummaryFigure": "{{- label}} : {{- value}}",
-    "dailySummaryNewUsers": "Inscrits",
-    "dailySummaryRidesPublished": "Trajets publiés",
-    "dailySummaryBookings": "Réservations confirmées"
+    "dailySummaryNewUsers": "Inscrits"
   }
 }

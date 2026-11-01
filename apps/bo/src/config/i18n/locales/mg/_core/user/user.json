@@ -123,17 +123,17 @@
       "verifyEmail": {
         "label": "Hamarino ny adiresy email-nao",
         "subject": "Hamarino ny adiresy email-nao",
-        "message": "Salama, mbola tsy voamarina ny adiresy email-nao. Hamarino avy ao amin'ny fampiharana mba hahafahanao manohy mamandrika sy mamoaka dia."
+        "message": "Salama, mbola tsy voamarina ny adiresy email-nao. Hamarino azafady."
       },
       "verifyPhone": {
         "label": "Hamarino ny laharana findainao",
         "subject": "Hamarino ny laharana findainao",
-        "message": "Salama, mbola tsy voamarina ny laharana findainao. Hamarino avy ao amin'ny fampiharana : izany no ahafahan'ny mpikambana hafa mifandray aminao amin'ny andron'ny dia."
+        "message": "Salama, mbola tsy voamarina ny laharana findainao. Hamarino azafady."
       },
       "completeProfile": {
         "label": "Fenoy ny mombamomba anao",
         "subject": "Fenoy ny mombamomba anao",
-        "message": "Salama, mbola tsy feno ny mombamomba anao. Ampio ny sarinao sy ny antsipiriany : ny profil feno dia mahatonga fitokisana ary mahazo famandrihana bebe kokoa."
+        "message": "Salama, mbola tsy feno ny mombamomba anao. Ampio ny sarinao sy ny antsipiriany mba hahafenoana azy."
       }
     }
   },
@@ -551,9 +551,6 @@
       "platforms": "Sehatra",
       "roles": "Andraikitra",
       "trust": "Fahatokisana & fiarovana",
-      "vehicles": "Fiara",
-      "rides": "Dia",
-      "requests": "Fangatahana",
       "ratingsReceived": "Hevitra voaray",
       "ratingsGiven": "Hevitra nomena",
       "suspension": "Fampiatoana",
@@ -579,11 +576,6 @@
       "offline": "Tsy mifandray",
       "emailHidden": "Mailaka nafenina",
       "memberSince": "Mpikambana nanomboka ny {{date}}"
-    },
-    "roleSummary": {
-      "driverAndPassenger": "Mpamily sy mpandeha",
-      "driver": "Mpamily",
-      "passenger": "Mpandeha"
     },
     "banner": {
       "teamUntil": "Naaton'ny ekipa hatramin'ny {{date}}",
@@ -739,48 +731,6 @@
       },
       "until": "hatramin'ny {{date}}"
     },
-    "vehicles": {
-      "vehicle": "Fiara",
-      "typeYear": "Karazana sy taona",
-      "mileage": "Kilometatra",
-      "documents": "Antontan-taratasy",
-      "verification": "Fanamarinana",
-      "empty": "Tsy misy fiara voasoratra",
-      "subtitle_one": "fiara {{count}}",
-      "subtitle_other": "fiara {{count}}",
-      "toVerify_one": "{{count}} hamarinina",
-      "toVerify_other": "{{count}} hamarinina"
-    },
-    "rides": {
-      "filters": {
-        "all": "Rehetra",
-        "driver": "Mpamily · {{count}}",
-        "passenger": "Mpandeha · {{count}}"
-      },
-      "ride": "Dia",
-      "departure": "Fiaingana",
-      "role": "Anjara",
-      "status": "Toe-javatra",
-      "amount": "Vola",
-      "gain": "tombony",
-      "paid": "naloa",
-      "roles": {
-        "driver": "Mpamily",
-        "passenger": "Mpandeha"
-      },
-      "note": "Vola: tombony azon'ny mpamily na vidiny naloan'ny mpandeha, arakaraka ny anjara.",
-      "empty": "Tsy misy dia, na amin'ny maha mpamily na amin'ny maha mpandeha",
-      "emptyRole": "Tsy misy dia amin'ity lafiny ity"
-    },
-    "requests": {
-      "ride": "Dia",
-      "driver": "mpamily {{name}}",
-      "departure": "Fiaingana",
-      "seats": "Toerana",
-      "status": "Toe-javatra",
-      "price": "Vidiny",
-      "empty": "Tsy misy fangatahana"
-    },
     "accountHelp": {
       "intro": "Hanampiana mpikambana tsy afaka miditra amin'ny kaontiny intsony. Ny hetsika tsirairay dia mitaky anton-javatra ary voasoratra ao amin'ny tantaran'ny mpikambana.",
       "reason": "Anton-javatra",
@@ -811,7 +761,7 @@
       },
       "changeCountry": {
         "title": "Ovaina ny firenen'ny kaonty",
-        "description": "Ao amin'ny : {{country}} ny kaonty ankehitriny. Ny firenena no mamaritra ny vola ampiasaina amin'ny dia, ny mpamatsy SMS ary ny fiteny atolotra. Ny dia sy ny famandrihana efa natao dia mitazona ny firenenany.",
+        "description": "Ao amin'ny : {{country}} ny kaonty ankehitriny. Ny firenena no mamaritra ny mpamatsy SMS sy ny fiteny atolotra.",
         "action": "Ovay ny firenena",
         "dialogTitle": "Ovay ny firenen'i {{name}}",
         "country": "Firenena vaovao"

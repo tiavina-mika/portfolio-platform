@@ -31,7 +31,7 @@
     "reasonRequired": "Tsy maintsy misy antony",
     "emailNotFound": "Mailaka tsy hita",
     "welcomeSubject": "Tongasoa eto amin'ny Portfolio!",
-    "welcomeMessage": "Manao ahoana {{fullName}}, voamarina ny kaontinao. Afaka mitady na manolotra dia ianao izao.",
+    "welcomeMessage": "Manao ahoana {{fullName}}, voamarina ny kaontinao.",
     "accountReactivatedSubject": "Naverina ny kaontinao",
     "accountReactivatedMessage": "Vaovao tsara! Vita ny fanidiana ny kaontinao ka afaka mampiasa ny application ianao indray.",
     "newDeviceLoginSubject": "Fidirana vaovao voafantina",
@@ -118,10 +118,7 @@
   "sms": {
     "verificationCode": "Ny kaodinao Portfolio : {{code}}",
     "contactChanged": "Portfolio : niova ny laharana finday amin'ny kaontinao. Raha tsy ianao no nanao izany, mifandraisa avy hatrany amin'ny fanohanana.",
-    "rideCancelled": "Nofoanana ny dianao : {{- departure}} - {{- destination}} tamin'ny {{- date}}. Naverina taminao ny vola.",
     "newDeviceLogin": "Fidirana vaovao tamin'ny kaontinao Portfolio avy amin'ny : {{- deviceName}}. Raha tsy ianao, ovay ny tenimiafinao.",
-    "requestConfirmed": "Portfolio: voamarina ny toeranao, dia {{- departure}} - {{- destination}} ny {{- date}}. Jereo ao amin'ny application.",
-    "bookingCanceledByDriver": "Portfolio: nofoanan'ny mpamily ny famandrihanao, dia {{- departure}} - {{- destination}} ny {{- date}}. Naverina manontolo aminao ny volanao.",
     "ticketAcknowledgement": "Portfolio: voaray ny fangatahanao #{{reference}}. Hamaly anao amin'ny SMS na amin'ny antso an-telefaona ny mpanampy. Tehirizo ity laharana ity.",
     "ticketReply": "Mpanampy Portfolio, fangatahana #{{reference}}: {{- message}}"
   },
@@ -171,8 +168,8 @@
     "notificationBroadcastMissingCity": "Fidio ny tanàna kendrena amin'ny fanambarana.",
     "userText": {
       "profanity": "Misy teny tsy azo avoaka ato amin’ity lahatsoratra ity. Avadiho tsy misy izany.",
-      "phone": "Tsy azo avoaka eto ny laharana finday. Esory izany : ifanakalozana ao anatin’ny fampiharana ny antsipiriany rehefa voamarina ny fanokanana.",
-      "email": "Tsy azo avoaka eto ny adiresy mailaka. Esory izany : ifanakalozana ao anatin’ny fampiharana ny antsipiriany rehefa voamarina ny fanokanana.",
+      "phone": "Tsy azo avoaka eto ny laharana finday. Esory izany.",
+      "email": "Tsy azo avoaka eto ny adiresy mailaka. Esory izany.",
       "url": "Tsy azo avoaka eto ny rohy. Esory izany."
     }
   },
@@ -214,16 +211,6 @@
     "phoneAlreadyUsedByAnotherAccount": "Efa ampiasain'ny kaonty hafa io laharana finday io.",
     "contactUnchanged": "Io efa ny sanda voatahiry ao amin'ny kaontinao."
   },
-  "project": {
-    "ride": {
-      "departure": "Fiaingana",
-      "destination": "Fahatongavana",
-      "hasNoRightToDelete": "Tsy manana fahazoan-dàlana ny hamàfa ity fiaingana ity"
-    },
-    "request": {
-      "comment": "Commentaire"
-    }
-  },
   "ticket": {
     "reopenedSystemMessage": "Nosokafana indray ny fangatahana"
   },
@@ -247,8 +234,6 @@
     "scheduledJobFailedDetails": "Hadisoana: {{- kind}} — ao amin'ny logs an'ny serivera ny antsipiriany",
     "dailySummaryTitle": "Omaly tao amin'ny Portfolio ({{- date}})",
     "dailySummaryFigure": "{{- label}}: {{- value}}",
-    "dailySummaryNewUsers": "Nisoratra anarana",
-    "dailySummaryRidesPublished": "Dia navoaka",
-    "dailySummaryBookings": "Famandrihana voamarina"
+    "dailySummaryNewUsers": "Nisoratra anarana"
   }
 }

@@ -31,7 +31,7 @@
     "reasonRequired": "Reason is required",
     "emailNotFound": "Email not found",
     "welcomeSubject": "Welcome to Portfolio!",
-    "welcomeMessage": "Hi {{fullName}}, your account is now verified. You're all set to search for a ride or offer one.",
+    "welcomeMessage": "Hi {{fullName}}, your account is now verified.",
     "accountReactivatedSubject": "Your account has been reactivated",
     "accountReactivatedMessage": "Good news! Your account suspension has ended and you can now use the app normally again.",
     "newDeviceLoginSubject": "New login detected",
@@ -118,10 +118,7 @@
   "sms": {
     "verificationCode": "Your Portfolio code: {{code}}",
     "contactChanged": "Portfolio: the phone number of your account was changed. If this wasn't you, contact support right away.",
-    "rideCancelled": "Ride cancelled: {{- departure}} - {{- destination}} on {{- date}}. You've been refunded.",
     "newDeviceLogin": "New login to your Portfolio account from: {{- deviceName}}. If this wasn't you, change your password.",
-    "requestConfirmed": "Portfolio: seat confirmed, ride {{- departure}} - {{- destination}} on {{- date}}. Details in the app.",
-    "bookingCanceledByDriver": "Portfolio: booking cancelled by the driver, ride {{- departure}} - {{- destination}} on {{- date}}. You have been fully refunded.",
     "ticketAcknowledgement": "Portfolio: we received your request #{{reference}}. Support will answer you by SMS or phone call. Keep this number.",
     "ticketReply": "Portfolio support, request #{{reference}}: {{- message}}"
   },
@@ -171,8 +168,8 @@
     "notificationBroadcastMissingCity": "Choose the city the announcement is for.",
     "userText": {
       "profanity": "This text contains words that cannot be published. Rewrite it without them.",
-      "phone": "A phone number cannot be published here. Remove it: contact details are exchanged through the app once a booking is confirmed.",
-      "email": "An email address cannot be published here. Remove it: contact details are exchanged through the app once a booking is confirmed.",
+      "phone": "A phone number cannot be published here. Remove it.",
+      "email": "An email address cannot be published here. Remove it.",
       "url": "A link cannot be published here. Remove it."
     }
   },
@@ -214,16 +211,6 @@
     "phoneAlreadyUsedByAnotherAccount": "This phone number is already used by another account.",
     "contactUnchanged": "This is already the value saved on your account."
   },
-  "project": {
-    "ride": {
-      "departure": "Departure",
-      "destination": "Destination",
-      "hasNoRightToDelete": "You have no right to delete this ride"
-    },
-    "request": {
-      "comment": "Comment"
-    }
-  },
   "ticket": {
     "reopenedSystemMessage": "Request reopened"
   },
@@ -247,8 +234,6 @@
     "scheduledJobFailedDetails": "Error: {{- kind}} — the detail is in the server logs",
     "dailySummaryTitle": "Yesterday on Portfolio ({{- date}})",
     "dailySummaryFigure": "{{- label}}: {{- value}}",
-    "dailySummaryNewUsers": "Sign-ups",
-    "dailySummaryRidesPublished": "Rides published",
-    "dailySummaryBookings": "Confirmed bookings"
+    "dailySummaryNewUsers": "Sign-ups"
   }
 }

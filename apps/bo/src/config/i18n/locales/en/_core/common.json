@@ -120,8 +120,6 @@
   "book": "Book",
   "cancel": "Cancel",
   "confirm": "Confirm",
-  "seatsMinimumNumberError": "Seats must be at least 1",
-  "seatsMaximumNumberError": "Seats must not exceed {{count}}",
   "address": "Address",
   "step": "Step",
   "stepOf": "Step {{step}} of {{total}}",
@@ -307,7 +305,6 @@
   },
   "total": "Total",
   "welcomeToTheDashboard": "Welcom to the {{appName}} dashboard",
-  "appDescription": "{{appName}} is a carpooling mobila application that consist of sharing your personal car with other people in order to travel together.",
   "name": "Name",
   "pageNotFound": "This page could not be found.",
   "backToHome": "Back to home",
@@ -494,26 +491,7 @@
   "done": "Done",
   "moreAction": "More actions for {{value}}",
   "noCameraAccess": "No camera access",
-  "placesCount": "{{number}} seats",
   "regeneratePdf": "Regenerate the PDF",
-  "welcome": {
-    "step1": {
-      "title": "Free sign-up",
-      "description": "Drivers and passengers pay no sign-up fee and no subscription."
-    },
-    "step2": {
-      "title": "As a car owner",
-      "description": "Say where you are going, where you want to pick passengers up and drop them off, and when."
-    },
-    "step3": {
-      "title": "As a passenger",
-      "description": "Enter your starting point, your destination and the date you want to travel. The app then shows every ride matching your search."
-    },
-    "step4": {
-      "title": "Once the ride is over",
-      "description": "Pay the driver by mobile money or in cash. Then both travellers can rate each other."
-    }
-  },
   "textToChips": {
     "helper": "A comma or Enter adds a chip, Backspace removes the last one.",
     "helperTouch": "A comma or Enter adds a chip.",

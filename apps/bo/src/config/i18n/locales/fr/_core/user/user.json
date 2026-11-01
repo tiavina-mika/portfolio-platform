@@ -124,17 +124,17 @@
       "verifyEmail": {
         "label": "Vérifiez votre adresse email",
         "subject": "Vérifiez votre adresse email",
-        "message": "Bonjour, votre adresse email n'est pas encore vérifiée. Confirmez-la depuis l'application pour continuer à réserver et à publier des trajets."
+        "message": "Bonjour, votre adresse email n'est pas encore vérifiée. Merci de la confirmer."
       },
       "verifyPhone": {
         "label": "Vérifiez votre numéro de téléphone",
         "subject": "Vérifiez votre numéro de téléphone",
-        "message": "Bonjour, votre numéro de téléphone n'est pas encore vérifié. Confirmez-le depuis l'application : c'est ce qui permet aux autres membres de vous contacter le jour du trajet."
+        "message": "Bonjour, votre numéro de téléphone n'est pas encore vérifié. Merci de le confirmer."
       },
       "completeProfile": {
         "label": "Complétez votre profil",
         "subject": "Complétez votre profil",
-        "message": "Bonjour, votre profil est encore incomplet. Ajoutez votre photo et vos informations : un profil complet inspire confiance et obtient bien plus de réservations."
+        "message": "Bonjour, votre profil est encore incomplet. Ajoutez votre photo et vos informations pour le compléter."
       }
     }
   },
@@ -551,9 +551,6 @@
       "platforms": "Plate-formes",
       "roles": "Postes",
       "trust": "Confiance & sécurité",
-      "vehicles": "Véhicules",
-      "rides": "Trajets",
-      "requests": "Demandes",
       "ratingsReceived": "Avis reçus",
       "ratingsGiven": "Avis donnés",
       "suspension": "Suspension",
@@ -579,11 +576,6 @@
       "offline": "Hors ligne",
       "emailHidden": "Email masqué",
       "memberSince": "Membre depuis le {{date}}"
-    },
-    "roleSummary": {
-      "driverAndPassenger": "Conducteur et passager",
-      "driver": "Conducteur",
-      "passenger": "Passager"
     },
     "banner": {
       "teamUntil": "Suspendu par l'équipe jusqu'au {{date}}",
@@ -739,48 +731,6 @@
       },
       "until": "jusqu'au {{date}}"
     },
-    "vehicles": {
-      "vehicle": "Véhicule",
-      "typeYear": "Type et année",
-      "mileage": "Kilométrage",
-      "documents": "Documents",
-      "verification": "Vérification",
-      "empty": "Aucun véhicule enregistré",
-      "subtitle_one": "{{count}} véhicule",
-      "subtitle_other": "{{count}} véhicules",
-      "toVerify_one": "{{count}} à vérifier",
-      "toVerify_other": "{{count}} à vérifier"
-    },
-    "rides": {
-      "filters": {
-        "all": "Tout",
-        "driver": "Conducteur · {{count}}",
-        "passenger": "Passager · {{count}}"
-      },
-      "ride": "Trajet",
-      "departure": "Départ",
-      "role": "Rôle",
-      "status": "Statut",
-      "amount": "Montant",
-      "gain": "gain",
-      "paid": "payé",
-      "roles": {
-        "driver": "Conducteur",
-        "passenger": "Passager"
-      },
-      "note": "Montant : gain du conducteur ou prix payé par le passager, selon le rôle.",
-      "empty": "Aucun trajet, ni comme conducteur ni comme passager",
-      "emptyRole": "Aucun trajet de ce côté"
-    },
-    "requests": {
-      "ride": "Trajet",
-      "driver": "conducteur {{name}}",
-      "departure": "Départ",
-      "seats": "Places",
-      "status": "Statut",
-      "price": "Prix",
-      "empty": "Aucune demande"
-    },
     "accountHelp": {
       "intro": "Pour aider un membre qui n'arrive plus à accéder à son compte. Chaque action demande un motif et est inscrite dans l'historique du membre.",
       "reason": "Motif",
@@ -811,7 +761,7 @@
       },
       "changeCountry": {
         "title": "Changer le pays du compte",
-        "description": "Le compte appartient aujourd'hui à : {{country}}. Le pays décide de la devise des trajets publiés, du fournisseur de SMS et des langues proposées. Les trajets et réservations déjà créés gardent leur pays.",
+        "description": "Le compte appartient aujourd'hui à : {{country}}. Le pays décide du fournisseur de SMS et des langues proposées.",
         "action": "Changer le pays",
         "dialogTitle": "Changer le pays de {{name}}",
         "country": "Nouveau pays"

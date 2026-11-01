@@ -124,17 +124,17 @@
       "verifyEmail": {
         "label": "Verify your email address",
         "subject": "Verify your email address",
-        "message": "Hello, your email address is not verified yet. Confirm it from the app to keep booking and publishing rides."
+        "message": "Hello, your email address is not verified yet. Please confirm it."
       },
       "verifyPhone": {
         "label": "Verify your phone number",
         "subject": "Verify your phone number",
-        "message": "Hello, your phone number is not verified yet. Confirm it from the app: it is how other members reach you on the day of the ride."
+        "message": "Hello, your phone number is not verified yet. Please confirm it."
       },
       "completeProfile": {
         "label": "Complete your profile",
         "subject": "Complete your profile",
-        "message": "Hello, your profile is still incomplete. Add your photo and your details: a complete profile builds trust and gets many more bookings."
+        "message": "Hello, your profile is still incomplete. Add your photo and your details to complete it."
       }
     }
   },
@@ -551,9 +551,6 @@
       "platforms": "Platforms",
       "roles": "Roles",
       "trust": "Trust & safety",
-      "vehicles": "Vehicles",
-      "rides": "Rides",
-      "requests": "Requests",
       "ratingsReceived": "Reviews received",
       "ratingsGiven": "Reviews given",
       "suspension": "Suspension",
@@ -579,11 +576,6 @@
       "offline": "Offline",
       "emailHidden": "Email hidden",
       "memberSince": "Member since {{date}}"
-    },
-    "roleSummary": {
-      "driverAndPassenger": "Driver and passenger",
-      "driver": "Driver",
-      "passenger": "Passenger"
     },
     "banner": {
       "teamUntil": "Suspended by the team until {{date}}",
@@ -739,48 +731,6 @@
       },
       "until": "until {{date}}"
     },
-    "vehicles": {
-      "vehicle": "Vehicle",
-      "typeYear": "Type and year",
-      "mileage": "Mileage",
-      "documents": "Documents",
-      "verification": "Verification",
-      "empty": "No vehicle registered",
-      "subtitle_one": "{{count}} vehicle",
-      "subtitle_other": "{{count}} vehicles",
-      "toVerify_one": "{{count}} to verify",
-      "toVerify_other": "{{count}} to verify"
-    },
-    "rides": {
-      "filters": {
-        "all": "All",
-        "driver": "Driver · {{count}}",
-        "passenger": "Passenger · {{count}}"
-      },
-      "ride": "Ride",
-      "departure": "Departure",
-      "role": "Role",
-      "status": "Status",
-      "amount": "Amount",
-      "gain": "earned",
-      "paid": "paid",
-      "roles": {
-        "driver": "Driver",
-        "passenger": "Passenger"
-      },
-      "note": "Amount: the driver's earnings or the price paid by the passenger, depending on the role.",
-      "empty": "No ride, neither as driver nor as passenger",
-      "emptyRole": "No ride on this side"
-    },
-    "requests": {
-      "ride": "Ride",
-      "driver": "driver {{name}}",
-      "departure": "Departure",
-      "seats": "Seats",
-      "status": "Status",
-      "price": "Price",
-      "empty": "No request"
-    },
     "accountHelp": {
       "intro": "To help a member who can no longer get into their account. Every action asks for a reason and is recorded in the member's history.",
       "reason": "Reason",
@@ -811,7 +761,7 @@
       },
       "changeCountry": {
         "title": "Change the account's country",
-        "description": "The account currently belongs to: {{country}}. The country sets the currency of the rides published, the SMS provider and the languages offered. Rides and bookings already made keep their country.",
+        "description": "The account currently belongs to: {{country}}. The country sets the SMS provider and the languages offered.",
         "action": "Change country",
         "dialogTitle": "Change {{name}}'s country",
         "country": "New country"

@@ -87,7 +87,6 @@
   "date": "Date",
   "hour": "Heure",
   "addImage": "Ajouter une image",
-  "placesCount": "{{number}} Places",
   "save": "Enregistrer",
   "edit": "Modifier",
   "delete": "Supprimer",
@@ -109,8 +108,6 @@
   "book": "Reserver",
   "cancel": "Annuler",
   "confirm": "Confirmer",
-  "seatsMinimumNumberError": "Le nombre de sièges doit être d'au moins 1",
-  "seatsMaximumNumberError": "Le nombre de sièges ne doit pas dépasser {{count}}",
   "address": "Adresse",
   "step": "Etape",
   "stepOf": "Etape {{step}} sur {{total}}",
@@ -221,24 +218,6 @@
   "accepted": "Accepté",
   "close": "Fermer",
   "suppression": "Suppression",
-  "welcome": {
-    "step1": {
-      "title": "Inscription gratuite",
-      "description": "Conducteurs et passagers ne paient pas de frais d'inscription ni d'abonnement."
-    },
-    "step2": {
-      "title": "En tant que propriétaire de voiture",
-      "description": "Précisez où vous allez, où vous souhaitez prendre et déposer des passagers, et quand."
-    },
-    "step3": {
-      "title": "En tant que passager",
-      "description": "Entrez votre point de départ, votre destination, ainsi que la date à laquelle vous souhaitez voyager. Ensuite, l'application vous présente tous les trajets disponibles selon votre recherche particulière."
-    },
-    "step4": {
-      "title": "Une fois le trajet terminé",
-      "description": "Une fois le trajet terminé. Payez le chauffeur par mobile money ou en espèces. Ensuite, les covoitureurs peuvent se donner une note mutuellement."
-    }
-  },
   "noCameraAccess": "Pas d'accès à la caméra",
   "selectLanguage": "Selectionner une langue",
   "selectLanguageDescription": "Langue utilisée par l'application",
@@ -315,7 +294,6 @@
   "moreAction": "Plus d'actions pour {{value}}",
   "total": "Total",
   "welcomeToTheDashboard": "Bienvenu sur le tableau de bord de {{appName}}",
-  "appDescription": "{{appName}} est une appliction mobile de covoiturage qui consiste à partager sa voiture personnelle avec d’autres personnes afin d’effectuer un trajet en commun.",
   "name": "Nom",
   "pageNotFound": "Cette page est introuvable.",
   "backToHome": "Retourner à l'accueil",
