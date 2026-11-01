@@ -12,8 +12,8 @@ import type { BanReason, BanType, IBan } from '@/types/user.type';
 import { moveFileToRecycleBin } from '@/api/_core/cloudinary.api';
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
 import {
-  DEFAULT_BAN_DURATION_DAYS, DEFAULT_QUERY_LIMIT, DISABLE_TRIGGERS_CONTEXT, IS_LOCAL, IS_TEST,
-  SKIP_SIGN_UP_VERIFICATION, UNVERIFIED_PHONE_SIGNUP_RETENTION_HOURS, USE_MASTER_KEY,
+  DEFAULT_BAN_DURATION_DAYS, DEFAULT_QUERY_LIMIT, DISABLE_TRIGGERS_CONTEXT, HIGHEST_LEVEL_ROLES, IS_LOCAL,
+  IS_TEST, SKIP_SIGN_UP_VERIFICATION, UNVERIFIED_PHONE_SIGNUP_RETENTION_HOURS, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 import {
   ACCOUNT_BANNED_STATUS, ACCOUNT_NOTIFICATION_TYPE, ACCOUNT_UNBANNED_STATUS,
@@ -32,6 +32,7 @@ import { escapeText } from '@/utils/_core/utils';
 import { createNotification, removeRecipientFromNotifications } from './notification.service.cloud';
 import { alertOwners } from './ownerAlert.service.cloud';
 import { createUserModerationLog } from './userModerationLog.service.cloud';
+import { getUserIdsFromRoles } from './userRole.service.cloud';
 import { revokeAllUserSessionsService } from './userSession.service.cloud';
 import { sendAccountReactivatedEmail } from '../../emails/_core/user.email';
 import { createContactToCloud, sendEmailToUser, sendEmailVerification } from '../../utils/_core/email.utils.cloud';
@@ -446,6 +447,41 @@ export const liftExpiredBans = async (): Promise<void> => {
         });
       }
     }, USE_MASTER_KEY);
+};
+
+/**
+ * Refuses a back-office deletion that would cost the platform its way in: an admin erasing their own
+ * account from the list (one misplaced click ends their session and anonymises them), an account of
+ * a higher role by an admin who lacks it, or the last active owner, who nobody could replace.
+ * Checked for the whole batch before the first account is touched, so a refusal halfway never leaves
+ * the earlier accounts already deleted.
+ * @param actor the back-office user deleting
+ * @param users the accounts to delete
+ * @param locale language of the refusal message
+ */
+export const assertCanDeleteUsers = async (
+  actor: Parse.User,
+  users: Parse.User[],
+  locale: Locale = DEFAULT_LANGUAGE
+): Promise<void> => {
+  for (const user of users) {
+    if (user.id === actor.id) throw new Error(translate('error.cannotDeleteOwnAccount', locale));
+
+    await assertCanActOnUser(actor, user, locale);
+  }
+
+  const deletedIds = new Set(users.map((user) => user.id));
+  const ownerIds = await getUserIdsFromRoles([HIGHEST_LEVEL_ROLES[0]!]);
+
+  if (!ownerIds.some((ownerId) => deletedIds.has(ownerId))) return;
+
+  const remainingOwner = await new Parse.Query(Parse.User)
+    .containedIn('objectId', ownerIds.filter((ownerId) => !deletedIds.has(ownerId)))
+    .notEqualTo('deleted', true)
+    .select(['objectId'])
+    .first(USE_MASTER_KEY);
+
+  if (!remainingOwner) throw new Error(translate('error.cannotDeleteLastOwner', locale));
 };
 
 export const deleteUser = async (

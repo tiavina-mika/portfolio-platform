@@ -128,6 +128,14 @@ export const buildCLPForClass = (
     if (ownerFields.write) clp.writeUserFields = ownerFields.write;
   }
 
+  /*
+   * the server-wide `protectedFields` option holds the real entries, this key only has to exist:
+   * Parse Server swaps the cached CLP for the one written here until its next schema reload, and a
+   * query in that window on a class the option covers (`_User` at boot, a login while a role's
+   * rights are edited) reads `protectedFields['*']` off it and crashes when the key is missing
+   */
+  clp.protectedFields = {};
+
   return clp;
 };
 

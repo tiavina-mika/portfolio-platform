@@ -124,7 +124,9 @@ export const parseFunction =
 
         logger.error(
           ` ============== ${logName} ${request.triggerName} ${object?.id} ==============, ` +
-          message
+          message,
+          // the rethrown Error below gets a fresh stack pointing at this wrapper: keep the original one
+          { stack: (error as Error | undefined)?.stack }
         );
 
         /*
@@ -142,7 +144,7 @@ export const parseFunction =
           return Promise.reject(error);
         }
 
-        return Promise.reject(new Error(message));
+        return Promise.reject(new Error(message, { cause: error }));
       }
     };
 

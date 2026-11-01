@@ -98,13 +98,9 @@ const ProfileMfaDialog = ({
         : t('user:mfa.setupTitle')}
     >
       <Stack spacing={2}>
-        {/* what the step is asking for, stated before the field that answers it */}
-        {!isBackupCodesStep && (
-          <Typography variant="body2">
-            {isDisableStep
-              ? t('user:mfa.verifyDescription')
-              : t('user:mfa.setupDescription')}
-          </Typography>
+        {/* what the step is asking for, stated before the field that answers it — MfaSetupForm states its own */}
+        {isDisableStep && (
+          <Typography variant="body2">{t('user:mfa.verifyDescription')}</Typography>
         )}
         {isDisableStep && (
           <MfaVerifyForm

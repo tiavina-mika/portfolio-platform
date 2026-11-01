@@ -84,6 +84,13 @@ export const helmetContentSecurityPolicy = {
     ],
     
     objectSrc: ["'none'"],
+
+    /*
+     * helmet adds it by default: the browser then rewrites every asset URL to https. The local
+     * server only speaks http (the BO is opened on the LAN address), so the BO scripts would fail
+     * to load on any route served by the index.html fallback (/invite…) and the page stays blank.
+     */
+    upgradeInsecureRequests: IS_LOCAL ? null : [],
   },
 };
 

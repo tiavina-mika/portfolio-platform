@@ -145,6 +145,8 @@
     "actionBlockedDuringImpersonation": "Cette action n'est pas autorisée pendant une session support.",
     "pleaseLogin": "Vous devez vous connecter pour effectuer cette action",
     "cannotActOnHigherRole": "Vous ne pouvez pas agir sur le compte d’un propriétaire ou d’un super-administrateur.",
+    "cannotDeleteOwnAccount": "Vous ne pouvez pas supprimer votre propre compte depuis le back-office.",
+    "cannotDeleteLastOwner": "Le dernier propriétaire de la plateforme ne peut pas être supprimé.",
     "unauthorizedToDoThisAction": "Vous n'êtes pas autorisé à effectuer cette action",
     "unauthorized": "Non autorisé",
     "positiveNumber": "Nombre positif",

@@ -20,16 +20,11 @@ import {
  *
  * Until now the only way to tell a new row from a handled one was to stand on the "Nouveautés"
  * tab, which is also the tab that hides everything else — so an operator working from "Tous" was
- * working blind. A tint plus an accent down the leading edge says it without adding a column.
- *
- * The accent is an inset shadow rather than a border: the table collapses its borders, and a
- * `border-left` on a body cell there is drawn over by the neighbouring cell's own edge.
+ * working blind. A tint says it without adding a column; no vertical edge is drawn on the cells,
+ * so the columns stay visually borderless.
  */
 export const getUnseenRowStyles = (theme: Theme) => ({
   backgroundColor: getSoftTintedBackground(theme, theme.palette.primary.main),
-  '& > .MuiTableCell-body:first-of-type': {
-    boxShadow: `inset ${UNSEEN_ROW_ACCENT_WIDTH}px 0 0 ${theme.palette.primary.main}`,
-  },
 });
 
 /**

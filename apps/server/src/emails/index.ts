@@ -67,9 +67,16 @@ const renderAlert = (alert: string): string => `
 const renderButton = (buttonUrl: string, buttonText?: string): string => `
   <tr>
     <td style="padding-top:28px;">
-      <a class="em-button" href="${buttonUrl}" style="display:inline-block;background-color:${light.button};
-        color:#12211a;font:700 16px/1 ${FONT_FAMILY};padding:16px 28px;border-radius:12px;
-        text-decoration:none;min-height:48px;">${buttonText ?? ''}</a>
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="em-button" align="center" valign="middle" bgcolor="${light.button}"
+            style="background-color:${light.button};border-radius:12px;height:48px;">
+            <a href="${buttonUrl}" style="display:block;padding:14px 28px;color:#12211a;
+              font-family:${FONT_FAMILY};font-size:16px;font-weight:700;line-height:20px;
+              text-align:center;text-decoration:none;">${buttonText ?? ''}</a>
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>
 `;

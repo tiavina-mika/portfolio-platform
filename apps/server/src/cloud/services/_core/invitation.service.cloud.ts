@@ -190,15 +190,20 @@ export const ensureOwnerInvitationsExist = async (): Promise<void> => {
       OWNER_INVITATION_EXPIRY_DAYS
     );
 
-    // avoid sending a real email on every hot-reload/test run — same pattern as user.triggers.ts's email verification skip
-    if (IS_LOCAL || IS_TEST) {
-      logger.info(`[bootstrapAdmin] Owner invite link for "${email}": ${getServerUrl()}/invite?token=${invitation.get('token')}`);
+    const inviteLink = `${getServerUrl()}/invite?token=${invitation.get('token')}`;
+
+    /*
+     * tests never send it: every run starts from an empty database, so each one would mail the owners.
+     * A local server does send it — a hot reload does not resend, the pending invitation above stops it
+     */
+    if (IS_TEST) {
+      logger.info(`[bootstrapAdmin] Owner invite link for "${email}": ${inviteLink}`);
       continue;
     }
 
     const roleLabels = await getRoleLabels([HIGHEST_LEVEL_ROLES[0]!], DEFAULT_LANGUAGE);
 
-    await sendInvitationEmail({
+    const isSent = await sendInvitationEmail({
       email,
       inviterName: APP_NAME,
       token: invitation.get('token'),
@@ -206,6 +211,16 @@ export const ensureOwnerInvitationsExist = async (): Promise<void> => {
       roleLabel: roleLabels.join(', '),
     });
 
-    logger.info(`[bootstrapAdmin] Owner invitation sent to "${email}"`);
+    if (!isSent) {
+      logger.warn(`[bootstrapAdmin] Owner invitation e-mail to "${email}" failed`);
+    }
+    else {
+      logger.info(`[bootstrapAdmin] Owner invitation sent to "${email}"`);
+    }
+
+    // a local developer can still open the link without a working mailbox (no Brevo key, sandbox domain)
+    if (IS_LOCAL) {
+      logger.info(`[bootstrapAdmin] Owner invite link for "${email}": ${inviteLink}`);
+    }
   }
 };

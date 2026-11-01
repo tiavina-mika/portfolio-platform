@@ -43,6 +43,7 @@ import {
   deleteUserById, deleteUsersById, exportUsers, goToUser, loadUsers, sendMessageToUser,
   toggleUsersNotification,
 } from '@/redux/actions/_core/user.action';
+import { getAppCurrentUserSelector } from '@/redux/reducers/_core/app.reducer';
 import { getAuditLogCountSelector, getAuditLogLogsSelector } from '@/redux/reducers/_core/auditLog.reducer';
 import { getRoleCanManageStaffSelector, getRoleRolesSelector } from '@/redux/reducers/_core/role.reducer';
 import {
@@ -265,6 +266,7 @@ const Users = () => {
   const auditLogs = useSelector(getAuditLogLogsSelector);
   const auditLogCount = useSelector(getAuditLogCountSelector);
   const roles = useSelector(getRoleRolesSelector);
+  const currentUser = useSelector(getAppCurrentUserSelector);
   // the server lets an owner, a super administrator or the staff right invite an admin: the button follows
   const canManageStaff = useSelector(getRoleCanManageStaffSelector);
   // whether this visit already read the roles for the invite form — see handleOpenInviteDialog
@@ -448,7 +450,12 @@ const Users = () => {
         ),
         contact: <UserContacts user={user} />,
         profileCompleteness: <UserProfileCompletenessCell user={user} />,
-        roles: <RolesChip roles={user.roles || []} />,
+        // the column is right-aligned like its header: the chips' own flex row would hug the left edge
+        roles: (
+          <Stack sx={{ alignItems: 'flex-end' }}>
+            <RolesChip roles={user.roles || []} />
+          </Stack>
+        ),
         ...Object.fromEntries(
           getUserListColumns().map((column) => {
             const { Component } = column;
@@ -498,7 +505,7 @@ const Users = () => {
                 </IconButton>
               </Tooltip>
             )}
-            onDelete={canDelete
+            onDelete={canDelete && user.id !== currentUser?.id
               ? () => handleDelete(user)
               : undefined}
             onPreview={canPreview
@@ -526,6 +533,7 @@ const Users = () => {
     filteredHeadCells,
     isAdminTab,
     handleDelete,
+    currentUser?.id,
     handlePreview,
     t,
     canDelete,

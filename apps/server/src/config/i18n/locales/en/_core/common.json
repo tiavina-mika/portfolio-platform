@@ -138,6 +138,8 @@
     "unauthorizedToDoThisAction": "You are not authorized to perform this action",
     "pleaseLogin": "You need to login to perform this action",
     "cannotActOnHigherRole": "You cannot act on the account of an owner or a super administrator.",
+    "cannotDeleteOwnAccount": "You cannot delete your own account from the back-office.",
+    "cannotDeleteLastOwner": "The last owner of the platform cannot be deleted.",
     "notificationReadOnly": "Notifications can only be changed by the server.",
     "sessionNotFound": "Session not found.",
     "tooManyDeviceRegistrations": "Too many device registrations in a short time. Please try again in a few minutes.",

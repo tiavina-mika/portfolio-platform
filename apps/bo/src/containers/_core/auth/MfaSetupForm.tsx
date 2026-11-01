@@ -73,6 +73,7 @@ const MfaSetupForm = ({ formId }: Props) => {
 
   return (
     <Stack spacing={2}>
+      <Typography variant="body2">{t('user:mfa.setupDescription')}</Typography>
       <Box className="flexCenter">
         <QRCodeSVG size={MFA_QR_CODE_SIZE} value={otpauthUrl} />
       </Box>

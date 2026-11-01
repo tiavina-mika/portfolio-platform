@@ -145,6 +145,8 @@
     "actionBlockedDuringImpersonation": "Tsy azo atao ity hetsika ity mandritra ny session support.",
     "pleaseLogin": "Mila miditra ianao vao afaka manao izany",
     "cannotActOnHigherRole": "Tsy afaka manova ny kaontin’ny tompony na ny mpitantana ambony ianao.",
+    "cannotDeleteOwnAccount": "Tsy afaka mamafa ny kaontinao manokana avy amin’ny back-office ianao.",
+    "cannotDeleteLastOwner": "Tsy azo fafana ny tompon’ny sehatra farany.",
     "unauthorizedToDoThisAction": "Tsy manana alalana hanao izany ianao",
     "unauthorized": "Tsy nahazoana alalana",
     "positiveNumber": "Isa positif",

@@ -18,7 +18,8 @@ import { roleNamesSchema } from '@/validations/_core/role.validations';
 import { countBadgeObjects } from '../../services/_core/badgeCount.service.cloud';
 import { attachUserListCounters, attachUserRoles } from '../../services/_core/user-list.service.cloud';
 import {
-  banUser, destroyBinnedUsers, getUserDetailsById, liftUserBan, redactUserDetailsSecrets,
+  assertCanDeleteUsers, banUser, destroyBinnedUsers, getUserDetailsById, liftUserBan,
+  redactUserDetailsSecrets,
 } from '../../services/_core/user.service.cloud';
 import { getUserIdsFromRoles } from '../../services/_core/userRole.service.cloud';
 import { assertInAgentCountries } from '../../utils/_core/agent-scope.utils.cloud';
@@ -209,6 +210,8 @@ Parse.Cloud.define(
       throw new Error('user:errors.userNotFound');
     }
 
+    await assertCanDeleteUsers(request.user!, [user], request.user!.get('locale') ?? DEFAULT_LANGUAGE);
+
     user.set('deleted', true);
     const updatedUser = await user.save(null, USE_MASTER_KEY);
 
@@ -223,12 +226,20 @@ Parse.Cloud.define(
     const { ids } = (request as any).params;
     const users: Parse.User[] = [];
 
-    await scopeToAgentCountries(new Parse.Query(Parse.User)).containedIn('objectId', ids).each(async (user: Parse.User): Promise<void> => {
+    const usersToDelete = await scopeToAgentCountries(new Parse.Query(Parse.User))
+      .containedIn('objectId', ids)
+      .limit(ids.length)
+      .find(USE_MASTER_KEY);
+
+    // the whole selection is checked before the first account is touched
+    await assertCanDeleteUsers(request.user!, usersToDelete, request.user!.get('locale') ?? DEFAULT_LANGUAGE);
+
+    for (const user of usersToDelete) {
       user.set('deleted', true);
       const updatedUser = await user.save(null, USE_MASTER_KEY);
 
       users.push(updatedUser);
-    }, USE_MASTER_KEY);
+    }
 
     return users;
   }, ['delete'], collections.User),

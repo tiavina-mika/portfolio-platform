@@ -43,6 +43,18 @@ const MfaVerifyForm = ({
 
   const code = form.watch('code');
   const autoSubmittedCodeRef = useRef<string | undefined>(undefined);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  /*
+   * the native `autoFocus` runs at mount, when this lazy-loaded route can still be hidden by its
+   * Suspense boundary (a hidden element refuses focus) — focusing on the next frame happens once
+   * the field is visible
+   */
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => inputRef.current?.focus());
+
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   /*
    * one submit per distinct code value: a wrong code counts towards the 5 failed attempts that
@@ -69,17 +81,13 @@ const MfaVerifyForm = ({
       primaryButtonText={primaryButtonText ?? t('user:mfa.verify')}
     >
       <TextField
-        /*
-         * the MFA screen exists only to collect this code — focusing it on mount saves the extra
-         * tap and matches how authenticator apps hand the code over
-         */
-        // eslint-disable-next-line jsx-a11y/no-autofocus
-        autoFocus
+        // the MFA screen exists only to collect this code, so it is focused on mount (see the effect)
         fixedLabel
         fullWidth
         // lets a password manager fill the TOTP code straight into the field
         autoComplete="one-time-code"
         helperText={t('user:mfa.verifyHelperText')}
+        inputRef={inputRef}
         label={t('user:mfa.code')}
         name="code"
         placeholder="123456"
