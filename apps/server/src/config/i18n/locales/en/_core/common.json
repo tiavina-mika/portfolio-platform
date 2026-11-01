@@ -30,12 +30,8 @@
     "openTicket": "Open the ticket",
     "reasonRequired": "Reason is required",
     "emailNotFound": "Email not found",
-    "reportThresholdReachedSubject": "Multiple reports received",
-    "reportThresholdReachedMessage": "{{count}} unresolved reports have been recorded on {{targetType}} ({{targetId}}). Please review this case.",
     "preventiveSuspensionSubject": "Your account has been temporarily suspended",
     "preventiveSuspensionMessage": "Following multiple reports, your account has been suspended for {{days}} days. Our moderation team is reviewing your case.",
-    "reportResolvedSubject": "Your report has been processed",
-    "reportResolvedMessage": "Thank you for your report. Our moderation team has reviewed it and taken the appropriate action.",
     "welcomeSubject": "Welcome to Portfolio!",
     "welcomeMessage": "Hi {{fullName}}, your account is now verified. You're all set to search for a ride or offer one.",
     "accountReactivatedSubject": "Your account has been reactivated",
@@ -80,8 +76,6 @@
     },
     "invitationRolesFailedSubject": "Invited account created without a role",
     "invitationRolesFailedMessage": "{{targetEmail}} signed up from an invitation, but the invited roles could not be given. The account exists without any role: please add them from the user page.",
-    "reportSubmittedSubject": "We received your report",
-    "reportSubmittedMessage": "Thank you for your report. Our moderation team will review it shortly.",
     "newsletterUnsubscribeConfirmationSubject": "You have been unsubscribed",
     "newsletterUnsubscribeConfirmationMessage": "You have successfully unsubscribed from the Portfolio newsletter. You will no longer receive these emails.",
     "accountBannedSubject": "Your account has been banned",
@@ -165,11 +159,6 @@
     "pleaseLogin": "You need to login to perform this action",
     "cannotActOnHigherRole": "You cannot act on the account of an owner or a super administrator.",
     "notificationReadOnly": "Notifications can only be changed by the server.",
-    "reportAlreadySubmitted": "You have already reported this item recently.",
-    "tooManyReports": "Too many reports in a short time. Please try again later.",
-    "reportDetailsRequired": "Please provide details for your report.",
-    "reportNotOpen": "This report is already closed and can no longer be taken in charge.",
-    "reportTargetIsNotAUser": "Only a report filed against a user account can lead to a suspension.",
     "sessionNotFound": "Session not found.",
     "tooManyDeviceRegistrations": "Too many device registrations in a short time. Please try again in a few minutes.",
     "userNotFound": "User not found.",
@@ -238,9 +227,7 @@
     }
   },
   "ticket": {
-    "reopenedSystemMessage": "Request reopened",
-    "reportWithoutDetails": "Report sent without details.",
-    "reportClosedSystemMessage": "Our team has reviewed your report. Write to us here if you have a question."
+    "reopenedSystemMessage": "Request reopened"
   },
   "cms": {
     "codeAlreadyUsed": "This technical code is already used by \"{{- name}}\". Choose another one."
@@ -258,7 +245,6 @@
     "openInBackOffice": "Open in the back-office",
     "newTicketFromWeb": "New support request #{{- reference}} (website)",
     "newTicketFromApp": "New support request #{{- reference}} (app)",
-    "newReportTicket": "New report — request #{{- reference}}",
     "scheduledJobFailed": "Scheduled job {{- jobName}} failed",
     "scheduledJobFailedDetails": "Error: {{- kind}} — the detail is in the server logs",
     "dailySummaryTitle": "Yesterday on Portfolio ({{- date}})",

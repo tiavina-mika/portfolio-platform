@@ -18,7 +18,6 @@ import {
 } from '@/constants/_core/ui/ui.constants';
 import ContactDetailsCard from '@/containers/_core/contacts/ContactDetailsCard';
 import ContactObjectsCard from '@/containers/_core/contacts/ContactObjectsCard';
-import ContactReportCard from '@/containers/_core/contacts/ContactReportCard';
 import TicketPrioritySelect from '@/containers/_core/tickets/TicketPrioritySelect';
 import TicketStatusChip from '@/containers/_core/tickets/TicketStatusChip';
 import TicketStatusSelect from '@/containers/_core/tickets/TicketStatusSelect';
@@ -72,7 +71,7 @@ type Props = {
 
 /**
  * What stands beside the thread: the facts of the
- * ticket, the report it comes from if it came from one, what this person has already asked, and how
+ * ticket, what this person has already asked, and how
  * the ticket is being handled. The history is what tells an agent whether they are reading a first complaint or the
  * fourth chapter of one, which is the difference between answering and escalating. Who the person
  * is on the platform opens from their name in the thread header instead.
@@ -94,7 +93,6 @@ const ContactContextPanel = ({
       {/* what the ticket is comes first, then the object it points at, then what was asked before */}
       <ContactDetailsCard contact={contact} />
       <ContactObjectsCard contact={contact} />
-      {!loading && context?.report && <ContactReportCard report={context.report} />}
 
       <Card css={classes.card}>
         <Typography css={classes.title} variant="overline">

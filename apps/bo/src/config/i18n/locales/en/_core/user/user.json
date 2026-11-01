@@ -619,8 +619,6 @@
       "ratingsGiven": "Reviews given",
       "suspension": "Suspension",
       "bans": "Ban history",
-      "reportsAgainst": "Reports against the member",
-      "reportsMade": "Reports made by the member",
       "tickets": "Support tickets",
       "notifications": "Notifications",
       "history": "History",
@@ -732,18 +730,6 @@
       "emptyReceived": "No review received",
       "emptyGiven": "No review given",
       "subtitle": "{{rating}} / 5 · {{count}} reviews"
-    },
-    "reports": {
-      "reason": "Reason",
-      "reportedBy": "Reported by",
-      "against": "Against",
-      "age": "Age",
-      "status": "Status",
-      "anonymous": "Anonymous",
-      "emptyAgainst": "No report against this member",
-      "emptyMade": "No report made by this member",
-      "subtitlePending_one": "{{count}} pending",
-      "subtitlePending_other": "{{count}} pending"
     },
     "tickets": {
       "message": "Message",

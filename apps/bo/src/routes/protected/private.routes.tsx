@@ -10,7 +10,6 @@ import {
   aboutRoute, homeRoute, profileRoute, settingsRoute,
 } from '@/routes/protected/_core/private.routes';
 import { privateLayout } from '@/routes/protected/_core/privateLayout.routes';
-import reportRoutes, { reportsLayout } from '@/routes/protected/_core/report.routes';
 import roleRoutes, { rolesLayout } from '@/routes/protected/_core/role.routes';
 import userRoutes, { usersLayout } from '@/routes/protected/_core/users.routes';
 import projectRoutes, { projectsLayout } from '@/routes/protected/_domain/project.routes';
@@ -34,7 +33,6 @@ const privateRoutes = privateLayout.addChildren([
   aboutRoute,
   notificationsLayout.addChildren(notificationRoutes),
   broadcastRoute,
-  reportsLayout.addChildren(reportRoutes),
   rolesLayout.addChildren(roleRoutes),
   contactsLayout.addChildren(contactRoutes),
   categoriesLayout.addChildren(categoryRoutes),

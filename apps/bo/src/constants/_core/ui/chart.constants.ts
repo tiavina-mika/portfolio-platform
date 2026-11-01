@@ -13,10 +13,7 @@ export const DASHBOARD_SECTION_GAP = 20;
 export const DASHBOARD_SECTION_GAP_MOBILE = 14;
 export const DASHBOARD_SECTION_TITLE_GAP = 12;
 export const DASHBOARD_SECTION_TITLE_ICON_GAP = 8;
-export const DASHBOARD_SECTION_TITLE_ICON_SIZE = 18;
 export const DASHBOARD_CARDS_GAP = 16;
-// the alert cards stand side by side on a wide screen
-export const DASHBOARD_ALERTS_COLUMNS = 2;
 // an activity column is titled from above, closer to its card than the band heading is to the columns
 export const DASHBOARD_COLUMN_TITLE_GAP = 10;
 export const DASHBOARD_CARD_HEADER_GAP = 10;
@@ -59,7 +56,6 @@ export const DASHBOARD_NO_ACCESS_LINKS_MAX_WIDTH = 520;
 export const DASHBOARD_NO_ACCESS_LINK_MIN_HEIGHT = 56;
 export const DASHBOARD_NO_ACCESS_LINK_ICON_SIZE = 14;
 export const DASHBOARD_PARTIAL_NOTICE_PADDING_TOP = 12;
-export const DASHBOARD_ALERT_SKELETON_ROWS = 3;
 export const DASHBOARD_ACTIVITY_SKELETON_ROWS = 4;
 export const DASHBOARD_SKELETON_TITLE_WIDTH = 170;
 export const DASHBOARD_SKELETON_TITLE_HEIGHT = 14;
@@ -71,37 +67,4 @@ export const DASHBOARD_SKELETON_LINES_GAP = 7;
 export const DASHBOARD_SKELETON_LINE_HEIGHT = 12;
 export const DASHBOARD_SKELETON_META_HEIGHT = 10;
 export const DASHBOARD_SKELETON_TRAILING_WIDTH = 70;
-
-/*
- * THE CHARTS — every plot is drawn at one height so the cards of a view line up, with its y-axis in
- * a fixed gutter the legend under the plot is aligned to, and three horizontal grid lines faint
- * enough to stay behind the series.
- */
-export const CHART_HEIGHT = 220;
-export const CHART_LEGEND_GAP_X = 16;
-export const CHART_LEGEND_GAP_Y = 6;
-export const CHART_LEGEND_ITEM_GAP = 6;
-export const CHART_LEGEND_SWATCH_SIZE = 10;
-export const CHART_LEGEND_SWATCH_RADIUS = 2;
-export const DONUT_CHART_SIZE = 190;
-export const DONUT_CHART_INNER_RADIUS = '59%';
-export const DONUT_CHART_OUTER_RADIUS = '92%';
-export const DONUT_CHART_GAP = 28;
-export const DONUT_CHART_LEGEND_MIN_WIDTH = 180;
-export const DONUT_CHART_LEGEND_GAP = 10;
-export const HEATMAP_CELL_HEIGHT = 22;
-export const HEATMAP_CELL_RADIUS = 3;
-export const HEATMAP_GAP = 6;
-export const HEATMAP_DAY_LABEL_WIDTH = 46;
-// an empty slot keeps the recessed ground; the faintest filled one still has to read as filled
-export const HEATMAP_MIN_OPACITY = 0.18;
-export const BAR_LIST_ROW_GAP = 10;
-export const BAR_LIST_LABEL_WIDTH = 220;
-export const BAR_LIST_LABEL_WIDTH_MOBILE = 132;
-export const BAR_LIST_VALUE_WIDTH = 64;
-export const BAR_LIST_VALUE_WIDTH_MOBILE = 52;
-export const BAR_LIST_EXTRA_WIDTH = 104;
-export const BAR_LIST_EXTRA_WIDTH_MOBILE = 78;
-export const BAR_LIST_TRACK_HEIGHT = 22;
-export const BAR_LIST_TRACK_RADIUS = 3;
 

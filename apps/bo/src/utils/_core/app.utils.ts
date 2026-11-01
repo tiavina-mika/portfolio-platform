@@ -144,18 +144,6 @@ export const getAppMainImagesEditionInitialValues = async (app: IApp): Promise<I
 export const validateTabSearch = (search: string) => z.object({ tab: z.string().optional() }).parse(search);
 
 /**
- * The report queue's own URL shape: the tab strip, plus the thing the queue may be scoped to when
- * another screen linked here with a subject already in hand. It lives in the URL rather than in
- * the filter panel so the scoped queue can be reloaded, bookmarked and left again.
- * @param search the raw search params
- * @returns the parsed params
- */
-export const validateReportSearch = (search: string) => z.object({
-  tab: z.string().optional(),
-  targetId: z.string().optional(),
-}).parse(search);
-
-/**
  * The list a page must show once rows have been marked seen or unseen, without refetching it.
  *
  * Rebuilt rather than patched in place: the rows are the very objects held by the Redux store, so

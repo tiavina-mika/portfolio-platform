@@ -68,7 +68,7 @@ Le formulaire s'ouvre en plein écran (« Ajouter un nouveau poste »), en deux 
   - la **durée d'inactivité** avant déconnexion automatique (de 15 minutes à 8 heures) ;
   - les **pays** couverts (aucun pays choisi = tous) ;
   - les **droits par ressource** : pour chaque rubrique (utilisateurs, postes, articles, pages, projets,
-    catégories, contacts, signalements, notifications…), des cases lister, consulter, créer,
+    catégories, contacts, notifications…), des cases lister, consulter, créer,
     modifier, supprimer et supprimer définitivement, avec des profils prédéfinis et un récapitulatif.
 
 Une alerte prévient si on quitte le formulaire avec des modifications non enregistrées.
@@ -126,5 +126,5 @@ quand). L'aperçu d'un poste montre aussi son propre historique.
 - Une personne sans aucun poste est déconnectée dès qu'elle tente d'entrer.
 - Si des postes existaient déjà sous les anciens noms (Owner, Administrator, Manager), ils doivent être
   renommés OWNER, SUPER_ADMIN et MANAGER, sans quoi leurs titulaires perdent l'accès complet.
-- Certaines rubriques de la liste des droits (signalements…) viennent d'un autre produit et n'ont
+- Certaines rubriques de la liste des droits viennent d'un autre produit et n'ont
   pas de contenu sur le portfolio.

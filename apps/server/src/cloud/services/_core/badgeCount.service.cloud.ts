@@ -1,6 +1,5 @@
 import { collections, USE_MASTER_KEY } from '@/constants/_core/constants';
 import { COUNTRY_SCOPED_BULK_CLASSES } from '@/constants/_core/country-scope.constants';
-import { ReportStatusEnum } from '@/types/report.type';
 
 import { scopeToAgentCountries } from '../../utils/_core/parse.utils.cloud';
 
@@ -23,11 +22,9 @@ export const buildClassQuery = (className: string): Parse.Query => {
 /**
  * The query behind every back-office badge: what is still waiting in this collection's queue.
  *
- * Most classes track that with `seen: false`, but two answer the same question with a field of
- * their own — a report moves through a status workflow (`pending -> under_review ->
- * resolved/dismissed`) that makes a `seen` boolean redundant, and a support ticket tracks new
- * admin-facing activity through `unreadByAdmin`. Any other class can ask for a `status`-scoped
- * count instead of the default (a subset of the default queue, tracked as its own badge).
+ * Most classes track that with `seen: false`, but a support ticket answers the same question with a
+ * field of its own (`unreadByAdmin`, the new admin-facing activity). Any other class can ask for a
+ * `status`-scoped count instead of the default (a subset of the default queue, tracked as its own badge).
  *
  * Kept as one function rather than inlined in `getObjectsCount` because the bulk "mark as seen"
  * actions have to recompute the very same figure to hand back a badge value the client does not
@@ -36,7 +33,6 @@ export const buildClassQuery = (className: string): Parse.Query => {
 export const buildBadgeCountQuery = (className: string, status?: string): Parse.Query => {
   const query = buildClassQuery(className).equalTo('deleted', false);
 
-  if (className === collections.Report) return query.equalTo('status', ReportStatusEnum.PENDING);
   if (className === collections.Contact) return query.equalTo('unreadByAdmin', true);
   if (status) return query.equalTo('status', status);
 

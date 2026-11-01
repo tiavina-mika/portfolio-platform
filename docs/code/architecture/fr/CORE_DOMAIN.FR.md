@@ -17,13 +17,13 @@
 
 ## Pourquoi cette séparation
 
-`apps/server` et `apps/bo` sont le back-office générique de la plateforme 1lalana (comptes, rôles, CMS, notifications, tickets, signalements, journal d'audit, tableaux de bord) auquel s'ajoute le métier du portfolio. Séparer les deux permet de réutiliser ou de mettre à jour la partie générique sans toucher au portfolio, et garde le métier (`Project`) à un seul endroit.
+`apps/server` et `apps/bo` sont le back-office générique de la plateforme 1lalana (comptes, rôles, CMS, notifications, tickets, journal d'audit, tableaux de bord) auquel s'ajoute le métier du portfolio. Séparer les deux permet de réutiliser ou de mettre à jour la partie générique sans toucher au portfolio, et garde le métier (`Project`) à un seul endroit.
 
 ## Ce qui est core, ce qui est domain
 
 | Côté | Contenu |
 |---|---|
-| `_core/` | Le code qui fonctionne encore si `_domain/` est supprimé : authentification, MFA, utilisateurs, rôles et droits, CMS (article, page, section de page, catégorie, contact, newsletter), notifications, tickets, signalements, journal d'audit, tableaux de bord sous forme de registres |
+| `_core/` | Le code qui fonctionne encore si `_domain/` est supprimé : authentification, MFA, utilisateurs, rôles et droits, CMS (article, page, section de page, catégorie, contact, newsletter), notifications, tickets, journal d'audit, tableaux de bord sous forme de registres |
 | `_domain/` | Ce qui est propre au portfolio : l'entité `Project` et tout ce qui ne peut pas tourner sans elle |
 
 Aujourd'hui `_domain/` ne contient que `Project` : côté serveur `project.functions.ts` (`getProjects`, `getProject`, `getProjectForClient`), `project.triggers.ts`, services, utils, constantes et validations ; côté back-office les pages, containers, redux, service, types, validations et traductions des projets.
@@ -57,7 +57,7 @@ Quand `_core` doit afficher des données du domaine, il expose un registre (`reg
 | `registerDashboardKpiProvider(className, fn)` | `project-dashboard.service.cloud.ts` |
 | `registerGlobalSearchEntity(key, config)` | `project-search.service.cloud.ts` |
 
-D'autres registres existent et ne sont pas utilisés par le portfolio (cibles de signalement, canaux de notification, enrichissement de la liste d'utilisateurs, suppression de compte, export de données).
+D'autres registres existent et ne sont pas utilisés par le portfolio (canaux de notification, enrichissement de la liste d'utilisateurs, suppression de compte, export de données).
 
 Points de composition : `cloud/services/index.ts`, `cloud/functions/index.ts`, `cloud/triggers/index.ts`, `cloud/jobs/index.ts` (chacun importe les fichiers `_core` puis `_domain`) et `src/index.ts`.
 

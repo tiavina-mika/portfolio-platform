@@ -26,7 +26,7 @@ All emails go through Brevo transactional emails (see [Brevo](../../../services/
 | New article | `sendArticleToNewsletterEmails` | Job `sendArticleToNewsletterJob`, started when an article is saved | Active newsletter subscribers, with an unsubscribe link |
 | Free message and notifications | `sendEmailToUser`, `sendNotificationEmailToUsers` | `sendMessageToUser`, notification sends and broadcasts | Users chosen by an admin |
 | Account notices | `sendWelcomeEmail`, `sendAccountReactivatedEmail`, `sendNewDeviceLoginEmail`, `sendPasswordResetDelayedEmail` | User and login triggers and services | The user |
-| Staff alerts | `sendEmailToStaffInTheirOwnLocale` | Reports, failed jobs | The staff (and Slack when `SLACK_ALERTS_WEBHOOK_URL` is set) |
+| Staff alerts | `sendEmailToStaffInTheirOwnLocale` | Failed jobs | The staff (and Slack when `SLACK_ALERTS_WEBHOOK_URL` is set) |
 
 Verification texts are also sent by SMS through MMSDuck (`sendSmsVerification`, ticket and new-device SMS): in development and test they are only logged.
 

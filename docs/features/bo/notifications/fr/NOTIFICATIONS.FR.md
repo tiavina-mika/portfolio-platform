@@ -15,7 +15,7 @@
 Menu de gauche → groupe **Communauté** → **Notifications**. Adresse : `/notifications`.
 
 À ne pas confondre avec la **cloche** de la barre du haut, qui résume ce qui est nouveau dans le back-office
-(contacts, utilisateurs, signalements).
+(contacts, utilisateurs).
 
 ## À quoi sert cette page
 

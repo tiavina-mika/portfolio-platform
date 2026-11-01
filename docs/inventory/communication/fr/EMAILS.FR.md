@@ -26,7 +26,7 @@ Tous les e-mails passent par les e-mails transactionnels de Brevo (voir [Brevo](
 | Nouvel article | `sendArticleToNewsletterEmails` | Job `sendArticleToNewsletterJob`, lancé quand un article est enregistré | Les abonnés actifs de la newsletter, avec un lien de désinscription |
 | Message libre et notifications | `sendEmailToUser`, `sendNotificationEmailToUsers` | `sendMessageToUser`, envois et diffusions de notifications | Des utilisateurs choisis par un admin |
 | Avis de compte | `sendWelcomeEmail`, `sendAccountReactivatedEmail`, `sendNewDeviceLoginEmail`, `sendPasswordResetDelayedEmail` | Triggers et services d'utilisateur et de connexion | L'utilisateur |
-| Alertes à l'équipe | `sendEmailToStaffInTheirOwnLocale` | Signalements, jobs en échec | L'équipe (et Slack quand `SLACK_ALERTS_WEBHOOK_URL` est renseigné) |
+| Alertes à l'équipe | `sendEmailToStaffInTheirOwnLocale` | Jobs en échec | L'équipe (et Slack quand `SLACK_ALERTS_WEBHOOK_URL` est renseigné) |
 
 Les textes de vérification partent aussi par SMS via MMSDuck (`sendSmsVerification`, SMS de ticket et de nouvel appareil) : en développement et en test ils sont seulement journalisés.
 

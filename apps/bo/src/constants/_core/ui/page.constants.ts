@@ -37,17 +37,6 @@ export const PAGE_HEAD_ACTIONS_OFFSET = 14;
 // stacked under the title, the row only needs air between two blocks, not the title's own offset
 export const PAGE_HEAD_ACTIONS_MOBILE_OFFSET = 10;
 export const PAGE_HEAD_ACTION_ICON_SIZE = 15;
-/*
- * width the placeholder of a page-head action takes while its figure is still loading — wide
- * enough that the button does not jump sideways once the number lands next to its label
- */
-export const PAGE_HEAD_ACTION_SKELETON_WIDTH = 200;
-/*
- * the line of figures a detail page states under its title — what the record is worth, how long it
- * has been going on. They are read as one sentence, so the middle dot between two of them sits
- * closer to either side than the facts stand from one another
- */
-export const PAGE_HEAD_META_GAP = 10;
 
 /*
  * THE PAGE FOOTER — the line closing the content column, standing on the same rail the app bar
@@ -368,20 +357,6 @@ export const CARD_STAT_VALUE_LINE_HEIGHT = 1.1;
 // the placeholder stands in for the figure's own box, so the grid does not jump when data lands
 export const CARD_STAT_SKELETON_VALUE_HEIGHT = 32;
 
-/*
- * THE STATUS STAT CARD — the summary form of the card above, sized to stand five to a row over a
- * list rather than four to a row at the top of a page. It drops the icon slot: what the figure
- * counts is a state, and the state is already named by the tinted dot in front of its label. The
- * caption sits on the figure's own baseline instead of under it, so the card stays two lines tall
- * whatever it holds.
- */
-export const CARD_STATUS_STAT_PADDING_X = 14;
-export const CARD_STATUS_STAT_PADDING_Y = 12;
-export const CARD_STATUS_STAT_GAP = 6;
-export const CARD_STATUS_STAT_VALUE_GAP = 6;
-// the label is the one place a state's own tint is carried by text rather than by a dot alone
-export const CARD_STATUS_STAT_LABEL_WEIGHT = 500;
-
 // page placeholder drawn while a page's chunk or the dashboard guard is on its way
 export const PAGE_SKELETON_PRETITLE_WIDTH = 90;
 export const PAGE_SKELETON_PRETITLE_HEIGHT = 10;
@@ -453,11 +428,6 @@ export const STATUS_PAGE_TITLE_FONT_SIZE_MOBILE = 19;
 export const STATUS_PAGE_ACTION_ICON_SIZE = 15;
 export const STATUS_PAGE_ACTION_HEIGHT = 44;
 export const STATUS_PAGE_ACTION_HEIGHT_MOBILE = 48;
-
-// the photos joined to a message or a report: large enough to tell a meeting point at a glance
-export const IMAGE_ATTACHMENT_SIZE = 72;
-export const IMAGE_ATTACHMENT_GAP = 8;
-export const IMAGE_ATTACHMENT_RADIUS = 6;
 
 /*
  * THE DASHBOARD PLACEHOLDER — the content zone of the shell drawn before the guard has loaded the

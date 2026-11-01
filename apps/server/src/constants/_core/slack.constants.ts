@@ -10,7 +10,6 @@ export const SLACK_ALERT_LOCALE: Locale = 'fr';
 export const SLACK_ALERT_ICONS = {
   urgent: '🚨',
   document: '📄',
-  report: '⚠️',
   sms: '📵',
   security: '🔐',
   ticket: '💬',

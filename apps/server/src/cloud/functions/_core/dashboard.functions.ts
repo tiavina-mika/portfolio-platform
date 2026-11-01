@@ -1,5 +1,5 @@
 import {
-  getDashboardAlerts, getDashboardKpis, getDashboardRecentActivity,
+  getDashboardKpis, getDashboardRecentActivity,
 } from '../../services/_core/dashboard.service.cloud';
 import { fromBO } from '../../utils/_core/utils.cloud';
 
@@ -7,13 +7,6 @@ Parse.Cloud.define(
   'getDashboardKpis',
   fromBO(async (request: Parse.Cloud.FunctionRequest): Promise<Record<string, unknown>> => (
     getDashboardKpis(request.user!)
-  ))
-);
-
-Parse.Cloud.define(
-  'getDashboardAlerts',
-  fromBO(async (request: Parse.Cloud.FunctionRequest): Promise<Record<string, unknown>> => (
-    getDashboardAlerts(request.user!)
   ))
 );
 

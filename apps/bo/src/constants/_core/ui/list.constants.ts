@@ -231,13 +231,6 @@ export const ROW_ACTIONS_BUTTON_SIZE = 30;
  */
 export const TABLE_CELL_LINE_GAP = 3;
 export const TABLE_CELL_INLINE_GAP = 6;
-// a glyph joining two words inside a cell (the route arrow), sized under the text it sits between
-export const TABLE_CELL_GLYPH_SIZE = 12;
-/*
- * the warning a row carries about itself (an open report): one step larger than the inline glyph
- * above, since it has to be caught while scanning the column rather than read inside a phrase
- */
-export const TABLE_CELL_ALERT_GLYPH_SIZE = 15;
 // smaller than the list's own avatar: it stands inside a row, next to a name, not on its own line
 export const TABLE_CELL_AVATAR_SIZE = 28;
 export const TABLE_CELL_AVATAR_GAP = 8;
@@ -245,12 +238,6 @@ export const TABLE_CELL_AVATAR_GAP = 8;
 export const TABLE_CELL_AVATAR_FONT_SIZE = 12;
 export const TABLE_CELL_AVATAR_FONT_WEIGHT = 600;
 
-/*
- * how many lines of free text a row may spend on one cell before it is cut off. Two: enough for a
- * complaint's first sentence to be read from the list, and few enough that a page of rows keeps a
- * uniform height — the full text is one click away in the row's own file.
- */
-export const TABLE_CELL_TEXT_CLAMP_LINES = 2;
 export const TABLE_CELL_TEXT_MAX_WIDTH = 340;
 
 /*

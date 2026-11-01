@@ -16,7 +16,6 @@ import globalSearchReducer from '@/redux/reducers/_core/globalSearch.reducer';
 import impersonationReducer from '@/redux/reducers/_core/impersonation.reducer';
 import notificationReducer from '@/redux/reducers/_core/notification.reducer';
 import pageReducer from '@/redux/reducers/_core/page.reducer';
-import reportReducer from '@/redux/reducers/_core/report.reducer';
 import roleReducer from '@/redux/reducers/_core/role.reducer';
 import roleAuditLogReducer from '@/redux/reducers/_core/roleAuditLog.reducer';
 import settingsReducer from '@/redux/reducers/_core/settings.reducer';
@@ -52,7 +51,6 @@ const reducers = {
   page: pageReducer,
   project: projectReducer,
   notification: notificationReducer,
-  report: reportReducer,
   globalSearch: globalSearchReducer,
   impersonation: impersonationReducer,
 };

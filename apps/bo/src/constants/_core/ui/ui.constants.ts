@@ -97,11 +97,6 @@ export const DIALOG_FULLSCREEN_TOOLBAR_HEIGHT = 52;
  * than standing on a band of its own — it is closer to the rule above it than to the body below
  */
 export const DIALOG_SUB_HEADER_PADDING_TOP = 8;
-/*
- * a header that says more than a name stacks its lines tight: the pretitle, the subject and the
- * badges qualifying it are one block being read at once, not three facts spaced apart
- */
-export const DIALOG_TITLE_LINE_GAP = 6;
 // the destructive confirmation draws its glyph one step above body copy so it leads the sentence
 export const DIALOG_SEVERITY_ICON_SIZE = 20;
 /*

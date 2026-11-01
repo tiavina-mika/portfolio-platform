@@ -31,7 +31,7 @@ Un rôle porte des champs personnalisés :
 - `countries` : les pays auxquels le rôle est limité (le trigger `country-scope` restreint les requêtes en conséquence).
 - un délai d'inactivité du back-office personnalisé, borné entre 15 et 480 minutes.
 
-Entités pouvant recevoir des droits dans le formulaire du back-office : `_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Notification`, `Report`, `UserAuditLog` (`ENTITIES_WITH_RIGHTS_OPTIONS` dans `apps/bo/src/constants/_core/user.constants.ts`), plus les entités qu'un domaine enregistre avec `registerRightsEntities` (le domaine `Project` le fait dans `apps/bo/src/utils/_domain/project-role.utils.ts`).
+Entités pouvant recevoir des droits dans le formulaire du back-office : `_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Notification`, `UserAuditLog` (`ENTITIES_WITH_RIGHTS_OPTIONS` dans `apps/bo/src/constants/_core/user.constants.ts`), plus les entités qu'un domaine enregistre avec `registerRightsEntities` (le domaine `Project` le fait dans `apps/bo/src/utils/_domain/project-role.utils.ts`).
 
 ## Comment fonctionne une vérification
 

@@ -30,12 +30,8 @@
     "openTicket": "Ouvrir le ticket",
     "reasonRequired": "La raison est requise",
     "emailNotFound": "Email non trouvé",
-    "reportThresholdReachedSubject": "Plusieurs signalements reçus",
-    "reportThresholdReachedMessage": "{{count}} signalements non résolus ont été enregistrés sur {{targetType}} ({{targetId}}). Veuillez examiner ce dossier.",
     "preventiveSuspensionSubject": "Votre compte a été suspendu temporairement",
     "preventiveSuspensionMessage": "Suite à plusieurs signalements, votre compte a été suspendu pendant {{days}} jours. Notre équipe de modération examine votre dossier.",
-    "reportResolvedSubject": "Votre signalement a été traité",
-    "reportResolvedMessage": "Merci pour votre signalement. Notre équipe de modération l'a examiné et a pris les mesures appropriées.",
     "welcomeSubject": "Bienvenue sur Portfolio !",
     "welcomeMessage": "Bonjour {{fullName}}, votre compte est maintenant vérifié. Vous pouvez chercher un trajet ou en proposer un.",
     "accountReactivatedSubject": "Votre compte a été réactivé",
@@ -80,8 +76,6 @@
     },
     "invitationRolesFailedSubject": "Compte invité créé sans rôle",
     "invitationRolesFailedMessage": "{{targetEmail}} s'est inscrit depuis une invitation, mais les rôles prévus n'ont pas pu être attribués. Le compte existe sans aucun rôle : ajoutez-les depuis la fiche utilisateur.",
-    "reportSubmittedSubject": "Nous avons reçu votre signalement",
-    "reportSubmittedMessage": "Merci pour votre signalement. Notre équipe de modération va l'examiner sous peu.",
     "newsletterUnsubscribeConfirmationSubject": "Vous avez été désinscrit",
     "newsletterUnsubscribeConfirmationMessage": "Vous avez bien été désinscrit de la newsletter Portfolio. Vous ne recevrez plus ces emails.",
     "accountBannedSubject": "Votre compte a été suspendu",
@@ -160,11 +154,6 @@
     "fileSizeTooBig": "La taille du fichier doit être inférieure à {{size}}",
     "acceptedFileTypes": "Les types de fichiers acceptés sont {{fileTypes}}",
     "notificationReadOnly": "Seul le serveur peut modifier une notification.",
-    "reportAlreadySubmitted": "Vous avez déjà signalé cet élément récemment.",
-    "tooManyReports": "Trop de signalements en peu de temps. Réessayez plus tard.",
-    "reportDetailsRequired": "Veuillez préciser les détails de votre signalement.",
-    "reportNotOpen": "Ce signalement est déjà clos et ne peut plus être pris en charge.",
-    "reportTargetIsNotAUser": "Seul un signalement visant un compte utilisateur peut donner lieu à une suspension.",
     "sessionNotFound": "Session introuvable.",
     "tooManyDeviceRegistrations": "Trop d'enregistrements d'appareil en peu de temps. Réessayez dans quelques minutes.",
     "userNotFound": "Utilisateur introuvable.",
@@ -238,9 +227,7 @@
     }
   },
   "ticket": {
-    "reopenedSystemMessage": "Demande rouverte",
-    "reportWithoutDetails": "Signalement envoyé sans précision.",
-    "reportClosedSystemMessage": "Notre équipe a examiné votre signalement. Écrivez-nous ici si vous avez une question."
+    "reopenedSystemMessage": "Demande rouverte"
   },
   "cms": {
     "codeAlreadyUsed": "Ce code technique est déjà utilisé par « {{- name}} ». Choisissez-en un autre."
@@ -258,7 +245,6 @@
     "openInBackOffice": "Ouvrir dans le back-office",
     "newTicketFromWeb": "Nouvelle demande au support n° {{- reference}} (site web)",
     "newTicketFromApp": "Nouvelle demande au support n° {{- reference}} (application)",
-    "newReportTicket": "Nouveau signalement — demande n° {{- reference}}",
     "scheduledJobFailed": "Échec du job planifié {{- jobName}}",
     "scheduledJobFailedDetails": "Erreur : {{- kind}} — le détail est dans les logs du serveur",
     "dailySummaryTitle": "Hier sur Portfolio ({{- date}})",

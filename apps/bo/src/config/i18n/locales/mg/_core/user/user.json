@@ -619,8 +619,6 @@
       "ratingsGiven": "Hevitra nomena",
       "suspension": "Fampiatoana",
       "bans": "Tantaran'ny fandrarana",
-      "reportsAgainst": "Fitarainana momba ilay mpikambana",
-      "reportsMade": "Fitarainana nataon'ilay mpikambana",
       "tickets": "Tapakila amin'ny mpanampy",
       "notifications": "Fampandrenesana",
       "history": "Tantara",
@@ -732,18 +730,6 @@
       "emptyReceived": "Tsy misy hevitra voaray",
       "emptyGiven": "Tsy misy hevitra nomena",
       "subtitle": "{{rating}} / 5 · hevitra {{count}}"
-    },
-    "reports": {
-      "reason": "Antony",
-      "reportedBy": "Nataon'i",
-      "against": "Momba",
-      "age": "Faharetany",
-      "status": "Toe-javatra",
-      "anonymous": "Tsy fantatra anarana",
-      "emptyAgainst": "Tsy misy fitarainana momba ity mpikambana ity",
-      "emptyMade": "Tsy misy fitarainana nataon'ity mpikambana ity",
-      "subtitlePending_one": "{{count}} miandry",
-      "subtitlePending_other": "{{count}} miandry"
     },
     "tickets": {
       "message": "Hafatra",

@@ -25,7 +25,7 @@
 
 ## Overview
 
-Data lives in MongoDB and is read and written through Parse Server (`apps/server`). The collection names shared by the apps are in `libs/shared-constants/src/collection.constants.ts` (`Article`, `Newsletter`, `Page`, `Category`, `Project`, `Contact`, `App`); the server also has its own `collections` constant (`apps/server/src/constants/_core/constants.ts`) and the domain class names are in `DOMAIN_COLLECTIONS` (`libs/shared-domain-constants`), see [CORE_DOMAIN.md](CORE_DOMAIN.md). The generic back-office adds classes not detailed below (`Notification`, `Report`, `TicketMessage`, `UserAuditLog`, `RoleAuditLog`, `UserSession`, `Invitation`, `ContentVersion`, ...): see the inventory. A `Test` class also exists, used only by the test functions and jobs.
+Data lives in MongoDB and is read and written through Parse Server (`apps/server`). The collection names shared by the apps are in `libs/shared-constants/src/collection.constants.ts` (`Article`, `Newsletter`, `Page`, `Category`, `Project`, `Contact`, `App`); the server also has its own `collections` constant (`apps/server/src/constants/_core/constants.ts`) and the domain class names are in `DOMAIN_COLLECTIONS` (`libs/shared-domain-constants`), see [CORE_DOMAIN.md](CORE_DOMAIN.md). The generic back-office adds classes not detailed below (`Notification`, `TicketMessage`, `UserAuditLog`, `RoleAuditLog`, `UserSession`, `Invitation`, `ContentVersion`, ...): see the inventory. A `Test` class also exists, used only by the test functions and jobs.
 
 The fields below are the ones the code reads or writes (Cloud Code triggers and the `*Attributes` interfaces of `apps/bo`). Parse adds `objectId`, `createdAt`, `updatedAt` and `ACL` to every class.
 

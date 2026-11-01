@@ -31,7 +31,7 @@ A role carries custom fields:
 - `countries`: the countries the role is limited to (the `country-scope` trigger narrows queries accordingly).
 - a custom back-office inactivity timeout, bounded between 15 and 480 minutes.
 
-Entities that can receive rights in the back-office form: `_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Notification`, `Report`, `UserAuditLog` (`ENTITIES_WITH_RIGHTS_OPTIONS` in `apps/bo/src/constants/_core/user.constants.ts`), plus the entities a domain registers with `registerRightsEntities` (the `Project` domain does it in `apps/bo/src/utils/_domain/project-role.utils.ts`).
+Entities that can receive rights in the back-office form: `_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Notification`, `UserAuditLog` (`ENTITIES_WITH_RIGHTS_OPTIONS` in `apps/bo/src/constants/_core/user.constants.ts`), plus the entities a domain registers with `registerRightsEntities` (the `Project` domain does it in `apps/bo/src/utils/_domain/project-role.utils.ts`).
 
 ## How a check works
 

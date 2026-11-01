@@ -9,7 +9,6 @@ export const COUNTRY_SCOPED_CLASSES: string[] = [
   collections.Ride,
   collections.Request,
   collections.Contact,
-  collections.Report,
   collections.Rating,
   collections.Vehicle,
   collections.Article,

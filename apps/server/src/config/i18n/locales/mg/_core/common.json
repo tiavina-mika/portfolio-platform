@@ -30,12 +30,8 @@
     "openTicket": "Sokafy ny tapakila",
     "reasonRequired": "Tsy maintsy misy antony",
     "emailNotFound": "Mailaka tsy hita",
-    "reportThresholdReachedSubject": "Fitoriana maro voaray",
-    "reportThresholdReachedMessage": "Fitoriana {{count}} mbola tsy voavaha no voarakitra momba ny {{targetType}} ({{targetId}}). Azafady jereo io tantara io.",
     "preventiveSuspensionSubject": "Voahidy vonjimaika ny kaontinao",
     "preventiveSuspensionMessage": "Noho ny fitoriana maro, voahidy nandritra ny {{days}} andro ny kaontinao. Ny ekipan'ny fanaraha-maso miandry mandinika ny tantaranao.",
-    "reportResolvedSubject": "Voakarakara ny fitorianao",
-    "reportResolvedMessage": "Misaotra anao tamin'ny fitoriana. Nodinihin'ny ekipan'ny fanaraha-maso izy io ary nisy fepetra noraisina.",
     "welcomeSubject": "Tongasoa eto amin'ny Portfolio!",
     "welcomeMessage": "Manao ahoana {{fullName}}, voamarina ny kaontinao. Afaka mitady na manolotra dia ianao izao.",
     "accountReactivatedSubject": "Naverina ny kaontinao",
@@ -80,8 +76,6 @@
     },
     "invitationRolesFailedSubject": "Voaforona ny kaonty nasaina nefa tsy nahazo andraikitra",
     "invitationRolesFailedMessage": "Nisoratra anarana avy amin'ny fanasana i {{targetEmail}}, saingy tsy voapetraka ny andraikitra nokasaina. Misy ny kaonty fa tsy manana andraikitra: ampio avy amin'ny pejin'ny mpampiasa.",
-    "reportSubmittedSubject": "Noraisinay ny fitarainanao",
-    "reportSubmittedMessage": "Misaotra ny fitarainanao. Ho jerena tsy ho ela izany amin'ny ekipa mpiandraikitra.",
     "newsletterUnsubscribeConfirmationSubject": "Voafoana ny fanoratanao",
     "newsletterUnsubscribeConfirmationMessage": "Voafoana ny fanoratanao tamin'ny newsletter Portfolio. Tsy handray izany imailaka izany intsony ianao.",
     "accountBannedSubject": "Voahidy ny kaontinao",
@@ -160,11 +154,6 @@
     "fileSizeTooBig": "Ny haben'ny fichier dia tsy mihoatra ny {{size}}",
     "acceptedFileTypes": "Ny karazana fichier ekena dia {{fileTypes}}",
     "notificationReadOnly": "Ny mpizara ihany no afaka manova fampandrenesana.",
-    "reportAlreadySubmitted": "Efa notoritorinao ity zavatra ity vao haingana.",
-    "tooManyReports": "Be loatra ny tatitra nalefa tao anatin'ny fotoana fohy. Andramo indray any aoriana.",
-    "reportDetailsRequired": "Azafady ampidiro ny antsipirian'ny fitorianao.",
-    "reportNotOpen": "Efa nakatona ity fitoriana ity ka tsy azo raisina an-tanana intsony.",
-    "reportTargetIsNotAUser": "Ny fitoriana mikendry kaonty mpampiasa ihany no azo anavana fampiatoana.",
     "sessionNotFound": "Tsy hita ny session.",
     "tooManyDeviceRegistrations": "Be loatra ny fanoratana fitaovana tao anatin'ny fotoana fohy. Andramo indray afaka minitra vitsivitsy.",
     "userNotFound": "Tsy hita ny mpampiasa.",
@@ -238,9 +227,7 @@
     }
   },
   "ticket": {
-    "reopenedSystemMessage": "Nosokafana indray ny fangatahana",
-    "reportWithoutDetails": "Naterina ny fitarainana nefa tsy misy fanazavana.",
-    "reportClosedSystemMessage": "Nojerena ny ekipanay ny fitarainanao. Soraty eto aminay raha manana fanontaniana ianao."
+    "reopenedSystemMessage": "Nosokafana indray ny fangatahana"
   },
   "cms": {
     "codeAlreadyUsed": "Efa ampiasain'i « {{- name}} » io kaody teknika io. Misafidiana hafa."
@@ -258,7 +245,6 @@
     "openInBackOffice": "Sokafy ao amin'ny back-office",
     "newTicketFromWeb": "Fangatahana vaovao ho an'ny fanohanana laharana {{- reference}} (tranonkala)",
     "newTicketFromApp": "Fangatahana vaovao ho an'ny fanohanana laharana {{- reference}} (fampiharana)",
-    "newReportTicket": "Fitarainana vaovao — fangatahana laharana {{- reference}}",
     "scheduledJobFailed": "Tsy nahomby ny asa voalahatra {{- jobName}}",
     "scheduledJobFailedDetails": "Hadisoana: {{- kind}} — ao amin'ny logs an'ny serivera ny antsipiriany",
     "dailySummaryTitle": "Omaly tao amin'ny Portfolio ({{- date}})",

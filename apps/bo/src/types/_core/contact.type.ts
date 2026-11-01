@@ -1,4 +1,3 @@
-import type { ReportReason, ReportStatus } from '@/types/_core/report.type';
 import type {
   ITicketMessage, TicketPriority, TicketSource, TicketStatus,
 } from '@/types/_core/ticket-message.type';
@@ -93,18 +92,9 @@ export interface ITicketRequesterContext {
   reviewsCount: number;
 }
 
-/** The report behind a ticket a report on a ride opened — enough to read where it stands and open it */
-export interface ITicketReportContext {
-  id: string;
-  reason: ReportReason;
-  status: ReportStatus;
-}
-
 export interface ITicketContext {
   requester: ITicketRequesterContext | null;
   previousTickets: IContact[];
-  /** null on every ticket that was not opened by a report */
-  report?: ITicketReportContext | null;
 }
 
 /**

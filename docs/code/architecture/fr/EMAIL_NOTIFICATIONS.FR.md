@@ -26,7 +26,7 @@ Les emails sont des emails transactionnels envoyés par le serveur via [Brevo](h
 - `BREVO_API_KEY`, `WEBSITE_URL` et `ADMIN_EMAIL_SENDER` sont requis au démarrage (`validateEnv`). Les liens des emails pointent vers `WEBSITE_URL`.
 - Les SMS exigent `MMSDUCK_API_KEY` en `preProduction` et `production` ; en développement ils sont seulement journalisés.
 - Les textes sont traduits avec l'i18n du serveur, voir [I18N.FR.md](I18N.FR.md) ; la locale vient du paramètre de la fonction ou du contexte d'enregistrement, `fr` par défaut.
-- Une alerte pour l'équipe (signalements, jobs en échec) part par email vers l'équipe et vers Slack si `SLACK_ALERTS_WEBHOOK_URL` est défini.
+- Une alerte pour l'équipe (jobs en échec) part par email vers l'équipe et vers Slack si `SLACK_ALERTS_WEBHOOK_URL` est défini.
 
 ## Emails envoyés
 

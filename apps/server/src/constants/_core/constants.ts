@@ -3,15 +3,11 @@ import {
   LIVE_QUERY_SUBSCRIBABLE_CLASSES,
 } from '@shared/constants';
 
-import type { ReportReason, ReportStatus } from '@/types/report.type';
-
 import { EnvEnum } from '@/types/app.type';
-import { ReportReasonEnum, ReportStatusEnum } from '@/types/report.type';
 
 export {
   APP_NAME, DEFAULT_COUNTRY, DEFAULT_ROLES, HIGHEST_LEVEL_ROLES,
 };
-
 
 /*
  * ---------------------------------------------- //
@@ -280,7 +276,6 @@ export const collections = {
   Notification: 'Notification',
   User: '_User',
   Rating: 'Rating',
-  Report: 'Report',
   UserAuditLog: 'UserAuditLog',
   RoleAuditLog: 'RoleAuditLog',
   SessionAuditLog: 'SessionAuditLog',
@@ -321,102 +316,9 @@ export const IMPERSONATION_SESSION_TTL_MINUTES = 30;
  */
 export const IMPERSONATION_UI_RIGHT = 'impersonation';
 
-/**
- * Number of distinct members with an unresolved report on the same target before notifying admins.
- */
-export const REPORT_ADMIN_NOTIFICATION_THRESHOLD = 3;
-
-/**
- * Number of distinct members with an unresolved report on the same target before applying a
- * preventive suspension. Distinct authors, not reports: one member repeating the same report every
- * day must not be able to suspend someone alone.
- */
-export const REPORT_AUTO_SUSPENSION_THRESHOLD = 5;
-
-/**
- * Duration of the preventive suspension applied when REPORT_AUTO_SUSPENSION_THRESHOLD is reached.
- */
-export const REPORT_AUTO_SUSPENSION_DAYS = 7;
-
-/**
- * Window during which a user cannot report the same target twice.
- */
-export const REPORT_DUPLICATE_WINDOW_HOURS = 24;
-
-/**
- * Reports a member may file per window (all targets together). Generous for honest use, tight enough
- * to stop a script flooding the moderation queue.
- */
-export const REPORT_RATE_LIMIT_PER_USER = 10;
-/**
- * Most open reports read to count the distinct members behind a target's complaints. Far above the
- * suspension threshold, so reaching it means the threshold was crossed long ago.
- */
-export const UNRESOLVED_REPORTS_SCAN_LIMIT = 200;
-export const REPORT_RATE_LIMIT_WINDOW = '1 h';
-export const REPORT_RATE_LIMIT_PREFIX = 'ratelimit:createReport';
-
-/**
- * Report statuses that still owe someone a decision. Grouped here rather than redeclared next to
- * each query that needs them: the ride list, the review moderation screen and the report queue all
- * ask the same question of a report, and a list that drifted from the others would silently show a
- * different backlog than the one the operator is being told to work through.
- */
-export const OPEN_REPORT_STATUSES: ReportStatus[] = [
-  ReportStatusEnum.PENDING,
-  ReportStatusEnum.UNDER_REVIEW,
-];
-
 /** Back-office path of the report queue (`<server>/<path>`), linked from the staff alerts. */
-export const REPORT_BO_PATH = 'signalements';
 
-/**
- * Reasons that touch someone's physical safety or money rather than the quality of a piece of
- * content. They set the order the report queue opens in and drive the "handle first" counter, so
- * they are a single list here rather than a judgement made again at each call site.
- */
-export const URGENT_REPORT_REASONS: ReportReason[] = [
-  ReportReasonEnum.HARASSMENT,
-  ReportReasonEnum.DANGEROUS_DRIVING,
-  ReportReasonEnum.FRAUD,
-];
-
-/**
- * How many rows each list of the back-office dashboard carries. The dashboard is read at a glance,
- * not worked through: an alert card names the few latest items and links to the full queue, and the
- * recent activity columns stay short enough for the three of them to sit side by side.
- */
-export const DASHBOARD_ALERT_ROWS_LIMIT = 3;
 export const DASHBOARD_RECENT_ROWS_LIMIT = 4;
-
-/**
- * Duration of the suspension a back-office operator applies from a report file. Same length as the
- * automatic one so a target does not get a longer or shorter ban depending on whether a human or
- * the threshold rule reached the decision.
- */
-export const REPORT_MANUAL_SUSPENSION_DAYS = REPORT_AUTO_SUSPENSION_DAYS;
-
-/**
- * The reasons a review can actually be reported for. The mobile report dialog offers exactly
- * these on a review, so the back-office filter that narrows the moderation list by reason offers
- * the same ones — a panel listing the others would be filters that can never match a row.
- */
-export const RATING_REPORT_REASONS: ReportReason[] = [
-  ReportReasonEnum.FAKE_REVIEW,
-  ReportReasonEnum.INAPPROPRIATE_CONTENT,
-  ReportReasonEnum.SPAM,
-  ReportReasonEnum.HARASSMENT,
-  ReportReasonEnum.PERSONAL_DATA,
-  ReportReasonEnum.COERCED_REVIEW,
-  ReportReasonEnum.OTHER,
-];
-
-/**
- * Duration of the suspension an operator applies to the author of a review from the moderation
- * list. Same length as the one reached from a report file, so the person receiving it gets the
- * same block whichever screen the decision was made on.
- */
-export const RATING_AUTHOR_SUSPENSION_DAYS = REPORT_AUTO_SUSPENSION_DAYS;
 
 /**
  * Default duration of a temporary ban when no explicit duration is provided.

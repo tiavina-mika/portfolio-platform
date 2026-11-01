@@ -13,7 +13,6 @@ import PageHeader from '@/components/layouts/PageHeader';
 import { DASHBOARD_UPDATED_AT_FORMAT } from '@/constants/_core/dashboard.constants';
 import { DASHBOARD_SECTION_GAP, DASHBOARD_SECTION_GAP_MOBILE, DASHBOARD_PARTIAL_NOTICE_PADDING_TOP } from '@/constants/_core/ui/chart.constants';
 import { PAGE_HEAD_ACTION_ICON_SIZE } from '@/constants/_core/ui/page.constants';
-import AlertsSection from '@/containers/_core/dashboard/AlertsSection';
 import DashboardErrorCard from '@/containers/_core/dashboard/DashboardErrorCard';
 import DashboardNoAccess from '@/containers/_core/dashboard/DashboardNoAccess';
 import KpiSection from '@/containers/_core/dashboard/KpiSection';
@@ -21,7 +20,6 @@ import RecentSection from '@/containers/_core/dashboard/RecentSection';
 import { useDashboardNoAccessLinks } from '@/hooks/_core/useDashboardNoAccessLinks';
 import { loadDashboardStats } from '@/redux/actions/_core/dashboard.action';
 import {
-  getDashboardAlertsSelector,
   getDashboardHasErrorSelector,
   getDashboardKpisSelector,
   getDashboardLoadingSelector,
@@ -55,7 +53,6 @@ const Home = () => {
   const { t } = useTranslation();
 
   const kpis = useSelector(getDashboardKpisSelector);
-  const alerts = useSelector(getDashboardAlertsSelector);
   const recent = useSelector(getDashboardRecentSelector);
   const isFetching = useSelector(getDashboardLoadingSelector);
   const hasError = useSelector(getDashboardHasErrorSelector);
@@ -63,7 +60,7 @@ const Home = () => {
   const noAccessLinks = useDashboardNoAccessLinks();
 
   // how much the account sees is only known once the three parts are in
-  const coverage = kpis && alerts && recent ? getDashboardCoverage({ kpis, alerts, recent }) : null;
+  const coverage = kpis && recent ? getDashboardCoverage({ kpis, recent }) : null;
 
   /*
    * the figures are loaded by the route without holding the navigation, so the page can render a
@@ -109,8 +106,6 @@ const Home = () => {
       {!isFailed && coverage !== 'none' && (
         <div css={classes.sections}>
           <KpiSection kpis={kpis} loading={isPending(kpis)} />
-          <Divider />
-          <AlertsSection alerts={alerts} loading={isPending(alerts)} />
           <Divider />
           <RecentSection
             loading={isPending(recent)}

@@ -22,7 +22,6 @@ import './_core/role.functions';
 import './_core/user.functions';
 import './_core/utils.functions';
 import './_core/notification.functions';
-import './_core/report.functions';
 import './_core/admins.functions';
 import './_core/dashboard.functions';
 import './_core/stepUpVerification.functions';

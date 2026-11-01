@@ -40,9 +40,7 @@ lire voit un message avec des liens vers les pages qui lui sont ouvertes.
 De haut en bas :
 
 1. **Chiffres clés** : nombre d'utilisateurs (avec les nouveaux de la semaine) et nombre de **projets actifs**.
-2. **Alertes** : les **signalements en cours** les plus récents, avec un lien
-   « Voir tous… » vers la liste correspondante.
-3. **Activité récente** : les **nouveaux utilisateurs** et les **derniers projets**.
+2. **Activité récente** : les **nouveaux utilisateurs** et les **derniers projets**.
 
 Le bouton **Actualiser** relit les chiffres ; l'heure de la dernière mise à jour est indiquée à côté. En cas
 d'échec de chargement, une carte propose de réessayer.
@@ -52,11 +50,11 @@ d'échec de chargement, une carte propose de réessayer.
 Les entrées sont regroupées ; un groupe sans aucune entrée autorisée n'apparaît pas :
 
 - **Opérations** : **Tableau de bord**, **Projets**.
-- **Communauté** : **Utilisateurs**, **Contacts**, **Signalements**, **Notifications**, **Diffusion**.
+- **Communauté** : **Utilisateurs**, **Contacts**, **Notifications**, **Diffusion**.
 - **Contenu** : **Articles**, **Pages**, **Catégories**.
 - **Administration** : **Droits** (appelée « Postes » dans l'écran), **Paramètres**, **Divers**.
 
-Des pastilles de nombre signalent les éléments nouveaux (utilisateurs, contacts, signalements, notifications, etc.). Le bouton à trois barres réduit le menu à ses icônes ou le déploie. Sur téléphone, le menu
+Des pastilles de nombre signalent les éléments nouveaux (utilisateurs, contacts, notifications, etc.). Le bouton à trois barres réduit le menu à ses icônes ou le déploie. Sur téléphone, le menu
 occupe tout l'écran et se referme après un choix.
 
 ### La barre du haut
@@ -66,7 +64,7 @@ occupe tout l'écran et se referme après un choix.
 - Une **recherche globale** : à partir de deux lettres, elle cherche dans les articles, catégories, pages,
   contacts, utilisateurs et projets, et ouvre l'élément choisi.
 - Une **cloche de notifications** : elle résume ce qui est nouveau (messages de contact, nouveaux
-  utilisateurs, signalements) avec un lien vers chaque liste.
+  utilisateurs) avec un lien vers chaque liste.
 - Le **menu du profil** : **Mon profil**, **À propos** (nom de l'application, version, environnement) et
   **Déconnexion**.
 
@@ -88,7 +86,6 @@ occupe tout l'écran et se referme après un choix.
 
 ## Points d'attention / limites actuelles
 
-- La carte « signalements » vient d'un socle conçu pour une autre plateforme : sur un portfolio, elle reste à zéro ou vide.
 - La colonne des **derniers projets** n'apparaît pas pour l'instant : l'information n'est pas fournie par
   le serveur.
 - La recherche globale sur les projets n'a pas été vérifiée de bout en bout.

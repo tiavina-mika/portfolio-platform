@@ -209,11 +209,6 @@ export const ALWAYS_LOCKED_CLASSES: string[] = [
   collections.PenaltyLog,
   collections.ContentVersion,
   collections.Counter,
-  /*
-   * Reports are filed through the `createReport` Cloud Function (master key, rate-limited) and
-   * handled from the BO through role rights; the app never saves one directly.
-   */
-  collections.Report,
 ];
 
 /**

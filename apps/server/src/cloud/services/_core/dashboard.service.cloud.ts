@@ -1,10 +1,9 @@
 import dayjs from 'dayjs';
 
 import {
-  collections, DASHBOARD_ALERT_ROWS_LIMIT, DASHBOARD_RECENT_ROWS_LIMIT, OPEN_REPORT_STATUSES, USE_MASTER_KEY,
+  collections, DASHBOARD_RECENT_ROWS_LIMIT, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 
-import { attachReportListFields } from './report-list.service.cloud';
 import { getAllRoleUserIds, getRolesForUser } from './userRole.service.cloud';
 import { newAgentQuery } from '../../utils/_core/parse.utils.cloud';
 import { isHighestRole, rolesGrantRight } from '../../utils/_core/role.utils.cloud';
@@ -14,11 +13,9 @@ export interface IDashboardKpiContext {
 }
 
 export type DashboardKpis = Record<string, unknown>;
-export type DashboardAlerts = Record<string, unknown>;
 export type DashboardRecentActivity = Record<string, unknown>;
 
 type DashboardKpiProvider = (context: IDashboardKpiContext) => Promise<DashboardKpis>;
-type DashboardAlertsProvider = () => Promise<DashboardAlerts>;
 type DashboardRecentActivityProvider = () => Promise<DashboardRecentActivity>;
 
 /**
@@ -28,24 +25,16 @@ type DashboardRecentActivityProvider = () => Promise<DashboardRecentActivity>;
 type Registered<T> = { className: string; provider: T };
 
 const kpiProviders: Registered<DashboardKpiProvider>[] = [];
-const alertsProviders: Registered<DashboardAlertsProvider>[] = [];
 const recentActivityProviders: Registered<DashboardRecentActivityProvider>[] = [];
 
 /**
  * Lets each business domain (ride/request, or any other transaction-based domain)
- * contribute its own dashboard KPIs/alerts/recent activity, without this generic
+ * contribute its own dashboard KPIs/recent activity, without this generic
  * service knowing about domain-specific types (e.g. ride.type.ts).
  * @param className the collection the provider reads, whose `find` right gates it
  */
 export const registerDashboardKpiProvider = (className: string, provider: DashboardKpiProvider): void => {
   kpiProviders.push({ className, provider });
-};
-
-export const registerDashboardAlertsProvider = (
-  className: string,
-  provider: DashboardAlertsProvider
-): void => {
-  alertsProviders.push({ className, provider });
 };
 
 export const registerDashboardRecentActivityProvider = (
@@ -100,32 +89,7 @@ const getUserDashboardRecentActivity = async (): Promise<DashboardRecentActivity
   return { users: recentUsers.map(u => u.toJSON()) };
 };
 
-/*
- * reports still owed a decision, newest first. A report names its target by id only, so the rows
- * go through the same label resolution as the report queue — a bare id tells an operator nothing
- */
-const getReportDashboardAlerts = async (): Promise<DashboardAlerts> => {
-  const [reports, openReportsCount] = await Promise.all([
-    newAgentQuery(collections.Report)
-      .equalTo('deleted', false)
-      .containedIn('status', OPEN_REPORT_STATUSES)
-      .descending('createdAt')
-      .limit(DASHBOARD_ALERT_ROWS_LIMIT)
-      .select(['reason', 'status', 'targetType', 'targetId', 'createdAt'])
-      .find(USE_MASTER_KEY),
-    newAgentQuery(collections.Report)
-      .equalTo('deleted', false)
-      .containedIn('status', OPEN_REPORT_STATUSES)
-      .count(USE_MASTER_KEY),
-  ]);
-
-  const openReports = await attachReportListFields(reports);
-
-  return { openReports: openReports.map(r => r.toJSON()), openReportsCount };
-};
-
 registerDashboardKpiProvider(collections.User, getUserDashboardKpis);
-registerDashboardAlertsProvider(collections.Report, getReportDashboardAlerts);
 registerDashboardRecentActivityProvider(collections.User, getUserDashboardRecentActivity);
 
 const getKpiContext = (): IDashboardKpiContext => ({
@@ -135,10 +99,9 @@ const getKpiContext = (): IDashboardKpiContext => ({
 const merge = (results: Record<string, unknown>[]): Record<string, unknown> => Object.assign({}, ...results);
 
 /*
- * The dashboard is read as three calls — KPIs, alerts, recent activity — rather than one: each
- * band of the page is drawn as soon as its own part is in, instead of every band waiting for the
- * slowest part (the recent rows, with their joined driver/passenger, and the alert rows, which
- * resolve each report's target label in a second round-trip).
+ * The dashboard is read as two calls — KPIs and recent activity — rather than one: each band of
+ * the page is drawn as soon as its own part is in, instead of every band waiting for the slowest
+ * part (the recent rows, with their joined records).
  */
 
 /**
@@ -150,15 +113,6 @@ export const getDashboardKpis = async (user: Parse.User): Promise<DashboardKpis>
   const providers = await getAllowedProviders(kpiProviders, user);
 
   return merge(await Promise.all(providers.map(provider => provider(context))));
-};
-
-/**
- * the alert cards contributed by every registered provider the account may read
- */
-export const getDashboardAlerts = async (user: Parse.User): Promise<DashboardAlerts> => {
-  const providers = await getAllowedProviders(alertsProviders, user);
-
-  return merge(await Promise.all(providers.map(provider => provider())));
 };
 
 /**

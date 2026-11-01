@@ -1,4 +1,3 @@
-import type { IReport } from '@/types/_core/report.type';
 import type { IUser } from '@/types/_core/user.type';
 
 /*
@@ -17,18 +16,12 @@ export interface IDashboardKpis {
   newUsersThisWeek?: number;
 }
 
-export interface IDashboardAlerts {
-  openReports?: IReport[];
-  openReportsCount?: number;
-}
-
 export interface IDashboardRecent {
   users?: IUser[];
 }
 
 export interface IDashboardStats {
   kpis: IDashboardKpis;
-  alerts: IDashboardAlerts;
   recent: IDashboardRecent;
 }
 
@@ -45,7 +38,6 @@ export interface IDashboardState {
    * in — null until then
    */
   kpis: IDashboardKpis | null;
-  alerts: IDashboardAlerts | null;
   recent: IDashboardRecent | null;
   // true until all three parts of a load have landed, or one of them has failed
   loading: boolean;

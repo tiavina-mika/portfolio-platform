@@ -619,8 +619,6 @@
       "ratingsGiven": "Avis donnés",
       "suspension": "Suspension",
       "bans": "Historique des bannissements",
-      "reportsAgainst": "Signalements contre le membre",
-      "reportsMade": "Signalements faits par le membre",
       "tickets": "Tickets au support",
       "notifications": "Notifications",
       "history": "Historique",
@@ -732,18 +730,6 @@
       "emptyReceived": "Aucun avis reçu",
       "emptyGiven": "Aucun avis donné",
       "subtitle": "{{rating}} / 5 · {{count}} avis"
-    },
-    "reports": {
-      "reason": "Motif",
-      "reportedBy": "Signalé par",
-      "against": "Contre",
-      "age": "Ancienneté",
-      "status": "Statut",
-      "anonymous": "Anonyme",
-      "emptyAgainst": "Aucun signalement contre ce membre",
-      "emptyMade": "Aucun signalement fait par ce membre",
-      "subtitlePending_one": "{{count}} en attente",
-      "subtitlePending_other": "{{count}} en attente"
     },
     "tickets": {
       "message": "Message",

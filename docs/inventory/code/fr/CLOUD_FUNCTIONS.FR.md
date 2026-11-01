@@ -41,7 +41,6 @@ Les fichiers sont dans `apps/server/src/cloud/functions/_core/` sauf mention con
 | `page.functions.ts` | `getPages`, `getPage` |
 | `pageSection.functions.ts` | `getPageSections` |
 | `passwordResetDelay.functions.ts` | `cancelPasswordResetDelay` |
-| `report.functions.ts` | `createReport`, `hasReportedTarget`, `getReports`, `getReport`, `getReportSummary`, `getReportTargetHistory`, `startReportReview`, `dismissReports`, `suspendReportedUser`, `resolveReport` |
 | `role.functions.ts` | `hasRole`, `addRolesToUser`, `getRolesDelegation`, `removeRolesForUser`, `createRole`, `updateRole`, `getRoleAuditLogs`, `getHighestRoleAccounts` |
 | `stepUpVerification.functions.ts` | `requestStepUpVerification`, `verifyStepUpCode` |
 | `ticket-message.functions.ts` | `sendTicketMessage`, `getTicketMessages`, `updateTicketStatus`, `updateTicketPriority`, `assignTicket` |
@@ -67,7 +66,6 @@ Les fichiers sont dans `apps/server/src/cloud/triggers/_core/` sauf mention cont
 | `notification.triggers.ts` | `beforeSave`, `afterSave` `Notification` |
 | `page.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `Page` |
 | `pageSection.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `PageSection` |
-| `report.triggers.ts` | `beforeSave` `Report` |
 | `role.triggers.ts` | `beforeSave`, `afterSave`, `beforeDelete`, `afterDelete` `_Role` |
 | `ticket-message.triggers.ts` | `beforeSave`, `afterSave` `TicketMessage` |
 | `user.triggers.ts` | `beforeSave`, `afterSave`, `beforeDelete`, `afterDelete` `_User` |

@@ -9,7 +9,6 @@ import {
   CodeIcon,
   ColumnsIcon,
   DashboardIcon,
-  FlagIcon,
   FolderIcon,
   LayoutIcon,
   MegaphoneIcon,
@@ -82,14 +81,6 @@ export const useNavigationMenus = (): ISidebarMenu[] => {
           onClick: () => navigate(goToList('contacts')),
           icon: <MessageCircleIcon size={ICON_SIZE} />,
           className: COLLECTIONS.contact,
-          hasRightName: 'canFind',
-        },
-        {
-          id: PATH_NAMES.reports,
-          label: t('user:reports.reports'),
-          onClick: () => navigate(goToList('reports')),
-          icon: <FlagIcon size={ICON_SIZE} />,
-          className: COLLECTIONS.report,
           hasRightName: 'canFind',
         },
         {

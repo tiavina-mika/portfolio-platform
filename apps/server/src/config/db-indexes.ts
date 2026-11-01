@@ -187,25 +187,6 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
      */
     { spec: { isSuspendedUntil: 1 }, options: { sparse: true } },
   ],
-  // Report has no `seen` field — its queue is the `pending` status (see getObjectsCount)
-  [collections.Report]: [
-    { spec: { deleted: 1, status: 1 } },
-    // the back-office user page: the reports filed about one account, and the ones it filed
-    { spec: { targetType: 1, targetId: 1, _created_at: -1 } },
-    { spec: { _p_reportedBy: 1, _created_at: -1 } },
-    /*
-     * the reviews of one page the caller has already reported (getReviews, isReportedByMe): their
-     * reports, narrowed to one reporter and a set of target ids in a single grouped read
-     */
-    { spec: { _p_reportedBy: 1, targetType: 1, targetId: 1 } },
-    // the reports statistics: filings per bucket, and the oldest open reports
-    { spec: { status: 1, _created_at: 1 } },
-    { spec: { _created_at: 1 } },
-    // the reports statistics: handling time of the reports decided in a period
-    { spec: { resolvedAt: 1 }, options: { sparse: true } },
-    // the back-office list and the reports statistics, read one country at a time
-    { spec: { country: 1, status: 1, _created_at: -1 } },
-  ],
   [collections.Contact]: [
     // the ticket inbox counts admin-unread tickets rather than the generic `seen`
     { spec: { deleted: 1, unreadByAdmin: 1 } },

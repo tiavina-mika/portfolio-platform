@@ -1,7 +1,7 @@
 import { ComponentType } from 'react';
 
 import {
-  DASHBOARD_ALERT_FIELDS, DASHBOARD_KPI_FIELDS, DASHBOARD_RECENT_FIELDS,
+  DASHBOARD_KPI_FIELDS, DASHBOARD_RECENT_FIELDS,
 } from '@/constants/_core/dashboard.constants';
 import { IDashboardKpis, IDashboardRecent, IDashboardStats } from '@/types/_core/dashboard.type';
 
@@ -55,11 +55,10 @@ export type DashboardCoverage = 'full' | 'partial' | 'none';
  * How much of the dashboard the account sees, from the parts the server sent: every part of every
  * band (`full`), some of them (`partial`) or none (`none`) — in which case there is nothing to draw.
  */
-export const getDashboardCoverage = ({ kpis, alerts, recent }: IDashboardStats): DashboardCoverage => {
+export const getDashboardCoverage = ({ kpis, recent }: IDashboardStats): DashboardCoverage => {
   const parts = [
     ...[...DASHBOARD_KPI_FIELDS, ...getDashboardKpiCards().map((card) => card.field)]
       .map((field) => kpis[field]),
-    ...DASHBOARD_ALERT_FIELDS.map((field) => alerts[field]),
     ...[...DASHBOARD_RECENT_FIELDS, ...getDashboardRecentColumns().map((column) => column.field)]
       .map((field) => recent[field]),
   ];

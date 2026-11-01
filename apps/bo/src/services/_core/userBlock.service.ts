@@ -6,10 +6,8 @@ import { USER_AUDIT_TRAIL_LIMIT, USER_DETAIL_BLOCK_LIMIT, USER_TICKET_THREAD_LIM
 import { fetchTicketMessages } from '@/services/_core/contact.service';
 import { fetchEntityList } from '@/services/_core/crud.service';
 import { fetchNotifications } from '@/services/_core/notification.service';
-import { fetchReports } from '@/services/_core/report.service';
 import { IContact } from '@/types/_core/contact.type';
 import { INotification } from '@/types/_core/notification.type';
-import { IReport, ReportStatusEnum, ReportTargetTypeEnum } from '@/types/_core/report.type';
 import { ITicketMessage, TicketStatusEnum } from '@/types/_core/ticket-message.type';
 import { IUserBlockResult } from '@/types/_core/userBlock.type';
 
@@ -25,41 +23,10 @@ const LATEST_FIRST = {
   order: 'desc',
 } as const;
 
-// a report still waiting for a decision — what the summary raises as an alert
-const OPEN_REPORT_STATUSES = [ReportStatusEnum.PENDING, ReportStatusEnum.UNDER_REVIEW];
 // a ticket support still owes an answer on
 const OPEN_TICKET_STATUSES = [TicketStatusEnum.OPEN, TicketStatusEnum.IN_PROGRESS];
 
-export type UserReportsExtra = { openCount: number };
 export type UserTicketsExtra = { openCount: number };
-
-/**
- * The reports filed about the account, plus how many of them still wait for a decision — the figure
- * the summary raises, which the few rows shown could not be counted from.
- */
-export const fetchUserReportsAgainst = async (
-  userId: string
-): Promise<IUserBlockResult<IReport, UserReportsExtra>> => {
-  const scope = { targetType: ReportTargetTypeEnum.USER, targetId: userId };
-  const [latest, open] = await Promise.all([
-    fetchReports({ ...LATEST_FIRST, ...scope, limit: USER_DETAIL_BLOCK_LIMIT }),
-    fetchReports({
-      ...LATEST_FIRST, ...scope, statuses: OPEN_REPORT_STATUSES, limit: 1,
-    }),
-  ]);
-
-  return { items: latest.results, count: latest.count, extra: { openCount: open.count } };
-};
-
-export const fetchUserReportsMade = async (userId: string): Promise<IUserBlockResult<IReport>> => {
-  const { results, count } = await fetchReports({
-    ...LATEST_FIRST,
-    limit: USER_DETAIL_BLOCK_LIMIT,
-    reporterId: userId,
-  });
-
-  return { items: results, count };
-};
 
 /**
  * The support tickets the account opened, plus how many of them support still owes an answer on —

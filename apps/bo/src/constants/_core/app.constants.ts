@@ -197,14 +197,13 @@ export const COLLECTIONS = {
   user: '_User',
   notification: 'Notification',
   rating: 'Rating',
-  report: 'Report',
   ...DOMAIN_COLLECTIONS,
 };
 
 /*
  * how often the badges that cannot be pushed are refetched instead (see
  * LIVE_QUERY_SUBSCRIBABLE_CLASSES). Slow enough that an admin left on a screen all day costs a
- * handful of count queries an hour, quick enough that a new support ticket or report is noticed
+ * handful of count queries an hour, quick enough that a new support ticket is noticed
  * within the minute it takes someone to walk back to their desk.
  */
 export const NOTIFICATION_COUNT_POLL_INTERVAL_MS = 60_000;
@@ -226,7 +225,6 @@ export const NOTIFICATION_COUNT_DEBOUNCE_MS = 200;
 export const NOTIFICATION_COLLECTIONS = [
   COLLECTIONS.contact,
   COLLECTIONS.user,
-  COLLECTIONS.report,
 ];
 
 // the address the support team answers at — the about page offers it as a link

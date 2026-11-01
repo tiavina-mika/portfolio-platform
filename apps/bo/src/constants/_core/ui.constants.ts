@@ -78,17 +78,6 @@ export const PAGE_HEAD_ACTIONS_OFFSET = 14;
 // stacked under the title, the row only needs air between two blocks, not the title's own offset
 export const PAGE_HEAD_ACTIONS_MOBILE_OFFSET = 10;
 export const PAGE_HEAD_ACTION_ICON_SIZE = 15;
-/*
- * width the placeholder of a page-head action takes while its figure is still loading — wide
- * enough that the button does not jump sideways once the number lands next to its label
- */
-export const PAGE_HEAD_ACTION_SKELETON_WIDTH = 200;
-/*
- * the line of figures a detail page states under its title — what the record is worth, how long it
- * has been going on. They are read as one sentence, so the middle dot between two of them sits
- * closer to either side than the facts stand from one another
- */
-export const PAGE_HEAD_META_GAP = 10;
 
 /*
  * THE PAGE FOOTER — the line closing the content column, standing on the same rail the app bar
@@ -306,11 +295,6 @@ export const DIALOG_FULLSCREEN_TITLE_GAP = 2;
  * than standing on a band of its own — it is closer to the rule above it than to the body below
  */
 export const DIALOG_SUB_HEADER_PADDING_TOP = 8;
-/*
- * a header that says more than a name stacks its lines tight: the pretitle, the subject and the
- * badges qualifying it are one block being read at once, not three facts spaced apart
- */
-export const DIALOG_TITLE_LINE_GAP = 6;
 // the destructive confirmation draws its glyph one step above body copy so it leads the sentence
 export const DIALOG_SEVERITY_ICON_SIZE = 20;
 /*
@@ -788,20 +772,6 @@ export const CARD_STAT_SKELETON_VALUE_HEIGHT = 32;
 export const AUDIENCE_METER_HEIGHT = 6;
 export const AUDIENCE_METER_RADIUS = 3;
 
-/*
- * THE STATUS STAT CARD — the summary form of the card above, sized to stand five to a row over a
- * list rather than four to a row at the top of a page. It drops the icon slot: what the figure
- * counts is a state, and the state is already named by the tinted dot in front of its label. The
- * caption sits on the figure's own baseline instead of under it, so the card stays two lines tall
- * whatever it holds.
- */
-export const CARD_STATUS_STAT_PADDING_X = 14;
-export const CARD_STATUS_STAT_PADDING_Y = 12;
-export const CARD_STATUS_STAT_GAP = 6;
-export const CARD_STATUS_STAT_VALUE_GAP = 6;
-// the label is the one place a state's own tint is carried by text rather than by a dot alone
-export const CARD_STATUS_STAT_LABEL_WEIGHT = 500;
-
 export const KPI_GRID_GAP = 14;
 export const KPI_GRID_COLUMNS = 4;
 export const KPI_GRID_FOLDED_COLUMNS = 2;
@@ -816,10 +786,7 @@ export const DASHBOARD_SECTION_GAP = 20;
 export const DASHBOARD_SECTION_GAP_MOBILE = 14;
 export const DASHBOARD_SECTION_TITLE_GAP = 12;
 export const DASHBOARD_SECTION_TITLE_ICON_GAP = 8;
-export const DASHBOARD_SECTION_TITLE_ICON_SIZE = 18;
 export const DASHBOARD_CARDS_GAP = 16;
-// the alert cards stand side by side on a wide screen
-export const DASHBOARD_ALERTS_COLUMNS = 2;
 // an activity column is titled from above, closer to its card than the band heading is to the columns
 export const DASHBOARD_COLUMN_TITLE_GAP = 10;
 export const DASHBOARD_CARD_HEADER_GAP = 10;
@@ -853,7 +820,6 @@ export const DASHBOARD_EMPTY_PADDING_X = 20;
 export const DASHBOARD_ERROR_PADDING_Y = 20;
 export const DASHBOARD_ERROR_PADDING_X = 16;
 export const DASHBOARD_ERROR_GAP = 14;
-export const DASHBOARD_ALERT_SKELETON_ROWS = 3;
 export const DASHBOARD_ACTIVITY_SKELETON_ROWS = 4;
 export const DASHBOARD_SKELETON_TITLE_WIDTH = 170;
 export const DASHBOARD_SKELETON_TITLE_HEIGHT = 14;
@@ -1098,13 +1064,6 @@ export const ROW_ACTIONS_BUTTON_SIZE = 30;
  */
 export const TABLE_CELL_LINE_GAP = 3;
 export const TABLE_CELL_INLINE_GAP = 6;
-// a glyph joining two words inside a cell (the route arrow), sized under the text it sits between
-export const TABLE_CELL_GLYPH_SIZE = 12;
-/*
- * the warning a row carries about itself (an open report): one step larger than the inline glyph
- * above, since it has to be caught while scanning the column rather than read inside a phrase
- */
-export const TABLE_CELL_ALERT_GLYPH_SIZE = 15;
 // smaller than the list's own avatar: it stands inside a row, next to a name, not on its own line
 export const TABLE_CELL_AVATAR_SIZE = 28;
 export const TABLE_CELL_AVATAR_GAP = 8;
@@ -1134,12 +1093,6 @@ export const IDENTITY_CONTACT_OFFSET_Y = 7;
 export const IDENTITY_CONTACT_ICON_SIZE = 14;
 export const IDENTITY_CONTACT_ICON_GAP = 7;
 
-/*
- * how many lines of free text a row may spend on one cell before it is cut off. Two: enough for a
- * complaint's first sentence to be read from the list, and few enough that a page of rows keeps a
- * uniform height — the full text is one click away in the row's own file.
- */
-export const TABLE_CELL_TEXT_CLAMP_LINES = 2;
 export const TABLE_CELL_TEXT_MAX_WIDTH = 340;
 
 /*
@@ -1523,29 +1476,6 @@ export const UNAUTHORIZED_ACTIONS_GAP = 10;
 export const UNAUTHORIZED_ACTION_ICON_SIZE = 15;
 
 /*
- * THE REPORT FILE — the dialog one report is read and ruled on in. Its body is not a form of
- * labelled fields but a quoted block: what was reported, why, in the reporter's own words and
- * signed with their name, drawn on the recessed ground inside its own edge so the complaint reads
- * as the thing being judged rather than as the dialog's own copy.
- *
- * The other reports the same target has drawn repeat that block one step tighter and one step
- * quieter — they are context for the decision, not the case being decided.
- */
-export const REPORT_FILE_CARD_PADDING = 14;
-// chips standing side by side name one thing between them — the reason and what was done about it
-export const REPORT_FILE_CHIP_GAP = 6;
-export const REPORT_FILE_CARD_GAP = 10;
-export const REPORT_FILE_HISTORY_GAP = 8;
-export const REPORT_FILE_HISTORY_PADDING_Y = 10;
-export const REPORT_FILE_HISTORY_PADDING_X = 12;
-export const REPORT_FILE_HISTORY_LINE_GAP = 5;
-/*
- * the decision row: the two ways out of a report share the footer evenly, since neither is the
- * expected one — a report is closed by ruling on it, not by confirming a default
- */
-export const REPORT_FILE_ACTIONS_GAP = 8;
-
-/*
  * NOTIFICATION DELIVERY — a send's channels shown as one tinted slot per channel, each carrying a
  * corner mark for what happened on it. A slot rather than a chip per channel: three chips side by
  * side would be the widest column in the table for a fact that is read as a glance, and the glyph
@@ -1624,39 +1554,6 @@ export const NOTIFICATION_CARD_ROW_GAP = 10;
 /* the panel a failed cell opens, wide enough to explain the refusal before offering to retry it */
 export const NOTIFICATION_RETRY_POPOVER_WIDTH = 250;
 export const NOTIFICATION_RETRY_POPOVER_GAP = 8;
-
-/*
- * THE CHARTS — every plot is drawn at one height so the cards of a view line up, with its y-axis in
- * a fixed gutter the legend under the plot is aligned to, and three horizontal grid lines faint
- * enough to stay behind the series.
- */
-export const CHART_HEIGHT = 220;
-export const CHART_LEGEND_GAP_X = 16;
-export const CHART_LEGEND_GAP_Y = 6;
-export const CHART_LEGEND_ITEM_GAP = 6;
-export const CHART_LEGEND_SWATCH_SIZE = 10;
-export const CHART_LEGEND_SWATCH_RADIUS = 2;
-export const DONUT_CHART_SIZE = 190;
-export const DONUT_CHART_INNER_RADIUS = '59%';
-export const DONUT_CHART_OUTER_RADIUS = '92%';
-export const DONUT_CHART_GAP = 28;
-export const DONUT_CHART_LEGEND_MIN_WIDTH = 180;
-export const DONUT_CHART_LEGEND_GAP = 10;
-export const HEATMAP_CELL_HEIGHT = 22;
-export const HEATMAP_CELL_RADIUS = 3;
-export const HEATMAP_GAP = 6;
-export const HEATMAP_DAY_LABEL_WIDTH = 46;
-// an empty slot keeps the recessed ground; the faintest filled one still has to read as filled
-export const HEATMAP_MIN_OPACITY = 0.18;
-export const BAR_LIST_ROW_GAP = 10;
-export const BAR_LIST_LABEL_WIDTH = 220;
-export const BAR_LIST_LABEL_WIDTH_MOBILE = 132;
-export const BAR_LIST_VALUE_WIDTH = 64;
-export const BAR_LIST_VALUE_WIDTH_MOBILE = 52;
-export const BAR_LIST_EXTRA_WIDTH = 104;
-export const BAR_LIST_EXTRA_WIDTH_MOBILE = 78;
-export const BAR_LIST_TRACK_HEIGHT = 22;
-export const BAR_LIST_TRACK_RADIUS = 3;
 
 /*
  * THE FORM WORKBENCH — the layout a long editorial form is written in: the summary rail naming its

@@ -13,7 +13,7 @@
 ## Où trouver cette page
 
 Liste des **Utilisateurs** → clic sur une ligne, ou icône « œil » de la colonne Actions. On y arrive aussi
-depuis la recherche globale, une notification ou un signalement.
+depuis la recherche globale ou une notification.
 
 ## À quoi sert cette page
 
@@ -37,7 +37,7 @@ rangées en sections, avec un sommaire :
 - **Profil** : détails, contact, contact d'urgence (non modifiable depuis le back-office).
 - **Accès** : **sessions actives** (appareil, système, mode de connexion, dernière connexion), **aide au
   compte**, plate-formes utilisées, **postes** (seulement pour un compte créé dans le back-office).
-- **Modération** : suspension, historique des bannissements, signalements contre le membre et faits par lui.
+- **Modération** : suspension, historique des bannissements.
 - **Échanges** : tickets au support, notifications reçues.
 - **Historique** : consultations de la fiche et journaux d'audit du compte.
 
@@ -68,7 +68,7 @@ Section **Postes** : ajouter ou retirer un poste (voir [Droits et postes](../../
 ## Cas d'utilisation typiques
 
 1. **Donner l'accès au back-office** : fiche d'un compte de l'équipe → ajouter un poste.
-2. **Suspendre un compte** après un signalement, puis lever la suspension.
+2. **Suspendre un compte**, puis lever la suspension.
 3. **Aider quelqu'un qui n'accède plus à son compte** : section Aide au compte.
 4. **Couper un appareil perdu** : déconnecter ses sessions.
 5. **Reproduire un problème** : session « Se connecter en tant que ».

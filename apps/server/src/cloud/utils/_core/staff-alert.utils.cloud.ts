@@ -53,11 +53,10 @@ export const alertStaff = async (
   return failures;
 };
 
-// a report opened from a ride carries its `report`; the other tickets say where they were written
+// the ticket says where it was written
 const getNewTicketTitle = (ticket: Parse.Object): string => {
   const options = { reference: String(ticket.get('reference') ?? '') };
 
-  if (ticket.get('report')) return translate('slack.newReportTicket', SLACK_ALERT_LOCALE, options);
   if (ticket.get('source') === TicketSourceEnum.APP) {
     return translate('slack.newTicketFromApp', SLACK_ALERT_LOCALE, options);
   }
@@ -71,7 +70,7 @@ const getNewTicketTitle = (ticket: Parse.Object): string => {
  */
 export const alertSlackOfNewTicket = async (ticket: Parse.Object): Promise<void> => {
   await postSlackAlert(buildSlackAlertText({
-    icon: ticket.get('report') ? SLACK_ALERT_ICONS.report : SLACK_ALERT_ICONS.ticket,
+    icon: SLACK_ALERT_ICONS.ticket,
     title: getNewTicketTitle(ticket),
     link: buildBackOfficeLink(`${getServerUrl()}/${TICKET_BO_PATH}/${ticket.id}`),
   }));

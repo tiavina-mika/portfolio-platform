@@ -6,7 +6,6 @@ export const PATH_NAMES = {
   contacts: '/' + i18n.t('route:contacts'),
   notifications: '/' + i18n.t('route:notifications'),
   broadcast: '/' + i18n.t('route:broadcast'),
-  reports: '/' + i18n.t('route:reports'),
   ratings: '/' + i18n.t('route:ratings'),
   articles: '/' + i18n.t('route:articles'),
   pages: '/' + i18n.t('route:pages'),

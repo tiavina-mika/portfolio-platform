@@ -164,59 +164,6 @@ export const INBOX_REQUESTER_TRIGGER_UNDERLINE_OFFSET = 3;
 export const INBOX_REQUESTER_TRIGGER_UNDERLINE_OPACITY = 0.4;
 
 /*
- * THE REPORT FILE — the dialog one report is read and ruled on in. Its body is not a form of
- * labelled fields but a quoted block: what was reported, why, in the reporter's own words and
- * signed with their name, drawn on the recessed ground inside its own edge so the complaint reads
- * as the thing being judged rather than as the dialog's own copy.
- *
- * The other reports the same target has drawn repeat that block one step tighter and one step
- * quieter — they are context for the decision, not the case being decided.
- */
-export const REPORT_FILE_CARD_PADDING = 14;
-// chips standing side by side name one thing between them — the reason and what was done about it
-export const REPORT_FILE_CHIP_GAP = 6;
-export const REPORT_FILE_CARD_GAP = 10;
-export const REPORT_FILE_HISTORY_GAP = 8;
-export const REPORT_FILE_HISTORY_PADDING_Y = 10;
-export const REPORT_FILE_HISTORY_PADDING_X = 12;
-export const REPORT_FILE_HISTORY_LINE_GAP = 5;
-/*
- * the decision row: the two ways out of a report share the footer evenly, since neither is the
- * expected one — a report is closed by ruling on it, not by confirming a default
- */
-export const REPORT_FILE_ACTIONS_GAP = 8;
-
-/*
- * THE REPORT FILE AS A SIDE SHEET — the same file, read where the queue is, so that working through
- * it never leaves the list. It is a column rather than a dialog because the operator moves from one
- * report to the next, and the list they are working through has to stay in view behind it.
- *
- * The header carries the way through the queue (previous, position, next) at touch size: it is the
- * control used most, so it is the one that must not be missed on a tablet.
- */
-export const REPORT_FILE_DRAWER_WIDTH = 480;
-export const REPORT_FILE_DRAWER_PADDING_X = 18;
-export const REPORT_FILE_DRAWER_HEADER_PADDING_Y = 12;
-export const REPORT_FILE_DRAWER_HEADER_PADDING_RIGHT = 9;
-export const REPORT_FILE_DRAWER_BODY_PADDING_Y = 16;
-export const REPORT_FILE_DRAWER_SECTION_GAP = 18;
-export const REPORT_FILE_DRAWER_FOOTER_PADDING_Y = 14;
-export const REPORT_FILE_NAV_BUTTON_SIZE = 44;
-export const REPORT_FILE_NAV_ICON_SIZE = 16;
-
-/*
- * THE REPORT PAGE — the same file given a page of its own, for the cases the side sheet is too
- * narrow for: a long history, or a case being worked on for a while. The complaint and its history
- * take the wide column, what the decision turns on (the target and the ruling) the narrow one that
- * stays at a readable width whatever the screen.
- */
-export const REPORT_PAGE_SIDE_COLUMN_WIDTH = 400;
-export const REPORT_PAGE_GAP = 20;
-export const REPORT_PAGE_CARD_BODY_GAP = 12;
-export const REPORT_PAGE_RESOLUTION_ROWS = 5;
-export const REPORT_FILE_RESOLUTION_ROWS = 3;
-
-/*
  * NOTIFICATION DELIVERY — a send's channels shown as one tinted slot per channel, each carrying a
  * corner mark for what happened on it. A slot rather than a chip per channel: three chips side by
  * side would be the widest column in the table for a fact that is read as a glance, and the glyph

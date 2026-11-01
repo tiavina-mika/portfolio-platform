@@ -5,7 +5,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { MouseEvent, ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  FiBell, FiFlag, FiMessageCircle, FiUserPlus,
+  FiBell, FiMessageCircle, FiUserPlus,
 } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 
@@ -86,14 +86,6 @@ const NotificationCenter = () => {
        * top of its queue, and its header states how many there are
        */
       onClick: goToInbox,
-    },
-    {
-      icon: <FiFlag />,
-      // trust & safety — kept visually distinct (red) even without the full "urgent" digest
-      color: 'error',
-      key: COLLECTIONS.report, // collection name
-      label: t('user:reports.reports'),
-      onClick: () => navigate(goToList('reports', { tab: t('route:tabs.news') })),
     },
     {
       icon: <FiUserPlus />,

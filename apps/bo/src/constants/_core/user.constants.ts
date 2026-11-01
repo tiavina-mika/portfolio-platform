@@ -223,7 +223,6 @@ export const RIGHTS_PRESETS: Record<'none' | 'read' | 'manage' | 'all', (keyof I
 const rightsEntityGroups: Record<string, RightsGroup> = {
   _User: 'community',
   Contact: 'community',
-  Report: 'community',
   Notification: 'community',
   Article: 'content',
   Page: 'content',
@@ -264,10 +263,6 @@ export const ENTITIES_WITH_RIGHTS_OPTIONS: Omit<IRightsItem, 'rights'>[] = [
   {
     label: i18n.t('user:notifications.notifications'),
     className: 'Notification',
-  },
-  {
-    label: i18n.t('user:reports.reports'),
-    className: 'Report',
   },
   {
     label: i18n.t('user:auditLogs.auditLogs'),
