@@ -308,7 +308,6 @@ export const TEXT_TO_CHIPS_INPUT_MIN_WIDTH_TABLET = 140;
 export const TEXT_TO_CHIPS_INPUT_HEIGHT = TEXT_TO_CHIPS_CHIP_HEIGHT;
 export const TEXT_TO_CHIPS_INPUT_HEIGHT_TABLET = TEXT_TO_CHIPS_CHIP_HEIGHT_TABLET;
 export const TEXT_TO_CHIPS_INPUT_HEIGHT_TOUCH = 34;
-export const RATING_ICON_SIZE = 18;
 
 /*
  * THE TABS — one template carries every tab strip in the back-office, whatever it switches: the

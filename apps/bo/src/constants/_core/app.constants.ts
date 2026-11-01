@@ -196,7 +196,6 @@ export const COLLECTIONS = {
   role: '_Role',
   user: '_User',
   notification: 'Notification',
-  rating: 'Rating',
   ...DOMAIN_COLLECTIONS,
 };
 

@@ -27,12 +27,10 @@
   "notFound": "tsy-hita",
   "unauthorized": "tsy-mahazo-miditra",
   "administration": "fitantanana",
-  "factures": "faktiora",
   "categories": "sokajy",
   "miscellaneous": "hafa",
   "notifications": "fampahafantarana",
   "broadcast": "fandefasana",
-  "ratings": "hevitra",
   "website": {
     "articles": "lahatsoratra",
     "blog": "blogy"
@@ -44,12 +42,6 @@
     "pending": "mandeha",
     "failed": "tsy-nahomby",
     "users": "mpampiasa",
-    "rides": "dia",
-    "ratings": "hevitra",
-    "vehicles": "fiara",
-    "collections": "vola-voaray",
-    "driverNoShows": "tsy-fahatongavan-mpamily",
-    "contestedNoShows": "tsy-fahatongavana-notoherina"
-  },
-  "rides": "làlana"
+    "collections": "vola-voaray"
+  }
 }

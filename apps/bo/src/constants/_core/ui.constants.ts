@@ -519,7 +519,6 @@ export const TEXT_TO_CHIPS_INPUT_MIN_WIDTH_TABLET = 140;
 export const TEXT_TO_CHIPS_INPUT_HEIGHT = TEXT_TO_CHIPS_CHIP_HEIGHT;
 export const TEXT_TO_CHIPS_INPUT_HEIGHT_TABLET = TEXT_TO_CHIPS_CHIP_HEIGHT_TABLET;
 export const TEXT_TO_CHIPS_INPUT_HEIGHT_TOUCH = 34;
-export const RATING_ICON_SIZE = 18;
 /*
  * the drop area has two drawings, not one. Empty, it is a field like any other — a solid outline on
  * the card surface, standing on a block of its own rather than on the input row, so the prompt is

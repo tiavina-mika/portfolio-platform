@@ -6,7 +6,6 @@ export const PATH_NAMES = {
   contacts: '/' + i18n.t('route:contacts'),
   notifications: '/' + i18n.t('route:notifications'),
   broadcast: '/' + i18n.t('route:broadcast'),
-  ratings: '/' + i18n.t('route:ratings'),
   articles: '/' + i18n.t('route:articles'),
   pages: '/' + i18n.t('route:pages'),
   pageSections: '/' + i18n.t('route:pageSections'),
@@ -24,7 +23,6 @@ export const PATH_NAMES = {
   logout: '/' + i18n.t('route:logout'),
   notFound: '/' + i18n.t('route:notFound'),
   unauthorized: '/' + i18n.t('route:unauthorized'),
-  rides: '/' + i18n.t('route:rides'),
   projects: '/' + i18n.t('route:projects'),
   account: {
     root: '/' + i18n.t('route:account'),

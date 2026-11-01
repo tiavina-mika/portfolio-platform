@@ -84,12 +84,6 @@ export const DESIGN_TOKENS = {
   },
 } as const;
 
-/*
- * stars keep their own amber in both modes: they rate a thing rather than warn about it, so they
- * must not shift with the warning palette (whose `main` is reserved for alert surfaces)
- */
-export const RATING_COLOR = '#E0A800';
-
 // unitless, so every size in the scale keeps the same proportion between its glyphs and its leading
 export const BODY_LINE_HEIGHT = 1.4286;
 /*

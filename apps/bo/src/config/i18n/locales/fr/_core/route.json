@@ -27,12 +27,10 @@
   "notFound": "introuvable",
   "unauthorized": "acces-refuse",
   "administration": "administration",
-  "factures": "factures",
   "categories": "categories",
   "miscellaneous": "divers",
   "notifications": "notifications",
   "broadcast": "diffusion",
-  "ratings": "avis",
   "website": {
     "articles": "articles",
     "blog": "blog"
@@ -44,12 +42,6 @@
     "pending": "en-cours",
     "failed": "echec",
     "users": "utilisateurs",
-    "rides": "trajets",
-    "ratings": "avis",
-    "vehicles": "vehicules",
-    "collections": "encaissements",
-    "driverNoShows": "absences-conducteur",
-    "contestedNoShows": "absences-contestees"
-  },
-  "rides": "trajets"
+    "collections": "encaissements"
+  }
 }

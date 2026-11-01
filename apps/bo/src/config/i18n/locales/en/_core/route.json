@@ -31,7 +31,6 @@
   "miscellaneous": "miscellaneous",
   "notifications": "notifications",
   "broadcast": "broadcast",
-  "ratings": "ratings",
   "website": {
     "articles": "articles",
     "blog": "blog"
@@ -43,13 +42,6 @@
     "pending": "in-progress",
     "failed": "failed",
     "users": "users",
-    "rides": "rides",
-    "ratings": "ratings",
-    "vehicles": "vehicles",
-    "collections": "collections",
-    "driverNoShows": "driver-no-shows",
-    "contestedNoShows": "contested-no-shows"
-  },
-  "factures": "invoices",
-  "rides": "rides"
+    "collections": "collections"
+  }
 }
