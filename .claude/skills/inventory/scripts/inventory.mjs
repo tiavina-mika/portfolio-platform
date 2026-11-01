@@ -23,7 +23,7 @@ const SKIPPED_DIRS = new Set(['node_modules', '.next', 'dist', 'build', 'coverag
 // provided by the runtime or the tooling, not by a `.env` file
 const RUNTIME_VARS = new Set(['NODE_ENV', 'MODE', 'DEV', 'PROD', 'SSR', 'BASE_URL', 'CI', 'PWD', 'HOME', 'TIME', 'ANALYZE', 'VITE_APP_VERSION',
   // set by the host or by the build, or only used by tests and scripts: not part of a .env file
-  'K_SERVICE', 'TZ', 'E2E', 'E2E_ALLOWED_ORIGINS', 'REAL_SIGN_UP_VERIFICATION', 'BOOKINGS_CLOSED', 'VITE_APP_RELEASE', 'VITE_APP_BUILD_TIME']);
+  'K_SERVICE', 'TZ', 'E2E', 'E2E_ALLOWED_ORIGINS', 'REAL_SIGN_UP_VERIFICATION', 'VITE_APP_RELEASE', 'VITE_APP_BUILD_TIME']);
 
 const read = (file) => fs.readFileSync(file, 'utf8');
 const rel = (file) => path.relative(ROOT, file).split(path.sep).join('/');

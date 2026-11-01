@@ -70,9 +70,9 @@
 ## 3. Des noms de classes de covoiturage restent dans le core
 
 - **Gravité** : 🟡 Faible · **Type** : Bug · **Statut** : ⏳ à faire
-- **Concerné** : `apps/server/src/constants/_core/constants.ts` (`collections`), `security.constants.ts`, `country-scope.constants.ts`, `user.constants.ts`, `test.functions.ts` (`createRideMock`)
+- **Concerné** : `apps/server/src/constants/_core/constants.ts` (`collections`), `security.constants.ts`, `country-scope.constants.ts`, `user.constants.ts`
 
-**Ce qui peut arriver** — `Ride`, `Request`, `Vehicle`, `Rating`, `RideShare`, `SosAlert` sont encore nommés dans les listes de classes, donc la reconstruction des permissions de classe au démarrage peut créer des classes vides et verrouillées dans MongoDB, et la fonction de test `createRideMock` reste exposée.
+**Ce qui peut arriver** — `Ride`, `Request`, `Vehicle`, `Rating`, `RideShare`, `SosAlert` sont encore nommés dans les listes de classes, donc la reconstruction des permissions de classe au démarrage peut créer des classes vides et verrouillées dans MongoDB.
 
 **Pourquoi** — le core a été copié sans le domaine des trajets et ces noms n'ont pas été retirés.
 
@@ -80,7 +80,7 @@
 
 **Comment corriger**
 
-1. **(recommandé)** Retirer les noms des listes et supprimer `createRideMock` ; lancer le lint et le typecheck.
+1. **(recommandé)** Retirer les noms des listes ; lancer le lint et le typecheck.
    *Pourquoi* : plus petit changement, aucune donnée en jeu.
 2. Les garder et filtrer la reconstruction sur les classes présentes dans le schéma — cache le problème au lieu de le retirer.
 

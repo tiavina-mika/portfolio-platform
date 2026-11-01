@@ -447,7 +447,6 @@
     "showJobStatus": "Show job status",
     "createBatchTest": "Create batch test",
     "createArticle": "Create article",
-    "createRideMock": "Create ride mock with vehicle",
     "deleteBatchTest": "Delete batch test",
     "sendEmailVerification": "Send email verification",
     "sendArticleToNewsletter": "Send article to newsletter",

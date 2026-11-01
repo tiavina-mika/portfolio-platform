@@ -58,7 +58,7 @@ Required only in the deployed environments (`preProduction` and `production`); o
 | `SLACK_ALERTS_WEBHOOK_URL` | Optional: Slack incoming webhook of the staff alert channel; empty means nothing is posted |
 | `DOCS_FEATURES_PASSWORD`, `DOCS_BUSINESS_PASSWORD` | Optional, validated by `validateEnv()` but not in `.env.example`: passwords of the documentation sections served by the server; a section without one stays closed (404) |
 
-Also read by the code and set by the host or by tests only: `K_SERVICE` (Cloud Run marker), `TZ`, `E2E`, `E2E_ALLOWED_ORIGINS`, `REAL_SIGN_UP_VERIFICATION`, `BOOKINGS_CLOSED`.
+Also read by the code and set by the host or by tests only: `K_SERVICE` (Cloud Run marker), `TZ`, `E2E`, `E2E_ALLOWED_ORIGINS`, `REAL_SIGN_UP_VERIFICATION`.
 
 ### `apps/bo`
 

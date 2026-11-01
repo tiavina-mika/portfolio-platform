@@ -1,6 +1,5 @@
 /* eslint-disable @cspell/spellchecker */
 import { useNavigate, useRouterState } from '@tanstack/react-router';
-import Parse from 'parse';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -99,9 +98,6 @@ const Misc = () => {
   const handleCreateBatchTest = () => dispatch(createBatchTest(BATCH_TEST_COUNT));
   const handleDeleteBatchTest = () => dispatch(deleteBatchTest());
   const handleCreateArticle = () => dispatch(createOrUpdateArticle({ values: testArticle }));
-  const handleCreateRide = async () => {
-    await Parse.Cloud.run('createRideMock');
-  };
 
   const migrationsOptions: MiscOption[] = [
     {
@@ -118,12 +114,6 @@ const Misc = () => {
   ];
 
   const testsOptions: MiscOption[] = [
-    {
-      color: 'green',
-      label: t('misc.createRideMock'),
-      action: handleCreateRide,
-      withSeparator: true,
-    },
     {
       color: 'red',
       label: `${t('misc.createBatchTest')} (${BATCH_TEST_COUNT})`,

@@ -47,7 +47,7 @@ Files are in `apps/server/src/cloud/functions/_core/` unless noted.
 | `user.functions.ts` | `getUserProfile`, `deleteAccount`, `exportMyData`, `saveUserLanguage` |
 | `userSession.functions.ts` | `registerSession`, `getUserSessions`, `revokeSession`, `revokeOtherSessions`, `adminGetUserSessions`, `adminRevokeUserSession`, `adminRevokeAllUserSessions` |
 | `utils.functions.ts` | `getJobStatus`, `destroyObjects` |
-| `test.functions.ts` | `getTestEmailSendersOptions`, `createBatchTest`, `destroyBatchTest`, `sendArticleToNewsletterTest`, `sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest`, `sendInvitationTest`, `sendWelcomeEmailTest`, `sendVerificationCodeSmsTest`, `createRideMock` (test helpers, imported only in local development and tests) |
+| `test.functions.ts` | `getTestEmailSendersOptions`, `createBatchTest`, `destroyBatchTest`, `sendArticleToNewsletterTest`, `sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest`, `sendInvitationTest`, `sendWelcomeEmailTest`, `sendVerificationCodeSmsTest` (test helpers, imported only in local development and tests) |
 | `_domain/project.functions.ts` | `getProjects`, `getProject`, `getProjectForClient` |
 
 ## Triggers
@@ -91,6 +91,5 @@ Files are in `apps/server/src/cloud/jobs/_core/` (`_domain/` has no job). A job 
 
 ## Gotchas
 
-- The `_core` folders were ported from a carpooling platform and still carry some of its vocabulary, such as `createRideMock` in the test functions.
 - The first owner is not created by a trigger any more: at boot `ensureOwnerInvitationsExist` invites each `OWNERS_EMAILS` address with the `OWNER` role (see [roles and permissions](ROLES_AND_PERMISSIONS.md)).
 - Any new function, trigger or job file must be added to this page in the same change (`.claude/rules/inventory.md`); `node .claude/skills/inventory/scripts/inventory.mjs --list` prints every name.

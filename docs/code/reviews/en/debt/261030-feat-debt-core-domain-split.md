@@ -70,9 +70,9 @@
 ## 3. Carpooling class names remain in the core
 
 - **Severity**: 🟡 Low · **Type**: Bug · **Status**: ⏳ to do
-- **Concerned**: `apps/server/src/constants/_core/constants.ts` (`collections`), `security.constants.ts`, `country-scope.constants.ts`, `user.constants.ts`, `test.functions.ts` (`createRideMock`)
+- **Concerned**: `apps/server/src/constants/_core/constants.ts` (`collections`), `security.constants.ts`, `country-scope.constants.ts`, `user.constants.ts`
 
-**What can happen** — `Ride`, `Request`, `Vehicle`, `Rating`, `RideShare`, `SosAlert` are still named in the class lists, so the class-permission rebuild at boot may create empty locked classes in MongoDB, and the test function `createRideMock` is still exposed.
+**What can happen** — `Ride`, `Request`, `Vehicle`, `Rating`, `RideShare`, `SosAlert` are still named in the class lists, so the class-permission rebuild at boot may create empty locked classes in MongoDB.
 
 **Why** — the core was copied without the ride domain and these names were not removed.
 
@@ -80,7 +80,7 @@
 
 **How to fix**
 
-1. **(recommended)** Remove the names from the lists and delete `createRideMock`; run lint and the typecheck.
+1. **(recommended)** Remove the names from the lists; run lint and the typecheck.
    *Why*: smallest change, no data involved.
 2. Keep them and filter the rebuild on classes that exist in the schema — hides the problem instead of removing it.
 

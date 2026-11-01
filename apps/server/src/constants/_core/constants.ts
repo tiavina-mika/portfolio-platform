@@ -59,20 +59,6 @@ export const SKIP_SIGN_UP_VERIFICATION =
   IS_TEST && !IS_E2E && process.env.REAL_SIGN_UP_VERIFICATION !== 'true';
 
 /*
- * The one way to stop charging passengers without a redeployment.
- *
- * Under instant booking the debit is on the critical path of every single booking: there is no
- * longer a human step between the passenger paying and their seat being theirs, so a failure on
- * the money path is not an isolated bad click, it is every booking of the night. This closes the
- * booking tunnel at its entrance — the seats are never taken, nothing is debited, and the
- * passenger is told the ride cannot be booked right now.
- *
- * It is an operations lever, not a product option: no member ever sees it, no driver can set it,
- * and it is off by default. Set BOOKINGS_CLOSED=true on the server to pull it.
- */
-export const ARE_BOOKINGS_CLOSED = process.env.BOOKINGS_CLOSED === 'true';
-
-/*
  * ---------------------------------------------- //
  * ------------ Parse Server options ------------ //
  * ---------------------------------------------- //

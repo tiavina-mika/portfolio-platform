@@ -52,4 +52,3 @@ Le back-office a un système de notifications (classe `Notification`, pages de n
 - Seul un article nouvellement créé lance le job de newsletter : un article créé inactif n'est pas envoyé quand il est activé plus tard.
 - `resubscribeNewsletter` met `active: true` directement depuis un lien de désabonnement valide, même pour une adresse jamais confirmée.
 - `sendArticleToNewsletterTest` lance le job avec `articleId` alors que le job lit `id`.
-- Plusieurs fonctions de test parlent encore de covoiturage (`createRideMock`).

@@ -1,5 +1,3 @@
-/* eslint-disable @cspell/spellchecker */
-import dayjs from 'dayjs';
 
 import type { DBRights } from '@/types/app.type';
 
@@ -20,7 +18,7 @@ import {
 import { runJob } from '../../utils/_core/job.utils.cloud';
 import { assertHasBoRight } from '../../utils/_core/role.utils.cloud';
 import { sendSmsVerification } from '../../utils/_core/sms.utils.cloud';
-import { fromBO, parseFunction } from '../../utils/_core/utils.cloud';
+import { fromBO } from '../../utils/_core/utils.cloud';
 import { parseFunctionValidation } from '../../utils/_core/validation.utils.cloud';
 
 export const Test = Parse.Object.extend('Test');
@@ -185,95 +183,4 @@ Parse.Cloud.define(
     return isSent;
   }),
   parseFunctionValidation(sendVerificationCodeSmsTestSchema)
-);
-
-Parse.Cloud.define(
-  'createRideMock',
-  parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<Parse.Object> => {
-    const currentUser = request.user;
-    const vehicleData = {
-      brand: 'Toyota',
-      model: 'Camry',
-      type: 'sedan',
-      number: 'ABC123',
-      color: 'blue',
-      year: 2020,
-      seats: 7,
-      fuel: 'gasoline',
-      owner: currentUser,
-      test: true,
-    };
-
-    const vehicle = new Parse.Object('Vehicle');
-
-    Object.entries(vehicleData).forEach(([key, value]) => {
-      vehicle.set(key, value);
-    });
-
-    const updatedVehicle = await vehicle.save();
-
-    const rideDefaultValuesMock = {
-      departure: {
-        placeId: 'ChIJ6cdvsch98CEROe9UI2xLchQ',
-        name: 'Itaosy',
-        district: 'Antananarivo Renivohitra',
-        region: 'Analamanga',
-        country: 'Madagascar',
-        countryCode: 'MG',
-        city: 'Antananarivo',
-        location: {
-          latitude: -18.9379883,
-          longitude: 47.5435024,
-        },
-      },
-      destination: {
-        placeId: 'ChIJOzwRFBJ-8CER1tH4egmCsyc',
-        name: 'Bevalala',
-        district: 'Antananarivo',
-        region: 'Analamanga',
-        country: 'Madagascar',
-        countryCode: 'MG',
-        city: 'Antananarivo',
-        location: {
-          latitude: -18.9137356,
-          longitude: 47.5164956,
-        },
-      },
-      stops: [
-        {
-          address: {
-            name: 'Stop 1',
-          },
-          price: 1000,
-        },
-        {
-          address: {
-            name: 'Stop 2',
-          },
-          price: 1500,
-        },
-      ],
-      date: dayjs().add(2, 'day').hour(15).minute(0).second(0).toDate(),
-      distance: 20,
-      duration: 20,
-      platform: 'IOS',
-      seats: 4,
-      price: 2000,
-    };
-
-    const ride = new Parse.Object('Ride');
-
-    Object.entries(rideDefaultValuesMock).forEach(([key, value]) => {
-      ride.set(key, value);
-    });
-
-    ride.set('vehicle', updatedVehicle);
-
-    ride.set('driver', currentUser);
-    ride.set('test', true);
-
-    const updatedRide = await ride.save(null, { sessionToken: currentUser!.getSessionToken() });
-
-    return updatedRide;
-  })
 );

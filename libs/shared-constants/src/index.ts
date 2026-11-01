@@ -11,7 +11,6 @@ export * from './ticket.constants';
 export * from './user.constants';
 export * from './sms.constants';
 export * from './support.constants';
-export * from './trust.constants';
 export * from './moderation.constants';
 export * from './collection.constants';
 export * from './locale.constants';

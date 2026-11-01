@@ -470,7 +470,6 @@
     "cron": "Cron",
     "showJobStatus": "Afficher le statut des jobs",
     "createArticle": "Créer un article",
-    "createRideMock": "Créer un trajet fictif avec véhicule",
     "createBatchTest": "Créer des test en batch",
     "deleteBatchTest": "Supprimer des test en batch",
     "sendEmailVerification": "Envoyer un email de vérification",

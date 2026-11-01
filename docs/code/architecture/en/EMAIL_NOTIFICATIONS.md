@@ -52,4 +52,3 @@ The back-office has a notification system (`Notification` class, notification pa
 - Only a newly created article starts the newsletter job: an article created inactive is not sent when activated later.
 - `resubscribeNewsletter` sets `active: true` directly from a valid unsubscribe link, even for an address that never confirmed.
 - `sendArticleToNewsletterTest` starts the job with `articleId` while the job reads `id`.
-- Several test functions still mention carpooling (`createRideMock`).
