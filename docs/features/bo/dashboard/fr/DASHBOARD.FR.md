@@ -53,7 +53,6 @@ Les entrées sont regroupées ; un groupe sans aucune entrée autorisée n'appar
 
 - **Opérations** : **Tableau de bord**, **Projets**.
 - **Communauté** : **Utilisateurs**, **Contacts**, **Signalements**, **Notifications**, **Diffusion**.
-- **Analytique** : **Statistiques** (droit « statistiques »).
 - **Contenu** : **Articles**, **Pages**, **Catégories**.
 - **Administration** : **Droits** (appelée « Postes » dans l'écran), **Paramètres**, **Divers**.
 

@@ -105,7 +105,7 @@ Checklist when adding a new domain entity (e.g. `testimonial`) next to `project`
 6. `src/cloud/functions/_domain/testimonial.functions.ts` — Cloud Functions, wrapped in `fromBO()` / `parseFunction()`, imported in `cloud/functions/index.ts`
 7. `src/cloud/triggers/_domain/testimonial.triggers.ts` — beforeSave/afterSave if needed, imported in `cloud/triggers/index.ts`
 8. `src/cloud/jobs/_domain/testimonial.jobs.ts` — background work via `runJob()`, if applicable, imported in `cloud/jobs/index.ts`
-9. Register it in the core registries it should appear in (dashboard, global search, statistics) from a `cloud/services/_domain/*` file imported in `cloud/services/index.ts`
+9. Register it in the core registries it should appear in (dashboard, global search) from a `cloud/services/_domain/*` file imported in `cloud/services/index.ts`
 10. Add translation keys in `src/config/i18n/locales/{fr,en,mg}/_domain/` and merge them in `src/config/i18n/index.ts` (`pnpm check-i18n` must pass)
 11. Update `docs/inventory/README.md` (Cloud Code) — see `.claude/rules/inventory.md` at the root
 12. Wire everything (see `implementation-completeness.md` — no orphaned Cloud Functions/Jobs), and

@@ -146,7 +146,6 @@ const uiOptions: ISelectOption<UIRole>[] = [
   { value: UIRoleEnum.MIGRATIONS, label: i18n.t('common:misc.migrations') },
   { value: UIRoleEnum.CRON, label: i18n.t('common:misc.cron') },
   { value: UIRoleEnum.TESTS, label: i18n.t('common:misc.tests') },
-  { value: UIRoleEnum.STATISTICS, label: i18n.t('common:statistics') },
   { value: UIRoleEnum.IMPERSONATION, label: i18n.t('common:misc.impersonation') },
   { value: UIRoleEnum.BROADCAST, label: i18n.t('user:notifications.broadcast.broadcast') },
   { value: UIRoleEnum.STAFF, label: i18n.t('common:misc.staff') },

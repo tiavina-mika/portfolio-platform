@@ -18,9 +18,6 @@
   "create": "hamorona",
   "update": "hanova",
   "blocks": "blocs",
-  "statistics": "antontanisa",
-  "statisticsUsers": "mpampiasa",
-  "statisticsReports": "fitarainana",
   "account": "kaonty",
   "confirmCode": "kaody/hamarinina",
   "verifyAccount": "hamarinina",
@@ -55,10 +52,5 @@
     "driverNoShows": "tsy-fahatongavan-mpamily",
     "contestedNoShows": "tsy-fahatongavana-notoherina"
   },
-  "statisticsRides": "lalana",
-  "statisticsVehicles": "fiara",
-  "statisticsCancellations": "fanafoanana",
-  "rides": "làlana",
-  "requests": "fangatahana",
-  "vehicles": "fiara"
+  "rides": "làlana"
 }

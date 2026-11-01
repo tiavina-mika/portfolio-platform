@@ -12,12 +12,6 @@ import {
 import { privateLayout } from '@/routes/protected/_core/privateLayout.routes';
 import reportRoutes, { reportsLayout } from '@/routes/protected/_core/report.routes';
 import roleRoutes, { rolesLayout } from '@/routes/protected/_core/role.routes';
-import {
-  statisticsCancellationsRoute,
-  statisticsOverviewRoute,
-  statisticsReportsRoute,
-  statisticsUsersRoute,
-} from '@/routes/protected/_core/statistics.routes';
 import userRoutes, { usersLayout } from '@/routes/protected/_core/users.routes';
 import projectRoutes, { projectsLayout } from '@/routes/protected/_domain/project.routes';
 
@@ -30,10 +24,6 @@ const privateRoutes = privateLayout.addChildren([
   homeRoute,
   // use addChildren in the root because of type errors
   miscLayout.addChildren(miscRoutes),
-  statisticsOverviewRoute,
-  statisticsUsersRoute,
-  statisticsCancellationsRoute,
-  statisticsReportsRoute,
   articlesLayout.addChildren(articleRoutes),
   projectsLayout.addChildren(projectRoutes),
   pagesLayout.addChildren(pageRoutes),

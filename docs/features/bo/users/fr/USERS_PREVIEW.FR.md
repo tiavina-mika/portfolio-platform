@@ -78,6 +78,5 @@ Section **Postes** : ajouter ou retirer un poste (voir [Droits et postes](../../
 - Les postes ne se gèrent que pour les comptes créés dans le back-office, et pas pour soi-même.
 - Il n'y a pas de bouton de suppression dans la fiche : la suppression se fait depuis la liste.
 - La fiche est en lecture seule : on ne modifie ni le nom ni les coordonnées, seulement via l'aide au compte.
-- Le bouton « Lever la suspension » de la page Statistiques > Annulations ne fonctionne pas pour l'instant.
 - Une grande partie des sections (véhicules, trajets, avis, SMS de secours) vient d'une autre application et
   reste vide.

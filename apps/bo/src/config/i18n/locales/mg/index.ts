@@ -5,7 +5,6 @@ import common from './_core/common.json';
 import dashboard from './_core/dashboard.json';
 import project from './_core/entity.json';
 import route from './_core/route.json';
-import statistics from './_core/statistics.json';
 import userInbox from './_core/user/inbox.json';
 import userNotification from './_core/user/notification.json';
 import user from './_core/user/user.json';
@@ -26,7 +25,6 @@ export default {
   cms,
   dashboard: { ...dashboard, ...projectDashboard },
   route: { ...route, ...projectRoute, website: { ...route.website, ...projectRoute.website } },
-  statistics,
   user: {
     ...user, ...userInbox, ...userNotification,
   },

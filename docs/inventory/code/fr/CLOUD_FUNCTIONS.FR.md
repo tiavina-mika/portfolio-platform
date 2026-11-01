@@ -43,7 +43,6 @@ Les fichiers sont dans `apps/server/src/cloud/functions/_core/` sauf mention con
 | `passwordResetDelay.functions.ts` | `cancelPasswordResetDelay` |
 | `report.functions.ts` | `createReport`, `hasReportedTarget`, `getReports`, `getReport`, `getReportSummary`, `getReportTargetHistory`, `startReportReview`, `dismissReports`, `suspendReportedUser`, `resolveReport` |
 | `role.functions.ts` | `hasRole`, `addRolesToUser`, `getRolesDelegation`, `removeRolesForUser`, `createRole`, `updateRole`, `getRoleAuditLogs`, `getHighestRoleAccounts` |
-| `statistics.functions.ts` | `getOverviewStatistics` |
 | `stepUpVerification.functions.ts` | `requestStepUpVerification`, `verifyStepUpCode` |
 | `ticket-message.functions.ts` | `sendTicketMessage`, `getTicketMessages`, `updateTicketStatus`, `updateTicketPriority`, `assignTicket` |
 | `user.functions.ts` | `getUserProfile`, `deleteAccount`, `exportMyData`, `saveUserLanguage` |

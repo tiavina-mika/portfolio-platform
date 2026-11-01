@@ -1,5 +1,5 @@
 import {
-  collections, DEFAULT_ROLES, HIGHEST_LEVEL_ROLES, STAFF_UI_RIGHT, STATISTICS_UI_RIGHT,
+  collections, DEFAULT_ROLES, HIGHEST_LEVEL_ROLES, STAFF_UI_RIGHT,
 } from '@/constants/_core/constants';
 import { ALWAYS_LOCKED_CLASSES } from '@/constants/_core/security.constants';
 
@@ -73,12 +73,11 @@ export const DEFAULT_ROLE_RIGHTS: Record<string, typeof SUPPORT_VIEWER_DEFAULT_R
 
 /*
  * BO "ui" right strings, matched against apps/bo's UIRoleEnum by value (not a shared type — see
- * IMPERSONATION_UI_RIGHT for the same pattern) — grants SUPPORT_VIEWER the statistics dashboard
- * out of the box, fitting its observability purpose, and TEAM_LEAD the staff management it exists for
+ * IMPERSONATION_UI_RIGHT for the same pattern) — grants TEAM_LEAD the staff management it exists for
  */
 export const DEFAULT_ROLE_UI: Record<string, string[]> = {
-  [DEFAULT_ROLES[1]!]: [STATISTICS_UI_RIGHT],
-  [DEFAULT_ROLES[2]!]: [STATISTICS_UI_RIGHT, STAFF_UI_RIGHT],
+  [DEFAULT_ROLES[1]!]: [],
+  [DEFAULT_ROLES[2]!]: [STAFF_UI_RIGHT],
 };
 
 /*

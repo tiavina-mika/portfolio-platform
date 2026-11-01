@@ -130,7 +130,6 @@ export const IMAGES = {
   defaultLogo: '/images/logo.svg',
 };
 
-
 const DEFAULT_LIMIT = 20;
 
 export const PAGINATION: IDefaultPagination = {
@@ -181,17 +180,11 @@ export const WEBSITE_URL = {
   local: `http://${LOCAL_NETWORK_HOSTNAME}:${WEBSITE_PORT}`,
 };
 
-export const NOTIFICATIONS_COUNT = 10;
-
-export const SHOW_NOTIFICATIONS_APP_BAR = false;
-
 /*
  * port of the local server the BO talks to when it runs on localhost — 8090 is the dev one; the
  * E2E suite runs its own server on another port and passes it through VITE_LOCAL_SERVER_PORT
  */
 export const SERVER_PORT = Number(import.meta.env.VITE_LOCAL_SERVER_PORT) || 8090;
-export const FORCE_DEBUG = false; // show console.log for important data
-export const FORCE_DELETE_STORED_DATA = false; // force to delete local stored data
 
 export const DOWNLOAD_ALERTS_LIMIT = 8;
 

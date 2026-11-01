@@ -10,7 +10,7 @@ as a generic boilerplate: delete `_domain/` and the app should still build, minu
 
 > **`_core/`** — code that has to keep working if `_domain/` is deleted: auth, user accounts, CMS
 > (article/page/category/contact/newsletter), notification/ticket CRUD, admin/roles/security,
-> dashboards and statistics *as a registry*.
+> dashboards *as a registry*.
 >
 > **`_domain/`** — code specific to this app: `Project`, plus anything that cannot run without knowing about it.
 
@@ -28,7 +28,7 @@ _domain/  →  _core/     ✅ allowed (the domain reuses generic building blocks
 _core/    →  _domain/   ❌ never (would make _core undeletable)
 ```
 
-When a `_core/` feature (a dashboard, a global search bar, the statistics) needs to surface domain data,
+When a `_core/` feature (a dashboard, a global search bar) needs to surface domain data,
 `_core/` exposes a **registry** (`registerXxxProvider(fn)`) that `_domain/` calls at module load time — `_core/`
 never imports `_domain/`.
 

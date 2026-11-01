@@ -376,7 +376,6 @@
   "category": "Catégorie",
   "subject": "Objet",
   "noFound": "{{value}} introuvable",
-  "statistics": "Statistiques",
   "status": "Statut",
   "pageSections": "Sections de la page",
   "previewLayout": {
@@ -500,7 +499,6 @@
   },
   "sidebar": {
     "content": "Contenu",
-    "analytics": "Analytique",
     "operations": "Opérations",
     "community": "Communauté",
     "admin": "Administration"

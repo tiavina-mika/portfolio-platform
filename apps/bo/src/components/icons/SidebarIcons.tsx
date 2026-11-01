@@ -163,11 +163,6 @@ export const MegaphoneIcon = (props: SidebarIconProps) => (
   </Svg>
 );
 
-export const BarChartIcon = (props: SidebarIconProps) => (
-  <Svg {...props}>
-    <path d="M4 19V5M8 19v-8M12 19V9M16 19v-5M20 19v-9" />
-  </Svg>
-);
 
 export const CodeIcon = (props: SidebarIconProps) => (
   <Svg {...props}>

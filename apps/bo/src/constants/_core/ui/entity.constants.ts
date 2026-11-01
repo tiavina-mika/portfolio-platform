@@ -1,15 +1,6 @@
 import { FONT_SIZE_OVERLINE } from '@/constants/_core/ui/ui.constants';
 
-/*
- * PERSON ROW — a party to the record standing on their own row inside a detail block (the driver
- * of a ride, each of its passengers). The face is larger than the one a table cell carries: the
- * row is about that person rather than merely naming them, and it holds a second line of facts
- * under the name plus the way to their account at the far end
- */
-export const PERSON_ROW_AVATAR_SIZE = 42;
 export const PERSON_ROW_IDENTITY_GAP = 8;
-// the facts under the name are read as one sentence, so the middle dot sits close to either side
-export const PERSON_ROW_FACTS_GAP = 6;
 /*
  * the chip that opens the post picker stands at the end of the posts an account already holds, and
  * carries a single "+" — the glyph is set large enough to read as a control rather than as a label
@@ -259,122 +250,6 @@ export const PROFILE_BACKUP_CODE_PADDING_X = 12;
 export const PROFILE_BACKUP_CODE_LETTER_SPACING = 1;
 
 /*
- * THE VEHICLE PAPERS — the three markers a vehicle row carries for its registration, insurance and
- * technical inspection, and the panel one of them opens.
- *
- * Each marker is a two-or-three letter tile rather than a labelled chip: the cell states which of
- * the three papers is missing, and three full names side by side would be the widest column of the
- * list for a fact read at a glance. They sit tight together so the trio reads as one status, not
- * as three separate values.
- */
-export const VEHICLE_DOCUMENT_BADGE_HEIGHT = 20;
-export const VEHICLE_DOCUMENT_BADGE_MIN_WIDTH = 30;
-export const VEHICLE_DOCUMENT_BADGE_RADIUS = 5;
-export const VEHICLE_DOCUMENT_BADGE_FONT_SIZE = FONT_SIZE_OVERLINE;
-export const VEHICLE_DOCUMENT_BADGE_GAP = 4;
-// the tint a marker takes from its own status, faint enough for the letters to stay the loud part
-export const VEHICLE_DOCUMENT_BADGE_BORDER_OPACITY = 0.4;
-/*
- * the review panel: the paper on the left at the size a plate number can be read off it, the facts
- * and the two decisions on the right
- */
-/*
- * THE DOCUMENT REVIEW PANEL — one of a vehicle's papers opened for a decision. It is built as two
- * panes rather than as a stack: the moderator rules by comparing the dates written beside the scan
- * against the scan itself, and a layout that put one under the other would have them scrolling
- * between the two halves of a single comparison.
- *
- * The paper's pane is recessed and the facts stand on the dialog's own surface, so the picture
- * reads as the thing being examined and the column beside it as what is known about it.
- */
-export const VEHICLE_DOCUMENT_REVIEW_GAP = 12;
-export const VEHICLE_DOCUMENT_REVIEW_PANE_PADDING = 16;
-export const VEHICLE_DOCUMENT_REVIEW_PREVIEW_GAP = 10;
-export const VEHICLE_DOCUMENT_REVIEW_PREVIEW_HEIGHT = 240;
-export const VEHICLE_DOCUMENT_REVIEW_META_WIDTH = 248;
-export const VEHICLE_DOCUMENT_REVIEW_FIELDS_GAP = 9;
-export const VEHICLE_DOCUMENT_REVIEW_FIELD_GAP = 2;
-export const VEHICLE_DOCUMENT_REVIEW_ACTIONS_GAP = 6;
-/*
- * the empty frame is hatched rather than left flat: an empty grey rectangle where a scan should be
- * reads as a picture that failed to load, where the diagonal banding says there is nothing to load
- */
-export const VEHICLE_DOCUMENT_REVIEW_HATCH_BAND = 10;
-export const VEHICLE_DOCUMENT_REVIEW_EMPTY_GAP = 8;
-export const VEHICLE_DOCUMENT_REVIEW_EMPTY_ICON_SIZE = 34;
-export const VEHICLE_DOCUMENT_REVIEW_ACTION_ICON_SIZE = 15;
-// the state of each paper, carried on its own tab so the queue is read without opening all three
-export const VEHICLE_DOCUMENT_REVIEW_TAB_DOT_SIZE = 7;
-
-/*
- * THE DOCKED REVIEW PANEL — the same three-paper review as the dialog above, docked inside the
- * vehicle page's own "Vérification" section instead of a modal, with a thumbnail rail replacing
- * the tab strip and a zoom control replacing rotate — a picture already at the size the moderator
- * chose does not need enlarging into a lightbox.
- */
-export const VEHICLE_DOCUMENT_PANEL_GAP = 16;
-export const VEHICLE_DOCUMENT_PANEL_THUMB_RAIL_WIDTH = 132;
-export const VEHICLE_DOCUMENT_PANEL_THUMB_HEIGHT = 56;
-export const VEHICLE_DOCUMENT_PANEL_THUMB_GAP = 12;
-export const VEHICLE_DOCUMENT_PANEL_META_WIDTH = 262;
-export const VEHICLE_DOCUMENT_PANEL_PREVIEW_HEIGHT = 340;
-export const VEHICLE_DOCUMENT_PANEL_HATCH_BAND = 10;
-export const VEHICLE_DOCUMENT_PANEL_STATUS_DOT_SIZE = 8;
-// the scale a moderator can read a scan at — a plate or a signature is checked well past 100%
-export const VEHICLE_DOCUMENT_PANEL_ZOOM_MIN = 50;
-export const VEHICLE_DOCUMENT_PANEL_ZOOM_MAX = 200;
-export const VEHICLE_DOCUMENT_PANEL_ZOOM_STEP = 25;
-export const VEHICLE_DOCUMENT_PANEL_ZOOM_DEFAULT = 100;
-export const VEHICLE_DOCUMENT_PANEL_ZOOM_BUTTON_SIZE = 28;
-export const VEHICLE_DOCUMENT_PANEL_ZOOM_ICON_SIZE = 15;
-
-/*
- * THE PHOTOS GRID — the pictures a driver uploaded of the vehicle itself (not a document), shown as
- * a responsive grid of thumbnails that open in the shared lightbox.
- */
-export const VEHICLE_PHOTO_MIN_WIDTH = 200;
-export const VEHICLE_PHOTO_GRID_GAP = 14;
-export const VEHICLE_PHOTO_THUMB_HEIGHT = 132;
-export const VEHICLE_PHOTO_CAPTION_PADDING = 10;
-export const VEHICLE_PHOTO_CAPTION_GAP = 2;
-export const VEHICLE_PHOTO_ZOOM_ICON_SIZE = 18;
-export const VEHICLE_PHOTO_ZOOM_SCRIM_OPACITY = 0.32;
-export const VEHICLE_PHOTO_ZOOM_GLYPH_OPACITY = 0.92;
-
-/*
- * THE CORRECTED EXPIRY — the end of validity is the driver's own reading of the paper, and nothing
- * upstream checks it beyond "not already past". So it is the one fact of the panel the moderator
- * can rewrite, and it is rewritten in place, on the line that states it, with the scan open beside
- * it — not in a form under the decisions, which would read as a setting of the approval rather
- * than as a correction of what was declared.
- */
-export const VEHICLE_DOCUMENT_EXPIRY_BLOCK_GAP = 5;
-export const VEHICLE_DOCUMENT_EXPIRY_LINE_GAP = 8;
-export const VEHICLE_DOCUMENT_EXPIRY_VALUE_GAP = 7;
-export const VEHICLE_DOCUMENT_EXPIRY_EDIT_SIZE = 30;
-export const VEHICLE_DOCUMENT_EXPIRY_EDIT_GLYPH_SIZE = 15;
-export const VEHICLE_DOCUMENT_EXPIRY_HINT_FONT_SIZE = FONT_SIZE_OVERLINE;
-/*
- * the badge saying this date is no longer the one the driver typed. It is a word and not just a
- * mark: the line it sits on already carries a date, and a lone glyph next to one would read as
- * decoration of that date rather than as a statement that it was overwritten
- */
-export const VEHICLE_DOCUMENT_EXPIRY_TAG_GAP = 4;
-export const VEHICLE_DOCUMENT_EXPIRY_TAG_FONT_SIZE = 11;
-export const VEHICLE_DOCUMENT_EXPIRY_TAG_GLYPH_SIZE = 11;
-export const VEHICLE_DOCUMENT_EXPIRY_TAG_PADDING_Y = 1;
-// the glyph leads, so the badge is trimmed a little tighter on that side than after the word
-export const VEHICLE_DOCUMENT_EXPIRY_TAG_PADDING_LEFT = 5;
-export const VEHICLE_DOCUMENT_EXPIRY_TAG_PADDING_RIGHT = 7;
-export const VEHICLE_DOCUMENT_EXPIRY_TAG_RADIUS = 99;
-/*
- * the tinted slot deepens under the pointer where the toolbar's own tinted slot darkens its edge
- * instead: this one is a lone square at the end of a line of text, with no neighbours for a change
- * of edge to read against
- */
-export const VEHICLE_DOCUMENT_EXPIRY_EDIT_HOVER_OPACITY = 0.15;
-
-/*
  * the sessions block of a user file: the device name sits over a smaller line naming the system
  * and the app version, and the block closes on a band holding the audit note and "sign out all"
  */
@@ -398,6 +273,3 @@ export const USER_DETAIL_VALUE_GAP = 6;
 export const USER_TICKET_THREAD_GAP = 10;
 export const USER_TICKET_THREAD_PADDING_Y = 12;
 export const USER_TICKET_THREAD_PADDING_X = 16;
-export const USER_TICKET_MESSAGE_PADDING = 10;
-// the role filter over the rides block
-export const USER_RIDES_FILTER_GAP = 12;

@@ -573,12 +573,6 @@ export const TESTS_UI_RIGHT = 'tests';
 export const CRON_UI_RIGHT = 'cron';
 
 /**
- * BO "ui" right gating the overview statistics — must match apps/bo's `UIRoleEnum.STATISTICS`. The
- * per-domain statistics stay gated by the `find` right on their own collection.
- */
-export const STATISTICS_UI_RIGHT = 'statistics';
-
-/**
  * BO "ui" right letting a role manage the staff without holding a highest role: invite a colleague,
  * give or take back a post, read the roles journal — must match apps/bo's `UIRoleEnum.STAFF`.
  *

@@ -63,7 +63,7 @@ Le formulaire s'ouvre en plein écran (« Ajouter un nouveau poste »), en deux 
 - **Configuration des accès** :
   - la **hiérarchie des postes** : les postes inclus ; toute personne ayant ce poste reçoit aussi leurs
     droits ;
-  - les **menus** visibles (Divers : migrations, cron, tests ; statistiques ; diffusion ;
+  - les **menus** visibles (Divers : migrations, cron, tests ; diffusion ;
     impersonation ; gestion du personnel) ;
   - la **durée d'inactivité** avant déconnexion automatique (de 15 minutes à 8 heures) ;
   - les **pays** couverts (aucun pays choisi = tous) ;

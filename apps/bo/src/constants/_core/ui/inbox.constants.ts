@@ -290,13 +290,7 @@ export const NOTIFICATION_MESSAGE_LINE_HEIGHT = 1.35;
 export const NOTIFICATION_MESSAGE_CODE_FONT_SIZE = 11;
 export const NOTIFICATION_MESSAGE_CODE_LETTER_SPACING = 0.2;
 
-/*
- * the cards a sender and a recipient list open into. Wide enough for a full name and the state
- * beside it on one line — a name that wraps turns a two-line card into a four-line one.
- */
-export const NOTIFICATION_SENDER_CARD_WIDTH = 264;
 export const NOTIFICATION_RECIPIENTS_CARD_WIDTH = 300;
-export const NOTIFICATION_CARD_ROW_PADDING_Y = 8;
 export const NOTIFICATION_CARD_ROW_GAP = 10;
 /* the panel a failed cell opens, wide enough to explain the refusal before offering to retry it */
 export const NOTIFICATION_RETRY_POPOVER_WIDTH = 250;
@@ -305,30 +299,3 @@ export const NOTIFICATION_RETRY_POPOVER_GAP = 8;
 /* the day-by-day list of the fallback SMS card scrolls inside itself past a month of rows, never the page */
 export const NOTIFICATION_SMS_DAYS_LIST_MAX_HEIGHT = 320;
 
-/*
- * THE RATING FILE — the side sheet a review is read and ruled on in. Same family as the report
- * file, but it is a stack of bordered sections rather than a card and a history: the text, the
- * answer, the two people, the complaints and the notes each get their own band, so the one the
- * decision turns on is found by its heading rather than by scrolling a single column.
- */
-export const RATING_FILE_SECTION_PADDING_X = 20;
-export const RATING_FILE_SECTION_PADDING_Y = 16;
-export const RATING_FILE_SECTION_GAP = 8;
-export const RATING_FILE_HEAD_PADDING_TOP = 18;
-// the review's own words are the thing being judged, so they are set a step larger than the body
-export const RATING_FILE_QUOTE_FONT_SIZE = 16;
-export const RATING_FILE_QUOTE_LINE_HEIGHT = 1.6;
-export const RATING_FILE_META_LINE_GAP = 2;
-export const RATING_FILE_PEOPLE_PADDING_Y = 4;
-export const RATING_FILE_PERSON_ROW_GAP = 12;
-export const RATING_FILE_PERSON_ROW_PADDING_Y = 10;
-export const RATING_FILE_PERSON_LABEL_WIDTH = 40;
-export const RATING_FILE_AVATAR_SIZE = 32;
-export const RATING_FILE_NOTE_EDGE_WIDTH = 2;
-export const RATING_FILE_NOTE_PADDING_LEFT = 10;
-export const RATING_FILE_NOTE_ROWS = 2;
-export const RATING_FILE_STARS_SIZE = 'medium';
-export const RATING_FILE_FOOTER_PADDING_Y = 12;
-export const RATING_FILE_FOOTER_GAP = 8;
-export const RATING_FILE_ALERT_MARGIN_BOTTOM = 12;
-export const RATING_FILE_REPLY_GAP = 10;

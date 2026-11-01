@@ -25,7 +25,6 @@ import './_core/notification.functions';
 import './_core/report.functions';
 import './_core/admins.functions';
 import './_core/dashboard.functions';
-import './_core/statistics.functions';
 import './_core/stepUpVerification.functions';
 import './_core/contactChange.functions';
 import './_core/ticket-message.functions';

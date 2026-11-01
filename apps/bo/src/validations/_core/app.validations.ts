@@ -2,7 +2,6 @@ import { z } from 'zod';
 
 import { readOnlyLocales } from '@/config/i18n';
 import { appTranslatedFieldsObj } from '@/constants/_core/app.constants';
-import { STATISTICS_PERIODS } from '@/constants/_core/statistics.constants';
 import { generateFileSchema, generateTranslatedFieldsInputSchema, getTranslatedFieldsCodec } from '@/validations/_core/zodSchema.validations';
 
 type ZodLiteralType = string | number | boolean | bigint;
@@ -53,12 +52,6 @@ export const tabAndCategoryRouteSearchParams = tabRouteSearchParams
  * to the first section, not throw the route's search validation
  */
 export const settingsRouteSearchParams = z.object({ section: z.string().optional() });
-
-export const periodRouteSearchParams = z.object({
-  period: z.enum(STATISTICS_PERIODS).optional(),
-  // overlays the previous period on the trend charts
-  isComparing: z.boolean().optional(),
-});
 
 export const autoCompleteOptionSchema = z.object({
   label: z.string(),

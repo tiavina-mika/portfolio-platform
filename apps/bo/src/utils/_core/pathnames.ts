@@ -25,22 +25,8 @@ export const PATH_NAMES = {
   logout: '/' + i18n.t('route:logout'),
   notFound: '/' + i18n.t('route:notFound'),
   unauthorized: '/' + i18n.t('route:unauthorized'),
-  vehicles: '/' + i18n.t('route:vehicles'),
   rides: '/' + i18n.t('route:rides'),
-  requests: '/' + i18n.t('route:requests'),
   projects: '/' + i18n.t('route:projects'),
-  /*
-   * every view sits under the statistics segment: the sidebar holds a single entry for the whole
-   * section, and it (like the breadcrumb group) is matched on the first segment of the address
-   */
-  statistics: {
-    root: '/' + i18n.t('route:statistics'),
-    users: '/' + i18n.t('route:statistics') + '/' + i18n.t('route:statisticsUsers'),
-    rides: '/' + i18n.t('route:statistics') + '/' + i18n.t('route:statisticsRides'),
-    vehicles: '/' + i18n.t('route:statistics') + '/' + i18n.t('route:statisticsVehicles'),
-    cancellations: '/' + i18n.t('route:statistics') + '/' + i18n.t('route:statisticsCancellations'),
-    reports: '/' + i18n.t('route:statistics') + '/' + i18n.t('route:statisticsReports'),
-  },
   account: {
     root: '/' + i18n.t('route:account'),
     confirmResetPasswordCode: '/' + i18n.t('route:confirmCode'),

@@ -372,7 +372,6 @@
   "category": "Sokajy",
   "subject": "Antony",
   "noFound": "Tsy misy {{value}}",
-  "statistics": "Antontan'isa",
   "dark": "Maizina",
   "light": "Mazava",
   "themeColors": "Lokon'ny theme",
@@ -480,7 +479,6 @@
   },
   "sidebar": {
     "content": "Votoaty",
-    "analytics": "Antontan'isa",
     "operations": "Fandidiana",
     "community": "Fiaraha-monina",
     "admin": "Fitantanana"

@@ -20,7 +20,6 @@ import reportReducer from '@/redux/reducers/_core/report.reducer';
 import roleReducer from '@/redux/reducers/_core/role.reducer';
 import roleAuditLogReducer from '@/redux/reducers/_core/roleAuditLog.reducer';
 import settingsReducer from '@/redux/reducers/_core/settings.reducer';
-import statisticsReducer from '@/redux/reducers/_core/statistics.reducer';
 import userReducer from '@/redux/reducers/_core/user.reducer';
 import userBlockReducer from '@/redux/reducers/_core/userBlock.reducer';
 import userSessionReducer from '@/redux/reducers/_core/userSession.reducer';
@@ -56,7 +55,6 @@ const reducers = {
   report: reportReducer,
   globalSearch: globalSearchReducer,
   impersonation: impersonationReducer,
-  statistics: statisticsReducer,
 };
 
 const persistConfig = {

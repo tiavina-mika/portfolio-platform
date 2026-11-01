@@ -136,7 +136,7 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
   ],
   [collections.User]: [
     BADGE_COUNT_INDEX,
-    // signups per bucket and the retention cohorts (user-statistics.service.cloud.ts)
+    // signups per bucket and the retention cohorts
     { spec: { _created_at: 1 } },
     // the morning jobs that warn members run once per country and only read that country's accounts
     { spec: { country: 1 } },
@@ -198,7 +198,7 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
      * reports, narrowed to one reporter and a set of target ids in a single grouped read
      */
     { spec: { _p_reportedBy: 1, targetType: 1, targetId: 1 } },
-    // the reports statistics: filings per bucket, and the oldest open reports (report-statistics.service.cloud.ts)
+    // the reports statistics: filings per bucket, and the oldest open reports
     { spec: { status: 1, _created_at: 1 } },
     { spec: { _created_at: 1 } },
     // the reports statistics: handling time of the reports decided in a period

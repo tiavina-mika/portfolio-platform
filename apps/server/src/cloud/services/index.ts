@@ -9,7 +9,6 @@ import './_core/userRole.service.cloud';
 import './_core/notification.service.cloud';
 import './_core/notification-resend.service.cloud';
 import './_core/dashboard.service.cloud';
-import './_core/statistics.service.cloud';
 import './_core/auditLog.service.cloud';
 import './_core/cms.service.cloud';
 import './_core/report.service.cloud';

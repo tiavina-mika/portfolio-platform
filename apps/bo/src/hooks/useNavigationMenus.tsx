@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { capitalize } from 'string-ts';
 
 import {
-  BarChartIcon,
   BellIcon,
   BriefcaseIcon,
   CodeIcon,
@@ -26,7 +25,6 @@ import { goToCategories } from '@/redux/actions/_core/category.action';
 import { goToNotificationBroadcast } from '@/redux/actions/_core/notification.action';
 import { goToPages } from '@/redux/actions/_core/page.action';
 import { goToRoles } from '@/redux/actions/_core/role.action';
-import { goToStatisticsOverview } from '@/redux/actions/_core/statistics.action';
 import { goToUsers } from '@/redux/actions/_core/user.action';
 import { goToList } from '@/redux/actions/_core/util.action';
 import { goToProjects } from '@/redux/actions/_domain/project.action';
@@ -113,24 +111,6 @@ export const useNavigationMenus = (): ISidebarMenu[] => {
            * handful of people should be able to take (the server checks it again)
            */
           uiRight: UIRoleEnum.BROADCAST,
-        },
-      ],
-    },
-    {
-      title: t('common:sidebar.analytics'),
-      subMenus: [
-        {
-          id: PATH_NAMES.statistics.root,
-          label: t('common:statistics'),
-          onClick: () => navigate(goToStatisticsOverview()),
-          icon: <BarChartIcon size={ICON_SIZE} />,
-          uiRight: UIRoleEnum.STATISTICS,
-          hasRightName: 'canFind',
-          /*
-           * one entry for the whole section: the views (overview, users, rides…) are switched from
-           * the navigation inside the statistics page itself, and every one of them sits under this
-           * entry's address segment, so it stays highlighted whichever view is open
-           */
         },
       ],
     },

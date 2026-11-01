@@ -176,7 +176,6 @@ export const usersTabOptions = [
   ...recycleBinTabOptions,
 ];
 
-
 export const roleTranslatedFieldsObj: TranslatedFieldOption[] = [
   { name: 'label', required: true, max: 100, transform: capitalize },
 ];
@@ -297,8 +296,6 @@ export const getRightsEntities = (): Omit<IRightsItem, 'rights'>[] => [
   ...ENTITIES_WITH_RIGHTS_OPTIONS,
   ...extraRightsEntities,
 ];
-
-export const SIGNUP_TOTAL_STEP = 3;
 
 export const ROLE_DEFAULT_LIMIT = 10;
 

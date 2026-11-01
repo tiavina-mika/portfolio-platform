@@ -23,7 +23,7 @@
 
 | Side | Holds |
 |---|---|
-| `_core/` | Code that still works if `_domain/` is deleted: auth, MFA, users, roles and rights, CMS (article, page, page section, category, contact, newsletter), notifications, tickets, reports, audit log, dashboards and statistics as registries |
+| `_core/` | Code that still works if `_domain/` is deleted: auth, MFA, users, roles and rights, CMS (article, page, page section, category, contact, newsletter), notifications, tickets, reports, audit log, dashboards as registries |
 | `_domain/` | What is specific to the portfolio: the `Project` entity and anything that cannot run without knowing it |
 
 Today `_domain/` holds only `Project`: on the server `project.functions.ts` (`getProjects`, `getProject`, `getProjectForClient`), `project.triggers.ts`, services, utils, constants and validations; in the back-office the pages, containers, redux, service, types, validations and translations of projects.
@@ -57,7 +57,7 @@ When `_core` must show domain data, it exposes a registry (`registerXxx(...)`) a
 | `registerDashboardKpiProvider(className, fn)` | `project-dashboard.service.cloud.ts` |
 | `registerGlobalSearchEntity(key, config)` | `project-search.service.cloud.ts` |
 
-Other registries exist and are unused by the portfolio (statistics overview, report targets, notification channels, user list enrichers, account deletion hooks, data export targets).
+Other registries exist and are unused by the portfolio (report targets, notification channels, user list enrichers, account deletion hooks, data export targets).
 
 Composition points: `cloud/services/index.ts`, `cloud/functions/index.ts`, `cloud/triggers/index.ts`, `cloud/jobs/index.ts` (each imports the `_core` files, then the `_domain` ones) and `src/index.ts`.
 
@@ -88,6 +88,5 @@ From 1lalana, left out on purpose: the rating feature, unit and component tests,
 ## Known limits
 
 - The server `collections` constant and some class lists still name carpooling classes (`Ride`, `Request`, `Vehicle`, `Rating`, `RideShare`, `SosAlert`).
-- Some statistics screens exist in `_core` without a real data source in the portfolio.
 
 See [the branch review](../../reviews/en/261030-feat-core-domain-split.md) for the full list.

@@ -29,9 +29,6 @@
   "administration": "administration",
   "categories": "categories",
   "miscellaneous": "miscellaneous",
-  "statistics": "statistics",
-  "statisticsUsers": "users",
-  "statisticsReports": "reports",
   "notifications": "notifications",
   "broadcast": "broadcast",
   "reports": "reports",
@@ -55,10 +52,5 @@
     "contestedNoShows": "contested-no-shows"
   },
   "factures": "invoices",
-  "rides": "rides",
-  "requests": "requests",
-  "vehicles": "vehicles",
-  "statisticsRides": "rides",
-  "statisticsVehicles": "vehicles",
-  "statisticsCancellations": "cancellations"
+  "rides": "rides"
 }

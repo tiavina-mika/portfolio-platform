@@ -136,7 +136,6 @@ export const LIST_FILTERS_DRAWER_GAP = 16;
  */
 export const LIST_FILTERS_DRAWER_Z_INDEX = 3;
 
-
 /*
  * the count pinned to the "filters" trigger — a small tinted pill reading as part of the label,
  * which is why it is rounder and quieter than the badge a notification icon carries
@@ -210,9 +209,6 @@ export const ROW_DETAIL_FACTS_COLUMNS = 4;
 export const ROW_DETAIL_FACTS_GAP_X = 20;
 export const ROW_DETAIL_FACTS_GAP_Y = 12;
 export const ROW_DETAIL_FACT_LINE_GAP = 2;
-export const ROW_DETAIL_NOTICE_GAP = 9;
-export const ROW_DETAIL_NOTICE_PADDING_X = 12;
-export const ROW_DETAIL_NOTICE_PADDING_Y = 9;
 /*
  * the sort arrow belongs to the column label rather than sitting beside it, and it is drawn under
  * the label's cap height, so an active column never stands a pixel taller than the ones beside it
@@ -268,30 +264,6 @@ export const ROW_METER_HEIGHT = 4;
 export const ROW_METER_RADIUS = 2;
 export const ROW_METER_GAP = 4;
 
-/*
- * THE INLINE RATING — a person's score standing next to their name inside a table row: a star and
- * one decimal, nothing more. It is a fact about the person, not the subject of the cell, so it is
- * drawn at the meta rung under the name rather than as a row of five stars — a five-star widget
- * repeated twice per row is the widest thing on the list for a value read as a single number.
- */
-export const INLINE_RATING_GLYPH_SIZE = 11;
-export const INLINE_RATING_GAP = 3;
-/*
- * under this score the rating stops being background and becomes something the operator has to
- * take into account before acting on the row, so it is tinted and weighted rather than muted
- */
-export const INLINE_RATING_LOW_THRESHOLD = 4;
-export const INLINE_RATING_LOW_FONT_WEIGHT = 600;
-
-/*
- * COUNT PILL — a figure standing alone in a table cell (the bookings a ride still owes an answer
- * for). It is wider and taller than the badge pinned to an icon corner: nothing else in the cell
- * says what it counts, so it has to hold the column on its own.
- */
-export const COUNT_PILL_MIN_WIDTH = 26;
-export const COUNT_PILL_HEIGHT = 24;
-export const COUNT_PILL_PADDING_X = 7;
-export const COUNT_PILL_RADIUS = 12;
 export const ROW_ACTIONS_ICON_SIZE = 15;
 export const ROW_ACTIONS_GAP = 4;
 

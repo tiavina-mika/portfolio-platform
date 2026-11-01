@@ -368,7 +368,6 @@
   "category": "Category",
   "subject": "Subject",
   "noFound": "No {{value}} found",
-  "statistics": "Statistics",
   "dark": "Dark",
   "light": "Light",
   "themeColors": "Theme colors",
@@ -476,7 +475,6 @@
   },
   "sidebar": {
     "content": "Content",
-    "analytics": "Analytics",
     "operations": "Operations",
     "community": "Community",
     "admin": "Admin"

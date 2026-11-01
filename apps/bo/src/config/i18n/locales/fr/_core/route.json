@@ -30,9 +30,6 @@
   "factures": "factures",
   "categories": "categories",
   "miscellaneous": "divers",
-  "statistics": "statistiques",
-  "statisticsUsers": "utilisateurs",
-  "statisticsReports": "signalements",
   "notifications": "notifications",
   "broadcast": "diffusion",
   "reports": "signalements",
@@ -55,10 +52,5 @@
     "driverNoShows": "absences-conducteur",
     "contestedNoShows": "absences-contestees"
   },
-  "rides": "trajets",
-  "requests": "demandes",
-  "vehicles": "vehicules",
-  "statisticsRides": "trajets",
-  "statisticsVehicles": "vehicules",
-  "statisticsCancellations": "annulations"
+  "rides": "trajets"
 }

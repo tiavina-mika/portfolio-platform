@@ -17,8 +17,8 @@ Les noms sont définis dans `libs/shared-constants/src/role.constants.ts` (parta
 | `OWNER` | Le plus haut | Premier de `HIGHEST_LEVEL_ROLES` ; le rôle qui fait les actions réservées à l'OWNER (réinitialiser la MFA d'un administrateur, révoquer un super administrateur) |
 | `SUPER_ADMIN` | Le plus haut | Second de `HIGHEST_LEVEL_ROLES` |
 | `MANAGER` | Par défaut | `DEFAULT_ROLES[0]` ; les droits se règlent par entité dans le back-office |
-| `SUPPORT_VIEWER` | Par défaut | Lecture seule (`find`, `get`) sur toutes les classes sauf celles toujours verrouillées ; voit la page de statistiques |
-| `TEAM_LEAD` | Par défaut | Ce que lit `SUPPORT_VIEWER`, plus la création d'un compte (pour inviter un collègue) ; voit les statistiques et la gestion de l'équipe |
+| `SUPPORT_VIEWER` | Par défaut | Lecture seule (`find`, `get`) sur toutes les classes sauf celles toujours verrouillées |
+| `TEAM_LEAD` | Par défaut | Ce que lit `SUPPORT_VIEWER`, plus la création d'un compte (pour inviter un collègue) ; voit la gestion de l'équipe |
 
 Les rôles par défaut sont créés au démarrage par `ensureDefaultRolesExist` une fois le rôle `SUPER_ADMIN` présent. D'autres rôles peuvent être créés depuis le back-office (`createRole`, `updateRole`). Les rôles sont stockés dans la collection Parse `_Role` ; les rôles les plus hauts sont enfants de tous les autres.
 
@@ -27,7 +27,7 @@ Les rôles par défaut sont créés au démarrage par `ensureDefaultRolesExist` 
 Un rôle porte des champs personnalisés :
 
 - `rights` : une liste de `{ className, rights }` où `rights` est une table de booléens pour les opérations `create`, `update`, `get`, `find`, `delete`, `destroy`.
-- `ui` : les droits « ui » du back-office (`UIRoleEnum` dans `apps/bo/src/types/_core/role.type.ts`) : `migrations`, `cron`, `tests` (les onglets de la page divers), `impersonation`, `statistics`, `broadcast`, `staff`. Le serveur reflète ceux qu'il doit faire respecter (par exemple `IMPERSONATION_UI_RIGHT`).
+- `ui` : les droits « ui » du back-office (`UIRoleEnum` dans `apps/bo/src/types/_core/role.type.ts`) : `migrations`, `cron`, `tests` (les onglets de la page divers), `impersonation`, `broadcast`, `staff`. Le serveur reflète ceux qu'il doit faire respecter (par exemple `IMPERSONATION_UI_RIGHT`).
 - `countries` : les pays auxquels le rôle est limité (le trigger `country-scope` restreint les requêtes en conséquence).
 - un délai d'inactivité du back-office personnalisé, borné entre 15 et 480 minutes.
 

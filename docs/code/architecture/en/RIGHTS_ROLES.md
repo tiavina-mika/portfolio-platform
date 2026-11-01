@@ -16,7 +16,7 @@
 Access control rests on Parse `_Role` objects. A role carries custom fields:
 
 - `rights`: a list of `{ className, rights: { create, find, get, update, delete, destroy } }`, one entry per collection (booleans);
-- `ui`: back-office areas the role opens (`UIRoleEnum` in `apps/bo/src/types/_core/role.type.ts`: `migrations`, `cron`, `tests`, `impersonation`, `statistics`, `broadcast`, `staff`);
+- `ui`: back-office areas the role opens (`UIRoleEnum` in `apps/bo/src/types/_core/role.type.ts`: `migrations`, `cron`, `tests`, `impersonation`, `broadcast`, `staff`);
 - `countries`: countries the role is limited to, and an optional inactivity timeout (15 to 480 minutes).
 
 The roles page of the back-office (`apps/bo/src/containers/_core/roles/RoleForm.tsx`) edits them. The collections offered are `ENTITIES_WITH_RIGHTS_OPTIONS` (`_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Notification`, `Report`, `UserAuditLog`) plus the entities the domain registers with `registerRightsEntities` (`Project`, in `apps/bo/src/utils/_domain/project-role.utils.ts`), see [CORE_DOMAIN.md](CORE_DOMAIN.md).
@@ -30,7 +30,7 @@ Names in `libs/shared-constants/src/role.constants.ts`, labels and default right
 | `OWNER` | highest (`HIGHEST_LEVEL_ROLES[0]`) | does the owner-only actions (reset an administrator's MFA, revoke a super administrator) |
 | `SUPER_ADMIN` | highest (`HIGHEST_LEVEL_ROLES[1]`) | every right on every collection |
 | `MANAGER` | default (`DEFAULT_ROLES[0]`) | rights set per entity in the back-office |
-| `SUPPORT_VIEWER` | default | read only, sees the statistics |
+| `SUPPORT_VIEWER` | default | read only |
 | `TEAM_LEAD` | default | reads like `SUPPORT_VIEWER`, can invite a colleague, sees the staff management |
 
 The two highest roles pass every check without a `rights` entry, on the server (`hasRight`) and in the back-office. Default roles are created at boot by `ensureDefaultRolesExist`, once `SUPER_ADMIN` exists.
