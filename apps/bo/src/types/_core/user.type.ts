@@ -92,7 +92,6 @@ export interface IUserAttributes extends IUserDefaultRecord {
   // set by the server on every sign-in: absent on an account that predates it and has not signed in since
   lastLoginAt?: DateType;
   // date until which a policy or a report keeps the account suspended, absent on a free account
-  isSuspendedUntil?: DateType;
   platforms: IPlatform[];
   image?: IFileCloud;
   bans?: IBan[];

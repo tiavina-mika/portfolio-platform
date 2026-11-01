@@ -174,9 +174,6 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
      * index can seek on, but the scan is still over index keys rather than over fetched accounts.
      */
     { spec: { deleted: 1, banned: 1, address: 1 } },
-    // the back-office list of the accounts still suspended. Sparse: a suspension is the exception
-
-    { spec: { isSuspendedUntil: 1 }, options: { sparse: true } },
   ],
   [collections.Contact]: [
     // the ticket inbox counts admin-unread tickets rather than the generic `seen`

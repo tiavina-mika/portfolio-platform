@@ -29,10 +29,6 @@ export type ContactSummary = {
 export type TicketRequesterContext = {
   memberSince?: string;
   isVerified: boolean;
-  ridesCount: number;
-  cancellationsCount: number;
-  rating: number | null;
-  reviewsCount: number;
 };
 
 export type TicketContext = {
@@ -108,10 +104,6 @@ export const getContactSummaryService = async (): Promise<ContactSummary> => {
  */
 
 const buildRequesterContext = (user: Parse.User): TicketRequesterContext => {
-  const stats = user.get('stats') ?? {};
-  const rideStats = user.get('rideStats') ?? {};
-  const requestStats = user.get('requestStats') ?? {};
-
   return {
     memberSince: user.get('createdAt')?.toISOString(),
     /*
@@ -125,15 +117,6 @@ const buildRequesterContext = (user: Parse.User): TicketRequesterContext => {
       emailVerified: user.get('emailVerified'),
       phoneVerified: user.get('phoneVerified'),
     }),
-    /*
-     * what the person has actually travelled, both ways round: the two counters are kept on the
-     * same account by different triggers, and an agent reading a ticket wants the one figure
-     */
-    ridesCount: (rideStats.completed ?? 0) + (requestStats.completed ?? 0),
-    cancellationsCount: (rideStats.canceled ?? 0) + (requestStats.canceled ?? 0),
-    // a new account has no score yet — null so the panel says so rather than showing a zero
-    rating: stats.reviewsCount ? stats.rating : null,
-    reviewsCount: stats.reviewsCount ?? 0,
   };
 };
 

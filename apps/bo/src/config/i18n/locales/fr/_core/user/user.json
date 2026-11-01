@@ -182,7 +182,6 @@
   "aboutTheUser": "A propos de l'utilisateur",
   "banned": "Banni(e)",
   "security": "Sécurité",
-  "suspendedUntil": "Suspendu(e) jusqu’au {{date}}",
   "ban": "Bannir",
   "accountInformation": "Information du compte",
   "updateAboutMe": "Modifier mes informations",
@@ -455,7 +454,6 @@
     "bookingsCanceledByDriver": "Réservations annulées en tant que conducteur",
     "totalDistance": "Distance totale",
     "trustAndSafety": "Confiance & sécurité",
-    "isSuspendedUntil": "Suspendu jusqu'au",
     "notSuspended": "Non suspendu",
     "lastDriverCancellations": "Annulations récentes en tant que conducteur (30 jours)",
     "noDriverCancellation": "Aucune annulation récente en tant que conducteur",
@@ -631,9 +629,7 @@
     "banner": {
       "teamUntil": "Suspendu par l'équipe jusqu'au {{date}}",
       "teamPermanent": "Banni(e) définitivement depuis le {{date}}",
-      "policyUntil": "Suspendu automatiquement jusqu'au {{date}}",
       "by": "par {{name}}",
-      "bothCauses": "Les deux causes sont actives : lever la suspension lève les deux.",
       "liftSuspension": "Lever la suspension",
       "deleted": "Compte supprimé le {{date}} par le membre",
       "deletedDescription": "L'email d'origine est masqué. Plus de session ni de connexion en tant que ce compte ; l'historique et le journal restent consultables."

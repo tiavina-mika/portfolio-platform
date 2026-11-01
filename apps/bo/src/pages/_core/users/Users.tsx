@@ -59,7 +59,7 @@ import {
 import { isCurrentTab } from '@/utils/_core/app.utils';
 import { displayDate } from '@/utils/_core/date.utils';
 import {
-  getAuditLogContactLines, getFullPhoneNumber, getUserActiveSuspensionUntil, getUserAuditLogColumns,
+  getAuditLogContactLines, getFullPhoneNumber, getUserAuditLogColumns,
   getUserFullName, getUserLastConnectedAt, getUserLastPlatformLabel, getUserListColumns, getUserNameLines,
 } from '@/utils/_core/user.utils';
 
@@ -414,15 +414,9 @@ const Users = () => {
     return users.map((user: IUser) => {
       const lastConnectedAt = getUserLastConnectedAt(user);
       const platformLabel = getUserLastPlatformLabel(user);
-      const suspendedUntil = user.banned ? undefined : getUserActiveSuspensionUntil(user);
-      const suspendedLabel = suspendedUntil
-        ? t('user:suspendedUntil', { date: displayDate(suspendedUntil, false) })
-        : '';
       const security = user.banned
         ? { label: t('user:banned'), color: 'error.main' }
-        : suspendedUntil
-          ? { label: suspendedLabel, color: 'warning.main' }
-          : { label: t('common:active'), color: 'text.primary' };
+        : { label: t('common:active'), color: 'text.primary' };
 
       const cells: Record<string, ReactNode> = {
         // `component="div"`: a cell of the table, not a row of a list — an `li` outside any `ul`
@@ -441,13 +435,6 @@ const Users = () => {
             </ListItemAvatar>
             <ListItemText {...getUserNameLines(user, t('user:unnamedMember'))} />
             {user.banned && <Chip color="error" label={t('user:banned')} size="small" />}
-            {suspendedUntil && (
-              <Chip
-                color="warning"
-                label={suspendedLabel}
-                size="small"
-              />
-            )}
             {isAdminTab && user.mfa?.enabled && (
               <Chip
                 color="primary"

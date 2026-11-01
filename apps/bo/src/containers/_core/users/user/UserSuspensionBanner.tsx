@@ -1,41 +1,28 @@
 import {
-  Alert, AlertTitle, Box, Button, Typography,
+  Alert, AlertTitle, Button, Typography,
 } from '@mui/material';
 import { BanTypeEnum } from '@shared/types';
 import { useTranslation } from 'react-i18next';
 
-import { USER_SUSPENSION_BANNER_GAP } from '@/constants/_core/ui/entity.constants';
 import { IBan } from '@/types/_core/user.type';
 import { DateType } from '@/types/_core/utils.type';
 import { displayDate } from '@/utils/_core/date.utils';
-import { UserSuspension } from '@/utils/_core/user.utils';
 
 type Props = {
   // the ban the team put on the account that is in force, if any
   teamBan?: IBan;
-  // the suspensions a domain policy put on it (repeated cancellations…), active ones only
-  policySuspensions: UserSuspension[];
   // set on a deleted account: nothing is kept out any more, the account is gone
   deletedAt?: DateType;
   canLift: boolean;
   onLift: () => void;
 };
 
-const classes = {
-  causes: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: USER_SUSPENSION_BANNER_GAP,
-  },
-};
-
 /**
  * What is true of the whole account before any of its blocks is read: that it is kept out of the
- * platform — by whom, until when and why — or that it was deleted. Both causes of a suspension are
- * stated when both are active, since lifting it lifts both.
+ * platform — by whom, until when and why — or that it was deleted.
  */
 const UserSuspensionBanner = ({
-  teamBan, policySuspensions, deletedAt, canLift, onLift,
+  teamBan, deletedAt, canLift, onLift,
 }: Props) => {
   const { t } = useTranslation(['user']);
 
@@ -48,10 +35,9 @@ const UserSuspensionBanner = ({
     );
   }
 
-  if (!teamBan && policySuspensions.length === 0) return null;
+  if (!teamBan) return null;
 
   const isPermanent = teamBan?.type === BanTypeEnum.PERMANENT;
-  const hasBothCauses = !!teamBan && policySuspensions.length > 0;
 
   const renderTeamBan = (ban: IBan) => {
     const facts = [
@@ -86,18 +72,7 @@ const UserSuspensionBanner = ({
         </Button>
       )}
     >
-      <Box css={classes.causes}>
-        {teamBan && renderTeamBan(teamBan)}
-        {policySuspensions.map((suspension) => (
-          <div key={suspension.cause}>
-            <AlertTitle>
-              {t('user:detail.banner.policyUntil', { date: displayDate(suspension.until) })}
-            </AlertTitle>
-            <Typography variant="body2">{suspension.cause}</Typography>
-          </div>
-        ))}
-        {hasBothCauses && <Typography variant="caption">{t('user:detail.banner.bothCauses')}</Typography>}
-      </Box>
+      {renderTeamBan(teamBan)}
     </Alert>
   );
 };

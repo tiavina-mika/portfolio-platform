@@ -86,10 +86,6 @@ export interface IContactSummary {
 export interface ITicketRequesterContext {
   memberSince?: string;
   isVerified: boolean;
-  ridesCount: number;
-  cancellationsCount: number;
-  rating: number | null;
-  reviewsCount: number;
 }
 
 export interface ITicketContext {

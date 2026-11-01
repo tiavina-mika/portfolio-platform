@@ -265,8 +265,6 @@ export const USER_SESSION_ERROR_GAP = 8;
 export const USER_PAGE_AVATAR_SIZE = 40;
 export const USER_PAGE_TITLE_GAP = 10;
 export const USER_PAGE_FACTS_GAP = 14;
-// the banner stating why the account is kept out of the platform: one line per active cause
-export const USER_SUSPENSION_BANNER_GAP = 4;
 // a value read with a qualifier after it ("Female · changed once, on 03/02/2025")
 export const USER_DETAIL_VALUE_GAP = 6;
 // a ticket's thread unfolded under its row: one bubble per message, stepped in from the row

@@ -24,7 +24,6 @@
     "statusLabels": {
       "ACCOUNT": {
         "ACCOUNT_BANNED": "Compte banni",
-        "ACCOUNT_SUSPENDED": "Compte suspendu (signalements)",
         "ACCOUNT_UNBANNED": "Compte réactivé",
         "SUSPENSION_LIFTED": "Suspension levée",
         "NEW_DEVICE_LOGIN": "Nouvelle connexion",

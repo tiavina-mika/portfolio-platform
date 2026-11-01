@@ -91,9 +91,9 @@ type Props = {
 
 /**
  * Who wrote the ticket, as the platform knows them: their name and address, whether their account
- * is verified, and the four figures that say whether this is a regular or a newcomer. Where the
- * ticket was written from is stated whether or not there is an account behind it — it is the one
- * fact about the requester that is always known.
+ * is verified, and since when they have been a member. Where the ticket was written from is stated
+ * whether or not there is an account behind it — it is the one fact about the requester that is
+ * always known.
  */
 const ContactRequesterCard = ({
   contact, requester, loading, onClose,
@@ -158,24 +158,9 @@ const ContactRequesterCard = ({
           t('user:contacts.source'),
           t(TICKET_SOURCE_LABEL_KEYS[getTicketSource(contact)].long)
         )}
-        {!!requester && (
-          <>
-            {renderRow(
-              t('user:contacts.memberSince'),
-              requester.memberSince ? displayDate(requester.memberSince) : '—'
-            )}
-            {renderRow(t('user:contacts.tripsCount'), requester.ridesCount)}
-            {renderRow(
-              t('user:contacts.averageRating'),
-              requester.rating === null
-                ? '—'
-                : t('user:contacts.ratingValue', {
-                  value: requester.rating,
-                  count: requester.reviewsCount,
-                })
-            )}
-            {renderRow(t('user:contacts.cancellationsCount'), requester.cancellationsCount)}
-          </>
+        {!!requester && renderRow(
+          t('user:contacts.memberSince'),
+          requester.memberSince ? displayDate(requester.memberSince) : '—'
         )}
       </Box>
       {!!contact.user && (

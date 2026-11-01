@@ -24,7 +24,6 @@
     "statusLabels": {
       "ACCOUNT": {
         "ACCOUNT_BANNED": "Kaonty voaroaka",
-        "ACCOUNT_SUSPENDED": "Kaonty voasakana (fitarainana)",
         "ACCOUNT_UNBANNED": "Kaonty naverina",
         "SUSPENSION_LIFTED": "Fanakanana nesorina",
         "NEW_DEVICE_LOGIN": "Fidirana vaovao",

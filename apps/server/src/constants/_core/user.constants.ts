@@ -64,7 +64,6 @@ export const SERVER_MANAGED_USER_FIELDS: string[] = [
   'bannedAt',
   'bannedBy',
   'suspendedUntil',
-  'isSuspendedUntil',
   'verification',
   'resetPasswordVerification',
   'stepUpVerification',
@@ -180,7 +179,7 @@ export const USER_DETAILS_FIELDS: string[] = [
   // activity and trust
   'stats', 'rating',
   // moderation
-  'banned', 'bans', 'isSuspendedUntil',
+  'banned', 'bans',
   // record traceability
   'createdAt', 'updatedAt', 'seen', 'seenAt', 'lastSeenAt', 'seenCount', 'unseenAt',
   'deleted', 'deletedAt', 'deletionReason',

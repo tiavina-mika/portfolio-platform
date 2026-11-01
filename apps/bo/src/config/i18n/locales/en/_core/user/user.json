@@ -182,7 +182,6 @@
   "aboutTheUser": "About the user",
   "banned": "Banned",
   "security": "Security",
-  "suspendedUntil": "Suspended until {{date}}",
   "ban": "Ban",
   "accountInformation": "Account information",
   "updateAboutMe": "Modify my informations",
@@ -454,7 +453,6 @@
     "bookingsCanceledByDriver": "Bookings cancelled as a driver",
     "totalDistance": "Total distance",
     "trustAndSafety": "Trust & safety",
-    "isSuspendedUntil": "Suspended until",
     "notSuspended": "Not suspended",
     "lastDriverCancellations": "Recent cancellations as driver (30 days)",
     "noDriverCancellation": "No recent cancellation as driver",
@@ -631,9 +629,7 @@
     "banner": {
       "teamUntil": "Suspended by the team until {{date}}",
       "teamPermanent": "Permanently banned since {{date}}",
-      "policyUntil": "Automatically suspended until {{date}}",
       "by": "by {{name}}",
-      "bothCauses": "Both causes are active: lifting the suspension lifts both.",
       "liftSuspension": "Lift the suspension",
       "deleted": "Account deleted on {{date}} by the member",
       "deletedDescription": "The original email is hidden. No more sessions nor logging in as this account; history and the audit log remain available."

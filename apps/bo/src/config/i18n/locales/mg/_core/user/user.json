@@ -180,7 +180,6 @@
   "aboutTheUser": "Momba ilay mpampiasa",
   "banned": "Voarara",
   "security": "Fiarovana",
-  "suspendedUntil": "Naato hatramin’ny {{date}}",
   "ban": "Ràràna",
   "accountInformation": "Mombamomba ny kaonty",
   "updateAboutMe": "Hanova ny mombamomba aho",
@@ -452,7 +451,6 @@
     "bookingsCanceledByDriver": "Famandrihana nofoanana amin'ny maha-mpamily",
     "totalDistance": "Lavitra totaly",
     "trustAndSafety": "Fitokisana & fiarovana",
-    "isSuspendedUntil": "Voasazy mandra-pahatongan'ny",
     "notSuspended": "Tsy voasazy",
     "lastDriverCancellations": "Fanafoanana vao haingana amin'ny maha-mpamily (30 andro)",
     "noDriverCancellation": "Tsy misy fanafoanana vao haingana amin'ny maha-mpamily",
@@ -631,9 +629,7 @@
     "banner": {
       "teamUntil": "Naaton'ny ekipa hatramin'ny {{date}}",
       "teamPermanent": "Voarara mandrakizay nanomboka ny {{date}}",
-      "policyUntil": "Naato ho azy hatramin'ny {{date}}",
       "by": "nataon'i {{name}}",
-      "bothCauses": "Samy mandeha ireo antony roa: manala azy roa ny fanesorana ny fampiatoana.",
       "liftSuspension": "Esory ny fampiatoana",
       "deleted": "Kaonty nofafan'ilay mpikambana ny {{date}}",
       "deletedDescription": "Nafenina ny mailaka tany am-boalohany. Tsy misy fidirana intsony; mbola azo jerena ny tantara sy ny diary."

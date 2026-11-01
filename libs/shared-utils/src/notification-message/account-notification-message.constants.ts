@@ -1,5 +1,5 @@
 import {
-  ACCOUNT_BANNED_STATUS, ACCOUNT_SUSPENDED_STATUS, ACCOUNT_UNBANNED_STATUS, NEW_DEVICE_LOGIN_STATUS,
+  ACCOUNT_BANNED_STATUS, ACCOUNT_UNBANNED_STATUS, NEW_DEVICE_LOGIN_STATUS,
   PASSWORD_RESET_DELAYED_STATUS, SUPPORT_SESSION_ENDED_STATUS, SUSPENSION_LIFTED_STATUS,
   TICKET_NEW_REPLY_FROM_AGENT_STATUS, TICKET_RESOLVED_STATUS,
 } from '@shared/constants';
@@ -23,36 +23,6 @@ export const ACCOUNT_NOTIFICATION_MESSAGES: Record<string, NotificationMessageEn
       fr: 'Votre suspension a été levée, vous pouvez à nouveau utiliser l\'application normalement',
       en: 'Your suspension has been lifted, you can use the app normally again',
       mg: 'Voafoana ny sazinao, afaka mampiasa ny application indray ianao',
-    },
-  },
-  [ACCOUNT_SUSPENDED_STATUS]: {
-    push: {
-      fr: 'Votre compte est temporairement suspendu suite à des signalements. Ouvrez l\'application ' +
-        'pour le détail.',
-      en: 'Your account is temporarily suspended following reports. Open the app for the details.',
-      mg: 'Naato vetivety ny kaontinao noho ny fitarainana. Sokafy ny application raha hijery ny ' +
-        'antsipiriany.',
-    },
-    app: {
-      fr: 'Votre compte est suspendu à titre préventif, le temps que notre équipe examine un signalement.',
-      en: 'Your account is suspended as a precaution while our team reviews a report.',
-      mg: 'Ampiatoana vonjimaika ny kaontinao mandritra ny fandinihan\'ny ekipanay tatitra iray.',
-    },
-  },
-  [`${ACCOUNT_SUSPENDED_STATUS}#until`]: {
-    push: {
-      fr: 'Votre compte est temporairement suspendu suite à des signalements. Ouvrez l\'application ' +
-        'pour le détail.',
-      en: 'Your account is temporarily suspended following reports. Open the app for the details.',
-      mg: 'Naato vetivety ny kaontinao noho ny fitarainana. Sokafy ny application raha hijery ny ' +
-        'antsipiriany.',
-    },
-    app: {
-      fr: 'Votre compte est suspendu à titre préventif jusqu\'au {{date}}, le temps que notre ' +
-        'équipe examine un signalement.',
-      en: 'Your account is suspended as a precaution until {{date}} while our team reviews a report.',
-      mg: 'Ampiatoana vonjimaika hatramin\'ny {{date}} ny kaontinao mandritra ny fandinihan\'ny ' +
-        'ekipanay tatitra iray.',
     },
   },
   [ACCOUNT_BANNED_STATUS]: {

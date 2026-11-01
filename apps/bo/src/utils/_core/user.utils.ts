@@ -5,7 +5,6 @@ import { ComponentType, ReactNode } from 'react';
 import type { IPreviewSection, ISelectOption, ITableHeadCell } from '@/types/_core/app.type';
 import type { IUserAuditLog } from '@/types/_core/auditLog.type';
 import type { UserSectionGroup } from '@/types/_core/user.type';
-import type { DateType } from '@/types/_core/utils.type';
 
 import { StatusDotColor } from '@/components/StatusDot';
 import {
@@ -77,34 +76,6 @@ export const registerUserSection = (extension: UserSectionExtension): void => {
 };
 
 export const getUserSectionExtensions = (): UserSectionExtension[] => [...userSectionExtensions];
-
-/**
- * Open registry: the ways an account can be kept out of the platform besides a ban by the team (a
- * suspension a domain policy puts on it after repeated cancellations). The page states every active
- * one in its banner and its suspension block, and lifting the suspension lifts all of them.
- */
-export type UserSuspension = {
-  until?: DateType;
-  // what put it on the account, in the words of the one reading the page
-  cause: string;
-};
-
-export type UserSuspensionSource = {
-  key: string;
-  // the row naming it in the suspension block, whether it is active or not
-  label: string;
-  getActive: (user: IUser) => UserSuspension | null;
-  // the thunk lifting it
-  lift: (user: IUser) => any;
-};
-
-const userSuspensionSources: UserSuspensionSource[] = [];
-
-export const registerUserSuspensionSource = (source: UserSuspensionSource): void => {
-  userSuspensionSources.push(source);
-};
-
-export const getUserSuspensionSources = (): UserSuspensionSource[] => [...userSuspensionSources];
 
 /**
  * Open registry: extra columns for the "audit log" (recycle bin) tab of the generic users list —
@@ -330,13 +301,6 @@ export const getUserLastPlatformLabel = (user: IUser): string | undefined => {
   );
 
   return userPlatformOptions.find((option) => option.value === lastPlatform?.name)?.label;
-};
-
-// when the suspension in force ends — undefined once it has lapsed or when there is none
-export const getUserActiveSuspensionUntil = (user: IUser): DateType | undefined => {
-  const until = user.isSuspendedUntil;
-
-  return until && !isDateExpired(until) ? until : undefined;
 };
 
 export type ProfileCompletenessLevel = 'complete' | 'partial' | 'toComplete';

@@ -103,7 +103,7 @@ import {
 import { SuspendUserInput } from '@/types/_core/userSession.type';
 import { canAccessTo, getRoleLabel } from '@/utils/_core/role.utils';
 import {
-  getActiveTeamBan, getUserExtensions, getUserFullName, getUserSectionExtensions, getUserSuspensionSources,
+  getActiveTeamBan, getUserExtensions, getUserFullName, getUserSectionExtensions,
   isUserFromBO, isUserSmsFallbackEnabled,
 } from '@/utils/_core/user.utils';
 
@@ -207,16 +207,9 @@ const User = () => {
   const userFullName = (isDeleted && currentAuditLog?.fullNameBefore) ||
     getUserFullName(user, t('user:unnamedMember'));
 
-  // what keeps the account out of the platform right now: a ban by the team, and any domain policy
+  // what keeps the account out of the platform right now: a ban by the team
   const teamBan = getActiveTeamBan(user);
-  const suspensionSources = getUserSuspensionSources();
-  const policyRows = suspensionSources.map((source) => ({
-    key: source.key,
-    label: source.label,
-    suspension: source.getActive(user),
-  }));
-  const activePolicySuspensions = policyRows.flatMap((row) => (row.suspension ? [row.suspension] : []));
-  const isSuspended = !!teamBan || activePolicySuspensions.length > 0;
+  const isSuspended = !!teamBan;
   const isPermanentlyBanned = teamBan?.type === BanTypeEnum.PERMANENT;
   const canSuspend = canUpdateUser && !isDeleted && !isSuspended;
   const canLift = canUpdateUser && !isDeleted && isSuspended;
@@ -230,13 +223,8 @@ const User = () => {
    */
   const handleGoToList = () => navigate(goToUsers());
 
-  // lifting the suspension lifts every cause of it at once: the team's ban and each policy's
   const handleLiftSuspension = () => {
     if (user.banned) dispatch(liftUserBanById(user.id));
-
-    suspensionSources
-      .filter((source) => !!source.getActive(user))
-      .forEach((source) => dispatch(source.lift(user)));
   };
 
   const onBanFormSubmit = (values: BanUserInput) => {
@@ -500,7 +488,7 @@ const User = () => {
           {canLift ? t('user:detail.menu.lift') : t('user:detail.menu.suspend')}
         </Button>
       ),
-      content: <UserSuspensionSummary policyRows={policyRows} teamBan={teamBan} />,
+      content: <UserSuspensionSummary teamBan={teamBan} />,
     },
     {
       id: 'bans',
@@ -678,7 +666,6 @@ const User = () => {
             canLift={canLift}
             deletedAt={isDeleted ? user.deletedAt : undefined}
             onLift={handleLiftSuspension}
-            policySuspensions={activePolicySuspensions}
             teamBan={teamBan}
           />
         )}

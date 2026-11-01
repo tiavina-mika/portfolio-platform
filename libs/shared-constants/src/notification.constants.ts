@@ -35,12 +35,6 @@ export const TICKET_NEW_REPLY_FROM_AGENT_STATUS = 'newReplyFromAgent';
 export const TICKET_RESOLVED_STATUS = 'TICKET_RESOLVED';
 
 /**
- * A preventive suspension decided by a moderator.
- * The payload's `suspension.until` is when it ends.
- */
-export const ACCOUNT_SUSPENDED_STATUS = 'ACCOUNT_SUSPENDED';
-
-/**
  * An announcement written by the back-office and sent to a segment of the members (an operator
  * incident, a new feature). Its text is not composed from a template like every other notification:
  * the payload carries the words the operator typed, per language.
