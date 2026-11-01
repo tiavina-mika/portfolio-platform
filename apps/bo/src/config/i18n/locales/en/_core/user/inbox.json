@@ -67,10 +67,6 @@
         "label": "Checking now",
         "body": "Hello, I am checking your case with the operator and will come back to you within 24 hours."
       },
-      "refund": {
-        "label": "Refund started",
-        "body": "The refund has been started. It shows on your account within 3 to 5 business days."
-      },
       "missingDocument": {
         "label": "Missing document",
         "body": "To move forward, please send us a readable photo of your licence, front and back."
@@ -96,60 +92,12 @@
     "sourceAppHint": "Received from the app, the requester has an account",
     "oneWayTicketNotice": "One-way request: this person has no account. Your reply goes out as an email and the exchange ends there — if they write again, it will be a new request.",
     "oneWayTicketNoticeSms": "This person has no email: your reply will go out by SMS, cut after {{count}} characters, and the exchange ends there. For anything longer, call them on the number shown.",
-    "sourceSos": "SOS alert",
-    "sourceSosLong": "SOS alert during a ride",
-    "sourceSosHint": "Raised from the app’s SOS button, during a ride",
     "newActivityAlert_one": "New message in the inbox",
     "newActivityAlert_other": "{{count}} new messages in the inbox",
     "openInbox": "Open inbox",
-    "sos": {
-      "badge": "SOS",
-      "openAlerts": "Open SOS alerts",
-      "openAlertsCount": "SOS · {{count}}",
-      "openAlertsTooltip_one": "1 SOS alert is not resolved yet: open the inbox",
-      "openAlertsTooltip_other": "{{count}} SOS alerts are not resolved yet: open the inbox",
-      "title": "SOS alert",
-      "rideNotStarted": "Ride not started: the driver never declared it under way in the app.",
-      "triggeredByLine": "Triggered by the {{role}} · {{when}}",
-      "barTitle": "Alert at {{time}} · {{role}}",
-      "roles": {
-        "driver": "driver",
-        "passenger": "passenger"
-      },
-      "ride": "Trip",
-      "departure": "Departure",
-      "plate": "Plate",
-      "driver": "Driver",
-      "passenger": "Passenger",
-      "location": "Location",
-      "openMap": "Open map",
-      "noLocation": "Location not shared",
-      "emergencyContact": "Emergency contact",
-      "noEmergencyContact": "No emergency contact set",
-      "noEmergencyContactShort": "No emergency contact",
-      "call": "Call",
-      "sms": "SMS to contact",
-      "smsStatuses": {
-        "sent": "SMS sent",
-        "failed": "Sending failed",
-        "quota_reached": "Cap reached",
-        "no_contact": "No contact"
-      },
-      "smsDetails": {
-        "sent": "Sent to the emergency contact when the alert was created.",
-        "failed": "The SMS could not be sent. Call the contact directly.",
-        "quota_reached": "No SMS went out: the monthly SMS cap is reached. Call the contact directly.",
-        "no_contact": "No emergency contact set: no SMS was sent."
-      },
-      "toggleDetails": "Show or hide the SOS alert details",
-      "vehicle": "Vehicle",
-      "passengers": "Passengers"
-    },
     "subject": "Subject",
     "reason": "Reason",
     "subjects": {
-      "refund": "Refund",
-      "payment": "Payment",
       "booking": "Booking",
       "ride_issue": "Problem during a ride",
       "publish": "Publishing a ride",
@@ -162,20 +110,6 @@
       "other": "Other"
     },
     "reasons": {
-      "refund": {
-        "cancelled_by_driver": "Ride cancelled by the driver",
-        "cancelled_by_me": "Ride cancelled by me",
-        "booking_refused": "Booking refused",
-        "penalty_disputed": "Disputed penalty",
-        "wrong_amount": "Wrong amount"
-      },
-      "payment": {
-        "charged_without_booking": "Charged without a booking",
-        "charged_twice": "Charged twice",
-        "payment_failed": "Payment failed",
-        "earnings_not_paid": "Earnings not paid",
-        "commission": "Commission"
-      },
       "booking": {
         "no_response": "No response",
         "refused": "Refused",
@@ -241,8 +175,7 @@
     },
     "objects": {
       "title": "Related trip",
-      "ride": "Ride",
-      "payment": "Payment"
+      "ride": "Ride"
     },
     "linkedReport": {
       "title": "Linked report",

@@ -21,7 +21,6 @@
   "sex": "Sexe",
   "phoneNumber": "Numéro téléphone",
   "contactPhone": "Téléphone de contact",
-  "paymentPhone": "Téléphone de paiement",
   "address": "Adresse",
   "male": "Homme",
   "female": "Femme",
@@ -151,7 +150,6 @@
     "insufficientAuth": "Vous n'avez pas le droit de faire ça",
     "canNotDeleteUser": "Vous ne pouvez pas supprimer un utilisateur",
     "canNotUpdateUser": "Vous ne pouvez pas update un utilisateur",
-    "canNotUpdatePayment": "Vous ne pouvez pas modifier un paiement",
     "userNotVerified": "Votre compte n'a pas encore été verifié. Un email vous a été envoyé. Veuillez entrer le code contenu dans l'email.",
     "invalidEmail": "Email invalide",
     "noAccountByEmail": "Compte introuvable ou inexistant avec cet email",
@@ -485,8 +483,7 @@
     "driverNoShowRejected": "Signalements d'absence du conducteur rejetés",
     "passengerNoShow": "Absences en tant que passager",
     "noShowDeclarationsRejected": "Déclarations d'absence de passager rejetées",
-    "countWithRate": "{{count}} ({{rate}})",
-    "sosAlertsCount": "SOS déclenchés"
+    "countWithRate": "{{count}} ({{rate}})"
   },
   "activity": {
     "activity": "Activité",
@@ -618,8 +615,6 @@
       "vehicles": "Véhicules",
       "rides": "Trajets",
       "requests": "Demandes",
-      "payments": "Paiements",
-      "refunds": "Remboursements",
       "ratingsReceived": "Avis reçus",
       "ratingsGiven": "Avis donnés",
       "suspension": "Suspension",
@@ -666,7 +661,6 @@
     "menu": {
       "suspend": "Suspendre le compte",
       "lift": "Lever la suspension",
-      "viewPayments": "Voir les paiements",
       "viewAudit": "Voir l'audit"
     },
     "details": {
@@ -676,7 +670,6 @@
       "age": "{{count}} ans"
     },
     "contact": {
-      "noPaymentPhone": "Aucun téléphone de paiement",
       "noEmail": "Aucun email — inscrit avec son téléphone"
     },
     "smsFallback": {
@@ -729,20 +722,6 @@
       },
       "empty": "Aucun bannissement",
       "note": "Sur les bannissements anciens, l'auteur et la levée ne sont pas connus."
-    },
-    "payments": {
-      "reference": "Référence",
-      "date": "Date",
-      "type": "Type",
-      "method": "Moyen",
-      "status": "Statut",
-      "amount": "Montant",
-      "empty": "Aucun paiement"
-    },
-    "refunds": {
-      "ride": "Trajet",
-      "reason": "Motif",
-      "empty": "Aucun remboursement"
     },
     "ratings": {
       "rating": "Note",

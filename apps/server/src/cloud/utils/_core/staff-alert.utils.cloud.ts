@@ -67,12 +67,9 @@ const getNewTicketTitle = (ticket: Parse.Object): string => {
 /**
  * Tells the Slack alert channel that a member wrote to support, so a new request is seen without
  * opening the back-office. Slack only: support works the queue from the back-office, there is no
- * e-mail to send. An SOS is left out — it raises its own, louder alert — and the message never
- * quotes what the member wrote.
+ * e-mail to send. The message never quotes what the member wrote.
  */
 export const alertSlackOfNewTicket = async (ticket: Parse.Object): Promise<void> => {
-  if (ticket.get('source') === TicketSourceEnum.SOS) return;
-
   await postSlackAlert(buildSlackAlertText({
     icon: ticket.get('report') ? SLACK_ALERT_ICONS.report : SLACK_ALERT_ICONS.ticket,
     title: getNewTicketTitle(ticket),

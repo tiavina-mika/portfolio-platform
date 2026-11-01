@@ -21,7 +21,6 @@ const NAMESPACES: Record<keyof LocaleResources, true> = {
   cms: true,
   common: true,
   dashboard: true,
-  finance: true,
   route: true,
   statistics: true,
   user: true,

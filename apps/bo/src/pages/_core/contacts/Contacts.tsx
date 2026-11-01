@@ -41,7 +41,6 @@ import { ExportFormat, ISelectOption } from '@/types/_core/app.type';
 import { IContactInboxFilters } from '@/types/_core/contact.type';
 import { TicketPriority, TicketStatus, TicketStatusEnum } from '@/types/_core/ticket-message.type';
 import { PATH_NAMES } from '@/utils/_core/pathnames';
-import { sortLiveSosFirst } from '@/utils/_core/ticket.utils';
 
 const collection = 'Contact';
 
@@ -277,7 +276,6 @@ const Contacts = () => {
   };
 
   const isTicketOpen = !!contact;
-  const queue = useMemo(() => sortLiveSosFirst(contacts), [contacts]);
 
   return (
     <>
@@ -293,7 +291,7 @@ const Contacts = () => {
         <Box css={(theme: Theme) => classes.queue(theme, isTicketOpen)}>
           <ContactInboxQueue
             activeScope={scope}
-            contacts={queue}
+            contacts={contacts}
             count={count}
             filters={filters}
             loading={loading}
@@ -327,7 +325,6 @@ const Contacts = () => {
             onResolve={handleResolve}
             onSendMessage={handleSendMessage}
             requester={ticketContext?.requester ?? null}
-            sosAlert={isTicketContextLoading ? null : ticketContext?.sosAlert ?? null}
           />
         </Box>
         {!!contact && (

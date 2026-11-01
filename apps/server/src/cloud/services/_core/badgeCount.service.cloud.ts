@@ -27,8 +27,7 @@ export const buildClassQuery = (className: string): Parse.Query => {
  * their own — a report moves through a status workflow (`pending -> under_review ->
  * resolved/dismissed`) that makes a `seen` boolean redundant, and a support ticket tracks new
  * admin-facing activity through `unreadByAdmin`. Any other class can ask for a `status`-scoped
- * count instead of the default (ex: failed payments, tracked as their own badge next to the
- * generic payment queue).
+ * count instead of the default (a subset of the default queue, tracked as its own badge).
  *
  * Kept as one function rather than inlined in `getObjectsCount` because the bulk "mark as seen"
  * actions have to recompute the very same figure to hand back a badge value the client does not

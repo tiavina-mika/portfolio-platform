@@ -24,7 +24,6 @@ export const createContactSchema = z.object({
   // the records the request is about — whose they are is checked against the session, not here
   rideId: objectIdFieldSchema.optional(),
   requestId: objectIdFieldSchema.optional(),
-  paymentId: objectIdFieldSchema.optional(),
   reportedUserId: objectIdFieldSchema.optional(),
   locale: z.string().optional(),
 }).refine(

@@ -3,7 +3,7 @@ import { COUNTRIES, SUPPORT_PHONE_OPERATOR_LABELS } from '@shared/constants';
 import { buildSupportPhoneContacts, getPhoneDialUrl } from '@shared/utils';
 import { useTranslation } from 'react-i18next';
 import {
-  FiCreditCard, FiExternalLink, FiInfo, FiLifeBuoy,
+  FiExternalLink, FiInfo, FiLifeBuoy,
 } from 'react-icons/fi';
 
 import Head from '@/components/Head';
@@ -79,11 +79,6 @@ const About = () => {
     })),
   ];
 
-  const paymentRows: AboutInfoRow[] = supportPhones.map(({ operator, phoneNumber }) => ({
-    label: SUPPORT_PHONE_OPERATOR_LABELS[operator],
-    value: phoneNumber,
-    isMono: true,
-  }));
 
   return (
     <Layout
@@ -120,11 +115,6 @@ const About = () => {
           icon={<FiLifeBuoy size={ABOUT_CARD_ICON_SIZE} />}
           rows={supportRows}
           title={t('about.support')}
-        />
-        <AboutInfoCard
-          icon={<FiCreditCard size={ABOUT_CARD_ICON_SIZE} />}
-          rows={paymentRows}
-          title={t('about.payments')}
         />
       </div>
     </Layout>

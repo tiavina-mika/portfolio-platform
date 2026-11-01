@@ -40,11 +40,11 @@ Parse.Cloud.define(
     if (!currentUser) throw new Error('Unauthorized');
 
     const {
-      subject, reason, message, locale = DEFAULT_LANGUAGE, rideId, requestId, paymentId, reportedUserId,
+      subject, reason, message, locale = DEFAULT_LANGUAGE, rideId, requestId, reportedUserId,
     } = request.params;
 
     const objects = await resolveContactObjects(currentUser, {
-      rideId, requestId, paymentId, reportedUserId,
+      rideId, requestId, reportedUserId,
     }, locale);
 
     const contact = new Contact();

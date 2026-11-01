@@ -14,7 +14,7 @@ import {
   INBOX_CONTEXT_TITLE_GAP,
 } from '@/constants/_core/ui/inbox.constants';
 import {
-  RESPONSIVE_BREAKPOINT, SKELETON_ENTRY_COUNT, SKELETON_ENTRY_HEIGHT,
+  SKELETON_ENTRY_COUNT, SKELETON_ENTRY_HEIGHT,
 } from '@/constants/_core/ui/ui.constants';
 import ContactDetailsCard from '@/containers/_core/contacts/ContactDetailsCard';
 import ContactObjectsCard from '@/containers/_core/contacts/ContactObjectsCard';
@@ -25,7 +25,6 @@ import TicketStatusSelect from '@/containers/_core/tickets/TicketStatusSelect';
 import { IContact, ITicketContext } from '@/types/_core/contact.type';
 import { TicketPriority, TicketStatus } from '@/types/_core/ticket-message.type';
 import { IUser } from '@/types/_core/user.type';
-import { getContactSosExtension } from '@/utils/_core/contact.utils';
 import { displayDate } from '@/utils/_core/date.utils';
 import { getDesignTokens } from '@/utils/_core/theme/tokens.utils';
 import { getUserFullName } from '@/utils/_core/user.utils';
@@ -52,10 +51,6 @@ const classes = {
     padding: `${INBOX_CONTEXT_ROW_PADDING_Y}px 0`,
     borderTop: `1px solid ${getDesignTokens(theme).borderLight}`,
   }),
-  // under the breakpoint the SOS is pinned over the thread instead, where it is seen first
-  sos: (theme: Theme) => ({
-    [theme.breakpoints.down(RESPONSIVE_BREAKPOINT)]: { display: 'none' },
-  }),
   handlingFields: {
     display: 'flex',
     flexDirection: 'column' as const,
@@ -76,7 +71,7 @@ type Props = {
 };
 
 /**
- * What stands beside the thread: the SOS that opened the ticket, if one did, the facts of the
+ * What stands beside the thread: the facts of the
  * ticket, the report it comes from if it came from one, what this person has already asked, and how
  * the ticket is being handled. The history is what tells an agent whether they are reading a first complaint or the
  * fourth chapter of one, which is the difference between answering and escalating. Who the person
@@ -87,7 +82,6 @@ const ContactContextPanel = ({
   onSelectTicket,
 }: Props) => {
   const { t } = useTranslation(['common', 'user']);
-  const sos = getContactSosExtension();
 
   const handleAssign = (event: SelectChangeEvent) => {
     const value = event.target.value;
@@ -97,14 +91,7 @@ const ContactContextPanel = ({
 
   return (
     <Box css={classes.column}>
-      {/* first in the column: an SOS is read before anything else the ticket says */}
-      {!loading && sos && context?.sosAlert && (
-        <Box css={classes.sos}>
-          <sos.Card sosAlert={context.sosAlert} />
-        </Box>
-      )}
-
-      {/* what the ticket is comes first, then the ride it points at, then what was asked before */}
+      {/* what the ticket is comes first, then the object it points at, then what was asked before */}
       <ContactDetailsCard contact={contact} />
       <ContactObjectsCard contact={contact} />
       {!loading && context?.report && <ContactReportCard report={context.report} />}

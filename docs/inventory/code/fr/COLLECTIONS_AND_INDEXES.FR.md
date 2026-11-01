@@ -23,7 +23,6 @@ Les noms de classes du domaine sont dans `libs/shared-domain-constants` (`DOMAIN
 | `Newsletter` | Abonnements à la newsletter (double opt-in, confirmé par un jeton haché) | server, web |
 | `App` | Réglages du site, dont les fichiers `image`, `imageForDarkMode` et `cv` (les anciens fichiers sont supprimés de Cloudinary au changement) | server, bo, web |
 | `Notification`, `NotificationResend` | Notifications envoyées depuis le back-office et leurs renvois | server, bo |
-| `Payment` | Paiements (passerelle simulée) | server, bo |
 | `Report` | Signalements d'un utilisateur ou d'un contenu | server, bo |
 | `UserAuditLog`, `RoleAuditLog`, `SessionAuditLog`, `MfaAuditLog`, `UserModerationLog`, `PenaltyLog` | Journaux d'audit (verrouillés, écrits par le serveur seul) | server, bo |
 | `UserSession` | Appareils et sessions | server |
@@ -43,7 +42,7 @@ Les index sont déclarés dans le code, dans `apps/server/src/config/db-indexes.
 - `Newsletter` : `email`, et `confirmationTokenHash` (sparse) pour le lien de confirmation.
 - `Notification` : liste par destinataire, filtres d'état de lecture et de type d'envoi, `idempotencyKey` (unique, sparse).
 - `Invitation` : `token` (unique, sparse) et `email`.
-- `Payment`, `User`, `Report`, `Contact`, `Category`, `Page` (`code`, unique quand renseigné), `ContentVersion`, `Counter` (`name`, unique), `UserSession` et les journaux d'audit ont leurs propres index.
+- `User`, `Report`, `Contact`, `Category`, `Page` (`code`, unique quand renseigné), `ContentVersion`, `Counter` (`name`, unique), `UserSession` et les journaux d'audit ont leurs propres index.
 - `_Join:users:_Role` : `relatedId` et `owningId`.
 
 `allowClientClassCreation` vaut `false`, et les permissions de classe sont reconstruites à chaque démarrage à partir des rôles (voir [rôles et permissions](ROLES_AND_PERMISSIONS.FR.md)). Un nouvel index va dans `db-indexes.ts`, jamais à la main dans Atlas ou Compass (`.claude/rules/parse-patterns.md`), et les champs Pointer utilisent leur nom de colonne Mongo (`_p_<champ>`).

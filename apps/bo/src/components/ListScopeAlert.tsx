@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 type Props = {
   // what the list was narrowed to, already named for the reader
   message: string;
-  // names the way back out — "see all rides", "see all payments"…
+  // names the way back out — "see all rides"…
   clearLabel: string;
   onClear: () => void;
 };

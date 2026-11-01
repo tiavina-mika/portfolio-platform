@@ -17,13 +17,12 @@ import TicketSourceIcon from '@/containers/_core/tickets/TicketSourceIcon';
 import TicketStatusChip from '@/containers/_core/tickets/TicketStatusChip';
 import { IContact } from '@/types/_core/contact.type';
 import {
-  TicketPriority, TicketPriorityEnum, TicketSource, TicketSourceEnum, TicketStatusEnum,
+  TicketPriority, TicketPriorityEnum, TicketSource, TicketSourceEnum,
 } from '@/types/_core/ticket-message.type';
-import { getContactSosExtension } from '@/utils/_core/contact.utils';
 import { fromNow } from '@/utils/_core/date.utils';
-import { getDesignTokens, getSosTones, getTintedBackground } from '@/utils/_core/theme/tokens.utils';
+import { getDesignTokens, getTintedBackground } from '@/utils/_core/theme/tokens.utils';
 import {
-  getTicketRequesterInitials, getTicketRequesterName, getTicketSource, getTicketSubjectLabel, isLiveSosTicket,
+  getTicketRequesterInitials, getTicketRequesterName, getTicketSource, getTicketSubjectLabel,
 } from '@/utils/_core/ticket.utils';
 
 /*
@@ -45,12 +44,8 @@ const getPriorityColor = (theme: Theme, priority: TicketPriority): string => {
 };
 
 const classes = {
-  item: (theme: Theme, isSelected: boolean, isLiveSos: boolean, isUnread: boolean) => {
+  item: (theme: Theme, isSelected: boolean) => {
     const tokens = getDesignTokens(theme);
-    const sosTones = getSosTones(theme);
-    const railColor = isLiveSos ? theme.palette.error.main : 'transparent';
-    // an SOS nobody has opened yet keeps a red wash until an agent does
-    const restingBackground = isLiveSos && isUnread ? sosTones.background : 'transparent';
 
     return {
       display: 'flex',
@@ -63,13 +58,12 @@ const classes = {
       borderBottom: `1px solid ${tokens.borderLight}`,
       /*
        * the open row is marked by a rail on its leading edge, drawn on every row so the list does
-       * not shift sideways by three pixels each time the reader picks a different ticket. A live
-       * SOS keeps a red rail of its own, so it stays found once the agent has moved on to another
+       * not shift sideways by three pixels each time the reader picks a different ticket
        */
-      borderLeft: `${INBOX_ITEM_RAIL_WIDTH}px solid ${isSelected ? theme.palette.primary.main : railColor}`,
+      borderLeft: `${INBOX_ITEM_RAIL_WIDTH}px solid ${isSelected ? theme.palette.primary.main : 'transparent'}`,
       backgroundColor: isSelected
         ? getTintedBackground(theme, theme.palette.primary.main)
-        : restingBackground,
+        : 'transparent',
       '&:hover': { backgroundColor: isSelected ? undefined : tokens.tabHover },
     };
   },
@@ -101,7 +95,6 @@ const classes = {
     flexShrink: 0,
     display: 'flex',
     color: {
-      [TicketSourceEnum.SOS]: theme.palette.error.main,
       [TicketSourceEnum.APP]: theme.palette.primary.main,
       [TicketSourceEnum.WEB]: getDesignTokens(theme).textMuted,
     }[source],
@@ -130,14 +123,11 @@ type Props = {
  */
 const ContactInboxItem = ({ contact, isSelected, onSelect }: Props) => {
   const { t } = useTranslation(['user']);
-  const sos = getContactSosExtension();
   const source = getTicketSource(contact);
-  const isSos = !!sos && source === TicketSourceEnum.SOS;
-  const isLiveSos = isLiveSosTicket(contact);
 
   return (
     <ButtonBase
-      css={(theme: Theme) => classes.item(theme, isSelected, isLiveSos, !!contact.unreadByAdmin)}
+      css={(theme: Theme) => classes.item(theme, isSelected)}
       onClick={() => onSelect(contact.id)}
     >
       <Box css={classes.head}>
@@ -154,10 +144,7 @@ const ContactInboxItem = ({ contact, isSelected, onSelect }: Props) => {
             <TicketSourceIcon size={INBOX_SOURCE_ICON_SIZE} source={source} />
           </Box>
         </Tooltip>
-        {/* an SOS says what kind of urgent it is, in place of the dot every urgent ticket shares */}
-        {isSos
-          ? <sos.Badge isClosed={contact.status === TicketStatusEnum.CLOSED} />
-          : <Box css={(theme: Theme) => classes.dot(theme, contact.priority)} />}
+        <Box css={(theme: Theme) => classes.dot(theme, contact.priority)} />
         <Typography
           sx={{ marginLeft: 'auto', whiteSpace: 'nowrap', fontSize: FONT_SIZE_META }}
           variant="caption"

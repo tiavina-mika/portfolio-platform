@@ -19,7 +19,7 @@ export const clearUserSuspensionSchema = z.object({
 
 export const overviewStatisticsSchema = z.object({
   months: z.number().min(1).max(24).optional(),
-  // the country whose currency the money figures are summed in, the default country's when absent
+  // the country the figures are read for, the default country's when absent
   country: z.string().optional(),
 });
 

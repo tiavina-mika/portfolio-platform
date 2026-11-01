@@ -25,7 +25,7 @@ import {
 } from '@/constants/_core/ui/inbox.constants';
 import { PAGE_HEAD_ACTION_ICON_SIZE } from '@/constants/_core/ui/page.constants';
 import {
-  RADIUS_SM, RESPONSIVE_BREAKPOINT, SKELETON_ENTRY_COUNT, SKELETON_ENTRY_HEIGHT,
+  RADIUS_SM, SKELETON_ENTRY_COUNT, SKELETON_ENTRY_HEIGHT,
 } from '@/constants/_core/ui/ui.constants';
 import ContactComposer from '@/containers/_core/contacts/ContactComposer';
 import ContactRequesterCard from '@/containers/_core/contacts/ContactRequesterCard';
@@ -33,9 +33,8 @@ import TicketMessageThread from '@/containers/_core/tickets/TicketMessageThread'
 import TicketPriorityChip from '@/containers/_core/tickets/TicketPriorityChip';
 import TicketSourceChip from '@/containers/_core/tickets/TicketSourceChip';
 import TicketStatusChip from '@/containers/_core/tickets/TicketStatusChip';
-import { IContact, ITicketRequesterContext, ITicketSosContext } from '@/types/_core/contact.type';
-import { ITicketMessage, TicketSourceEnum, TicketStatusEnum } from '@/types/_core/ticket-message.type';
-import { getContactSosExtension } from '@/utils/_core/contact.utils';
+import { IContact, ITicketRequesterContext } from '@/types/_core/contact.type';
+import { ITicketMessage, TicketStatusEnum } from '@/types/_core/ticket-message.type';
 import { getDesignTokens, getTintedBackground } from '@/utils/_core/theme/tokens.utils';
 import {
   getTicketReplyChannel, getTicketRequesterInitials, getTicketRequesterName, getTicketSubjectLabel,
@@ -116,13 +115,6 @@ const classes = {
     padding: `${INBOX_THREAD_PADDING_Y}px ${INBOX_THREAD_PADDING_X}px`,
     backgroundColor: getDesignTokens(theme).surfaceSecondary,
   }),
-  /*
-   * the SOS band only exists where the context column has dropped below the thread: beside it, the
-   * SOS card at the head of that column already says everything the band would
-   */
-  sosBar: (theme: Theme) => ({
-    [theme.breakpoints.up(RESPONSIVE_BREAKPOINT)]: { display: 'none' },
-  }),
   composer: (theme: Theme) => ({
     borderTop: `1px solid ${getDesignTokens(theme).borderLight}`,
   }),
@@ -132,8 +124,6 @@ type Props = {
   contact: IContact | null;
   // what the platform knows about the ticket author — null when the ticket carries no account
   requester: ITicketRequesterContext | null;
-  // the SOS that opened the ticket — null on every other one
-  sosAlert: ITicketSosContext | null;
   isRequesterLoading: boolean;
   messages: ITicketMessage[];
   loading: boolean;
@@ -154,10 +144,9 @@ type Props = {
  * rather than taking a card of the column beside it.
  */
 const ContactConversation = ({
-  contact, requester, sosAlert, isRequesterLoading, messages, loading, canUpdate, canDelete, canDestroy,
+  contact, requester, isRequesterLoading, messages, loading, canUpdate, canDelete, canDestroy,
   onResolve, onSendMessage, onDelete, onDestroy,
 }: Props) => {
-  const sos = getContactSosExtension();
   const { t } = useTranslation(['common', 'user']);
   const requesterRef = useRef<HTMLButtonElement>(null);
   const [isRequesterOpen, setIsRequesterOpen] = useState(false);
@@ -208,10 +197,7 @@ const ContactConversation = ({
               </Typography>
             </Box>
           </ButtonBase>
-          {/* an SOS is always urgent: its badge says so and more, in place of the priority */}
-          {sos && contact.source === TicketSourceEnum.SOS
-            ? <sos.Badge isClosed={contact.status === TicketStatusEnum.CLOSED} variant="chip" />
-            : <TicketPriorityChip priority={contact.priority} />}
+          <TicketPriorityChip priority={contact.priority} />
           <TicketStatusChip status={contact.status} />
           <TicketSourceChip contact={contact} />
         </Box>
@@ -256,11 +242,6 @@ const ContactConversation = ({
           requester={requester}
         />
       </Popover>
-      {sos && sosAlert && (
-        <Box css={classes.sosBar}>
-          <sos.Bar sosAlert={sosAlert} />
-        </Box>
-      )}
       <Box css={classes.thread}>
         {loading
           ? (

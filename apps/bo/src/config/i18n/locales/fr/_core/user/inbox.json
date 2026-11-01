@@ -67,10 +67,6 @@
         "label": "Vérification en cours",
         "body": "Bonjour, je vérifie votre dossier auprès de l’opérateur et je reviens vers vous sous 24 h."
       },
-      "refund": {
-        "label": "Remboursement lancé",
-        "body": "Le remboursement a été lancé. Il apparaît sous 3 à 5 jours ouvrés sur votre compte."
-      },
       "missingDocument": {
         "label": "Pièce manquante",
         "body": "Pour poursuivre, merci de nous transmettre une photo lisible de votre permis, recto et verso."
@@ -96,60 +92,12 @@
     "sourceAppHint": "Reçue depuis l’application, le demandeur a un compte",
     "oneWayTicketNotice": "Demande à sens unique : cette personne n’a pas de compte. Votre réponse partira par email et l’échange s’arrête là — si elle réécrit, ce sera une nouvelle demande.",
     "oneWayTicketNoticeSms": "Cette personne n’a pas d’email : la réponse partira par SMS, coupée au-delà de {{count}} caractères, et l’échange s’arrête là. Pour plus long, appelez-la au numéro indiqué.",
-    "sourceSos": "Alerte SOS",
-    "sourceSosLong": "Alerte SOS pendant un trajet",
-    "sourceSosHint": "Déclenchée depuis le bouton SOS de l’application, pendant un trajet",
     "newActivityAlert_one": "Nouveau message dans la boîte de réception",
     "newActivityAlert_other": "{{count}} nouveaux messages dans la boîte de réception",
     "openInbox": "Ouvrir la boîte",
-    "sos": {
-      "badge": "SOS",
-      "openAlerts": "Alertes SOS en cours",
-      "openAlertsCount": "SOS · {{count}}",
-      "openAlertsTooltip_one": "1 alerte SOS n'est pas encore résolue : ouvrir la boîte de réception",
-      "openAlertsTooltip_other": "{{count}} alertes SOS ne sont pas encore résolues : ouvrir la boîte de réception",
-      "title": "Alerte SOS",
-      "rideNotStarted": "Trajet pas encore démarré : le conducteur ne l’a jamais déclaré en cours dans l’app.",
-      "triggeredByLine": "Déclenchée par le {{role}} · {{when}}",
-      "barTitle": "Alerte à {{time}} · {{role}}",
-      "roles": {
-        "driver": "conducteur",
-        "passenger": "passager"
-      },
-      "ride": "Trajet",
-      "departure": "Départ",
-      "plate": "Plaque",
-      "driver": "Conducteur",
-      "passenger": "Passager",
-      "location": "Position",
-      "openMap": "Ouvrir la carte",
-      "noLocation": "Position non partagée",
-      "emergencyContact": "Contact d’urgence",
-      "noEmergencyContact": "Aucun contact d’urgence renseigné",
-      "noEmergencyContactShort": "Aucun contact d’urgence",
-      "call": "Appeler",
-      "sms": "SMS au contact",
-      "smsStatuses": {
-        "sent": "SMS envoyé",
-        "failed": "Échec de l’envoi",
-        "quota_reached": "Plafond atteint",
-        "no_contact": "Aucun contact"
-      },
-      "smsDetails": {
-        "sent": "Envoyé au contact d’urgence à la création de l’alerte.",
-        "failed": "Le SMS n’a pas pu être envoyé. Appelez le contact directement.",
-        "quota_reached": "Aucun SMS n’est parti : le plafond mensuel de SMS est atteint. Appelez le contact directement.",
-        "no_contact": "Aucun contact d’urgence renseigné : aucun SMS n’a été envoyé."
-      },
-      "toggleDetails": "Afficher ou masquer le détail de l’alerte SOS",
-      "vehicle": "Véhicule",
-      "passengers": "Passagers"
-    },
     "subject": "Sujet",
     "reason": "Motif",
     "subjects": {
-      "refund": "Remboursement",
-      "payment": "Paiement",
       "booking": "Réservation",
       "ride_issue": "Problème pendant un trajet",
       "publish": "Publier un trajet",
@@ -162,20 +110,6 @@
       "other": "Autre"
     },
     "reasons": {
-      "refund": {
-        "cancelled_by_driver": "Trajet annulé par le chauffeur",
-        "cancelled_by_me": "Trajet annulé par moi",
-        "booking_refused": "Réservation refusée",
-        "penalty_disputed": "Pénalité contestée",
-        "wrong_amount": "Montant incorrect"
-      },
-      "payment": {
-        "charged_without_booking": "Débité sans réservation",
-        "charged_twice": "Débité deux fois",
-        "payment_failed": "Paiement échoué",
-        "earnings_not_paid": "Gains non versés",
-        "commission": "Commission"
-      },
       "booking": {
         "no_response": "Pas de réponse",
         "refused": "Refusée",
@@ -241,8 +175,7 @@
     },
     "objects": {
       "title": "Trajet lié",
-      "ride": "Trajet",
-      "payment": "Paiement"
+      "ride": "Trajet"
     },
     "linkedReport": {
       "title": "Signalement lié",

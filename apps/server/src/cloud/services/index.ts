@@ -1,4 +1,4 @@
-// _core = generic, no business-domain knowledge (auth, user, ban, notification, payment, RBAC, CMS, reports…)
+// _core = generic, no business-domain knowledge (auth, user, ban, notification, RBAC, CMS, reports…)
 import './_core/auth.service.cloud';
 import './_core/category.service.cloud';
 import './_core/contact.service.cloud';
@@ -8,7 +8,6 @@ import './_core/user.service.cloud';
 import './_core/userRole.service.cloud';
 import './_core/notification.service.cloud';
 import './_core/notification-resend.service.cloud';
-import './_core/payment.service.cloud';
 import './_core/dashboard.service.cloud';
 import './_core/statistics.service.cloud';
 import './_core/auditLog.service.cloud';

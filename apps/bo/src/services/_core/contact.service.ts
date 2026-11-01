@@ -1,9 +1,8 @@
 import Parse from 'parse';
 
-import { OPEN_SOS_TICKET_STATUSES } from '@/constants/_core/ticket.constants';
 import { IContact, IContactSummary, ITicketContext } from '@/types/_core/contact.type';
 import {
-  ITicketAttachment, ITicketMessage, TicketPriority, TicketPriorityEnum, TicketSourceEnum, TicketStatus,
+  ITicketAttachment, ITicketMessage, TicketPriority, TicketStatus,
 } from '@/types/_core/ticket-message.type';
 import { IUser } from '@/types/_core/user.type';
 import { toJSONWithId } from '@/utils/_core/parse.utils';
@@ -125,24 +124,4 @@ export const updateTicketPriorityService = async (
   const updatedContact = await Parse.Cloud.run('updateTicketPriority', { ticketId, priority });
 
   return toJSONWithId<IContact>(updatedContact);
-};
-
-/**
- * How many SOS alerts support has not closed yet — the dedicated badge of the notification centre.
- * Read through the inbox list itself with no rows asked for, so it counts exactly what the inbox
- * would show. Filtered on the urgent priority too: every SOS is filed urgent, which keeps out the
- * legacy tickets written before the source was stored.
- */
-export const fetchOpenSosTicketsCount = async (): Promise<number> => {
-  const result = await Parse.Cloud.run('getContacts', {
-    limit: 0,
-    skip: 0,
-    search: {
-      source: TicketSourceEnum.SOS,
-      status: OPEN_SOS_TICKET_STATUSES,
-      priority: [TicketPriorityEnum.URGENT],
-    },
-  });
-
-  return result.count ?? 0;
 };

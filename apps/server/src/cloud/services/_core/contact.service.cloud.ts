@@ -105,7 +105,7 @@ export const registerContactObjectsResolver = (resolver: ContactObjectsResolver)
 
 /**
  * The records a request is about, once proven to be its author's own: a ticket pointing at
- * someone else's ride or payment would hand that record to whoever reads the ticket.
+ * someone else's ride would hand that record to whoever reads the ticket.
  * @param author the member filing the request
  * @param ids the record ids they sent
  * @param locale the language of the error, when a record is not theirs
@@ -252,7 +252,7 @@ export const getContactByIdService = async (
      */
     .include([
       'user', 'updatedBy', 'assignedTo', 'seenBy', 'lastSeenBy',
-      'ride', 'request', 'payment', 'reportedUser', ...include,
+      'ride', 'request', 'reportedUser', ...include,
     ])
     .first(USE_MASTER_KEY);
 

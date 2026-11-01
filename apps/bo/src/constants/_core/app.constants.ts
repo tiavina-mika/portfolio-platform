@@ -203,7 +203,6 @@ export const COLLECTIONS = {
   role: '_Role',
   user: '_User',
   notification: 'Notification',
-  payment: 'Payment',
   rating: 'Rating',
   report: 'Report',
   ...DOMAIN_COLLECTIONS,
@@ -232,7 +231,6 @@ export const NOTIFICATION_BADGE_MAX = 99;
 export const NOTIFICATION_COUNT_DEBOUNCE_MS = 200;
 
 export const NOTIFICATION_COLLECTIONS = [
-  COLLECTIONS.payment,
   COLLECTIONS.contact,
   COLLECTIONS.user,
   COLLECTIONS.report,

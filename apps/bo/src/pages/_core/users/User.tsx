@@ -10,7 +10,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { FaCheck, FaCheckDouble } from 'react-icons/fa';
 import {
-  FiActivity, FiAlertTriangle, FiClock, FiCreditCard, FiEye, FiFileText, FiFlag, FiInbox, FiLifeBuoy, FiList,
+  FiActivity, FiAlertTriangle, FiClock, FiEye, FiFileText, FiFlag, FiInbox, FiLifeBuoy, FiList,
   FiLock, FiLogOut, FiMail, FiMessageSquare, FiMonitor, FiPauseCircle, FiPhone, FiShield, FiShieldOff,
   FiSlash, FiSmartphone, FiUser, FiUserCheck,
 } from 'react-icons/fi';
@@ -45,7 +45,6 @@ import UserEmergencyContact from '@/containers/_core/users/user/UserEmergencyCon
 import UserHeaderFacts from '@/containers/_core/users/user/UserHeaderFacts';
 import UserNotificationsTable from '@/containers/_core/users/user/UserNotificationsTable';
 import UserPageTitle from '@/containers/_core/users/user/UserPageTitle';
-import UserPaymentsTable from '@/containers/_core/users/user/UserPaymentsTable';
 import UserPlatforms from '@/containers/_core/users/user/UserPlatforms';
 import UserRecordHistory from '@/containers/_core/users/user/UserRecordHistory';
 import UserRecordViews from '@/containers/_core/users/user/UserRecordViews';
@@ -74,7 +73,7 @@ import {
 import {
   loadUserSessions, revokeAllUserSessionsById, revokeUserSessionById, suspendUserById,
 } from '@/redux/actions/_core/userSession.action';
-import { goToList, goToPreview } from '@/redux/actions/_core/util.action';
+import { goToList } from '@/redux/actions/_core/util.action';
 import { getAppCurrentUserSelector } from '@/redux/reducers/_core/app.reducer';
 import { getAuditLogCurrentSelector } from '@/redux/reducers/_core/auditLog.reducer';
 import {
@@ -90,7 +89,7 @@ import {
   getUserSessionsHasErrorSelector, getUserSessionsLoadingSelector, getUserSessionsSelector,
 } from '@/redux/reducers/_core/userSession.reducer';
 import {
-  fetchUserAuditTrail, fetchUserNotifications, fetchUserPayments, fetchUserReportsAgainst,
+  fetchUserAuditTrail, fetchUserNotifications, fetchUserReportsAgainst,
   fetchUserReportsMade,
   fetchUserTickets,
   UserReportsExtra, UserTicketsExtra,
@@ -99,7 +98,6 @@ import { IPreviewGroup, IPreviewSection } from '@/types/_core/app.type';
 import { IContact } from '@/types/_core/contact.type';
 import { ImpersonateUserInput } from '@/types/_core/impersonation.type';
 import { INotification } from '@/types/_core/notification.type';
-import { IPayment } from '@/types/_core/payment.type';
 import { IReport, ReportTargetTypeEnum } from '@/types/_core/report.type';
 import { IRole, RolesForUserInput, UIRoleEnum } from '@/types/_core/role.type';
 import {
@@ -178,7 +176,6 @@ const User = () => {
   const { open: isOpenResetPasswordDialog, toggle: toggleOpenResetPasswordDialog } = useToggle();
 
   const userId = user?.id;
-  const payments = useUserBlock<IPayment>('payments', userId, fetchUserPayments);
   const reportsAgainst = useUserBlock<IReport, UserReportsExtra>(
     'reportsAgainst', userId, fetchUserReportsAgainst
   );
@@ -343,8 +340,6 @@ const User = () => {
     navigate(goToUsers({ tab: auditLogTab?.tab }));
   };
 
-  const handleGoToUserPayments = () => navigate(goToList('payments', { user: user.id }));
-
   const menus = [
     {
       onClick: toggleOpenSuspendDialog,
@@ -390,12 +385,6 @@ const User = () => {
       display: !isDeleted && canImpersonate,
       label: t('user:impersonation.loginAsUser'),
       icon: <FiUserCheck />,
-    },
-    {
-      onClick: handleGoToUserPayments,
-      display: true,
-      label: t('user:detail.menu.viewPayments'),
-      icon: <FiCreditCard />,
     },
     {
       onClick: handleGoToAuditLog,
@@ -508,25 +497,10 @@ const User = () => {
         />
       ),
     },
-    // ------------- activity ------------- //
-    {
-      id: 'payments',
-      group: 'activity',
-      order: 60,
-      label: t('user:detail.sections.payments'),
-      icon: <FiCreditCard />,
-      status: payments.status,
-      onRetry: payments.retry,
-      content: (
-        <UserPaymentsTable
-          count={payments.count}
-          onOpen={(payment: IPayment) => navigate(goToPreview('payments', payment.id))}
-          onViewAll={handleGoToUserPayments}
-          payments={payments.items}
-        />
-      ),
-    },
-    // ------------- moderation ------------- //
+    /*
+     * ------------- activity ------------- //
+     * ------------- moderation ------------- //
+     */
     {
       id: 'suspension',
       group: 'moderation',

@@ -879,7 +879,7 @@ export const DASHBOARD_SECTION_TITLE_GAP = 12;
 export const DASHBOARD_SECTION_TITLE_ICON_GAP = 8;
 export const DASHBOARD_SECTION_TITLE_ICON_SIZE = 18;
 export const DASHBOARD_CARDS_GAP = 16;
-// the two alert cards — failed payments and open reports — stand side by side on a wide screen
+// the alert cards stand side by side on a wide screen
 export const DASHBOARD_ALERTS_COLUMNS = 2;
 // an activity column is titled from above, closer to its card than the band heading is to the columns
 export const DASHBOARD_COLUMN_TITLE_GAP = 10;
@@ -904,8 +904,6 @@ export const DASHBOARD_ALERT_BODY_PADDING_TOP = 4;
 export const DASHBOARD_ALERT_BODY_PADDING_BOTTOM = 8;
 export const DASHBOARD_ALERT_ROW_PADDING_Y = 11;
 export const DASHBOARD_ALERT_ROW_GAP = 10;
-// a gateway failure message is free text — it is cut rather than allowed to push the amount out
-export const DASHBOARD_ALERT_CHIP_MAX_WIDTH = 200;
 export const DASHBOARD_ACTIVITY_BODY_PADDING_Y = 8;
 export const DASHBOARD_ACTIVITY_BODY_PADDING_X = 12;
 export const DASHBOARD_ACTIVITY_ROW_PADDING_Y = 8;
@@ -1111,8 +1109,8 @@ export const TABLE_HEAD_LETTER_SPACING = 0.3;
 export const TABLE_CHECKBOX_COLUMN_WIDTH = 44;
 /*
  * THE ROW THAT OPENS — a list whose rows carry more than a row can show, and whose reader has to
- * decide on one without leaving the list (a payment ledger: the failure message, the attempts, the
- * two accounts the money moved between, then the actions). The caret takes a gutter of its own
+ * decide on one without leaving the list (the failure message, the attempts, the
+ * accounts involved, then the actions). The caret takes a gutter of its own
  * rather than sitting inside the first cell: the head row leaves the same gutter empty, so every
  * column label stays over its own column whether a row is open or not.
  */
@@ -2299,28 +2297,3 @@ export const CATEGORY_FORM_PATH_BOX_PADDING_Y = 12;
 export const CATEGORY_FORM_PATH_BOX_PADDING_X = 14;
 export const CATEGORY_FORM_PATH_BOX_GAP = 4;
 export const CATEGORY_FORM_ACTION_ICON_SIZE = 15;
-
-/*
- * The finance pages are dashboards — a row of figures, then a chart, then a table — so they are
- * capped and centred rather than stretched across a wide screen, where the eye has to travel
- * between a figure and the label under it. Shared by the pages rather than written on each: two
- * dashboards of the platform's own money reading at different widths looks like a mistake.
- */
-export const FINANCE_PAGE_MAX_WIDTH = 1400;
-/*
- * The overview reads in two columns — the figures and their chart, then the payments someone has
- * to chase — so the chase list stays in view next to the figures instead of under a long chart.
- * The side column keeps one width whatever the screen, which is what lets a row fit its payer, its
- * type, its amount and its button; under the breakpoint it would be squeezed, so it stacks.
- */
-export const FINANCE_OVERVIEW_SIDE_WIDTH = 440;
-export const FINANCE_OVERVIEW_GAP = 20;
-export const FINANCE_OVERVIEW_KPI_COLUMNS = 2;
-export const FINANCE_CHART_HEIGHT = 220;
-export const FINANCE_CHART_CARD_GAP = 12;
-export const FINANCE_CHART_CARD_PADDING_TOP = 16;
-export const FINANCE_CHART_CARD_PADDING_X = 18;
-export const FINANCE_CHART_CARD_PADDING_BOTTOM = 18;
-export const FINANCE_QUEUE_SKELETON_ROWS = 3;
-export const FINANCE_QUEUE_ROW_SIDE_GAP = 4;
-export const FINANCE_QUEUE_ROW_TITLE_GAP = 8;

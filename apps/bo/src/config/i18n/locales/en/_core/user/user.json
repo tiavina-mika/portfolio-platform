@@ -21,7 +21,6 @@
   "sex": "Sex",
   "phoneNumber": "Phone number",
   "contactPhone": "Contact phone",
-  "paymentPhone": "Payment phone",
   "address": "Address",
   "male": "Male",
   "female": "Female",
@@ -151,7 +150,6 @@
     "insufficientAuth": "You have no right to do this action",
     "canNotDeleteUser": "You can not delete an user",
     "canNotUpdateUser": "You can not update an user",
-    "canNotUpdatePayment": "You can not update a payment",
     "userNotVerified": "Your account is not verified yet. An email has been sent to you. Please check your email and enter the code in that email.",
     "invalidEmail": "Invalid email",
     "noAccountByEmail": "No account found with matching email",
@@ -484,8 +482,7 @@
     "driverNoShowRejected": "Rejected driver no-show reports",
     "passengerNoShow": "No-shows as passenger",
     "noShowDeclarationsRejected": "Rejected passenger no-show declarations",
-    "countWithRate": "{{count}} ({{rate}})",
-    "sosAlertsCount": "SOS raised"
+    "countWithRate": "{{count}} ({{rate}})"
   },
   "activity": {
     "activity": "Activity",
@@ -618,8 +615,6 @@
       "vehicles": "Vehicles",
       "rides": "Rides",
       "requests": "Requests",
-      "payments": "Payments",
-      "refunds": "Refunds",
       "ratingsReceived": "Reviews received",
       "ratingsGiven": "Reviews given",
       "suspension": "Suspension",
@@ -666,7 +661,6 @@
     "menu": {
       "suspend": "Suspend the account",
       "lift": "Lift the suspension",
-      "viewPayments": "View payments",
       "viewAudit": "View the audit"
     },
     "details": {
@@ -676,7 +670,6 @@
       "age": "{{count}} years old"
     },
     "contact": {
-      "noPaymentPhone": "No payment phone",
       "noEmail": "No email — signed up with their phone"
     },
     "smsFallback": {
@@ -729,20 +722,6 @@
       },
       "empty": "No ban",
       "note": "For older bans, the author and the lift are unknown."
-    },
-    "payments": {
-      "reference": "Reference",
-      "date": "Date",
-      "type": "Type",
-      "method": "Method",
-      "status": "Status",
-      "amount": "Amount",
-      "empty": "No payment"
-    },
-    "refunds": {
-      "ride": "Ride",
-      "reason": "Reason",
-      "empty": "No refund"
     },
     "ratings": {
       "rating": "Rating",

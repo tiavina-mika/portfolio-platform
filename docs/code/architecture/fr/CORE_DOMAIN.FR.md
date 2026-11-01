@@ -23,7 +23,7 @@
 
 | Côté | Contenu |
 |---|---|
-| `_core/` | Le code qui fonctionne encore si `_domain/` est supprimé : authentification, MFA, utilisateurs, rôles et droits, CMS (article, page, section de page, catégorie, contact, newsletter), notifications, paiements, tickets, signalements, journal d'audit, tableaux de bord et statistiques sous forme de registres |
+| `_core/` | Le code qui fonctionne encore si `_domain/` est supprimé : authentification, MFA, utilisateurs, rôles et droits, CMS (article, page, section de page, catégorie, contact, newsletter), notifications, tickets, signalements, journal d'audit, tableaux de bord et statistiques sous forme de registres |
 | `_domain/` | Ce qui est propre au portfolio : l'entité `Project` et tout ce qui ne peut pas tourner sans elle |
 
 Aujourd'hui `_domain/` ne contient que `Project` : côté serveur `project.functions.ts` (`getProjects`, `getProject`, `getProjectForClient`), `project.triggers.ts`, services, utils, constantes et validations ; côté back-office les pages, containers, redux, service, types, validations et traductions des projets.
@@ -57,7 +57,7 @@ Quand `_core` doit afficher des données du domaine, il expose un registre (`reg
 | `registerDashboardKpiProvider(className, fn)` | `project-dashboard.service.cloud.ts` |
 | `registerGlobalSearchEntity(key, config)` | `project-search.service.cloud.ts` |
 
-D'autres registres existent et ne sont pas utilisés par le portfolio (vue d'ensemble des statistiques, cibles de signalement, canaux de notification, enrichissement de la liste d'utilisateurs, suppression de compte, export de données, gestionnaires de paiement).
+D'autres registres existent et ne sont pas utilisés par le portfolio (vue d'ensemble des statistiques, cibles de signalement, canaux de notification, enrichissement de la liste d'utilisateurs, suppression de compte, export de données).
 
 Points de composition : `cloud/services/index.ts`, `cloud/functions/index.ts`, `cloud/triggers/index.ts`, `cloud/jobs/index.ts` (chacun importe les fichiers `_core` puis `_domain`) et `src/index.ts`.
 
@@ -88,6 +88,6 @@ De 1lalana, laissés de côté volontairement : la fonctionnalité de notation, 
 ## Limites connues
 
 - La constante `collections` du serveur et certaines listes de classes nomment encore des classes de covoiturage (`Ride`, `Request`, `Vehicle`, `Rating`, `RideShare`, `SosAlert`).
-- Les écrans paiements, finance et certaines statistiques existent dans `_core` sans vraie source de données dans le portfolio.
+- Certains écrans de statistiques existent dans `_core` sans vraie source de données dans le portfolio.
 
 Voir [la revue de la branche](../../reviews/fr/261030-feat-core-domain-split.FR.md) pour la liste complète.

@@ -9,7 +9,6 @@ import {
   loadCancellationReasonsSlice,
   loadCancellationStatisticsSlice,
   loadOverviewStatisticsSlice,
-  loadPaymentsStatisticsSlice,
   loadReportsStatisticsSlice,
   loadRidesHeatmapSlice,
   loadRidesStatisticsSlice,
@@ -26,7 +25,6 @@ import {
   fetchCancellationReasonBreakdown,
   fetchCancellationStatistics,
   fetchOverviewStatistics,
-  fetchPaymentsStatistics,
   fetchReportsStatistics,
   fetchRidesActivityHeatmap,
   fetchRidesStatistics,
@@ -64,10 +62,6 @@ export const onOverviewStatisticsEnter = (): AppThunkAction => {
 
 export const onUsersStatisticsEnter = (): AppThunkAction => {
   return onEnterActionWithLoader(null, { collection: COLLECTIONS.user, action: 'find' });
-};
-
-export const onPaymentsStatisticsEnter = (): AppThunkAction => {
-  return onEnterActionWithLoader(null, { collection: COLLECTIONS.payment, action: 'find' });
 };
 
 export const onReportsStatisticsEnter = (): AppThunkAction => {
@@ -135,17 +129,6 @@ export const loadRidesStatistics = (period?: StatisticsPeriod): any => {
       dispatch(loadRidesHeatmap(period)),
     ]);
   };
-};
-
-export const loadPaymentsStatistics = (period?: StatisticsPeriod): any => {
-  return actionWithLoader(
-    async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
-      const payments = await fetchPaymentsStatistics(period, getSettingsMoneyCountrySelector(getState?.()!));
-
-      dispatch(loadPaymentsStatisticsSlice(payments));
-    },
-    { localLoadingAction: setStatisticsLoadingSlice }
-  );
 };
 
 export const loadVehiclesStatistics = (period?: StatisticsPeriod): any => {

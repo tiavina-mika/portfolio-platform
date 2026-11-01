@@ -26,7 +26,7 @@ Emails are transactional emails sent by the server through [Brevo](https://www.b
 - `BREVO_API_KEY`, `WEBSITE_URL` and `ADMIN_EMAIL_SENDER` are required at startup (`validateEnv`). Links in emails point to `WEBSITE_URL`.
 - SMS need `MMSDUCK_API_KEY` in `preProduction` and `production`; in development they are only logged.
 - Texts are translated with the server i18n, see [I18N.md](I18N.md); the locale comes from the function parameter or the save context, default `fr`.
-- A staff alert (reports, failed payments, failed jobs) goes to the staff by e-mail and to Slack when `SLACK_ALERTS_WEBHOOK_URL` is set.
+- A staff alert (reports, failed jobs) goes to the staff by e-mail and to Slack when `SLACK_ALERTS_WEBHOOK_URL` is set.
 
 ## Emails sent
 

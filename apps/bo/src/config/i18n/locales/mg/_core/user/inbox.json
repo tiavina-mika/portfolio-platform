@@ -67,10 +67,6 @@
         "label": "Fanamarinana an-dalana",
         "body": "Salama, amarinako amin’ny mpandraharaha ny antontan-taratasinao ary hiverina aminao aho ao anatin’ny 24 ora."
       },
-      "refund": {
-        "label": "Famerenam-bola natomboka",
-        "body": "Natomboka ny famerenam-bola. Hiseho ao amin’ny kaontinao ao anatin’ny 3 ka hatramin’ny 5 andro iasana izany."
-      },
       "missingDocument": {
         "label": "Taratasy tsy ampy",
         "body": "Mba hanohizana, alefaso aminay ny sarin’ny fahazoan-dalana mivantana sy ambadika, mazava tsara."
@@ -96,60 +92,12 @@
     "sourceAppHint": "Noraisina avy amin’ny fampiharana, manana kaonty ny mpangataka",
     "oneWayTicketNotice": "Fangatahana tokana lalana : tsy manana kaonty io olona io. Handeha amin’ny mailaka ny valinteninao ary mijanona eo ny resaka — raha manoratra indray izy, dia fangatahana vaovao no ho azy.",
     "oneWayTicketNoticeSms": "Tsy manana mailaka io olona io: handeha amin’ny SMS ny valinteninao, tapahina aorian’ny litera {{count}}, ary mijanona eo ny resaka. Raha lava kokoa, antsoy amin’ny laharana aseho.",
-    "sourceSos": "Fanairana SOS",
-    "sourceSosLong": "Fanairana SOS nandritra ny dia",
-    "sourceSosHint": "Nalefa tamin’ny bokotra SOS ao amin’ny app, nandritra ny dia",
     "newActivityAlert_one": "Hafatra vaovao ao amin'ny boaty fandraisana",
     "newActivityAlert_other": "Hafatra vaovao {{count}} ao amin'ny boaty fandraisana",
     "openInbox": "Sokafy ny boaty",
-    "sos": {
-      "badge": "SOS",
-      "openAlerts": "Fanairana SOS mbola misokatra",
-      "openAlertsCount": "SOS · {{count}}",
-      "openAlertsTooltip_one": "Fanairana SOS 1 mbola tsy voavaha: sokafy ny boaty fandraisana",
-      "openAlertsTooltip_other": "Fanairana SOS {{count}} mbola tsy voavaha: sokafy ny boaty fandraisana",
-      "title": "Fanairana SOS",
-      "rideNotStarted": "Mbola tsy natomboka ny dia: tsy nambaran’ny mpamily fa mandeha izy tao amin’ny app.",
-      "triggeredByLine": "Nalefan’ny {{role}} · {{when}}",
-      "barTitle": "Fanairana tamin’ny {{time}} · {{role}}",
-      "roles": {
-        "driver": "mpamily",
-        "passenger": "mpandeha"
-      },
-      "ride": "Dia",
-      "departure": "Fiaingana",
-      "plate": "Laharana",
-      "driver": "Mpamily",
-      "passenger": "Mpandeha",
-      "location": "Toerana",
-      "openMap": "Sokafy ny sarintany",
-      "noLocation": "Tsy nozaraina ny toerana",
-      "emergencyContact": "Olona hampandrenesina",
-      "noEmergencyContact": "Tsy misy olona hampandrenesina voasoratra",
-      "noEmergencyContactShort": "Tsy misy olona hampandrenesina",
-      "call": "Antsoy",
-      "sms": "SMS ho an’ilay olona",
-      "smsStatuses": {
-        "sent": "Lasa ny SMS",
-        "failed": "Tsy lasa",
-        "quota_reached": "Tratra ny fetra",
-        "no_contact": "Tsy misy olona"
-      },
-      "smsDetails": {
-        "sent": "Nalefa tany amin’ilay olona hampandrenesina rehefa noforonina ny fanairana.",
-        "failed": "Tsy lasa ny SMS. Antsoy mivantana ilay olona.",
-        "quota_reached": "Tsy nisy SMS lasa: tratra ny fetran’ny SMS isam-bolana. Antsoy mivantana ilay olona.",
-        "no_contact": "Tsy misy olona hampandrenesina voasoratra: tsy nisy SMS nalefa."
-      },
-      "toggleDetails": "Asehoy na afeno ny antsipiriany momba ny fanairana SOS",
-      "vehicle": "Fiara",
-      "passengers": "Mpandeha"
-    },
     "subject": "Lohahevitra",
     "reason": "Antony",
     "subjects": {
-      "refund": "Famerenam-bola",
-      "payment": "Fandoavam-bola",
       "booking": "Famandrihana",
       "ride_issue": "Olana nandritra ny dia",
       "publish": "Famoahana dia",
@@ -162,20 +110,6 @@
       "other": "Hafa"
     },
     "reasons": {
-      "refund": {
-        "cancelled_by_driver": "Nofoanan'ny mpamily ny dia",
-        "cancelled_by_me": "Nofoanako ny dia",
-        "booking_refused": "Nolavina ny famandrihana",
-        "penalty_disputed": "Sazy iadian-kevitra",
-        "wrong_amount": "Diso ny vola"
-      },
-      "payment": {
-        "charged_without_booking": "Nalaina vola tsy nisy famandrihana",
-        "charged_twice": "Nalaina indroa",
-        "payment_failed": "Tsy nahomby ny fandoavana",
-        "earnings_not_paid": "Tsy voaloa ny tombony",
-        "commission": "Kaomisiona"
-      },
       "booking": {
         "no_response": "Tsy nisy valiny",
         "refused": "Nolavina",
@@ -241,8 +175,7 @@
     },
     "objects": {
       "title": "Dia mifandray",
-      "ride": "Dia",
-      "payment": "Fandoavam-bola"
+      "ride": "Dia"
     },
     "linkedReport": {
       "title": "Fitarainana mifandray",

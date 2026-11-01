@@ -8,7 +8,7 @@ import { collectionNameFieldSchema } from './utils.validations';
 
 export const getObjectsCountSchema = z.object({
   className: collectionNameFieldSchema,
-  // status-filtered count instead of the default `seen: false` (ex: Payment `failed` badge)
+  // status-filtered count instead of the default `seen: false`
   status: z.string().optional(),
 });
 
@@ -30,12 +30,12 @@ export const contactSchema = z.object({
   source: z.unknown().optional(),
 }).refine(
   /*
-   * an SOS or a request written in the app belongs to a member, who may have signed up by phone
+   * a request written in the app belongs to a member, who may have signed up by phone
    * only: it is answered through their account, not by e-mail. Only the public website's visitor,
    * who has no account, must leave an address or a phone number to be answered at.
    */
   ({ email, phone, source }) => (
-    !!email || !!phone || source === TicketSourceEnum.SOS || source === TicketSourceEnum.APP
+    !!email || !!phone || source === TicketSourceEnum.APP
   ),
   { path: ['email'] }
 );

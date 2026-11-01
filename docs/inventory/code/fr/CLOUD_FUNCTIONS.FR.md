@@ -41,9 +41,6 @@ Les fichiers sont dans `apps/server/src/cloud/functions/_core/` sauf mention con
 | `page.functions.ts` | `getPages`, `getPage` |
 | `pageSection.functions.ts` | `getPageSections` |
 | `passwordResetDelay.functions.ts` | `cancelPasswordResetDelay` |
-| `payment.functions.ts` | `getPayments`, `getPaymentLedgerSummary`, `getPayment`, `retryPayment`, `refundPayment` |
-| `payoutPhone.functions.ts` | `requestPayoutPhoneVerification`, `confirmPayoutPhoneVerification` |
-| `receipt.functions.ts` | `generateMyReceipt`, `resendReceipt` |
 | `report.functions.ts` | `createReport`, `hasReportedTarget`, `getReports`, `getReport`, `getReportSummary`, `getReportTargetHistory`, `startReportReview`, `dismissReports`, `suspendReportedUser`, `resolveReport` |
 | `role.functions.ts` | `hasRole`, `addRolesToUser`, `getRolesDelegation`, `removeRolesForUser`, `createRole`, `updateRole`, `getRoleAuditLogs`, `getHighestRoleAccounts` |
 | `statistics.functions.ts` | `getOverviewStatistics` |
@@ -71,7 +68,6 @@ Les fichiers sont dans `apps/server/src/cloud/triggers/_core/` sauf mention cont
 | `notification.triggers.ts` | `beforeSave`, `afterSave` `Notification` |
 | `page.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `Page` |
 | `pageSection.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `PageSection` |
-| `payment.triggers.ts` | `beforeSave`, `afterSave` `Payment` |
 | `report.triggers.ts` | `beforeSave` `Report` |
 | `role.triggers.ts` | `beforeSave`, `afterSave`, `beforeDelete`, `afterDelete` `_Role` |
 | `ticket-message.triggers.ts` | `beforeSave`, `afterSave` `TicketMessage` |
@@ -91,7 +87,6 @@ Les fichiers sont dans `apps/server/src/cloud/jobs/_core/` (`_domain/` n'a aucun
 | `misc.jobs.ts` | `clearRecycleBinInCloudJob` |
 | `newsletter.jobs.ts` | `sendArticleToNewsletterJob` |
 | `notification.jobs.ts` | `expireOldNotificationsJob`, `purgeOldNotificationsJob` |
-| `payment.jobs.ts` | `updatePaymentAfterSaveJob`, `retryFailedPlatformPaymentsJob`, `reconcilePendingPaymentsJob` |
 | `retention.jobs.ts` | `purgeOldLogsJob` |
 | `slack.jobs.ts` | `postDailySlackSummaryJob` |
 | `user.jobs.ts` | `deleteOrDestroyUserRelationsJob`, `liftExpiredBansJob`, `createUserAuditLogJob`, `purgeOrphanUserSessionsJob`, `purgeUnverifiedPhoneSignupsJob` |
@@ -100,6 +95,5 @@ Les fichiers sont dans `apps/server/src/cloud/jobs/_core/` (`_domain/` n'a aucun
 ## Pièges
 
 - Les dossiers `_core` viennent d'une plateforme de covoiturage et en gardent le vocabulaire : `createRideMock` dans les fonctions de test, et les noms de classes `Ride`, `Request`, `Vehicle`, `Rating`, `RideShare` et `SosAlert` dans la constante serveur `collections` (voir les [collections](COLLECTIONS_AND_INDEXES.FR.md#pièges)).
-- `payment.functions.ts`, `payoutPhone`, `receipt` et les jobs de paiement s'appuient sur une passerelle de paiement simulée : le portfolio n'encaisse aucun paiement aujourd'hui.
 - Le premier owner n'est plus créé par un trigger : au démarrage, `ensureOwnerInvitationsExist` invite chaque adresse de `OWNERS_EMAILS` avec le rôle `OWNER` (voir [rôles et permissions](ROLES_AND_PERMISSIONS.FR.md)).
 - Tout nouveau fichier de fonctions, triggers ou jobs doit être ajouté à cette page dans le même changement (`.claude/rules/inventory.md`) ; `node .claude/skills/inventory/scripts/inventory.mjs --list` affiche tous les noms.

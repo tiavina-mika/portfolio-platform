@@ -149,42 +149,6 @@ export const INBOX_CONTEXT_ROW_PADDING_Y = 7;
 export const INBOX_CONTEXT_ROW_GAP = 10;
 
 /*
- * THE SOS BLOCK — an alert is not one more card of the context column, it is what the agent acts
- * on first: a red-outlined card at the head of the column on a wide screen, and a band pinned
- * under the thread header below it, folded to one line so the thread stays readable. Its two
- * actions — the map and the call — are 44px targets: they are reached for under pressure, often
- * on a tablet held in one hand.
- */
-export const INBOX_SOS_BADGE_HEIGHT = 20;
-export const INBOX_SOS_BADGE_PADDING_X = 7;
-export const INBOX_SOS_CHIP_HEIGHT = 24;
-export const INBOX_SOS_CHIP_PADDING_X = 9;
-export const INBOX_SOS_BADGE_LETTER_SPACING = '.5px';
-export const INBOX_SOS_HEAD_PADDING_Y = 12;
-export const INBOX_SOS_HEAD_PADDING_X = 14;
-export const INBOX_SOS_HEAD_GAP = 8;
-export const INBOX_SOS_META_GAP = 4;
-export const INBOX_SOS_SECTION_PADDING_Y = 10;
-export const INBOX_SOS_LABEL_GAP = 6;
-export const INBOX_SOS_ROW_PADDING_Y = 6;
-export const INBOX_SOS_ROW_GAP = 10;
-export const INBOX_SOS_LABEL_LETTER_SPACING = '.3px';
-export const INBOX_SOS_PLATE_LETTER_SPACING = '.4px';
-export const INBOX_SOS_ACTION_HEIGHT = 44;
-export const INBOX_SOS_ACTION_PADDING_X = 12;
-export const INBOX_SOS_ACTION_GAP = 8;
-export const INBOX_SOS_ACTION_ICON_SIZE = 16;
-// the map link darkens its tint on hover rather than changing colour — it stays the same action
-export const INBOX_SOS_ACTION_HOVER_OPACITY = 0.15;
-// the call is pressed, not clicked through: it dims a touch instead of taking an underline
-export const INBOX_SOS_CALL_HOVER_BRIGHTNESS = 0.97;
-export const INBOX_SOS_BAR_HEIGHT = 52;
-export const INBOX_SOS_BAR_PADDING_Y = 8;
-export const INBOX_SOS_BAR_PADDING_X = 12;
-export const INBOX_SOS_BAR_BODY_PADDING_Y = 10;
-export const INBOX_SOS_BAR_CHEVRON_SIZE = 18;
-
-/*
  * who wrote the ticket is read from the thread header rather than from a card of the context
  * column: the name in the header opens it as a panel hung under it, so the column keeps the two
  * things an agent works from (previous tickets, handling) and the thread gains the width

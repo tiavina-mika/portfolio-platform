@@ -1,4 +1,3 @@
-import { PaymentTypeEnum } from '@shared/types';
 import Parse from 'parse';
 
 import type { IUserAuditTrailEntry } from '@shared/types';
@@ -10,7 +9,6 @@ import { fetchNotifications } from '@/services/_core/notification.service';
 import { fetchReports } from '@/services/_core/report.service';
 import { IContact } from '@/types/_core/contact.type';
 import { INotification } from '@/types/_core/notification.type';
-import { IPayment } from '@/types/_core/payment.type';
 import { IReport, ReportStatusEnum, ReportTargetTypeEnum } from '@/types/_core/report.type';
 import { ITicketMessage, TicketStatusEnum } from '@/types/_core/ticket-message.type';
 import { IUserBlockResult } from '@/types/_core/userBlock.type';
@@ -34,23 +32,6 @@ const OPEN_TICKET_STATUSES = [TicketStatusEnum.OPEN, TicketStatusEnum.IN_PROGRES
 
 export type UserReportsExtra = { openCount: number };
 export type UserTicketsExtra = { openCount: number };
-
-/**
- * Every movement of money the account stood on either side of, refunds aside — they have a block of
- * their own, where the reason they were given back is what is read.
- */
-export const fetchUserPayments = async (userId: string): Promise<IUserBlockResult<IPayment>> => {
-  const { results, count } = await fetchEntityList<IPayment>('getPayments', {
-    ...LATEST_FIRST,
-    limit: USER_DETAIL_BLOCK_LIMIT,
-    filters: { user: userId },
-    search: {
-      type: [PaymentTypeEnum.PASSENGER_TO_APP, PaymentTypeEnum.APP_TO_DRIVER, PaymentTypeEnum.DRIVER_TO_APP],
-    },
-  });
-
-  return { items: results, count };
-};
 
 /**
  * The reports filed about the account, plus how many of them still wait for a decision — the figure

@@ -33,8 +33,8 @@ export const DEFAULT_ROLE_TRANSLATED_LABELS: Record<string, Record<string, { lab
 
 /*
  * classes deliberately left out of SUPPORT_VIEWER's default rights — every class that is only
- * ever reached through a master-key Cloud Function (audit trails, invitations, push tokens, SOS
- * alerts, ride-share tokens, impersonation sessions…). Granting `find`/`get` on them
+ * ever reached through a master-key Cloud Function (audit trails, invitations,
+ * impersonation sessions…). Granting `find`/`get` on them
  * would turn their CLP into "readable by this role" and let a read-only, low-privilege role list
  * them with the raw SDK, which is the opposite of what a locked class promises
  */
@@ -101,15 +101,6 @@ export const ROLE_ANCESTORS_MAX_DEPTH = 5;
  * holds far fewer posts, so a level hitting it could not be read in full and its posts are refused
  */
 export const ROLE_ANCESTORS_LEVEL_MAX_COUNT = 200;
-
-/*
- * a money action taken from the back-office (refund, early payout release) at or above this amount
- * is reported to the owners by e-mail, per currency of the payment. A currency missing here is never
- * reported: a threshold written for one currency means nothing in another
- */
-export const LARGE_MONEY_ACTION_ALERT_AMOUNTS: Record<string, number> = {
-  MGA: 500_000,
-};
 
 // bounds on what a role name / label / invitation can carry, enforced when a role is created
 export const ROLE_NAME_MAX_LENGTH = 60;

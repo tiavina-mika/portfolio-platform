@@ -66,18 +66,6 @@ export const AlertErrorIcon = (props: AlertIconProps) => (
 );
 
 /*
- * Not a severity glyph: the arrow turning back on itself is what a band about money already given
- * back is drawn with, in place of the tone's own icon. A refund is a settled fact rather than an
- * alarm, so the band it sits in says what happened by the glyph and not by turning red.
- */
-export const AlertRefundIcon = (props: AlertIconProps) => (
-  <Svg {...props}>
-    <path d="M3 8h9a3 3 0 010 6H8" />
-    <path d="M6 5L3 8l3 3" />
-  </Svg>
-);
-
-/*
  * MUI passes `fontSize="small"` to whatever fills the Alert `closeIcon` slot — it is deliberately
  * not accepted here: the cross is drawn at the design's fixed 14px, not at a typography scale.
  */

@@ -117,7 +117,6 @@ export const OWNER_POINTER_FIELDS: Record<string, {
    * branded Portfolio, to any user.
    */
   [collections.Notification]: { read: ['to'], fieldTypes: { to: 'Array' } },
-  [collections.Payment]: { read: ['payer', 'receiver'] },
   [collections.Rating]: { read: ['from', 'to'], write: ['from'], authenticatedCreate: true },
   [collections.Request]: {
     /*
@@ -179,16 +178,6 @@ export const ALWAYS_LOCKED_CLASSES: string[] = [
    * its own CLP. No BO role is ever granted rights on TicketMessage directly.
    */
   collections.TicketMessage,
-  /*
-   * RideShare holds the tokens of the public ride links: read and written only by the ride-share
-   * Cloud Functions with the master key, never by a client directly.
-   */
-  collections.RideShare,
-  /*
-   * SosAlert records who raised an SOS, where and what became of the SMS: written by the
-   * triggerSos Cloud Function and read by the ticket context, both with the master key only.
-   */
-  collections.SosAlert,
   /*
    * UserModerationLog records bans, lifts and suspensions: written by the moderation services and
    * read by the back-office audit trail function, both with the master key only.
@@ -294,7 +283,7 @@ export const EXTRA_SCHEMA_FIELDS: Record<
   },
   /*
    * sign-up only — the one moment a `_User` write carries no session (see SELF_MANAGED_CLASSES).
-   * Everything a signed-in user edits afterwards (address, birthday, image, payment phones…) is
+   * Everything a signed-in user edits afterwards (address, birthday, image…) is
    * covered by the authenticated `addField` grant instead and must NOT be listed here.
    */
   [collections.User]: {

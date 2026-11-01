@@ -201,13 +201,13 @@ export const RIGHTS_DISPLAY_ORDER: (keyof IRights)[] = [
 
 /**
  * The sidebar group each entity belongs to, in the order the rights panel lists them — an admin
- * looks for "Payments" where they find it in the menu, not in an alphabetical wall of resources.
+ * looks for "Articles" where they find it in the menu, not in an alphabetical wall of resources.
  */
 /** the sections of the role form, in the order its summary lists them */
 export const ROLE_FORM_SECTIONS = ['identity', 'access', 'rights'] as const;
 export type RoleFormSection = typeof ROLE_FORM_SECTIONS[number];
 
-export const RIGHTS_GROUPS = ['operations', 'community', 'content', 'finance', 'admin'] as const;
+export const RIGHTS_GROUPS = ['operations', 'community', 'content', 'admin'] as const;
 export type RightsGroup = typeof RIGHTS_GROUPS[number];
 
 /**
@@ -229,7 +229,6 @@ const rightsEntityGroups: Record<string, RightsGroup> = {
   Article: 'content',
   Page: 'content',
   Category: 'content',
-  Payment: 'finance',
   _Role: 'admin',
   UserAuditLog: 'admin',
 };
@@ -262,10 +261,6 @@ export const ENTITIES_WITH_RIGHTS_OPTIONS: Omit<IRightsItem, 'rights'>[] = [
   {
     label: i18n.t('user:contacts.contact'),
     className: 'Contact',
-  },
-  {
-    label: i18n.t('user:payments.payments'),
-    className: 'Payment',
   },
   {
     label: i18n.t('user:notifications.notifications'),

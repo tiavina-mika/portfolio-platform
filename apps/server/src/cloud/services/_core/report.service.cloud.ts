@@ -49,8 +49,8 @@ const REPORT_PROPERTIES = [
 ];
 
 /**
- * What a business domain does when a report on one of its entities is filed or ruled on — holding a
- * pending payout while support looks into it, say. A registry, so this generic service never has to
+ * What a business domain does when a report on one of its entities is filed or ruled on — hiding a
+ * ride while support looks into it, say. A registry, so this generic service never has to
  * know which entities can be reported or what a report on them sets in motion.
  */
 type ReportLifecycleHook = {
@@ -610,7 +610,7 @@ type StartReportReviewInput = {
  * returned untouched — the first operator keeps it, and a double click or a second tab is harmless.
  * A closed report cannot be taken back: reopening a ruling is not what this does.
  *
- * Not a ruling, so the status-changed hooks (payout freeze, ticket closing) are not run.
+ * Not a ruling, so the status-changed hooks (ticket closing) are not run.
  * @param input the report to take, and the operator taking it
  * @returns the report, under review
  * @throws when the report is already resolved or dismissed

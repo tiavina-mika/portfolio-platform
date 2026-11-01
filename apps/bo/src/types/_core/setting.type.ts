@@ -30,7 +30,7 @@ export type PreviewLayout = 'sidebar' | 'full';
 export interface ISettingState {
   locale: Locale;
   /**
-   * The country whose currency the money figures (dashboard, finance, payments, statistics) are read
+   * The country whose currency the money figures (dashboard, statistics) are read
    * in: amounts of two currencies are never added up. Optional: a state saved before it existed has none.
    */
   moneyCountry?: string;

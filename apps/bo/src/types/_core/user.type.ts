@@ -114,7 +114,6 @@ export interface IUserAttributes extends IUserDefaultRecord {
   lastSexChangeAt?: DateType;
   birthdayChangeCount?: number;
   lastBirthdayChangeAt?: DateType;
-  paymentPhones?: IPhone[];
   /** Who support calls if a trip goes wrong — set by the member from the app, read-only here. */
   emergencyContact?: EmergencyContact;
   /**

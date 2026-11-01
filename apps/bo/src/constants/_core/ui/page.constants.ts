@@ -502,22 +502,6 @@ export const NO_SHOW_DRIVER_AVATAR_COLOR = '#3A4759';
 export const NO_SHOW_SUPPORT_AVATAR_COLOR = '#1A2332';
 
 /*
- * THE PAYMENT PAGE — the two sides of a movement of money, and the chain it belongs to (passenger →
- * platform → driver). The steps of the chain share one row on a wide screen and are stacked on a
- * phone, so their padding stays small enough for three of them to sit side by side in the content
- * column.
- */
-export const PAYMENT_PARTY_GAP = 12;
-export const PAYMENT_PARTY_AVATAR_SIZE = 40;
-export const PAYMENT_CYCLE_GAP = 12;
-export const PAYMENT_CYCLE_STEP_GAP = 4;
-export const PAYMENT_CYCLE_STEP_PADDING_Y = 12;
-export const PAYMENT_CYCLE_STEP_PADDING_X = 14;
-export const PAYMENT_CYCLE_ARROW_SIZE = 18;
-export const PAYMENT_CYCLE_NOTE_GAP = 8;
-export const PAYMENT_CYCLE_NOTE_ICON_SIZE = 15;
-
-/*
  * THE DASHBOARD PLACEHOLDER — the content zone of the shell drawn before the guard has loaded the
  * admin: the page head with its action, a row of figure cards and a table card. On a phone only
  * two of the four figure cards stay, and the action leaves the head.

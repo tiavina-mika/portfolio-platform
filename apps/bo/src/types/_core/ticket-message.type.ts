@@ -30,9 +30,7 @@ export type TicketPriority = `${TicketPriorityEnum}`;
  */
 export enum TicketSourceEnum {
   WEB = 'web',
-  APP = 'app',
-  // opened by the server when a member raises an SOS during a ride — always urgent
-  SOS = 'sos'
+  APP = 'app'
 }
 export type TicketSource = `${TicketSourceEnum}`;
 

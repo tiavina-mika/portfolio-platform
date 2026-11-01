@@ -18,7 +18,6 @@
     "support": "Support",
     "supportEmail": "Email",
     "supportPhone": "{{operator}} phone",
-    "payments": "Payments",
     "website": "Website"
   },
   "refresh": "Refresh",
@@ -370,7 +369,6 @@
   "subject": "Subject",
   "noFound": "No {{value}} found",
   "statistics": "Statistics",
-  "finance": "Finance",
   "dark": "Dark",
   "light": "Light",
   "themeColors": "Theme colors",
@@ -481,7 +479,6 @@
     "analytics": "Analytics",
     "operations": "Operations",
     "community": "Community",
-    "finance": "Finance",
     "admin": "Admin"
   },
   "app": {

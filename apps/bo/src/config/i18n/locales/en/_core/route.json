@@ -31,14 +31,11 @@
   "miscellaneous": "miscellaneous",
   "statistics": "statistics",
   "statisticsUsers": "users",
-  "statisticsPayments": "payments",
   "statisticsReports": "reports",
   "notifications": "notifications",
   "broadcast": "broadcast",
   "reports": "reports",
   "ratings": "ratings",
-  "payments": "payments",
-  "finance": "finance",
   "website": {
     "articles": "articles",
     "blog": "blog"
@@ -54,7 +51,6 @@
     "ratings": "ratings",
     "vehicles": "vehicles",
     "collections": "collections",
-    "payouts": "payouts",
     "driverNoShows": "driver-no-shows",
     "contestedNoShows": "contested-no-shows"
   },
@@ -64,6 +60,5 @@
   "vehicles": "vehicles",
   "statisticsRides": "rides",
   "statisticsVehicles": "vehicles",
-  "statisticsCancellations": "cancellations",
-  "financeDrivers": "drivers"
+  "statisticsCancellations": "cancellations"
 }

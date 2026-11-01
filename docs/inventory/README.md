@@ -104,9 +104,9 @@ Source: `apps/server/src/cloud/`. Each kind has a `_core/` folder (generic) and 
 
 | Kind | Files |
 |---|---|
-| Functions | `_core/`: `accountHelp`, `admins`, `app`, `article`, `auditLog`, `auth`, `category`, `contact`, `contactChange`, `contentVersion`, `dashboard`, `faq`, `globalSearch`, `impersonation`, `invitation`, `mfa`, `misc`, `notification`, `page`, `pageSection`, `passwordResetDelay`, `payment`, `payoutPhone`, `receipt`, `report`, `role`, `statistics`, `stepUpVerification`, `ticket-message`, `user`, `userSession`, `utils` (and `test`, local and test only). `_domain/`: `project` |
-| Triggers | `_core/`: `app`, `article`, `auth`, `category`, `contact`, `country-scope`, `newsletter`, `notification`, `page`, `pageSection`, `payment`, `report`, `role`, `ticket-message`, `user`. `_domain/`: `project` |
-| Jobs | `_core/`: `category`, `cms`, `email`, `impersonation`, `misc`, `newsletter`, `notification`, `payment`, `retention`, `slack`, `user` (and `test`). `_domain/`: none |
+| Functions | `_core/`: `accountHelp`, `admins`, `app`, `article`, `auditLog`, `auth`, `category`, `contact`, `contactChange`, `contentVersion`, `dashboard`, `faq`, `globalSearch`, `impersonation`, `invitation`, `mfa`, `misc`, `notification`, `page`, `pageSection`, `passwordResetDelay`, `report`, `role`, `statistics`, `stepUpVerification`, `ticket-message`, `user`, `userSession`, `utils` (and `test`, local and test only). `_domain/`: `project` |
+| Triggers | `_core/`: `app`, `article`, `auth`, `category`, `contact`, `country-scope`, `newsletter`, `notification`, `page`, `pageSection`, `report`, `role`, `ticket-message`, `user`. `_domain/`: `project` |
+| Jobs | `_core/`: `category`, `cms`, `email`, `impersonation`, `misc`, `newsletter`, `notification`, `retention`, `slack`, `user` (and `test`). `_domain/`: none |
 
 ## Scheduled tasks
 
@@ -118,7 +118,7 @@ Roles `OWNER` and `SUPER_ADMIN` (highest level), and the default roles `MANAGER`
 
 ## Collections and indexes
 
-Domain collection `Project`; core collections `Article`, `Page`, `PageSection`, `Category`, `Contact`, `Newsletter`, `App`, `Notification`, `Payment`, `Report`, the audit and session logs, and Parse's `_User`, `_Role` and `_Session`. Indexes are declared in code (`apps/server/src/config/db-indexes.ts`). Details: [collections and indexes](code/en/COLLECTIONS_AND_INDEXES.md).
+Domain collection `Project`; core collections `Article`, `Page`, `PageSection`, `Category`, `Contact`, `Newsletter`, `App`, `Notification`, `Report`, the audit and session logs, and Parse's `_User`, `_Role` and `_Session`. Indexes are declared in code (`apps/server/src/config/db-indexes.ts`). Details: [collections and indexes](code/en/COLLECTIONS_AND_INDEXES.md).
 
 ## Emails
 

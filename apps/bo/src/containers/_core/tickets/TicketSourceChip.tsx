@@ -23,8 +23,7 @@ const classes = {
    */
   chip: (theme: Theme, source: TicketSource) => {
     const tokens = getDesignTokens(theme);
-    // an SOS is the one ticket that must stand out of the queue: the alarm tone, nothing quieter
-    const toneColor = source === TicketSourceEnum.SOS ? theme.palette.error.main : theme.palette.primary.main;
+    const toneColor = theme.palette.primary.main;
 
     return {
       height: INBOX_SOURCE_CHIP_HEIGHT,
@@ -55,7 +54,7 @@ type Props = {
 };
 
 /**
- * Where the ticket comes from — the public website form, the app, or an SOS raised during a ride. It is not decoration:
+ * Where the ticket comes from — the public website form or the app. It is not decoration:
  * it is the first thing that tells an agent whether the person on the other side will ever see a
  * thread, which decides how the answer has to be written.
  */

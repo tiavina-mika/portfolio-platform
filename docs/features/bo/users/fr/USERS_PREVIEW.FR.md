@@ -37,7 +37,6 @@ rangées en sections, avec un sommaire :
 - **Profil** : détails, contact, contact d'urgence (non modifiable depuis le back-office).
 - **Accès** : **sessions actives** (appareil, système, mode de connexion, dernière connexion), **aide au
   compte**, plate-formes utilisées, **postes** (seulement pour un compte créé dans le back-office).
-- **Activité** : paiements.
 - **Modération** : suspension, historique des bannissements, signalements contre le membre et faits par lui.
 - **Échanges** : tickets au support, notifications reçues.
 - **Historique** : consultations de la fiche et journaux d'audit du compte.
@@ -57,7 +56,7 @@ Menu **Actions** de l'en-tête :
   reconfigurer à sa prochaine connexion.
 - **Se connecter en tant que** : démarre une session de support sur ce compte, avec un motif obligatoire
   conservé dans l'historique ; jamais possible sur un compte Owner ou Super Admin.
-- **Voir les paiements** et **Voir l'audit** : raccourcis vers ces listes filtrées sur le compte.
+- **Voir l'audit** : raccourci vers cette liste filtrée sur le compte.
 - **Écrire à l'utilisateur** : bouton d'envoi de message.
 
 Section **Aide au compte** (chaque action demande un motif, consigné dans l'historique) : renvoyer le code

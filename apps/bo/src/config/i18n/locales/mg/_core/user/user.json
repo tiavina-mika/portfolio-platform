@@ -21,7 +21,6 @@
   "sex": "Sex",
   "phoneNumber": "Laharan-taroby",
   "contactPhone": "Laharan-taroby ifandraisana",
-  "paymentPhone": "Laharan-taroby fandoavam-bola",
   "address": "Adiresy",
   "male": "Lehilahy",
   "female": "Vehivavy",
@@ -150,7 +149,6 @@
     "insufficientAuth": "Tsy manana zo anao an'io ianao",
     "canNotDeleteUser": "Tsy afaka ny mamàfa mpampiasa ianao",
     "canNotUpdateUser": "Tsy afaka ny manova mpampiasa ianao",
-    "canNotUpdatePayment": "Tsy afaka ny manova fandoavam-bola ianao",
     "userNotVerified": "Mbola tsy voamarina ny kaontinao. Jereo ny mailaka fa misy kaody fanamarinana ny kaontinao any",
     "invalidEmail": "Mailaka invalide",
     "noAccountByEmail": "Kaonty tsy misy amin'io mailaka io",
@@ -482,8 +480,7 @@
     "driverNoShowRejected": "Fitarainana tsy fahatongavan'ny mpamily nolavina",
     "passengerNoShow": "Tsy fahatongavana amin'ny maha-mpandeha",
     "noShowDeclarationsRejected": "Fanambarana tsy fahatongavan'ny mpandeha nolavina",
-    "countWithRate": "{{count}} ({{rate}})",
-    "sosAlertsCount": "SOS nalefa"
+    "countWithRate": "{{count}} ({{rate}})"
   },
   "activity": {
     "activity": "Hetsika",
@@ -618,8 +615,6 @@
       "vehicles": "Fiara",
       "rides": "Dia",
       "requests": "Fangatahana",
-      "payments": "Fandoavam-bola",
-      "refunds": "Famerenam-bola",
       "ratingsReceived": "Hevitra voaray",
       "ratingsGiven": "Hevitra nomena",
       "suspension": "Fampiatoana",
@@ -666,7 +661,6 @@
     "menu": {
       "suspend": "Ampiato ny kaonty",
       "lift": "Esory ny fampiatoana",
-      "viewPayments": "Hijery ny fandoavam-bola",
       "viewAudit": "Hijery ny fanaraha-maso"
     },
     "details": {
@@ -676,7 +670,6 @@
       "age": "{{count}} taona"
     },
     "contact": {
-      "noPaymentPhone": "Tsy misy finday fandoavam-bola",
       "noEmail": "Tsy misy mailaka — nisoratra anarana tamin'ny findainy"
     },
     "smsFallback": {
@@ -729,20 +722,6 @@
       },
       "empty": "Tsy misy fandrarana",
       "note": "Amin'ny fandrarana taloha, tsy fantatra ny mpanao sy ny fanesorana."
-    },
-    "payments": {
-      "reference": "Laharana",
-      "date": "Daty",
-      "type": "Karazana",
-      "method": "Fomba",
-      "status": "Toe-javatra",
-      "amount": "Vola",
-      "empty": "Tsy misy fandoavam-bola"
-    },
-    "refunds": {
-      "ride": "Dia",
-      "reason": "Antony",
-      "empty": "Tsy misy famerenam-bola"
     },
     "ratings": {
       "rating": "Naoty",

@@ -1,19 +1,14 @@
 import { LIVE_QUERY_SUBSCRIBABLE_CLASSES } from '@shared/constants';
-import { PaymentStatusEnum } from '@shared/types';
 import debounce from 'lodash/debounce';
 import Parse from 'parse';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-
 import {
-  COLLECTIONS, NOTIFICATION_COLLECTIONS, NOTIFICATION_COUNT_DEBOUNCE_MS,
+  NOTIFICATION_COLLECTIONS, NOTIFICATION_COUNT_DEBOUNCE_MS,
   NOTIFICATION_COUNT_POLL_INTERVAL_MS,
 } from '@/constants/_core/app.constants';
-import { PAYMENT_FAILED_NOTIFICATION_KEY } from '@/constants/_core/payment.constants';
-import { SOS_COUNT_POLL_INTERVAL_MS } from '@/constants/_core/ticket.constants';
 import { refreshNotification } from '@/redux/actions/_core/app.action';
-import { refreshOpenSosTicketsCount } from '@/redux/actions/_core/contact.action';
 import { getRoleCurrentUserRolesSelector } from '@/redux/reducers/_core/role.reducer';
 import { getSettingsIsAuthenticatedSelector } from '@/redux/reducers/_core/settings.reducer';
 import { canAccessTo } from '@/utils/_core/role.utils';
@@ -50,14 +45,6 @@ export const useNotificationCountsLiveQuery = (): void => {
   const allowedCollectionsKey = NOTIFICATION_COLLECTIONS.filter(
     (collection) => canAccessTo(roles, collection)
   ).join(',');
-  /*
-   * failed payments — a `status: failed` subset of the Payment class tracked as its own badge
-   * count, kept apart from the generic payment queue because a failed payment is work to do
-   * rather than a row to read, so it is refreshed under its own key
-   */
-  const canTrackFailedPayments = canAccessTo(roles, COLLECTIONS.payment);
-  // the SOS alerts still open — a `source: sos` subset of the Contact class, on a faster clock of its own
-  const canTrackSosAlerts = canAccessTo(roles, COLLECTIONS.contact);
   const hasRoles = roles.length > 0;
 
   useEffect(() => {
@@ -95,22 +82,12 @@ export const useNotificationCountsLiveQuery = (): void => {
       debounced();
     };
 
-    const refreshFailedPayments = () => dispatch(refreshNotification(COLLECTIONS.payment, {
-      status: PaymentStatusEnum.FAILED,
-      key: PAYMENT_FAILED_NOTIFICATION_KEY,
-    }));
-
     const refreshPolled = () => {
       polledCollections.forEach(refresh);
-      if (canTrackFailedPayments) refreshFailedPayments();
     };
-
-    const refreshSosAlerts = () => dispatch(refreshOpenSosTicketsCount());
 
     const refreshAll = () => {
       allowedCollections.forEach(refresh);
-      if (canTrackFailedPayments) refreshFailedPayments();
-      if (canTrackSosAlerts) refreshSosAlerts();
     };
 
     const subscribe = async (collection: string): Promise<void> => {
@@ -147,20 +124,12 @@ export const useNotificationCountsLiveQuery = (): void => {
      * refetches the moment the reader comes back, which is the only point at which a stale badge
      * could have been noticed at all
      */
-    const hasPolledBadges = polledCollections.length > 0 || canTrackFailedPayments;
+    const hasPolledBadges = polledCollections.length > 0;
     const pollInterval = hasPolledBadges
       ? window.setInterval(() => {
         if (document.visibilityState !== 'visible') return;
         refreshPolled();
       }, NOTIFICATION_COUNT_POLL_INTERVAL_MS)
-      : undefined;
-
-    /*
-     * the SOS alerts are recounted even while the tab is hidden, and more often: every other badge
-     * can wait for the reader to come back, a member in danger on a ride cannot
-     */
-    const sosPollInterval = canTrackSosAlerts
-      ? window.setInterval(refreshSosAlerts, SOS_COUNT_POLL_INTERVAL_MS)
       : undefined;
 
     const handleVisibilityChange = () => {
@@ -174,14 +143,12 @@ export const useNotificationCountsLiveQuery = (): void => {
       isCancelled = true;
       debouncedRefreshByCollection.forEach((debounced) => debounced.cancel());
       if (pollInterval !== undefined) window.clearInterval(pollInterval);
-      if (sosPollInterval !== undefined) window.clearInterval(sosPollInterval);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       subscriptions.forEach((subscription) => {
         subscription.unsubscribe().catch(() => undefined);
       });
     };
   }, [
-    dispatch, isAuthenticated, hasRoles, allowedCollectionsKey, canTrackFailedPayments,
-    canTrackSosAlerts,
+    dispatch, isAuthenticated, hasRoles, allowedCollectionsKey,
   ]);
 };

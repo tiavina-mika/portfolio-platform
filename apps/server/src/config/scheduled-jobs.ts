@@ -29,8 +29,8 @@ const LOCAL_MORNING_SCHEDULE = { timezone: DEFAULT_COUNTRY.timeZone };
  * When Redis cannot be reached the tick runs anyway, and the failure is logged as an error. Every
  * scheduled job is written to be re-runnable (guard fields such as `reminder24hSentAt`, or a status
  * filter the job itself moves rows out of), so a duplicate run during an outage is the lesser harm:
- * skipping would leave bookings unexpired, payouts unreleased and refunds unprocessed until Redis
- * came back, with nothing to catch up on the ticks that were missed.
+ * skipping would leave notifications unexpired until Redis came back, with nothing to catch up on
+ * the ticks that were missed.
  * @returns whether this instance should run the tick
  */
 export const acquireScheduledJobLock = async (
@@ -153,22 +153,6 @@ export const scheduleJobs = (serverUrl: string): void => {
     schedule('30 2 * * *', () => runScheduledJob('purgeOrphanedEditorFilesJob'));
 
     /*
-     * Retry the payments the platform owes and could not send (late-cancellation compensations,
-     * refunds of bookings already cancelled) — runs hourly
-     * Each payment carries its own next attempt (nextAutoRetryAt, 1h / 6h / 24h apart); the admins
-     * are e-mailed once every attempt is spent
-     */
-    schedule('25 * * * *', () => runScheduledJob('retryFailedPlatformPaymentsJob'));
-
-    /*
-     * Settle the payments still waiting for their operator — every 2 minutes
-     * Mobile money is confirmed by the customer on their phone, after the call that asked for it
-     * has returned: each payment carries its own next check (nextCheckAt), and fails once it is
-     * PENDING_PAYMENT_TIMEOUT_MINUTES old without a confirmation
-     */
-    schedule('*/2 * * * *', () => runScheduledJob('reconcilePendingPaymentsJob'));
-
-    /*
      * Post yesterday's figures (sign-ups and whatever a domain registers) to the staff's
      * Slack alert channel — runs daily at 07:30 (country time), before the 08:00 batch below, so
      * the day is counted once it is over and read when the staff starts. Does nothing in an
@@ -192,7 +176,7 @@ export const scheduleJobs = (serverUrl: string): void => {
     schedule('30 4 * * 0', () => runScheduledJob('purgeOldNotificationsJob'));
 
     /*
-     * Destroy the audit, moderation, SOS, ticket-message and expired-link rows past their retention
+     * Destroy the audit, moderation, ticket-message and expired-link rows past their retention
      * period (LOG_RETENTION_RULES) — runs weekly on Sunday at 04:45, after the purges above
      * so the heaviest deletions never overlap. Retention is counted in months, so weekly is plenty
      */

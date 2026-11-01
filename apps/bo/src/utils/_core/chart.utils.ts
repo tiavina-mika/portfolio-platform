@@ -43,7 +43,7 @@ export const getShareOfTotal = (value: number, total: number): number => (
 );
 
 /**
- * The tones a chart hands out to parts that carry no meaning of their own (vehicle types, payment
+ * The tones a chart hands out to parts that carry no meaning of their own (vehicle types,
  * operators): the brand tone first, then the palette's other hues, then grey for the long tail. A
  * series that does carry a meaning (a failure rate, a cancellation) picks its tone by name instead.
  */

@@ -61,7 +61,7 @@ const getAgentAndDate = (agent: IUser | undefined, date: string): string => (
  * A fact the ticket does not carry has no row rather than a placeholder, except the ways to reach
  * the requester: an agent has to be told that there is no phone number, not left to wonder whether
  * the row is missing. The two records a request may point at by person or booking sit here with
- * the other facts; the ride and the payment it points at have a card of their own.
+ * the other facts; the ride it points at has a card of its own.
  */
 const ContactDetailsCard = ({ contact }: Props) => {
   const { t } = useTranslation(['common', 'user']);

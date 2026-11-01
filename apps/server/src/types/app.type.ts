@@ -1,4 +1,3 @@
-import { PaymentServiceEnum } from '@shared/types';
 import { z } from 'zod';
 
 import type { LanguageCode } from '@shared/constants';
@@ -34,8 +33,6 @@ export type Phone = {
   code: string;
   number: string;
 };
-
-export type PaymentService = `${PaymentServiceEnum}`;
 
 export enum EnvEnum {
   DEV = 'development',

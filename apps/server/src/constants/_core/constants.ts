@@ -2,7 +2,6 @@ import {
   APP_NAME, DEFAULT_COUNTRY, DEFAULT_ROLES, HIGHEST_LEVEL_ROLES, LANGUAGE_CODES,
   LIVE_QUERY_SUBSCRIBABLE_CLASSES,
 } from '@shared/constants';
-import { CurrencyEnum } from '@shared/types';
 
 import type { ReportReason, ReportStatus } from '@/types/report.type';
 
@@ -86,8 +85,6 @@ export const USE_MASTER_KEY = { useMasterKey: true };
 export const WITHOUT_CASCADE_SAVE = { cascadeSave: false };
 export const USE_MASTER_KEY_WITHOUT_CASCADE_SAVE = { useMasterKey: true, cascadeSave: false };
 export const USE_READ_PREFERENCE = { readPreference: 'SECONDARY' };
-
-export const DEFAULT_CURRENCY = DEFAULT_COUNTRY.currency as CurrencyEnum;
 
 export const DEFAULT_QUERY_LIMIT = 50;
 
@@ -281,7 +278,6 @@ export const collections = {
   Request: 'Request',
   Vehicle: 'Vehicle',
   Notification: 'Notification',
-  Payment: 'Payment',
   User: '_User',
   Rating: 'Rating',
   Report: 'Report',
@@ -297,8 +293,6 @@ export const collections = {
   UserModerationLog: 'UserModerationLog',
   PenaltyLog: 'PenaltyLog',
   NotificationResend: 'NotificationResend',
-  RideShare: 'RideShare',
-  SosAlert: 'SosAlert',
   Counter: 'Counter',
 };
 
@@ -502,55 +496,7 @@ export const DISABLE_USER_ACCOUNT_CONFIRMATION = IS_LOCAL || IS_TEST;
 export const ENFORCE_HIGHEST_ROLES_MFA = !IS_LOCAL && !IS_TEST;
 
 export enum ERRORS {
-  NOT_ENOUGH_BALANCE = 'Not enough balance',
-  PAYMENT_FAILED = 'Payment failed',
-  PAYER_PHONE_NOT_FOUND = 'Payer phone not found',
-  RECEIVER_PHONE_NOT_FOUND = 'Receiver phone not found',
-  PAYMENT_NOT_FOUND = 'Payment not found',
-  PAYMENT_NOT_FAILED = 'Only a failed payment can be retried',
-  PAYMENT_NOT_PENDING = 'Only a payment still waiting for the operator can be checked again',
-  PAYMENT_NOT_SUCCESS = 'Only a successful payment can be reversed',
-  PAYMENT_NOT_REFUNDABLE = 'Only a settled passenger collection can be refunded',
-  PAYMENT_ALREADY_REFUNDED = 'This payment has already been refunded in full',
-  /*
-   * a booking still standing is paid out to its driver on the whole fare: refunding its collection
-   * by hand would have the platform pay the same seat twice. It is cancelled instead.
-   */
-  PAYMENT_DRIVER_ALREADY_PAID = 'The driver of this booking was already paid for the ride: it can no longer be refunded by hand',
-  /*
-   * a payout only goes to a number the driver proved to control with a code: the ride stays waiting
-   * for its payout until they confirm one, instead of sending money to an unproven number
-   */
-  PAYOUT_PHONE_NOT_VERIFIED = 'The payout number of this ride was never confirmed by its driver',
-  PAYMENT_REFUND_AMOUNT_TOO_HIGH = 'A refund cannot exceed what is left of the payment',
-  RECEIPT_NOT_AVAILABLE = 'Only a successful payment has a receipt',
-  PAYMENT_CONFIRMATION_TIMEOUT = 'The payment was not confirmed in time',
-  /*
-   * the call to the operator never came back, so nothing tells which of its transactions this was:
-   * support has to check the operator's statement before anything else is done with it
-   */
-  PAYMENT_OUTCOME_UNKNOWN = 'The operator never answered: check its statement before retrying',
-  PAYMENT_AMOUNT_MISMATCH = 'The operator confirmed another amount than the one requested',
-  /* the first attempt of a payment went through at the operator after all: sending it again would pay twice */
-  PAYMENT_ALREADY_SETTLED_AT_OPERATOR = 'The first attempt of this payment went through at the operator',
-  /* the first attempt of a payment is still waiting at the operator: sending it again would pay twice */
-  PAYMENT_STILL_PENDING_AT_OPERATOR = 'The first attempt of this payment is still waiting at the operator',
-  /* another payout of the same ride went through, or is still waiting for its operator */
-  PAYMENT_RIDE_ALREADY_PAID = 'This ride has already been paid to its driver',
-  /*
-   * the booking this collection was for is refused, expired or cancelled: paying it now would
-   * debit a passenger who has no seat, and the money would answer to no booking
-   */
-  BOOKING_CLOSED_BOOK_AGAIN = 'This booking is closed: book the ride again instead of paying again',
-  /* another refund of the same booking is already under way, or it has already been given back */
-  REQUEST_REFUND_ALREADY_CLAIMED = 'This booking is already being refunded',
-  /* nothing was ever collected for this booking, so there is no amount a refund could come out of */
-  REQUEST_COLLECTION_NOT_FOUND = 'No settled collection found for this booking',
   REQUEST_NOT_FOUND = 'Booking not found',
-  /* settled by someone else meanwhile, or never charged: neither confirming nor refunding applies */
-  REQUEST_NOT_CHARGED_PENDING = 'This booking is not a charged booking waiting to be settled',
-  /* the booking stays open and listed, so the refund can be tried again or the seat confirmed */
-  REQUEST_REFUND_REFUSED = 'The operator refused the refund: the booking was left open',
   /* writing off a driver's debt gives up real revenue: nothing is erased without a recorded why */
   PENALTY_WRITE_OFF_REASON_REQUIRED = 'A reason is required to write off a driver penalty'
 }
@@ -604,16 +550,6 @@ export const CREDENTIAL_RATE_LIMITED_PATHS = [
  * handful of people should be able to take.
  */
 export const BROADCAST_UI_RIGHT = 'broadcast';
-
-/**
- * BO "ui" right gating the Finance module — must match apps/bo's `UIRoleEnum.FINANCE`
- * (apps/bo/src/types/_core/role.type.ts).
- *
- * Kept independent from the `find` right on Payment on purpose: a role may be allowed to look up
- * an individual payment for support without seeing the platform's own retained revenue, its
- * drivers' outstanding debt or its reconciliation backlog.
- */
-export const FINANCE_UI_RIGHT = 'finance';
 
 /**
  * BO "ui" right gating the "Divers" migrations tab (data migration, recycle bin and orphaned

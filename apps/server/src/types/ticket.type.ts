@@ -17,15 +17,13 @@ export enum TicketPriorityEnum {
 export type TicketPriority = `${TicketPriorityEnum}`;
 
 /**
- * Where the ticket comes from: the public website, the app, or an SOS raised during a ride. It is
- * recorded rather than derived: a message sent from the public website by someone who happens to
- * hold an account would otherwise be indistinguishable from one written inside the app, and an
- * SOS is generated rather than written — the three are answered differently.
+ * Where the ticket comes from: the public website or the app. It is recorded rather than derived: a
+ * message sent from the public website by someone who happens to hold an account would otherwise be
+ * indistinguishable from one written inside the app — the two are answered differently.
  */
 export enum TicketSourceEnum {
   WEB = 'web',
-  APP = 'app',
-  SOS = 'sos'
+  APP = 'app'
 }
 
 export type TicketSource = `${TicketSourceEnum}`;
@@ -41,7 +39,6 @@ export type ContactObjectIds = {
   rideId?: string;
   /** the booking itself, or the passenger's booking on `rideId` */
   requestId?: string;
-  paymentId?: string;
   reportedUserId?: string;
 };
 
@@ -49,7 +46,6 @@ export type ContactObjectIds = {
 export type ContactObjects = {
   ride?: Parse.Object;
   request?: Parse.Object;
-  payment?: Parse.Object;
   reportedUser?: Parse.Object;
 };
 

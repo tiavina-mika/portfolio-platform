@@ -29,11 +29,9 @@ export const LOG_RETENTION_RULES: LogRetentionRule[] = [
   { collection: collections.MfaAuditLog, dateField: 'createdAt', months: SECURITY_LOG_RETENTION_MONTHS },
   { collection: collections.UserModerationLog, dateField: 'createdAt', months: CASE_RECORD_RETENTION_MONTHS },
   { collection: collections.PenaltyLog, dateField: 'createdAt', months: CASE_RECORD_RETENTION_MONTHS },
-  { collection: collections.SosAlert, dateField: 'createdAt', months: CASE_RECORD_RETENTION_MONTHS },
   { collection: collections.TicketMessage, dateField: 'createdAt', months: CASE_RECORD_RETENTION_MONTHS },
   // the history of a send is destroyed with its notification; this catches the ones left behind
   { collection: collections.NotificationResend, dateField: 'createdAt', months: EXPIRED_LINK_RETENTION_MONTHS },
-  { collection: collections.RideShare, dateField: 'expiresAt', months: EXPIRED_LINK_RETENTION_MONTHS },
   { collection: collections.Invitation, dateField: 'expiresAt', months: EXPIRED_LINK_RETENTION_MONTHS },
   {
     collection: collections.ImpersonationSession,

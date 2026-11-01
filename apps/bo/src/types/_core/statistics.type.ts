@@ -5,7 +5,6 @@ export enum StatisticsViewEnum {
   OVERVIEW = 'overview',
   USERS = 'users',
   RIDES = 'rides',
-  PAYMENTS = 'payments',
   VEHICLES = 'vehicles',
   CANCELLATIONS = 'cancellations',
   REPORTS = 'reports'
@@ -167,52 +166,6 @@ export interface IRideActivityHeatmapPoint {
   count: number;
 }
 
-export interface IPaymentStatisticsPoint {
-  date: string;
-  revenue: number;
-  paymentsFailed: number;
-  paymentsTotal: number;
-  failureRate: number;
-  refunds: number;
-  refundedAmount: number;
-  averageCollectionDays: number | null;
-  commission: number;
-  averageBasket: number | null;
-}
-
-export interface IPaymentServiceSharePoint {
-  service: string;
-  count: number;
-  amount: number;
-  failed: number;
-  /** percent of this operator's payments that failed */
-  failureRate: number;
-}
-
-export interface IPendingPayoutPoint {
-  driverId: string;
-  fullName: string;
-  ridesCount: number;
-  amount: number;
-  oldestAt: string;
-}
-
-export interface IPaymentsStatistics {
-  /** ISO 4217 code every amount of the report is in */
-  currency?: string;
-  points: IPaymentStatisticsPoint[];
-  previousPoints?: IPaymentStatisticsPoint[];
-  comparisons: {
-    commission: IPeriodComparison;
-    averageBasket: INullablePeriodComparison;
-    revenue: IPeriodComparison;
-    failureRate: IPeriodComparison;
-    refunds: IPeriodComparison;
-    averageCollectionDays: INullablePeriodComparison;
-  };
-  byService: IPaymentServiceSharePoint[];
-  pendingPayouts: IPendingPayoutPoint[];
-}
 
 export interface IVehicleStatisticsPoint {
   date: string;
@@ -351,7 +304,6 @@ export interface IStatisticsState {
   users: IUsersStatistics | null;
   rides: IRidesStatistics | null;
   ridesHeatmap: IRideActivityHeatmapPoint[] | null;
-  payments: IPaymentsStatistics | null;
   vehicles: IVehiclesStatistics | null;
   cancellations: ICancellationStatistics | null;
   reports: IReportsStatistics | null;

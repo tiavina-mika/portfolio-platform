@@ -184,11 +184,3 @@ export const confirmContactChangeSchema = z.object({
   code: z.string().trim().length(6),
   locale: localeFieldSchema.optional(),
 });
-
-/** A number the driver wants to be paid on, sent a code before it can receive a payout */
-export const requestPayoutPhoneVerificationSchema = z.object({
-  phone: contactChangeValueShape.phone.unwrap(),
-  locale: localeFieldSchema.optional(),
-});
-
-export const confirmPayoutPhoneVerificationSchema = confirmContactChangeSchema;

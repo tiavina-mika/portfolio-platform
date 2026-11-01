@@ -1,16 +1,15 @@
 import { MessageChannelEnum } from '@shared/types';
 import { getDisplayIdentifier, getDisplayName } from '@shared/utils';
-import dayjs from 'dayjs';
 
 import type { TFunction } from 'i18next';
 
 import {
-  SOS_TRIGGERED_TIME_FORMAT, TICKET_PRIORITY_OPTIONS, TICKET_STATUS_OPTIONS,
+  TICKET_PRIORITY_OPTIONS, TICKET_STATUS_OPTIONS,
 } from '@/constants/_core/ticket.constants';
 import { ISelectOption } from '@/types/_core/app.type';
 import { IContact } from '@/types/_core/contact.type';
 import {
-  TicketPriority, TicketSource, TicketSourceEnum, TicketStatus, TicketStatusEnum,
+  TicketPriority, TicketSource, TicketSourceEnum, TicketStatus,
 } from '@/types/_core/ticket-message.type';
 import { getUserFullName } from '@/utils/_core/user.utils';
 
@@ -81,8 +80,8 @@ export const getTicketPriorityLabelByValue = (priority: TicketPriority): string 
 
 /**
  * What the request is about, as the agent reads it: "Refund · Wrong amount", or the subject alone
- * when it takes no reason. Empty for a ticket that carries no subject — one from the website, an
- * SOS, or one filed before subjects existed.
+ * when it takes no reason. Empty for a ticket that carries no subject — one from the website, or one
+ * filed before subjects existed.
  */
 export const getTicketSubjectLabel = (contact: Pick<IContact, 'subject' | 'reason'>, t: TFunction): string => {
   if (!contact.subject) return '';
@@ -93,22 +92,3 @@ export const getTicketSubjectLabel = (contact: Pick<IContact, 'subject' | 'reaso
     ? `${subject} · ${t(`user:contacts.reasons.${contact.subject}.${contact.reason}`)}`
     : subject;
 };
-
-/** An SOS nobody has closed yet: it is still something to act on, not a record of one. */
-export const isLiveSosTicket = (contact: Pick<IContact, 'source' | 'status'>): boolean => (
-  contact.source === TicketSourceEnum.SOS && contact.status !== TicketStatusEnum.CLOSED
-);
-
-/**
- * The page of the queue with its live SOS tickets lifted to the top, each group keeping the order
- * the server sent: an alert under way must never sit below a refund question because the refund
- * was written a minute later.
- */
-export const sortLiveSosFirst = (contacts: IContact[]): IContact[] => [
-  ...contacts.filter(isLiveSosTicket),
-  ...contacts.filter((contact: IContact) => !isLiveSosTicket(contact)),
-];
-
-export const getSosTriggeredTime = (triggeredAt: string): string => (
-  dayjs(triggeredAt).format(SOS_TRIGGERED_TIME_FORMAT)
-);

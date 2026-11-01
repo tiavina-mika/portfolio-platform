@@ -6,7 +6,7 @@ import { fromBO } from '../../utils/_core/utils.cloud';
 Parse.Cloud.define(
   'getDashboardKpis',
   fromBO(async (request: Parse.Cloud.FunctionRequest): Promise<Record<string, unknown>> => (
-    getDashboardKpis(request.user!, request.params.country)
+    getDashboardKpis(request.user!)
   ))
 );
 

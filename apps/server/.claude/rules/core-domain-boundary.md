@@ -9,7 +9,7 @@ Most folders under `apps/server/src` split into a `_core/` and a `_domain/` subf
 as a generic boilerplate: delete `_domain/` and the app should still build, minus the portfolio's own domain.
 
 > **`_core/`** — code that has to keep working if `_domain/` is deleted: auth, user accounts, CMS
-> (article/page/category/contact/newsletter), notification/payment/ticket CRUD, admin/roles/security,
+> (article/page/category/contact/newsletter), notification/ticket CRUD, admin/roles/security,
 > dashboards and statistics *as a registry*.
 >
 > **`_domain/`** — code specific to this app: `Project`, plus anything that cannot run without knowing about it.

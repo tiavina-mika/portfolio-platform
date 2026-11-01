@@ -9,7 +9,6 @@ export const SLACK_ALERT_LOCALE: Locale = 'fr';
 /** One icon per kind of alert, so the channel can be scanned at a glance. */
 export const SLACK_ALERT_ICONS = {
   urgent: '🚨',
-  payment: '💸',
   document: '📄',
   report: '⚠️',
   sms: '📵',

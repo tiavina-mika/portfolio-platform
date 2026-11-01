@@ -132,19 +132,6 @@ export const createEntitySlice = <TEntity extends IEntityWithId>(name: string) =
           state.tabCounts[to] = previousTo + amount;
         }
       },
-      /*
-       * rewrites one row where it stands, unlike `updateInListSlice` which pulls it to the top.
-       * Used when the change is an outcome rather than an edit — an operator working down a run of
-       * failed payments is retrying them in the order they are reading, and a row that jumps to the
-       * front on success takes their place in the list away from them.
-       */
-      replaceInListSlice: (state, action: PayloadAction<TEntity>) => {
-        state.entities = state.entities.map((entity) => (
-          (entity as TEntity & IEntityWithId).id === action.payload.id
-            ? { ...entity, ...action.payload }
-            : entity
-        ));
-      },
       updateInListSlice: (state, action: PayloadAction<TEntity>) => {
         const newEntities: TEntity[] = [];
 

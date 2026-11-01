@@ -27,33 +27,6 @@ export const RATING_REMINDER_STATUS = 'RATING_REMINDER';
 export const RATING_REPLY_STATUS = 'RATING_REPLY';
 
 /**
- * Sent to a passenger whose booking payment the operator confirmed after the booking had already
- * been closed — the money is given straight back. Its own status rather than the booking's
- * PAYMENT_FAILED: the passenger was already told the payment had failed, so they have to read that
- * it went through after all and has been refunded, otherwise the refund looks unexplained.
- */
-export const LATE_PAYMENT_REFUNDED_STATUS = 'LATE_PAYMENT_REFUNDED';
-
-/**
- * Sent to a passenger once a refund of their booking has actually left the merchant account, with
- * the amount.
- *
- * Its own status rather than the booking's: the notice saying the booking was refused, expired or
- * cancelled is sent the moment the booking closes, which with a mobile money operator is before
- * the money moves — and none of those notices can state the amount, since a cancellation tier only
- * gives part of it back. The passenger was left to work out from their operator's statement how
- * much they had been given back, and whether they had been at all.
- */
-export const REQUEST_REFUND_PAID_STATUS = 'REQUEST_REFUND_PAID';
-
-/**
- * Sent to the driver once the payout of a closed ride is released, at the end of the passenger
- * contestation window. Its own status rather than the ride's COMPLETED: the passengers get
- * COMPLETED ("rate your ride"), the driver must read that the money has left.
- */
-export const RIDE_PAYOUT_RELEASED_STATUS = 'RIDE_PAYOUT_RELEASED';
-
-/**
  * Driver no-show report lifecycle, each sent as a request notification. Their own statuses rather
  * than the booking's: the booking stays accepted while support examines the report, and each side
  * must read what actually happened (reported, answered, confirmed, rejected), not a status change.
@@ -156,9 +129,6 @@ export const RIDE_COMPLETION_CHECK_STATUS = 'RIDE_COMPLETION_CHECK';
 export const RIDE_AUTO_COMPLETED_STATUS = 'RIDE_AUTO_COMPLETED';
 /** to the driver: their ride was closed for them, and the payout follows the contestation window */
 export const RIDE_AUTO_COMPLETED_DRIVER_STATUS = 'RIDE_AUTO_COMPLETED_DRIVER';
-
-/** Sent to a passenger once their booking payment went through and the driver has been asked. */
-export const REQUEST_PAYMENT_SUCCEEDED_STATUS = 'REQUEST_PAYMENT_SUCCEEDED';
 
 /**
  * A preventive suspension decided after reports (automatic threshold or a moderator's decision).

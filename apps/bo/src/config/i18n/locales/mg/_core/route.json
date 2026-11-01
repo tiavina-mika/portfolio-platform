@@ -20,7 +20,6 @@
   "blocks": "blocs",
   "statistics": "antontanisa",
   "statisticsUsers": "mpampiasa",
-  "statisticsPayments": "fandoavana",
   "statisticsReports": "fitarainana",
   "account": "kaonty",
   "confirmCode": "kaody/hamarinina",
@@ -38,8 +37,6 @@
   "broadcast": "fandefasana",
   "reports": "fitarainana",
   "ratings": "hevitra",
-  "payments": "fandoavana",
-  "finance": "fitantanam-bola",
   "website": {
     "articles": "lahatsoratra",
     "blog": "blogy"
@@ -55,7 +52,6 @@
     "ratings": "hevitra",
     "vehicles": "fiara",
     "collections": "vola-voaray",
-    "payouts": "vola-naloa",
     "driverNoShows": "tsy-fahatongavan-mpamily",
     "contestedNoShows": "tsy-fahatongavana-notoherina"
   },
@@ -64,6 +60,5 @@
   "statisticsCancellations": "fanafoanana",
   "rides": "làlana",
   "requests": "fangatahana",
-  "vehicles": "fiara",
-  "financeDrivers": "mpamily"
+  "vehicles": "fiara"
 }

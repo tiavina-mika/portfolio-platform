@@ -59,16 +59,6 @@ export const DESIGN_TOKENS = {
     shadowModal: '0 24px 48px rgba(15,23,42,.26)',
     // tinted chip/alert backgrounds are ~8% of the base color on light surfaces
     tintOpacity: 0.08,
-    /*
-     * an SOS is drawn in its own muted red rather than in the error palette's alert tone: it is read
-     * for minutes while the agent works the ticket, so its label is a darker red that stays calm on
-     * the tinted ground, and its edges are the error red at fixed strengths — a full outline, a
-     * fainter rule between its bands, and a ground just under the chip tint
-     */
-    sosText: '#9D3B3B',
-    sosTintOpacity: 0.06,
-    sosBorderOpacity: 0.4,
-    sosDividerOpacity: 0.15,
   },
   dark: {
     bodyBg: '#0F1623',
@@ -91,10 +81,6 @@ export const DESIGN_TOKENS = {
     shadowModal: '0 24px 48px #000000a6, 0 0 0 1px #ffffff1f',
     // dark surfaces need a stronger tint (~16%) for the color to stay readable
     tintOpacity: 0.16,
-    sosText: '#F2A0A0',
-    sosTintOpacity: 0.15,
-    sosBorderOpacity: 0.5,
-    sosDividerOpacity: 0.24,
   },
 } as const;
 

@@ -10,7 +10,6 @@ import { TicketPriorityEnum, type ContactObjectIds } from '@/types/ticket.type';
 const CONTACT_OBJECT_ID_KEYS: Record<TicketObjectEnum, keyof ContactObjectIds> = {
   [TicketObjectEnum.RIDE]: 'rideId',
   [TicketObjectEnum.BOOKING]: 'requestId',
-  [TicketObjectEnum.PAYMENT]: 'paymentId',
   [TicketObjectEnum.USER]: 'reportedUserId',
 };
 

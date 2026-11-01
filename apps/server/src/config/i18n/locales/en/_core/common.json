@@ -76,15 +76,6 @@
       "mfaReset": {
         "subject": "Two-factor authentication reset for {{target}}",
         "message": "{{actor}} reset the two-factor authentication of {{target}}."
-      },
-      "largeMoneyAction": {
-        "subject": "{{action}} of {{amount}}",
-        "message": "{{actor}} made: {{action}} of {{amount}} (reference {{reference}})."
-      },
-      "moneyActions": {
-        "refund": "Refund",
-        "payoutRelease": "Early payout to the driver",
-        "ridePassengersRefund": "Refund of the passengers of a ride"
       }
     },
     "invitationRolesFailedSubject": "Invited account created without a role",
@@ -93,8 +84,6 @@
     "reportSubmittedMessage": "Thank you for your report. Our moderation team will review it shortly.",
     "newsletterUnsubscribeConfirmationSubject": "You have been unsubscribed",
     "newsletterUnsubscribeConfirmationMessage": "You have successfully unsubscribed from the Portfolio newsletter. You will no longer receive these emails.",
-    "receiptResentSubject": "Your payment receipt",
-    "receiptResentMessage": "Please find your payment receipt attached.",
     "accountBannedSubject": "Your account has been banned",
     "accountBannedTemporary": "Your account has been banned until {{until}} for the following reason: {{reason}}.",
     "accountBannedPermanent": "Your account has been permanently banned for the following reason: {{reason}}.",
@@ -141,9 +130,6 @@
     "newDeviceLogin": "New login to your Portfolio account from: {{- deviceName}}. If this wasn't you, change your password.",
     "requestConfirmed": "Portfolio: seat confirmed, ride {{- departure}} - {{- destination}} on {{- date}}. Details in the app.",
     "bookingCanceledByDriver": "Portfolio: booking cancelled by the driver, ride {{- departure}} - {{- destination}} on {{- date}}. You have been fully refunded.",
-    "requestPaymentFailed": "Portfolio: payment failed, ride {{- departure}} - {{- destination}} on {{- date}}. No seat booked.",
-    "sosAlert": "Portfolio: {{- name}} raised an SOS alert during their ride {{- departure}} - {{- destination}} ({{- vehicle}} {{- plate}}). Support has been alerted.",
-    "sosAlertLocation": "Location: {{- url}}",
     "ticketAcknowledgement": "Portfolio: we received your request #{{reference}}. Support will answer you by SMS or phone call. Keep this number.",
     "ticketReply": "Portfolio support, request #{{reference}}: {{- message}}"
   },
@@ -177,8 +163,6 @@
     "unauthorized": "Unauthorized",
     "unauthorizedToDoThisAction": "You are not authorized to perform this action",
     "pleaseLogin": "You need to login to perform this action",
-    "receiptRecipientHasNoEmail": "This member has no email address: the receipt cannot be sent.",
-    "receiptEmailNotSent": "The receipt could not be sent. Please try again later.",
     "cannotActOnHigherRole": "You cannot act on the account of an owner or a super administrator.",
     "notificationReadOnly": "Notifications can only be changed by the server.",
     "reportAlreadySubmitted": "You have already reported this item recently.",
@@ -220,8 +204,6 @@
     "phoneNumberAlreadyUsed": "This phone number is already linked to an account. Please log in instead.",
     "invalidSignUp": "Invalid sign-up. Please try again from the app.",
     "noVerificationPending": "No verification is pending for this account.",
-    "payoutPhoneAlreadyVerified": "This number is already confirmed for your payouts.",
-    "payoutPhoneLimitReached": "You have reached the maximum number of payout numbers. Contact support to change one.",
     "accountHelpPhoneNotPending": "This member's phone number is already verified or missing: there is no code to resend.",
     "accountHelpNoContactForReset": "This member has no verified phone number and no email: change their contact first.",
     "verificationLocked": "Too many failed attempts. Please request a new verification code.",
@@ -263,17 +245,6 @@
   "cms": {
     "codeAlreadyUsed": "This technical code is already used by \"{{- name}}\". Choose another one."
   },
-  "receipt": {
-    "title": "Payment receipt",
-    "recipient": "Recipient",
-    "issuedAt": "Issued on",
-    "amount": "Amount",
-    "service": "Payment method",
-    "transactionId": "Transaction reference",
-    "rideDate": "Ride date",
-    "totalPrice": "Ride total price",
-    "disclaimer": "This document is a receipt attesting that a payment took place. It is not an invoice."
-  },
   "docsAccess": {
     "sections": {
       "features": "Features documentation",
@@ -294,7 +265,6 @@
     "dailySummaryFigure": "{{- label}}: {{- value}}",
     "dailySummaryNewUsers": "Sign-ups",
     "dailySummaryRidesPublished": "Rides published",
-    "dailySummaryBookings": "Confirmed bookings",
-    "dailySummarySosAlerts": "SOS alerts"
+    "dailySummaryBookings": "Confirmed bookings"
   }
 }

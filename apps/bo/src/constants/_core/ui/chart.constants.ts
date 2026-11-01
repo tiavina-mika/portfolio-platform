@@ -37,7 +37,7 @@ export const DASHBOARD_SECTION_TITLE_GAP = 12;
 export const DASHBOARD_SECTION_TITLE_ICON_GAP = 8;
 export const DASHBOARD_SECTION_TITLE_ICON_SIZE = 18;
 export const DASHBOARD_CARDS_GAP = 16;
-// the two alert cards — failed payments and open reports — stand side by side on a wide screen
+// the alert cards stand side by side on a wide screen
 export const DASHBOARD_ALERTS_COLUMNS = 2;
 // an activity column is titled from above, closer to its card than the band heading is to the columns
 export const DASHBOARD_COLUMN_TITLE_GAP = 10;
@@ -62,8 +62,6 @@ export const DASHBOARD_ALERT_BODY_PADDING_TOP = 4;
 export const DASHBOARD_ALERT_BODY_PADDING_BOTTOM = 8;
 export const DASHBOARD_ALERT_ROW_PADDING_Y = 11;
 export const DASHBOARD_ALERT_ROW_GAP = 10;
-// a gateway failure message is free text — it is cut rather than allowed to push the amount out
-export const DASHBOARD_ALERT_CHIP_MAX_WIDTH = 200;
 export const DASHBOARD_ACTIVITY_BODY_PADDING_Y = 8;
 export const DASHBOARD_ACTIVITY_BODY_PADDING_X = 12;
 export const DASHBOARD_ACTIVITY_ROW_PADDING_Y = 8;

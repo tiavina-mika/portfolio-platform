@@ -18,9 +18,7 @@ The keep-awake ping runs outside local development and outside Cloud Run. The bu
 | Schedule (server time unless noted) | Job | What |
 |---|---|---|
 | `*/14 * * * *` | none (calls `/ping`) | Keeps a free hosting plan awake. Not in local development, not on Cloud Run |
-| `*/2 * * * *` | `reconcilePendingPaymentsJob` | Settles the payments still waiting for their operator |
 | `*/5 * * * *` | `revokeExpiredImpersonationSessionsJob` | Revokes expired "login as" sessions |
-| `25 * * * *` | `retryFailedPlatformPaymentsJob` | Retries the payments owed and not sent |
 | `0 2 * * *` | `expireOldNotificationsJob` | Soft-deletes notifications older than 365 days |
 | `30 2 * * *` | `purgeOrphanedEditorFilesJob` | Deletes the Cloudinary images of the CMS editor that no Page or Article references (older than 24 hours only) |
 | `30 3 * * *` | `purgeUnverifiedPhoneSignupsJob` | Destroys sign-ups that never confirmed their phone number |

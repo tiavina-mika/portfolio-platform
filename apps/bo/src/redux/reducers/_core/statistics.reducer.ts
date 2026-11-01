@@ -4,7 +4,6 @@ import {
   ICancellationReasonPoint,
   ICancellationStatistics,
   IOverviewStatistics,
-  IPaymentsStatistics,
   IRideActivityHeatmapPoint,
   IReportsStatistics,
   IRidesStatistics,
@@ -19,7 +18,6 @@ const initialState: IStatisticsState = {
   users: null,
   rides: null,
   ridesHeatmap: null,
-  payments: null,
   vehicles: null,
   cancellations: null,
   reports: null,
@@ -57,12 +55,6 @@ export const statistics = createSlice({
       action: PayloadAction<IRideActivityHeatmapPoint[]>
     ) => {
       state.ridesHeatmap = action.payload;
-    },
-    loadPaymentsStatisticsSlice: (
-      state: IStatisticsState,
-      action: PayloadAction<IPaymentsStatistics>
-    ) => {
-      state.payments = action.payload;
     },
     loadVehiclesStatisticsSlice: (
       state: IStatisticsState,
@@ -113,9 +105,6 @@ export const statistics = createSlice({
       state.rides = null;
       state.ridesHeatmap = null;
     },
-    clearPaymentsStatisticsSlice: (state: IStatisticsState) => {
-      state.payments = null;
-    },
     clearVehiclesStatisticsSlice: (state: IStatisticsState) => {
       state.vehicles = null;
     },
@@ -135,7 +124,6 @@ export const {
   loadUsersStatisticsSlice,
   loadRidesStatisticsSlice,
   loadRidesHeatmapSlice,
-  loadPaymentsStatisticsSlice,
   loadVehiclesStatisticsSlice,
   loadCancellationStatisticsSlice,
   loadReportsStatisticsSlice,
@@ -147,7 +135,6 @@ export const {
   clearOverviewStatisticsSlice,
   clearUsersStatisticsSlice,
   clearRidesStatisticsSlice,
-  clearPaymentsStatisticsSlice,
   clearVehiclesStatisticsSlice,
   clearReportsStatisticsSlice,
   clearCancellationStatisticsSlice,
@@ -171,9 +158,6 @@ export const getRidesStatisticsSelector = (
 export const getRidesHeatmapSelector = (
   state: Record<string, any>
 ): IRideActivityHeatmapPoint[] | null => state.statistics.ridesHeatmap;
-export const getPaymentsStatisticsSelector = (
-  state: Record<string, any>
-): IPaymentsStatistics | null => state.statistics.payments;
 export const getVehiclesStatisticsSelector = (
   state: Record<string, any>
 ): IVehiclesStatistics | null => state.statistics.vehicles;

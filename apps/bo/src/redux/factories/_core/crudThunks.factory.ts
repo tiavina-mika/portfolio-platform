@@ -32,7 +32,7 @@ interface ICrudSliceActions<TEntity extends IEntityWithId> {
   clearCountSlice: ActionCreatorWithoutPayload;
   // omit when the entity has no single soft-delete (ex: vehicle, page section — bulk-toggle only)
   removeFromListSlice?: ActionCreatorWithPayload<string>;
-  // omit when the entity has no bulk-toggle (ex: payment, notification)
+  // omit when the entity has no bulk-toggle (ex: notification)
   removeManyFromListSlice?: ActionCreatorWithPayload<string[]>;
   /*
    * omit when the list endpoint does not report per-tab totals — the strip then carries labels

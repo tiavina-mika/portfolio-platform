@@ -9,7 +9,6 @@ import './_core/newsletter.triggers';
 import './_core/notification.triggers';
 import './_core/page.triggers';
 import './_core/pageSection.triggers';
-import './_core/payment.triggers';
 import './_core/report.triggers';
 import './_core/role.triggers';
 import './_core/ticket-message.triggers';

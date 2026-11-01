@@ -4,12 +4,10 @@ import { lazy } from 'react';
 import {
   loadCancellationStatistics,
   loadOverviewStatistics,
-  loadPaymentsStatistics,
   loadReportsStatistics,
   loadUsersStatistics,
   onCancellationsStatisticsEnter,
   onOverviewStatisticsEnter,
-  onPaymentsStatisticsEnter,
   onReportsStatisticsEnter,
   onUsersStatisticsEnter,
 } from '@/redux/actions/_core/statistics.action';
@@ -20,7 +18,6 @@ import { periodRouteSearchParams } from '@/validations/_core/app.validations';
 
 const Overview = lazy(() => import('@/pages/_core/statistics/Overview'));
 const Users = lazy(() => import('@/pages/_core/statistics/Users'));
-const Payments = lazy(() => import('@/pages/_core/statistics/Payments'));
 const Cancellations = lazy(() => import('@/pages/_core/statistics/Cancellations'));
 const Reports = lazy(() => import('@/pages/_core/statistics/Reports'));
 
@@ -48,18 +45,6 @@ export const statisticsUsersRoute = createRoute({
   loader: onLoad(({ deps }) => loadUsersStatistics(deps.period)),
   path: PATH_NAMES.statistics.users,
 });
-
-
-export const statisticsPaymentsRoute = createRoute({
-  validateSearch: search => periodRouteSearchParams.parse(search),
-  loaderDeps: ({ search }) => ({ period: search.period }),
-  getParentRoute: () => privateLayout,
-  component: Payments,
-  beforeLoad: onEnter(onPaymentsStatisticsEnter),
-  loader: onLoad(({ deps }) => loadPaymentsStatistics(deps.period)),
-  path: PATH_NAMES.statistics.payments,
-});
-
 
 export const statisticsCancellationsRoute = createRoute({
   validateSearch: search => periodRouteSearchParams.parse(search),

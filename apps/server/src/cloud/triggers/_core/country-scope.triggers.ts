@@ -53,7 +53,7 @@ const getAllowedCountriesOf = async (user: Parse.User): Promise<string[] | null>
 
 /*
  * Every read made with the session of a back-office user whose roles cover only some countries is
- * narrowed to them, `get` by id included — which is how the back-office opens a ride, a payment or
+ * narrowed to them, `get` by id included — which is how the back-office opens a ride or
  * a ticket. A read made with the master key is the server itself and is never narrowed: the
  * functions that use it scope their own lists.
  */

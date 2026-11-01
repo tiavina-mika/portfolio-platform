@@ -223,8 +223,8 @@ export const getUserNameLines = (
 };
 
 /**
- * full name for a partial user snapshot (firstName/lastName only, e.g. a `Payment.snapshot`
- * payer/receiver or a paginated list projection) — unlike `getUserFullName`, does not require a
+ * full name for a partial user snapshot (firstName/lastName only, e.g. a record snapshot
+ * owner or a paginated list projection) — unlike `getUserFullName`, does not require a
  * full `IUser`
  * @param user
  * @returns

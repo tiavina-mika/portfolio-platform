@@ -1,10 +1,8 @@
-import type { IPayment } from '@/types/_core/payment.type';
 import type { ReportReason, ReportStatus } from '@/types/_core/report.type';
 import type {
   ITicketMessage, TicketPriority, TicketSource, TicketStatus,
 } from '@/types/_core/ticket-message.type';
 import type { IUser } from '@/types/_core/user.type';
-import type { RideUserTypeEnum, SosSmsStatusEnum } from '@shared/domain-types';
 import type { TicketSubjectEnum } from '@shared/types';
 
 
@@ -73,7 +71,6 @@ export interface IContactAttributes {
    * the records the requester attached in the app, checked to be theirs when the ticket was filed —
    * absent on older tickets and on subjects that attach nothing
    */
-  payment?: IncludedRecord<IPayment>;
   reportedUser?: IUser;
 }
 
@@ -96,33 +93,6 @@ export interface ITicketRequesterContext {
   reviewsCount: number;
 }
 
-/** The SOS behind a ticket the SOS opened — what the agent needs to call the right people */
-export interface ITicketSosContext {
-  triggeredAt: string;
-  role: RideUserTypeEnum;
-  /** the ride was still booked: the driver never declared it under way in the app */
-  isRideNotStarted: boolean;
-  ride: {
-    id: string;
-    departureLabel: string;
-    destinationLabel: string;
-    departureAt?: string;
-    vehicleLabel: string;
-    plate: string;
-    driverName: string;
-    /** the member who raised it when a passenger did, every accepted passenger when the driver did */
-    passengerNames: string[];
-  } | null;
-  location: { latitude: number; longitude: number; mapUrl: string } | null;
-  smsStatus: SosSmsStatusEnum;
-  /** the contact as it was when the SOS went out — it may have changed since */
-  emergencyContact: {
-    name: string;
-    relationship: string;
-    phone: { code: string; number: string };
-  } | null;
-}
-
 /** The report behind a ticket a report on a ride opened — enough to read where it stands and open it */
 export interface ITicketReportContext {
   id: string;
@@ -133,8 +103,6 @@ export interface ITicketReportContext {
 export interface ITicketContext {
   requester: ITicketRequesterContext | null;
   previousTickets: IContact[];
-  /** null on every ticket that was not opened by an SOS */
-  sosAlert?: ITicketSosContext | null;
   /** null on every ticket that was not opened by a report */
   report?: ITicketReportContext | null;
 }

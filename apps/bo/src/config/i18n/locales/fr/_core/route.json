@@ -32,14 +32,11 @@
   "miscellaneous": "divers",
   "statistics": "statistiques",
   "statisticsUsers": "utilisateurs",
-  "statisticsPayments": "paiements",
   "statisticsReports": "signalements",
   "notifications": "notifications",
   "broadcast": "diffusion",
   "reports": "signalements",
   "ratings": "avis",
-  "payments": "paiements",
-  "finance": "finance",
   "website": {
     "articles": "articles",
     "blog": "blog"
@@ -55,7 +52,6 @@
     "ratings": "avis",
     "vehicles": "vehicules",
     "collections": "encaissements",
-    "payouts": "reversements",
     "driverNoShows": "absences-conducteur",
     "contestedNoShows": "absences-contestees"
   },
@@ -64,6 +60,5 @@
   "vehicles": "vehicules",
   "statisticsRides": "trajets",
   "statisticsVehicles": "vehicules",
-  "statisticsCancellations": "annulations",
-  "financeDrivers": "conducteurs"
+  "statisticsCancellations": "annulations"
 }

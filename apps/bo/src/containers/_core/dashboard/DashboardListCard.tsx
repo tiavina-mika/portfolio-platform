@@ -182,7 +182,7 @@ type Props = {
 
 /**
  * A short list of the dashboard: the few latest rows of something, then the way to its full list.
- * An empty card states no tone — no failed payment is good news, not a warning — and an empty
+ * An empty card states no tone — nothing to act on is good news, not a warning — and an empty
  * activity column names itself in its own head, since the card is then all there is of it.
  */
 const DashboardListCard = ({

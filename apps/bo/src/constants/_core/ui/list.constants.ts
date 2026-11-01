@@ -188,8 +188,8 @@ export const TABLE_HEAD_LETTER_SPACING = 0.3;
 export const TABLE_CHECKBOX_COLUMN_WIDTH = 44;
 /*
  * THE ROW THAT OPENS — a list whose rows carry more than a row can show, and whose reader has to
- * decide on one without leaving the list (a payment ledger: the failure message, the attempts, the
- * two accounts the money moved between, then the actions). The caret takes a gutter of its own
+ * decide on one without leaving the list (the failure message, the attempts, the
+ * accounts involved, then the actions). The caret takes a gutter of its own
  * rather than sitting inside the first cell: the head row leaves the same gutter empty, so every
  * column label stays over its own column whether a row is open or not.
  */

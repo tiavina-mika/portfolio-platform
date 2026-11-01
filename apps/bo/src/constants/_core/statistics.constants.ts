@@ -24,10 +24,6 @@ export const STATISTICS_VIEWS = [
   },
   { view: StatisticsViewEnum.USERS, labelKey: 'user:users', className: COLLECTIONS.user, order: 10 },
   {
-    view: StatisticsViewEnum.PAYMENTS, labelKey: 'user:payments.payments',
-    className: COLLECTIONS.payment, order: 30,
-  },
-  {
     view: StatisticsViewEnum.CANCELLATIONS, labelKey: 'statistics:cancellations',
     uiRight: UIRoleEnum.STATISTICS, order: 50,
   },
@@ -46,8 +42,6 @@ export const EXPIRING_DOCUMENT_CRITICAL_DAYS = 7;
 // the overview has no period switch: it always reads the last twelve months, a bucket per month
 export const OVERVIEW_STATISTICS_PERIOD: StatisticsPeriod = '12m';
 
-// the key the server groups payments under when the operator was never recorded on them
-export const UNKNOWN_PAYMENT_SERVICE = 'unknown';
 
 // a table cell with no figure to state — distinct from a 0, which is a figure
 export const STATISTICS_EMPTY_CELL = '—';

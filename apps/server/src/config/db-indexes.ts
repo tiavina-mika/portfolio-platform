@@ -103,15 +103,8 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
     // purgeOldNotificationsJob (notification.service.cloud.ts)
     { spec: { deleted: 1, deletedAt: 1 } },
     /*
-     * the sends of one booking, newest first — what the back-office payment page lists
-     * (payment-notification.service.cloud.ts). A notification points at no booking: the booking
-     * travels in its payload, whose shape is fixed per type.
-     */
-    { spec: { 'payload.request.id': 1, _created_at: -1 } },
-    /*
-     * Idempotency guarantee at the database level, same reasoning as Payment's `paymentIntentId`
-     * below: `idempotencyKey` names the one notification an event may produce, and every scheduled
-     * job that can replay an announcement sets it (see buildNotificationIdempotencyKey). `unique`
+     * Idempotency guarantee at the database level: `idempotencyKey` names the one notification an
+     * event may produce, and every scheduled job that can replay an announcement sets it (see buildNotificationIdempotencyKey). `unique`
      * is what makes the second run a no-op rather than a second reminder in everyone's inbox — the
      * guard fields the jobs write are a separate save, so a crash between the two used to re-notify
      * the whole audience on the next tick.
@@ -140,70 +133,6 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
     { spec: { email: 1 } },
     // confirmNewsletterSubscription: the double opt-in link is looked up by its token's hash
     { spec: { confirmationTokenHash: 1 }, options: { sparse: true } },
-  ],
-  [collections.Payment]: [
-    /*
-     * Idempotency guarantee at the database level (not just applicative check-then-act):
-     * `paymentIntentId` is the gateway-issued transaction reference, set once a payment
-     * reaches SUCCESS (see processAndCreatePayment/retryPaymentAPI). `unique` rejects a second
-     * Payment row from ever recording the same gateway transaction twice — a replayed webhook once
-     * real providers are wired up. It does not stop a payment being *sent* twice: a real operator
-     * issues a new reference per call, so that is `idempotencyKey`'s job, below. `sparse` because PENDING/FAILED payments (or ones that never reached the gateway)
-     * have no `paymentIntentId` yet, and MongoDB unique indexes reject duplicate *missing*
-     * values too unless the index is sparse.
-     */
-    { spec: { paymentIntentId: 1 }, options: { unique: true, sparse: true } },
-    /*
-     * One money movement, one payment: `collect:<requestId>` names the collection of a booking and
-     * `payout:<rideId>` the payout of a ride, which never legitimately happen twice. A second
-     * payment asking for the same key is answered with the first instead of being sent to the
-     * operator again. `sparse` because refunds, which can repeat, carry no key.
-     */
-    { spec: { idempotencyKey: 1 }, options: { unique: true, sparse: true } },
-    // the references of the earlier attempts of a retried payment, so a late answer still matches
-    { spec: { previousReferences: 1 }, options: { sparse: true } },
-    // payments failed on their deadline still read at the operator (payment-settlement.service.cloud.ts)
-    { spec: { status: 1, failureCode: 1, failedAt: 1 } },
-    BADGE_COUNT_INDEX,
-    // the failed-payment badge counts a status subset of the same collection
-    { spec: { deleted: 1, status: 1 } },
-    // payments owed by the platform due for an automatic retry (payment-retry.service.cloud.ts)
-    { spec: { status: 1, nextAutoRetryAt: 1 } },
-    // payments waiting for their operator, due for a check (payment-settlement.service.cloud.ts)
-    { spec: { status: 1, nextCheckAt: 1 } },
-    /*
-     * the operator's own transaction reference, known from its first answer — before the payment
-     * succeeds, unlike `paymentIntentId`. What an operator's status answer or webhook is matched
-     * on; `sparse` for the payments that never reached the operator.
-     */
-    { spec: { providerReference: 1 }, options: { unique: true, sparse: true } },
-    // final payments whose follow-up never finished, taken over by the reconciliation job
-    { spec: { status: 1, settledAt: 1 } },
-    /*
-     * a member's payment history: one branch per side of the `$or` (payer / receiver), newest
-     * first; the type / status / period filters narrow inside that range
-     */
-    { spec: { _p_payer: 1, deleted: 1, _created_at: -1 } },
-    { spec: { _p_receiver: 1, deleted: 1, _created_at: -1 } },
-    // payments statistics and the overview revenue, both scoped to a type and a period
-    // (payment-statistics.service.cloud.ts)
-    { spec: { type: 1, status: 1, _created_at: 1 } },
-    // average collection delay, bucketed on when a passenger payment succeeded
-    // (payment-statistics.service.cloud.ts)
-    { spec: { type: 1, status: 1, successAt: 1 } },
-    // pending driver payouts: looks up a completed ride's successful payout by its ride pointer
-    // (payment-statistics.service.cloud.ts)
-    { spec: { _p_ride: 1, type: 1, status: 1 } },
-    // the refunds of one collection, for the back-office payment page (ride-payment-cycle.service.cloud.ts)
-    { spec: { _p_refundOf: 1 } },
-    /*
-     * The money of one booking: its collection, and the refunds that came out of it
-     * (getBookingCollection, getPaymentsByRequestId, closeStalePendingRequests). Every refund of a
-     * booking now starts by finding that collection, so this is on the path of every cancellation,
-     * refusal and timeout — and it is what let `closeStalePendingRequests` stop looking a page of
-     * rides at a time.
-     */
-    { spec: { _p_request: 1, type: 1, status: 1 } },
   ],
   [collections.User]: [
     BADGE_COUNT_INDEX,
@@ -382,7 +311,7 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
   [collections.MfaAuditLog]: [{ spec: { userId: 1, _created_at: -1 } }],
   [collections.ImpersonationSession]: [
     { spec: { _p_targetUser: 1, _created_at: -1 } },
-    // isImpersonatedSessionService — looked up on every payment and user save
+    // isImpersonatedSessionService — looked up on every user save
     { spec: { sessionToken: 1 } },
   ],
   [collections.UserAuditLog]: [{ spec: { userId: 1, _created_at: -1 } }],

@@ -44,13 +44,6 @@ export type NotificationSnapshot = {
   vehicle?: { id: string; brand?: string; model?: string };
   /** carried by a driver's cancellation penalty: what they owe and until when they are suspended */
   penalty?: { amount?: number; suspensionEnd?: DateType };
-  /**
-   * carried by the notice that a refund has actually reached the passenger. The amount is the one
-   * thing the notice is for: the booking's own notice ("expired", "refused", "cancelled") is sent
-   * when the booking closes, which with a mobile money operator is well before the money arrives
-   * and before anybody knows how much of it a cancellation tier left.
-   */
-  refund?: { amount?: number };
   /** carried by a passenger's cancellation suspension: when they can book again */
   suspension?: { until?: DateType };
   /**

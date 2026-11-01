@@ -16,8 +16,6 @@ export interface IStatisticsContext {
   previousMonths: string[];
   /** ISO 3166-1 alpha-2 code of the country every figure of the overview is read for */
   country: string;
-  /** ISO 4217 code the money figures are summed in: amounts of two currencies are never added up */
-  currency: string;
 }
 
 export type StatisticsPoint = {
@@ -37,17 +35,14 @@ export type OverviewStatisticsContribution = {
   comparisons: Record<string, NullablePeriodComparison>;
 };
 
-export type OverviewStatistics = OverviewStatisticsContribution & {
-  /** ISO 4217 code the money figures are in */
-  currency: string;
-};
+export type OverviewStatistics = OverviewStatisticsContribution;
 
 type OverviewStatisticsProvider = (context: IStatisticsContext) => Promise<OverviewStatisticsContribution>;
 
 const overviewStatisticsProviders: OverviewStatisticsProvider[] = [];
 
 /**
- * Lets each business domain (users, rides/requests, payments, ...) contribute its own
+ * Lets each business domain (users, rides/requests, ...) contribute its own
  * monthly time-series points and headline comparisons to the "overview" statistics page, without
  * this generic service knowing about domain-specific types.
  */
@@ -111,20 +106,18 @@ export const getOverviewStatistics = async (
     STATISTICS_TIME_ZONE,
     'month'
   );
-  const { code, currency } = resolveScopedCountry(country);
+  const { code } = resolveScopedCountry(country);
   const context: IStatisticsContext = {
     months,
     since,
     previousSince: shiftInZone(since, STATISTICS_TIME_ZONE, -months, 'month'),
     previousMonths: buildPreviousMonthRange(months),
     country: code,
-    currency,
   };
 
   const contributions = await Promise.all(overviewStatisticsProviders.map((provider) => provider(context)));
 
   return {
-    currency: context.currency,
     points: mergeStatisticsPoints(buildEmptyMonthRange(months), contributions.map((c) => c.points)),
     previousPoints: mergeStatisticsPoints(context.previousMonths, contributions.map((c) => c.previousPoints)),
     comparisons: contributions.reduce<Record<string, NullablePeriodComparison>>(

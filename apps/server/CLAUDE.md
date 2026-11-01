@@ -40,7 +40,7 @@ pnpm build:bo            # build bo (prod) then copy it into the server (pnpm co
 
 ```
 src/
-├── api/            # External API integrations (Cloudinary, payment)
+├── api/            # External API integrations (Cloudinary)
 ├── cloud/          # Parse Cloud Code
 │   ├── emails/     # E-mail builders sent from Cloud Code
 │   ├── functions/  # Cloud Functions — orchestration only, one file per domain

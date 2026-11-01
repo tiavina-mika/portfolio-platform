@@ -43,7 +43,7 @@ export type TicketContext = {
 };
 
 /**
- * Adds a block of its own to the context of a ticket (e.g. the SOS a ticket was opened by). The
+ * Adds a block of its own to the context of a ticket. The
  * inbox is generic: a domain that opens tickets registers what the agent needs to see about them
  * rather than this service reading domain collections itself.
  * @returns the blocks to merge into the context — an empty object when the ticket is not theirs

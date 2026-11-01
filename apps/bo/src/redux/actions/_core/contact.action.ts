@@ -1,11 +1,10 @@
 import dayjs from 'dayjs';
 
 import i18n from '@/config/i18n';
-import { COLLECTIONS, PAGINATION, Errors } from '@/constants/_core/app.constants';
+import { PAGINATION, Errors } from '@/constants/_core/app.constants';
 import {
-  CONTACT_INBOX_PAGE_SIZE, CONTACT_INBOX_SORT, SOS_NOTIFICATION_KEY,
+  CONTACT_INBOX_PAGE_SIZE, CONTACT_INBOX_SORT,
 } from '@/constants/_core/ticket.constants';
-import { refreshNotification } from '@/redux/actions/_core/app.action';
 import {
   onEnterActionWithLoader, actionWithLoader, clearListUnlessLoadedWith, rememberListQuery,
 } from '@/redux/actions/_core/util.action';
@@ -36,7 +35,7 @@ import {
 import { AppDispatch, AppThunkAction, RootState } from '@/redux/store';
 import { fetchCurrentUserSessionToken } from '@/services/_core/auth.service';
 import {
-  assignTicketService, fetchContact, fetchContactSummary, fetchOpenSosTicketsCount, fetchTicketAgents,
+  assignTicketService, fetchContact, fetchContactSummary, fetchTicketAgents,
   fetchTicketContext,
   markContactAsReplied, fetchTicketMessages, sendTicketMessageService,
   updateTicketStatusService, updateTicketPriorityService, markTicketAsSeenByAdmin,
@@ -44,7 +43,7 @@ import {
 import { fetchEntityList } from '@/services/_core/crud.service';
 import { IExportColumn } from '@/types/_core/app.type';
 import { IContact, IContactInboxFilters } from '@/types/_core/contact.type';
-import { TicketPriority, TicketSourceEnum, TicketStatus } from '@/types/_core/ticket-message.type';
+import { TicketPriority, TicketStatus } from '@/types/_core/ticket-message.type';
 import { displayDate } from '@/utils/_core/date.utils';
 import { uploadFilesAPI } from '@/utils/_core/file.utils';
 import { PATH_NAMES } from '@/utils/_core/pathnames';
@@ -356,27 +355,12 @@ export const sendTicketMessage = (
   });
 };
 
-/**
- * recounts the SOS alerts support has not closed yet, in the background — the dedicated SOS badge
- * of the notification centre. Polled: `Contact` is read through a role, which a LiveQuery
- * subscription cannot follow.
- */
-export const refreshOpenSosTicketsCount = (): any => refreshNotification(COLLECTIONS.contact, {
-  key: SOS_NOTIFICATION_KEY,
-  fetchCount: fetchOpenSosTicketsCount,
-});
-
 export const updateTicketStatus = (ticketId: string, status: TicketStatus): any => {
   return actionWithLoader(async (dispatch: AppDispatch): Promise<void> => {
     const updatedContact = await updateTicketStatusService(ticketId, status);
 
     dispatch(loadContactSlice(updatedContact));
     dispatch(updateContactInListSlice(updatedContact));
-
-    // closing an SOS takes it off the SOS badge now rather than at the next poll
-    if (updatedContact.source === TicketSourceEnum.SOS) {
-      dispatch(refreshOpenSosTicketsCount());
-    }
   });
 };
 

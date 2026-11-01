@@ -6,10 +6,6 @@ import { TicketObjectEnum, TicketSubjectEnum, TicketSubjectGroupEnum } from '@sh
  */
 export const TICKET_SUBJECT_GROUPS = [
   {
-    group: TicketSubjectGroupEnum.MONEY,
-    subjects: [TicketSubjectEnum.REFUND, TicketSubjectEnum.PAYMENT],
-  },
-  {
     group: TicketSubjectGroupEnum.RIDE,
     subjects: [
       TicketSubjectEnum.BOOKING,
@@ -36,13 +32,6 @@ export const TICKET_SUBJECT_GROUPS = [
  * dilute the back-office statistics.
  */
 export const TICKET_SUBJECT_REASONS: Record<TicketSubjectEnum, readonly string[]> = {
-  [TicketSubjectEnum.REFUND]: [
-    'cancelled_by_driver', 'cancelled_by_me', 'booking_cancelled_by_driver', 'penalty_disputed',
-    'wrong_amount',
-  ],
-  [TicketSubjectEnum.PAYMENT]: [
-    'charged_without_booking', 'charged_twice', 'payment_failed', 'earnings_not_paid', 'commission',
-  ],
   [TicketSubjectEnum.BOOKING]: ['cancelled_by_driver', 'invitation', 'change', 'cancel'],
   [TicketSubjectEnum.RIDE_ISSUE]: [
     'driver_no_show', 'delay', 'route_changed', 'passenger_no_show', 'different_vehicle', 'different_price',
@@ -61,11 +50,10 @@ export const TICKET_SUBJECT_REASONS: Record<TicketSubjectEnum, readonly string[]
 
 /**
  * The (subject, reason) pairs support must see first: a security flaw must not sit in the queue,
- * and a double charge is money the requester is missing right now. Any other request is medium.
+ * and a safety report must be read first. Any other request is medium.
  */
 export const TICKET_HIGH_PRIORITY_REASONS: Partial<Record<TicketSubjectEnum, readonly string[]>> = {
   [TicketSubjectEnum.TECH]: ['security_flaw'],
-  [TicketSubjectEnum.PAYMENT]: ['charged_twice', 'charged_without_booking'],
   [TicketSubjectEnum.SAFETY]: TICKET_SUBJECT_REASONS[TicketSubjectEnum.SAFETY],
 };
 
@@ -81,8 +69,6 @@ type TicketSubjectObject = {
  * verification or an account question is about the account itself).
  */
 export const TICKET_SUBJECT_OBJECTS: Partial<Record<TicketSubjectEnum, readonly TicketSubjectObject[]>> = {
-  [TicketSubjectEnum.REFUND]: [{ object: TicketObjectEnum.RIDE, required: true }],
-  [TicketSubjectEnum.PAYMENT]: [{ object: TicketObjectEnum.PAYMENT, required: true }],
   [TicketSubjectEnum.BOOKING]: [{ object: TicketObjectEnum.BOOKING, required: true }],
   [TicketSubjectEnum.RIDE_ISSUE]: [{ object: TicketObjectEnum.RIDE, required: true }],
   [TicketSubjectEnum.PUBLISH]: [{ object: TicketObjectEnum.RIDE, required: false }],

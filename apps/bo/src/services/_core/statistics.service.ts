@@ -4,7 +4,6 @@ import {
   ICancellationReasonPoint,
   ICancellationStatistics,
   IOverviewStatistics,
-  IPaymentsStatistics,
   IReportsStatistics,
   IRideActivityHeatmapPoint,
   IRidesStatistics,
@@ -39,12 +38,6 @@ export const fetchRidesActivityHeatmap = async (
   return Parse.Cloud.run('getRidesActivityHeatmap', { period, country });
 };
 
-export const fetchPaymentsStatistics = async (
-  period?: StatisticsPeriod,
-  country?: string
-): Promise<IPaymentsStatistics> => {
-  return Parse.Cloud.run('getPaymentsStatistics', { period, country });
-};
 
 export const fetchVehiclesStatistics = async (
   period?: StatisticsPeriod,

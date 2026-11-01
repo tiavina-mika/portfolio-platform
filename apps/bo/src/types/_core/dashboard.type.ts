@@ -1,4 +1,3 @@
-import type { IPayment } from '@/types/_core/payment.type';
 import type { IReport } from '@/types/_core/report.type';
 import type { IUser } from '@/types/_core/user.type';
 
@@ -16,17 +15,9 @@ export type DashboardRow<T> = T & { objectId: string };
 export interface IDashboardKpis {
   totalUsers?: number;
   newUsersThisWeek?: number;
-  monthRevenue?: number;
-  /** ISO 4217 code of `monthRevenue`, absent on a server that does not send it yet */
-  monthRevenueCurrency?: string;
-  monthPaymentsCount?: number;
 }
 
 export interface IDashboardAlerts {
-  // the latest few only — the card links to the full list for the rest
-  failedPayments?: DashboardRow<IPayment>[];
-  // the whole backlog, which is what the card's count states
-  failedPaymentsCount?: number;
   openReports?: IReport[];
   openReportsCount?: number;
 }

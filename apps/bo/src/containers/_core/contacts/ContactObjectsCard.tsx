@@ -15,7 +15,6 @@ import { IAddress } from '@/types/_core/user.type';
 import { displayDate, getParseDateValue } from '@/utils/_core/date.utils';
 import { PATH_NAMES } from '@/utils/_core/pathnames';
 import { getDesignTokens } from '@/utils/_core/theme/tokens.utils';
-import { formatPriceWithCurrency } from '@/utils/_core/utils';
 
 const classes = {
   card: { padding: `${INBOX_CONTEXT_CARD_PADDING}px` },
@@ -45,16 +44,16 @@ type Props = {
 const getPlaceLabel = (address?: IAddress): string => address?.city || address?.name || '';
 
 /**
- * The ride and the payment the requester attached to the request, each one a link to its own page.
- * They were checked against the requester when the ticket was filed, so an agent can act on them
+ * The ride the requester attached to the request, a link to its own page.
+ * It was checked against the requester when the ticket was filed, so an agent can act on them
  * without asking which ride was meant. The booking and the person reported sit with the other facts
  * of the ticket.
  */
 const ContactObjectsCard = ({ contact }: Props) => {
   const { t } = useTranslation(['user']);
-  const { ride, payment } = contact;
+  const { ride } = contact;
 
-  if (!ride && !payment) return null;
+  if (!ride) return null;
 
   const renderRow = (label: string, value: ReactNode, sub?: ReactNode) => (
     <Box css={classes.row} key={label}>
@@ -78,13 +77,6 @@ const ContactObjectsCard = ({ contact }: Props) => {
           {`${getPlaceLabel(ride.departure)} → ${getPlaceLabel(ride.destination)}`}
         </Link>,
         ride.date && <Typography variant="caption">{displayDate(getParseDateValue(ride.date))}</Typography>
-      )}
-
-      {payment && renderRow(
-        t('user:contacts.objects.payment'),
-        <Link params={{ id: payment.objectId }} to={`${PATH_NAMES.payments}/$id`}>
-          {formatPriceWithCurrency(payment.amount, payment.currency)}
-        </Link>
       )}
 
     </Card>

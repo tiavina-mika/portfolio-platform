@@ -12,7 +12,6 @@ import {
   ICancellationStatisticsPoint,
   IOverviewStatisticsPoint,
   INullablePeriodComparison,
-  IPaymentStatisticsPoint,
   IReportStatisticsPoint,
   IRideStatisticsPoint,
   IUserStatisticsPoint,
@@ -37,8 +36,6 @@ export const getStatisticsViewPath = (view: StatisticsViewEnum): string => {
       return PATH_NAMES.statistics.users;
     case StatisticsViewEnum.RIDES:
       return PATH_NAMES.statistics.rides;
-    case StatisticsViewEnum.PAYMENTS:
-      return PATH_NAMES.statistics.payments;
     case StatisticsViewEnum.VEHICLES:
       return PATH_NAMES.statistics.vehicles;
     case StatisticsViewEnum.CANCELLATIONS:
@@ -187,27 +184,6 @@ export const getRidesStatisticsExportColumns = (t: TFunction): IExportColumn<IRi
   { header: t('statistics:seatsBooked'), getValue: (point) => point.seatsBooked },
 ];
 
-export const getPaymentsStatisticsExportColumns = (
-  t: TFunction,
-  currency?: string
-): IExportColumn<IPaymentStatisticsPoint>[] => [
-  { header: t('common:date'), getValue: (point) => point.date },
-  { header: t('statistics:revenue'), getValue: (point) => point.revenue },
-  { header: t('statistics:paymentsFailed'), getValue: (point) => point.paymentsFailed },
-  { header: t('statistics:paymentsTotal'), getValue: (point) => point.paymentsTotal },
-  { header: t('statistics:failureRate'), getValue: (point) => point.failureRate },
-  { header: t('statistics:refunds'), getValue: (point) => point.refunds },
-  { header: t('statistics:refundedAmount'), getValue: (point) => point.refundedAmount },
-  { header: t('statistics:averageCollectionDays'), getValue: (point) => point.averageCollectionDays },
-  {
-    header: t('statistics:commissionLegend', { currency: getCurrencySymbol(currency) }),
-    getValue: (point) => point.commission,
-  },
-  {
-    header: t('statistics:averageBasketLegend', { currency: getCurrencySymbol(currency) }),
-    getValue: (point) => point.averageBasket,
-  },
-];
 
 export const getVehiclesStatisticsExportColumns = (
   t: TFunction

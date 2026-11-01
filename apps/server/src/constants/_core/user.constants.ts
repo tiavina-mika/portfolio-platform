@@ -1,5 +1,4 @@
 import { DEFAULT_COUNTRY } from '@shared/constants';
-import { RequestStatusEnum } from '@shared/domain-types';
 import { ProfileFieldEnum } from '@shared/types';
 
 /**
@@ -46,18 +45,6 @@ export const PROFILE_FIELD_COLUMNS: Record<`${ProfileFieldEnum}`, string[]> = {
 };
 
 /**
- * Booking statuses that count as "these two are travelling together" for the `riders` visibility
- * above. A pending or refused booking never unlocks a phone number.
- */
-export const CONFIRMED_BOOKING_STATUSES = [
-  RequestStatusEnum.CONFIRMED,
-  RequestStatusEnum.COMPLETED,
-  // an absence can be contested: both sides may still need to reach each other while it is examined
-  RequestStatusEnum.NO_SHOW,
-  RequestStatusEnum.CONTESTED_NO_SHOW,
-];
-
-/**
  * Fields a user may never write on their own account, even though `_User` is self-managed (the
  * ACL Parse writes at sign-up gives the owner write access to their own row, and the CLP has to
  * stay open enough for profile edits). They are all fed by server-side flows — trip counters,
@@ -80,7 +67,6 @@ export const SERVER_MANAGED_USER_FIELDS: string[] = [
   // written through `updateNotificationPreferences`, which validates the shape against a schema
   'notificationPreferences',
   'rideStats',
-  'sosAlertsCount',
   'requestStats',
   'stats',
   'completedRidesThisMonth',
@@ -106,9 +92,6 @@ export const SERVER_MANAGED_USER_FIELDS: string[] = [
   'stepUpVerification',
   'stepUpVerifiedAt',
   'contactChangeVerification',
-  'payoutPhoneVerification',
-  // the numbers the driver proved to control by a code: only a server write may add one
-  'verifiedPayoutPhones',
   // why the sign-up code SMS did not go out — written by the server, read by the app
   'verificationSmsError',
   'passwordResetToken',
@@ -156,8 +139,6 @@ export const USER_PROTECTED_FIELDS: string[] = [
   // a phone-signup account's username IS its number (`+261…`), and an email account's is its email
   'username',
   'phone',
-  'paymentPhones',
-  'verifiedPayoutPhones',
   // someone else's number, who has no account here and never agreed to be listed
   'emergencyContact',
   'mfa',
@@ -166,7 +147,6 @@ export const USER_PROTECTED_FIELDS: string[] = [
   'resetPasswordVerification',
   'stepUpVerification',
   'contactChangeVerification',
-  'payoutPhoneVerification',
   'passwordResetToken',
   'passwordResetDelay',
   // when someone last signed in is not for other members to read
@@ -225,7 +205,7 @@ export const USER_AUDIT_TRAIL_MAX_LIMIT = 100;
 export const USER_DETAILS_FIELDS: string[] = [
   // profile
   'username', 'email', 'firstName', 'lastName', 'phone', 'image', 'aboutMe', 'birthday', 'sex', 'address',
-  'locale', 'spokenLanguages', 'paymentPhones', 'emergencyContact', 'profileVisibility', 'country',
+  'locale', 'spokenLanguages', 'emergencyContact', 'profileVisibility', 'country',
   'sexChangeCount', 'lastSexChangeAt', 'birthdayChangeCount', 'lastBirthdayChangeAt',
   // account and access
   'platform', 'platforms', 'fromBO', 'registerStep', 'emailVerified', 'phoneVerified', 'isOnline',
@@ -234,7 +214,7 @@ export const USER_DETAILS_FIELDS: string[] = [
   'notificationPreferences',
   // activity and trust
   'stats', 'rideStats', 'requestStats', 'rating', 'trustedDriver', 'trustedDriverSince',
-  'completedRidesThisMonth', 'totalGain', 'sosAlertsCount',
+  'completedRidesThisMonth', 'totalGain',
   // moderation
   'banned', 'bans', 'isSuspendedUntil', 'suspension', 'pendingPenalty', 'lastCancellations',
   // record traceability
@@ -251,9 +231,6 @@ export const USER_DETAILS_POINTER_FIELDS: string[] = [
   'createdBy', 'updatedBy', 'deletedBy', 'seenBy', 'lastSeenBy', 'unseenBy',
 ];
 export const USER_DETAILS_POINTER_SUBFIELDS: string[] = ['firstName', 'lastName', 'email', 'image'];
-
-/** How many numbers a driver can be paid on — enough for a few operators, too few to farm texts */
-export const MAX_VERIFIED_PAYOUT_PHONES = 5;
 
 /** Back-office path of a member's page (`<server>/<path>/<userId>`), linked from the staff alerts. */
 export const USER_BO_PATH = 'utilisateurs';

@@ -241,7 +241,7 @@ const buildMessageValues = (
     data = {}, senderName, formatDate, formatPrice,
   } = input;
   const {
-    ride, request, rating, penalty, refund, suspension, device,
+    ride, request, rating, penalty, suspension, device,
   } = data;
   const entity = ride ?? request;
   const departure = entity?.departure;
@@ -258,7 +258,6 @@ const buildMessageValues = (
     ...(senderName && { from: senderName, driver: senderName, passenger: senderName }),
     ...(typeof rating?.value === 'number' && { value: rating.value }),
     ...(typeof penalty?.amount === 'number' && { amount: formatPrice(penalty.amount) }),
-    ...(typeof refund?.amount === 'number' && { amount: formatPrice(refund.amount) }),
     ...(penalty?.suspensionEnd && { date: formatDate(penalty.suspensionEnd as Date | string) }),
     ...(suspension?.until && { date: formatDate(suspension.until as Date | string) }),
     ...(device?.name && { device: device.name }),

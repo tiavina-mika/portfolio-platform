@@ -25,7 +25,7 @@ type Props = {
   children: ReactNode;
 };
 
-/** The frame of a short table standing in a statistics card: reasons, suspended users, payouts, documents. */
+/** The frame of a short table standing in a statistics card: reasons, suspended users, documents. */
 const StatisticsTableContainer = ({ children }: Props) => (
   <TableContainer css={classes.container}>
     <Table css={classes.table} size="small">

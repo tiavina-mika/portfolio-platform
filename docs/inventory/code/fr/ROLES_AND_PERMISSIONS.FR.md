@@ -27,11 +27,11 @@ Les rôles par défaut sont créés au démarrage par `ensureDefaultRolesExist` 
 Un rôle porte des champs personnalisés :
 
 - `rights` : une liste de `{ className, rights }` où `rights` est une table de booléens pour les opérations `create`, `update`, `get`, `find`, `delete`, `destroy`.
-- `ui` : les droits « ui » du back-office (`UIRoleEnum` dans `apps/bo/src/types/_core/role.type.ts`) : `migrations`, `cron`, `tests` (les onglets de la page divers), `impersonation`, `statistics`, `finance`, `broadcast`, `staff`. Le serveur reflète ceux qu'il doit faire respecter (par exemple `IMPERSONATION_UI_RIGHT`).
+- `ui` : les droits « ui » du back-office (`UIRoleEnum` dans `apps/bo/src/types/_core/role.type.ts`) : `migrations`, `cron`, `tests` (les onglets de la page divers), `impersonation`, `statistics`, `broadcast`, `staff`. Le serveur reflète ceux qu'il doit faire respecter (par exemple `IMPERSONATION_UI_RIGHT`).
 - `countries` : les pays auxquels le rôle est limité (le trigger `country-scope` restreint les requêtes en conséquence).
 - un délai d'inactivité du back-office personnalisé, borné entre 15 et 480 minutes.
 
-Entités pouvant recevoir des droits dans le formulaire du back-office : `_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Payment`, `Notification`, `Report`, `UserAuditLog` (`ENTITIES_WITH_RIGHTS_OPTIONS` dans `apps/bo/src/constants/_core/user.constants.ts`), plus les entités qu'un domaine enregistre avec `registerRightsEntities` (le domaine `Project` le fait dans `apps/bo/src/utils/_domain/project-role.utils.ts`).
+Entités pouvant recevoir des droits dans le formulaire du back-office : `_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Notification`, `Report`, `UserAuditLog` (`ENTITIES_WITH_RIGHTS_OPTIONS` dans `apps/bo/src/constants/_core/user.constants.ts`), plus les entités qu'un domaine enregistre avec `registerRightsEntities` (le domaine `Project` le fait dans `apps/bo/src/utils/_domain/project-role.utils.ts`).
 
 ## Comment fonctionne une vérification
 

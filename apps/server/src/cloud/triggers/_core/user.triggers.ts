@@ -240,7 +240,7 @@ Parse.Cloud.beforeSave(
     }
 
     /*
-     * written straight from the profile like the payment numbers, but checked here because this
+     * written straight from the profile, but checked here because this
      * number is the one the SOS texts: normalized first so every way of typing it is stored — and
      * compared with the account's own number — the same way
      */

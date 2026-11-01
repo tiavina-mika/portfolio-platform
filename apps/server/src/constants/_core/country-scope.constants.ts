@@ -8,7 +8,6 @@ import { collections } from './constants';
 export const COUNTRY_SCOPED_CLASSES: string[] = [
   collections.Ride,
   collections.Request,
-  collections.Payment,
   collections.Contact,
   collections.Report,
   collections.Rating,

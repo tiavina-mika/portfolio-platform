@@ -76,15 +76,6 @@
       "mfaReset": {
         "subject": "Double authentification réinitialisée pour {{target}}",
         "message": "{{actor}} a réinitialisé la double authentification de {{target}}."
-      },
-      "largeMoneyAction": {
-        "subject": "{{action}} de {{amount}}",
-        "message": "{{actor}} a effectué : {{action}} de {{amount}} (référence {{reference}})."
-      },
-      "moneyActions": {
-        "refund": "Remboursement",
-        "payoutRelease": "Versement anticipé au conducteur",
-        "ridePassengersRefund": "Remboursement des passagers d’un trajet"
       }
     },
     "invitationRolesFailedSubject": "Compte invité créé sans rôle",
@@ -93,8 +84,6 @@
     "reportSubmittedMessage": "Merci pour votre signalement. Notre équipe de modération va l'examiner sous peu.",
     "newsletterUnsubscribeConfirmationSubject": "Vous avez été désinscrit",
     "newsletterUnsubscribeConfirmationMessage": "Vous avez bien été désinscrit de la newsletter Portfolio. Vous ne recevrez plus ces emails.",
-    "receiptResentSubject": "Votre reçu de paiement",
-    "receiptResentMessage": "Veuillez trouver ci-joint le reçu de votre paiement.",
     "accountBannedSubject": "Votre compte a été suspendu",
     "accountBannedTemporary": "Votre compte a été suspendu jusqu'au {{until}} pour le motif suivant : {{reason}}.",
     "accountBannedPermanent": "Votre compte a été définitivement suspendu pour le motif suivant : {{reason}}.",
@@ -141,9 +130,6 @@
     "newDeviceLogin": "Nouvelle connexion à votre compte Portfolio depuis : {{- deviceName}}. Si ce n'est pas vous, changez votre mot de passe.",
     "requestConfirmed": "Portfolio : place confirmée, trajet {{- departure}} - {{- destination}} le {{- date}}. Détails dans l'application.",
     "bookingCanceledByDriver": "Portfolio : réservation annulée par le conducteur, trajet {{- departure}} - {{- destination}} le {{- date}}. Remboursement intégral.",
-    "requestPaymentFailed": "Portfolio : paiement échoué, trajet {{- departure}} - {{- destination}} le {{- date}}. Aucune place réservée.",
-    "sosAlert": "Portfolio : {{- name}} a déclenché une alerte SOS pendant son trajet {{- departure}} - {{- destination}} ({{- vehicle}} {{- plate}}). Le support est prévenu.",
-    "sosAlertLocation": "Position : {{- url}}",
     "ticketAcknowledgement": "Portfolio : votre demande #{{reference}} est bien enregistrée. Le support vous répondra par SMS ou par appel. Gardez ce numéro.",
     "ticketReply": "Support Portfolio, demande #{{reference}} : {{- message}}"
   },
@@ -189,8 +175,6 @@
     "cannotImpersonateStaffAccount": "Vous ne pouvez pas vous connecter en tant qu'un compte membre du staff.",
     "actionBlockedDuringImpersonation": "Cette action n'est pas autorisée pendant une session support.",
     "pleaseLogin": "Vous devez vous connecter pour effectuer cette action",
-    "receiptRecipientHasNoEmail": "Ce membre n'a pas d'adresse email : le reçu ne peut pas être envoyé.",
-    "receiptEmailNotSent": "Le reçu n'a pas pu être envoyé. Réessayez plus tard.",
     "cannotActOnHigherRole": "Vous ne pouvez pas agir sur le compte d’un propriétaire ou d’un super-administrateur.",
     "unauthorizedToDoThisAction": "Vous n'êtes pas autorisé à effectuer cette action",
     "unauthorized": "Non autorisé",
@@ -220,8 +204,6 @@
     "phoneNumberAlreadyUsed": "Ce numéro de téléphone est déjà associé à un compte. Veuillez vous connecter.",
     "invalidSignUp": "Inscription invalide. Veuillez réessayer depuis l'application.",
     "noVerificationPending": "Aucune vérification en attente pour ce compte.",
-    "payoutPhoneAlreadyVerified": "Ce numéro est déjà confirmé pour vos versements.",
-    "payoutPhoneLimitReached": "Vous avez atteint le nombre maximum de numéros de versement. Contactez le support pour en changer un.",
     "accountHelpPhoneNotPending": "Le numéro de ce membre est déjà vérifié ou absent : il n'y a aucun code à renvoyer.",
     "accountHelpNoContactForReset": "Ce membre n'a ni numéro vérifié ni email : changez d'abord son contact.",
     "verificationLocked": "Trop de tentatives échouées. Veuillez demander un nouveau code.",
@@ -263,17 +245,6 @@
   "cms": {
     "codeAlreadyUsed": "Ce code technique est déjà utilisé par « {{- name}} ». Choisissez-en un autre."
   },
-  "receipt": {
-    "title": "Reçu de paiement",
-    "recipient": "Destinataire",
-    "issuedAt": "Émis le",
-    "amount": "Montant",
-    "service": "Moyen de paiement",
-    "transactionId": "Référence de transaction",
-    "rideDate": "Date du trajet",
-    "totalPrice": "Prix total du trajet",
-    "disclaimer": "Ce document est un reçu attestant qu'un paiement a eu lieu. Il ne s'agit pas d'une facture."
-  },
   "docsAccess": {
     "sections": {
       "features": "Documentation des fonctionnalités",
@@ -294,7 +265,6 @@
     "dailySummaryFigure": "{{- label}} : {{- value}}",
     "dailySummaryNewUsers": "Inscrits",
     "dailySummaryRidesPublished": "Trajets publiés",
-    "dailySummaryBookings": "Réservations confirmées",
-    "dailySummarySosAlerts": "Alertes SOS"
+    "dailySummaryBookings": "Réservations confirmées"
   }
 }

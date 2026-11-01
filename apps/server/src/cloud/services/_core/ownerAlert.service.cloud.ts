@@ -3,9 +3,8 @@ import type { User } from 'parse';
 
 import { translate } from '@/config/i18n';
 import { HIGHEST_LEVEL_ROLES } from '@/constants/_core/constants';
-import { type LargeMoneyActionType, OwnerAlertEventEnum } from '@/types/ownerAlert.type';
+import { OwnerAlertEventEnum } from '@/types/ownerAlert.type';
 import { logger } from '@/utils/_core/logger';
-import { isLargeMoneyAction } from '@/utils/_core/payment.utils';
 
 import { getUsersFromRoles } from './userRole.service.cloud';
 import { sendEmailToStaffInTheirOwnLocale } from '../../utils/_core/email.utils.cloud';
@@ -60,25 +59,4 @@ export const alertOwners = async (
   catch (error) {
     logger.error(`Owner alert "${event}" could not be sent`, { error: (error as Error).stack });
   }
-};
-
-/**
- * Tells the owners of a refund or an early payout release taken from the back-office, when its
- * amount reaches LARGE_MONEY_ACTION_ALERT_AMOUNTS. These actions only need the `update` right on
- * their collection: the alert is how a mistake, or a staff account used to drain the merchant
- * account, reaches someone who can stop it.
- * @param reference the payment or the ride the money moved on, for the owner to look it up
- */
-export const alertOwnersOfLargeMoneyAction = async (
-  action: LargeMoneyActionType,
-  actor: User,
-  { amount, currency, reference }: { amount?: number; currency?: string; reference: string }
-): Promise<void> => {
-  if (!isLargeMoneyAction(amount, currency)) return;
-
-  await alertOwners(OwnerAlertEventEnum.LARGE_MONEY_ACTION, actor, (locale) => ({
-    action: translate(`email.ownerAlert.moneyActions.${action}`, locale),
-    amount: `${amount} ${currency}`,
-    reference,
-  }));
 };

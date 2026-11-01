@@ -259,7 +259,6 @@ Parse.Cloud.define(
       platform: 'IOS',
       seats: 4,
       price: 2000,
-      paymentPhone: { number: '341234567', code: '261' },
     };
 
     const ride = new Parse.Object('Ride');

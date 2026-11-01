@@ -8,7 +8,6 @@ export const PATH_NAMES = {
   broadcast: '/' + i18n.t('route:broadcast'),
   reports: '/' + i18n.t('route:reports'),
   ratings: '/' + i18n.t('route:ratings'),
-  payments: '/' + i18n.t('route:payments'),
   articles: '/' + i18n.t('route:articles'),
   pages: '/' + i18n.t('route:pages'),
   pageSections: '/' + i18n.t('route:pageSections'),
@@ -38,14 +37,9 @@ export const PATH_NAMES = {
     root: '/' + i18n.t('route:statistics'),
     users: '/' + i18n.t('route:statistics') + '/' + i18n.t('route:statisticsUsers'),
     rides: '/' + i18n.t('route:statistics') + '/' + i18n.t('route:statisticsRides'),
-    payments: '/' + i18n.t('route:statistics') + '/' + i18n.t('route:statisticsPayments'),
     vehicles: '/' + i18n.t('route:statistics') + '/' + i18n.t('route:statisticsVehicles'),
     cancellations: '/' + i18n.t('route:statistics') + '/' + i18n.t('route:statisticsCancellations'),
     reports: '/' + i18n.t('route:statistics') + '/' + i18n.t('route:statisticsReports'),
-  },
-  finance: {
-    root: '/' + i18n.t('route:finance'),
-    drivers: i18n.t('route:financeDrivers'),
   },
   account: {
     root: '/' + i18n.t('route:account'),

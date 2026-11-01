@@ -9,14 +9,12 @@ import {
   BriefcaseIcon,
   CodeIcon,
   ColumnsIcon,
-  CreditCardIcon,
   DashboardIcon,
   FlagIcon,
   FolderIcon,
   LayoutIcon,
   MegaphoneIcon,
   MessageCircleIcon,
-  ReceiptIcon,
   ServerIcon,
   SettingsIcon,
   UserIcon,
@@ -25,7 +23,6 @@ import { COLLECTIONS } from '@/constants/_core/app.constants';
 import { goToHome, goToMisc, goToSettings } from '@/redux/actions/_core/app.action';
 import { goToArticles } from '@/redux/actions/_core/article.action';
 import { goToCategories } from '@/redux/actions/_core/category.action';
-import { goToFinanceOverview } from '@/redux/actions/_core/finance.action';
 import { goToNotificationBroadcast } from '@/redux/actions/_core/notification.action';
 import { goToPages } from '@/redux/actions/_core/page.action';
 import { goToRoles } from '@/redux/actions/_core/role.action';
@@ -46,7 +43,7 @@ const ICON_SIZE = 18;
  * never drift apart (see `naming-conventions.md` / DRY).
  */
 export const useNavigationMenus = (): ISidebarMenu[] => {
-  const { t } = useTranslation(['common', 'route', 'user', 'statistics', 'finance', 'project']);
+  const { t } = useTranslation(['common', 'route', 'user', 'statistics', 'project']);
   const navigate = useNavigate();
 
   return useMemo(() => [
@@ -117,14 +114,6 @@ export const useNavigationMenus = (): ISidebarMenu[] => {
            */
           uiRight: UIRoleEnum.BROADCAST,
         },
-        {
-          id: PATH_NAMES.payments,
-          label: t('user:payments.payments'),
-          onClick: () => navigate(goToList('payments')),
-          icon: <CreditCardIcon size={ICON_SIZE} />,
-          className: COLLECTIONS.payment,
-          hasRightName: 'canFind',
-        },
       ],
     },
     {
@@ -142,19 +131,6 @@ export const useNavigationMenus = (): ISidebarMenu[] => {
            * the navigation inside the statistics page itself, and every one of them sits under this
            * entry's address segment, so it stays highlighted whichever view is open
            */
-        },
-      ],
-    },
-    {
-      title: t('common:sidebar.finance'),
-      subMenus: [
-        {
-          id: PATH_NAMES.finance.root,
-          label: t('common:finance'),
-          onClick: () => navigate(goToFinanceOverview()),
-          icon: <ReceiptIcon size={ICON_SIZE} />,
-          uiRight: UIRoleEnum.FINANCE,
-          hasRightName: 'canFind',
         },
       ],
     },

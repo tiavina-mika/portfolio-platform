@@ -25,8 +25,8 @@ Super Admin ont tous les droits.
 
 ## Ce que l'on voit à l'écran
 
-Une seule entrée de menu, et une navigation interne entre cinq vues : **Vue d'ensemble**, **Utilisateurs**,
-**Paiements**, **Signalements** et **Annulations**. Chaque vue propose le choix de la période (7 jours, 30
+Une seule entrée de menu, et une navigation interne entre quatre vues : **Vue d'ensemble**, **Utilisateurs**,
+**Signalements** et **Annulations**. Chaque vue propose le choix de la période (7 jours, 30
 jours, 90 jours, 12 mois), la comparaison avec la période précédente et l'export CSV de chaque graphique.
 
 ## Actions possibles
@@ -36,7 +36,7 @@ jours, 90 jours, 12 mois), la comparaison avec la période précédente et l'exp
 
 ## Points d'attention / limites actuelles
 
-- Seule la **vue d'ensemble** est alimentée par le serveur du portfolio ; les vues Utilisateurs, Paiements,
+- Seule la **vue d'ensemble** est alimentée par le serveur du portfolio ; les vues Utilisateurs,
   Signalements et Annulations appellent des fonctions que le serveur ne fournit pas et ne s'affichent pas
   correctement.
 - Les graphiques parlent de trajets, de conducteurs et de remplissage : vocabulaire d'une autre application.

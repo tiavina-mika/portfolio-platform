@@ -29,26 +29,6 @@ export const getTintedBackground = (theme: Theme, color: string): string => (
   alpha(color, getDesignTokens(theme).tintOpacity)
 );
 
-export type SosTones = {
-  text: string;
-  background: string;
-  border: string;
-  divider: string;
-};
-
-/** the red an SOS block is drawn in: its label, its ground, its outline and the rule between its bands */
-export const getSosTones = (theme: Theme): SosTones => {
-  const tokens = getDesignTokens(theme);
-  const red = theme.palette.error.main;
-
-  return {
-    text: tokens.sosText,
-    background: alpha(red, tokens.sosTintOpacity),
-    border: alpha(red, tokens.sosBorderOpacity),
-    divider: alpha(red, tokens.sosDividerOpacity),
-  };
-};
-
 /*
  * the faintest tint the design draws: the ground of a marked table row and of the band naming the
  * current selection. It sits under the chip/alert tint on purpose — a selected row has to read as

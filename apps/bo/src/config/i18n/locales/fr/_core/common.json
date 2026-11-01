@@ -18,7 +18,6 @@
     "support": "Support",
     "supportEmail": "E-mail",
     "supportPhone": "Téléphone {{operator}}",
-    "payments": "Paiements",
     "website": "Site web"
   },
   "refresh": "Actualiser",
@@ -378,7 +377,6 @@
   "subject": "Objet",
   "noFound": "{{value}} introuvable",
   "statistics": "Statistiques",
-  "finance": "Finance",
   "status": "Statut",
   "pageSections": "Sections de la page",
   "previewLayout": {
@@ -505,7 +503,6 @@
     "analytics": "Analytique",
     "operations": "Opérations",
     "community": "Communauté",
-    "finance": "Finance",
     "admin": "Administration"
   },
   "app": {

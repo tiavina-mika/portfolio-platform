@@ -53,7 +53,7 @@ const USER_SELF_EXPORT_FIELDS = [
   'email', 'username', 'firstName', 'lastName', 'phone', 'birthday', 'sex', 'address', 'aboutMe',
   'locale', 'image', 'requestStats', 'rideStats', 'stats', 'pendingPenalty', 'isSuspendedUntil',
   'banned', 'bans', 'consentVersion', 'acceptedTermsAt', 'emailVerified', 'phoneVerified',
-  'paymentPhones', 'emergencyContact', 'notificationPreferences', 'profileVisibility', 'hasSeenOnboarding',
+  'emergencyContact', 'notificationPreferences', 'profileVisibility', 'hasSeenOnboarding',
   'platforms', 'createdAt', 'updatedAt',
 ];
 
@@ -83,21 +83,6 @@ const exportUserRatings = async (user: Parse.User): Promise<Record<string, any>[
   return records;
 };
 
-const exportUserPayments = async (user: Parse.User): Promise<Record<string, any>[]> => {
-  const records: Record<string, any>[] = [];
-
-  await Parse.Query.or(
-    new Parse.Query(collections.Payment).equalTo('payer', user),
-    new Parse.Query(collections.Payment).equalTo('receiver', user)
-  )
-    .select(['type', 'status', 'amount', 'currency', 'source', 'destination', 'createdAt'])
-    .each((object: Parse.Object) => {
-      records.push(toRecord(object));
-    }, USE_MASTER_KEY);
-
-  return records;
-};
-
 const exportUserNotifications = async (user: Parse.User): Promise<Record<string, any>[]> => {
   const records: Record<string, any>[] = [];
 
@@ -119,9 +104,8 @@ const exportUserNotifications = async (user: Parse.User): Promise<Record<string,
 export const getUserDataExport = async (user: Parse.User): Promise<Record<string, any>> => {
   const targets = [...coreUserDataExportTargets, ...domainUserDataExportTargets];
 
-  const [ratings, payments, notifications, ...relations] = await Promise.all([
+  const [ratings, notifications, ...relations] = await Promise.all([
     exportUserRatings(user),
-    exportUserPayments(user),
     exportUserNotifications(user),
     ...targets.map((target) => exportUserRelation(user, target)),
   ]);
@@ -136,7 +120,6 @@ export const getUserDataExport = async (user: Parse.User): Promise<Record<string
     exportedAt: new Date().toISOString(),
     profile: exportUserProfile(user),
     ratingsGivenAndReceived: ratings,
-    payments,
     notificationsReceived: notifications,
     ...relationsByKey,
   };

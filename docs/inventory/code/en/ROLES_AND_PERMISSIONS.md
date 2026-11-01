@@ -27,11 +27,11 @@ The default roles are created at boot by `ensureDefaultRolesExist` once the `SUP
 A role carries custom fields:
 
 - `rights`: a list of `{ className, rights }` where `rights` is a map of booleans for the operations `create`, `update`, `get`, `find`, `delete`, `destroy`.
-- `ui`: the back-office "ui" rights (`UIRoleEnum` in `apps/bo/src/types/_core/role.type.ts`): `migrations`, `cron`, `tests` (the tabs of the miscellaneous page), `impersonation`, `statistics`, `finance`, `broadcast`, `staff`. The server mirrors the ones it must enforce (for example `IMPERSONATION_UI_RIGHT`).
+- `ui`: the back-office "ui" rights (`UIRoleEnum` in `apps/bo/src/types/_core/role.type.ts`): `migrations`, `cron`, `tests` (the tabs of the miscellaneous page), `impersonation`, `statistics`, `broadcast`, `staff`. The server mirrors the ones it must enforce (for example `IMPERSONATION_UI_RIGHT`).
 - `countries`: the countries the role is limited to (the `country-scope` trigger narrows queries accordingly).
 - a custom back-office inactivity timeout, bounded between 15 and 480 minutes.
 
-Entities that can receive rights in the back-office form: `_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Payment`, `Notification`, `Report`, `UserAuditLog` (`ENTITIES_WITH_RIGHTS_OPTIONS` in `apps/bo/src/constants/_core/user.constants.ts`), plus the entities a domain registers with `registerRightsEntities` (the `Project` domain does it in `apps/bo/src/utils/_domain/project-role.utils.ts`).
+Entities that can receive rights in the back-office form: `_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Notification`, `Report`, `UserAuditLog` (`ENTITIES_WITH_RIGHTS_OPTIONS` in `apps/bo/src/constants/_core/user.constants.ts`), plus the entities a domain registers with `registerRightsEntities` (the `Project` domain does it in `apps/bo/src/utils/_domain/project-role.utils.ts`).
 
 ## How a check works
 
