@@ -54,5 +54,4 @@ Les index sont déclarés dans le code, dans `apps/server/src/config/db-indexes.
 
 ## Pièges
 
-- La constante `collections` liste encore des noms de classes de covoiturage (`Ride`, `Request`, `Vehicle`, `Rating`, `RideShare`, `SosAlert`) que le portfolio n'utilise pas. Comme la reconstruction des permissions de classe parcourt cette liste et celles des classes verrouillées, elle peut créer ces classes vides (et verrouillées) dans la base.
 - Le nom de classe `Project` n'est pas dans `collections` : il vient de `DOMAIN_COLLECTIONS`, donc un fichier du cœur qui en a besoin doit l'importer depuis la lib partagée.

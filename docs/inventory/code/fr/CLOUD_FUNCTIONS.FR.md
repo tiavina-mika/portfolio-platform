@@ -91,6 +91,6 @@ Les fichiers sont dans `apps/server/src/cloud/jobs/_core/` (`_domain/` n'a aucun
 
 ## Pièges
 
-- Les dossiers `_core` viennent d'une plateforme de covoiturage et en gardent le vocabulaire : `createRideMock` dans les fonctions de test, et les noms de classes `Ride`, `Request`, `Vehicle`, `Rating`, `RideShare` et `SosAlert` dans la constante serveur `collections` (voir les [collections](COLLECTIONS_AND_INDEXES.FR.md#pièges)).
+- Les dossiers `_core` viennent d'une plateforme de covoiturage et en gardent une partie du vocabulaire, comme `createRideMock` dans les fonctions de test.
 - Le premier owner n'est plus créé par un trigger : au démarrage, `ensureOwnerInvitationsExist` invite chaque adresse de `OWNERS_EMAILS` avec le rôle `OWNER` (voir [rôles et permissions](ROLES_AND_PERMISSIONS.FR.md)).
 - Tout nouveau fichier de fonctions, triggers ou jobs doit être ajouté à cette page dans le même changement (`.claude/rules/inventory.md`) ; `node .claude/skills/inventory/scripts/inventory.mjs --list` affiche tous les noms.

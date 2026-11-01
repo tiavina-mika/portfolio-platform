@@ -68,21 +68,6 @@ const exportUserProfile = (user: Parse.User): Record<string, any> => {
   return profile;
 };
 
-const exportUserRatings = async (user: Parse.User): Promise<Record<string, any>[]> => {
-  const records: Record<string, any>[] = [];
-
-  await Parse.Query.or(
-    new Parse.Query(collections.Rating).equalTo('from', user),
-    new Parse.Query(collections.Rating).equalTo('to', user)
-  )
-    .select(['value', 'comment', 'from', 'to', 'createdAt'])
-    .each((object: Parse.Object) => {
-      records.push(toRecord(object));
-    }, USE_MASTER_KEY);
-
-  return records;
-};
-
 const exportUserNotifications = async (user: Parse.User): Promise<Record<string, any>[]> => {
   const records: Record<string, any>[] = [];
 
@@ -104,8 +89,7 @@ const exportUserNotifications = async (user: Parse.User): Promise<Record<string,
 export const getUserDataExport = async (user: Parse.User): Promise<Record<string, any>> => {
   const targets = [...coreUserDataExportTargets, ...domainUserDataExportTargets];
 
-  const [ratings, notifications, ...relations] = await Promise.all([
-    exportUserRatings(user),
+  const [notifications, ...relations] = await Promise.all([
     exportUserNotifications(user),
     ...targets.map((target) => exportUserRelation(user, target)),
   ]);
@@ -119,7 +103,6 @@ export const getUserDataExport = async (user: Parse.User): Promise<Record<string
   return {
     exportedAt: new Date().toISOString(),
     profile: exportUserProfile(user),
-    ratingsGivenAndReceived: ratings,
     notificationsReceived: notifications,
     ...relationsByKey,
   };

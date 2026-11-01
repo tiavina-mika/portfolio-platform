@@ -12,9 +12,6 @@ import type {
 } from './notification-message.type';
 import type { NotificationSnapshot } from '@shared/types';
 
-/** A departure reminder sent a day ahead reads "tomorrow" rather than a number of hours. */
-const HOURS_IN_A_DAY = 24;
-
 /** What separates a status from the variant of it a notification's own data selects. */
 const VARIANT_SEPARATOR = '#';
 
@@ -23,21 +20,17 @@ const VARIANT_SEPARATOR = '#';
  * legacy `snapshot` and of the newer `payload`, merged by the caller. Sender and recipients are not
  * part of it — the sender's name comes in as `senderName`, already resolved.
  */
-export type NotificationMessageData = Partial<Omit<NotificationSnapshot, 'from' | 'to' | 'ride'>> & {
-  /** `hoursBeforeDeparture` is set on a departure reminder: "tomorrow" or "in 1 h" */
-  ride?: NotificationSnapshot['ride'] & { hoursBeforeDeparture?: number };
+export type NotificationMessageData = Partial<Omit<NotificationSnapshot, 'from' | 'to'>> & {
   /** the device a "new sign-in" alert names — what lets the member recognise (or not) the login */
   device?: { name?: string };
 };
 
 /**
- * How a date and an amount are printed for the person reading. Passed in rather than done here: a
- * departure hour belongs to the reader's timezone and an amount to their currency format, and the
- * server, the app and the back-office each already own those rules.
+ * How a date is printed for the person reading. Passed in rather than done here: a date belongs to
+ * the reader's timezone, and the server and the back-office each already own that rule.
  */
 export type NotificationMessageFormatters = {
   formatDate: (value: Date | string | number) => string;
-  formatPrice: (value: number) => string;
 };
 
 export type NotificationMessageInput = {
@@ -45,17 +38,12 @@ export type NotificationMessageInput = {
   status?: string;
   data?: NotificationMessageData;
   /**
-   * Who the text is written for. Several support decisions mean the opposite for each side of the
-   * same booking, so the same send is worded from the reader's own position.
-   */
-  viewerId?: string;
-  /**
    * Whether a member raised it and their name is drawn just above the text. Only ever true on the
    * app surface, where the row prints the name on its own line — a push has no such line, so its
    * sentence always names the person itself.
    */
   hasSender?: boolean;
-  /** the member who raised it, as `{{driver}}`, `{{passenger}}` and `{{from}}` print them */
+  /** the member who raised it, as `{{from}}` prints them */
   senderName?: string;
 };
 
@@ -100,15 +88,7 @@ export const localizeNotificationText = (
 const resolveNotificationType = (input: NotificationMessageInput): string | undefined => {
   if (input.type) return input.type;
 
-  const {
-    ride, request, rating, ticket, vehicle,
-  } = input.data ?? {};
-
-  if (request) return NotificationTypeEnum.REQUEST;
-  if (rating) return NotificationTypeEnum.RATE;
-  if (ride) return NotificationTypeEnum.RIDE;
-  if (ticket) return NotificationTypeEnum.TICKET;
-  if (vehicle) return NotificationTypeEnum.VEHICLE;
+  if (input.data?.ticket) return NotificationTypeEnum.TICKET;
 
   return NotificationTypeEnum.ACCOUNT;
 };
@@ -116,8 +96,7 @@ const resolveNotificationType = (input: NotificationMessageInput): string | unde
 export type NotificationMessageCatalogue = Record<string, NotificationMessageEntry>;
 
 /**
- * What a domain adds to the values a sentence interpolates (the stops a ride change names, the car
- * of a document review). Receives what the notification carries and the language being written.
+ * What a domain adds to the values a sentence interpolates. Receives what the notification carries and the language being written.
  */
 export type NotificationMessageValuesBuilder = (
   input: NotificationMessageRenderInput,
@@ -153,44 +132,21 @@ const getCatalogueForType = (type: string | undefined): NotificationMessageCatal
 );
 
 /**
- * The suffix a notification's own data appends to its status to pick a wording: a penalty that
- * names an amount, a reminder counted in hours, a support decision read by the side it went against.
+ * The suffix a notification's own data appends to its status to pick a wording: a suspension that
+ * names its end date, a sign-in that names its device.
  *
  * It exists because one status can be several sentences without being several events — splitting
  * them into statuses of their own would multiply what every client has to branch on, and what the
  * push templates would then have to cover.
  */
 const resolveVariant = (input: NotificationMessageInput): string | undefined => {
-  const { status, data = {}, viewerId } = input;
-  const {
-    ride, request, penalty, suspension, device,
-  } = data;
+  const { status, data = {} } = input;
+  const { suspension, device } = data;
 
   if (!status) return undefined;
 
   if (suspension?.until) return 'until';
   if (device?.name) return 'withDevice';
-
-  if (penalty) {
-    if (penalty.amount && penalty.suspensionEnd) return 'withAmountAndSuspension';
-    if (penalty.amount) return 'withAmount';
-    if (penalty.suspensionEnd) return 'withSuspension';
-  }
-
-  if (ride && typeof ride.hoursBeforeDeparture === 'number') {
-    if (ride.hoursBeforeDeparture >= HOURS_IN_A_DAY) return 'tomorrow';
-
-    return Math.max(1, Math.round(ride.hoursBeforeDeparture)) === 1 ? 'inHoursOne' : 'inHoursOther';
-  }
-
-  /*
-   * a cancellation read by the driver who made it — the rows written before the penalty had a
-   * status of its own are filed as the passengers' `CANCELED`
-   */
-  if (ride && !request && viewerId && ride.driverId === viewerId) return 'driver';
-
-  // a decision that means the opposite for each side of the booking
-  if (request && viewerId) return request.passengerId === viewerId ? 'passenger' : 'driver';
 
   return undefined;
 };
@@ -200,8 +156,7 @@ const resolveVariant = (input: NotificationMessageInput): string | undefined => 
  * selects when the catalogue has one, and the plain status otherwise.
  *
  * Sanctions and security alerts are looked up first, by status alone: they are filed under whatever
- * type raised them — a booking suspension under `REQUEST`, a lifted suspension once under `RIDE` —
- * and reading them as trip news is exactly what that lookup order prevents.
+ * type raised them, and that lookup order keeps one from being read as an event of that type.
  */
 export const getNotificationMessageEntry = (
   input: NotificationMessageInput
@@ -237,31 +192,13 @@ const buildMessageValues = (
   input: NotificationMessageRenderInput,
   locale: NotificationMessageLocale
 ): NotificationMessageValues => {
-  const {
-    data = {}, senderName, formatDate, formatPrice,
-  } = input;
-  const {
-    ride, request, rating, penalty, suspension, device,
-  } = data;
-  const entity = ride ?? request;
-  const departure = entity?.departure;
-  const destination = entity?.destination;
-  const rawDate = entity?.date ?? request?.createdAt;
-  const hours = ride?.hoursBeforeDeparture;
+  const { data = {}, senderName, formatDate } = input;
+  const { suspension, device } = data;
 
   return {
-    ...(departure && { departure }),
-    ...(destination && { destination }),
-    ...(rawDate && { date: formatDate(rawDate as Date | string) }),
-    ...(request?.pickup || departure ? { pickup: request?.pickup ?? departure } : {}),
-    ...(request?.dropoff || destination ? { dropoff: request?.dropoff ?? destination } : {}),
-    ...(senderName && { from: senderName, driver: senderName, passenger: senderName }),
-    ...(typeof rating?.value === 'number' && { value: rating.value }),
-    ...(typeof penalty?.amount === 'number' && { amount: formatPrice(penalty.amount) }),
-    ...(penalty?.suspensionEnd && { date: formatDate(penalty.suspensionEnd as Date | string) }),
+    ...(senderName && { from: senderName }),
     ...(suspension?.until && { date: formatDate(suspension.until as Date | string) }),
     ...(device?.name && { device: device.name }),
-    ...(typeof hours === 'number' && { count: Math.max(1, Math.round(hours)) }),
     ...Object.assign({}, ...valuesBuilders.map((build) => build(input, locale))),
   };
 };

@@ -54,5 +54,4 @@ Indexes are declared in code, in `apps/server/src/config/db-indexes.ts` (`INDEXE
 
 ## Gotchas
 
-- The `collections` constant still lists carpooling class names (`Ride`, `Request`, `Vehicle`, `Rating`, `RideShare`, `SosAlert`) that the portfolio does not use. Because the class-level permission rebuild walks that list and the locked-class lists, it may create these classes empty (and locked) in the database.
 - The `Project` class name is not in `collections`: it comes from `DOMAIN_COLLECTIONS`, so a core file that needs it must import it from the shared lib.

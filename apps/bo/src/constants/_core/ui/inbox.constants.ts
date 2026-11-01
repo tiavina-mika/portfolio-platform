@@ -245,4 +245,3 @@ export const NOTIFICATION_RETRY_POPOVER_GAP = 8;
 
 /* the day-by-day list of the fallback SMS card scrolls inside itself past a month of rows, never the page */
 export const NOTIFICATION_SMS_DAYS_LIST_MAX_HEIGHT = 320;
-

@@ -13,8 +13,7 @@ import {
   MAX_MARK_ALL_SEEN_LIMIT, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 import {
-  ACCOUNT_NOTIFICATION_TYPE, DRIVER_CANCELLATION_PENALTY_STATUS, NOTIFICATION_HARD_DELETE_GRACE_DAYS,
-  PASSENGER_CANCELLATION_SUSPENSION_STATUS, SUSPENSION_LIFTED_STATUS,
+  ACCOUNT_NOTIFICATION_TYPE, NOTIFICATION_HARD_DELETE_GRACE_DAYS, SUSPENSION_LIFTED_STATUS,
 } from '@/constants/_core/notification.constants';
 import { NotificationChannelEnum, NotificationChannelStatusEnum } from '@/types/notification.type';
 import { logger } from '@/utils/_core/logger';
@@ -80,15 +79,10 @@ export const getNotificationChannelSender = (
 ): NotificationChannelSender | undefined => channelSendersByKey[getChannelSenderKey(type, channel)];
 
 /*
- * sanctions a user must know about whatever they switched off: a fine they owe, a suspension that
- * blocks them, and the end of one. ACCOUNT notifications (security alerts, bans) are mandatory as a
- * whole type, see isMandatoryNotification.
+ * sanctions a user must know about whatever they switched off: the end of a suspension. ACCOUNT
+ * notifications (security alerts, bans) are mandatory as a whole type, see isMandatoryNotification.
  */
-const MANDATORY_NOTIFICATION_STATUSES = new Set<string>([
-  DRIVER_CANCELLATION_PENALTY_STATUS,
-  PASSENGER_CANCELLATION_SUSPENSION_STATUS,
-  SUSPENSION_LIFTED_STATUS,
-]);
+const MANDATORY_NOTIFICATION_STATUSES = new Set<string>([SUSPENSION_LIFTED_STATUS]);
 
 const isMandatoryNotification = (type: string, status?: string): boolean => (
   type === ACCOUNT_NOTIFICATION_TYPE || (!!status && MANDATORY_NOTIFICATION_STATUSES.has(status))

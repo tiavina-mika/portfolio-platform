@@ -56,28 +56,12 @@ export const userPlatformOptions: ISelectOption[] = [
 
 export const notificationTypeOptions: ISelectOption[] = [
   {
-    label: i18n.t('user:notifications.types.ride'),
-    value: NotificationTypeEnum.RIDE,
-  },
-  {
-    label: i18n.t('user:notifications.types.request'),
-    value: NotificationTypeEnum.REQUEST,
-  },
-  {
-    label: i18n.t('user:notifications.types.rate'),
-    value: NotificationTypeEnum.RATE,
-  },
-  {
     label: i18n.t('user:notifications.types.account'),
     value: NotificationTypeEnum.ACCOUNT,
   },
   {
     label: i18n.t('user:notifications.types.ticket'),
     value: NotificationTypeEnum.TICKET,
-  },
-  {
-    label: i18n.t('user:notifications.types.vehicle'),
-    value: NotificationTypeEnum.VEHICLE,
   },
   {
     label: i18n.t('user:notifications.types.announcement'),

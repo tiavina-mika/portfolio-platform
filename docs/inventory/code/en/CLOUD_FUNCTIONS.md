@@ -91,6 +91,6 @@ Files are in `apps/server/src/cloud/jobs/_core/` (`_domain/` has no job). A job 
 
 ## Gotchas
 
-- The `_core` folders were ported from a carpooling platform and still carry its vocabulary: `createRideMock` in the test functions, and the `Ride`, `Request`, `Vehicle`, `Rating`, `RideShare` and `SosAlert` class names in the server `collections` constant (see [collections](COLLECTIONS_AND_INDEXES.md#gotchas)).
+- The `_core` folders were ported from a carpooling platform and still carry some of its vocabulary, such as `createRideMock` in the test functions.
 - The first owner is not created by a trigger any more: at boot `ensureOwnerInvitationsExist` invites each `OWNERS_EMAILS` address with the `OWNER` role (see [roles and permissions](ROLES_AND_PERMISSIONS.md)).
 - Any new function, trigger or job file must be added to this page in the same change (`.claude/rules/inventory.md`); `node .claude/skills/inventory/scripts/inventory.mjs --list` prints every name.

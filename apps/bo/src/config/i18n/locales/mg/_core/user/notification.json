@@ -17,76 +17,23 @@
     "senderSearchPlaceholder": "Anarana na mailaky ny mpandefa",
     "receiverSearchPlaceholder": "Anarana na mailaky ny mpandray",
     "types": {
-      "ride": "Dia",
-      "request": "Fangatahana",
-      "rating": "Naoty",
       "account": "Kaonty",
-      "rate": "Hevitra",
       "ticket": "Tapakila fanampiana",
-      "vehicle": "Fiara",
       "announcement": "Fanambarana"
     },
     "statusLabels": {
-      "RIDE": {
-        "PUBLISHED": "Dia navoaka",
-        "BOOKED": "Dia voaraisina",
-        "FULL": "Dia feno",
-        "CANCELED": "Dia foana",
-        "IN_PROGRESS": "Dia eo am-pandrosoana",
-        "AWAITING_CONFIRMATION": "Dia miandry fanamafisana",
-        "COMPLETED": "Dia vita",
-        "ARCHIVED": "Dia voatahiry",
-        "DRIVER_CANCELLATION_PENALTY": "Sazy noho ny fanafoanana nataon'ny mpamily",
-        "RIDE_DEPARTURE_REMINDER": "Fampahatsiahivana fiaingana",
-        "RIDE_COMPLETION_REMINDER": "Fampahatsiahivana famaranana dia",
-        "RIDE_COMPLETION_CHECK": "Nitranga ve ny dia?",
-        "RIDE_AUTO_COMPLETED": "Narakitra ho azy ny dia",
-        "RIDE_AUTO_COMPLETED_DRIVER": "Narakitra ho azy ny dia (mpamily)",
-        "SUSPENSION_LIFTED": "Fanakanana nesorina",
-        "RIDE_UPDATED": "Dia novaina"
-      },
-      "REQUEST": {
-        "CONFIRMED": "Famandrihana voamarina",
-        "CANCELED_BY_PASSENGER": "Famandrihana nofoanana",
-        "CANCELED_BY_DRIVER": "Fangatahana nofoanan'ny mpamily",
-        "COMPLETED": "Fangatahana vita",
-        "NO_SHOW": "Mpandeha voalaza fa tsy tonga",
-        "CONTESTED_NO_SHOW": "Fanoherana ny tsy fahatongavana",
-        "PASSENGER_CANCELLATION_SUSPENSION": "Fanakanana mpandeha (fanafoanana)",
-        "DRIVER_NO_SHOW_REPORTED": "Voalaza fa tsy tonga ny mpamily",
-        "DRIVER_NO_SHOW_REPLIED": "Namaly ny fitarainana ny mpamily",
-        "DRIVER_NO_SHOW_CONFIRMED": "Voamarina ny tsy fahatongavan'ny mpamily",
-        "DRIVER_NO_SHOW_REJECTED": "Nolavina ny fitarainana",
-        "PASSENGER_NO_SHOW_CONFIRMED": "Voamarina ny tsy fahatongavan'ny mpandeha",
-        "PASSENGER_NO_SHOW_REJECTED": "Nolavina ny tsy fahatongavan'ny mpandeha"
-      },
       "ACCOUNT": {
         "ACCOUNT_BANNED": "Kaonty voaroaka",
         "ACCOUNT_SUSPENDED": "Kaonty voasakana (fitarainana)",
         "ACCOUNT_UNBANNED": "Kaonty naverina",
         "SUSPENSION_LIFTED": "Fanakanana nesorina",
-        "PASSENGER_CANCELLATION_SUSPENSION": "Fanakanana mpandeha (fanafoanana)",
         "NEW_DEVICE_LOGIN": "Fidirana vaovao",
         "SUPPORT_SESSION_ENDED": "Vita ny fanampiana",
         "PASSWORD_RESET_DELAYED": "Fanovana teny miafina voatazona"
       },
-      "RATE": {
-        "COMPLETED": "Hevitra vaovao",
-        "RATING_INVITATION": "Fanasana hanome naoty",
-        "RATING_REMINDER": "Fampahatsiahivana hanome naoty",
-        "RATING_REPLY": "Valin’ny hevitra"
-      },
       "TICKET": {
         "newReplyFromAgent": "Valin'ny fanampiana",
-        "TICKET_RESOLVED": "Tapakila voavaha",
-        "REPORT_RECEIVED": "Voaray ny tatitra",
-        "REPORT_RESOLVED": "Voavaha ny tatitra"
-      },
-      "VEHICLE": {
-        "VEHICLE_VERIFIED": "Fiara voamarina",
-        "VEHICLE_DOCUMENT_REJECTED": "Taratasim-piara nolavina",
-        "VEHICLE_DOCUMENT_EXPIRING_SOON": "Taratasim-piara ho lany daty tsy ho ela",
-        "VEHICLE_DOCUMENT_EXPIRED": "Taratasim-piara lany daty"
+        "TICKET_RESOLVED": "Tapakila voavaha"
       },
       "ANNOUNCEMENT": {
         "ANNOUNCEMENT": "Fanambarana"
@@ -189,11 +136,7 @@
       }
     },
     "payloadKeys": {
-      "ride": "Dia",
-      "request": "Fangatahana",
-      "rating": "Hevitra",
-      "ticket": "Tapakila",
-      "vehicle": "Fiara"
+      "ticket": "Tapakila"
     },
     "id": "ID",
     "channel": "Fantsona",

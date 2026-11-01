@@ -61,19 +61,12 @@ export const FULL_ACCESS_OPERATIONS = ['find', 'get', 'create', 'update', 'delet
 
 /**
  * Classes that any signed-in user is intentionally allowed to `find`/`get`, beyond whatever
- * role rights are configured — browsing ride offers or viewing another user's public profile.
+ * role rights are configured — viewing another user's public profile.
  * Every other class stays gated to role rights and/or owner pointer permissions (see
  * `OWNER_POINTER_FIELDS`) — never to a blanket "any authenticated user" grant.
- *
- * `Vehicle` is deliberately NOT here. It carries registration plates and the owner's insurance
- * and registration papers; a blanket read let any account list every plate on the platform with
- * its owner. Vehicles a user does not own are now reached only through `getVehicleById` /
- * `getUserVehicles`, which mask the plate's serial and never return the documents; the owner
- * reads their own rows through the `owner` pointer permission below.
  */
 export const AUTHENTICATED_READABLE_CLASSES: string[] = [
   collections.User,
-  collections.Ride,
 ];
 
 /**
@@ -92,17 +85,8 @@ export const AUTHENTICATED_READABLE_CLASSES: string[] = [
  *
  * `authenticatedCreate`: pointer permissions never cover `create` (there is no existing object
  * to check the pointer against yet), so classes a normal signed-in user must be able to create
- * directly (Rating, Request, Ride, Vehicle) need this explicit flag — the owning trigger
- * (`beforeSave`/`setRequestDefaultValuesBeforeSave`) is what actually locks the created object
- * down, this flag only lets the request through Parse Server's CLP check.
- *
- * Ride/Vehicle are listed here (write-only, no `read`) even though they are already world-
- * readable to signed-in users via `AUTHENTICATED_READABLE_CLASSES`: without an entry, the moment
- * any BO role gets a rights entry on them (the read-only support role ships with find/get on
- * every class), the CLP rebuild would restrict `create`/`update`/`delete` to BO roles only and a
- * driver could no longer publish or edit their own ride from the mobile app. The `write` pointer
- * field is what lets the owner — and only the owner — update/delete their own row; every
- * server-side write goes through the master key, so it is unaffected by the restriction.
+ * directly need this explicit flag — the owning trigger is what actually locks the created
+ * object down, this flag only lets the request through Parse Server's CLP check.
  */
 export const OWNER_POINTER_FIELDS: Record<string, {
   read?: string[];
@@ -117,24 +101,7 @@ export const OWNER_POINTER_FIELDS: Record<string, {
    * branded Portfolio, to any user.
    */
   [collections.Notification]: { read: ['to'], fieldTypes: { to: 'Array' } },
-  [collections.Rating]: { read: ['from', 'to'], write: ['from'], authenticatedCreate: true },
-  [collections.Request]: {
-    /*
-     * `write` is the passenger alone: the driver never saves a booking from the app — every move
-     * they make (cancelling, declaring an absence, replying to a report) is a Cloud Function
-     * saving with the master key. A `write` grant on `driver` let them rewrite the passenger's
-     * `comment` or hide the booking from the passenger's list.
-     */
-    read: ['passenger', 'driver'], write: ['passenger'], authenticatedCreate: true,
-  },
-  [collections.Ride]: { write: ['driver'], authenticatedCreate: true },
   [collections.UserSession]: { read: ['user'] },
-  /*
-   * `read` is load-bearing here, unlike on Ride: since Vehicle left
-   * `AUTHENTICATED_READABLE_CLASSES`, the pointer permission is the only thing letting a driver
-   * query their own vehicles from the app at all.
-   */
-  [collections.Vehicle]: { read: ['owner'], write: ['owner'], authenticatedCreate: true },
 };
 
 /**
@@ -147,8 +114,7 @@ export const OWNER_POINTER_FIELDS: Record<string, {
  * rights on `_User` would trigger a rebuild that locks sign-up and profile edits to BO roles.
  *
  * `addField` follows `update` here (authenticated, not public). Parse waives `addField` entirely
- * for any class declaring `writeUserFields` — which is already the case for Ride/Vehicle/Request/
- * Rating — so an authenticated owner can add columns to those four today; `_User`
+ * for any class declaring `writeUserFields`; `_User`
  * gets no such waiver (it has no self-pointer column) and would instead reject every profile
  * field added after this CLP first ran. Granting it explicitly puts `_User` at the same level as
  * the classes around it rather than making it the one place where adding a field breaks. The

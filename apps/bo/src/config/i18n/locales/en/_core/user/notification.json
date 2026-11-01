@@ -17,76 +17,23 @@
     "senderSearchPlaceholder": "Name or email of the sender",
     "receiverSearchPlaceholder": "Name or email of the receiver",
     "types": {
-      "ride": "Ride",
-      "request": "Request",
-      "rating": "Rating",
       "account": "Account",
-      "rate": "Review",
       "ticket": "Support ticket",
-      "vehicle": "Vehicle",
       "announcement": "Announcement"
     },
     "statusLabels": {
-      "RIDE": {
-        "PUBLISHED": "Ride published",
-        "BOOKED": "Ride booked",
-        "FULL": "Ride full",
-        "CANCELED": "Ride canceled",
-        "IN_PROGRESS": "Ride in progress",
-        "AWAITING_CONFIRMATION": "Ride awaiting confirmation",
-        "COMPLETED": "Ride completed",
-        "ARCHIVED": "Ride archived",
-        "DRIVER_CANCELLATION_PENALTY": "Driver cancellation penalty",
-        "RIDE_DEPARTURE_REMINDER": "Departure reminder",
-        "RIDE_COMPLETION_REMINDER": "Ride completion reminder",
-        "RIDE_COMPLETION_CHECK": "Did the ride take place?",
-        "RIDE_AUTO_COMPLETED": "Ride closed automatically",
-        "RIDE_AUTO_COMPLETED_DRIVER": "Ride closed automatically (driver)",
-        "SUSPENSION_LIFTED": "Suspension lifted",
-        "RIDE_UPDATED": "Ride changed"
-      },
-      "REQUEST": {
-        "CONFIRMED": "Booking confirmed",
-        "CANCELED_BY_PASSENGER": "Booking canceled",
-        "CANCELED_BY_DRIVER": "Request canceled by driver",
-        "COMPLETED": "Request completed",
-        "NO_SHOW": "Passenger declared absent",
-        "CONTESTED_NO_SHOW": "Absence contested",
-        "PASSENGER_CANCELLATION_SUSPENSION": "Passenger suspension (cancellations)",
-        "DRIVER_NO_SHOW_REPORTED": "Driver absence reported",
-        "DRIVER_NO_SHOW_REPLIED": "Driver replied to the report",
-        "DRIVER_NO_SHOW_CONFIRMED": "Driver absence confirmed",
-        "DRIVER_NO_SHOW_REJECTED": "Driver absence report rejected",
-        "PASSENGER_NO_SHOW_CONFIRMED": "Passenger absence confirmed",
-        "PASSENGER_NO_SHOW_REJECTED": "Passenger absence rejected"
-      },
       "ACCOUNT": {
         "ACCOUNT_BANNED": "Account banned",
         "ACCOUNT_SUSPENDED": "Account suspended (reports)",
         "ACCOUNT_UNBANNED": "Account reactivated",
         "SUSPENSION_LIFTED": "Suspension lifted",
-        "PASSENGER_CANCELLATION_SUSPENSION": "Passenger suspension (cancellations)",
         "NEW_DEVICE_LOGIN": "New sign-in",
         "SUPPORT_SESSION_ENDED": "Support session ended",
         "PASSWORD_RESET_DELAYED": "Password change held back"
       },
-      "RATE": {
-        "COMPLETED": "New review",
-        "RATING_INVITATION": "Invitation to rate",
-        "RATING_REMINDER": "Reminder to rate",
-        "RATING_REPLY": "Reply to a review"
-      },
       "TICKET": {
         "newReplyFromAgent": "Support reply",
-        "TICKET_RESOLVED": "Ticket resolved",
-        "REPORT_RECEIVED": "Report received",
-        "REPORT_RESOLVED": "Report handled"
-      },
-      "VEHICLE": {
-        "VEHICLE_VERIFIED": "Vehicle verified",
-        "VEHICLE_DOCUMENT_REJECTED": "Vehicle document rejected",
-        "VEHICLE_DOCUMENT_EXPIRING_SOON": "Vehicle document expiring soon",
-        "VEHICLE_DOCUMENT_EXPIRED": "Vehicle document expired"
+        "TICKET_RESOLVED": "Ticket resolved"
       },
       "ANNOUNCEMENT": {
         "ANNOUNCEMENT": "Announcement"
@@ -189,11 +136,7 @@
       }
     },
     "payloadKeys": {
-      "ride": "Ride",
-      "request": "Request",
-      "rating": "Review",
-      "ticket": "Ticket",
-      "vehicle": "Vehicle"
+      "ticket": "Ticket"
     },
     "id": "ID",
     "channel": "Channel",

@@ -17,49 +17,9 @@ export type NotificationSnapshot = {
     id: string;
     image: string;
   }[];
-  ride?: {
-    id: string;
-    date: DateType;
-    driverId?: string;
-    departure?: string;
-    destination?: string;
-  };
-  rating?: { id: string; userId: string; fromUserId: string; value?: number };
-  request?: {
-    id: string;
-    passengerId: string;
-    driverId: string;
-    date: DateType;
-    createdAt: DateType;
-    rideId: string;
-    departure?: string;
-    destination?: string;
-    /** where the driver picks this passenger up — the ride departure unless they board at a stop */
-    pickup?: string;
-    /** where the driver drops this passenger off — the ride destination unless they alight at a stop */
-    dropoff?: string;
-  };
   ticket?: { id: string; status?: string };
-  /** carried by the document-review notifications; brand/model is what names the car in the copy */
-  vehicle?: { id: string; brand?: string; model?: string };
-  /** carried by a driver's cancellation penalty: what they owe and until when they are suspended */
-  penalty?: { amount?: number; suspensionEnd?: DateType };
-  /** carried by a passenger's cancellation suspension: when they can book again */
+  /** carried by a suspension: when it ends */
   suspension?: { until?: DateType };
-  /**
-   * carried by `RIDE_UPDATED`: what the driver moved on a ride that was already booked, and until
-   * when the passenger may walk away from it for free. `fields` names the parts that changed so the
-   * copy can say "the time" rather than "something"; the new values themselves are in `ride`.
-   */
-  rideChange?: {
-    fields: string[];
-    /** end of the free-cancellation window opened by the change */
-    freeCancellationUntil?: DateType;
-    /** the departure the passenger had booked, before the change */
-    previousDate?: DateType;
-    previousDeparture?: string;
-    previousDestination?: string;
-  };
   /**
    * carried by `ANNOUNCEMENT`: the words an operator typed, one entry per language, rendered as
    * they are. The only notification whose text is data rather than a shared template.
@@ -79,12 +39,8 @@ export type NotificationSnapshot = {
  * and route on the same literals the server writes.
  */
 export enum NotificationTypeEnum {
-  REQUEST = 'REQUEST',
-  RIDE = 'RIDE',
-  RATE = 'RATE',
   ACCOUNT = 'ACCOUNT',
   TICKET = 'TICKET',
-  VEHICLE = 'VEHICLE',
   /** written by an operator in the back-office and sent to a segment of the members */
   ANNOUNCEMENT = 'ANNOUNCEMENT'
 }
@@ -198,9 +154,7 @@ export type NotificationResendReason = `${NotificationResendReasonEnum}`;
  *
  * The in-app notification list always holds every notification — these switches only decide through
  * which channel (push, e-mail, paid SMS fallback) the member is also told; every category is always
- * sent. Hiding a booking request from the
- * inbox because its push was turned off left drivers with no trace of who wanted to ride with
- * them. Security alerts and sanctions (new device, ban, suspension, penalty) ignore every switch.
+ * sent. Security alerts and sanctions (new device, ban, suspension) ignore every switch.
  */
 export type NotificationPreferences = {
   /** push for every category (absent = enabled) */
