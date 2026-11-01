@@ -91,16 +91,6 @@ const getDataExportLimiter = lazyRatelimit(() => new Ratelimit({
 }));
 
 /**
- * Contact form submission (mobile) — mobile has no reCAPTCHA equivalent, so an authenticated
- * per-user cap replaces it as the anti-abuse mechanism. The website's forms have their own limiter.
- */
-const getContactLimiter = lazyRatelimit(() => new Ratelimit({
-  redis: getRedis(),
-  limiter: Ratelimit.slidingWindow(5, '1 h'),
-  prefix: 'ratelimit:contact',
-}));
-
-/**
  * Contact and newsletter forms of the website — a safety net behind the per-visitor limit the website
  * applies itself. Sized for the website rather than for one visitor: the forms are submitted by the
  * website's server, so every visitor arrives from its address and shares this one allowance.
@@ -150,31 +140,6 @@ const readTextPlainBody = (req: Request, res: Response): Promise<void> => new Pr
   parseTextPlainBody(req, res, () => resolve());
 });
 
-/**
- * The Parse JS / React Native SDK sends the session token in the request body (`_SessionToken`),
- * not in the `X-Parse-Session-Token` header — reading the header alone made every mobile member
- * fall back to the IP, so members behind one mobile-operator NAT shared a single allowance.
- */
-const getSessionKey = async (req: Request, res: Response): Promise<string> => {
-  await readTextPlainBody(req, res);
-
-  const body: unknown = req.body;
-  const bodyToken = typeof body === 'object' && body !== null
-    ? (body as { _SessionToken?: unknown })._SessionToken
-    : undefined;
-  const headerToken = req.header('X-Parse-Session-Token');
-  const token = headerToken ?? (typeof bodyToken === 'string' ? bodyToken : undefined);
-
-  /*
-   * Parse Server authenticates with one of the two depending on the app id it finds, so a caller
-   * sending two different tokens could be counted on one while running on the other — a fresh,
-   * random token per request would then get a fresh allowance. No SDK sends two different tokens.
-   */
-  if (headerToken && typeof bodyToken === 'string' && bodyToken !== headerToken) return getRequestIp(req);
-
-  return token || getRequestIp(req);
-};
-
 type RateLimiterMiddleware = ((req: Request, res: Response, next: NextFunction) => Promise<void>) & {
   isAllowed: (req: Request, res: Response) => Promise<boolean>;
 };
@@ -214,13 +179,6 @@ export const docsLoginRateLimiter = createRateLimiterMiddleware(getDocsLoginLimi
 export const fileUploadRateLimiter = createRateLimiterMiddleware(getFileUploadLimiter);
 export const dataExportRateLimiter = createRateLimiterMiddleware(getDataExportLimiter);
 /**
- * Keyed on the session token rather than the IP — an authenticated endpoint.
- */
-export const contactRateLimiter = createRateLimiterMiddleware(
-  getContactLimiter,
-  getSessionKey
-);
-/**
  * One allowance per form: a burst of contact messages does not use up the newsletter's allowance.
  */
 export const websiteFormRateLimiter = createRateLimiterMiddleware(
@@ -241,7 +199,6 @@ export const contentCounterRateLimiter = createRateLimiterMiddleware(
  */
 export const RATE_LIMITED_POST_ROUTES: Record<string, RateLimiterMiddleware> = {
   '/functions/exportMyData': dataExportRateLimiter,
-  '/functions/createContact': contactRateLimiter,
   '/functions/createPublicContact': websiteFormRateLimiter,
   '/functions/subscribeToNewsletter': websiteFormRateLimiter,
   '/functions/incrementArticleViewCount': contentCounterRateLimiter,

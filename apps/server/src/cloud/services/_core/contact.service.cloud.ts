@@ -1,19 +1,16 @@
-import { type TicketAwaiting, TicketAwaitingEnum, TicketSubjectEnum } from '@shared/types';
+import { type TicketAwaiting, TicketAwaitingEnum } from '@shared/types';
 
-import type { Locale } from '@/types/app.type';
-import type { Phone } from '@/types/user.type';
 
 import { getMongoCollection } from '@/cloud/utils/_core/db.utils.cloud';
-import { translate } from '@/config/i18n';
 import { collections, USE_MASTER_KEY } from '@/constants/_core/constants';
 import { TICKET_NOTIFICATION_TYPE } from '@/constants/_core/notification.constants';
 import { FINISHED_TICKET_STATUSES } from '@/constants/_core/ticket.constants';
 import {
-  type ContactObjectIds, type ContactObjects, type TicketSource, TicketMessageSenderRoleEnum,
+  type TicketSource, TicketMessageSenderRoleEnum,
   TicketSourceEnum, TicketStatusEnum,
 } from '@/types/ticket.type';
 import { scopeCountries } from '@/utils/_core/agent-context.utils';
-import { toPhoneSearchDigits, toPhoneUsername } from '@/utils/_core/phone.utils';
+import { toPhoneSearchDigits } from '@/utils/_core/phone.utils';
 import { escapeText, isBoolean } from '@/utils/_core/utils';
 
 import { setUnseenNotificationsSeenForRecipient } from './notification.service.cloud';
@@ -58,20 +55,6 @@ const getContactsBySourceQuery = (source: TicketSource): Parse.Query => {
 };
 
 /**
- * Stamps a ticket written in the app with its author's own contact details, read from the account
- * rather than typed in the form: the reply reaches them in the app anyway, and an account created
- * by phone has no e-mail to type.
- */
-export const applyAuthorIdentity = (contact: Parse.Object, author: Parse.User): void => {
-  const email = author.get('email');
-  const phone = author.get('phone') as Phone | undefined;
-
-  contact.set('name', [author.get('firstName'), author.get('lastName')].filter(Boolean).join(' '));
-  if (email) contact.set('email', email);
-  if (phone?.code && phone.number) contact.set('phone', toPhoneUsername(phone));
-};
-
-/**
  * How many tickets one phone number opened since a given moment, the one just filed included. It is
  * what caps the texts sent to a number: the form accepts any number, so a number is not proof that
  * its owner is the one writing.
@@ -85,42 +68,6 @@ export const countRecentTicketsByPhoneService = async (phone: string, since: Dat
     .greaterThan('createdAt', since)
     .count(USE_MASTER_KEY)
 );
-
-/**
- * Checks the records a request is attached to against its author and returns them as pointers.
- * The records are the domain's business, so the domain registers the resolver; with none
- * registered, a request can attach nothing.
- */
-type ContactObjectsResolver = (
-  author: Parse.User,
-  ids: ContactObjectIds,
-  locale: Locale
-) => Promise<ContactObjects>;
-
-let contactObjectsResolver: ContactObjectsResolver | undefined;
-
-export const registerContactObjectsResolver = (resolver: ContactObjectsResolver): void => {
-  contactObjectsResolver = resolver;
-};
-
-/**
- * The records a request is about, once checked against its author: a ticket must not point at a
- * record its author has no business naming.
- * @param author the member filing the request
- * @param ids the record ids they sent
- * @param locale the language of the error, when a record is not theirs
- * @returns the records to store on the ticket
- */
-export const resolveContactObjects = async (
-  author: Parse.User,
-  ids: ContactObjectIds,
-  locale: Locale
-): Promise<ContactObjects> => {
-  if (!Object.values(ids).some(Boolean)) return {};
-  if (!contactObjectsResolver) throw new Error(translate('error.unauthorizedToDoThisAction', locale));
-
-  return contactObjectsResolver(author, ids, locale);
-};
 
 export const getContactsService = async ({
   limit, skip, orderBy, order, filters, search, include = [],
@@ -252,7 +199,7 @@ export const getContactByIdService = async (
      */
     .include([
       'user', 'updatedBy', 'assignedTo', 'seenBy', 'lastSeenBy',
-      'reportedUser', ...include,
+      ...include,
     ])
     .first(USE_MASTER_KEY);
 
@@ -338,8 +285,6 @@ type GetMyTicketsInput = {
   skip: number;
   /** Whose move it is — omitted for every ticket. */
   awaiting?: TicketAwaiting;
-  /** Only the requests reporting another user. */
-  isReport?: boolean;
 };
 
 const ACTIVE_TICKET_STATUSES = [TicketStatusEnum.OPEN, TicketStatusEnum.IN_PROGRESS];
@@ -370,7 +315,7 @@ const applyAwaitingFilter = (query: Parse.Query, awaiting?: TicketAwaiting): voi
 };
 
 export const getMyTicketsService = async ({
-  user, limit, skip, awaiting, isReport,
+  user, limit, skip, awaiting,
 }: GetMyTicketsInput): Promise<{ results: Parse.Object[]; count: number }> => {
   /*
    * only what the app draws: the back-office fields a ticket also carries — who it is assigned to,
@@ -385,7 +330,6 @@ export const getMyTicketsService = async ({
     .descending('lastMessageAt');
 
   applyAwaitingFilter(query, awaiting);
-  if (isReport) query.equalTo('subject', TicketSubjectEnum.REPORT_USER);
 
   const result = await query.withCount().find(USE_MASTER_KEY);
 

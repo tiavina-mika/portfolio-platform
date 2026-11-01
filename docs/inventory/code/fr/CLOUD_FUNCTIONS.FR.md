@@ -27,7 +27,7 @@ Les fichiers sont dans `apps/server/src/cloud/functions/_core/` sauf mention con
 | `auditLog.functions.ts` | `getAuditLogs`, `getAuditLogByUserId`, `getUserAuditTrail` |
 | `auth.functions.ts` | `verifyAccount`, `changePassword`, `sendVerificationCode`, `sendResetPasswordVerificationCode`, `loginWithPhone`, `loginWithEmail`, `resetPassword` |
 | `category.functions.ts` | `getCategories`, `getCategory` |
-| `contact.functions.ts` | `createContact`, `createPublicContact`, `subscribeToNewsletter`, `confirmNewsletterSubscription`, `getContacts`, `getContact`, `getContactSummary`, `getTicketContext`, `getTicketAgents`, `getMyTickets`, `getMyTicket`, `reopenMyTicket` |
+| `contact.functions.ts` | `createPublicContact`, `subscribeToNewsletter`, `confirmNewsletterSubscription`, `getContacts`, `getContact`, `getContactSummary`, `getTicketContext`, `getTicketAgents`, `getMyTickets`, `getMyTicket`, `reopenMyTicket` |
 | `contactChange.functions.ts` | `requestContactChange`, `confirmContactChange` |
 | `contentVersion.functions.ts` | `getContentVersions`, `getContentVersionSnapshot` |
 | `dashboard.functions.ts` | `getDashboardKpis`, `getDashboardAlerts`, `getDashboardRecentActivity` |

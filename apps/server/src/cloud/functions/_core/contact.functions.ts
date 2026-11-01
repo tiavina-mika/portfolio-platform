@@ -2,12 +2,11 @@ import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
 import {
   collections, RECAPTCHA_VERIFICATION_FAILED, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
-import { type CreatedContact, TicketSourceEnum } from '@/types/ticket.type';
+import { TicketSourceEnum } from '@/types/ticket.type';
 import { toTypedPhoneUsername } from '@/utils/_core/phone.utils';
 import { verifyRecaptchaToken } from '@/utils/_core/recaptcha.utils';
-import { getContactPriority } from '@/utils/_core/ticket.utils';
 import {
-  confirmNewsletterSubscriptionSchema, createContactSchema, createPublicContactSchema, getContactsSchema,
+  confirmNewsletterSubscriptionSchema, createPublicContactSchema, getContactsSchema,
   getContactSchema, getMyTicketsSchema, getMyTicketSchema, reopenMyTicketSchema, subscribeToNewsletterSchema,
 } from '@/validations/_core/contact.validations';
 import { getTicketContextSchema } from '@/validations/_core/ticket-message.validations';
@@ -18,9 +17,8 @@ import {
   getTicketContextService,
 } from '../../services/_core/contact-list.service.cloud';
 import {
-  applyAuthorIdentity, getContactByIdService, getContactsService, getMyTicketService, getMyTicketsService,
+  getContactByIdService, getContactsService, getMyTicketService, getMyTicketsService,
   markMyTicketAsReadService,
-  resolveContactObjects,
 } from '../../services/_core/contact.service.cloud';
 import {
   confirmNewsletterSubscriptionService, subscribeToNewsletterService,
@@ -31,47 +29,6 @@ import { Contact } from '../../triggers/_core/contact.triggers';
 import { assertInAgentCountries } from '../../utils/_core/agent-scope.utils.cloud';
 import { fromBO, parseFunction } from '../../utils/_core/utils.cloud';
 import { parseFunctionValidation } from '../../utils/_core/validation.utils.cloud';
-
-Parse.Cloud.define(
-  'createContact',
-  parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<CreatedContact> => {
-    const currentUser = request.user;
-
-    if (!currentUser) throw new Error('Unauthorized');
-
-    const {
-      subject, reason, message, locale = DEFAULT_LANGUAGE, reportedUserId,
-    } = request.params;
-
-    const objects = await resolveContactObjects(currentUser, { reportedUserId }, locale);
-
-    const contact = new Contact();
-
-    applyAuthorIdentity(contact, currentUser);
-    contact.set('subject', subject);
-    if (reason) contact.set('reason', reason);
-    contact.set('message', message);
-    Object.entries(objects).forEach(([field, object]) => {
-      if (object) contact.set(field, object);
-    });
-    contact.set('user', currentUser);
-    /*
-     * set here rather than taken from the params: this is the app's only way in, and the origin of
-     * a ticket decides how it is answered — it must not be something the caller can claim
-     */
-    contact.set('source', TicketSourceEnum.APP);
-    // derived from what the request is about, never picked by the caller
-    contact.set('priority', getContactPriority(subject, reason));
-
-    const context = locale ? { locale } : {};
-
-    await contact.save(null, { ...USE_MASTER_KEY, context });
-
-    // the reference is what the confirmation screen shows its author, to quote to support
-    return { id: contact.id, reference: contact.get('reference') };
-  }),
-  parseFunctionValidation(createContactSchema)
-);
 
 /**
  * The public website's way in: a visitor has no account, so the reCAPTCHA token stands in for the
@@ -234,13 +191,13 @@ Parse.Cloud.define(
   parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<GetMyTicketsResult> => {
     const { user } = request;
     const {
-      limit, skip, awaiting, isReport, locale = DEFAULT_LANGUAGE,
+      limit, skip, awaiting, locale = DEFAULT_LANGUAGE,
     } = request.params;
 
     if (!user) throw new Error(translate('error.pleaseLogin', locale));
 
     return getMyTicketsService({
-      user, limit, skip, awaiting, isReport,
+      user, limit, skip, awaiting,
     });
   }),
   parseFunctionValidation(getMyTicketsSchema)

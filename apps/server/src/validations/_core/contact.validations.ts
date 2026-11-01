@@ -1,40 +1,13 @@
 import { CONTACT_MESSAGE_MAX_LENGTH } from '@shared/constants';
-import { TICKET_SUBJECT_REASONS } from '@shared/domain-constants';
 import { TicketAwaitingEnum, TicketSubjectEnum } from '@shared/types';
 import { isTypedSmsMobilePhoneNumber } from '@shared/utils';
 import { z } from 'zod';
 
 import { TicketPriorityEnum, TicketSourceEnum, TicketStatusEnum } from '@/types/ticket.type';
-import { areContactObjectsValid } from '@/utils/_core/ticket.utils';
 
 import {
   paginationQuerySchema, dateRangeFieldSchema, includeFieldSchema, objectIdFieldSchema,
 } from './util.validations';
-
-/**
- * A request written in the app: its author is the session, so no name, e-mail or phone is taken
- * from the caller. The reason must be one its subject offers — and is required whenever the
- * subject offers any — so the back-office can count tickets per (subject, reason) without
- * stray values.
- */
-export const createContactSchema = z.object({
-  subject: z.enum(TicketSubjectEnum),
-  reason: z.string().max(40).optional(),
-  message: z.string().trim().min(1).max(CONTACT_MESSAGE_MAX_LENGTH),
-  // the records the request is about — whose they are is checked against the session, not here
-  reportedUserId: objectIdFieldSchema.optional(),
-  locale: z.string().optional(),
-}).refine(
-  ({ subject, reason }) => {
-    const reasons = TICKET_SUBJECT_REASONS[subject];
-
-    return reasons.length ? !!reason && reasons.includes(reason) : !reason;
-  },
-  { path: ['reason'] }
-).refine(
-  ({ subject, ...ids }) => areContactObjectsValid(subject, ids),
-  { path: ['subject'] }
-);
 
 /**
  * The public website's form: its visitor has no account, so they say who they are, and the
@@ -108,7 +81,6 @@ export const getContactSchema = z.object({
 
 export const getMyTicketsSchema = paginationQuerySchema.extend({
   awaiting: z.enum(TicketAwaitingEnum).optional(),
-  isReport: z.boolean().optional(),
 });
 
 export const getMyTicketSchema = z.object({

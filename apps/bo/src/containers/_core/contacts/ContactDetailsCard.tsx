@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 
 import type { Theme } from '@mui/material/styles';
 
-import Link from '@/components/Link';
 import { TICKET_LOCALE_LABEL_KEYS } from '@/constants/_core/ticket.constants';
 import {
   INBOX_CONTEXT_CARD_PADDING, INBOX_CONTEXT_ROW_GAP, INBOX_CONTEXT_ROW_PADDING_Y,
@@ -16,7 +15,6 @@ import { IContact } from '@/types/_core/contact.type';
 import { IUser } from '@/types/_core/user.type';
 import { getContactDetailRows } from '@/utils/_core/contact.utils';
 import { displayDate } from '@/utils/_core/date.utils';
-import { PATH_NAMES } from '@/utils/_core/pathnames';
 import { getDesignTokens } from '@/utils/_core/theme/tokens.utils';
 import { getUserFullName } from '@/utils/_core/user.utils';
 
@@ -66,7 +64,7 @@ const getAgentAndDate = (agent: IUser | undefined, date: string): string => (
 const ContactDetailsCard = ({ contact }: Props) => {
   const { t } = useTranslation(['common', 'user']);
   const {
-    reference, email, phone, createdAt, locale, subject, reason, reportedUser,
+    reference, email, phone, createdAt, locale, subject, reason,
     seenAt, seenBy, lastSeenAt, lastSeenBy, seenCount, repliedAt, repliedBy,
   } = contact;
 
@@ -100,12 +98,6 @@ const ContactDetailsCard = ({ contact }: Props) => {
       {!!subject && !!reason && renderRow(
         t('user:contacts.details.reason'),
         t(`user:contacts.reasons.${subject}.${reason}`)
-      )}
-      {!!reportedUser && renderRow(
-        t('user:contacts.details.reportedUser'),
-        <Link params={{ id: reportedUser.objectId }} to={`${PATH_NAMES.users}/$id`}>
-          {getUserFullName(reportedUser)}
-        </Link>
       )}
       {getContactDetailRows(contact).map(({ label, value }) => renderRow(label, value))}
 

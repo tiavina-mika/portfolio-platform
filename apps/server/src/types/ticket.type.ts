@@ -28,22 +28,6 @@ export enum TicketSourceEnum {
 
 export type TicketSource = `${TicketSourceEnum}`;
 
-/** What the app gets back once its request is filed: enough to show the confirmation screen. */
-export type CreatedContact = {
-  id: string;
-  reference: number;
-};
-
-/** The ids of the records an app request is attached to, as `createContact` receives them. */
-export type ContactObjectIds = {
-  reportedUserId?: string;
-};
-
-/** The same records once checked against their author, as the pointers the ticket stores. */
-export type ContactObjects = {
-  reportedUser?: Parse.Object;
-};
-
 export enum TicketMessageSenderRoleEnum {
   CUSTOMER = 'customer',
   AGENT = 'agent',

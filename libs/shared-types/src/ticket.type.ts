@@ -5,7 +5,6 @@
  */
 export enum TicketSubjectEnum {
   SAFETY = 'safety',
-  REPORT_USER = 'report_user',
   VERIFICATION = 'verification',
   ACCOUNT = 'account',
   TECH = 'tech',
@@ -21,15 +20,6 @@ export enum TicketSubjectGroupEnum {
 }
 
 export type TicketSubjectGroup = `${TicketSubjectGroupEnum}`;
-
-/**
- * The kinds of record a request can be attached to ("the user reported"…). Which ones a subject asks for is declared in `TICKET_SUBJECT_OBJECTS`.
- */
-export enum TicketObjectEnum {
-  USER = 'user'
-}
-
-export type TicketObject = `${TicketObjectEnum}`;
 
 /**
  * Whose move it is on a request, as its author filters their own list: an open request is waiting

@@ -58,17 +58,12 @@ export interface IContactAttributes {
   /*
    * what the requester said the request is about, picked in the app — absent on tickets from the
    * website, from an SOS, and on those filed before subjects existed. `reason` is a key of the
-   * subject's own list (`TICKET_SUBJECT_REASONS`), absent for a subject that takes none.
+   * subject's own list in the translations, absent for a subject that takes none.
    */
   subject?: TicketSubjectEnum;
   reason?: string;
   // the agent who owes this requester an answer — absent while the ticket is still unclaimed
   assignedTo?: IUser;
-  /*
-   * the records the requester attached in the app, checked to be theirs when the ticket was filed —
-   * absent on older tickets and on subjects that attach nothing
-   */
-  reportedUser?: IUser;
 }
 
 export type IContact = IContactAttributes & { id: string };

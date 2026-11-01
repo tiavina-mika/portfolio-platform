@@ -84,7 +84,7 @@ Parse.Cloud.beforeSave(
     contact.set('source', contact.get('source') ?? TicketSourceEnum.WEB);
     contact.set('status', TicketStatusEnum.OPEN);
     /*
-     * a client never picks its own priority — `createContact` would otherwise let anyone file an
+     * a client never picks its own priority — a direct write to the class would otherwise let anyone file an
      * urgent ticket. Only a ticket the server opens itself (an SOS, saved with the master key)
      * keeps the priority it was given.
      */
