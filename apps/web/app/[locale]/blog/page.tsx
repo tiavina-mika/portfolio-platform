@@ -5,6 +5,7 @@ import { capitalize } from 'string-ts';
 
 import Articles from '@/containers/articles/Articles';
 import ArticlesHeader from '@/containers/articles/ArticlesHeader';
+import ArticlesSection from '@/containers/articles/ArticlesSection';
 import { locales, Locale } from '@/i18n/config';
 import { ROUTES } from '@/i18n/routes';
 import { getArticleCategories, getCategoryBySlug } from '@/server/queries/category.queries';
@@ -142,10 +143,20 @@ const ArticlesContent = async (props: Props) => {
  * `<Suspense>` boundary so `cacheComponents` can still validate/prerender the static shell
  * (nav/footer) around it
  */
-const ArticlesApp = (props: Props) => (
-  <Suspense fallback={null}>
-    <ArticlesContent {...props} />
-  </Suspense>
-);
+const ArticlesApp = async (props: Props) => {
+  const params = await props.params;
+
+  /*
+   * the fallback is rendered here, not in a `loading.tsx`: a `loading.tsx` receives no locale, so its
+   * translations would read it from the request headers and block the prerender
+   */
+  setRequestLocale(params.locale);
+
+  return (
+    <Suspense fallback={<ArticlesSection status="loading" />}>
+      <ArticlesContent {...props} />
+    </Suspense>
+  );
+};
 
 export default ArticlesApp;

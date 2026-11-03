@@ -42,6 +42,9 @@ export const CATEGORY_SUBCATEGORY_PAGES_PREVIEW_LIMIT = 3;
  */
 export const GENERATE_STATIC_PARAMS_FALLBACK_SLUG = '__cache-components-fallback__';
 
+// time zone the dates are formatted in, the same on the server and in the browser
+export const TIME_ZONE = 'UTC';
+
 export const COOKIES = {
   locale: 'NEXT_LOCALE',
   // 'granted' | 'denied' | absent = not answered yet

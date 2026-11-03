@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation';
 import { getRequestConfig } from 'next-intl/server';
 
+import { TIME_ZONE } from '@/utils/constants';
+
 import { locales } from './config';
 import { routing } from './routing';
 
@@ -30,8 +32,13 @@ export default getRequestConfig(async ({ requestLocale }) => {
     modules.reduce((acc, module) => ({ ...acc, ...module.default }), {})
   );
 
+  /*
+   * `cacheComponents` treats the server's own time zone as request-time data, which would make every
+   * route wait for the request: a fixed zone lets the layout be prerendered
+   */
   return {
     locale,
     messages,
+    timeZone: TIME_ZONE,
   };
 });

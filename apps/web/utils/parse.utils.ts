@@ -127,6 +127,22 @@ export const serializeParseObject = <T = any>(value: unknown): T => {
     return serialized as T;
   }
 
+  // a Date or a class instance with `toJSON` (Parse.ACL…) cannot cross the cache boundary as it is
+  if (value instanceof Date) return value.toISOString() as T;
+
+  if (value && typeof value === 'object') {
+    const { toJSON } = value as { toJSON?: () => unknown };
+
+    if (typeof toJSON === 'function') return serializeParseObject(toJSON.call(value));
+
+    // a plain object (a user returned by a Cloud Function) can still hold Dates and ACLs
+    if (Object.getPrototypeOf(value) === Object.prototype) {
+      return Object.fromEntries(
+        Object.entries(value).map(([key, item]) => [key, serializeParseObject(item)])
+      ) as T;
+    }
+  }
+
   return value as T;
 };
 

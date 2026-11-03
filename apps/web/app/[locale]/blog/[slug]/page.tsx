@@ -6,6 +6,7 @@ import { titleCase } from 'string-ts';
 
 import { BreadcrumbsSegment } from '@/components/Breadcrumbs';
 import JsonLd from '@/components/JsonLd';
+import ArticleSkeleton from '@/containers/articles/ArticleSkeleton';
 import RelatedArticles from '@/containers/articles/RelatedArticles';
 import RelatedArticlesData from '@/containers/articles/RelatedArticlesData';
 import { defaultLocale, locales, Locale } from '@/i18n/config';
@@ -139,7 +140,7 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
  * ------------ page ----------- //
  * ----------------------------- //
  */
-const ArticleApp = async (props: Props) => {
+const ArticleContent = async (props: Props) => {
   const params = await props.params;
 
   const slug = params.slug;
@@ -190,6 +191,22 @@ const ArticleApp = async (props: Props) => {
         )}
       />
     </>
+  );
+};
+
+/**
+ * the skeleton is rendered here, not in a `loading.tsx`: a `loading.tsx` receives no locale, so its
+ * translations would read it from the request headers and block the prerender
+ */
+const ArticleApp = async (props: Props) => {
+  const params = await props.params;
+
+  setRequestLocale(params.locale);
+
+  return (
+    <Suspense fallback={<ArticleSkeleton />}>
+      <ArticleContent {...props} />
+    </Suspense>
   );
 };
 
