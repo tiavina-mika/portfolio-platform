@@ -41,8 +41,10 @@ const getMmsDuckClient = (): AxiosInstance => {
 export const sendWithMmsDuck = async ({
   nationalNumber, message,
 }: SmsProviderInput): Promise<SmsProviderResult> => {
-  // SMS are optional: without a key the text is refused up front, with a reason a notification can
-  // record, instead of calling the provider with an empty bearer token
+  /*
+   * SMS are optional: without a key the text is refused up front, with a reason a notification can
+   * record, instead of calling the provider with an empty bearer token
+   */
   if (!process.env.MMSDUCK_API_KEY) {
     logger.warn('sendSms refused — MMSDUCK_API_KEY is not set');
     return {

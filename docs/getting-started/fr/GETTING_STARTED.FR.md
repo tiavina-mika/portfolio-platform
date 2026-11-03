@@ -30,7 +30,7 @@ Chaque app fournit un `.env.example`. Copiez-le, remplissez-le, ne commitez jama
 |---|---|
 | `apps/server` | `.env.development` (voir la config du serveur pour les autres environnements) |
 | `apps/bo` | `.env.preprod` (`pnpm dev`, `build:preprod`) ou `.env.prod` (`build:prod`) |
-| `apps/web` | `.env.local` |
+| `apps/web` | `.env.local` (les quatre URLs locales) par-dessus `.env.preprod` (`pnpm dev`, `build:preprod`) ou `.env.prod` (`build:prod`) |
 
 ## Lancer
 

@@ -30,7 +30,7 @@ Each app ships a `.env.example`. Copy it, fill it, never commit the real file. T
 |---|---|
 | `apps/server` | `.env.development` (see the server config for the other environments) |
 | `apps/bo` | `.env.preprod` (`pnpm dev`, `build:preprod`) or `.env.prod` (`build:prod`) |
-| `apps/web` | `.env.local` |
+| `apps/web` | `.env.local` (the four local URLs) over `.env.preprod` (`pnpm dev`, `build:preprod`) or `.env.prod` (`build:prod`) |
 
 ## Run
 

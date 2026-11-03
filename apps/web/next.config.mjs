@@ -1,4 +1,6 @@
 /* eslint-disable @cspell/spellchecker */
+import './load-env.js';
+
 import { fileURLToPath } from 'node:url';
 
 import withBundleAnalyzer from '@next/bundle-analyzer';
