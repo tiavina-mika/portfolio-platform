@@ -1,18 +1,16 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { cache } from 'react';
+import { cache, Suspense } from 'react';
 import { titleCase } from 'string-ts';
 
 import { BreadcrumbsSegment } from '@/components/Breadcrumbs';
 import JsonLd from '@/components/JsonLd';
+import RelatedArticles from '@/containers/articles/RelatedArticles';
+import RelatedArticlesData from '@/containers/articles/RelatedArticlesData';
 import { defaultLocale, locales, Locale } from '@/i18n/config';
 import { ROUTES } from '@/i18n/routes';
-import {
-  getArticle,
-  getArticleSlugsForLocale,
-  getRelatedArticles,
-} from '@/server/queries/article.queries';
+import { getArticle, getArticleSlugsForLocale } from '@/server/queries/article.queries';
 import { IError } from '@/types/app.type';
 import { IArticle } from '@/types/article.type';
 import { OgCard, OgCardLayoutEnum } from '@/types/og.type';
@@ -161,11 +159,6 @@ const ArticleApp = async (props: Props) => {
   const articlesPath = retrievePathnameFromDynamicPathname(ROUTES.articles.preview().pathname);
   const currentPathname = getAbsoluteUrl(`/${locale}${articlesPath}${slug}`);
 
-  const relatedArticlesResponse = await getRelatedArticles(article);
-  const relatedArticles = (relatedArticlesResponse as IError)?.error
-    ? []
-    : (relatedArticlesResponse as IArticle[]);
-
   const title = getTranslatedField(article.translated, locale, 'title');
   const ogImage = generateOGImageUrl(await getArticleOgCard(article, locale));
 
@@ -189,7 +182,12 @@ const ArticleApp = async (props: Props) => {
         breadcrumbs={breadcrumbs}
         currentPathname={currentPathname}
         locale={locale}
-        relatedArticles={relatedArticles}
+        relatedArticles={(
+          // cached for minutes only = request-time data: it streams in instead of blocking the page
+          <Suspense fallback={<RelatedArticles status="loading" />}>
+            <RelatedArticlesData article={article} locale={locale} />
+          </Suspense>
+        )}
       />
     </>
   );

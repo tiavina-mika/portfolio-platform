@@ -1,4 +1,5 @@
 import { useTranslations } from 'next-intl';
+import { ReactNode } from 'react';
 import { capitalize } from 'string-ts';
 
 import { BreadcrumbsSegment } from '@/components/Breadcrumbs';
@@ -6,13 +7,11 @@ import ArticleBody from '@/containers/articles/ArticleBody';
 import ArticleHeader from '@/containers/articles/ArticleHeader';
 import ArticleTags from '@/containers/articles/ArticleTags';
 import ArticleViewTracker from '@/containers/articles/ArticleViewTracker';
-import RelatedArticles from '@/containers/articles/RelatedArticles';
 import Share from '@/containers/common/Share';
 import Newsletter from '@/containers/newsletter/NewsLetter';
 import { Locale } from '@/i18n/config';
 import { ROUTES } from '@/i18n/routes';
 import { IArticle } from '@/types/article.type';
-import { getArticleCardData } from '@/utils/article.utils';
 import { goToItemsByCategory, getReadingTimeInMinutes } from '@/utils/cms.utils';
 import { collections } from '@/utils/constants';
 import { formatShortDate } from '@/utils/date.utils';
@@ -27,10 +26,9 @@ type Props = {
    */
   article: IArticle;
   /**
-   * list of related articles
-   * @type IArticle[]
+   * the "read also" section, fetched behind its own Suspense by the route
    */
-  relatedArticles: IArticle[];
+  relatedArticles: ReactNode;
   /**
    * project language
    * @example 'en'
@@ -109,13 +107,7 @@ const ArticlePage = ({
         id={article.id}
         totalMediaShare={article.totalMediaShare}
       />
-      <RelatedArticles
-        articles={relatedArticles.map((related) => getArticleCardData(
-          related,
-          locale,
-          (minutes) => t('readingTime', { minutes })
-        ))}
-      />
+      {relatedArticles}
       <Newsletter locale={locale} />
     </div>
   );
