@@ -8,7 +8,7 @@
 
 - [Résumé](#résumé)
 - [1. Les rôles existants ne sont pas renommés](#1-les-rôles-existants-ne-sont-pas-renommés)
-- [2. Un serveur déployé exige deux propriétaires et une clé SMS](#2-un-serveur-déployé-exige-deux-propriétaires-et-une-clé-sms)
+- [2. Un serveur déployé exige deux propriétaires](#2-un-serveur-déployé-exige-deux-propriétaires)
 - [4. Trous sur les projets dans le tableau de bord, la recherche et les versions](#4-trous-sur-les-projets-dans-le-tableau-de-bord-la-recherche-et-les-versions)
 - [5. Écrans du back-office sans serveur ni source de données](#5-écrans-du-back-office-sans-serveur-ni-source-de-données)
 - [6. Le build du site exige un serveur Parse](#6-le-build-du-site-exige-un-serveur-parse)
@@ -22,7 +22,7 @@
 | # | Gravité | Type | Risque | Statut |
 |---|---|---|---|---|
 | 1 | 🟠 Moyenne | Régression | Les rôles `Owner` / `Administrator` / `Manager` d'une base existante ne sont pas reconnus | ⏳ à faire |
-| 2 | 🟠 Moyenne | Bug | `validateEnv` bloque un portfolio à un seul propriétaire et exige une clé SMS | ⏳ décision produit |
+| 2 | 🟠 Moyenne | Bug | `validateEnv` bloque un portfolio à un seul propriétaire | ⏳ décision produit |
 | 4 | 🟡 Faible | Bug | Colonne du tableau de bord, recherche par auteur, restauration de version | ⏳ à faire |
 | 5 | 🟡 Faible | Bug | Écrans qui appellent des Cloud Functions inexistantes, entrée de menu masquée | ⏳ à faire |
 | 6 | 🟡 Faible | Bug | `next build` exige un serveur Parse joignable | ⏳ à faire |
@@ -48,12 +48,12 @@
    *Pourquoi* : aucune perte de données, réversible, utilise l'outillage de jobs existant.
 2. Renommer à la main dans la base (Compass / Atlas) avant le premier déploiement — peu coûteux, mais facile à oublier et non tracé.
 
-## 2. Un serveur déployé exige deux propriétaires et une clé SMS
+## 2. Un serveur déployé exige deux propriétaires
 
 - **Gravité** : 🟠 Moyenne · **Type** : Bug · **Statut** : ⏳ décision produit
 - **Concerné** : `apps/server/src/utils/_core/validateEnv.ts`, `apps/server/src/constants/_core/role.constants.ts` (`MIN_OWNERS_COUNT`)
 
-**Ce qui peut arriver** — en `preProduction` / `production` le serveur s'arrête au démarrage sauf si `OWNERS_EMAILS` liste deux adresses distinctes et si `MMSDUCK_API_KEY` et `WEBSITE_REVALIDATE_SECRET` sont définis. Un portfolio à un propriétaire et sans fournisseur de SMS ne peut pas se déployer. `UPSTASH_REDIS_*` et `ADMIN_EMAIL_SENDER` sont requis même en local.
+**Ce qui peut arriver** — en `preProduction` / `production` le serveur s'arrête au démarrage sauf si `OWNERS_EMAILS` liste deux adresses distinctes et si `WEBSITE_REVALIDATE_SECRET` est défini. Un portfolio à un seul propriétaire ne peut pas se déployer. (La clé SMS est désormais facultative.) `UPSTASH_REDIS_*` et `ADMIN_EMAIL_SENDER` sont requis même en local.
 
 **Pourquoi** — les règles viennent de la plateforme 1lalana (un propriétaire seul n'a plus de recours s'il perd son authentificateur).
 
@@ -61,9 +61,9 @@
 
 **Comment corriger**
 
-1. **(recommandé)** Rendre `MIN_OWNERS_COUNT` et l'exigence de clé SMS configurables par le domaine (1 propriétaire, pas de SMS pour le portfolio) et garder les valeurs strictes comme défaut du core.
+1. **(recommandé)** Rendre `MIN_OWNERS_COUNT` configurable par le domaine (1 propriétaire pour le portfolio) et garder les valeurs strictes comme défaut du core.
    *Pourquoi* : garde le défaut sûr d'un back-office générique, débloque le portfolio.
-2. Garder la règle et demander d'ajouter une seconde adresse et un compte SMS — le plus sûr, mais coûte un service que le portfolio n'utilise pas.
+2. Garder la règle et demander d'ajouter une seconde adresse — le plus sûr, mais impose un second propriétaire que le portfolio n'a peut-être pas.
 
 ## 4. Trous sur les projets dans le tableau de bord, la recherche et les versions
 

@@ -36,7 +36,6 @@ Required everywhere: `PORT`, `MONGO_URL`, `PARSE_APP_ID`, `PARSE_MASTER_KEY`, `R
 Required only in the deployed environments (`preProduction` and `production`); optional in development and test:
 
 - `OWNERS_EMAILS` must list at least two distinct addresses (`MIN_OWNERS_COUNT`). A single owner who loses their authenticator leaves the OWNER-only actions out of reach, so a deployed server with one owner does not start.
-- `MMSDUCK_API_KEY` must not be empty: without it every SMS (sign-up codes, password resets, alerts) is refused. Elsewhere SMS are only logged.
 - `WEBSITE_REVALIDATE_SECRET` must not be empty: without it the website cache is never invalidated. It must equal the web `REVALIDATE_SECRET`.
 
 | Variable | Purpose |
@@ -54,7 +53,7 @@ Required only in the deployed environments (`preProduction` and `production`); o
 | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `UPSTASH_REDIS_URL` | Upstash Redis: rate limits and the lock that lets only one server instance run a scheduled job tick |
 | `WEBSITE_REVALIDATE_SECRET` | Shared secret to invalidate the website CMS cache (must equal the web `REVALIDATE_SECRET`) |
 | `RECAPTCHA_SECRET_KEY` | reCAPTCHA v3 secret: the server verifies the token of the contact and newsletter forms. Skipped in development and test, fails closed elsewhere |
-| `MMSDUCK_API_KEY` | MMSDuck SMS provider key |
+| `MMSDUCK_API_KEY` | MMSDuck SMS provider key (optional: without it every SMS is refused with a warning) |
 | `SLACK_ALERTS_WEBHOOK_URL` | Optional: Slack incoming webhook of the staff alert channel; empty means nothing is posted |
 | `DOCS_FEATURES_PASSWORD`, `DOCS_BUSINESS_PASSWORD` | Optional, validated by `validateEnv()` but not in `.env.example`: passwords of the documentation sections served by the server; a section without one stays closed (404) |
 

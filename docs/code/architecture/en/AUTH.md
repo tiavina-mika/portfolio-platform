@@ -67,7 +67,7 @@ The back-office sends the key from `VITE_REST_API_KEY`; being a `VITE_*` variabl
 
 ## Secrets involved
 
-Names only, see [the inventory](../../../inventory/README.md): `PARSE_APP_ID`, `PARSE_MASTER_KEY`, `REST_API_KEY`, `OWNERS_EMAILS`, `CRYPTO_FIXED_PART_KEY`, `CRYPTO_FIXED_FULL_KEY`, `UPSTASH_REDIS_*`, `MMSDUCK_API_KEY`. `validateEnv` checks them at startup (see the inventory for the deployed-only rules).
+Names only, see [the inventory](../../../inventory/README.md): `PARSE_APP_ID`, `PARSE_MASTER_KEY`, `REST_API_KEY`, `OWNERS_EMAILS`, `CRYPTO_FIXED_PART_KEY`, `CRYPTO_FIXED_FULL_KEY`, `UPSTASH_REDIS_*`, `MMSDUCK_API_KEY`. `validateEnv` checks them at startup (`MMSDUCK_API_KEY` is optional) (see the inventory for the deployed-only rules).
 
 ## Known gaps
 

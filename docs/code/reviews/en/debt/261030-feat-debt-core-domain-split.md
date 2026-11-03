@@ -8,7 +8,7 @@
 
 - [Summary](#summary)
 - [1. Existing roles are not renamed](#1-existing-roles-are-not-renamed)
-- [2. A deployed server needs two owners and an SMS key](#2-a-deployed-server-needs-two-owners-and-an-sms-key)
+- [2. A deployed server needs two owners](#2-a-deployed-server-needs-two-owners)
 - [4. Project gaps in the dashboard, search and versions](#4-project-gaps-in-the-dashboard-search-and-versions)
 - [5. Back-office screens without a server or data source](#5-back-office-screens-without-a-server-or-data-source)
 - [6. The website build needs a Parse server](#6-the-website-build-needs-a-parse-server)
@@ -22,7 +22,7 @@
 | # | Severity | Type | Risk | Status |
 |---|---|---|---|---|
 | 1 | 🟠 Medium | Regression | Roles `Owner` / `Administrator` / `Manager` of an existing database are not recognised | ⏳ to do |
-| 2 | 🟠 Medium | Bug | `validateEnv` blocks a single-owner portfolio and requires an SMS key | ⏳ product decision |
+| 2 | 🟠 Medium | Bug | `validateEnv` blocks a single-owner portfolio | ⏳ product decision |
 | 4 | 🟡 Low | Bug | Project dashboard column, search by author, version restore | ⏳ to do |
 | 5 | 🟡 Low | Bug | Screens calling Cloud Functions that do not exist, hidden menu entry | ⏳ to do |
 | 6 | 🟡 Low | Bug | `next build` needs a reachable Parse server | ⏳ to do |
@@ -48,12 +48,12 @@
    *Why*: no data loss, reversible, uses the existing job tooling.
 2. Rename by hand in the database (Compass / Atlas) before the first deploy — cheap, but easy to forget and not tracked.
 
-## 2. A deployed server needs two owners and an SMS key
+## 2. A deployed server needs two owners
 
 - **Severity**: 🟠 Medium · **Type**: Bug · **Status**: ⏳ product decision
 - **Concerned**: `apps/server/src/utils/_core/validateEnv.ts`, `apps/server/src/constants/_core/role.constants.ts` (`MIN_OWNERS_COUNT`)
 
-**What can happen** — in `preProduction` / `production` the server stops at boot unless `OWNERS_EMAILS` lists two distinct addresses and `MMSDUCK_API_KEY`, `WEBSITE_REVALIDATE_SECRET` are set. A portfolio with one owner and no SMS provider cannot deploy. `UPSTASH_REDIS_*` and `ADMIN_EMAIL_SENDER` are required even locally.
+**What can happen** — in `preProduction` / `production` the server stops at boot unless `OWNERS_EMAILS` lists two distinct addresses and `WEBSITE_REVALIDATE_SECRET` is set. A portfolio with a single owner cannot deploy. (The SMS key is now optional.) `UPSTASH_REDIS_*` and `ADMIN_EMAIL_SENDER` are required even locally.
 
 **Why** — the rules come from the 1lalana platform (a lone owner has no way back if they lose their authenticator).
 
@@ -61,9 +61,9 @@
 
 **How to fix**
 
-1. **(recommended)** Make `MIN_OWNERS_COUNT` and the SMS key requirement configurable by the domain (1 owner, no SMS for the portfolio) and keep the strict values as the core default.
+1. **(recommended)** Make `MIN_OWNERS_COUNT` configurable by the domain (1 owner for the portfolio) and keep the strict values as the core default.
    *Why*: keeps the safe default for a generic back-office, unblocks the portfolio.
-2. Keep the rule and ask the user to add a second address and an SMS account — safest, but costs a service the portfolio does not use.
+2. Keep the rule and ask the user to add a second address — safest, but forces a second owner the portfolio may not have.
 
 ## 4. Project gaps in the dashboard, search and versions
 

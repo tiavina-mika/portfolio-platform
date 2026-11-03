@@ -2,7 +2,7 @@ import { create, type AxiosError, type AxiosInstance } from 'axios';
 
 import type { ISendSmsResponse, SmsProviderInput, SmsProviderResult } from '@/types/sms.type';
 
-import { SMS_INSUFFICIENT_CREDITS_CODE } from '@/constants/_core/constants';
+import { SMS_INSUFFICIENT_CREDITS_CODE, SMS_NOT_CONFIGURED_CODE } from '@/constants/_core/constants';
 import { logger } from '@/utils/_core/logger';
 
 const MMSDUCK_BASE_URL = 'https://api.mmsduck.com';
@@ -21,7 +21,7 @@ const getMmsDuckClient = (): AxiosInstance => {
     _client = create({
       baseURL: MMSDUCK_BASE_URL,
       timeout: MMSDUCK_TIMEOUT_MS,
-      headers: { Authorization: `Bearer ${process.env.MMSDUCK_API_KEY ?? ''}` },
+      headers: { Authorization: `Bearer ${process.env.MMSDUCK_API_KEY}` },
     });
   }
   return _client;
@@ -41,6 +41,16 @@ const getMmsDuckClient = (): AxiosInstance => {
 export const sendWithMmsDuck = async ({
   nationalNumber, message,
 }: SmsProviderInput): Promise<SmsProviderResult> => {
+  // SMS are optional: without a key the text is refused up front, with a reason a notification can
+  // record, instead of calling the provider with an empty bearer token
+  if (!process.env.MMSDUCK_API_KEY) {
+    logger.warn('sendSms refused — MMSDUCK_API_KEY is not set');
+    return {
+      errorCode: SMS_NOT_CONFIGURED_CODE,
+      errorMessage: 'The SMS provider is not configured',
+    };
+  }
+
   try {
     const client = getMmsDuckClient();
     const { data } = await client.post<NonNullable<ISendSmsResponse>>(

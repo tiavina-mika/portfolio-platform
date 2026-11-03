@@ -22,7 +22,7 @@ The variables of each app are listed in the [inventory](../../README.md#environm
 
 - `NODE_ENV` selects the environment. `IS_LOCAL`, `IS_PREPROD` and `IS_PROD` are derived from it in `apps/server/src/constants/_core/constants.ts`.
 - Local file loading: `.env.prod` when production is forced, otherwise `.env.preprod`. In a deployed environment no file is read: the variables are set on the host.
-- At boot, `validateEnv()` (`apps/server/src/utils/_core/validateEnv.ts`, `envalid`) refuses to start without the required variables listed in the [inventory](../../README.md#appsserver). In `preProduction` and `production` it also requires `OWNERS_EMAILS` (at least two distinct addresses), `MMSDUCK_API_KEY` and `WEBSITE_REVALIDATE_SECRET`; elsewhere they are optional.
+- At boot, `validateEnv()` (`apps/server/src/utils/_core/validateEnv.ts`, `envalid`) refuses to start without the required variables listed in the [inventory](../../README.md#appsserver). In `preProduction` and `production` it also requires `OWNERS_EMAILS` (at least two distinct addresses) and `WEBSITE_REVALIDATE_SECRET`; elsewhere they are optional.
 - The back-office build is served by Express from `clientBuild/bo/preprod` or `clientBuild/bo/prod` depending on the environment (`pnpm copy` fills them, then checks that no secret-looking `VITE_*` value ended up in the bundle).
 - The keep-awake ping runs everywhere except in local development and on Cloud Run; the business cron jobs run in production only (see [scheduled tasks](SCHEDULED_JOBS.md)).
 
@@ -37,4 +37,4 @@ Vite reads `.env.preprod` (`pnpm dev`, `build:preprod`) or `.env.prod` (`build:p
 ## Gotchas
 
 - `FORCE_PROD` and `FORCE_PREPROD` in `apps/server/src/constants/_core/constants.ts` must stay `false` when committing: they exist to test an environment locally.
-- A deployed server with fewer than two `OWNERS_EMAILS` addresses, or without `MMSDUCK_API_KEY` or `WEBSITE_REVALIDATE_SECRET`, does not start: a single-owner portfolio must list a second address before deploying.
+- A deployed server with fewer than two `OWNERS_EMAILS` addresses, or without `WEBSITE_REVALIDATE_SECRET`, does not start: a single-owner portfolio must list a second address before deploying.

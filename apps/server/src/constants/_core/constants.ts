@@ -171,6 +171,9 @@ export const SMS_INSUFFICIENT_CREDITS_CODE = 'insufficient_credits';
  */
 export const SMS_UNREACHABLE_COUNTRY_CODE = 'unreachable_country';
 
+/** Recorded when a text is refused because the provider's API key is not set in the environment. */
+export const SMS_NOT_CONFIGURED_CODE = 'sms_not_configured';
+
 /**
  * Minimum time between two "SMS credit exhausted" e-mails to the staff. Every refused text raises
  * the alert, and a burst of sign-ups would otherwise send one e-mail per attempt.

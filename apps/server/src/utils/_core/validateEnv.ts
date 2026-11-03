@@ -72,12 +72,11 @@ const validateEnv = (env: Env = process.env): void => {
     DOCS_FEATURES_PASSWORD: str({ default: '' }),
     DOCS_BUSINESS_PASSWORD: str({ default: '' }),
     /*
-     * MMSDuck key behind every SMS: sign-up codes, password resets, alerts. Without it each text is
-     * refused and the member waits for a code that never comes, with nothing in the logs to say
-     * why — so the environments that really send SMS refuse to boot without it. Development and
-     * test only log the message, and need no key.
+     * MMSDuck key behind every SMS. Optional everywhere: without it each text is refused with a
+     * warning in the logs (see mmsduck.service.ts) and development and test only log the message.
+     * A portfolio that sends no SMS needs no provider account.
      */
-    MMSDUCK_API_KEY: isDeployed(env) ? nonEmptyStr() : str({ default: '' }),
+    MMSDUCK_API_KEY: str({ default: '' }),
     /*
      * Shared secret that lets the server invalidate the website's CMS cache (see
      * revalidate.utils.ts); it must equal the website's REVALIDATE_SECRET. Without it the call is

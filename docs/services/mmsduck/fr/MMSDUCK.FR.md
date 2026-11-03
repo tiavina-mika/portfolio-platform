@@ -22,15 +22,15 @@ MMSDuck est le fournisseur de SMS. Il envoie les codes de vérification du tél�
 
 | Variable | App | Rôle |
 |---|---|---|
-| `MMSDUCK_API_KEY` | server | Clé du fournisseur (secret). Obligatoire et non vide en `preProduction` et `production` ; facultative ailleurs |
+| `MMSDUCK_API_KEY` | server | Clé du fournisseur (secret). Facultative dans tous les environnements ; sans elle chaque SMS est refusé avec un avertissement dans les logs |
 
 ## Mise en place
 
-1. Créer un compte MMSDuck et une clé d'API, et ajouter du crédit.
-2. Poser `MMSDUCK_API_KEY` sur l'hébergeur de chaque environnement déployé.
+1. Ne rien faire tant qu'aucun SMS n'est utilisé : le serveur démarre sans la clé.
+2. Pour envoyer des SMS : créer un compte MMSDuck et une clé d'API, ajouter du crédit, et poser `MMSDUCK_API_KEY` sur l'hébergeur de chaque environnement déployé.
 
 ## Pièges
 
 - En développement et en test aucun SMS n'est envoyé : le message est seulement journalisé.
 - Chaque SMS coûte du crédit. Un pays qu'aucun fournisseur ne dessert est refusé avant tout envoi.
-- Le serveur ne démarre pas dans un environnement déployé sans la clé.
+- Sans la clé, un serveur déployé démarre quand même, mais chaque SMS est refusé (code d'erreur `sms_not_configured`, enregistré sur le destinataire) et les codes envoyés par SMS n'arrivent jamais.
