@@ -2,6 +2,8 @@
   "title": "Titre",
   "name": "Nom",
   "content": "Contenu",
+  "tableOfContents": "Sommaire",
+  "tableOfContentsEmpty": "Ajoutez des titres pour générer le sommaire",
   "pages": "Pages",
   "page": "Page",
   "thisPage": "Ce page",

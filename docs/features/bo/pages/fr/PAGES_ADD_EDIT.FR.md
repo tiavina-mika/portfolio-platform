@@ -44,7 +44,7 @@ Trois onglets de langue. Pour chaque langue :
   automatiquement et reste modifiable. Obligatoire en français.
 - **Titre** : affiché en haut de la page ; à défaut, c'est le nom qui est affiché.
 - **Description** (jusqu'à 2000 caractères).
-- **Contenu** : éditeur de texte riche (titres, liens, images…). Obligatoire en français.
+- **Contenu** : éditeur de texte riche (titres, liens, images…). Obligatoire en français. Un **sommaire** listant les titres du texte s’affiche à côté de l’éditeur pour s’y repérer (il n’est pas visible sur le site public).
 - **Adresse (slug)**, **Tags** (séparés par une virgule), **Meta titre** et **Meta description** pour les
   moteurs de
   recherche (environ 70 et 170 caractères au maximum).

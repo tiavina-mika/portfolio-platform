@@ -17,10 +17,12 @@ const classes = {
 type Props = {
   name: string;
   required?: boolean;
+  /** shows the table of contents built from the headings next to the editor (off by default) */
+  withTableOfContents?: boolean;
 } & Omit<TextEditorProps, 'onChange'>;
 
 const TextEditorField = ({
-  name, required, ...inputProps
+  name, required, withTableOfContents, ...inputProps
 }: Props) => {
   const {
     t,
@@ -44,6 +46,7 @@ const TextEditorField = ({
         <TextEditor
           {...field}
           {...inputProps}
+          disableTableOfContents={!withTableOfContents}
           error={(errors as any)[name]?.message}
           label={required
             ? (
@@ -54,6 +57,15 @@ const TextEditorField = ({
               </>
             )
             : inputProps.label}
+          labels={withTableOfContents
+            ? {
+              ...inputProps.labels,
+              tableOfContent: {
+                label: t('cms:tableOfContents'),
+                noContentLabel: t('cms:tableOfContentsEmpty'),
+              },
+            }
+            : inputProps.labels}
         />
       )}
     />

@@ -2,6 +2,8 @@
   "title": "Title",
   "name": "Name",
   "content": "Content",
+  "tableOfContents": "Table of contents",
+  "tableOfContentsEmpty": "Add headings to generate the table of contents",
   "pages": "Pages",
   "page": "Page",
   "published": "Published",

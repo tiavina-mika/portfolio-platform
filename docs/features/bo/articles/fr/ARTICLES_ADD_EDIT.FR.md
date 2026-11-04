@@ -58,7 +58,7 @@ erreur est signalé. Champs de chaque langue :
   peut le corriger. Laissé vide, il est déduit du titre à l'enregistrement.
 - **Description** (obligatoire en français, 2 000 caractères au maximum) : courte présentation affichée sous
   le titre.
-- **Contenu** : texte mis en forme, avec insertion d'images (obligatoire en français).
+- **Contenu** : texte mis en forme, avec insertion d’images (obligatoire en français). Un **sommaire** listant les titres du texte s’affiche à côté de l’éditeur pour s’y repérer (il n’est pas visible sur le site public).
 - **Tags** (200 caractères au maximum, séparés par des virgules), **Meta titre** (70 caractères) et **Meta
   description** (170 caractères) pour le référencement. S'ils sont vides, ils sont complétés
   automatiquement à partir du titre et de la description.
