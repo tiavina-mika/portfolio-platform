@@ -36,7 +36,7 @@ Dépôt GitHub ──► tiavina-mika-bo.preprod (API + back-office) ──► M
 
 - Un compte [Render](https://render.com), avec votre compte GitHub connecté (Account Settings → GitHub).
 - Le dépôt poussé sur GitHub, sur la branche à déployer (`main` pour la production).
-- Les comptes des services externes, clés en main (voir les [services](../../README.md)) : MongoDB Atlas, Cloudinary, Brevo, Google reCAPTCHA (clé de site et clé secrète), Google Maps.
+- Les comptes des services externes, clés en main (voir les [services](../../README.md)) : MongoDB Atlas, Cloudinary, Brevo, Google reCAPTCHA (clé de site et clé secrète).
 - Les deux noms de service : `tiavina-mika-bo.preprod` (serveur + back-office) et `tiavina-mika-preprod` (site). Render déduit chaque URL publique `https://<slug>.onrender.com` du nom ; lisez toujours l'URL réelle sous le nom du service dans le tableau de bord. Ci-dessous, **URL du serveur** et **URL du site** désignent ces deux URL réelles.
 
 ## Étape 1 : la base de données (MongoDB Atlas)
@@ -224,7 +224,6 @@ Toutes sont validées par `apps/web/env.ts` ; une variable manquante ou invalide
 | `RECAPTCHA_SECRET_KEY` | clé **secrète** reCAPTCHA |
 | `NEXT_PUBLIC_SERVER_URL` | la même que `SERVER_URL` |
 | `NEXT_PUBLIC_APP_URL` | la même que `APP_URL` |
-| `NEXT_PUBLIC_GOOGLE_MAP_KEY` | clé Google Maps (restreignez-la à votre domaine dans Google Cloud) |
 | `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` | clé de **site** reCAPTCHA |
 
 Les valeurs `NEXT_PUBLIC_*` sont inscrites au build et visibles dans le navigateur. `APP_ENV` est posée par les scripts `build:preprod` et `start:preprod` : ne la définissez pas.
@@ -237,11 +236,10 @@ Les valeurs `NEXT_PUBLIC_*` sont inscrites au build et visibles dans le navigate
 ## Étape 5 : boucler la configuration
 
 1. **reCAPTCHA** : dans l'admin Google reCAPTCHA, ajoutez le domaine du site (et votre domaine personnalisé) aux domaines de la clé.
-2. **Google Maps** : ajoutez le même domaine aux restrictions de référent HTTP de la clé.
-3. **Brevo** : vérifiez que les adresses `ADMIN_EMAIL_SENDER` et `SENDER_EMAIL` sont des expéditeurs vérifiés.
-4. **Première connexion au back-office** : au démarrage, le serveur crée une invitation Owner pour chaque adresse de `OWNERS_EMAILS`. Ouvrez l'email d'invitation, définissez le mot de passe, puis connectez-vous sur l'URL du serveur.
-5. **Contenu** : créez vos premiers projets et articles dans le back-office, puis redéployez le site (Manual Deploy) si son build s'est fait sur une base vide.
-6. **Domaine personnalisé** (facultatif) : Settings → Custom Domains sur chaque service, ajoutez l'enregistrement DNS indiqué par Render, attendez le certificat. Mettez ensuite à jour `SERVER_URL`, `VITE_SERVER_URL`, `WEBSITE_URL`, `VITE_WEBSITE_URL`, `APP_URL`, `NEXT_PUBLIC_SERVER_URL` et `NEXT_PUBLIC_APP_URL`, et redéployez les deux services en vidant le cache de build.
+2. **Brevo** : vérifiez que les adresses `ADMIN_EMAIL_SENDER` et `SENDER_EMAIL` sont des expéditeurs vérifiés.
+3. **Première connexion au back-office** : au démarrage, le serveur crée une invitation Owner pour chaque adresse de `OWNERS_EMAILS`. Ouvrez l'email d'invitation, définissez le mot de passe, puis connectez-vous sur l'URL du serveur.
+4. **Contenu** : créez vos premiers projets et articles dans le back-office, puis redéployez le site (Manual Deploy) si son build s'est fait sur une base vide.
+5. **Domaine personnalisé** (facultatif) : Settings → Custom Domains sur chaque service, ajoutez l'enregistrement DNS indiqué par Render, attendez le certificat. Mettez ensuite à jour `SERVER_URL`, `VITE_SERVER_URL`, `WEBSITE_URL`, `VITE_WEBSITE_URL`, `APP_URL`, `NEXT_PUBLIC_SERVER_URL` et `NEXT_PUBLIC_APP_URL`, et redéployez les deux services en vidant le cache de build.
 
 ## Étape 6 : vérifier que tout fonctionne
 

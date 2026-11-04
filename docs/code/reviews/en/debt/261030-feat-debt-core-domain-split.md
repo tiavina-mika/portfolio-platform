@@ -130,9 +130,9 @@
 ## 8. Website leftovers
 
 - **Severity**: 🟡 Low · **Type**: Bug · **Status**: ⏳ to do
-- **Concerned**: `apps/web/app/[locale]/layout.tsx`, `apps/web/components/Map.tsx`, `apps/web/components/Avatar.tsx`, `apps/web/utils/user.utils.ts`, `apps/web/global.d.ts`, `apps/web/translations`
+- **Concerned**: `apps/web/app/[locale]/layout.tsx`, `apps/web/components/Avatar.tsx`, `apps/web/utils/user.utils.ts`, `apps/web/global.d.ts`, `apps/web/translations`
 
-**What can happen** — the zod error-message locale is no longer loaded in the layout (to verify that validation messages are localised); `Map.tsx` has no importer, and `Avatar.tsx` (the only user of `user.utils.ts`) has none either; the `Messages` type in `global.d.ts` lacks the `home` and `project` namespaces; some translation keys are stale; the FAQ is not ported; the locale `mg` is absent (`fr` and `en` only, 1lalana has `mg`).
+**What can happen** — the zod error-message locale is no longer loaded in the layout (to verify that validation messages are localised); `Avatar.tsx` (the only user of `user.utils.ts`) has no importer; the `Messages` type in `global.d.ts` lacks the `home` and `project` namespaces; some translation keys are stale; the FAQ is not ported; the locale `mg` is absent (`fr` and `en` only, 1lalana has `mg`).
 
 **How to check** — submit the contact form with invalid data in `en`; grep for importers.
 

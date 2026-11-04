@@ -36,7 +36,6 @@ const env = createEnv({
   client: {
     NEXT_PUBLIC_SERVER_URL: z.string().url(),
     NEXT_PUBLIC_APP_URL: z.string().url(),
-    NEXT_PUBLIC_GOOGLE_MAP_KEY: z.string(),
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z.string(),
     // GA4 measurement id — absent = analytics disabled (kept unset in dev local)
     NEXT_PUBLIC_GA_MEASUREMENT_ID: z.string().optional(),
@@ -63,7 +62,6 @@ const env = createEnv({
     TIME: process.env.TIME,
     // -------- client -------- //
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
-    NEXT_PUBLIC_GOOGLE_MAP_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
     NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
     NEXT_PUBLIC_GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
