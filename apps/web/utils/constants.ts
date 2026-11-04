@@ -89,6 +89,16 @@ export const CONTACTS = [
  */
 export const AVERAGE_READING_WORDS_PER_MINUTE = 200;
 
+/*
+ * distance from the top of the viewport, in px, under which a heading counts as "being read": it clears
+ * the sticky navigation bar (55–93px) with some room, so the table of contents highlights the section
+ * the visitor is actually in
+ */
+export const TABLE_OF_CONTENTS_ACTIVE_OFFSET = 140;
+
+// prefix of the ids given to the headings of a content, so they cannot collide with another id of the page
+export const TABLE_OF_CONTENTS_ID_PREFIX = 'toc-';
+
 // id of the placeholder row the search returns when nothing matches
 export const SEARCH_EMPTY_RESULT_ID = 'empty';
 

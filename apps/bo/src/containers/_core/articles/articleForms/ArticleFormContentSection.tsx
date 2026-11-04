@@ -68,6 +68,7 @@ const ArticleFormContentSection = ({ locale }: Props) => {
         />
         <Suspense fallback={<TextEditorFieldSkeleton />}>
           <TextEditorField
+            withTableOfContents
             helperText={t('cms:articleForm.contentHelper')}
             id={locale + 'content'}
             label={t('cms:content')}

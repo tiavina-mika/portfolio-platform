@@ -2,6 +2,7 @@ import { BreadcrumbsSegment } from '@/components/Breadcrumbs';
 import Section from '@/components/layouts/Section';
 import { CardImage } from '@/components/ui/Card';
 import ReadOnlyTextCodeEditor from '@/containers/articles/ReadOnlyTextCodeEditor';
+import ContentWithTableOfContents from '@/containers/common/ContentWithTableOfContents';
 import PageBlocks from '@/containers/pages/PageBlocks';
 import PageHeader from '@/containers/pages/PageHeader';
 import { Locale } from '@/i18n/config';
@@ -44,7 +45,7 @@ const CmsPage = ({
       {/* content */}
       {!!content && (
         <Section className="flex-col" size="lg">
-          <ReadOnlyTextCodeEditor content={content} />
+          <ContentWithTableOfContents content={content} hasTableOfContents={page.hasTableOfContents} />
         </Section>
       )}
       {/* images */}

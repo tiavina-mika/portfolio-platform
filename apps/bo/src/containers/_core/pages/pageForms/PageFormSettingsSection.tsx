@@ -59,6 +59,16 @@ const PageFormSettingsSection = () => {
         <CmsCountryField />
         <Divider />
 
+        {/* a table of contents of the content's headings, shown on the website */}
+        <div css={classes.switchRow}>
+          <div css={classes.switchRowText}>
+            <Typography variant="h6">{t('cms:tableOfContents')}</Typography>
+            <Typography variant="body2">{t('cms:tableOfContentsVisible')}</Typography>
+          </div>
+          <CheckboxField isSwitch name="hasTableOfContents" />
+        </div>
+        <Divider />
+
         <TextField
           fixedLabel
           fullWidth

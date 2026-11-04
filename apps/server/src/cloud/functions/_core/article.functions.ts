@@ -184,6 +184,7 @@ Parse.Cloud.define(
         'user',
         'updatedAt',
         'totalMediaShare',
+        'hasTableOfContents',
       ])
       .first(USE_MASTER_KEY);
 

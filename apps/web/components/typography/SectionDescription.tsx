@@ -19,8 +19,12 @@ const SectionDescription = ({ children, className }: Props) => {
     `, className)}
     >
       <Title
-        className={cn('md:text-xl! text-muted-foreground! dark:text-muted-foreground!', primaryFont)}
         level={4}
+        className={cn(`
+          text-muted-foreground!
+          md:text-xl!
+          dark:text-muted-foreground!
+        `, primaryFont)}
       >
         {children}
       </Title>

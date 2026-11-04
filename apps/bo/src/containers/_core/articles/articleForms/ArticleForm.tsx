@@ -31,6 +31,7 @@ const ARTICLE_FORM_ID = 'article-form-id';
 
 const initialValues = {
   active: true,
+  hasTableOfContents: false,
   country: DEFAULT_COUNTRY_CODE,
   categories: [],
 };

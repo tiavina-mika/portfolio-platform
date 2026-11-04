@@ -73,6 +73,7 @@ const PageFormContentSection = ({ locale }: Props) => {
         />
         <Suspense fallback={<TextEditorFieldSkeleton />}>
           <TextEditorField
+            withTableOfContents
             id={locale + 'content'}
             label={t('cms:content')}
             name={locale + ':content'}

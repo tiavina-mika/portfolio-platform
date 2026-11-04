@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TableOfContents</title>
+<style>
+  /* ==========================================================
+     1. Variables / tokens
+     ========================================================== */
+  :root {
+    --background: #ffffff;
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --border: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --ring-focus: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+    --font-primary: "Basier Circle", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .dark {
+    --background: oklch(0.12 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --border: oklch(1 0 0 / 10%);
+    --ring: oklch(0.556 0 0);
+  }
+
+  /* ==========================================================
+     2. Base
+     ========================================================== */
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--muted);
+    color: var(--foreground);
+    font-family: var(--font-primary);
+    line-height: 1.6;
+  }
+
+  /* ==========================================================
+     3. Composant : sommaire
+     ========================================================== */
+  .toc { padding: 24px; }
+
+  /* Variante liste (desktop) */
+  .toc-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--border);
+    width: 260px;
+    max-width: 100%;
+  }
+  .toc-link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 16px;
+    margin-left: -1px;
+    border-left: 2px solid transparent;
+    font: 400 16px var(--font-primary);
+    color: var(--muted-foreground);
+    text-decoration: none;
+  }
+
+  /* Variante puces (mobile, tablette) */
+  .toc-chips {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .toc-chip {
+    flex: none;
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: 22px;
+    border: 1px solid var(--border);
+    font: 400 14px var(--font-primary);
+    color: var(--foreground);
+    text-decoration: none;
+  }
+
+  /* ==========================================================
+     4. États
+     ========================================================== */
+  .toc-link:hover { text-decoration: underline; }
+  .toc-chip:hover { background: var(--accent); }
+  .toc-link:focus-visible,
+  .toc-chip:focus-visible { outline: none; box-shadow: var(--ring-focus); }
+  .toc-link[aria-current="true"] {
+    border-left-color: var(--foreground);
+    font-weight: 600;
+    color: var(--foreground);
+  }
+  .toc-chip[aria-current="true"] {
+    border-color: var(--foreground);
+    font-weight: 600;
+  }
+
+  /* ==========================================================
+     5. Responsive : cadre de prévisualisation + panneau de tweaks
+     ========================================================== */
+  .layout { display: flex; min-height: 100vh; }
+  .stage {
+    flex: 1;
+    min-width: 0;
+    padding: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .frame {
+    max-width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--background);
+    overflow: hidden;
+  }
+  .tweaks {
+    width: 300px;
+    flex: none;
+    border-left: 1px solid var(--border);
+    background: var(--card);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: auto;
+    max-height: 100vh;
+    position: sticky;
+    top: 0;
+  }
+  .tweaks-title { font: 700 14px var(--font-primary); }
+  .tweaks-group { display: flex; flex-direction: column; gap: 6px; }
+  .tweaks-label {
+    font: 600 11px var(--font-mono);
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+  }
+  .tweaks-options { display: flex; flex-wrap: wrap; gap: 4px; }
+  .tweaks-btn {
+    padding: 4px 10px;
+    font: 500 12px var(--font-primary);
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--foreground);
+  }
+  .tweaks-btn[aria-pressed="true"] {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  @media (max-width: 800px) {
+    .layout { flex-direction: column; }
+    .tweaks { width: auto; max-height: none; position: static; border-left: 0; border-top: 1px solid var(--border); }
+    .stage { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="layout" id="root">
+  <main class="stage"><div class="frame" id="frame"><div id="stage"></div></div></main>
+  <aside class="tweaks" id="tweaks"></aside>
+</div>
+
+<script>
+  var LB = {
+    fr: ['Tweaks','Thème','Clair','Sombre','Langue','Point de rupture','Variante','Auto','Liste','Puces','Élément actif'],
+    en: ['Tweaks','Theme','Light','Dark','Language','Breakpoint','Variant','Auto','List','Chips','Active item'],
+    mg: ['Tweaks','Lohamilina','Mazava','Maizina','Fiteny','Habe efijery','Karazana','Auto','Lisitra','Chip','Misy asa']
+  };
+  var BPN = {
+    fr: ['mobile','tablette','desktop','grand desktop'],
+    en: ['mobile','tablet','desktop','large desktop'],
+    mg: ['finday','tablette','desktop','desktop lehibe']
+  };
+  var ITEMS = {
+    fr: ['Mes atouts','Services','Parcours scolaire','Mes passions'],
+    en: ['My strengths','Services','Education','My passions'],
+    mg: ['Ny tombontsoako','Serivisy','Fianarana','Ny zavatra tiako']
+  };
+  var TITLE = { fr: 'Sommaire', en: 'Contents', mg: 'Laharana' };
+  var WIDTHS = { mobile: 375, tablet: 768, desktop: 1280, large: 1536 };
+
+  var state = { theme: 'light', lang: 'fr', bp: 'desktop', variant: 'auto', cur: 0 };
+
+  function isChips() {
+    return state.variant === 'chips' || (state.variant === 'auto' && (state.bp === 'mobile' || state.bp === 'tablet'));
+  }
+
+  function renderToc() {
+    var current = state.cur;
+    var links = ITEMS[state.lang].map(function (label, k) {
+      var on = current === k ? ' aria-current="true"' : '';
+      if (isChips()) return '<a href="#" data-go="' + k + '" class="toc-chip"' + on + '>' + label + '</a>';
+      return '<li><a href="#" data-go="' + k + '" class="toc-link"' + on + '>' + label + '</a></li>';
+    }).join('');
+    var inner = isChips()
+      ? '<div class="toc-chips">' + links + '</div>'
+      : '<ul class="toc-list">' + links + '</ul>';
+    return '<nav class="toc" aria-label="' + TITLE[state.lang] + '">' + inner + '</nav>';
+  }
+
+  function group(label, key, options) {
+    var btns = options.map(function (o) {
+      return '<button type="button" class="tweaks-btn" data-key="' + key + '" data-val="' + o[0] + '" aria-pressed="' + (String(state[key]) === String(o[0])) + '">' + o[1] + '</button>';
+    }).join('');
+    return '<div class="tweaks-group"><div class="tweaks-label">' + label + '</div><div class="tweaks-options">' + btns + '</div></div>';
+  }
+
+  function render() {
+    var L = LB[state.lang];
+    document.getElementById('root').className = 'layout' + (state.theme === 'dark' ? ' dark' : '');
+    document.body.className = state.theme === 'dark' ? 'dark' : '';
+    document.getElementById('frame').style.width = WIDTHS[state.bp] + 'px';
+    document.getElementById('stage').innerHTML = renderToc();
+    var bp = BPN[state.lang];
+    document.getElementById('tweaks').innerHTML =
+      '<div class="tweaks-title">' + L[0] + '</div>' +
+      group(L[6], 'variant', [['auto', L[7]], ['list', L[8]], ['chips', L[9]]]) +
+      group(L[10], 'cur', ITEMS[state.lang].map(function (t, k) { return [k, t]; })) +
+      group(L[1], 'theme', [['light', L[2]], ['dark', L[3]]]) +
+      group(L[4], 'lang', [['fr', 'fr'], ['en', 'en'], ['mg', 'mg']]) +
+      group(L[5], 'bp', [['mobile', bp[0]], ['tablet', bp[1]], ['desktop', bp[2]], ['large', bp[3]]]);
+  }
+
+  document.getElementById('stage').addEventListener('click', function (e) {
+    var a = e.target.closest('[data-go]');
+    if (!a) return;
+    e.preventDefault();
+    state.cur = +a.getAttribute('data-go');
+    render();
+  });
+  document.getElementById('tweaks').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-key]');
+    if (!b) return;
+    var key = b.getAttribute('data-key'), val = b.getAttribute('data-val');
+    state[key] = key === 'cur' ? +val : val;
+    render();
+  });
+
+  render();
+</script>
+</body>
+</html>

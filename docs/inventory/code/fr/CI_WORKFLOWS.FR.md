@@ -28,6 +28,7 @@ Les workflows sont dans `.github/workflows/`. Les secrets et variables qu'ils li
 | Job | Ce qu'il lance |
 |---|---|
 | Lint, typecheck and build affected projects | `nx affected -t lint`, `typecheck`, `build --exclude=web`, `build-docs`, puis `pnpm check-i18n` |
+| Render build (production or pre-production) | Sur les PR vers `main` (production) et `develop` (préproduction) : install, `vite build` du back-office, build du serveur et `copy`, avec des valeurs `VITE_*` factices, puis vérifie que le bundle copié contient `index.html` et des scripts |
 | Conventional commit messages | `commitlint` sur les commits ajoutés par une PR |
 | Unit tests of affected projects | `nx affected -t test --exclude=server,web` |
 | Build affected Storybooks | `nx affected -t build-sb` |

@@ -172,6 +172,7 @@ export const ARTICLE_FORM_SECTIONS: ICmsFormSections = {
 
 export const ALL_PAGE_FIELDS = [
   'active',
+  'hasTableOfContents',
   'country',
   'code',
   'editorFiles',

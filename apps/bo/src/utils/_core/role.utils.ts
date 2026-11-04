@@ -1,5 +1,6 @@
 import {
-  ROLE_SESSION_TIMEOUT_MAX_MINUTES, ROLE_SESSION_TIMEOUT_MIN_MINUTES, SHARED_CLASS_ALIASES,
+  HIGHEST_LEVEL_ROLES, ROLE_SESSION_TIMEOUT_MAX_MINUTES, ROLE_SESSION_TIMEOUT_MIN_MINUTES,
+  SHARED_CLASS_ALIASES,
 } from '@shared/constants';
 import dayjs from 'dayjs';
 import clamp from 'lodash/clamp';
@@ -8,7 +9,7 @@ import { DEFAULT_LOCALE } from '@/constants/_core/app.constants';
 import {
   MINUTES_PER_HOUR, MS_PER_MINUTE, SESSION_INACTIVITY_TIMEOUT_MS,
 } from '@/constants/_core/auth.constants';
-import { HIGHEST_LEVEL_ROLES, HIGHEST_ROLE_STALE_LOGIN_DAYS } from '@/constants/_core/user.constants';
+import { HIGHEST_ROLE_STALE_LOGIN_DAYS } from '@/constants/_core/user.constants';
 import { ITabSearchParams } from '@/types/_core/app.type';
 import { ISidebarSubMenu } from '@/types/_core/navigation.type';
 import {

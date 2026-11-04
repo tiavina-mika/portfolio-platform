@@ -86,6 +86,8 @@ export interface IPageAttributes {
   categories?: ICategory[];
   linkLocations?: ('menu' | 'footer')[];
   active: boolean;
+  // shows a clickable table of contents, built from the headings of the content, on the website
+  hasTableOfContents?: boolean;
   // the country the page is written for — absent on a page saved before the field existed
   country?: string;
   editorFiles?: ITranslatedFileCloud[];

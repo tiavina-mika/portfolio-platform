@@ -23,6 +23,8 @@ export interface IArticleAttributes {
   images?: IFileCloud[];
   categories: ICategory[];
   totalMediaShare?: number;
+  // absent on an article saved before the field existed — reads as off
+  hasTableOfContents?: boolean;
 }
 
 export interface IArticle extends IArticleAttributes {
