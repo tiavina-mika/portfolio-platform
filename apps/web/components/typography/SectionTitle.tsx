@@ -24,7 +24,7 @@ const SectionTitle = ({ children, className, gutterBottom = true }: Props) => {
         level={2}
         className={cn(
           `
-            text-2xl! font-bold
+            text-2xl! leading-[1.1]! font-bold
             md:text-4xl!
             lg:text-6xl!
             xl:text-8xl!
