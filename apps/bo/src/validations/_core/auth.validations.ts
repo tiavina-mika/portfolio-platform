@@ -25,8 +25,8 @@ export const complexPasswordSchema = string()
 
 const userSchema = object({
   email: string()
-    .email({ message: i18n.t('form.error.required', { field: 'Email' }) })
-    .nonempty()
+    .nonempty({ message: i18n.t('form.error.required', { field: 'Email' }) })
+    .email()
     .max(120)
     .transform(value => value.toLowerCase()),
   password: complexPasswordSchema,
@@ -34,8 +34,9 @@ const userSchema = object({
 
 export const loginSchema = object({
   email: string()
-    .email({ message: i18n.t('form.error.required', { field: 'Email' }) })
-    .nonempty()
+    // "required" only for an empty field: a malformed address gets the global "invalid email" message
+    .nonempty({ message: i18n.t('form.error.required', { field: 'Email' }) })
+    .email()
     .max(120)
     .transform(value => value.toLowerCase()),
   password: passwordFieldSchema,

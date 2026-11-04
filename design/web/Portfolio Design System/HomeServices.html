@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HomeServices</title>
+<style>
+/* ===== Variables / tokens ===== */
+:root{
+--background:#ffffff;--foreground:oklch(0.145 0 0);
+--card:oklch(1 0 0);--card-foreground:oklch(0.145 0 0);
+--popover:oklch(1 0 0);--popover-foreground:oklch(0.145 0 0);
+--primary:oklch(0.205 0 0);--primary-foreground:oklch(0.985 0 0);
+--secondary:oklch(0.97 0 0);--secondary-foreground:oklch(0.205 0 0);
+--muted:oklch(0.97 0 0);--muted-foreground:oklch(0.556 0 0);
+--accent:oklch(0.97 0 0);--accent-foreground:oklch(0.205 0 0);
+--destructive:oklch(0.577 0.245 27.325);--destructive-foreground:oklch(0.985 0 0);
+--border:oklch(0.922 0 0);--input:oklch(0.922 0 0);--ring:oklch(0.708 0 0);
+--brand-lime:#b2ce66;--brand-lime-light:#dff79e;--brand-lime-dark:#5c6b34;
+--primary-light:#d4d4d4;--primary-dark:#0a0a0a;
+--default:#1d2424;--default-light:#4d4d4d;--default-dark:#00112c;
+--success:#16a34a;--success-light:#dcfce7;--success-dark:#15803d;
+--warning:#ea580c;--warning-light:#ffedd5;--warning-dark:#c2410c;
+--error:#dc2626;--error-light:#fee2e2;--error-dark:#991b1b;
+--info:#2563eb;--info-light:#dbeafe;--info-dark:#1e40af;
+--dark-100:#f4f4f4;--dark-200:#e0e3e7;--dark-400:#4d4d4d;--dark-500:#1d2424;
+--chart-1:oklch(0.646 0.222 41.116);--chart-2:oklch(0.6 0.118 184.704);--chart-3:oklch(0.398 0.07 227.392);--chart-4:oklch(0.828 0.189 84.429);--chart-5:oklch(0.769 0.188 70.08);
+}
+.dark{
+--background:oklch(0.12 0 0);--foreground:oklch(0.985 0 0);
+--card:oklch(0.205 0 0);--card-foreground:oklch(0.985 0 0);
+--popover:oklch(0.205 0 0);--popover-foreground:oklch(0.985 0 0);
+--primary:oklch(0.922 0 0);--primary-foreground:oklch(0.205 0 0);
+--secondary:oklch(0.269 0 0);--secondary-foreground:oklch(0.985 0 0);
+--muted:oklch(0.269 0 0);--muted-foreground:oklch(0.708 0 0);
+--accent:oklch(0.269 0 0);--accent-foreground:oklch(0.985 0 0);
+--destructive:oklch(0.704 0.191 22.216);
+--border:oklch(1 0 0 / 10%);--input:oklch(1 0 0 / 15%);--ring:oklch(0.556 0 0);
+}
+:root {
+  --font-primary: "Basier Circle", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ring-focus: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+}
+
+/* ===== Base ===== */
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--muted); color: var(--foreground); font-family: var(--font-primary); }
+.root { display: flex; min-height: 100vh; }
+.stage { flex: 1; min-width: 0; overflow: auto; padding: 32px; display: flex; justify-content: center; align-items: flex-start; }
+.frame { max-width: 100%; border: 1px solid var(--border); border-radius: 12px; padding: 24px; background: var(--background); color: var(--foreground); overflow: hidden; }
+
+/* ===== Composant HomeServices ===== */
+.services { display: flex; flex-direction: column; gap: 20px; }
+.services__title { margin: 0; font: 700 32px/1.25 var(--font-primary); }
+.services--mobile .services__title { font-size: 24px; }
+.services__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.services--wide .services__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.card { display: flex; flex-direction: column; gap: 12px; padding: 20px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); color: var(--card-foreground); }
+.card__icon { flex: none; width: 48px; height: 48px; border-radius: 10px; background: var(--accent); display: inline-flex; align-items: center; justify-content: center; }
+.card__icon i { width: 24px; height: 24px; background: var(--foreground); -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
+.card__title { margin: 0; font: 700 18px/1.25 var(--font-primary); }
+.card__text { margin: 0; font: 16px/1.5 var(--font-primary); color: var(--muted-foreground); }
+
+/* ===== Etats ===== */
+.chip:focus-visible { outline: none; box-shadow: var(--ring-focus); }
+.chip:hover { background: var(--accent); }
+.chip[aria-pressed="true"], .chip[aria-pressed="true"]:hover { background: var(--primary); color: var(--primary-foreground); border-color: var(--primary); }
+
+/* ===== Panneau de tweaks ===== */
+.tweaks { width: 300px; flex: none; border-left: 1px solid var(--border); background: var(--card); padding: 16px; display: flex; flex-direction: column; gap: 16px; overflow: auto; max-height: 100vh; position: sticky; top: 0; }
+.tweaks__title { font: 700 14px var(--font-primary); }
+.tweaks__group { display: flex; flex-direction: column; gap: 6px; }
+.tweaks__label { font: 600 11px var(--font-mono); color: var(--muted-foreground); text-transform: uppercase; }
+.tweaks__opts { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip { padding: 4px 10px; font: 500 12px var(--font-primary); border-radius: 6px; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--foreground); }
+
+/* ===== Responsive ===== */
+@media (max-width: 800px) { .root { flex-direction: column; } .tweaks { width: auto; position: static; max-height: none; border-left: 0; border-top: 1px solid var(--border); } }
+</style>
+</head>
+<body>
+<div class="root" id="root">
+  <main class="stage"><div class="frame" id="frame"><div id="out"></div></div></main>
+  <aside class="tweaks" id="tweaks"></aside>
+</div>
+<script>
+/* ===== Données ===== */
+var ICONS = {"page-web":"icons/page-web.svg","user":"icons/user.svg","search":"icons/search.svg","success":"icons/success.svg"};
+var ICON_OF = { a: 'page-web', b: 'user', c: 'search', d: 'success' };
+var TEXTS = {fr:{ti:'Pourquoi moi ?',a:'Monter un projet de A à Z',b:'Un renfort technique, un lead si besoin',c:'Votre futur CTO',d:'Des tarifs adaptés aux startups et PME',ad:'De la conception technique à la mise en ligne, je gère chaque étape et je choisis avec vous les technologies adaptées.',bd:'Développeur dans l\'équipe ou référent technique, j\'apporte mon expertise pour fiabiliser vos livraisons.',cd:'Je définis la stratégie technologique et j\'accompagne les décisions techniques pour soutenir la croissance et l\'innovation de votre startup.',dd:'Une expertise de niveau haut de gamme à un tarif compétitif, avec des solutions ajustées à vos besoins et à votre marché.'},en:{ti:'Why me?',a:'Develop a Project from A to Z',b:'Strengthen, integrate, or lead a team',c:'Potential CTO of a Startup',d:'Competitive Pricing',ad:'I handle all stages of development, including technology selection, technical architecture, development, database integration, and deployment to production environments.',bd:'Collaborate effectively within an existing team to enhance its skills, optimize processes, and ensure project success by contributing my deep technical expertise and a results-oriented approach.',cd:'As a potential CTO of a startup, I can define technology strategies and guide technical decisions to ensure the company\'s growth and innovation.',dd:'I offer competitive pricing for startups and SMEs, providing expertise equivalent to premium services, while ensuring solutions tailored to specific needs and market requirements.'},mg:{ti:'Serivisy',a:'Rindran-tserasera web',b:'Rindran-tserasera finday',c:'Torohevitra',d:'Tranonkala fampisehoana',ad:'Mamolavola sy manamboatra ny vokatrao aho.',bd:'Mamolavola sy manamboatra ny vokatrao aho.',cd:'Mamolavola sy manamboatra ny vokatrao aho.',dd:'Mamolavola sy manamboatra ny vokatrao aho.'}};
+var LABELS = {
+  fr: ['Tweaks', 'Thème', 'Clair', 'Sombre', 'Langue', 'Point de rupture'],
+  en: ['Tweaks', 'Theme', 'Light', 'Dark', 'Language', 'Breakpoint'],
+  mg: ['Tweaks', 'Lohamilina', 'Mazava', 'Maizina', 'Fiteny', 'Habe efijery']
+};
+var BP_NAMES = {
+  fr: ['mobile', 'tablette', 'desktop', 'grand desktop'],
+  en: ['mobile', 'tablet', 'desktop', 'large desktop'],
+  mg: ['finday', 'tablette', 'desktop', 'desktop lehibe']
+};
+var BP_KEYS = ['mobile', 'tablet', 'desktop', 'large'];
+var BP_WIDTHS = [375, 768, 1280, 1536];
+
+/* ===== Etat ===== */
+var state = { theme: 'light', lang: 'fr', bp: 'desktop' };
+
+/* ===== Rendu ===== */
+function render() {
+  var T = TEXTS[state.lang], i = BP_KEYS.indexOf(state.bp), L = LABELS[state.lang];
+  document.documentElement.lang = state.lang;
+  document.getElementById('root').className = 'root' + (state.theme === 'dark' ? ' dark' : '');
+  document.body.className = state.theme === 'dark' ? 'dark' : '';
+  var frame = document.getElementById('frame');
+  frame.style.width = BP_WIDTHS[i] + 'px';
+  var cards = ['a', 'b', 'c', 'd'].map(function (k) {
+    return '<article class="card"><span class="card__icon"><i style="--icon:url(' + ICONS[ICON_OF[k]] + ')"></i></span>' +
+      '<h3 class="card__title">' + T[k] + '</h3><p class="card__text">' + T[k + 'd'] + '</p></article>';
+  }).join('');
+  document.getElementById('out').innerHTML =
+    '<section class="services' + (i === 0 ? ' services--mobile' : '') + (i >= 1 ? ' services--wide' : '') + '">' +
+    '<h2 class="services__title">' + T.ti + '</h2><div class="services__grid">' + cards + '</div></section>';
+  var groups = [
+    [L[1], 'theme', [['light', L[2]], ['dark', L[3]]]],
+    [L[4], 'lang', [['fr', 'fr'], ['en', 'en'], ['mg', 'mg']]],
+    [L[5], 'bp', BP_KEYS.map(function (k, n) { return [k, BP_NAMES[state.lang][n]]; })]
+  ];
+  var tw = document.getElementById('tweaks');
+  tw.innerHTML = '<div class="tweaks__title">' + L[0] + '</div>' + groups.map(function (g) {
+    return '<div class="tweaks__group"><div class="tweaks__label">' + g[0] + '</div><div class="tweaks__opts">' +
+      g[2].map(function (o) {
+        return '<button type="button" class="chip" data-k="' + g[1] + '" data-v="' + o[0] + '" aria-pressed="' + (state[g[1]] === o[0]) + '">' + o[1] + '</button>';
+      }).join('') + '</div></div>';
+  }).join('');
+}
+
+/* ===== Interactions ===== */
+document.getElementById('tweaks').addEventListener('click', function (e) {
+  var b = e.target.closest('[data-k]');
+  if (!b) return;
+  state[b.getAttribute('data-k')] = b.getAttribute('data-v');
+  render();
+  var again = document.querySelector('[data-k="' + b.getAttribute('data-k') + '"][data-v="' + b.getAttribute('data-v') + '"]');
+  if (again) again.focus();
+});
+render();
+</script>
+</body>
+</html>

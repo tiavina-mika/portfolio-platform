@@ -38,8 +38,9 @@ De haut en bas, la page enchaîne les blocs suivants :
    (rédigé dans le back-office, dans chaque langue), une grande image d'illustration (une version
    pour le thème clair et une pour le thème sombre) et le bouton **"Télécharger mon CV"**.
 2. **"Pourquoi moi ?"** : quatre cartes avec une icône, un titre et un court texte :
-   monter un projet de A à Z, renforcer, intégrer ou diriger une équipe, potentiel CTO d'une startup,
-   tarifs concurrentiels. Ce contenu est le même pour tous les visiteurs d'une langue donnée ; il ne
+   monter un projet de A à Z, un renfort technique (voire un lead) si besoin, votre futur CTO, des
+   tarifs adaptés aux startups et PME. Les cartes sont sur une colonne sur mobile et sur deux colonnes
+   dès la tablette. Ce contenu est le même pour tous les visiteurs d'une langue donnée ; il ne
    se modifie pas dans le back-office.
 3. **"Projets développés récemment"** : le nombre total de projets entre parenthèses, une phrase de
    présentation, puis les cartes des derniers projets (jusqu'à 16). Chaque carte montre l'image, le

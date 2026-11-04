@@ -9,7 +9,7 @@ import {
   BO_DEV_PORT, IS_E2E, IS_LOCAL, MAX_FILES_UPLOAD, MOBILE_STORYBOOK_DEV_PORT, MOBILE_WEB_DEV_PORT,
   WEB_DEV_PORT,
 } from '@/constants/_core/constants';
-import { getClientUrl } from '@/utils/_core/utils';
+import { getClientUrl, getServerUrl } from '@/utils/_core/utils';
 
 /*
  * it's just temporary, after it uploaded to the cloud (cloudinary), the local files will be deleted
@@ -120,8 +120,10 @@ const getCorsOrigins = (): string[] => {
   if (IS_E2E) return (process.env.E2E_ALLOWED_ORIGINS ?? '').split(',').filter(Boolean);
 
   if (IS_LOCAL) {
+    // the host of SERVER_URL (.env.local) may be a LAN ip, so a phone on the network is allowed too
+    const localHostname = new URL(getServerUrl()).hostname;
     return LOCAL_DEV_PORTS.flatMap(port => [
-      `http://${process.env.LOCAL_NETWORK_HOSTNAME}:${port}`,
+      `http://${localHostname}:${port}`,
       `http://localhost:${port}`,
     ]);
   }
@@ -129,4 +131,10 @@ const getCorsOrigins = (): string[] => {
   return [getClientUrl()];
 };
 
-export const corsOptions: CorsOptions = { origin: getCorsOrigins() };
+/*
+ * the allowlist is read on each request, not when this module loads: the env files are only
+ * loaded once the server starts, so SERVER_URL / WEBSITE_URL are still undefined at import time
+ */
+export const corsOptions: CorsOptions = {
+  origin: (origin, callback) => callback(null, !origin || getCorsOrigins().includes(origin)),
+};

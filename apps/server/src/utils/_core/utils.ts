@@ -9,8 +9,8 @@ import { DEFAULT_LANGUAGE } from '@/config/i18n';
 
 import { encrypt } from './encrypt.utils';
 import {
-  FORCE_PROD, IS_LOCAL, IS_TEST,
-  USE_MASTER_KEY, WEB_DEV_PORT,
+  IS_TEST,
+  USE_MASTER_KEY,
 } from '../../constants/_core/constants';
 
 export const wait = (ms = 1000): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
@@ -176,18 +176,11 @@ export const capitalizeFirstLetter = (string: string): string => {
 
 /**
  * Get server url to serve the client and the api
- * For local environment, we use ip address instead of localhost (via ipconfig ipv4)
- * because in some cases (mobile) localhost does not work
+ * In local, SERVER_URL comes from .env.local (overrides the .env.preprod / .env.prod value),
+ * e.g. a LAN ip address instead of localhost because in some cases (mobile) localhost does not work
  * @returns
  */
 export const getServerUrl = (): string => {
-  const localHostName = `http://${process.env.LOCAL_NETWORK_HOSTNAME}:${process.env.PORT}`;
-
-  // use local .env file in local environment or force prod (test prod in local)
-  if (IS_LOCAL || FORCE_PROD || IS_TEST) {
-    return localHostName;
-  }
-
   return process.env.SERVER_URL!;
 };
 
@@ -349,11 +342,8 @@ export const getTranslatedField = <T extends Record<string, any>>(
   return translated[language]?.[field];
 };
 
+// in local, WEBSITE_URL comes from .env.local
 export const getClientUrl = (): string => {
-  if (IS_LOCAL) {
-    return `http://${process.env.LOCAL_NETWORK_HOSTNAME}:${WEB_DEV_PORT}`;
-  }
-
   return process.env.WEBSITE_URL ?? '';
 };
 
