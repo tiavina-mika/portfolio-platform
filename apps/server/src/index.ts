@@ -124,6 +124,8 @@ const init = async () => {
   if (envFileName && (IS_LOCAL || FORCE_PROD || FORCE_PREPROD)) {
     // eslint-disable-next-line @typescript-eslint/await-thenable
     await dotenv.config({ path: path.join(dirname, '..', envFileName) });
+    // personal local overrides (e.g. SERVER_URL, WEBSITE_URL), not committed
+    dotenv.config({ path: path.join(dirname, '..', '.env.local'), override: true, quiet: true });
   }
 
   // Validate the environment variables (.env file or remote host/server defined variables)

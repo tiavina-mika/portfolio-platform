@@ -44,8 +44,7 @@ Required only in the deployed environments (`preProduction` and `production`); o
 | `IS_PREPROD` | Marks the pre-production environment |
 | `MONGO_URL` | MongoDB connection string |
 | `PARSE_APP_ID`, `PARSE_MASTER_KEY`, `REST_API_KEY` | Parse Server credentials (`REST_API_KEY` is also the value the clients send in the `X-portfolio-key` header) |
-| `SERVER_URL`, `WEBSITE_URL` | Public URLs of the API and of the website |
-| `LOCAL_NETWORK_HOSTNAME` | Optional, local only: LAN host used to print a server URL reachable from a phone |
+| `SERVER_URL`, `WEBSITE_URL` | Public URLs of the API and of the website. In local, an optional `apps/server/.env.local` overrides them (localhost or a LAN ip for a phone) |
 | `CRYPTO_FIXED_PART_KEY`, `CRYPTO_FIXED_FULL_KEY`, `CRYPTO_IV` | Encryption keys (`CRYPTO_IV` is in `.env.example` but not checked by `validateEnv()`) |
 | `BREVO_API_KEY`, `ADMIN_EMAIL_SENDER` | Emails (API key and default sender) |
 | `OWNERS_EMAILS` | Comma-separated emails that receive a back-office invitation with the `OWNER` role at boot (see above for the deployed minimum) |

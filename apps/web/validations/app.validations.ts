@@ -12,7 +12,9 @@ export const localeSchemaField = z.union([
 
 export const EmailFieldSchema = z
   .string()
-  .email({ message: 'error.required' })
+  // "required" only for an empty field: a malformed address gets its own "invalid" message
+  .min(1, { message: 'error.requiredEmail' })
+  .email({ message: 'error.invalidEmail' })
   .max(120, getDynamicValidationError('error.max', 120))
   .transform((value: string) => value.toLowerCase());
 
