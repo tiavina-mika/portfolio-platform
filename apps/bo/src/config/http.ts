@@ -1,8 +1,10 @@
+import { catchError, responseBody } from '@shared/utils';
 import axios from 'axios';
 
-import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { getServerUrl } from '@/utils/utils';
+import type { AxiosRequestConfig } from 'axios';
+
+import { getServerUrl } from '@/utils/_core/utils';
 
 /*
  * =================
@@ -20,6 +22,7 @@ import { getServerUrl } from '@/utils/utils';
  * ======
  */
 const createInstance = () =>
+  // eslint-disable-next-line import/no-named-as-default-member
   axios.create({ baseURL: getServerUrl() });
 
 /**
@@ -31,48 +34,13 @@ const createInstance = () =>
 export const protectRequest = (sessionToken: string, hasFile = false): AxiosRequestConfig => {
   return {
     headers: {
-      'X-portfolio-key': import.meta.env.VITE_REST_API_KEY ?? '',
+      'X-portfolio-key': import.meta.env.VITE_APP_ACCESS_TAG ?? '',
       'X-Parse-Session-Token': sessionToken,
       'Content-Type': hasFile
         ? 'multipart/form-data'
         : 'application/json',
     },
   };
-};
-
-// get the data field response directly
-const responseBody = <O>(response: AxiosResponse<O>) => response.data;
-
-const catchError = (error: any) => {
-  if (error.response) {
-    /*
-     * The request was made and the server responded with a status code
-     * that falls out of the range of 2xx
-     */
-    const {
-      data,
-    } = error.response;
-
-    // @see server/src/middlewares/validation.middleware.ts for the structure of the error response
-    if (data.details?.length) {
-      const {
-        message,
-      } = data.details[0];
-
-      throw new Error(message);
-    }
-    else {
-      throw new Error(data);
-    }
-  }
-  else if (error.request) {
-  // The request was made but no response was received
-    throw new Error(error.request);
-  }
-  else {
-  // Something happened in setting up the request that triggered an Error
-    throw error;
-  }
 };
 
 export const http = {

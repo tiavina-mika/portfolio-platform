@@ -27,7 +27,8 @@ const run = async () => {
 	// check if the client build folder exists
 	await fs.ensureDir('../bo');
 	// copy the client build to the server build
-	await fs.copy('../bo/dist', `./${clientFolder}`);
+	// source maps are only for Sentry: never copy one, the folder is committed and served as is
+	await fs.copy('../bo/dist', `./${clientFolder}`, { filter: (src) => !src.endsWith('.map') });
 	console.log('Done');
 }
 

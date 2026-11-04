@@ -66,7 +66,7 @@ back-office.
 
 Un clic sur une carte ouvre la page de détail (voir
 [Détail d'un projet](../../projects/fr/PROJECT_DETAIL.FR.md) et
-[Lire un article](../../articles/fr/ARTICLE.FR.md)).
+[Lire un article](../../blog/fr/ARTICLE.FR.md)).
 
 ### Envoyer un message ou s'abonner à la newsletter
 

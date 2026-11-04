@@ -3,14 +3,8 @@
 import { headers } from 'next/headers';
 import { UAParser } from 'ua-parser-js';
 
-import { IResponsiveBreakpoints, IUploadedFile } from '@/types/app.type';
+import { IResponsiveBreakpoints, IUploadedFile, ResponsiveScreens } from '@/types/app.type';
 
-type Output = {
-  isMobile: boolean;
-  isTablet: boolean;
-  isMobileAndTablet: boolean;
-  isDesktop: boolean;
-};
 
 /**
  * Note: this not work on testing it a desktop browser
@@ -18,7 +12,7 @@ type Output = {
  * it work on real operating system (ex: android, ios, mac, etc...)
  * @returns
  */
-export const getIsResponsiveScreens = async (): Promise<Output> => {
+export const getIsResponsiveScreens = async (): Promise<ResponsiveScreens> => {
   if (typeof process === 'undefined') {
     throw new Error(
       '[Server method] you are importing a server-only module outside of server'
@@ -62,7 +56,7 @@ export const getIsResponsiveScreens = async (): Promise<Output> => {
 export const getImageByBreakpoint = async (
   file: IUploadedFile
 ): Promise<string> => {
-  const breakpoints: IResponsiveBreakpoints[][] = file.responsiveBreakpoints || [];
+  const breakpoints: IResponsiveBreakpoints[][] | undefined = file.responsiveBreakpoints;
   // get the screen size (mobile, tablet, desktop)
   const screens = await getIsResponsiveScreens();
   // 1st level

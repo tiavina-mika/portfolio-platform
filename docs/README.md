@@ -19,7 +19,7 @@
 | Folder | Audience | Content |
 |---|---|---|
 | [getting-started/](getting-started/README.md) | New developers | Install, run, first change |
-| [code/](code/architecture/en/MONOREPO.md) | Developers | Architecture (domain model, auth, rights, emails, errors, i18n, deployment) and ADRs; guides, runbooks, testing and upgrade notes are added here as they are written |
+| [code/](code/architecture/en/MONOREPO.md) | Developers | Architecture (core and domain split, domain model, auth, rights, emails, errors, i18n, deployment) and ADRs; guides, runbooks, testing and upgrade notes are added here as they are written |
 | [services/](services/README.md) | Developers | One entry per external service, with a guide for the ones that need one |
 | [features/](features/README.md) | Non-technical readers | What each back-office and website screen does (French) |
 | [inventory/](inventory/README.md) | Developers | Census of env variables, Cloud Code and external services |

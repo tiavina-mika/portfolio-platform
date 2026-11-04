@@ -1,0 +1,22 @@
+{
+  "contacts": {
+    "contacts": "Contacts",
+    "contact": "Contact",
+    "message": "Message",
+    "hasNoRightToDeleteContact": "Vous ne pouvez pas supprimer ce contact",
+    "sentDate": "Date d'envoi",
+    "search": "Nom, email, téléphone ou message",
+    "noContactMatchesSearch": "Aucun message ne correspond à cette recherche.",
+    "selectContact": "Aucun message ouvert",
+    "selectContactDescription": "Sélectionnez un message dans la liste pour le lire.",
+    "details": {
+      "title": "Détails du message",
+      "email": "Email",
+      "phone": "Téléphone",
+      "createdAt": "Créée le",
+      "language": "Langue",
+      "newsletter": "Newsletter",
+      "notProvided": "Non renseigné"
+    }
+  }
+}

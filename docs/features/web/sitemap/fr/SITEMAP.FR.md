@@ -35,8 +35,8 @@ Tout visiteur, sans connexion ni compte.
   - **"Projets"** : le nom de chaque projet actif ;
   - **"Pages"** : le nom de chaque page de contenu active ;
   - **"Articles"** : le titre de chaque article actif ;
-  - **"Categories"** : le nom de chaque catégorie active (les catégories d'articles mènent à la liste
-    des articles de la catégorie).
+  - **"Catégories"** : le nom de chaque catégorie active (les catégories d'articles mènent à la liste
+    des articles de la catégorie, les catégories de pages à la page de la catégorie).
 - Les groupes qui ne contiennent aucun élément ne s'affichent pas.
 - Pendant le chargement, des lignes grisées s'affichent à la place des liens.
 
@@ -63,5 +63,5 @@ Un clic sur un lien ouvre le projet, l'article, la page ou la liste filtrée cor
   ne montre que les projets, pages, articles et catégories.
 - Si le chargement échoue, un message "Une erreur s'est produite" invite à rafraîchir la page ou à
   contacter le propriétaire ([Pages d'erreur](../../errors/fr/ERROR_PAGES.FR.md)).
-- Le site publie aussi, pour les moteurs de recherche, un plan technique que le visiteur ne voit pas ;
+- Le site publie aussi, pour les moteurs de recherche, des plans techniques (accueil, blog, projets et pages) que le visiteur ne voit pas ;
   il ne se confond pas avec cette page.

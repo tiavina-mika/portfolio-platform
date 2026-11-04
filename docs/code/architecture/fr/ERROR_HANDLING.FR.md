@@ -23,7 +23,7 @@ Le serveur lève des `Error` simples dont le message est destiné à être montr
 
 ### Cloud Functions et triggers
 
-Chaque Cloud Function et chaque trigger est enveloppé dans `parseFunction` (`apps/server/src/cloud/utils/utils.cloud.ts`). Elle journalise le début et la fin de l'appel avec l'id de l'objet, l'id de l'utilisateur et l'IP du client, et en cas d'échec journalise l'erreur et rejette avec `new Error(message)` : le client reçoit le message, pas une pile d'appels. Une fonction qui ne renvoie rien renvoie `'ok'`. `fromBO` ajoute par-dessus le contrôle « doit être connecté », voir [RIGHTS_ROLES.FR.md](RIGHTS_ROLES.FR.md).
+Chaque Cloud Function et chaque trigger est enveloppé dans `parseFunction` (`apps/server/src/cloud/utils/_core/utils.cloud.ts`). Elle journalise le début et la fin de l'appel avec l'id de l'objet, l'id de l'utilisateur et l'IP du client, et en cas d'échec journalise l'erreur et rejette avec `new Error(message)` : le client reçoit le message, pas une pile d'appels. Une fonction qui ne renvoie rien renvoie `'ok'`. `fromBO` ajoute par-dessus le contrôle « doit être connecté », voir [RIGHTS_ROLES.FR.md](RIGHTS_ROLES.FR.md).
 
 Les erreurs métier sont levées avec un message de l'une de ces deux formes :
 
@@ -42,7 +42,7 @@ Les fonctions qui ne doivent pas faire échouer le client renvoient `false` plut
 
 ### Messages traduits
 
-`translate(key, locale)` (`apps/server/src/config/i18next.ts`) lit `apps/server/src/locales/{fr,en,mg}/common.json` via i18next avec `fr` en repli. La locale atteint les triggers par le contexte d'enregistrement (`context: { locale }`, posé par le site pour `Contact`) et les Cloud Functions par le paramètre `locale`. Les clés avec préfixe de namespace comme `user:errors.accessDenied` ne sont pas dans les fichiers du serveur : ce sont les clés du back-office.
+`translate(key, locale)` (`apps/server/src/config/i18n/index.ts`) lit `apps/server/src/config/i18n/locales/{fr,en,mg}/_core/common.json` via i18next avec `fr` en repli. La locale atteint les triggers par le contexte d'enregistrement (`context: { locale }`, posé par le site pour `Contact`) et les Cloud Functions par le paramètre `locale`. Les clés avec préfixe de namespace comme `user:errors.accessDenied` ne sont pas dans les fichiers du serveur : ce sont les clés du back-office.
 
 ### Routes Express
 
@@ -67,7 +67,7 @@ Les jobs (`cloud/jobs/`) attrapent les erreurs, les journalisent avec `logger.in
 
 ## Back-office
 
-- Les thunks sont créés via `actionWithLoader` (`apps/bo/src/redux/actions/util.action.ts`). Il démarre et arrête un indicateur de chargement (global ou local), contrôle les droits optionnels `collection` / `action` / `uiRight`, et attrape toute erreur levée : le message passe par `translatedError` et est stocké avec `setErrorSlice`. `SnackBars.tsx` affiche l'erreur et l'efface à la fermeture.
+- Les thunks sont créés via `actionWithLoader` (`apps/bo/src/redux/actions/_core/util.action.ts`). Il démarre et arrête un indicateur de chargement (global ou local), contrôle les droits optionnels `collection` / `action` / `uiRight`, et attrape toute erreur levée : le message passe par `translatedError` et est stocké avec `setErrorSlice`. `SnackBars.tsx` affiche l'erreur et l'efface à la fermeture.
 - `translatedError` : quand le message contient `:`, il est traité comme une clé i18next et traduit (`user:errors.userNotFound`), sinon affiché tel quel. C'est pourquoi les clés du serveur portent le namespace du BO.
 - Les codes d'erreur Parse sont gérés là où ils comptent : l'inscription associe le code 202 à « compte déjà existant » et 142 au message du serveur ; la connexion associe 141 au parcours de vérification quand la confirmation est activée.
 - Les loaders de routes utilisent `onEnterActionWithLoader`, qui transforme l'interne `Errors.notFound` en `notFound()` de TanStack Router (page 404) et `Errors.redirect` en `redirect()`. TanStack Router ne peut pas les attraper dans l'enveloppe générique, donc les loaders n'utilisent pas `actionWithLoader`.

@@ -4,45 +4,16 @@
     "downloadMyCV": "Download my CV",
     "downloadCV": "Download CV",
     "myProjects": "My projects",
-    "letsTalkTogether": "Let's talk together",
-    "doNotHesitateToContactMe": "Do not hesitate to contact me. I am always open to discuss new projects, innovative ideas or new opportunities.",
     "subscribeToNewsletter": "Subscribe to my newsletter",
     "newsLetterDescription": "Subscribe to my newsletter to be able to follow and receive special offers and the articles / tutorials that I occasionally publish on my blog",
-    "projectDevelopedRecently": "Projects developed recently ({count})",
-    "seeOtherProjects": "See {count} other projects",
     "notSubscribedToNewsletter": "You are not subscribed to the newsletter.",
     "unsubscribeMessage": "You can unsubscribe at any time by clicking on the unsubscribe link contained in each of our emails.",
     "gotToHomePage": "Go to the home page",
     "contactMe": "Contact me",
     "pageNotFound": "Page not found",
     "pageNotFoundDescription": "The page you are looking for does not exist or has been moved.",
-    "whyMe": "Why me?"
-  },
-  "Project": {
-    "visitSite": "Visit website",
-    "seeCodeSource": "See source code",
-    "projectDescription": "Project description",
-    "society": "Society",
-    "technicalStack": "Technical stack",
-    "aboutTheSociety": "About the society",
-    "technologies": "Technologies",
-    "otherProjectsOf": "Other projects of {society}",
-    "links": "Links",
-    "repositories": "Repositories",
-    "screenShot": "Screenshot",
-    "video": "Video",
-    "projects": "Projects",
-    "description": "Since 2016, I have had the opportunity to work on a variety of projects, ranging from the development of dynamic websites to the creation of complex web applications.",
-    "projectDevelopedRecently": "Projects developed recently ({count})",
-    "societyDescription": "Society description",
-    "projectsIDevelopedTitle": "Projects I have developed over my career",
-    "projectsIDevelopedOverMyCareerDescription": "Over the course of my career, I have had the opportunity to design, develop, build, and deploy a variety of applications that address real-world problems and enhance user experiences.",
-    "otherProjectsFrom": "Other projects from {society}",
-    "message": {
-      "error": {
-        "notFound": "Project not found."
-      }
-    }
+    "errorCode": "Error 404",
+    "readBlog": "Read the blog"
   },
   "Footer": {
     "contact": "Contact",
@@ -53,7 +24,8 @@
     "moreInfo": "More information",
     "message": "Self-confidence is gained through experience and hard work.",
     "myProjects": "My projects",
-    "siteMap": "Site map"
+    "siteMap": "Site map",
+    "socials": "Social networks"
   },
   "Contact": {
     "email": "Email",
@@ -65,13 +37,23 @@
     "subject": "From website contact form",
     "subscribe": "Subscribe",
     "subscribeWithSuccess": "You have successfully subscribed to the newsletter.",
-    "messageSent": "Your message has been sent.",
+    "messageSent": "Your message has been sent. I will get back to you as soon as possible.",
     "description": "For any new projects or new collaborations, I would first like to get to know you and your company through a call or a meeting. Then I would like to understand the context of your company, its goals and long-term objectives. After agreeing on the collaboration and prioritizing tasks, we write an agreement and start the mission in a few days. If you have an interesting topic in mind and want to learn more and hear my expertise, just contact me via the contact form.",
     "fields": {
       "name": "Name",
       "email": "Email",
       "message": "Message"
-    }
+    },
+    "socialTitle": "Follow me",
+    "yourFullName": "Your full name",
+    "emailExample": "your.email@example.com",
+    "writeSomething": "Write something",
+    "successTitle": "Message sent",
+    "failTitle": "Could not send",
+    "failedMessage": "Check your connection and try again.",
+    "sending": "Sending…",
+    "again": "Send another message",
+    "offline": "You are offline. Reconnect to send your message."
   },
   "Error": {
     "unknown": "Something went wrong. Please try again later.",
@@ -80,24 +62,6 @@
     "ifProblemPersist": "If the problem persists, please",
     "contactUs": "contact us"
   },
-  "Services": {
-    "1": {
-      "title": "Develop a Project from A to Z",
-      "description": "I handle all stages of development, including technology selection, technical architecture, development, database integration, and deployment to production environments."
-    },
-    "2": {
-      "title": "Strengthen, integrate, or lead a team",
-      "description": "Collaborate effectively within an existing team to enhance its skills, optimize processes, and ensure project success by contributing my deep technical expertise and a results-oriented approach."
-    },
-    "3": {
-      "title": "Potential CTO of a Startup",
-      "description": "As a potential CTO of a startup, I can define technology strategies and guide technical decisions to ensure the company's growth and innovation."
-    },
-    "4": {
-      "title": "Competitive Pricing",
-      "description": "I offer competitive pricing for startups and SMEs, providing expertise equivalent to premium services, while ensuring solutions tailored to specific needs and market requirements."
-    }
-  },
   "ServerError": {
     "articleSave": "The article could not be saved.",
     "emailAlreadyExists": "This email is already subscribed to the newsletter.",
@@ -105,7 +69,9 @@
     "localeRequired": "The language is required.",
     "paramsRequired": "The parameters are required.",
     "reasonRequired": "The reason is required.",
-    "somethingWentWrong": "Something went wrong. Please try again later."
+    "somethingWentWrong": "Something went wrong. Please try again later.",
+    "recaptchaVerificationFailed": "The anti-bot verification failed. Please try again.",
+    "tooManyRequests": "Too many requests in a short time. Please try again in an hour."
   },
   "NavBar": {
     "home": "Home",
@@ -116,7 +82,15 @@
     "blog": "Blog",
     "contact": "Contact",
     "toggleTheme": "Toggle theme",
-    "projects": "Projects"
+    "projects": "Projects",
+    "menu": "Menu",
+    "closeMenu": "Close menu",
+    "mainNavigation": "Main",
+    "search": "Search",
+    "closeSearch": "Close search",
+    "searching": "Searching…",
+    "searchUnavailable": "Search is unavailable. Try again in a moment.",
+    "noResults": "No results for “{query}”."
   },
   "LanguageSwitcher": {
     "label": "Change language",
@@ -126,14 +100,17 @@
     "sitemap": "Sitemap",
     "description": "Sitemap of {appName} website where you can navigate to the page you want by clicking on the links.",
     "projects": "Projects",
-    "articles": "Articles"
+    "articles": "Articles",
+    "loading": "Loading the sitemap",
+    "loadError": "The sitemap could not be loaded.",
+    "retry": "Try again"
   },
   "Newsletter": {
     "subscribe": "Subscribe to the newsletter",
     "unsubscribe": "Unsubscribe",
     "resubscribe": "Resubscribe",
     "email": "Email",
-    "subscribeWithSuccess": "You've been unsubscribed from our newsletter.",
+    "subscribeWithSuccess": "Almost done: check your inbox and confirm your subscription with the link I just sent you.",
     "unsubscribeWithSuccess": "You have successfully unsubscribed from the newsletter.",
     "alreadySubscribed": "This email is already subscribed to the newsletter.",
     "youWillNotReceived": "You will no longer receive the latest news and articles from {appName}.",
@@ -146,7 +123,21 @@
     "notRelevant": "The content is not relevant to me",
     "other": "Other",
     "reason": "Reason",
-    "reasonSubmittedSuccessfully": "The reason has been submitted successfully."
+    "reasonSubmittedSuccessfully": "The reason has been submitted successfully.",
+    "confirmedTitle": "Your subscription is confirmed",
+    "confirmedDescription": "Thank you! You will now receive the latest news and articles from {appName}. Each email has a link to unsubscribe at any time.",
+    "title": "Subscribe to my newsletter",
+    "description": "Subscribe to my newsletter to receive special offers and the articles / tutorials I occasionally publish on my blog.",
+    "unsubscribeMessage": "You can unsubscribe at any time by clicking the unsubscribe link in every email.",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "name@example.com",
+    "emailRequired": "Enter your email address.",
+    "emailInvalid": "Enter a valid email address.",
+    "failText": "Something went wrong on our side.",
+    "failTitle": "Could not subscribe",
+    "offlineText": "You are offline. Reconnect to subscribe.",
+    "submit": "Subscribe",
+    "sending": "Sending…"
   },
   "Metadata": {
     "home": {
@@ -169,13 +160,46 @@
       "metaTitle": "Sitemap",
       "metaDescription": "Sitmap of the website {appName} where you can navigate to the page you want by clicking on the links."
     },
-    "faq": {
-      "metaTitle": "Frequently asked questions in {appName}",
-      "metaDescription": "Questions everybody asked."
-    },
     "unsubscribeNewsletter": {
       "metaTitle": "Unsubscribe from the newsletter",
       "metaDescription": "Unsubscribe from the newsletter of {appName}. You will no longer receive the latest news and articles."
+    },
+    "confirmNewsletter": {
+      "metaTitle": "Newsletter subscription confirmed",
+      "metaDescription": "Your subscription to the newsletter of {appName} is confirmed."
+    }
+  },
+  "Pagination": {
+    "label": "Pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {page}",
+    "current": "current page"
+  },
+  "OpenGraph": {
+    "home": {
+      "title": "Full Stack Developer",
+      "subtitle": "Projects, articles and contact."
+    },
+    "projects": {
+      "chip": "Projects",
+      "title": "The projects of {appName}",
+      "subtitle": "The applications I designed and built."
+    },
+    "contact": {
+      "chip": "Contact",
+      "title": "Contact me",
+      "subtitle": "A project or a question? Write to me."
+    },
+    "blog": {
+      "chip": "Blog",
+      "title": "The {appName} blog",
+      "subtitle": "Articles and tutorials about web development."
+    },
+    "sitemap": {
+      "chip": "Sitemap",
+      "title": "Sitemap",
+      "subtitle": "All {appName} pages at a glance."
     }
   }
 }

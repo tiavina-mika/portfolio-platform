@@ -8,11 +8,14 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@shared/types": "workspace:*"
+    "@shared/constants": "workspace:*",
+    "@shared/types": "workspace:*",
+    "dayjs": "^1.11.23"
   },
   "devDependencies": {
     "@cspell/eslint-plugin": "^9.8.0",
     "@shared/eslint-config": "workspace:*",
+    "axios": "^1.19.0",
     "eslint": "^9.39.5",
     "typescript-eslint": "^8.65.0"
   }

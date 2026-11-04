@@ -25,7 +25,7 @@ voit qui l'a créé, qui l'a modifié et combien de fois il a été partagé.
 ## Qui peut l'utiliser
 
 Le droit **Consulter** sur la ressource « Article » (page **Droits**) est nécessaire pour ouvrir la page ;
-sans lui, elle s'affiche comme « introuvable ». Les propriétaires et administrateurs l'ont toujours.
+sans lui, elle s'affiche comme « introuvable ». Les comptes Owner et Super Admin l'ont toujours.
 
 ## Ce que l'on voit à l'écran
 
@@ -69,7 +69,7 @@ Le bouton **Actions** en haut de la page ouvre un menu :
 
 ## Points d'attention / limites actuelles
 
-- Le menu **Actions** affiche toutes les entrées quel que soit le rôle ; une action pour laquelle le compte n'a
+- Le menu **Actions** affiche toutes les entrées quel que soit le poste ; une action pour laquelle le compte n'a
   pas le droit est refusée (message d'erreur ou page « introuvable »).
 - L'entrée **Publier / Ne pas publier** du menu active ou désactive un article d'un clic (même effet que
   l'interrupteur « Actif » du formulaire) ; elle exige le droit de modification.

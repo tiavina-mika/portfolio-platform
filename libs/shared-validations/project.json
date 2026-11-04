@@ -1,0 +1,5 @@
+{
+  "name": "shared-validations",
+  "sourceRoot": "libs/shared-validations/src",
+  "tags": ["scope:shared-core"]
+}

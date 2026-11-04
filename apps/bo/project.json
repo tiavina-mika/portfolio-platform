@@ -5,6 +5,10 @@
       "command": "pnpm dev",
       "options": { "cwd": "apps/bo" }
     },
+    "typecheck": {
+      "command": "pnpm typecheck",
+      "options": { "cwd": "apps/bo" }
+    },
     "build": {
       "command": "pnpm build",
       "options": { "cwd": "apps/bo" },

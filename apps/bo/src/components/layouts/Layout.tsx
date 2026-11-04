@@ -1,24 +1,27 @@
 import {
-  Box, Stack, type Theme, Typography,
+  type Theme, Typography,
 } from '@mui/material';
 
 import type { ReactNode } from 'react';
 
+import { CONTENT_GAP } from '@/constants/_core/ui/page.constants';
+import { FONT_SIZE_META, RADIUS_LG } from '@/constants/_core/ui/ui.constants';
+import { getDesignTokens } from '@/utils/_core/theme/tokens.utils';
+
 import IconPopover from '../IconPopover';
+import PageHeader from './PageHeader';
 
 const classes = {
+  // same surface treatment as a MuiCard (border + radius + shadow), for non-Card page content
   layoutContent: (theme: Theme) => {
     return {
-      backgroundColor: theme.palette.mode === 'light'
-        ? 'rgb(255, 255, 255)'
-        : theme.palette.background.paper,
-      color: 'rgba(0, 0, 0, 0.87)',
-      transition: 'box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+      backgroundColor: theme.palette.background.paper,
+      color: theme.palette.text.primary,
+      border: `1px solid ${theme.palette.divider}`,
+      transition: 'box-shadow .15s',
       overflow: 'hidden',
-      borderRadius: 4,
-      boxShadow: theme.palette.mode === 'light'
-        ? 'rgb(90 114 123 / 11%) 0px 7px 30px 0px'
-        : 'none',
+      borderRadius: RADIUS_LG,
+      boxShadow: getDesignTokens(theme).shadow,
       padding: '18px 24px',
       [theme.breakpoints.down('sm')]: { padding: 0 },
       [theme.breakpoints.between('sm', 'md')]: { padding: 12 },
@@ -29,22 +32,17 @@ const classes = {
       },
     };
   },
-  titleContainer: (theme: Theme) => ({
-    [theme.breakpoints.up('xl')]: { maxWidth: 800 },
-    [theme.breakpoints.between('lg', 'xl')]: { maxWidth: 600 },
-  }),
-  title: (theme: Theme) => ({
-    [theme.breakpoints.up('xl')]: { fontSize: 32 },
-    [theme.breakpoints.down('xl')]: {
-      fontSize: 22,
-      margin: 0,
-    },
-  }),
 };
 
 type Props = {
   children: ReactNode;
   title?: string | ReactNode;
+  /*
+   * the line above the title, naming where the page sits — only needed by a page the sidebar does
+   * not list (the profile, reached from the app bar), since PageHeader otherwise reads it off the
+   * sidebar group the route belongs to
+   */
+  pretitle?: ReactNode;
   cardTitle?: string;
   isCard?: boolean;
   actions?: ReactNode;
@@ -58,6 +56,7 @@ type Props = {
 
 const Layout = ({
   title,
+  pretitle,
   children,
   cardTitle,
   actions,
@@ -70,22 +69,26 @@ const Layout = ({
   rightActions,
 }: Props) => {
   return (
-    <div className={className} css={{ width: '100%' }}>
-      {/* page level title */}
+    <div
+      className={className}
+      css={{
+        width: '100%',
+        // the head and the card under it are two bands of the content column, spaced by its gap
+        display: 'flex',
+        flexDirection: 'column',
+        gap: CONTENT_GAP,
+      }}
+    >
+      {/* page level title — the head is the same block on every page, list or detail */}
       {title && (
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', py: { xs: 2, lg: 2 } }}>
-          <Stack css={classes.titleContainer} spacing={0} sx={{ justifyContent: 'center' }}>
-            <Typography gutterBottom css={classes.title} variant="h2">
-              {title}
-            </Typography>
-            {description && (
-              <Typography gutterBottom variant="h6">
-                {description}
-              </Typography>
-            )}
-          </Stack>
-          {actions && actionsEmplacement === 'head' && <Box className="flexRow">{actions}</Box>}
-        </Box>
+        <PageHeader
+          description={description}
+          pretitle={pretitle}
+          title={title}
+          actions={actionsEmplacement === 'head'
+            ? actions
+            : undefined}
+        />
       )}
       {/* if card */}
       <div css={isCard
@@ -108,7 +111,7 @@ const Layout = ({
                 </div>
               )}
               {cardDescription && (
-                <Typography css={{ fontSize: 12 }}>
+                <Typography css={{ fontSize: FONT_SIZE_META }}>
                   {cardDescription}
                 </Typography>
               )}

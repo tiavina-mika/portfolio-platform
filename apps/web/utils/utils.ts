@@ -1,11 +1,13 @@
 /* eslint-disable @cspell/spellchecker */
-import { escapeRegExp } from 'lodash';
+import escapeRegExp from 'lodash/escapeRegExp';
 import { HookActionStatus } from 'next-safe-action/hooks';
+import Parse from 'parse';
 import toast from 'react-hot-toast';
 import { ZodError, type ZodIssue } from 'zod';
 
 import type { FieldPath, FieldValues, UseFormReturn } from 'react-hook-form';
 
+import { AnimatedDivProps } from '@/components/animation/AnimatedDiv';
 import env from '@/env';
 import { IActionError } from '@/types/app.type';
 
@@ -20,7 +22,15 @@ export const wait = (ms: number): Promise<void> => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
 
-export { cutText } from '@shared/utils';
+export const cutText = (text: string, length: number): string => {
+  return text.length > length ? `${text.substring(0, length)}...` : text;
+};
+
+export const capitalizeFirstLetter = (string: string): string => {
+  if (!string || typeof string !== 'string' || string?.trim().length === 0) return '';
+
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
 export const filter = (
   object: Record<string, any>,
@@ -331,3 +341,33 @@ export const formatNumberToUnit = (num: number): string => {
   // Less than 1 thousand
   return num.toString();
 };
+
+
+/**
+ * used to get the animation props for the AnimatedDiv component
+ * @returns
+ */
+export const getAnimationProps = ({
+  withAnimation,
+  animation,
+  defaultAnimation,
+}: AnimatedDivProps & { defaultAnimation: Record<string, any> }) => {
+  if (withAnimation) {
+    if (animation) {
+      return animation;
+    }
+    return defaultAnimation;
+  }
+  return {};
+};
+
+/**
+ * Turns rich text paragraphs into inline content, for a heading: a heading cannot hold a <p>, so the
+ * paragraphs become lines separated by a <br>
+ * @example '<p>Share the <strong>road</strong></p><p>and the cost</p>' → 'Share the <strong>road</strong><br>and the cost'
+ */
+export const unwrapParagraphs = (html: string): string =>
+  html
+    .trim()
+    .replace(/<\/p>\s*<p(\s[^>]*)?>/g, '<br>')
+    .replace(/<\/?p(\s[^>]*)?>/g, '');

@@ -1,13 +1,14 @@
-import { capitalize } from 'string-ts';
 import * as z from 'zod';
 
-import { Locale } from '@/types/setting.type';
-import { displayDate } from '@/utils/date.utils';
-import { convertBytesToFileSize, convertMimeTypeToFileExtension, isMimeType } from '@/utils/file.utils';
+import i18n from '@/config/i18n';
+import { Locale } from '@/types/_core/setting.type';
+import { displayDate } from '@/utils/_core/date.utils';
+import { convertBytesToFileSize, convertMimeTypeToFileExtension, isMimeType } from '@/utils/_core/file.utils';
+import { capitalizeFirstLetter } from '@/utils/_core/utils';
 
 /**
  * Get translated error message for a given field.
- * In "globalError" section of the form.json.
+ * In "globalError" section of the zod.json.
  * E.g., "invalidStringType", "tooBigText", etc.
  */
 const getErrorMessage = (i18nData: Record<string, any>, field: string): string => {
@@ -16,15 +17,21 @@ const getErrorMessage = (i18nData: Record<string, any>, field: string): string =
 
 /**
  * Get translated field name for a given input.
- * In "name" section of the form.json.
+ * In "name" section of the zod.json.
  * E.g., "title", "name", etc.
- * @param i18nData form.json i18n data
+ * @param i18nData zod.json i18n data
  * @param field key of the field (e.g., "title", "name", etc.)
  * @param valueType optional value type (e.g., "date", "file", etc.)
  * @returns translated field name
  */
-const getInputName = (i18nData: Record<string, any>, field: string): string => {
-  return i18nData.name?.[field as keyof typeof i18nData.name] || '';
+const getInputName = (i18nData: Record<string, any>, field: string | string[]): string => {
+  if (Array.isArray(field)) {
+    const fullKey = field.join('.');
+    const lastKey = field[field.length - 1] ?? '';
+
+    return i18nData.name?.[fullKey] || i18nData.name?.[lastKey] || '';
+  }
+  return i18nData.name?.[field] || '';
 };
 
 /**
@@ -81,7 +88,7 @@ const isInvalidAsEmptyArray = (issue: z.core.$ZodIssue): boolean => {
 /**
  * Set global error messages for a given i18n data.
  * This will be applied to every Zod schema.
- * @param i18nData form.json i18n data
+ * @param i18nData zod.json i18n data
  * @returns
  */
 const setGlobalError = (i18nData: Record<string, any>): any => {
@@ -99,10 +106,11 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
           const expected = issue.expected?.charAt(0).toUpperCase() + issue.expected?.slice(1);
           const key = `invalid${expected}Type`;
 
-          // Name of the field (e.g.: "title", "name", etc.)
-          const field = issue.path?.length ? issue.path[issue.path.length - 1] as string : '';
-          // Translated field name (e.g.: "Le titre", "Le nom", etc.)
-          const fieldName = getInputName(i18nData, field);
+          /*
+           * Translated field name (e.g.: "Le titre", "Le nom", etc.)
+           * Tries "departure.country" first, falls back to "country"
+           */
+          const fieldName = getInputName(i18nData, issue.path?.map(String) ?? []);
 
           /*
            * ----------------------------------- //
@@ -127,13 +135,7 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
               message = message.replace('{{field}}', getInputName(i18nData, 'field'));
             }
 
-            /*
-             * DEBUG
-             * return JSON.stringify(issue)
-             * return issue.input + ', ' + typeof issue.input + ', ' + issue.received + ', ' + issue.expected;
-             */
-
-            return capitalize(message.trim());
+            return capitalizeFirstLetter(message.trim());
           }
 
           /*
@@ -154,14 +156,19 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
            */
           message = message.replace('{{field}}', fieldName || '');
 
-          return capitalize(message.trim());
+          return capitalizeFirstLetter(message.trim());
         }
         /**
-         * Cases where the value is too big or too small
+         * Cases where the value is too big
          * (e.g., string length, number value, array length, etc.)
-         * @NOTE: too small is handled both by "nonempty()" and "min()" here
          */
         case 'too_big':
+        /**
+         * Cases where the value is too small
+         * (e.g., string length, number value, array length, etc.)
+         * @NOTE: it is handled both "nonempty()" and "min()" here
+         */
+        // falls through
         case 'too_small': {
           const isTooBig = issue.code === 'too_big';
           const valueType = issue.origin;
@@ -198,10 +205,8 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
            * else if min(): min length or value
            */
           const isTextRequired = valueType === 'string' && limit === '1' && !isTooBig;
-          // Name of the field (e.g.: "title", "name", etc.)
-          const field = issue.path?.length ? issue.path[issue.path.length - 1] as string : '';
-          // Translated field name (e.g.: "Le titre", "Le nom", etc.)
-          const fieldName = getInputName(i18nData, field || valueType);
+          // Translated field name — tries "departure.country" first, falls back to "country"
+          const fieldName = getInputName(i18nData, issue.path?.length ? issue.path.map(String) : [valueType]);
           // Dynamic message with replacements for {{number}} (e.g.: Should be at most 10)
           let message: string = getErrorMessage(i18nData, key);
 
@@ -236,7 +241,7 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
 
           }
 
-          return capitalize(message.trim());
+          return capitalizeFirstLetter(message.trim());
         }
         case 'custom': {
           const params = issue.params ?? {};
@@ -255,10 +260,8 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
           const input = (issue as any).input;
 
           const list = (issue as z.core.$ZodIssueInvalidValue<string>).values as string[] || [];
-          // Name of the field (e.g.: "title", "name", etc.)
-          const path = issue.path?.length ? issue.path[issue.path.length - 1] as string : '';
-          // e.g: globalError.invalidFileType or name.file in form.json
-          const field = getInputName(i18nData, path);
+          // Translated field name — tries "departure.country" first, falls back to "country"
+          const field = getInputName(i18nData, issue.path?.map(String) ?? []);
 
           if (!list.length) return;
 
@@ -268,13 +271,13 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
           if (!isMimeType(input)) {
             const key = 'InvalidEnumValue';
 
-            // form.json -> name.articleEnum, name.pageEnum, etc. (to differentiate from other fields)
-            const options = list.map((item) => getInputName(i18nData, `${item}Enum`)).join(', ');
+            // zod.json -> name.articleOption, name.pageOption, etc. (to differentiate from other fields)
+            const options = list.map((item) => getInputName(i18nData, `${item}Option`)).join(', ');
             const message = getErrorMessage(i18nData, key)
               .replace('{{options}}', options)
               .replace('{{field}}', field);
 
-            return capitalize(message.trim());
+            return capitalizeFirstLetter(message.trim());
           }
 
           // 2. File type invalid value
@@ -295,7 +298,17 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
           if (!allowedExtensions.length) return;
           message = message.replace('{{field}}', field); // Replace field name
           message = message.replace('{{value}}', allowedExtensions.join(', '));
-          return capitalize(message.trim());
+          return capitalizeFirstLetter(message.trim());
+        }
+
+        case 'invalid_format': {
+          const format = (issue as any).format;
+          // e.g., invalidEmailFormat, invalidUrlFormat, etc.
+          const key = `invalid${format.charAt(0).toUpperCase() + format.slice(1)}Format`;
+
+          const message = getErrorMessage(i18nData, key) || `Invalid format: ${format}`;
+
+          return capitalizeFirstLetter(message.trim());
         }
         default:
           return getErrorMessage(i18nData, 'genericError') || 'Invalid input';
@@ -305,19 +318,23 @@ const setGlobalError = (i18nData: Record<string, any>): any => {
 };
 
 /**
- * Load i18n JSON and configure Zod globally.
- * Use for init at startup or runtime switch.
+ * points the zod error messages at the given language. Its `zod` namespace is one of the i18n
+ * resources, so it is read from there rather than fetched again as a separate chunk.
  */
-export const loadZodI18nLocale = async (locale: Locale) => {
-  try {
-    // Dynamically import the locale JSON for form
-    const { default: i18nData } = await import(`./locales/${locale}/zod.json`);
+const applyZodI18nLocale = (locale: Locale): void => {
+  const i18nData = i18n.getResourceBundle(locale, 'zod');
 
-    // Configure Zod with the loaded i18n data
-    z.config(setGlobalError(i18nData));
-  } catch (error) {
-    console.error(`Error loading locale "${locale}":`, error);
-    // Fallback to 'en' or built-in
-    z.config(z.locales.en());
-  }
+  z.config(i18nData ? setGlobalError(i18nData) : z.locales.en());
+};
+
+/**
+ * keeps the zod error messages in the app language, now and after every switch. Driven by the
+ * `languageChanged` event rather than by the screens that switch language: i18next only fires it
+ * once the new language is downloaded, whereas a screen resuming after the settings update could
+ * run before the translations are in. Call once at startup.
+ */
+export const syncZodWithAppLanguage = (): void => {
+  i18n.on('languageChanged', (locale: string) => applyZodI18nLocale(locale as Locale));
+
+  if (i18n.resolvedLanguage) applyZodI18nLocale(i18n.resolvedLanguage as Locale);
 };

@@ -1,0 +1,81 @@
+{
+  "project": {
+    "societyDescription": "Society description",
+    "projects": "Projects",
+    "project": "Project",
+    "newProject": "New project",
+    "createProject": "Create project",
+    "editProject": "Edit {{name}}",
+    "societyLogo": "Logo of the society",
+    "website": "Website",
+    "links": "Links",
+    "society": "Society",
+    "repositories": "Repositories",
+    "addLinks": "Add links",
+    "addRepository": "Add repository",
+    "link": "Link",
+    "invalidRepositoryUrl": "Invalid repository URL",
+    "invalidYoutubeUrl": "Invalid youtube URL",
+    "addNpmLinks": "Add npm links",
+    "invalidNpmUrl": "Invalid npm URL",
+    "npmLinks": "Npm links",
+    "codesandboxLinks": "Codesandbox links",
+    "addCodesandboxLinks": "Add codesandbox links",
+    "invalidCodesandboxUrl": "Invalid codesandbox URL",
+    "projectTypes": "Project types",
+    "technologies": "Technologies",
+    "types": {
+      "socialNetwork": "Social network",
+      "eCommerce": "E-commerce",
+      "multimedia": "Multimedia",
+      "ecology": "Ecology",
+      "artificialIntelligence": "Artificial intelligence",
+      "education": "Education",
+      "greenEnergy": "Green energy",
+      "renewableEnergy": "Renewable energy",
+      "economicDevelopment": "Economic development",
+      "literature": "Literature",
+      "sport": "Sport",
+      "searchEngine": "Search engine",
+      "philosophy": "Philosophy",
+      "deepLearning": "Deep learning",
+      "chatBot": "Chat bot",
+      "travel": "Travel",
+      "portfolio": "Portfolio",
+      "blog": "Blog",
+      "startup": "Startup",
+      "foodTech": "Food tech",
+      "supplyChain": "Supply chain",
+      "cuisine": "Cuisine",
+      "utility": "Utility",
+      "productManagement": "Product management",
+      "transport": "Transport",
+      "openSource": "Open source"
+    },
+    "activeProjectVisible": "An active project is visible to users",
+    "errors": {
+      "projectNotFound": "Project not found"
+    },
+    "messages": {
+      "deletedSuccessfully": "Project deleted successfully",
+      "published": "Project published. It is now visible on the website.",
+      "unpublished": "Project unpublished. It is no longer visible on the website."
+    },
+    "thisProject": "this project",
+    "theseProjects": "these projects",
+    "theProject": "the project",
+    "searchByName": "Search by name",
+    "contentOfTheProject": "Project content",
+    "previewImageHelper": "Smaller picture used on the project cards and when its link is shared",
+    "untitledProject": "Project name",
+    "loadingProject": "Loading project…",
+    "status": {
+      "published": "Published",
+      "draft": "Draft"
+    },
+    "form": {
+      "classification": "Classification",
+      "sectionsOrderHelper": "Sections can be filled in any order. Only the French name, title, description and content, the image, at least one type and one technology are required."
+    }
+  }
+}

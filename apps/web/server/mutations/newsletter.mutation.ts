@@ -2,32 +2,34 @@
 
 import { z } from 'zod';
 
-import { action } from '@/config/safeAction';
-import { collections } from '@/utils/constants';
-import { setValues } from '@/utils/parse.utils';
+import { action } from '@/config/safe-action';
 import {
   NewsletterSchema,
   ResubscribeToNewsletterSchema,
   UnsubscribeReasonSchema,
 } from '@/validations/app.validations';
 import { getParseServer } from '@/config/parse-server.config';
-
-const NEWSLETTER_PROPERTIES = new Set(['email', 'language']);
+import { assertNewsletterFormAllowed } from '@/server/formRateLimit.server';
 
 const Parse = getParseServer();
 
 export const createNewsletter = action
   .inputSchema(NewsletterSchema)
-  .bindArgsSchemas<[z.ZodString]>([z.string()])
-  .action(async ({ parsedInput: values, bindArgsParsedInputs: [locale] }) => {
-    const Newsletter = Parse.Object.extend(collections.Newsletter);
-    const newsLetter = new Newsletter();
+  .bindArgsSchemas<[z.ZodString, z.ZodString]>([z.string(), z.string()])
+  .action(async ({ parsedInput: values, bindArgsParsedInputs: [locale, recaptchaToken] }) => {
+    // counted per visitor, for the same reason as the contact form
+    await assertNewsletterFormAllowed();
 
-    const newValues = { ...values, language: locale };
-
-    setValues(newsLetter, newValues, NEWSLETTER_PROPERTIES);
-
-    await newsLetter.save();
+    /*
+     * Same as the contact form: the token is forwarded, not spent here — Google accepts it once,
+     * and the check belongs on the side that writes the row. It throws
+     * `recaptchaVerificationFailed`, translated through the `ServerError` namespace.
+     */
+    await Parse.Cloud.run('subscribeToNewsletter', {
+      ...values,
+      language: locale,
+      recaptchaToken,
+    });
 
     return {
       success: true,

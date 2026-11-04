@@ -1,0 +1,81 @@
+{
+  "project": {
+    "societyDescription": "Description de la société",
+    "projects": "Projets",
+    "project": "Projet",
+    "newProject": "Nouveau projet",
+    "createProject": "Créer un projet",
+    "editProject": "Modifier {{name}}",
+    "societyLogo": "Logo de la société",
+    "website": "Site web",
+    "links": "Liens",
+    "society": "Société",
+    "repositories": "Dépôts",
+    "link": "Lien",
+    "addLinks": "Ajouter des liens",
+    "addRepository": "Ajouter un dépôt",
+    "invalidRepositoryUrl": "URL de dépôt invalide",
+    "invalidYoutubeUrl": "URL Youtube invalide",
+    "addNpmLinks": "Ajouter des liens npm",
+    "invalidNpmUrl": "URL npm invalide",
+    "npmLinks": "Liens npm",
+    "codesandboxLinks": "Liens codesandbox",
+    "addCodesandboxLinks": "Ajouter des liens codesandbox",
+    "invalidCodesandboxUrl": "URL codesandbox invalide",
+    "projectTypes": "Types de projet",
+    "technologies": "Technologies",
+    "types": {
+      "socialNetwork": "Réseau social",
+      "eCommerce": "E-commerce",
+      "multimedia": "Multimédia",
+      "ecology": "Ecologie",
+      "artificialIntelligence": "Intelligence artificielle",
+      "education": "Education",
+      "greenEnergy": "Energie verte",
+      "renewableEnergy": "Energie renouvelable",
+      "economicDevelopment": "Développement économique",
+      "literature": "Littérature",
+      "sport": "Sport",
+      "searchEngine": "Moteur de recherche",
+      "philosophy": "Philosophie",
+      "deepLearning": "Apprentissage profond",
+      "chatBot": "Chat bot",
+      "travel": "Voyage",
+      "portfolio": "Portfolio",
+      "blog": "Blog",
+      "startup": "Startup",
+      "foodTech": "Food tech",
+      "supplyChain": "Supply chain",
+      "cuisine": "Cuisine",
+      "utility": "Utilitaire",
+      "productManagement": "Gestion de produit",
+      "transport": "Transport",
+      "openSource": "Open source"
+    },
+    "activeProjectVisible": "Un projet actif est visible pour les utilisateurs",
+    "errors": {
+      "projectNotFound": "Projet introuvable"
+    },
+    "messages": {
+      "deletedSuccessfully": "Projet supprimé avec succès",
+      "published": "Projet publié. Il est maintenant visible sur le site.",
+      "unpublished": "Projet dépublié. Il n'est plus visible sur le site."
+    },
+    "thisProject": "ce projet",
+    "theseProjects": "ces projets",
+    "theProject": "le projet",
+    "searchByName": "Rechercher par nom",
+    "contentOfTheProject": "Contenu du projet",
+    "previewImageHelper": "Image plus petite utilisée sur les cartes de projet et lors du partage de son lien",
+    "untitledProject": "Nom du projet",
+    "loadingProject": "Chargement du projet…",
+    "status": {
+      "published": "Publié",
+      "draft": "Brouillon"
+    },
+    "form": {
+      "classification": "Classification",
+      "sectionsOrderHelper": "Les sections se remplissent dans n'importe quel ordre. Seuls le nom, le titre, la description et le contenu en français, l'image, au moins un type et une technologie sont obligatoires."
+    }
+  }
+}

@@ -1,17 +1,25 @@
 
 import {
-  Alert, Box, Button, Stack, useTheme,
+  Alert, Box, Button, Stack,
 } from '@mui/material';
-import { FormEvent, ReactNode, useMemo } from 'react';
-import { FormProvider } from 'react-hook-form';
+import {
+  FormEvent, ReactNode, useEffect, useMemo, useRef,
+} from 'react';
+import {
+  FormProvider, type FieldValues, type SubmitHandler, type UseFormReturn,
+} from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import type { ResponsiveStyleValue, SxProps, Theme } from '@mui/system';
 
-import { useBreakpoint } from '@/hooks/useBreakpoint';
+import { useBreakpoint } from '@/hooks/_core/useBreakpoint';
 
 const classes = {
-  buttons: (direction: 'row' | 'column', fixedButtons: boolean) => (theme: Theme) => {
+  buttons: (
+    direction: 'row' | 'column',
+    fixedButtons: boolean,
+    stickyButtons: boolean
+  ) => (theme: Theme) => {
     const values: Record<string, any> = {
       position: 'fixed' as const,
       top: 4,
@@ -19,6 +27,15 @@ const classes = {
       right: '16vw',
       flexDirection: 'row' as const,
       [theme.breakpoints.down('xl')]: { right: '22vw' },
+    };
+    const stickyValues: Record<string, any> = {
+      position: 'sticky' as const,
+      bottom: 0,
+      zIndex: 1,
+      backgroundColor: theme.palette.background.paper,
+      borderTop: `1px solid ${theme.palette.divider}`,
+      paddingTop: theme.spacing(1.5),
+      paddingBottom: theme.spacing(1.5),
     };
 
     if (direction === 'row') {
@@ -31,6 +48,9 @@ const classes = {
             ? values
             : {}),
         },
+        ...(stickyButtons
+          ? stickyValues
+          : {}),
       };
     }
     return {
@@ -38,6 +58,9 @@ const classes = {
       flexDirection: 'column' as const,
       ...(fixedButtons
         ? values
+        : {}),
+      ...(stickyButtons
+        ? stickyValues
         : {}),
     };
   },
@@ -49,15 +72,19 @@ const classes = {
   },
 };
 
-export interface IFormProps {
+export interface IFormProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TContext = any,
+  TTransformedValues extends FieldValues = TFieldValues
+> {
 
   /**
    * Used to identify the form when the submit button is outside the form
    * e.g: when the form is in a dialog
    */
   formId?: string;
-  onSubmit?: (() => void) | ((event: FormEvent<HTMLFormElement>) => void);
-  form?: any;
+  onSubmit: SubmitHandler<TTransformedValues>;
+  form: UseFormReturn<TFieldValues, TContext, TTransformedValues>;
 
   /**
    * loading state in the form button
@@ -113,9 +140,31 @@ export interface IFormProps {
    * @default false
    */
   fixedButtons?: boolean;
+
+  /**
+   * Sticky buttons at the bottom of the viewport (useful for long multi-block/multi-step forms)
+   * @default false
+   */
+  stickyButtons?: boolean;
+
+  /**
+   * When provided, the primary button becomes a manual trigger (`type="button"`) instead of a
+   * native form submit, and native form submission (e.g. pressing Enter in a field) is
+   * redirected to it as well. Use this for an intermediate step of a multi-step wizard sharing
+   * one `useForm` across steps — `handleSubmit` always validates the *entire* schema, so wiring
+   * it to a "Next" button would validate not-yet-visited steps' fields too and block navigation
+   * on their required fields. Call `form.trigger([...currentStepFieldNames])` yourself inside
+   * this handler to validate only the current step before advancing.
+   * @default undefined — falls back to the normal type="submit" + handleSubmit(onSubmit) behavior
+   */
+  onPrimaryButtonClick?: () => void;
 }
 
-const Form = ({
+const Form = <
+  TFieldValues extends FieldValues = FieldValues,
+  TContext = any,
+  TTransformedValues extends FieldValues = TFieldValues
+>({
   formId,
   onSubmit,
   form,
@@ -134,9 +183,10 @@ const Form = ({
   buttonFullWidth = true,
   buttonDirection = 'column',
   fixedButtons = false,
+  stickyButtons = false,
+  onPrimaryButtonClick,
   ...formProps
-}: IFormProps) => {
-  const theme = useTheme();
+}: IFormProps<TFieldValues, TContext, TTransformedValues>) => {
   const isSmallScreen = useBreakpoint();
   const {
     t,
@@ -144,10 +194,27 @@ const Form = ({
 
   const {
     formState: {
-      isDirty, isValid,
+      isDirty, isValid, errors, submitCount,
     },
-    getFieldState,
   } = form;
+
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // DOM query, not RHF's setFocus/shouldFocusError — our field refs point to MUI's non-focusable root div
+  useEffect(() => {
+    if (!submitCount || !Object.keys(errors).length) return;
+
+    const invalidFieldSelector = [
+      'input[aria-invalid="true"]',
+      'textarea[aria-invalid="true"]',
+      'select[aria-invalid="true"]',
+      '[role="combobox"][aria-invalid="true"]',
+    ].join(', ');
+    const firstInvalidField = formRef.current?.querySelector<HTMLElement>(invalidFieldSelector);
+
+    firstInvalidField?.focus();
+    firstInvalidField?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [submitCount, errors]);
 
   const isFullWidth = useMemo(() => {
     if (isSmallScreen) return true;
@@ -155,15 +222,46 @@ const Form = ({
     return isSmallScreen || buttonFullWidth;
   }, [isSmallScreen, buttonFullWidth, buttonDirection]);
 
+  /*
+   * a block action closing a card (login, sign-up, a one-column form) is the large step of the
+   * button scale — at the base row height a full-width slab reads as a thin strip. A footer laying
+   * its actions out in a row is a toolbar instead, and stands on the normal button row.
+   */
+  const buttonSize = buttonDirection === 'row'
+    ? 'medium'
+    : 'large';
+
+  /*
+   * native submit (e.g. Enter key in a field) must go through the same manual handler as the
+   * primary button — otherwise it would fall back to handleSubmit and validate the whole schema
+   *
+   * stopPropagation is required because a <form> rendered inside a Dialog (e.g. the category
+   * creation dialog opened from a page/article form) is portaled to document.body in the DOM,
+   * but React still bubbles the "submit" event through the *React* tree — so without this, saving
+   * that inner form would also trigger the outer page/article form's onSubmit
+   */
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.stopPropagation();
+
+    if (onPrimaryButtonClick) {
+      event.preventDefault();
+      onPrimaryButtonClick();
+      return;
+    }
+
+    form.handleSubmit(onSubmit)(event);
+  };
+
   const formComponent = (
     <Box
       noValidate
       autoComplete="off"
       component="form"
       id={formId}
-      onSubmit={onSubmit}
-      sx={[{ width }, ...(Array.isArray(sx) ? sx : [sx ?? {}])]}
+      onSubmit={handleFormSubmit}
+      ref={formRef}
       {...formProps}
+      sx={[{ width }, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       {error && (
         <Alert severity="error" sx={{ mb: 1.5 }}>
@@ -172,51 +270,43 @@ const Form = ({
       )}
       <Stack direction={direction} spacing={2}>
         {children}
-        {/* use the local id if no id is defined */}
-        <div css={classes.buttons(buttonDirection, fixedButtons)}>
-          {!onSecondaryButtonClick && buttonDirection === 'row' && !isSmallScreen && <div />}
-          {/* buttons */}
-          {!formId && (
-            <Button
-              className={buttonClassName}
-              disabled={isDisabled && (!isDirty || getFieldState().invalid || !isValid)}
-              fullWidth={isFullWidth}
-              type="submit"
-              variant="contained"
-              css={{
-                fontSize: 18,
-                fontWeight: 500,
-                py: direction === 'column'
-                  ? '0.7rem'
-                  : 0,
-                bgcolor: theme.palette.primary.main,
-                '&:hover': {
-                  bgcolor: theme.palette.primary.main,
-                  opacity: 0.8,
-                },
-              }}
-            >
-              {loading
-                ? '...'
-                : primaryButtonText ?? t('save')}
-            </Button>
-          )}
-          {onSecondaryButtonClick && (
-            <Button
-              className={secondaryButtonClassName}
-              css={classes.secondaryButton(buttonDirection, fixedButtons)}
-              fullWidth={isFullWidth}
-              onClick={onSecondaryButtonClick}
-            >
-              {secondaryButtonText ?? t('cancel')}
-            </Button>
-          )}
-        </div>
+        {/* the footer is dropped entirely when the form is submitted from outside it (formId) and
+            has no secondary action — an empty row would still take the stack's own spacing */}
+        {(!formId || onSecondaryButtonClick) && (
+          <div css={classes.buttons(buttonDirection, fixedButtons, stickyButtons)}>
+            {!onSecondaryButtonClick && buttonDirection === 'row' && !isSmallScreen && <div />}
+            {/* buttons */}
+            {!formId && (
+              <Button
+                className={buttonClassName}
+                disabled={isDisabled && (!isDirty || !isValid)}
+                fullWidth={isFullWidth}
+                loading={loading}
+                onClick={onPrimaryButtonClick}
+                size={buttonSize}
+                type={onPrimaryButtonClick ? 'button' : 'submit'}
+                variant="contained"
+              >
+                {primaryButtonText ?? t('save')}
+              </Button>
+            )}
+            {onSecondaryButtonClick && (
+              <Button
+                className={secondaryButtonClassName}
+                css={classes.secondaryButton(buttonDirection, fixedButtons)}
+                disabled={loading}
+                fullWidth={isFullWidth}
+                onClick={onSecondaryButtonClick}
+                size={buttonSize}
+              >
+                {secondaryButtonText ?? t('cancel')}
+              </Button>
+            )}
+          </div>
+        )}
       </Stack>
     </Box>
   );
-
-  if (!form) return formComponent;
 
   return <FormProvider {...form}>{formComponent}</FormProvider>;
 };

@@ -23,7 +23,7 @@ Créer une catégorie ou corriger son nom, son image, son type et sa visibilité
 ## Qui peut l'utiliser
 
 Le droit **Créer** (création) ou **Modifier** (modification) sur la ressource « Catégories », réglé dans
-la page **Droits**. Sans ce droit, le bouton n'est pas proposé. Les propriétaires et administrateurs ont
+la page **Droits**. Sans ce droit, le bouton n'est pas proposé. Les comptes Owner et Super Admin ont
 tous les droits.
 
 ## Ce que l'on voit à l'écran

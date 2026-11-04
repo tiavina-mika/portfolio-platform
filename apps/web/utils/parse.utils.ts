@@ -1,4 +1,7 @@
+import { getContentCountryConstraint } from '@shared/utils';
+
 import { getParseServer } from '@/config/parse-server.config';
+import { WEB_COUNTRY_CODE } from '@/utils/constants';
 
 import { filter, isNull } from './utils';
 
@@ -87,4 +90,81 @@ export const createMockParseObject = <O extends Record<string, any>>(
   parseObject.id = attributes.objectId || `fakeId_${Math.random().toString(36).substring(2, 11)}`;
   Object.keys(attributes).forEach(key => parseObject.set(key, attributes[key]));
   return parseObject;
+};
+
+/**
+ * recursively converts a Parse.Object (or an array/tree of them) into a plain JSON value.
+ * `id` is kept alongside the attributes (not just `objectId`) so existing `.id` call sites keep
+ * working unchanged after a query result switches from a Parse.Object to raw JSON — needed so the
+ * server/queries/* layer can be cached ('use cache' / unstable_cache serializes its return value,
+ * which silently strips Parse.Object methods like `.get()`)
+ * @param value
+ * @returns
+ */
+export const serializeParseObject = <T = any>(value: unknown): T => {
+  const Parse = getParseServer();
+
+  if (Array.isArray(value)) {
+    return value.map((item) => serializeParseObject(item)) as T;
+  }
+
+  if (value instanceof Parse.Object) {
+    /*
+     * `Parse` is a runtime value (from `getParseServer()`), not a type-level namespace, so
+     * `instanceof` narrows `value` but TS can't infer its shape from it — cast explicitly instead
+     */
+    const object: any = value;
+    const serialized: Record<string, any> = {
+      id: object.id,
+      createdAt: object.createdAt ? new Date(object.createdAt).toISOString() : undefined,
+      updatedAt: object.updatedAt ? new Date(object.updatedAt).toISOString() : undefined,
+    };
+
+    for (const key of Object.keys(object.attributes)) {
+      serialized[key] = serializeParseObject(object.attributes[key]);
+    }
+
+    return serialized as T;
+  }
+
+  // a Date or a class instance with `toJSON` (Parse.ACL…) cannot cross the cache boundary as it is
+  if (value instanceof Date) return value.toISOString() as T;
+
+  if (value && typeof value === 'object') {
+    const { toJSON } = value as { toJSON?: () => unknown };
+
+    if (typeof toJSON === 'function') return serializeParseObject(toJSON.call(value));
+
+    // a plain object (a user returned by a Cloud Function) can still hold Dates and ACLs
+    if (Object.getPrototypeOf(value) === Object.prototype) {
+      return Object.fromEntries(
+        Object.entries(value).map(([key, item]) => [key, serializeParseObject(item)])
+      ) as T;
+    }
+  }
+
+  return value as T;
+};
+
+type CountryQuery = {
+  equalTo: (key: string, value: string) => unknown;
+  notContainedIn: (key: string, values: string[]) => unknown;
+};
+
+/**
+ * Keeps the editorial content (articles, pages) of the website's country. The default country also
+ * keeps the rows saved before the field existed, which carry no country.
+ * @param query the query to narrow, returned to keep chaining
+ */
+export const withContentCountry = <Q extends CountryQuery>(query: Q): Q => {
+  const constraint = getContentCountryConstraint(WEB_COUNTRY_CODE);
+
+  if ('equalTo' in constraint) {
+    query.equalTo('country', constraint.equalTo);
+  }
+  else {
+    query.notContainedIn('country', constraint.notContainedIn);
+  }
+
+  return query;
 };

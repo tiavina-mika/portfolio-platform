@@ -1,61 +1,42 @@
+import { type Theme } from '@emotion/react';
 import {
-  alpha, Button, IconButton, Tooltip, Typography, useTheme, type Theme,
+  Button, IconButton, Tooltip,
 } from '@mui/material';
-import { green } from '@mui/material/colors';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { MouseEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  FiChevronDown, FiEdit3, FiEye, FiGlobe, FiList, FiMoreHorizontal, FiPlus, FiTrash,
+  FiChevronDown, FiDownload, FiEdit3, FiEye, FiGlobe, FiList, FiMoreHorizontal, FiPlus,
+  FiRotateCcw, FiTrash,
 } from 'react-icons/fi';
 
-import { useToggle } from '@/hooks/useToggle';
-import { IMenu } from '@/types/app.type';
+import { RowEditIcon, RowMoreIcon, RowPreviewIcon } from '@/components/icons/RowActionIcons';
+import { ROW_ACTIONS_ICON_SIZE } from '@/constants/_core/ui/list.constants';
+import { PAGE_HEAD_ACTION_ICON_SIZE } from '@/constants/_core/ui/page.constants';
+import {
+  ICON_BUTTON_SMALL_ICON_SIZE, MENU_ITEM_ICON_SIZE, MENU_MIN_WIDTH,
+} from '@/constants/_core/ui/ui.constants';
+import { useToggle } from '@/hooks/_core/useToggle';
+import { IMenu } from '@/types/_core/app.type';
+import { getDestructiveMenuItemStyles, getRowActionsStyles } from '@/utils/_core/theme/styles.utils';
 
 import Dialog from './Dialog';
 
+/*
+ * paper border/shadow/radius, item height, type size and the icon gap all come from the theme's
+ * MuiMenu / MuiMenuItem overrides — only the panel's own width and offset are set here
+ */
 const classes = {
   menu: (theme: Theme) => ({
     '& .MuiPaper-root': {
-      borderRadius: 6,
       marginTop: theme.spacing(1),
-      minWidth: 180,
-      color: theme.palette.mode === 'light'
-        ? 'rgb(55, 65, 81)'
-        : theme.palette.grey[300],
-      boxShadow: `
-        rgb(255, 255, 255) 0px 0px 0px 0px, 
-        rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, 
-        rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, 
-        rgba(0, 0, 0, 0.05) 0px 4px 6px -2px
-      `,
-      '& .MuiMenu-list': { padding: '4px 0' },
-      '& .MuiMenuItem-root': {
-        '& .MuiSvgIcon-root': {
-          fontSize: 18,
-          color: theme.palette.text.secondary,
-          marginRight: theme.spacing(1.5),
-        },
-        '&:active': { backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity) },
-      },
+      minWidth: MENU_MIN_WIDTH,
     },
   }),
-  button: (theme: Theme) => ({
-    backgroundColor: theme.palette.mode === 'light'
-      ? '#fff'
-      : theme.palette.background.paper,
-    border: theme.palette.mode === 'light'
-      ? '1px solid #dddddf'
-      : 'none',
-    color: '#1B191F',
-    transition: 'all 0.08s ease-in-out !important',
-    borderRadius: 6,
-    height: 42,
-    padding: '0 25px',
-    '& .MuiTypography-root': { fontWeight: 700 },
-  }),
+  destructiveItem: (theme: Theme) => getDestructiveMenuItemStyles(theme),
+  rowActions: (theme: Theme) => getRowActionsStyles(theme),
 };
 
 export type ActionsMenuProps = {
@@ -65,11 +46,25 @@ export type ActionsMenuProps = {
   onCreate?: () => void;
   onPreview?: () => void;
   onDestroy?: () => void;
+  /**
+   * Puts a row back where it came from. Only the recycle bin passes it: until now the bin offered
+   * "destroy permanently" as its single action, so a row deleted by mistake could only be
+   * destroyed for good or left there forever.
+   */
+  onRestore?: () => void;
+  onDownloadJson?: () => void;
   websiteUrl?: string;
   label?: string;
   dialogDescription?: string;
   menus?: IMenu[];
-  type?: 'icon' | 'button';
+  /*
+   * `row` is the list variant: the two actions a reader reaches for on every row — open and edit —
+   * stand as their own slots and only the rest folds into the overflow menu, so scanning a list
+   * never costs a menu opening. `preview` is the same idea on a detail page, where editing is the
+   * one thing the reader came to do: it stands as a full button and everything else folds behind
+   * the overflow trigger. `icon`/`button` keep everything behind a single trigger.
+   */
+  type?: 'icon' | 'button' | 'row' | 'preview';
 };
 
 const ActionsMenu = ({
@@ -79,6 +74,8 @@ const ActionsMenu = ({
   onPreview,
   onCreate,
   onDestroy,
+  onRestore,
+  onDownloadJson,
   label,
   websiteUrl,
   dialogDescription,
@@ -91,7 +88,6 @@ const ActionsMenu = ({
     t,
   } = useTranslation();
 
-  const theme = useTheme();
   const {
     open: openDeleteDialog, toggle: toggleDeleteDialog,
   } = useToggle();
@@ -129,6 +125,19 @@ const ActionsMenu = ({
     window.open(websiteUrl, '_blank', 'noopener,noreferrer');
   };
 
+  const handleDownloadJson = (event: MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    if (!onDownloadJson) return;
+    onDownloadJson();
+  };
+
+  const handleRestore = (event: MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    handleClose();
+    if (!onRestore) return;
+    onRestore();
+  };
+
   const handleConfirmDeleteDialogClick = (event: MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
   };
@@ -138,74 +147,148 @@ const ActionsMenu = ({
     handleClose();
   };
 
+  const isRow = type === 'row';
+  const isPreview = type === 'preview';
+
   const options = [
     {
       onClick: handleEdit,
-      display: !!onEdit,
+      display: !isRow && !isPreview && !!onEdit,
       label: t('edit'),
-      icon: <FiEdit3 size={20} />,
+      icon: <FiEdit3 size={MENU_ITEM_ICON_SIZE} />,
     },
     {
       onClick: handlePreview,
-      display: !!onPreview,
+      display: !isRow && !!onPreview,
       label: t('seePreview'),
-      icon: <FiEye size={20} />,
+      icon: <FiEye size={MENU_ITEM_ICON_SIZE} />,
     },
     {
       onClick: handleGoToWebsite,
       display: !!websiteUrl,
       label: t('seeWebsite'),
-      icon: <FiGlobe color={green[500]} size={20} />,
+      icon: (
+        <FiGlobe
+          css={(theme: Theme) => ({ color: theme.palette.success.main })}
+          size={MENU_ITEM_ICON_SIZE}
+        />
+      ),
+    },
+    {
+      onClick: handleDownloadJson,
+      display: !!onDownloadJson,
+      label: t('downloadJson'),
+      icon: <FiDownload size={MENU_ITEM_ICON_SIZE} />,
+    },
+    {
+      onClick: handleRestore,
+      display: !!onRestore,
+      label: t('restore'),
+      icon: <FiRotateCcw size={MENU_ITEM_ICON_SIZE} />,
     },
 
     {
       onClick: goToList,
       display: !!goToList,
       label: t('returnToList'),
-      icon: <FiList size={20} />,
+      icon: <FiList size={MENU_ITEM_ICON_SIZE} />,
     },
     {
       onClick: onCreate,
       display: !!onCreate,
       label: t('add'),
-      icon: <FiPlus size={20} />,
+      icon: <FiPlus size={MENU_ITEM_ICON_SIZE} />,
     },
     ...menus, // before delete
     {
       onClick: handleDelete,
       display: !!onDelete || !!onDestroy,
       label: t('delete'),
-      icon: <FiTrash css={(theme: Theme) => ({ color: theme.palette.error.main })} size={20} />,
+      icon: <FiTrash size={MENU_ITEM_ICON_SIZE} />,
+      isDestructive: true,
     },
   ];
 
-  return (
-    <>
-      {/* -------- button -------- */}
-      <>
-        {type === 'button'
-          ? (
-            <Button
-              css={classes.button}
-              onClick={handleClick}
-              endIcon={(
-                <FiChevronDown color={theme.palette.mode === 'light'
-                  ? '#000'
-                  : '#fff'}
-                />
-              )}
-            >
-              <Typography sx={{ fontSize: 16, textTransform: 'none', px: 0 }}>Actions</Typography>
-            </Button>
-          )
-          : (
-            <Tooltip title="Actions">
-              <IconButton onClick={handleClick}>
-                <FiMoreHorizontal size={20} />
+  // the overflow trigger disappears when everything a row can do already stands on the row
+  const hasMenuOptions = options.some((option) => option.display);
+
+  const renderTrigger = () => {
+    if (isRow) {
+      return (
+        <div css={classes.rowActions}>
+          {onPreview && (
+            <Tooltip title={t('viewDetails')}>
+              <IconButton aria-label="preview" onClick={handlePreview}>
+                <RowPreviewIcon size={ROW_ACTIONS_ICON_SIZE} />
               </IconButton>
             </Tooltip>
           )}
-      </>
+          {onEdit && (
+            <Tooltip title={t('edit')}>
+              <IconButton aria-label="edit" onClick={handleEdit}>
+                <RowEditIcon size={ROW_ACTIONS_ICON_SIZE} />
+              </IconButton>
+            </Tooltip>
+          )}
+          {hasMenuOptions && (
+            <Tooltip title={t('otherActions')}>
+              <IconButton aria-expanded={open} aria-label="otherActions" onClick={handleClick}>
+                <RowMoreIcon size={ROW_ACTIONS_ICON_SIZE} />
+              </IconButton>
+            </Tooltip>
+          )}
+        </div>
+      );
+    }
+
+    /*
+     * a detail page opens on the thing it is about, so the action it exists for stands on its own
+     * next to the title instead of being reached through a menu that has to be opened first
+     */
+    if (isPreview) {
+      return (
+        <>
+          {onEdit && (
+            <Button
+              onClick={handleEdit}
+              startIcon={<FiEdit3 size={PAGE_HEAD_ACTION_ICON_SIZE} />}
+              variant="contained"
+            >
+              {t('edit')}
+            </Button>
+          )}
+          {hasMenuOptions && (
+            <Tooltip title={t('otherActions')}>
+              <IconButton aria-expanded={open} aria-label="otherActions" onClick={handleClick}>
+                <FiMoreHorizontal size={ICON_BUTTON_SMALL_ICON_SIZE} />
+              </IconButton>
+            </Tooltip>
+          )}
+        </>
+      );
+    }
+
+    if (type === 'button') {
+      return (
+        <Button endIcon={<FiChevronDown />} onClick={handleClick} variant="outlined">
+          Actions
+        </Button>
+      );
+    }
+
+    return (
+      <Tooltip title="Actions">
+        <IconButton onClick={handleClick}>
+          <FiMoreHorizontal size={ICON_BUTTON_SMALL_ICON_SIZE} />
+        </IconButton>
+      </Tooltip>
+    );
+  };
+
+  return (
+    <>
+      {/* -------- trigger(s) -------- */}
+      {renderTrigger()}
       {/* -------- menu -------- */}
       <Menu
         disableScrollLock
@@ -221,7 +304,13 @@ const ActionsMenu = ({
       >
         {options.map((option, index) => (
           option.display && (
-            <MenuItem key={index} onClick={option.onClick}>
+            <MenuItem
+              key={index}
+              onClick={option.onClick}
+              css={'isDestructive' in option && option.isDestructive
+                ? classes.destructiveItem
+                : undefined}
+            >
               <ListItemIcon>
                 {option.icon}
               </ListItemIcon>

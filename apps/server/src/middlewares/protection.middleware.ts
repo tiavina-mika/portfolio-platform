@@ -1,8 +1,9 @@
 import type { NextFunction, Request, Response } from 'express';
 
-import { getUserForSessionToken } from '@/cloud/services/auth.service.cloud';
+
+import { getUserForSessionToken } from '@/cloud/services/_core/auth.service.cloud';
 import { HttpException } from '@/types/app.type';
-import { logger } from '@/utils/logger';
+import { logger } from '@/utils/_core/logger';
 
 type Input = {
   withKey?: boolean;
@@ -15,29 +16,34 @@ const protectionMiddleware = (
     try {
       // should have a header key
       if (withKey) {
+        const isTest = req.get('X-Request-Test') === 'true' && process.env.NODE_ENV === 'development';
+
+        if (isTest) {
+          return next();
+        }
         const apiKey = req.get('X-portfolio-key');
 
         // if the key exists, go to next
         if (!apiKey) {
-          next(new HttpException(400, 'Missing "X-portfolio-key" params'));
+          return next(new HttpException(400, 'Missing "X-portfolio-key" params'));
         }
-        else if (apiKey && apiKey !== process.env.REST_API_KEY) {
-          next(new HttpException(400, 'Invalid "X-portfolio-key"'));
+        else if (apiKey !== process.env.REST_API_KEY) {
+          return next(new HttpException(400, 'Invalid "X-portfolio-key"'));
         }
       }
 
       // should have a header session token
       if (withAuth) {
-        const parseSession = req.get('X-Parse-Session-Token') || req.query.sessionToken;
+        const parseSession = req.get('X-Parse-Session-Token') || (req.query.sessionToken as string);
 
         if (!parseSession) {
-          next(new HttpException(400, 'Missing session params'));
+          return next(new HttpException(400, 'Missing session params'));
         }
-        const user = await getUserForSessionToken(parseSession as string);
+        const user = await getUserForSessionToken(parseSession);
 
         // if user exists, go to next
         if (!user) {
-          next(new HttpException(400, 'User not found'));
+          return next(new HttpException(400, 'User not found'));
         }
       }
 

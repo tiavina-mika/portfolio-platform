@@ -1,4 +1,5 @@
 import { BrevoClient, BrevoError } from '@getbrevo/brevo';
+import { E2eOutboxChannelEnum } from '@shared/domain-types';
 
 import type {
   ICreateContactEmailParams,
@@ -6,15 +7,14 @@ import type {
   ICreateEmailResponse,
   IGetContactsResponse,
   ISendEmail,
+  ISendEmailResult,
 } from '@/types/email.type';
 
-import { ADMIN_EMAIL_SENDER, APP_NAME } from '@/utils/constants';
-import { logger } from '@/utils/logger';
+import { APP_NAME, IS_E2E } from '@/constants/_core/constants';
+import { recordE2eMessage } from '@/utils/_core/e2e-outbox.utils';
+import { logger } from '@/utils/_core/logger';
+import { getAdminEmailSender } from '@/utils/_core/user.utils';
 
-/**
- * attributes for contact
- * see: https://app.brevo.com/contact/attribute/list
- */
 const CONTACT_ATTRIBUTES = [
   { attributeCategory: 'normal' as const, attributeName: 'FIRSTNAME', type: 'text' as const },
   { attributeCategory: 'normal' as const, attributeName: 'LASTNAME', type: 'text' as const },
@@ -35,34 +35,23 @@ const getBrevoClient = (): BrevoClient => {
 
 let _contactAttributesReady: Promise<void> | null = null;
 
-/**
- * create attributes for contact
- * the attributes are the fields of the contact
- * and used as variables in the email template
- */
 const createContactAttributes = async (): Promise<void> => {
   const client = getBrevoClient();
 
   await Promise.all(
-    CONTACT_ATTRIBUTES.map(async (attribute) => {
-      try {
-        await client.contacts.createAttribute(attribute);
-      }
-      catch (error: unknown) {
-        // Brevo answers 400 when the attribute already exists: it is ready, no need to retry it
-        if (error instanceof BrevoError && error.statusCode === 400) return;
-        throw error;
-      }
-    })
+    CONTACT_ATTRIBUTES.map((attribute) => client.contacts.createAttribute(attribute))
   );
 };
 
 const ensureContactAttributes = (): Promise<void> => {
   if (!_contactAttributesReady) {
     _contactAttributesReady = createContactAttributes().catch((error: unknown) => {
-      // swallow error to avoid breaking the contact creation, reset so it is retried on the next call
+      // Reset so it can be retried on the next call if it failed
       _contactAttributesReady = null;
-      logger.error('createContactAttributes failed : ', (error as BrevoError)?.body);
+      logger.error('createContactAttributes failed', {
+        status: (error as BrevoError)?.statusCode,
+        body: (error as BrevoError)?.body,
+      });
     });
   }
   return _contactAttributesReady;
@@ -70,13 +59,6 @@ const ensureContactAttributes = (): Promise<void> => {
 
 // ─── Public API ─────────────────────────────────────────────────────────────
 
-/**
- * create contact in Brevo
- * see: https://app.brevo.com/contact/list/id/5
- * @param values
- * @param id
- * @returns
- */
 export const createContactEmail = async (
   values: ICreateContactEmailParams,
   id?: string
@@ -88,21 +70,23 @@ export const createContactEmail = async (
 
     const data = await client.contacts.createContact({
       ...values,
-      // a missing value is left out: Brevo rejects an empty SMS as an invalid phone number
       attributes: {
         LASTNAME: values.attributes.lastName,
+        FIRSTNAME: values.attributes.firstName ?? '',
         EMAIL: values.email,
-        ...(values.attributes.firstName ? { FIRSTNAME: values.attributes.firstName } : {}),
-        ...(values.attributes.sms ? { SMS: values.attributes.sms } : {}),
+        SMS: values.attributes.sms ?? '',
       },
       ...(id ? { ext_id: id } : {}),
     });
 
-    logger.info('create contact success: ', JSON.stringify(data));
+    logger.info('create contact success', { data });
     return data;
   }
   catch (error: unknown) {
-    logger.error('create contact failed : ', (error as BrevoError)?.body);
+    logger.error('create contact failed', {
+      status: (error as BrevoError)?.statusCode,
+      body: (error as BrevoError)?.body,
+    });
   }
 };
 
@@ -111,30 +95,63 @@ export const getContacts = async (): Promise<IGetContactsResponse> => {
     const client = getBrevoClient();
     const data = await client.contacts.getContacts({ limit: 50, offset: 0 });
 
-    logger.info('getContacts success: ', data);
+    logger.info('getContacts success:', data);
     return data;
   }
   catch (error: unknown) {
-    logger.error('getContacts failed : ', (error as BrevoError)?.body);
+    logger.error('getContacts failed', {
+      status: (error as BrevoError)?.statusCode,
+      body: (error as BrevoError)?.body,
+    });
   }
 };
 
-export const sendEmail = async (values: ISendEmail): Promise<ICreateEmailResponse> => {
+/**
+ * Sends one transactional e-mail. A refusal comes back with Brevo's own code and message rather than
+ * as a bare `undefined`: a notification records them on the recipient the e-mail failed for.
+ */
+export const sendEmailWithResult = async (values: ISendEmail): Promise<ISendEmailResult> => {
+  // E2E runs keep the e-mail instead of calling Brevo, so a test can assert on what was sent
+  if (IS_E2E) {
+    recordE2eMessage({
+      channel: E2eOutboxChannelEnum.EMAIL,
+      to: values.to?.map((recipient) => recipient.email) ?? [],
+      subject: values.subject,
+      body: values.htmlContent ?? values.textContent ?? '',
+    });
+    return { data: { messageId: 'e2e' } };
+  }
+
   try {
     const client = getBrevoClient();
 
     if (!values.sender) {
-      values.sender = { email: ADMIN_EMAIL_SENDER!, name: APP_NAME };
+      values.sender = { email: getAdminEmailSender(), name: APP_NAME };
     }
 
     const data = await client.transactionalEmails.sendTransacEmail(values);
 
-    logger.info('sendEmail success : ', JSON.stringify(data));
-    return data;
+    logger.info('sendEmail success:', JSON.stringify(data));
+    return { data };
   }
   catch (error: unknown) {
-    logger.error('sendEmail failed : ', (error as BrevoError)?.body);
+    const brevoError = error as BrevoError | undefined;
+    const body = brevoError?.body as { code?: string; message?: string } | undefined;
 
-    throw error;
+    logger.warn('sendEmail failed', {
+      status: brevoError?.statusCode,
+      body: brevoError?.body,
+    });
+
+    return {
+      errorCode: body?.code ?? (brevoError?.statusCode
+        ? String(brevoError.statusCode)
+        : undefined),
+      errorMessage: body?.message ?? brevoError?.message,
+    };
   }
 };
+
+export const sendEmail = async (values: ISendEmail): Promise<ICreateEmailResponse> => (
+  (await sendEmailWithResult(values)).data
+);

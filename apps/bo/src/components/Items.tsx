@@ -1,12 +1,13 @@
 import {
-  Box, List, ListItem, ListItemIcon, type Theme,
+  Box, List, ListItem, ListItemIcon, Theme,
 } from '@mui/material';
-import { grey } from '@mui/material/colors';
 import Typography from '@mui/material/Typography';
 import { ReactNode } from 'react';
 
-import { ISelectOption } from '@/types/app.type';
-import { isStringOrNumber } from '@/utils/utils';
+import { FIELD_LABEL_MIN_WIDTH, FIELD_ROW_GAP, FIELD_ROW_PADDING_Y } from '@/constants/_core/ui/ui.constants';
+import { ISelectOption } from '@/types/_core/app.type';
+import { getDesignTokens } from '@/utils/_core/theme/tokens.utils';
+import { isStringOrNumber } from '@/utils/_core/utils';
 
 
 const classes = {
@@ -32,9 +33,7 @@ const classes = {
     return styles;
   },
   value: (theme: Theme) => ({
-    color: theme.palette.mode === 'light'
-      ? '#000'
-      : grey[400],
+    color: theme.palette.text.primary,
     fontWeight: 500,
     flex: 1,
     display: 'flex',
@@ -46,10 +45,16 @@ const classes = {
     },
     '& > p': { fontWeight: 500 },
   }),
-  li: {
+  // the filet closes a row against the next one, so the last row of the block does not draw one
+  li: (theme: Theme) => ({
     paddingLeft: 0,
     paddingRight: 0,
-  },
+    paddingTop: FIELD_ROW_PADDING_Y,
+    paddingBottom: FIELD_ROW_PADDING_Y,
+    borderBottom: `1px solid ${getDesignTokens(theme).borderLight}`,
+    '&:last-of-type': { borderBottom: 'none', paddingBottom: 0 },
+    '&:first-of-type': { paddingTop: 0 },
+  }),
   valueFullWidth: (theme: Theme) => ({
     flex: '1 !important',
     [theme.breakpoints.up('md')]: { justifyContent: 'flex-end !important' },
@@ -60,13 +65,14 @@ type Props = {
   items: ISelectOption<string | ReactNode | undefined>[];
   alignment?: 'row' | 'column';
   fullWidth?: boolean;
+  className?: string;
 };
 
 const Items = ({
-  items, fullWidth = false, alignment = 'row',
+  items, className, fullWidth = false, alignment = 'row',
 }: Props) => {
   return (
-    <List sx={{ p: 0 }}>
+    <List className={className} sx={{ p: 0, flex: 1 }}>
       {items.map((item: ISelectOption<string | ReactNode | undefined>, index: number) => (
         item.hide
           ? null : (
@@ -74,10 +80,17 @@ const Items = ({
               {item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
               <div
                 className="flexRow flex1 spaceBetween"
-                css={classes.content(alignment, item.label.length)}
+                css={[classes.content(alignment, item.label.length), { gap: FIELD_ROW_GAP }]}
               >
-                <Box sx={{ alignItems: 'center', display: 'flex', flex: 1 }}>
-                  <Typography variant="body1">
+                <Box
+                  sx={{
+                    alignItems: 'center',
+                    display: 'flex',
+                    flex: 1,
+                    minWidth: FIELD_LABEL_MIN_WIDTH,
+                  }}
+                >
+                  <Typography variant="body2">
                     {item.label}
                   </Typography>
                 </Box>
@@ -92,7 +105,7 @@ const Items = ({
                   {/* empty value */}
                   {!item.value && (
                     <Typography
-                      css={(theme: Theme) => ({ color: theme.palette.grey[400] })}
+                      css={(theme: Theme) => ({ color: theme.palette.text.disabled })}
                     >
                       -
                     </Typography>

@@ -4,45 +4,16 @@
     "downloadMyCV": "Télécharger mon CV",
     "downloadCV": "Télécharger CV",
     "myProjects": "Mes projets",
-    "letsTalkTogether": "Discutons ensemble",
-    "doNotHesitateToContactMe": "N'hésitez pas à me contacter. Je suis toujours ouvert pour discuter de nouveaux projets, des idées innovantes ou de nouvelles opportunités.",
     "subscribeToNewsletter": "S'abonner à ma newsletter",
     "newsLetterDescription": "Abonnez-vous à ma newsletter pour pouvoir suivre et récevoir des offres spéciales et les articles / tutos que je publie occasionnellement sur mon blog",
-    "projectDevelopedRecently": "Projets développés récemment ({count})",
-    "seeOtherProjects": "Voir {count} autres projets",
     "notSubscribedToNewsletter": "Vous n'êtes pas abonné à la newsletter",
     "unsubscribeMessage": "Vous pouvez se désabonner à tout moment en cliquant sur le lien de désabonnement contenu dans chacun de nos mails.",
     "gotToHomePage": "Aller à la page d'accueil",
     "contactMe": "Me contacter",
     "pageNotFound": "Page introuvable",
     "pageNotFoundDescription": "La page que vous recherchez n'existe pas ou a été déplacée.",
-    "whyMe": "Pourquoi moi ?"
-  },
-  "Project": {
-    "visitSite": "Visiter le site Web",
-    "seeCodeSource": "Voir le code source",
-    "projectDescription": "Description du projet",
-    "society": "Société",
-    "technicalStack": "Stack technique",
-    "aboutTheSociety": "À propos de la société",
-    "technologies": "Technologies",
-    "otherProjectsOf": "Autres projets de {society}",
-    "links": "Liens",
-    "repositories": "Code source",
-    "screenShot": "Capture d'écran",
-    "video": "Video",
-    "projects": "Projets",
-    "description": "Depuis 2016 j'ai eu l'opportunité de travailler sur des projets variés, allant du développement de sites web dynamiques à la création d'applications web complexes.",
-    "projectDevelopedRecently": "Projets développés récemment ({count})",
-    "societyDescription": "Description de la société",
-    "projectsIDevelopedTitle": "Projets que j'ai développés au cours de ma carrière",
-    "projectsIDevelopedOverMyCareerDescription": "Au cours de ma carrière, j'ai eu l'opportunité de concevoir, développer, construire et déployer une variété d'applications qui répondent à des problèmes du monde réel et améliorent l'expérience utilisateur.",
-    "otherProjectsFrom": "Autres projets de {society}",
-    "message": {
-      "error": {
-        "notFound": "Page introuvable."
-      }
-    }
+    "errorCode": "Erreur 404",
+    "readBlog": "Lire le blog"
   },
   "Footer": {
     "contact": "Contact",
@@ -53,7 +24,8 @@
     "moreInfo": "Plus d'information",
     "message": "La confiance en soi s'acquiert par l'expérience et le travail acharné.",
     "myProjects": "Mes projets",
-    "siteMap": "Plan du site"
+    "siteMap": "Plan du site",
+    "socials": "Réseaux sociaux"
   },
   "Contact": {
     "email": "Email",
@@ -65,13 +37,23 @@
     "subject": "Formulaire de contact du site",
     "subscribe": "S'abonner",
     "subscribeWithSuccess": "Vous êtes maintenant abonné à notre newsletter.",
-    "messageSent": "Votre message a été envoyé.",
+    "messageSent": "Votre message a été envoyé. Je vous répondrai dans les meilleurs délais.",
     "description": "Pour tout nouveaux projets ou nouvelles collaborations, j'aimerais d'abord apprendre à vous connaître, vous et votre entreprise, par un appel ou une rencontre. Ensuite j'aimerai comprendre le contexte de votre entreprise, ses buts et objectifs à long terme. Après s'être mis d'accord sur la collaboration et la priorisation des tâches, nous rédigeons un accord et commençons la mission en quelques jours. Si vous avez un sujet intéressant en tête et souhaitez en savoir plus et entendre mon savoir-faire, il vous suffit de me contacter via le formulaire de contact.",
     "fields": {
       "name": "Nom",
       "email": "Email",
       "message": "Message"
-    }
+    },
+    "socialTitle": "Me suivre",
+    "yourFullName": "Votre nom complet",
+    "emailExample": "votre.email@exemple.com",
+    "writeSomething": "Écrivez quelque chose",
+    "successTitle": "Message envoyé",
+    "failTitle": "Envoi impossible",
+    "failedMessage": "Vérifiez votre connexion puis réessayez.",
+    "sending": "Envoi en cours…",
+    "again": "Envoyer un autre message",
+    "offline": "Vous êtes hors ligne. Reconnectez-vous pour envoyer votre message."
   },
   "Error": {
     "unknown": "Une erreur s'est produite. Veuillez réessayer plus tard.",
@@ -87,25 +69,9 @@
     "localeRequired": "La language est requis.",
     "paramsRequired": "Parmètre requis.",
     "reasonRequired": "La raison est requise.",
-    "somethingWentWrong": "Quelque chose s'est mal passé. Veuillez réessayer plus tard."
-  },
-  "Services": {
-    "1": {
-      "title": "Monter un projet de A à Z",
-      "description": "Je gère toutes les étapes du développement, y compris le choix des technologies, l'architecture technique, le développement, l'intégration de bases de données, ainsi que le déploiement sur des environnements de production."
-    },
-    "2": {
-      "title": "Renforcer, intégrer ou diriger une équipe",
-      "description": "Collaborer efficacement au sein d’une équipe existante pour renforcer ses compétences, optimiser les processus et assurer la réussite des projets, en apportant mon expertise technique approfondie et une approche orientée vers les résultats."
-    },
-    "3": {
-      "title": "Potentiel CTO d'une startup",
-      "description": "En tant que potentiel CTO d'une startup, je suis en mesure de définir des stratégies technologiques et de guider les décisions techniques pour assurer la croissance et l'innovation au sein de l'entreprise."
-    },
-    "4": {
-      "title": "Tarifs concurrentiels",
-      "description": "Je propose des tarifs compétitifs pour startups et PME, offrant une expertise équivalente à des prestations haut de gamme, tout en garantissant des solutions adaptées aux besoins spécifiques et aux exigences du marché."
-    }
+    "somethingWentWrong": "Quelque chose s'est mal passé. Veuillez réessayer plus tard.",
+    "recaptchaVerificationFailed": "La vérification anti-robot a échoué. Veuillez réessayer.",
+    "tooManyRequests": "Trop de requêtes en peu de temps. Veuillez réessayer dans une heure."
   },
   "NavBar": {
     "home": "Accueil",
@@ -116,7 +82,15 @@
     "toggleTheme": "Changer de thème",
     "projects": "Projets",
     "article": "Article",
-    "contact": "Contact"
+    "contact": "Contact",
+    "menu": "Menu",
+    "closeMenu": "Fermer le menu",
+    "mainNavigation": "Principale",
+    "search": "Rechercher",
+    "closeSearch": "Fermer la recherche",
+    "searching": "Recherche en cours…",
+    "searchUnavailable": "La recherche est indisponible. Réessayez dans un instant.",
+    "noResults": "Aucun résultat pour « {query} »."
   },
   "LanguageSwitcher": {
     "label": "Changer language",
@@ -126,14 +100,17 @@
     "sitemap": "Plan du site",
     "description": "Plan du site du site {appName} où vous pouvez naviguer vers la page que vous souhaitez en cliquant sur les liens.",
     "projects": "Projets",
-    "articles": "Articles"
+    "articles": "Articles",
+    "loading": "Chargement du plan du site",
+    "loadError": "Le plan du site n'a pas pu être chargé.",
+    "retry": "Réessayer"
   },
   "Newsletter": {
     "subscribe": "S'abonner à la newsletter",
     "unsubscribe": "Se désabonner",
     "resubscribe": "Se réabonner",
     "email": "Email",
-    "subscribeWithSuccess": "Vous êtes maintenant abonné à notre newsletter.",
+    "subscribeWithSuccess": "Presque terminé : consultez votre boîte mail et confirmez votre inscription avec le lien que je viens de vous envoyer.",
     "unsubscribeWithSuccess": "Vous vous êtes désabonné avec succès de la newsletter.",
     "alreadySubscribed": "Cet email est déjà abonné à la newsletter.",
     "youWillNotReceived": "Vous ne recevrez plus les dernières nouvelles et articles de {appName}.",
@@ -146,7 +123,21 @@
     "notRelevant": "Le contenu me semble pas pertinent",
     "other": "Autre",
     "reason": "Raison",
-    "reasonSubmittedSuccessfully": "La raison a été soumise avec succès."
+    "reasonSubmittedSuccessfully": "La raison a été soumise avec succès.",
+    "confirmedTitle": "Votre inscription est confirmée",
+    "confirmedDescription": "Merci ! Vous recevrez désormais les actualités et les articles de {appName}. Chaque email contient un lien pour vous désabonner à tout moment.",
+    "title": "S'abonner à ma newsletter",
+    "description": "Abonnez-vous à ma newsletter pour recevoir des offres spéciales et les articles / tutos que je publie occasionnellement sur mon blog.",
+    "unsubscribeMessage": "Vous pouvez vous désabonner à tout moment en cliquant sur le lien de désabonnement contenu dans chaque email.",
+    "emailLabel": "Adresse e-mail",
+    "emailPlaceholder": "prenom@exemple.com",
+    "emailRequired": "Indiquez votre adresse e-mail.",
+    "emailInvalid": "Saisissez une adresse e-mail valide.",
+    "failText": "Un problème est survenu de notre côté.",
+    "failTitle": "Inscription impossible",
+    "offlineText": "Vous êtes hors ligne. Reconnectez-vous pour vous abonner.",
+    "submit": "S'abonner",
+    "sending": "Envoi en cours…"
   },
   "Metadata": {
     "home": {
@@ -169,13 +160,46 @@
       "metaTitle": "Plan du site",
       "metaDescription": "Plan du site du site {appName}. Vous pouvez naviguer vers la page que vous souhaitez en cliquant sur les liens."
     },
-    "faq": {
-      "metaTitle": "Questions fréquemment posées {appName}",
-      "metaDescription": "Questions que tout le monde pose."
-    },
     "unsubscribeNewsletter": {
       "metaTitle": "Se désabonner de la newsletter",
       "metaDescription": "Se désabonner de la newsletter de {appName}. Vous ne recevrez plus de notifications par email."
+    },
+    "confirmNewsletter": {
+      "metaTitle": "Inscription à la newsletter confirmée",
+      "metaDescription": "Votre inscription à la newsletter de {appName} est confirmée."
+    }
+  },
+  "Pagination": {
+    "label": "Pagination",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "page": "Page {page}",
+    "current": "page actuelle"
+  },
+  "OpenGraph": {
+    "home": {
+      "title": "Développeur Full Stack",
+      "subtitle": "Projets, articles et contact."
+    },
+    "projects": {
+      "chip": "Projets",
+      "title": "Les projets de {appName}",
+      "subtitle": "Les applications que j'ai conçues et développées."
+    },
+    "contact": {
+      "chip": "Contact",
+      "title": "Me contacter",
+      "subtitle": "Un projet ou une question ? Écrivez-moi."
+    },
+    "blog": {
+      "chip": "Blog",
+      "title": "Le blog de {appName}",
+      "subtitle": "Articles et tutoriels sur le développement web."
+    },
+    "sitemap": {
+      "chip": "Plan du site",
+      "title": "Plan du site",
+      "subtitle": "Toutes les pages de {appName} en un coup d'œil."
     }
   }
 }

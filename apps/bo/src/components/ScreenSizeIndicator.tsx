@@ -1,7 +1,12 @@
 import {
   useTheme, Box, Typography, useMediaQuery,
-  type Theme,
+  Theme,
 } from '@mui/material';
+
+import {
+  SCREEN_SIZE_INDICATOR_BOTTOM, SCREEN_SIZE_INDICATOR_Z_INDEX,
+} from '@/constants/_core/ui/page.constants';
+import { FONT_SIZE_OVERLINE } from '@/constants/_core/ui/ui.constants';
 
 type IsSize = {
   isXs: boolean;
@@ -29,18 +34,22 @@ const getLabel = ({
 const classes = {
   screenSizeIndicator: (theme: Theme) => ({
     position: 'fixed' as const,
-    bottom: 10,
+    bottom: SCREEN_SIZE_INDICATOR_BOTTOM,
     right: 10,
     width: 24,
     height: 24,
     borderRadius: '50%',
-    zIndex: theme.zIndex.tooltip, // Ensure it stays on top
-    backgroundColor: '#000',
-    color: '#fff',
-    ...theme.applyStyles('dark', {
-      backgroundColor: '#fff',
-      color: '#000',
-    }) as Record<string, string>,
+    zIndex: SCREEN_SIZE_INDICATOR_Z_INDEX, // above the TanStack Router devtools toggle
+    backgroundColor: theme.palette.common.black,
+  }),
+  /*
+   * the label color is set here rather than inherited from the badge: the caption typography
+   * variant carries a fixed muted tint, which would otherwise render dark grey text on the dark
+   * badge background
+   */
+  label: (theme: Theme) => ({
+    fontSize: FONT_SIZE_OVERLINE,
+    color: theme.palette.common.white,
   }),
 };
 
@@ -59,7 +68,7 @@ const ScreenSizeIndicator = () => {
       className="flexCenter"
       css={classes.screenSizeIndicator}
     >
-      <Typography css={{ fontSize: 14 }} variant="caption">
+      <Typography css={classes.label} variant="caption">
         {getLabel({
           isXs,
           isLg,

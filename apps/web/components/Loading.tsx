@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 import { cn } from '@/utils/app.utils';
 
 type Props = {
@@ -6,6 +8,8 @@ type Props = {
 };
 
 const Loading = ({ className, rootClassName }: Props) => {
+  const t = useTranslations('Common');
+
   return (
     <div className={cn('flex justify-center', rootClassName)} role="status">
       <svg
@@ -30,7 +34,7 @@ const Loading = ({ className, rootClassName }: Props) => {
           fill="currentFill"
         />
       </svg>
-      <span className="sr-only">Loading...</span>
+      <span className="sr-only">{t('loading')}</span>
     </div>
   );
 };

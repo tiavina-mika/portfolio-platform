@@ -1,0 +1,22 @@
+{
+  "contacts": {
+    "contacts": "Contacts",
+    "contact": "Contact",
+    "message": "Hafatra",
+    "hasNoRightToDeleteContact": "Tsy afaka mamafa ity contact ity",
+    "sentDate": "Daty nampidirina",
+    "search": "Anarana, mailaka, laharana finday na hafatra",
+    "noContactMatchesSearch": "Tsy misy hafatra mifanaraka amin’io fikarohana io.",
+    "selectContact": "Tsy misy hafatra misokatra",
+    "selectContactDescription": "Safidio ny hafatra iray ao amin’ny lisitra mba hamakiana azy.",
+    "details": {
+      "title": "Antsipiriany momba ny hafatra",
+      "email": "Mailaka",
+      "phone": "Finday",
+      "createdAt": "Noforonina tamin’ny",
+      "language": "Fiteny",
+      "newsletter": "Gazetiboky",
+      "notProvided": "Tsy voasoratra"
+    }
+  }
+}

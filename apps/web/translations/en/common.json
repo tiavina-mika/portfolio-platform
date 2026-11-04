@@ -27,9 +27,37 @@
     "search": "Search...",
     "noResults": "No results",
     "shareOn": "Share on {social}",
-    "shares": "Shares"
+    "shares": "Shares",
+    "optional": "Optional",
+    "scrollableContent": "Scrollable content",
+    "close": "Close",
+    "actions": "Actions",
+    "newTab": "{name} (new tab)",
+    "noActions": "No action available.",
+    "back": "Back",
+    "actionFailed": "Action failed. Try again.",
+    "tryAgain": "Try again",
+    "offlineMessage": "You are offline. Reconnect to continue.",
+    "readMore": "Read more",
+    "skipToContent": "Skip to content",
+    "opensInNewTab": "(opens in a new tab)",
+    "imageUnavailable": "Image unavailable",
+    "share": "Share this article",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied",
+    "loading": "Loading..."
   },
   "Errors": {
     "somethingWentWrong": "Something went wrong. Please try again later."
+  },
+  "Date": {
+    "published": "Published on {date}",
+    "updated": "Updated on {date}"
+  },
+  "Cookies": {
+    "title": "Cookies",
+    "description": "I use audience measurement cookies to improve the site. You can accept or decline.",
+    "accept": "Accept",
+    "decline": "Decline"
   }
 }

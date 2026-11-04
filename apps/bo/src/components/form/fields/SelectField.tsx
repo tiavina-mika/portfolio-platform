@@ -1,8 +1,8 @@
 import { FormHelperText, Stack } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { ISelectOption } from '@/types/app.type';
-import { isString } from '@/utils/utils';
+import { ISelectOption } from '@/types/_core/app.type';
+import { isString } from '@/utils/_core/utils';
 
 
 import SelectInput, { ReactSelectProps } from '../inputs/SelectInput';
@@ -10,7 +10,7 @@ import SelectInput, { ReactSelectProps } from '../inputs/SelectInput';
 export type SelectProps = {
   name: string;
   options: ISelectOption[];
-} & Omit<ReactSelectProps<string | number>, 'value' | 'onChange'>;
+} & Omit<ReactSelectProps<unknown>, 'value' | 'onChange'>;
 
 const SelectField = ({
   name,

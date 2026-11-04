@@ -13,7 +13,6 @@ import { routing } from './i18n/routing';
 const proxy = async (request: NextRequest) => {
   const handleI18nRouting = createMiddleware(routing);
 
-
   /*
    * Step 1: Get the custom locale from the request headers
    * it's used when forcing a specific locale for certain requests (url)
@@ -25,11 +24,6 @@ const proxy = async (request: NextRequest) => {
 
   // Step 2: if defined in the headers, set the custom locale
   response.headers.set('x-custom-locale', customDefaultLocale);
-  /**
-   * the route pathname is not accessible in the server component, so we set it here
-   * @see https://next-intl-docs.vercel.app/docs/routing/middleware
-   */
-  response.headers.set('x-current-path', request.nextUrl.pathname);
 
   return response;
 };

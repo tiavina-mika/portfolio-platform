@@ -61,13 +61,14 @@ throw new Error(message);
 
 ## Where to add translation keys
 
-All server error keys go under the `error` namespace inside `common.json` of each locale:
+All server error keys go under the `error` namespace inside `common.json` of each locale (`_core/` for
+generic messages; a `_domain/` file merged in `config/i18n/index.ts` for the domain's own):
 
 ```
-src/locales/
-├── fr/common.json   ← { "error": { "accountSuspended": "Votre compte est suspendu." } }
-├── en/common.json   ← { "error": { "accountSuspended": "Your account is suspended." } }
-└── mg/common.json   ← { "error": { "accountSuspended": "..." } }
+src/config/i18n/locales/
+├── fr/_core/common.json   ← { "error": { "accountSuspended": "Votre compte est suspendu." } }
+├── en/_core/common.json   ← { "error": { "accountSuspended": "Your account is suspended." } }
+└── mg/_core/common.json   ← { "error": { "accountSuspended": "..." } }
 ```
 
 **All three files must be updated simultaneously.**

@@ -1,4 +1,5 @@
 import { Stack, FormHelperText } from '@mui/material';
+import { useId } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import PasswordInput from '../inputs/PasswordInput';
@@ -21,6 +22,9 @@ const PasswordField = ({
     },
   } = useFormContext();
 
+  const helperTextId = useId();
+  const hasError = !!errors[name] || !!errorMessage;
+
   return (
     <Controller
       control={control}
@@ -33,13 +37,15 @@ const PasswordField = ({
           <PasswordInput
             {...field}
             {...inputProps}
-            error={!!errors[name] || !!errorMessage}
+            aria-describedby={hasError ? helperTextId : undefined}
+            aria-invalid={hasError}
+            error={hasError}
             variant="outlined"
           />
 
           {/* errors */}
           {errors[name] && typeof (errors as any)[name].message === 'string' && (
-            <FormHelperText error>
+            <FormHelperText error id={helperTextId}>
               {(errors as any)[name].message}
             </FormHelperText>
           )}

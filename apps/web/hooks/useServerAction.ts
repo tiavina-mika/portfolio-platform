@@ -6,7 +6,6 @@
  */
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-hook';
@@ -36,6 +35,10 @@ export type UseServerActionParams<Input, Schema, Action, Bind> = {
    * message to be displayed on successful form submit
    */
   sentMessage?: string;
+  /**
+   * message to be displayed when the request itself fails (network down, server unreachable)
+   */
+  failedMessage?: string;
   /**
    * translation key for the form
    */
@@ -77,6 +80,7 @@ export const useServerAction = <
   schema,
   action,
   sentMessage,
+  failedMessage,
   translationKey,
   recaptchaActionName,
   bind,
@@ -98,42 +102,53 @@ export const useServerAction = <
     defaultValues: initialValue as DefaultValues<Input>,
   });
 
-  const bindAction = bind && Array.isArray(bind) && bind.length > 0
-    ? (action as any).bind(null, ...bind)
-    : action;
+  // goes back to an empty form after a confirmation or a failure banner
+  const reset = () => {
+    setSentSuccessMessage('');
+    setError('');
+  };
 
   const onSubmit = async (values: FormData) => {
     setLoading(true);
+    // a new attempt hides the previous failure banner
+    setError('');
 
     // ------------ 1. recaptcha ------------ //
+    let recaptchaToken: string | undefined;
+
     if (recaptchaActionName) {
       // execute google recaptcha and get the token
-      const token = await executeGoogleReCaptcha(recaptchaActionName);
-
-      // send the token to the server for verification
-      const response = await axios.post(
-        '/api/recaptcha-verification',
-        { token },
-        {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      // check if the recaptcha verification was successful
-      if (!response.data.success) {
-        setError(tForm('somethingWentWrong'));
-        setLoading(false);
-        return;
-      }
+      recaptchaToken = await executeGoogleReCaptcha(recaptchaActionName);
     }
 
-    // ------------ 2. form submission ------------ //
+    /*
+     * ------------ 2. form submission ------------ //
+     *
+     * The token travels unverified all the way to the API that performs the write, and is checked
+     * exactly once, there. Google accepts a v3 token a single time, so an extra "fast feedback"
+     * round-trip from here would spend it and leave the real check nothing to validate — and a
+     * check made anywhere upstream of the write protects the form, not the data, since a server
+     * action and the Parse API are both callable directly.
+     */
+    const boundArgs = recaptchaActionName
+      ? [...(Array.isArray(bind) ? bind : []), recaptchaToken]
+      : bind;
 
+    const bindAction = boundArgs && Array.isArray(boundArgs) && boundArgs.length > 0
+      ? (action as any).bind(null, ...boundArgs)
+      : action;
 
-    const data = await bindAction(values);
+    let data;
+
+    try {
+      data = await bindAction(values);
+    } catch (exception) {
+      setLoading(false);
+      // without a message to show, the failure is not ours to hide
+      if (!failedMessage) throw exception;
+      setError(failedMessage);
+      return;
+    }
 
     if (!data) {
       setLoading(false);
@@ -172,5 +187,6 @@ export const useServerAction = <
     loading,
     form,
     onSubmit,
+    reset,
   };
 };

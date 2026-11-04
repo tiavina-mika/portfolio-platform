@@ -1,5 +1,7 @@
 import {
+  Box,
   Checkbox,
+  Chip,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -7,14 +9,16 @@ import {
   ListItemText,
   MenuItem,
   Select,
-  type SelectChangeEvent,
-  type SxProps,
-  type Theme,
+  SelectChangeEvent,
+  SxProps,
+  Theme,
 } from '@mui/material';
 import { ReactNode, useEffect, useState } from 'react';
 
 
-import { ISelectOption } from '@/types/app.type';
+import { CHIP_FONT_SIZE, INPUT_CHIP_HEIGHT, INPUT_CHIP_RADIUS } from '@/constants/_core/ui/ui.constants';
+import { ISelectOption } from '@/types/_core/app.type';
+import { getTintedBackground } from '@/utils/_core/theme/tokens.utils';
 
 const isAllSelected = (options: ISelectOption[], selected: any) =>
   options.length > 0 && selected.length === options.length;
@@ -40,7 +44,7 @@ const CheckedMultiSelectInput = ({
   error,
   helperText,
   autoWidth,
-  bgcolor = '#fff',
+  bgcolor = 'background.paper',
 }: Props) => {
   const [selected, setSelected] = useState<any[]>([]);
 
@@ -63,18 +67,33 @@ const CheckedMultiSelectInput = ({
   };
 
   /**
-   * render value to label separated by ,
+   * render each picked option as a chip — a comma-joined string truncates into an unreadable
+   * fragment as soon as three or four options are picked, whereas chips wrap and stay countable
    */
   const renderValue = (selected: unknown): ReactNode => {
     if (!selected) return '';
-    const values = [];
+    const pickedOptions = options.filter(
+      (option: ISelectOption) => (selected as any[]).includes(option.value)
+    );
 
-    for (const option of options) {
-      if ((selected as any[]).includes(option.value)) {
-        values.push(option.label);
-      }
-    }
-    return values.join(', ');
+    return (
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+        {pickedOptions.map((option: ISelectOption) => (
+          <Chip
+            key={option.value}
+            label={option.label}
+            sx={(theme: Theme) => ({
+              height: INPUT_CHIP_HEIGHT,
+              borderRadius: `${INPUT_CHIP_RADIUS}px`,
+              fontSize: CHIP_FONT_SIZE,
+              border: 'none',
+              color: theme.palette.primary.dark,
+              backgroundColor: getTintedBackground(theme, theme.palette.primary.main),
+            })}
+          />
+        ))}
+      </Box>
+    );
   };
 
   const handleChange = (event: SelectChangeEvent<any>) => {

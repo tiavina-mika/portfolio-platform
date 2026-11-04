@@ -3,17 +3,17 @@ import {
 } from '@mui/material';
 import { useFormContext, Controller } from 'react-hook-form';
 
-import { ISelectOption } from '@/types/app.type';
+import { ISelectOption } from '@/types/_core/app.type';
 
-type Props = {
+type Props<V> = {
   name: string;
   label?: string;
-  options: ISelectOption[];
+  options: ISelectOption<V>[];
 };
 
-const CheckboxesField = ({
+const CheckboxesField = <V,>({
   name, label, options,
-}: Props) => {
+}: Props<V>) => {
   // hooks
   const {
     control,
@@ -33,7 +33,7 @@ const CheckboxesField = ({
           render={({
             field,
           }: any): any =>
-            options.map((option: ISelectOption, index: number) => (
+            options.map((option: ISelectOption<V>, index: number) => (
               <FormControlLabel
                 {...field}
                 key={option.label + index}

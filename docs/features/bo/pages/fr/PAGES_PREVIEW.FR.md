@@ -24,7 +24,7 @@ page.
 ## Qui peut l'utiliser
 
 Le droit **Consulter** sur la ressource « Pages » (page **Droits**). Sans lui, ou si la page n'existe plus,
-l'écran « introuvable » s'affiche. Les actions du menu dépendent des autres droits du rôle.
+l'écran « introuvable » s'affiche. Les actions du menu dépendent des autres droits du poste.
 
 ## Ce que l'on voit à l'écran
 

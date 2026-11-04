@@ -1,25 +1,14 @@
-import Parse from 'parse';
+import type { IProjectTranslatedFields, IProjectUrl } from '@shared/domain-types';
 
 import { Locale } from '@/i18n/config';
 
-import { IFileCloud, ISEOFields } from './app.type';
+import { IFileCloud } from './app.type';
 import { ICategory } from './cms.type';
 
-interface IProjectTranslatedFields extends ISEOFields {
-  description?: string;
-  slug?: string;
-  title?: string;
-  name?: string;
-  content?: string;
-  tags?: string;
-  societyDescription?: string;
-}
+export type { IProjectUrl };
 
 interface IProjectTranslated extends Record<Locale, IProjectTranslatedFields> {}
 
-export interface IProjectUrl {
-  url: string;
-}
 export interface IProjectAttributes {
   objectId: string;
   updatedAt?: string;
@@ -40,8 +29,9 @@ export interface IProjectAttributes {
   platforms?: string[];
   technologies?: string[];
   categories?: ICategory[];
+  totalMediaShare?: number;
 }
 
-export interface IProject extends Parse.Object<IProjectAttributes> {
+export interface IProject extends IProjectAttributes {
   id: string;
 }

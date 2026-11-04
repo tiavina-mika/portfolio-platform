@@ -1,8 +1,8 @@
 import { Stack, FormHelperText } from '@mui/material';
-import PasswordChecklist from 'mui-password-checklist';
 import { Controller, useFormContext } from 'react-hook-form';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 
+import PasswordChecklistInput from '../inputs/PasswordChecklistInput';
 import { CustomTextFieldInputProps } from '../inputs/TextFieldInput';
 
 type Props = {
@@ -29,7 +29,7 @@ const PasswordChecklistField = ({
         field,
       }) => (
         <Stack>
-          <PasswordChecklist
+          <PasswordChecklistInput
             {...field}
             {...inputProps}
             error={!!errors[name]}

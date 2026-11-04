@@ -1,0 +1,642 @@
+{
+  "themes": [
+    {
+      "id": "trips",
+      "title": "Rides and booking",
+      "items": [
+        {
+          "id": "find-ride",
+          "question": "How do I find a ride?",
+          "answer": "Ride search happens in the 1lalana app. The website presents the service and travel tips."
+        },
+        {
+          "id": "book-on-website",
+          "question": "Can I book a seat from the website?",
+          "answer": "No. Booking and payment only happen in the 1lalana app."
+        },
+        {
+          "id": "driver-approval",
+          "question": "Do I have to wait for the driver to accept?",
+          "answer": "No. As soon as the payment is confirmed, the seat is yours. The driver has nothing to approve: they receive a notification with your pick-up and drop-off points."
+        },
+        {
+          "id": "last-seat",
+          "question": "What if two people go for the last seat?",
+          "answer": "Seats are held as soon as you confirm, before payment. The second person is told right away, without being charged."
+        },
+        {
+          "id": "partial-ride",
+          "question": "Can I pay for only part of the ride?",
+          "answer": "Yes, when the ride has several stops: you choose your pick-up and drop-off points and only pay for the part you travel."
+        },
+        {
+          "id": "fixed-contribution",
+          "question": "Is the requested contribution fixed?",
+          "answer": "The driver sets the price per seat. You pay that price times the number of seats, with no added fees. The amounts shown in the app are the reference."
+        }
+      ]
+    },
+    {
+      "id": "luggage",
+      "title": "Luggage and preferences",
+      "items": [
+        {
+          "id": "luggage-levels",
+          "question": "What luggage can I bring?",
+          "answer": "The driver sets the accepted luggage level for each ride.",
+          "table": {
+            "head": ["Level", "For the passenger"],
+            "rows": [
+              ["None", "Only what they keep on them."],
+              ["Cabin", "A bag or small suitcase, at the feet or on the lap."],
+              ["Hold", "A standard suitcase in the boot."],
+              ["Roof rack", "Luggage fixed on the roof."],
+              ["Bulky", "A large parcel, a trunk, goods."]
+            ]
+          }
+        },
+        {
+          "id": "missing-luggage-info",
+          "question": "What does missing luggage information mean?",
+          "answer": "That the driver promised nothing. It does not mean “no luggage”: only the “None” level says that."
+        },
+        {
+          "id": "large-luggage-search",
+          "question": "Can I search for a ride that takes large luggage?",
+          "answer": "Yes, in the app: the “Luggage accepted” filter keeps rides with hold or bulky luggage."
+        },
+        {
+          "id": "animals",
+          "question": "Are animals accepted?",
+          "answer": "It depends on the vehicle: the driver declares “animals accepted” among the equipment, and it is shown on the ride."
+        },
+        {
+          "id": "smoking-music",
+          "question": "Can people smoke or play music?",
+          "answer": "The “non-smoking” and “music” equipment are declared by the driver for their vehicle and grouped in the ride preferences."
+        },
+        {
+          "id": "vehicle-equipment",
+          "question": "What equipment can a vehicle show?",
+          "answer": "Air conditioning, large boot, USB sockets, music, animals accepted, non-smoking and “maximum 2 in the back”."
+        }
+      ]
+    },
+    {
+      "id": "during",
+      "title": "During the ride",
+      "items": [
+        {
+          "id": "warn-relative",
+          "question": "How do I warn a relative?",
+          "answer": "From the app, create a “warn a relative” link. Your relative opens it without an account and sees the departure, arrival and times, the driver’s first name with their last-name initial, and the vehicle: make, model, colour and full plate."
+        },
+        {
+          "id": "live-position",
+          "question": "Does my relative see the vehicle live?",
+          "answer": "No. The page shows the state of the ride and the time of its last update. It shows no real-time position and no price, and does not allow booking."
+        },
+        {
+          "id": "link-duration",
+          "question": "How long does the link stay active?",
+          "answer": "Until 24 hours after the estimated arrival time. After that, the page says the link is no longer active, just as for a revoked link."
+        },
+        {
+          "id": "share-offer",
+          "question": "How do I share a ride to find passengers?",
+          "answer": "A driver can share an offer page: the ride, an indicative price per seat and the free seats, without the plate. To book, the page points to the app."
+        },
+        {
+          "id": "sos-button",
+          "question": "What is the SOS button for?",
+          "answer": "It sends an SMS to the emergency contact saved in your profile. The driver and passengers of the ride can use it, up to 2 hours after the estimated arrival time."
+        },
+        {
+          "id": "emergency-contact",
+          "question": "What is the emergency contact?",
+          "answer": "A trusted person saved in your profile, with their relationship to you. They are the person the SOS texts and support calls if needed."
+        },
+        {
+          "id": "early-start",
+          "question": "What if the driver starts early?",
+          "answer": "They can declare the departure from 30 minutes before the planned time. Once the departure is declared, neither the driver nor the passengers can cancel any more."
+        }
+      ]
+    },
+    {
+      "id": "payment",
+      "title": "Payment and payout",
+      "items": [
+        {
+          "id": "how-to-pay",
+          "question": "How do I pay for a booking?",
+          "answer": "By mobile money, from the app, with the phone number used for payment."
+        },
+        {
+          "id": "extra-fees",
+          "question": "Are there fees on top of the price?",
+          "answer": "No. No fee is added for passengers. 1lalana’s commission is taken from the driver, when they are paid."
+        },
+        {
+          "id": "payment-failed",
+          "question": "What happens if the payment fails?",
+          "answer": "The booking is not confirmed and the seats go back on sale immediately. You can book again from the app."
+        },
+        {
+          "id": "driver-payout-time",
+          "question": "When is the driver paid?",
+          "answer": "24 hours after the ride ends. During that time the money is held by the platform, so a problem can be reported, for example a driver who did not show up."
+        },
+        {
+          "id": "driver-forgets-end",
+          "question": "What if the driver forgets to end the ride?",
+          "answer": "The platform sends reminders, then closes the ride for them, counted from the estimated arrival time.",
+          "table": {
+            "head": ["Delay", "What happens"],
+            "rows": [
+              ["2 hours", "First reminder to the driver."],
+              ["24 hours", "Second reminder. Passengers are asked whether the ride took place."],
+              ["72 hours", "Automatic closing: the 24-hour dispute window opens, then the driver is paid if nobody reports a problem."]
+            ]
+          }
+        },
+        {
+          "id": "receipts",
+          "question": "Where can I find my receipts?",
+          "answer": "In the payment history of the app."
+        }
+      ]
+    },
+    {
+      "id": "commission",
+      "title": "Commission",
+      "items": [
+        {
+          "id": "how-1lalana-earns",
+          "question": "How does 1lalana make money?",
+          "answer": "Through a commission taken from the driver, once, at the end of each completed ride. It is 1lalana’s only direct revenue. Passengers pay no fee on top of the seat price."
+        },
+        {
+          "id": "who-pays-commission",
+          "question": "Who pays the commission?",
+          "answer": "The driver. It is taken once, at the end of the ride, on the total amount paid by passengers. It is 1lalana’s only direct revenue."
+        },
+        {
+          "id": "commission-rate",
+          "question": "What is the commission rate?",
+          "answer": "It depends on the number of rides the driver has completed since the start of the calendar month.",
+          "table": {
+            "head": ["Rides completed this month", "Rate"],
+            "rows": [
+              ["1 to 5", "15%"],
+              ["6 to 15", "13%"],
+              ["16 to 30", "11%"],
+              ["31 and more", "10%"]
+            ]
+          }
+        },
+        {
+          "id": "decreasing-rate",
+          "question": "Why does the rate drop as rides add up?",
+          "answer": "The counter resets every month. The more active a driver is in the month, the lower the rate."
+        },
+        {
+          "id": "cancellation-surcharge",
+          "question": "What is the cancellation surcharge?",
+          "answer": "The base rate is increased if the driver often cancels rides that had passengers, over the last 90 days. The surcharge can never lower the commission.",
+          "table": {
+            "head": ["Cancellation rate", "Commission applied"],
+            "rows": [
+              ["0 to 5%", "100% of the base amount"],
+              ["5 to 10%", "120%"],
+              ["10 to 20%", "140%"],
+              ["20% and more", "160%"]
+            ]
+          }
+        },
+        {
+          "id": "rate-variations",
+          "question": "Does the rate change with the ride, the area or a promo code?",
+          "answer": "No. Only the monthly volume and the driver’s cancellation rate count."
+        },
+        {
+          "id": "payout-calculation",
+          "question": "How is a driver’s payout calculated?",
+          "answer": "Illustrative example for a ride paid 50,000 Ar in total.",
+          "table": {
+            "head": ["Step", "Amount"],
+            "rows": [
+              ["Base commission (8 rides this month, 13%)", "6,500 Ar"],
+              ["Surcharge (12% cancellations, ×1.4)", "9,100 Ar"],
+              ["Paid to the driver", "40,900 Ar"]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "passenger-cancel",
+      "title": "Cancellation by the passenger",
+      "items": [
+        {
+          "id": "can-cancel",
+          "question": "Can I cancel my booking?",
+          "answer": "Yes, as long as the driver has not started the ride. Once started, an absence is declared, it is not cancelled."
+        },
+        {
+          "id": "free-cancellation",
+          "question": "Is cancelling free?",
+          "answer": "Yes during the 15 minutes after booking: full refund, to fix a wrong stop or date. It still counts in the cancellation tally."
+        },
+        {
+          "id": "refund-amount",
+          "question": "How much am I refunded?",
+          "answer": "It depends on the time left before departure. The amount withheld is bounded: at least 500 Ar, at most 20,000 Ar.",
+          "table": {
+            "head": ["Time before departure", "Refunded", "Driver", "1lalana"],
+            "rows": [
+              ["24 h or more", "90%", "0%", "10%"],
+              ["Between 2 h and 24 h", "40%", "50%", "10%"],
+              ["Less than 2 h", "0%", "100%", "0%"]
+            ]
+          }
+        },
+        {
+          "id": "refund-time",
+          "question": "When am I refunded?",
+          "answer": "Right away. If the mobile money operator is slow, the booking shows “refund in progress” and you get a notification with the amount."
+        },
+        {
+          "id": "driver-compensation",
+          "question": "Why does the driver get compensation?",
+          "answer": "They kept the seat for you and can no longer offer it in time. It is paid with the ride payout, commission deducted."
+        }
+      ]
+    },
+    {
+      "id": "driver-cancel",
+      "title": "Cancellation by the driver",
+      "items": [
+        {
+          "id": "driver-cancels-ride",
+          "question": "What happens if the driver cancels the ride?",
+          "answer": "All passengers are fully refunded and notified, with no penalty on their side."
+        },
+        {
+          "id": "driver-penalty",
+          "question": "What is the driver’s penalty?",
+          "answer": "It applies to the amount actually booked by the ride’s passengers, with a minimum of 2,000 Ar and a maximum of 15,000 Ar.",
+          "table": {
+            "head": ["Cancellation", "Percentage"],
+            "rows": [
+              ["At least 24 h before departure", "10%"],
+              ["Less than 24 h before departure", "20%"]
+            ]
+          }
+        },
+        {
+          "id": "cancel-without-passenger",
+          "question": "Does cancelling a ride with no passenger cost anything?",
+          "answer": "No. With no confirmed passenger there is no penalty and no effect on the driver’s record."
+        },
+        {
+          "id": "penalty-payment",
+          "question": "How is the penalty paid?",
+          "answer": "It is not charged right away: it becomes a debt, automatically deducted from the next payout or payouts, after commission. There is no manual payment."
+        },
+        {
+          "id": "cancel-single-booking",
+          "question": "Can a driver cancel a single booking?",
+          "answer": "Yes, with a mandatory reason, as long as the ride has not started. The passenger is fully refunded and the seat goes back on sale. The penalty is calculated on that booking, except within the hour after booking when departure is more than 24 h away."
+        },
+        {
+          "id": "cancel-after-start",
+          "question": "Can a ride be cancelled after it has started?",
+          "answer": "No. Once the ride has started, neither the driver nor the passenger can cancel."
+        }
+      ]
+    },
+    {
+      "id": "suspension",
+      "title": "Account suspension",
+      "items": [
+        {
+          "id": "when-suspended",
+          "question": "When is my account suspended?",
+          "answer": "After 3 cancellations within a rolling 30 days: cancellations with passengers for a driver, paid bookings for a passenger. The first suspension lasts 7 days."
+        },
+        {
+          "id": "repeat-suspension",
+          "question": "What happens on a repeat?",
+          "answer": "The suspension is extended by 14 days, from the end of the current suspension, or from today if it has ended."
+        },
+        {
+          "id": "suspension-restrictions",
+          "question": "What can’t I do during a suspension?",
+          "answer": "A driver cannot publish a ride, a passenger cannot book. The account has a single end date, whatever the cause."
+        },
+        {
+          "id": "suspension-end",
+          "question": "When does the suspension end?",
+          "answer": "Automatically on the end date, with a notification. The 30 days are rolling: an older cancellation no longer counts."
+        },
+        {
+          "id": "pending-penalty",
+          "question": "Does a pending penalty block my account?",
+          "answer": "No, only an active suspension blocks. However, an account cannot be deleted while a penalty is pending or a suspension is running."
+        },
+        {
+          "id": "lift-suspension",
+          "question": "Can a suspension be lifted?",
+          "answer": "If the cancellation had a serious reason, write to us. Support can lift a suspension and, case by case, clear the debt, with a recorded reason."
+        }
+      ]
+    },
+    {
+      "id": "absences",
+      "title": "No-shows at departure",
+      "items": [
+        {
+          "id": "passenger-no-show",
+          "question": "What happens if I don’t show up?",
+          "answer": "You are not refunded and the driver is paid normally for the seat. There is no other penalty: no fee, no suspension."
+        },
+        {
+          "id": "mark-absent",
+          "question": "When can the driver mark me absent?",
+          "answer": "From 10 minutes after the planned departure time, until the ride is closed."
+        },
+        {
+          "id": "dispute-absence",
+          "question": "How do I dispute a declared absence?",
+          "answer": "Within 24 hours, with a mandatory message, once only. Support decides. The decision moves no money."
+        },
+        {
+          "id": "driver-no-show",
+          "question": "What if the driver doesn’t show up?",
+          "answer": "Use “The driver did not come” in the app, up to 24 hours after closing. The payment is frozen. If the absence is confirmed, all passengers are fully refunded and the driver is not paid."
+        }
+      ]
+    },
+    {
+      "id": "reviews",
+      "title": "Reviews and ratings",
+      "items": [
+        {
+          "id": "who-reviews",
+          "question": "Who can leave a review?",
+          "answer": "The driver and the passengers of a completed ride, about each other, within 14 days after the ride ends."
+        },
+        {
+          "id": "mandatory-rating",
+          "question": "Is rating mandatory?",
+          "answer": "No. You can ignore the invitation, but after 14 days it is no longer possible to give your opinion."
+        },
+        {
+          "id": "review-visibility",
+          "question": "Why isn’t my review visible right away?",
+          "answer": "Reviews are published double-blind: they appear together, when both people have rated or after 14 days, once the driver is paid. Nobody writes a review after reading the other’s."
+        },
+        {
+          "id": "edit-review",
+          "question": "Can I edit or withdraw my review?",
+          "answer": "Until it is published you can edit it. Once published you can only withdraw it, and cannot write a new one."
+        },
+        {
+          "id": "reply-review",
+          "question": "Can I reply to a review I received?",
+          "answer": "Yes, once, publicly, in 500 characters at most. The reply can be neither edited nor deleted."
+        },
+        {
+          "id": "refused-content",
+          "question": "What content is refused in a review?",
+          "answer": "Insults, phone numbers, email addresses and links. The comment is limited to 500 characters."
+        },
+        {
+          "id": "report-review",
+          "question": "How do I report an abusive review?",
+          "answer": "From the app, with the reason “inappropriate content” or “spam”."
+        }
+      ]
+    },
+    {
+      "id": "safety",
+      "title": "Safety and reports",
+      "items": [
+        {
+          "id": "how-to-report",
+          "question": "How do I report a user, a ride or a vehicle?",
+          "answer": "From the app: choose a reason and add a comment. You get an acknowledgement, then a message when the report is handled. The same item can only be reported once every 24 hours."
+        },
+        {
+          "id": "anonymous-report",
+          "question": "Is my report anonymous?",
+          "answer": "It can be. In that case nobody, including the team, knows who sent it."
+        },
+        {
+          "id": "after-report",
+          "question": "What happens after a report?",
+          "answer": "The team reviews the case. If the same user is reported several times before review, they may temporarily lose the ability to publish rides, as a precaution."
+        },
+        {
+          "id": "ban",
+          "question": "When is an account banned?",
+          "answer": "By an administrator’s decision: fraud, harassment, repeated no-shows, fake profile or safety breach. A ban is temporary or permanent, and the person is signed out immediately."
+        },
+        {
+          "id": "contest-ban",
+          "question": "How do I contest a ban?",
+          "answer": "From the website’s contact form, without an account, or by email to support."
+        },
+        {
+          "id": "stolen-phone",
+          "question": "My phone or SIM card was stolen, what do I do?",
+          "answer": "Contact us: the account can be protected for 24 hours, 48 hours or 7 days. This is not a sanction. Also have your SIM card blocked."
+        },
+        {
+          "id": "contact-visibility",
+          "question": "Are my contact details visible to others?",
+          "answer": "No. They are only exchanged once a booking is confirmed, and reviews cannot contain a phone number or email."
+        }
+      ]
+    },
+    {
+      "id": "driver",
+      "title": "Publishing a ride",
+      "items": [
+        {
+          "id": "publish-requirements",
+          "question": "What do I need to publish a ride?",
+          "answer": "An account with a profile photo, so passengers recognise who picks them up, and a verified phone number, through which passengers and the platform reach the driver. A registered vehicle is also needed."
+        },
+        {
+          "id": "driver-obligations",
+          "question": "What are the driver’s obligations?",
+          "answer": "A valid licence, valid insurance and a vehicle in good condition. 1lalana is a matching platform: the driver shares road costs, it is not a commercial activity."
+        },
+        {
+          "id": "set-price",
+          "question": "How do I set my price?",
+          "answer": "You set a price per seat. Since this is cost sharing, the price is capped. The passenger pays that price times the number of seats, and the amounts in the app are the reference."
+        },
+        {
+          "id": "add-stops",
+          "question": "Can I add stops?",
+          "answer": "Yes. A stop must be on the ride’s route, within 5 km of it. Passengers can get on and off at these stops and only pay for the part they travel."
+        },
+        {
+          "id": "message-passengers",
+          "question": "Can I write a message to passengers?",
+          "answer": "Yes, a comment of up to 500 characters (stops, punctuality, luggage), shown on the ride detail. With no comment, nothing is shown."
+        },
+        {
+          "id": "edit-ride",
+          "question": "Can I edit my ride after publishing it?",
+          "answer": "Yes. If you change the departure time or a seat a passenger booked, they can cancel for free for 24 hours, never beyond the departure time."
+        },
+        {
+          "id": "driver-reliability",
+          "question": "How do I know a driver is reliable?",
+          "answer": "A driver needs a profile photo and a verified phone number to publish. Their vehicle can carry the “verified vehicle” badge, and reviews from past rides are available in the app."
+        }
+      ]
+    },
+    {
+      "id": "vehicles",
+      "title": "Drivers and vehicles",
+      "items": [
+        {
+          "id": "accepted-vehicles",
+          "question": "Which vehicles are accepted?",
+          "answer": "Private cars (saloon, estate, people carrier, SUV, 4x4, pickup, sports car), minibuses and utility 4x4s. The vehicle must be from after 1980: there is no upper age limit, because passengers judge its condition on the photos."
+        },
+        {
+          "id": "vehicle-and-seat-limits",
+          "question": "How many vehicles and seats can I declare?",
+          "answer": "A vehicle declares from 1 to 40 seats, with up to 3 photos. A driver can register up to 5 vehicles."
+        },
+        {
+          "id": "registration-plate",
+          "question": "Which registration plate is accepted?",
+          "answer": "A plate in the Malagasy format (for example 1234 TBA), declared on a single vehicle of the platform."
+        },
+        {
+          "id": "verification-optional",
+          "question": "Is vehicle verification mandatory?",
+          "answer": "No, it is optional. It gives the “verified vehicle” badge that passengers see when booking."
+        },
+        {
+          "id": "required-documents",
+          "question": "Which documents are required?",
+          "answer": "The three documents are requested together to get the badge.",
+          "table": {
+            "head": ["Document", "What it is for", "End date"],
+            "rows": [
+              ["Registration card", "Shows the vehicle matches the announced plate.", "No"],
+              ["Insurance", "Confirms passengers are covered during the ride.", "Yes"],
+              ["Technical inspection", "Confirms the mechanical condition of the vehicle.", "Yes"]
+            ]
+          }
+        },
+        {
+          "id": "verification-time",
+          "question": "How long does verification take?",
+          "answer": "The team reviews each document. The target is an answer within 72 hours. A rejected document comes with a reason and can be sent again: the review then restarts for that document."
+        },
+        {
+          "id": "insurance-expiry",
+          "question": "What happens when my insurance expires?",
+          "answer": "A reminder is sent 30 days before expiry, then a notification at expiry. While a document is expired, the “verified vehicle” badge is no longer shown."
+        },
+        {
+          "id": "vehicle-visibility",
+          "question": "What do passengers see of my vehicle?",
+          "answer": "Photos and declared equipment are public. The plate is only shown in full to the passenger whose booking is confirmed; elsewhere only the provincial series stays readable. Documents are never shown: only the driver and the verification team can access them."
+        }
+      ]
+    },
+    {
+      "id": "notifications",
+      "title": "Notifications",
+      "items": [
+        {
+          "id": "notification-types",
+          "question": "Which notifications can I receive?",
+          "answer": "In the app, you are told about events that concern you: the driver receives a notification when a seat is booked on their ride, the passenger when a refund is made, and everyone when support answers a request."
+        },
+        {
+          "id": "find-notifications",
+          "question": "Where can I find my notifications?",
+          "answer": "In the app. They are also included in the export file of your personal data."
+        },
+        {
+          "id": "sms",
+          "question": "Will I receive text messages?",
+          "answer": "Only in two cases: the SOS button SMS, sent to your emergency contact, and the support answer if you only left a phone number in the contact form."
+        },
+        {
+          "id": "website-notifications",
+          "question": "Does the website send notifications?",
+          "answer": "No. The website has no accounts and sends no notifications. The only message it can send is the newsletter, only if you signed up for it."
+        }
+      ]
+    },
+    {
+      "id": "account",
+      "title": "Account and personal data",
+      "items": [
+        {
+          "id": "collected-data",
+          "question": "What data does 1lalana collect?",
+          "answer": "Identity, ID document, phone number, email, ride locations, mobile money number, vehicle documents, emergency contact and reviews. Each piece of data serves the running of the service."
+        },
+        {
+          "id": "location-tracking",
+          "question": "Is my location tracked?",
+          "answer": "No. The driver enters a departure and arrival point when creating the ride. There is no continuous GPS tracking and no real-time position. Other users see the address, not the exact coordinates."
+        },
+        {
+          "id": "export-data",
+          "question": "Can I get my personal data?",
+          "answer": "Yes, in the app: Profile, Settings, Account, “Export my data”. You receive a JSON file with your profile, rides, bookings, vehicles, reviews, payments, notifications and contact messages. At most three requests per 24 hours."
+        },
+        {
+          "id": "delete-account",
+          "question": "Can I delete my account?",
+          "answer": "Yes, unless a penalty is pending or a suspension is running."
+        },
+        {
+          "id": "website-account",
+          "question": "Does the website use my account?",
+          "answer": "No. The website has no accounts: the blog, contact and newsletter are open to everyone, even someone banned from the app."
+        }
+      ]
+    },
+    {
+      "id": "support",
+      "title": "Support and contact",
+      "items": [
+        {
+          "id": "contact-us",
+          "question": "How can I contact you?",
+          "answer": "Through the form on the Contact page: your name, your message and, your choice, an email or a Malagasy mobile number. One of the two is enough."
+        },
+        {
+          "id": "acknowledgement",
+          "question": "Will I get an acknowledgement?",
+          "answer": "Yes, with your request number, by email, or by SMS if you only left a number."
+        },
+        {
+          "id": "answer-channel",
+          "question": "How will I receive the answer?",
+          "answer": "By email if you left an address, by SMS if you only left a number. An SMS is limited to 300 characters: for a longer answer, the team calls you. You cannot reply to that message: write to us again from the form."
+        },
+        {
+          "id": "follow-request",
+          "question": "How do I follow my request from the app?",
+          "answer": "Signed in to the app, open “My requests”: you find the exchange there, a notification warns you of each answer, and you can attach up to 5 files (photos or PDF) per message. If you write after it was resolved, the request is reopened automatically."
+        }
+      ]
+    }
+  ]
+}

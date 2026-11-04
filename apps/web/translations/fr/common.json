@@ -27,9 +27,37 @@
     "search": "Rechercher...",
     "noResults": "Aucun résultat",
     "shareOn": "Partager sur {social}",
-    "shares": "Partages"
+    "shares": "Partages",
+    "optional": "Facultatif",
+    "scrollableContent": "Contenu défilant",
+    "close": "Fermer",
+    "actions": "Actions",
+    "newTab": "{name} (nouvel onglet)",
+    "noActions": "Aucune action disponible.",
+    "back": "Retour",
+    "actionFailed": "L'action a échoué. Réessayez.",
+    "tryAgain": "Réessayer",
+    "offlineMessage": "Vous êtes hors ligne. Reconnectez-vous pour continuer.",
+    "readMore": "Lire la suite",
+    "skipToContent": "Aller au contenu",
+    "opensInNewTab": "(s'ouvre dans un nouvel onglet)",
+    "imageUnavailable": "Image indisponible",
+    "share": "Partager cet article",
+    "copyLink": "Copier le lien",
+    "linkCopied": "Lien copié",
+    "loading": "Chargement..."
   },
   "Errors": {
     "somethingWentWrong": "Une erreur s'est produite. Veuillez réessayer plus tard."
+  },
+  "Date": {
+    "published": "Publié le {date}",
+    "updated": "Mis à jour le {date}"
+  },
+  "Cookies": {
+    "title": "Cookies",
+    "description": "J'utilise des cookies de mesure d'audience pour améliorer le site. Vous pouvez accepter ou refuser.",
+    "accept": "Accepter",
+    "decline": "Refuser"
   }
 }

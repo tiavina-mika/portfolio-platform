@@ -1,10 +1,11 @@
-import { getTranslations } from 'next-intl/server';
+import { CategoryEntityEnum } from '@shared/types';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 
 import SitemapGroup from '@/containers/sitemaps/SitemapGroup';
 import { Locale } from '@/i18n/config';
 import { getCategoriesForUrls } from '@/server/queries/category.queries';
-import { CategoryEntityEnum, ICategory } from '@/types/cms.type';
+import { ICategory } from '@/types/cms.type';
 import { goToItemsByCategory } from '@/utils/cms.utils';
 import { getTranslatedField } from '@/utils/translation.utils';
 
@@ -19,6 +20,7 @@ const SitemapCategoriesSlot = async (props: Props) => {
 
   const locale = params.locale as Locale;
 
+  setRequestLocale(locale);
   const t = await getTranslations('Article');
   const categories = await getCategoriesForUrls();
 
@@ -27,9 +29,9 @@ const SitemapCategoriesSlot = async (props: Props) => {
    * ex: article, page, ...
    */
   const renderItemUrl = (item: ICategory) => {
-    const pathname = item.get('entity') === CategoryEntityEnum.ARTICLE ? 'articles' : 'pages';
+    const pathname = item.entity === CategoryEntityEnum.ARTICLE ? 'articles' : 'pages';
 
-    return goToItemsByCategory(item.get('translated'), locale, pathname);
+    return goToItemsByCategory(item.translated, locale, pathname);
   };
 
   return (
@@ -38,7 +40,7 @@ const SitemapCategoriesSlot = async (props: Props) => {
       renderItemUrl={renderItemUrl}
       title={t('categories')}
       renderItemLinkText={item =>
-        getTranslatedField(item.get('translated'), locale, 'name') || ''}
+        getTranslatedField(item.translated, locale, 'name') || ''}
     />
   );
 };

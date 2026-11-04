@@ -14,12 +14,15 @@
  * @returns {JSX.Element} The rendered MetaTextField component.
  */
 
-import { Stack, FormHelperText, type Theme } from '@mui/material';
+import {
+  Stack, FormHelperText, Typography, type Theme,
+} from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import i18n from '@/config/i18n';
-import { cutText } from '@/utils/utils';
+import { META_DESCRIPTION_MAX_LENGTH, META_TITLE_MAX_LENGTH } from '@/constants/_core/cms.constants';
+import { FONT_SIZE_META } from '@/constants/_core/ui.constants';
 
 import TextFieldInput, { CustomTextFieldInputProps } from '../inputs/TextFieldInput';
 
@@ -44,8 +47,8 @@ const getTranslatedLabel = (type: TextFieldProps['type']): string => {
 
 const getMaxLength = (type: TextFieldProps['type']): number => {
   return type === 'metaTitle'
-    ? 70
-    : 160;
+    ? META_TITLE_MAX_LENGTH
+    : META_DESCRIPTION_MAX_LENGTH;
 };
 
 // check if the value is valid
@@ -56,7 +59,20 @@ const checkIsSuccess = (value: string, maxLength: number): boolean => {
   return false;
 };
 
-const classes = { filledHelperText: (theme: Theme) => ({ '&.MuiFormHelperText-root': { color: theme.palette.success.main } }) };
+const classes = {
+  /*
+   * how much of the budget the value has used, on the label's own row. Tabular figures so the
+   * count does not jog sideways as it is typed into
+   */
+  count: {
+    fontSize: FONT_SIZE_META,
+    fontVariantNumeric: 'tabular-nums',
+  },
+  // long enough to be worth indexing and still short enough to be printed whole
+  countSuccess: (theme: Theme) => ({ color: theme.palette.success.main }),
+  // either too short to say anything, or past what the search engine will print
+  countRefused: (theme: Theme) => ({ color: theme.palette.error.main }),
+};
 
 const MetaTextField = ({
   name, type, ...inputProps
@@ -95,39 +111,29 @@ const MetaTextField = ({
             error={!!errors[name]}
             label={getTranslatedLabel(type)}
             tooltip={t('common:infoMessages.cutText', { length: maxLength })}
+            labelEnd={(
+              <Typography
+                component="span"
+                css={[classes.count, checkIsSuccess(field.value, maxLength)
+                  ? classes.countSuccess
+                  : classes.countRefused]}
+              >
+                {getCharactersLength(maxLength, field.value)}
+              </Typography>
+            )}
             rows={type === 'metaDescription'
               ? 3
               : 2}
           />
-          <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
-            {/* display error message if any */}
-            {errorMessage && <FormHelperText error>{errorMessage}</FormHelperText>}
-
-            {/* text */}
-            {!errorMessage && (
-              field.value
-                // display preview
-                ? (
-                  <FormHelperText>
-                    <span css={{ marginRight: 10, fontWeight: 500 }}>{t('preview')} :</span>
-                    {cutText(field.value, maxLength)}
-                  </FormHelperText>
-                )
-                // display helper text
-                : <FormHelperText> {getTranslatedDescription(type)}</FormHelperText>
-            )}
-
-            {/* characters length */}
-            <FormHelperText
-              error={!(checkIsSuccess(field.value, maxLength))}
-              filled={checkIsSuccess(field.value, maxLength)}
-              css={checkIsSuccess(field.value, maxLength)
-                ? classes.filledHelperText
-                : null}
-            >
-              {getCharactersLength(maxLength, field.value)}
-            </FormHelperText>
-          </Stack>
+          {/*
+            * what the field is for, kept in place while it is being filled. It used to be swapped
+            * for an echo of the value as soon as anything was typed, which restated the line the
+            * admin was already looking at and took away the one sentence saying how much of it a
+            * search engine will actually print
+            */}
+          {errorMessage
+            ? <FormHelperText error>{errorMessage}</FormHelperText>
+            : <FormHelperText>{getTranslatedDescription(type)}</FormHelperText>}
         </Stack>
       )}
     />

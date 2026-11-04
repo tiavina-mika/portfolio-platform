@@ -1,7 +1,7 @@
 import { IconButton } from '@mui/material';
 import { FiTrash } from 'react-icons/fi';
 
-import { useToggle } from '@/hooks/useToggle';
+import { useToggle } from '@/hooks/_core/useToggle';
 
 import ConfirmDeletionFormModal from './ConfirmDeletionFormModal';
 

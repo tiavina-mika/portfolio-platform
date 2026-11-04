@@ -4,22 +4,53 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- need this for MUI -->
+    <!--
+      the Parse server answers the very first requests of a session (user, roles), so its
+      connection is opened while the scripts are still downloading
+    -->
+    <link rel="preconnect" href="%VITE_SERVER_URL%" crossorigin />
+    <!--
+      DM Sans is the only typeface the back-office draws in — the weights loaded here (400/500/600)
+      are exactly the three the type scale uses, and 700 backs the few places a browser would
+      otherwise synthesise a bolder face. Loaded from the css2 endpoint: the `icon` endpoint this
+      link used before serves Material's icon font and never returned DM Sans at all, so the whole
+      interface silently fell back to the system sans.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap"
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
     />
-    <!-- need this for tiptap editor -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css"
-    />
-    <link href="https://fonts.googleapis.com/icon?family=DM+Sans:300,400,500,700" rel="stylesheet">
 
-    <title>Tiavina Mika BO</title>
+    <title>Portfolio BO</title>
+    <!--
+      Splash drawn by the HTML itself: the shell's silhouette (sidebar band, app bar band, page
+      background) is on screen before any script has run, and React replaces it on mount. The
+      colors are the default theme's — the admin's own theme is a persisted setting only the app
+      can read — following the system light/dark preference.
+    -->
+    <style>
+      body { margin: 0; }
+      .boot-splash { display: flex; min-height: 100vh; background: #F5F7FB; }
+      .boot-splash-sidebar { width: 252px; flex-shrink: 0; background: #1a2332; }
+      .boot-splash-main { flex: 1; }
+      .boot-splash-appbar { height: 64px; background: #FFFFFF; border-bottom: 1px solid #E6E7EB; }
+      @media (max-width: 1199px) { .boot-splash-sidebar { display: none; } }
+      @media (prefers-color-scheme: dark) {
+        .boot-splash { background: #0F1623; }
+        .boot-splash-sidebar { border-right: 1px solid #ffffff0f; }
+        .boot-splash-appbar { background: #1A2332; border-bottom-color: #ffffff14; }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="boot-splash" aria-busy="true">
+        <div class="boot-splash-sidebar"></div>
+        <div class="boot-splash-main"><div class="boot-splash-appbar"></div></div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

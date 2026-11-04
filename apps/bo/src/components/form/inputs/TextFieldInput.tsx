@@ -1,10 +1,11 @@
 
-import { InputAdornment, type Theme } from '@mui/material';
-import { grey } from '@mui/material/colors';
-import MUITextField, { type TextFieldProps } from '@mui/material/TextField';
+import {
+  InputAdornment, TextField as MUITextField, type TextFieldProps, type Theme,
+} from '@mui/material';
 import { ReactNode, forwardRef } from 'react';
 
-import { COLORS } from '@/utils/constants';
+import { COLORS, INPUT_ADORNMENT_GAP, INPUT_ADORNMENT_INSET } from '@/constants/_core/ui/ui.constants';
+import { getDesignTokens } from '@/utils/_core/theme/tokens.utils';
 
 import InputLabel from '../InputLabel';
 
@@ -25,24 +26,9 @@ const getPlaceholder = (placeholder?: string, required?: boolean): string => {
 };
 
 const classes = {
+  // border/focus-ring/label colors come from the theme's MuiOutlinedInput override
   lightTextField: (theme: Theme) => ({
-    '& .MuiInputLabel-root': {
-      color: theme.palette.mode === 'dark'
-        ? '#fff'
-        : grey[700],
-      fontSize: 16,
-    },
-    '& label.Mui-focused': {
-      color: theme.palette.mode === 'dark'
-        ? '#fff'
-        : grey[900],
-    },
-    '& .MuiInput-underline:after': { borderBottomColor: grey[900] },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': { borderColor: grey[400] },
-      '&:hover fieldset': { borderColor: grey[700] },
-      '&.Mui-focused fieldset': { borderColor: grey[900] },
-    },
+    '& .MuiInput-underline:after': { borderBottomColor: theme.palette.primary.main },
   }),
   darkTextField: (theme: Theme) => ({
     '& .MuiInputLabel-root': {
@@ -72,27 +58,39 @@ const classes = {
       '&.Mui-focused fieldset': { borderColor: theme.palette.primary.main },
     },
   }),
+  /*
+   * an adorned control keeps the same inset as a plain one: the padding moves from the field up to
+   * the row, so the icon — not the text — is what sits against the outline, and the two stay a
+   * fixed gap apart whichever side the adornment is on
+   */
   rootWithIcons: (theme: Theme) => ({
+    '& .MuiInputBase-root': {
+      paddingLeft: INPUT_ADORNMENT_INSET,
+      paddingRight: INPUT_ADORNMENT_INSET,
+    },
+    '& .MuiInputBase-input': { padding: 0 },
     '& .MuiInputAdornment-root': {
-      height: '100%',
+      height: 'auto',
+      margin: 0,
       display: 'flex',
-      justifyItems: 'center',
       alignItems: 'center',
+      color: getDesignTokens(theme).textMuted,
     },
-    '& .MuiInputAdornment-positionStart': {
-      borderRight: '1px solid ' + theme.palette.grey[300],
-      borderTopLeftRadius: theme.shape.borderRadius + 'px',
-      borderBottomLeftRadius: theme.shape.borderRadius + 'px',
-      paddingRight: 6,
-    },
+    '& .MuiInputAdornment-positionStart': { marginRight: INPUT_ADORNMENT_GAP },
+    '& .MuiInputAdornment-positionEnd': { marginLeft: INPUT_ADORNMENT_GAP },
   }),
 };
 
 export type CustomTextFieldInputProps = {
   bgcolor?: string;
-  // if true, the label will not be "shrink" (useful for fixed labels)
+  // if true, the label will not be set to shrink (useful for fixed labels)
   fixedLabel?: boolean;
   tooltip?: string;
+  /*
+   * what closes the label's row on the right — a character count, a limit. Only drawn with
+   * `fixedLabel`: a floating MUI label sits inside the outline and has no row to carry it
+   */
+  labelEnd?: ReactNode;
   mode?: 'light' | 'dark';
   // left icon
   left?: ReactNode | string;
@@ -105,7 +103,7 @@ export type CustomTextFieldInputProps = {
   className?: string;
 
   /**
-   * if true, the label will not be "shrink" (useful for fixed labels)
+   * if true, the label will not be set to shrink (useful for fixed labels)
    */
   shrinkLabel?: boolean;
   placeholder?: string;
@@ -113,7 +111,7 @@ export type CustomTextFieldInputProps = {
 
 /**
  * should use `forwardRef` if using an refactored component with emotion
- * issue: https://stackoverflow.com/questions/66312566/how-to-type-forwardref-in-separate-select-component
+ * issue: https://stackoverflow.com/questions/66312566/how-to-multiple-forwardref-in-separate-select-component
  */
 const TextFieldInput = forwardRef<HTMLDivElement, CustomTextFieldInputProps>(
   (
@@ -123,13 +121,13 @@ const TextFieldInput = forwardRef<HTMLDivElement, CustomTextFieldInputProps>(
       className,
       tooltip,
       fixedLabel,
+      labelEnd,
       rightClassName,
       leftClassName,
       placeholder,
       shrinkLabel,
       bgcolor,
       mode = 'light',
-      slotProps,
       ...otherProps
     },
     ref
@@ -145,6 +143,7 @@ const TextFieldInput = forwardRef<HTMLDivElement, CustomTextFieldInputProps>(
       >
         {fixedLabel && (
           <InputLabel
+            end={labelEnd}
             label={otherProps.label}
             required={otherProps.required}
             tooltip={tooltip}
@@ -159,21 +158,16 @@ const TextFieldInput = forwardRef<HTMLDivElement, CustomTextFieldInputProps>(
               ? classes.lightTextField
               : classes.darkTextField,
             // bgcolor,
-            !!(left || right) && classes.rootWithIcons,
+            Boolean(left || right) && classes.rootWithIcons,
             { backgroundColor: bgcolor },
           ]}
-          {...otherProps}
-          label={fixedLabel
-            ? ''
-            : otherProps.label}
           slotProps={{
-            ...slotProps,
             inputLabel: {
               ...(shrinkLabel && { shrink: shrinkLabel }),
-              ...(typeof slotProps?.inputLabel === 'function' ? {} : slotProps?.inputLabel),
+              ...otherProps.slotProps?.inputLabel,
             },
             input: {
-              ...(typeof slotProps?.input === 'function' ? {} : slotProps?.input),
+              ...otherProps.slotProps?.input,
               startAdornment: left
                 ? (
                   <InputAdornment className={leftClassName} position="start">
@@ -190,6 +184,10 @@ const TextFieldInput = forwardRef<HTMLDivElement, CustomTextFieldInputProps>(
                 : null,
             },
           }}
+          {...otherProps}
+          label={fixedLabel
+            ? ''
+            : otherProps.label}
         />
       </div>
     );

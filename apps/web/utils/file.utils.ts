@@ -1,7 +1,12 @@
 /* eslint-disable @cspell/spellchecker */
+import { PAGE_IMAGES_FIELDS, PAGE_SINGLE_IMAGE_FIELDS } from '@shared/validations';
 import Parse from 'parse';
 
-import { IFileCloud } from '@/types/app.type';
+
+import { http, protectRequest } from '@/config/http';
+import { defaultLocale, Locale } from '@/i18n/config';
+import { UploadApiResponse } from '@/types/cloudinary.type';
+import { IFileCloud, IUploadFile, IUploadFilesAPI } from '@/types/file.type';
 
 /**
  * get the original filename from the url
@@ -83,10 +88,10 @@ export const convertBytesToFileSize = (
  * convert kb, mb, gb to bytes
  * E.g: 5, 'mb' => 5242880 bytes, 'kb' => 5120 bytes, 'gb' => 5368709120 bytes, 0.000002 mb => 2 bytes
  */
-export const convertFileSizeToBytes = (size: number, type = 'mb'): number => {
-  const types = ['B', 'KB', 'MB', 'GB', 'TB'];
+export const convertFileSizeToBytes = (size: number, unit = 'mb'): number => {
+  const units = ['B', 'KB', 'MB', 'GB', 'TB'];
 
-  const key = types.indexOf(type.toUpperCase());
+  const key = units.indexOf(unit.toUpperCase());
 
   if (typeof key !== 'boolean') {
     return size * (1024 ** key);
@@ -95,11 +100,328 @@ export const convertFileSizeToBytes = (size: number, type = 'mb'): number => {
   return 0;
 };
 
+/**
+ * convert upload response to IFileCloud
+ * so we can use it in the app and save it in the database
+ * @param res
+ * @returns
+ */
+export const formatUploadResponse = (saveExtraField = false) => (res: UploadApiResponse): IFileCloud => {
+  const data: IFileCloud = {
+    url: res.secure_url,
+    publicId: res.public_id,
+  };
+
+  if (saveExtraField) {
+    data.size = convertBytesToFileSize(res.bytes, 'mb', true) as string;
+    data.createdAt = new Date(res.created_at);
+    data.height = res.height;
+    data.width = res.width;
+  }
+
+  if (res.responsive_breakpoints?.length > 0) {
+    data.responsiveBreakpoints = res.responsive_breakpoints?.map(
+      (breakpoint: UploadApiResponse['responsive_breakpoints']) => {
+        return breakpoint?.breakpoints.map((bp: any) => ({
+          url: bp.secure_url,
+          width: bp.width,
+          height: bp.height,
+          size: convertBytesToFileSize(bp.bytes, 'mb', true) as string,
+        }));
+      });
+  }
+
+  return data;
+};
+
+/**
+ * upload type files
+ * @param files list of input file
+ * @param folder folder to save the files (in cloud)
+ * @param userId id of the current user
+ * @param sessionToken token of the current user
+ * @param endpoint url of the endpoint
+ * @returns
+ */
+export const uploadFilesAPI = async ({
+  files,
+  folder,
+  userId,
+  sessionToken,
+  endpoint = '/files',
+  config,
+  validation,
+  locale = defaultLocale,
+  saveExtraFields = false,
+}: IUploadFilesAPI): Promise<IFileCloud[]> => {
+  if (!sessionToken) {
+    throw new Error('Session token is required for file upload');
+  }
+  const formData = new FormData();
+
+  files.forEach((file: File) => {
+    formData.append('files', file);
+  });
+
+  formData.append('folder', folder);
+
+  if (userId) {
+    formData.append('userId', userId);
+  }
+
+  if (config) {
+    formData.append('config', JSON.stringify(config));
+  }
+  if (validation) {
+    formData.append('validation', JSON.stringify(validation));
+  }
+
+  formData.append('locale', locale);
+
+  const response = await http.post<FormData, UploadApiResponse[]>(
+    endpoint,
+    formData,
+    protectRequest(sessionToken, true)
+  );
+
+  return response.map(formatUploadResponse(saveExtraFields));
+};
+
+interface ISyncUploadFilesToDatabase {
+  fields: string[];
+  entity: Parse.Object;
+  formValues: Record<string, any>;
+  uploadInput: Omit<IUploadFile, 'endpoint'>;
+  locale?: Locale;
+}
+
+/**
+ * upload the new files to the api
+ * add the new upload files url to database with the old ones
+ * remove the unused old files from the list
+ * in the server, remove these removed files from the cloud
+ * @param fields list of field name, ex: ['images']
+ * @param entity parse entity, ex: Page
+ * @param formValues values from form
+ * @param uploadInput data to send to the upload api
+ * @returns
+ */
+export const updateUploadedMultipleFilesToSave = async ({
+  fields,
+  entity,
+  formValues,
+  uploadInput,
+}: ISyncUploadFilesToDatabase): Promise<Record<string, any>> => {
+  const newValues: Record<string, any> = {};
+
+  for (const field of fields) {
+    const oldFieldValue = entity.get(field);
+
+    // input values
+    if (formValues[field] && Array.isArray(formValues[field])) {
+      const inputFiles = formValues[field];
+      const newInputFilesToUpload = [];
+      const oldSavedFilesToKeep = [];
+
+      for (const inputFile of inputFiles) {
+        // get the input file name
+        const inputFileName = inputFile.name.split('.')[0];
+        // check if the file name exist in data base file list
+        const oldSavedFileToKeep = oldFieldValue?.find((oldFile: IFileCloud) =>
+          oldFile.publicId.includes(inputFileName)
+        );
+
+        if (oldSavedFileToKeep) {
+          oldSavedFilesToKeep.push(oldSavedFileToKeep);
+        }
+        else {
+          newInputFilesToUpload.push(inputFile);
+        }
+      }
+
+      // upload the new files
+      const fileUploadInput = { ...uploadInput, files: newInputFilesToUpload };
+      const uploadedFilesUrls = await uploadFilesAPI(fileUploadInput);
+
+      // will save the new files and the not-removed old ones
+      newValues[field] = [...uploadedFilesUrls, ...oldSavedFilesToKeep];
+    }
+  }
+
+  return newValues;
+};
+
+/**
+ * upload all single file and type files fields files
+ * ex: bannerImage, previewImage, images, ...
+ */
+interface IUploadInput<T> {
+  folder: string;
+  userId?: string;
+  sessionToken: string | null;
+  values: T;
+  singleUploadFields?: string[];
+  multipleUploadFields?: string[];
+  locale?: Locale;
+}
+
+export const uploadFormFiles = async <T extends Record<string, any>>({
+  folder,
+  sessionToken,
+  userId,
+  values,
+  singleUploadFields = PAGE_SINGLE_IMAGE_FIELDS,
+  multipleUploadFields,
+  locale = defaultLocale,
+}: IUploadInput<T>): Promise<Record<string, IFileCloud | IFileCloud[]>> => {
+  if (!sessionToken) {
+    throw new Error('Session token is required for file upload');
+  }
+  const uploadInput = {
+    folder,
+    userId,
+    sessionToken,
+  };
+
+  const newValues: Record<string, any> = {};
+
+  // --------- single file fields --------- //
+  for (const field of singleUploadFields) {
+    if (values[field]) {
+      const options: IUploadFilesAPI = {
+        ...uploadInput,
+        locale,
+        files: [values[field]],
+      };
+
+      // resize preview image because it always has a fixed size
+      if (field.includes('preview')) {
+        options.config = {
+          responsive_breakpoints: [
+            {
+              create_derived: false,
+              min_width: 600,
+              max_width: 600,
+              max_images: 1,
+            },
+          ],
+        };
+      }
+
+      const files = await uploadFilesAPI(options);
+
+      [newValues[field]] = files;
+    }
+  }
+
+  // --------- type files fields --------- //
+  if (multipleUploadFields) {
+    for (const field of multipleUploadFields) {
+      if (values[field] && Array.isArray(values[field])) {
+        const fileUploadInput = { ...uploadInput, files: values[field] };
+        const uploadedFilesUrls = await uploadFilesAPI(fileUploadInput);
+
+        newValues[field] = uploadedFilesUrls;
+      }
+    }
+  }
+
+  return newValues;
+};
+
 export const isUpdatedFileChanged = (prevField: IFileCloud, formField: File): boolean => {
   const fileName = formField.name.split('.')[0];
   const hasTheName = prevField?.publicId.includes(fileName);
 
   return hasTheName;
+};
+
+/**
+ * upload all single file and type files fields files
+ * ex: bannerImage, previewImage, images, ...
+ */
+type UpdatedUploadInput<T> = {
+  parseObj: Parse.Object;
+} & IUploadInput<T>;
+
+export const uploadUpdatedFormFiles = async <T extends Record<string, any>>({
+  parseObj,
+  folder,
+  sessionToken,
+  userId,
+  values,
+  singleUploadFields = PAGE_SINGLE_IMAGE_FIELDS,
+  multipleUploadFields = PAGE_IMAGES_FIELDS,
+  locale,
+}: UpdatedUploadInput<T>): Promise<any> => {
+  if (!sessionToken) {
+    throw new Error('Session token is required for file upload');
+  }
+  const uploadInput = {
+    folder,
+    userId,
+    sessionToken,
+    locale,
+  };
+
+  const newValues: Record<string, any> = {};
+
+  // --------- single file fields --------- //
+  for (const field of singleUploadFields) {
+    if (values[field]) {
+      const oldFieldValue = parseObj.get(field);
+      const isNew = isUpdatedFileChanged(oldFieldValue, values[field]);
+
+      // new uploaded file
+      if (!isNew) {
+        const options = { ...uploadInput, files: [values[field]] };
+        const files = await uploadFilesAPI(options);
+
+        [newValues[field]] = files;
+      }
+      else {
+        newValues[field] = oldFieldValue;
+      }
+    }
+  }
+
+  if (multipleUploadFields) {
+    for (const field of multipleUploadFields) {
+      const oldSavedFiles = parseObj.get(field);
+
+      // input values
+      if (values[field] && Array.isArray(values[field])) {
+        const inputFiles = values[field];
+        const newInputFilesToUpload = [];
+        const oldSavedFilesToKeep = [];
+
+        for (const inputFile of inputFiles) {
+        // get the input file name
+          const inputFileName = inputFile.name.split('.')[0];
+          // check if the file name exist in database file list
+          const oldSavedFileToKeep = oldSavedFiles?.find((oldFile: IFileCloud) =>
+            oldFile.publicId.includes(inputFileName)
+          );
+
+          if (oldSavedFileToKeep) {
+            oldSavedFilesToKeep.push(oldSavedFileToKeep);
+          }
+          else {
+            newInputFilesToUpload.push(inputFile);
+          }
+        }
+
+        // upload the new files
+        const fileUploadInput = { ...uploadInput, files: newInputFilesToUpload };
+        const uploadedFilesUrls = await uploadFilesAPI(fileUploadInput);
+
+        // will save the new files and the remove old ones
+        newValues[field] = [...uploadedFilesUrls, ...oldSavedFilesToKeep];
+      }
+    }
+  }
+
+  return newValues;
 };
 
 /**
@@ -126,7 +448,12 @@ export const downloadFile = ({
   }
 
   // e.g: http://localhost:1337/parse
-  const serverUrl = Parse.serverURL!;
+  const serverUrl = Parse.serverURL;
+
+  if (!serverUrl) {
+    throw new Error('Parse.serverURL is not configured');
+  }
+
   const lastSlash = serverUrl.lastIndexOf('/');
   // convert the data object to query params
   const queryParams = Object
@@ -140,6 +467,8 @@ export const downloadFile = ({
   const location = `${hostname}/download/${pathName}?${queryParams}`;
 
   if (!openInNewTab) {
+    // not a Next.js page navigation — triggers a browser file download from the Express endpoint
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
     window.location.href = location;
     return;
   }

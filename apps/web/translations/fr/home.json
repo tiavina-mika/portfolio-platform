@@ -1,0 +1,35 @@
+{
+  "HomeHero": {
+    "loading": "Chargement de la présentation",
+    "error": "La présentation n'a pas pu être chargée.",
+    "offline": "Vous êtes hors ligne. La présentation s'affichera dès le retour de la connexion."
+  },
+  "HomeServices": {
+    "title": "Pourquoi moi ?",
+    "items": {
+      "1": {
+        "title": "Monter un projet de A à Z",
+        "description": "Je gère toutes les étapes du développement, y compris le choix des technologies, l'architecture technique, le développement, l'intégration de bases de données, ainsi que le déploiement sur des environnements de production."
+      },
+      "2": {
+        "title": "Renforcer, intégrer ou diriger une équipe",
+        "description": "Collaborer efficacement au sein d’une équipe existante pour renforcer ses compétences, optimiser les processus et assurer la réussite des projets, en apportant mon expertise technique approfondie et une approche orientée vers les résultats."
+      },
+      "3": {
+        "title": "Potentiel CTO d'une startup",
+        "description": "En tant que potentiel CTO d'une startup, je suis en mesure de définir des stratégies technologiques et de guider les décisions techniques pour assurer la croissance et l'innovation au sein de l'entreprise."
+      },
+      "4": {
+        "title": "Tarifs concurrentiels",
+        "description": "Je propose des tarifs compétitifs pour startups et PME, offrant une expertise équivalente à des prestations haut de gamme, tout en garantissant des solutions adaptées aux besoins spécifiques et aux exigences du marché."
+      }
+    }
+  },
+  "HomeProjects": {
+    "description": "Depuis 2016 j'ai eu l'opportunité de travailler sur des projets variés, allant du développement de sites web dynamiques à la création d'applications web complexes."
+  },
+  "HomeContact": {
+    "title": "Discutons ensemble",
+    "description": "N'hésitez pas à me contacter. Je suis toujours ouvert pour discuter de nouveaux projets, des idées innovantes ou de nouvelles opportunités."
+  }
+}

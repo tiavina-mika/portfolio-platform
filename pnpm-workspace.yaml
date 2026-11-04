@@ -4,8 +4,11 @@ packages:
   - 'libs/shared-constants'
   - 'libs/shared-domain-constants'
   - 'libs/shared-domain-types'
+  - 'libs/shared-domain-utils'
+  - 'libs/shared-faq'
   - 'libs/shared-types'
   - 'libs/shared-utils'
+  - 'libs/shared-validations'
 
 nodeLinker: hoisted
 

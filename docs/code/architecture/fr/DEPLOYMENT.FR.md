@@ -5,6 +5,7 @@
 - [Vue d'ensemble](#vue-densemble)
 - [Environnements](#environnements)
 - [Construire et démarrer chaque app](#construire-et-démarrer-chaque-app)
+- [Commandes de production](#commandes-de-production)
 - [Variables d'environnement à l'exécution](#variables-denvironnement-à-lexécution)
 - [Garder l'hébergeur éveillé](#garder-lhébergeur-éveillé)
 - [Workflows GitHub](#workflows-github)
@@ -37,6 +38,30 @@ Le workflow de version documente le flux : `develop` est déployée en préprodu
 Le back-office n'est pas déployé seul : `pnpm build:bo:preprod` et `pnpm build:bo` dans `apps/server` construisent `apps/bo` puis lancent `pnpm copy`, qui copie `apps/bo/dist` dans `apps/server/clientBuild/bo/preprod` ou `.../prod` (le dossier est choisi selon `NODE_ENV` ; les deux mêmes noms sont écrits dans `config/copyBuilds.cjs` et dans `src/utils/constants.ts` et doivent rester égaux). Un second script, `config/checkClientBuildSecrets.cjs`, scanne ce bundle versionné à la recherche de la valeur littérale de toute variable `VITE_*` dont le nom se termine par `KEY`, `SECRET`, `TOKEN` ou `PASSWORD`, car Vite incorpore chaque valeur `VITE_*` dans le code du navigateur. Express sert le dossier en statique, et un attrape-tout enregistré après les routes `/parse`, `/files`, `/download` et `/ping` répond à tout autre chemin avec son `index.html` (l'application monopage).
 
 Le `next build` du site prérend les pages publiques avec des données lues dans l'API Parse en ligne : il a donc besoin d'un serveur joignable.
+
+## Commandes de production
+
+La production est la branche `main`, avec `NODE_ENV=production` pour le serveur et `APP_ENV=production` pour le site. Les valeurs des variables viennent de l'hébergeur (voir plus bas), jamais d'un fichier versionné.
+
+**Sur l'hébergeur (Render)**, un service par app :
+
+| Service | Build Command | Start Command |
+|---|---|---|
+| server (sert aussi le back-office) | `mkdir -p "$HOME/.local/bin" && corepack enable --install-directory "$HOME/.local/bin" && export PATH="$HOME/.local/bin:$PATH" && pnpm install --frozen-lockfile --prod=false && pnpm --filter portfolio-bo exec vite build && pnpm --filter portfolio-server build && NODE_ENV=production pnpm --filter portfolio-server copy` | `pnpm --filter portfolio-server start` |
+| web | `mkdir -p "$HOME/.local/bin" && corepack enable --install-directory "$HOME/.local/bin" && export PATH="$HOME/.local/bin:$PATH" && pnpm install --frozen-lockfile --prod=false && pnpm --filter portfolio-web build:prod` | `pnpm --filter portfolio-web start` |
+
+**Sur une machine qui a les fichiers `.env.prod`** (pour essayer un build de production en local) :
+
+```bash
+pnpm install --frozen-lockfile
+pnpm --filter portfolio-server build
+pnpm --filter portfolio-server build:bo      # build:prod du bo + copie dans clientBuild/bo/prod
+pnpm --filter portfolio-web build:prod
+pnpm --filter portfolio-server start         # NODE_ENV=production node --import tsx dist/index.js
+pnpm --filter portfolio-web start            # APP_ENV=production node server.js
+```
+
+Le build du site a besoin que le serveur de production soit joignable (voir plus haut). La mise en place pas à pas sur Render, et les différences avec la préproduction, sont dans [Pré-production et production](../../../services/render/fr/RENDER_DEPLOYMENT.FR.md#pré-production-et-production).
 
 ## Variables d'environnement à l'exécution
 

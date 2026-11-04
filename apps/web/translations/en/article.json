@@ -1,6 +1,6 @@
 {
   "Article": {
-    "relatedArticles": "Related articles",
+    "relatedArticles": "Read also",
     "articles": "Articles",
     "anArticle": "an article",
     "theArticle": "the article",
@@ -17,9 +17,26 @@
       "error": {
         "notFound": "Article not found."
       }
-    }
+    },
+    "readingTime": "{minutes} min read",
+    "allCategories": "All",
+    "sortBy": "Sort by",
+    "newest": "Newest",
+    "oldest": "Oldest",
+    "loading": "Loading the articles",
+    "loadError": "The articles did not load. Check your connection.",
+    "offline": "You are offline. The articles will show when the connection is back.",
+    "tags": "Tags",
+    "galleryImageAlt": "{title} ({position}/{total})"
   },
   "Page": {
-    "pages": "Pages"
+    "pages": "Pages",
+    "category": "Category",
+    "subcategories": "Subcategories",
+    "noPagesYet": "No page yet.",
+    "noSubcategories": "No subcategory yet.",
+    "loadingPages": "Loading the pages",
+    "loadingSubcategories": "Loading the subcategories",
+    "viewAll": "View all"
   }
 }

@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { ISelectOption } from '@/types/app.type';
+import { ISelectOption } from '@/types/_core/app.type';
 
 import CheckedMultiSelectInput from '../inputs/CheckedMultiSelectInput';
 

@@ -1,5 +1,5 @@
 
-import { TextField, type TextFieldProps } from '@mui/material';
+import { type TextFieldProps } from '@mui/material';
 import { DateTimePicker, DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
@@ -10,14 +10,16 @@ type Props = {
   value?: Date | null | undefined;
   onChange: (value: any) => void;
   disableFuture?: boolean;
+  disablePast?: boolean;
   withHour?: boolean;
   label?: string;
   inputFormat?: string;
-} & TextFieldProps;
+} & Omit<TextFieldProps, 'onChange' | 'value'>;
 
 const DatePickerInput = ({
   value,
   disableFuture,
+  disablePast,
   onChange,
   label,
   inputFormat,
@@ -49,9 +51,10 @@ const DatePickerInput = ({
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Component
         disableFuture={disableFuture}
+        disablePast={disablePast}
         label={label}
         value={date ? dayjs(date) : null}
-        inputFormat={inputFormat ?? (withHour
+        format={inputFormat ?? (withHour
           ? t('fullDateFormat')
           : t('dateOnlyFormat'))}
         onChange={(value: Date | Dayjs | null) =>
@@ -63,16 +66,15 @@ const DatePickerInput = ({
               : null
           )
         }
-        renderInput={(params: TextFieldProps) => (
-          <TextField
-            fullWidth
-            color="primary"
-            margin="dense"
-            variant="standard"
-            {...params}
-            {...inputProps}
-          />
-        )}
+        slotProps={{
+          textField: {
+            fullWidth: true,
+            color: 'primary',
+            // outlined like every other control: the underline variant is not part of the design
+            variant: 'outlined',
+            ...inputProps,
+          },
+        }}
       />
     </LocalizationProvider>
   );

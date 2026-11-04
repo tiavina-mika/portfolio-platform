@@ -35,7 +35,7 @@ catégories et images.
 
 ## Qui peut l'utiliser
 
-Selon le rôle du compte (page **Droits**, ressource « Article »). Les propriétaires et administrateurs
+Selon le poste du compte (page **Droits**, ressource « Article »). Les comptes Owner et Super Admin
 ont tous les droits.
 
 | Droit | Ce qu'il permet ici |

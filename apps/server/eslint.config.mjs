@@ -172,6 +172,32 @@ export default defineConfig(
       '@typescript-eslint/no-floating-promises': 'warn',
     },
   },
+  // --- Time zone rules --- //
+  /*
+   * The server runs in UTC, so any date read off the server's own clock is wrong for a member: a day
+   * boundary, an hour of the day or a printed date must be read on an explicit zone, through the
+   * helpers of `@shared/utils` (startOfInZone, formatInZone…) or `formatDateInAppTimezone`.
+   */
+  {
+    files: ['src/**/*.ts'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: "CallExpression[callee.property.name=/^(startOf|endOf|utcOffset)$/]",
+          message: 'Read a day, month or offset on an explicit zone: use startOfInZone / endOfInZone from @shared/utils.',
+        },
+        {
+          selector: "CallExpression[callee.property.name=/^(getHours|getMinutes|getDate|getDay|getMonth|setHours|setDate)$/]",
+          message: 'These read the server clock (UTC): use @shared/utils zone helpers, or dayjs add/subtract for a duration.',
+        },
+        {
+          selector: "CallExpression[callee.property.name='format'][callee.object.type='CallExpression'][callee.object.callee.name='dayjs'][callee.object.arguments.length>0]",
+          message: 'A printed date is read on the server clock: use formatDateInAppTimezone or formatInZone.',
+        },
+      ],
+    },
+  },
   // --- Lodash rules --- //
   {
     files: ["**/*.js", "**/*.ts"],

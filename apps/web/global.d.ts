@@ -11,3 +11,8 @@ declare module '*.css' {
   const content: unknown;
   export default content;
 }
+
+// Google Analytics function, defined by the Analytics component once the consent allows it
+interface Window {
+  gtag?: (...args: unknown[]) => void;
+}

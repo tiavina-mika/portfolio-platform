@@ -1,3 +1,5 @@
+require('./load-env');
+
 const next = require('next');
 const express = require('express');
 const cors = require('cors');

@@ -1,4 +1,4 @@
-# Cas d'utilisation — Contacts (Liste)
+# Cas d'utilisation — Contacts (Messages reçus)
 
 ## Table des matières
 
@@ -6,20 +6,21 @@
 - [À quoi sert cette page](#à-quoi-sert-cette-page)
 - [Qui peut l'utiliser](#qui-peut-lutiliser)
 - [Ce que l'on voit à l'écran](#ce-que-lon-voit-à-lécran)
-- [Rechercher / filtrer](#rechercher--filtrer)
+- [Rechercher](#rechercher)
 - [Actions possibles](#actions-possibles)
 - [Cas d'utilisation typiques](#cas-dutilisation-typiques)
 - [Points d'attention / limites actuelles](#points-dattention--limites-actuelles)
 
 ## Où trouver cette page
 
-Menu de gauche → **Contacts**, ou carte **Contacts** de l'écran d'accueil, ou l'icône de message avec
-pastille de nombre en haut à droite de l'écran (elle ouvre directement l'onglet « Nouveaux »).
+Menu de gauche → groupe **Communauté** → **Contacts**, ou la ligne « contacts » de la cloche de la barre du
+haut. Adresse : `/contacts`.
 
 ## À quoi sert cette page
 
-Elle rassemble les messages envoyés par les visiteurs depuis le formulaire de contact du site public.
-On y lit les messages, on y répond et on supprime ceux qui ne servent plus.
+Lire les messages envoyés par les visiteurs depuis le formulaire de contact du site public. C'est une simple
+boîte de lecture : on consulte le message et on retrouve les coordonnées de la personne pour lui écrire avec
+sa propre messagerie. La page ne permet pas de répondre.
 
 ## Qui peut l'utiliser
 
@@ -27,52 +28,51 @@ Droits de la ressource « Contact », réglés dans la page **Droits** :
 
 | Droit | Ce qu'il permet ici |
 |---|---|
-| Lister | Voir la liste (sans ce droit, l'écran « introuvable » s'affiche) |
+| Lister | Voir les messages (sans ce droit, l'écran « introuvable » s'affiche) |
 | Supprimer | Mettre un message à la corbeille |
-| Supprimer définitivement | Onglet « Corbeille » et destruction définitive |
+| Supprimer définitivement | Voir la corbeille et détruire définitivement un message |
 
-Ouvrir un message pour y répondre n'est conditionné par aucun droit supplémentaire à l'écran. Les
-propriétaires et administrateurs ont tous les droits.
+Les comptes Owner et Super Admin ont tous les droits.
 
 ## Ce que l'on voit à l'écran
 
-- Des onglets : **Tout**, **Nouveaux** (messages pas encore marqués comme vus) et **Corbeille**
-  (réservé aux comptes pouvant supprimer définitivement).
-- Un champ de recherche et un panneau de filtres avancés.
-- Un tableau : **Nom**, **Email**, **Message** (les 100 premiers caractères), **Répondu** (coche ou non),
-  **Date d'envoi** (avec l'heure) et **Actions**. Si l'expéditeur a un compte, c'est son nom de compte
-  qui est affiché.
-- Affichage en tableau ou en vignettes (grand écran), tri par colonne (par défaut les plus récemment
-  modifiés d'abord), 20 lignes par écran (50 ou 75 au choix).
+Une disposition en deux colonnes (sur téléphone, un seul écran à la fois) :
 
-Un clic sur une ligne ouvre le message (voir [Lire et répondre à un message](CONTACTS_PREVIEW.FR.md)).
+- **À gauche, la liste des messages** : pour chacun, une pastille avec les initiales, le nom de l'expéditeur,
+  la date relative (« il y a 2 heures »…) et un extrait du message. Un message **non lu** est écrit en gras.
+  En dessous : le nombre de messages et la pagination. Les comptes autorisés à détruire voient aussi un
+  onglet **Corbeille**.
+- **À droite, le message ouvert** : le nom et l'e-mail de l'expéditeur, le texte complet du message, puis
+  une carte de détails : e-mail, téléphone, date d'envoi, langue du visiteur et s'il a demandé à recevoir la
+  newsletter. Quand aucun message n'est ouvert, un texte invite à en choisir un.
 
-## Rechercher / filtrer
+Ouvrir un message le marque comme lu : il perd son gras dans la liste et le compteur du menu de gauche
+diminue.
 
-- Le champ de recherche (« Nom, email ou message ») cherche dans ces trois informations.
-- Les filtres avancés : répondu ou non, date de création, date de modification, nom, e-mail.
-- L'icône « Réinitialiser les filtres » remet la liste à zéro.
+## Rechercher
+
+Un champ de recherche au-dessus de la liste : on tape et la liste se met à jour toute seule, après une
+courte pause. La recherche porte sur le contenu des messages et sur les coordonnées des expéditeurs.
 
 ## Actions possibles
 
-- **Répondre** : l'icône d'avion en papier de la ligne (ou un clic sur la ligne) ouvre le message.
-- **Supprimer** : l'icône corbeille de la ligne, après confirmation, met le message à la corbeille.
-- **Sélection multiple** : en cochant des lignes, on peut les **marquer comme vus ou non vus** (dans
-  l'onglet « Nouveaux » : « Marquer comme vu »), ou les **supprimer** d'un coup.
-- **Corbeille** : chaque ligne propose « Supprimer » (définitif, irréversible).
+- **Ouvrir un message** : un clic sur une ligne. Chaque message a sa propre adresse, que l'on peut copier ou
+  retrouver depuis la recherche globale.
+- **Supprimer** un message (menu à trois points du message) : il part à la corbeille.
+- **Détruire définitivement** un message depuis la corbeille.
+- **Exporter** la liste telle qu'elle est affichée (recherche comprise), en CSV ou Excel, sans limite de
+  page.
 
 ## Cas d'utilisation typiques
 
-1. **Traiter les nouveaux messages** : onglet « Nouveaux », ouvrir chaque message et répondre.
-2. **Retrouver un échange** : taper le nom ou l'adresse de la personne dans la recherche.
-3. **Voir ce qui reste sans réponse** : filtre avancé « Répondu » sur « non ».
-4. **Faire le ménage** : cocher les messages traités et les supprimer.
+1. **Lire les nouveaux messages** : les messages en gras sont ceux qui n'ont pas encore été ouverts.
+2. **Retrouver un échange** : taper le nom, l'e-mail ou un mot du message.
+3. **Faire le ménage** : supprimer les messages traités, puis vider la corbeille.
+4. **Récupérer des contacts** : exporter la liste.
 
 ## Points d'attention / limites actuelles
 
-- Ouvrir un message ne le marque pas comme vu : il faut le faire par la sélection multiple. Tant que ce
-  n'est pas fait, il reste compté dans la pastille en haut de l'écran.
-- Pour les comptes qui peuvent supprimer définitivement, la sélection multiple n'est pas proposée.
+- Il n'est pas possible de répondre depuis le back-office, ni de créer un message : la liste ne se remplit
+  que par le formulaire du site.
+- Le visiteur ne reçoit pas d'accusé de réception automatique.
 - Il n'existe pas de bouton « Restaurer » pour un message mis à la corbeille.
-- Il est impossible de créer un message depuis le back-office : la liste ne se remplit que par le
-  formulaire du site.

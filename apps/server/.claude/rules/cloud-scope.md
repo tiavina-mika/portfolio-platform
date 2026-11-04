@@ -24,7 +24,7 @@ This is a **two-way boundary**:
 | Uses `Parse.Query`, `Parse.Object`, `Parse.Cloud.define/job`, `Parse.User`, etc. | `cloud/` (correct sub-folder — see `parse-patterns.md`) |
 | Generic utility (string/date/math/retry/formatting, no Parse import) | `src/utils/` |
 | Type/interface with no `Parse.Object` shape | `src/types/` |
-| Constant | `src/utils/constants.ts` (or `libs/shared-constants` if several apps use it) |
+| Constant | `src/constants/_core/constants.ts` (or `libs/shared-constants` if several apps use it) |
 | Reusable service with no Parse dependency (e.g. calls an external API) | `src/services/` |
 
 ## How to decide

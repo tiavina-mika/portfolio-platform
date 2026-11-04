@@ -1,11 +1,11 @@
 
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react';
-import { type PaletteMode, ThemeProvider } from '@mui/material';
-import { type ReactNode } from 'react';
+import { CssBaseline, PaletteMode, ThemeProvider } from '@mui/material';
+import { ReactNode, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { getSettingsThemeColorSelector, getSettingsThemeSelector } from '@/redux/reducers/settings.reducer';
-import { getTheme } from '@/utils/theme.utils';
+import { getSettingsThemeColorSelector, getSettingsThemeSelector } from '@/redux/reducers/_core/settings.reducer';
+import { getTheme } from '@/utils/_core/theme/theme.utils';
 
 import { GlobalStyles } from './GlobalStyles';
 
@@ -18,11 +18,13 @@ const MuiThemeProvider = ({
 }: Props) => {
   const theme: PaletteMode = useSelector(getSettingsThemeSelector);
   const themeColor = useSelector(getSettingsThemeColorSelector);
-  const currentTheme = getTheme(theme, themeColor);
+  // building a theme is costly, and the provider re-renders with whatever re-renders the app root
+  const currentTheme = useMemo(() => getTheme(theme, themeColor), [theme, themeColor]);
 
   return (
     <ThemeProvider theme={currentTheme}>
       <EmotionThemeProvider theme={currentTheme}>
+        <CssBaseline />
         <GlobalStyles theme={currentTheme} />
         {children}
       </EmotionThemeProvider>

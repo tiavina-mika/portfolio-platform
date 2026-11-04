@@ -20,7 +20,7 @@
 
 ## Où trouver cette page
 
-Menu de gauche → **Articles** (premier lien du menu). Adresse : `/articles`.
+Menu de gauche → groupe **Contenu** → **Articles**. Adresse : `/articles`.
 
 La liste peut aussi s'ouvrir **restreinte à une catégorie**, en cliquant sur le nom d'une catégorie depuis
 la fiche d'un article : seuls les articles classés dans cette catégorie sont alors affichés.
@@ -32,8 +32,8 @@ pour le consulter, on le modifie, on le supprime ou on en crée un nouveau.
 
 ## Qui peut l'utiliser
 
-L'accès dépend du **rôle** du compte (page **Droits**, ressource « Article »). Les propriétaires et
-administrateurs ont tous les droits.
+L'accès dépend du **poste** du compte (page **Droits**, ressource « Article »). Les comptes Owner et
+Super Admin ont tous les droits.
 
 | Droit | Ce qu'il permet ici |
 |---|---|
@@ -112,11 +112,11 @@ création (voir la page « Articles (Ajout et modification) »).
 
 ## Points d'attention / limites actuelles
 
-- **Il n'y a pas de bouton « Restaurer »** : un article mis à la corbeille ne peut pas être remis dans la
-  liste depuis le back-office.
+- Dans l'onglet **Corbeille**, l'action **Restaurer** remet un article dans la liste.
 - Depuis la corbeille, **« Voir l'aperçu » n'ouvre pas la fiche** : la page affichée est « introuvable », car
   la fiche d'un article supprimé n'est plus accessible.
 - Le champ **Rechercher par auteur** et les critères « utilisateur » et « titre » de la recherche avancée
   **ne donnent pas de résultat fiable** pour l'instant : pour chercher un titre, préférer le champ
   **Rechercher titre, contenu**.
-- Il n'y a pas d'export de la liste.
+- La liste peut être exportée (bouton **Exporter** : fichier CSV ou Excel, pour la page affichée ou la
+  sélection).

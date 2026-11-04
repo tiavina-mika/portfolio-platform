@@ -16,9 +16,8 @@
 ## Où trouver cette page
 
 Lien **"Projets"** du menu de navigation (présent sur toutes les pages), bouton **"Voir N autres
-projets"** de la page d'accueil, ou lien "Mes projets" du pied de page (celui-ci ramène en réalité à
-l'accueil, voir les points d'attention). L'adresse est `/projects` en anglais et `/projets` en
-français.
+projets"** de la page d'accueil, ou lien "Mes projets" du pied de page. L'adresse est `/projects` en anglais et
+`/projets` en français.
 
 ## À quoi sert cette page
 
@@ -39,7 +38,7 @@ Tout visiteur, sans connexion ni compte.
 - Les projets sont triés par date de début, du plus récent au plus ancien.
 - Une **pagination** en bas de page : 12 projets par page, avec des flèches et les numéros des pages
   voisines.
-- Pendant le chargement, des cartes grisées s'affichent à la place des projets.
+- Pendant le chargement, des cartes grisées s'affichent à la place des projets ; si le chargement échoue, une bannière propose de réessayer, et hors connexion un message indique que les projets reviendront avec le réseau.
 
 Seuls les projets **actifs** (non désactivés ni supprimés dans le back-office) sont visibles. Le
 nom, la description et les textes s'affichent dans la langue du visiteur.
@@ -51,8 +50,8 @@ page de détail d'un projet :
 
 - un clic sur une **technologie** (par exemple React) affiche uniquement les projets qui utilisent
   cette technologie ;
-- un clic sur un **mot-clé** de la page de détail est prévu pour filtrer de la même façon (voir les
-  points d'attention).
+- un clic sur un **mot-clé** de la page de détail affiche de même uniquement les projets portant ce
+  mot-clé.
 
 Le menu de recherche du site (en haut de page) permet aussi de retrouver un projet par son texte,
 voir [Navigation, pied de page, langue et thème](../../navigation/fr/NAVIGATION_AND_FOOTER.FR.md).
@@ -77,11 +76,8 @@ Les flèches et les numéros de la pagination affichent les projets suivants ou 
 
 ## Points d'attention / limites actuelles
 
-- Aucun projet n'est affiché tant qu'aucun projet n'est actif ; il n'y a pas de message particulier
-  dans ce cas.
+- Tant qu'aucun projet n'est actif, le message **"Aucun projet pour le moment."** s'affiche.
 - Le filtre par technologie n'indique pas à l'écran qu'il est actif : la liste est simplement plus
   courte. Pour revenir à la liste complète, on repasse par le menu "Projets".
-- Le filtre par mot-clé proposé depuis la page de détail d'un projet ne restreint pas
-  actuellement la liste : la liste complète s'affiche.
-- Le lien "Mes projets" du pied de page mène à la page d'accueil, pas à cette liste.
+- Les filtres (technologie, mot-clé) et l'ordre sont portés par l'adresse de la page : une liste filtrée peut être copiée et partagée.
 - Il n'y a pas de choix de tri pour le visiteur sur cette page.

@@ -6,6 +6,7 @@ import {
 } from 'react';
 
 import { cn } from '@/utils/app.utils';
+import { CARD_IMAGE_SIZES } from '@/utils/constants';
 
 import Text, { TextProps } from '../typography/Text';
 import TextLink from '../typography/TextLink';
@@ -19,13 +20,13 @@ interface ICardProps extends ComponentProps<'div'> {
 
 const Card = ({
   className,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/naming-convention
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   as: Component = 'div',
   withShadow = true,
   ...props
 }: ICardProps) => {
   return (
-    <div
+    <Component
       data-slot="card"
       className={cn(
         'flex flex-1 flex-col gap-3 self-stretch',
@@ -174,7 +175,7 @@ const getObjectSizeClassName = (objectSize: CardImageProps['objectSize']) => {
   }
 };
 
-type CardComponentImageProps = ImageProps & IWithLinkProps & CardImageProps;
+type CardComponentImageProps =ImageProps & IWithLinkProps & CardImageProps;
 const CardImage = ({
   className,
   children,
@@ -195,6 +196,11 @@ const CardImage = ({
     >
       <Image
         fill
+        /*
+         * a `fill` image needs `sizes` or Next serves the largest variant; cards are at most
+         * half the viewport on desktop and full width on mobile. A caller can override it.
+         */
+        sizes={CARD_IMAGE_SIZES}
         className={cn(
           'object-center',
           getObjectSizeClassName(objectSize),

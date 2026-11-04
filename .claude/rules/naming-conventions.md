@@ -43,6 +43,10 @@ docs/cas-utilisation/articles/        ❌ "cas-utilisation" is French — rename
 
 This applies everywhere a folder is created or renamed: `docs/`, `src/` sub-folders, etc.
 
+## `_core` / `_domain` folders — server and back-office only
+
+In `apps/server` and `apps/bo`, most source folders hold a `_core/` subfolder (generic back-office, works without the portfolio's domain) and a `_domain/` one (the `Project` domain). Files take the same name in both; `_core` never imports `_domain` (the two meet only in the composition points). `apps/web` is not split. Details: `docs/code/architecture/en/CORE_DOMAIN.md`, and the `core-domain-boundary` rules of each app.
+
 ## Domain folders — always singular
 
 A sub-folder that scopes a container/page/route/constants file to one business domain

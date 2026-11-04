@@ -1,15 +1,16 @@
 import { type Theme } from '@mui/material';
-import { grey } from '@mui/material/colors';
 import { TextEditor, type TextEditorProps } from 'mui-tiptap-editor';
 import { useFormContext, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { FONT_SIZE_META } from '@/constants/_core/ui/ui.constants';
+
 const classes = {
   required: (theme: Theme) => ({
-    color: grey[500],
+    color: theme.palette.text.secondary,
     marginRight: 6,
     marginLeft: 6,
-    [theme.breakpoints.down('sm')]: { fontSize: 14 },
+    [theme.breakpoints.down('sm')]: { fontSize: FONT_SIZE_META },
   }),
 };
 

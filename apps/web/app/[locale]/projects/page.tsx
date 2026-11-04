@@ -1,17 +1,19 @@
-
 import { Metadata, ResolvingMetadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Suspense } from 'react';
 
-import PageHeader from '@/components/layouts/PageHeader';
-import Section from '@/components/layouts/Section';
-import { siteConfig } from '@/config/site';
-import PaginatedProjects from '@/containers/projects/PaginatedProjects';
-import ProjectsSkeleton from '@/containers/projects/ProjectsSkeleton';
-import { defaultLocale, Locale } from '@/i18n/config';
+import Projects from '@/containers/project/Projects';
+import ProjectsHeader from '@/containers/project/ProjectsHeader';
+import { locales, Locale } from '@/i18n/config';
 import { ROUTES } from '@/i18n/routes';
 import { ISearchParams } from '@/types/app.type';
-import { getTranslatedAbsoluteUrl } from '@/utils/app.utils';
+import { OgCardLayoutEnum } from '@/types/og.type';
+import { getAlternates, getTranslatedAbsoluteUrl } from '@/utils/app.utils';
+import { APP_NAME } from '@/utils/constants';
+import { getSocialMetadata } from '@/utils/og.utils';
+import { projectSearchParamsSchema } from '@/validations/app.validations';
+
+import ProjectsPage from './ProjectsPage';
 
 /*
  * ----------------------------- //
@@ -28,35 +30,35 @@ export const generateMetadata = async (
 ): Promise<Metadata> => {
   const params = await props.params;
   const locale = params.locale as Locale;
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
+  const tOg = await getTranslations({ locale, namespace: 'OpenGraph' });
 
-  const t = await getTranslations({
-    locale,
-    namespace: 'Metadata',
-  });
-
-  const image = `${siteConfig.url}/images/metadata/og-image-projects.${locale || defaultLocale}.jpg`;
-
-  const og = (await parent).openGraph;
   const keywords = (await parent).keywords || [];
 
+  // canonical always points to the unfiltered, page-1 listing — filters/pagination are not canonical
+  const urlsByLocale = Object.fromEntries(
+    locales.map((loc) => [loc, getTranslatedAbsoluteUrl(ROUTES.projects.root, { locale: loc })])
+  );
+  const title = t('projects.metaTitle');
+  const description = t('projects.metaDescription');
+
   return {
-    title: t('projects.metaTitle'),
-    description: t('projects.metaDescription'),
-    keywords: [...keywords, 'projects', 'blog', 'news'],
-    openGraph: {
-      ...og,
-      title: t('projects.metaTitle'),
-      description: t('projects.metaDescription'),
-      url: getTranslatedAbsoluteUrl(ROUTES.projects.root, { locale }),
-      images: [
-        {
-          url: image,
-          width: 1200,
-          height: 630,
-          alt: t('projects.metaTitle'),
-        },
-      ],
-    },
+    title,
+    description,
+    keywords: [...keywords, 'projects', 'portfolio'],
+    alternates: getAlternates(urlsByLocale, locale),
+    ...getSocialMetadata({
+      card: {
+        layout: OgCardLayoutEnum.CENTERED,
+        chip: tOg('projects.chip'),
+        title: tOg('projects.title', { appName: APP_NAME }),
+        subtitle: tOg('projects.subtitle'),
+      },
+      title,
+      description,
+      url: urlsByLocale[locale],
+      locale,
+    }),
   };
 };
 
@@ -67,27 +69,56 @@ type Props = {
   searchParams: Promise<ISearchParams>;
 };
 
-const ProjectsPage = async (props: Props) => {
+const ProjectsContent = async (props: Props) => {
   const searchParams = await props.searchParams;
   const params = await props.params;
 
   const locale = params.locale as Locale;
 
   setRequestLocale(locale);
-  const tProject = await getTranslations('Project');
+
+  const parsedSearchParams = projectSearchParamsSchema.parse(searchParams);
+  const page = parseInt(parsedSearchParams.page, 10) || 1;
+  const {
+    order, orderedBy, tag, technologies,
+  } = parsedSearchParams;
+
+  // the filters and the sort that the links of the pagination keep
+  const linkSearchParams: Record<string, string> = {
+    ...(tag ? { tag } : {}),
+    ...(technologies ? { technologies } : {}),
+    ...(orderedBy ? { orderedBy } : {}),
+    ...(order === 'asc' ? { order } : {}),
+  };
 
   return (
-    <Section className="flex flex-col" rootClassName="mb-6 md:mb-8 lg:mb-16">
-      <PageHeader
-        fullWidth
-        description={tProject('projectsIDevelopedOverMyCareerDescription')}
-        title={tProject('projectsIDevelopedTitle')}
-      />
-      <Suspense fallback={<ProjectsSkeleton />}>
-        <PaginatedProjects locale={locale} searchParams={searchParams} />
-      </Suspense>
-    </Section>
+    <ProjectsPage
+      header={<ProjectsHeader locale={locale} />}
+      projects={(
+        <Projects
+          locale={locale}
+          order={order}
+          orderedBy={orderedBy}
+          page={page}
+          searchParams={linkSearchParams}
+          tag={tag}
+          technologies={technologies}
+        />
+      )}
+    />
   );
 };
 
-export default ProjectsPage;
+/**
+ * this route reads `searchParams` (pagination/filters), which — unlike `params` — is never
+ * covered by `generateStaticParams` and so is always request-time data — wrapped in its own
+ * `<Suspense>` boundary so `cacheComponents` can still validate/prerender the static shell
+ * (nav/footer) around it
+ */
+const ProjectsApp = (props: Props) => (
+  <Suspense fallback={null}>
+    <ProjectsContent {...props} />
+  </Suspense>
+);
+
+export default ProjectsApp;

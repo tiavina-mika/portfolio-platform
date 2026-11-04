@@ -1,0 +1,22 @@
+{
+  "contacts": {
+    "contacts": "Contacts",
+    "contact": "Contact",
+    "message": "Message",
+    "hasNoRightToDeleteContact": "You can not delete this contact",
+    "sentDate": "Sent date",
+    "search": "Name, email, phone or message",
+    "noContactMatchesSearch": "No message matches this search.",
+    "selectContact": "No message open",
+    "selectContactDescription": "Pick a message from the list to read it.",
+    "details": {
+      "title": "Message details",
+      "email": "Email",
+      "phone": "Phone",
+      "createdAt": "Created",
+      "language": "Language",
+      "newsletter": "Newsletter",
+      "notProvided": "Not provided"
+    }
+  }
+}

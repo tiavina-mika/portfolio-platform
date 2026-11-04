@@ -1,15 +1,15 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, type DialogProps } from '@mui/material';
+import { Box, DialogProps, type Theme } from '@mui/material';
 import { useState } from 'react';
-import { type SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import Dialog from '@/components/Dialog';
 import TextField from '@/components/form/fields/TextField';
 import Form from '@/components/form/Form';
-import { ConfirmDeletionInput } from '@/types/app.type';
-import { confirmDeletionSchema } from '@/validations/app.validations';
+import { ConfirmDeletionInput } from '@/types/_core/app.type';
+import { confirmDeletionSchema } from '@/validations/_core/app.validations';
 
 
 const CONFIRM_DELETION_FORM_ID = 'confirm-deletion-form-id';
@@ -34,12 +34,8 @@ const ConfirmDeletionFormModal = ({
 
   const form = useForm<ConfirmDeletionInput>({ resolver: zodResolver(confirmDeletionSchema) });
 
-  const {
-    handleSubmit,
-  } = form;
-
-  const onSubmitHandler: SubmitHandler<ConfirmDeletionInput> = async (values) => {
-    if (values.confirmation !== value) {
+  const handleSubmit = async (values: ConfirmDeletionInput) => {
+    if (values.confirmation.trim() !== value) {
       setError(t('infoMessages.pleaserEnterValue', { value }));
       return;
     }
@@ -58,7 +54,7 @@ const ConfirmDeletionFormModal = ({
       title={t('delete') + ' ' + label} // ex: Delete this order
       toggle={toggle}
       description={(
-        <span css={{ color: '#000' }}>
+        <span css={(theme: Theme) => ({ color: theme.palette.text.primary })}>
           <span>
             {t('infoMessages.sureToDeleteThing')}
             {' '}
@@ -74,7 +70,11 @@ const ConfirmDeletionFormModal = ({
       {...dialogProps}
     >
       <Box sx={{ mt: 3 }}>
-        <Form form={form} formId={CONFIRM_DELETION_FORM_ID} onSubmit={handleSubmit(onSubmitHandler)}>
+        <Form
+          form={form}
+          formId={CONFIRM_DELETION_FORM_ID}
+          onSubmit={handleSubmit}
+        >
           <TextField
             required
             errorMessage={error}

@@ -10,61 +10,84 @@
 
 ## Où se trouve le code
 
-Source : `apps/server/src/cloud/`. Chaque type a un `index.ts` qui importe ses fichiers ; le point d'entrée du Cloud Code est `apps/server/src/cloud/index.ts`.
+Source : `apps/server/src/cloud/`. Les fonctions, triggers et jobs ont chacun un dossier `_core/` (générique, réutilisable) et un dossier `_domain/` (le domaine `project`), et un `index.ts` qui importe leurs fichiers ; le point d'entrée du Cloud Code est `apps/server/src/cloud/index.ts`.
 
-La plupart des fonctions sont enveloppées par `fromBO(...)` (`utils/utils.cloud.ts`), qui refuse un appel sans utilisateur connecté et peut vérifier les droits de ses rôles (voir [rôles et permissions](ROLES_AND_PERMISSIONS.FR.md)). Les fonctions `*ForClient` servent le site public.
+La plupart des fonctions sont enveloppées par `fromBO(...)` (`cloud/utils/_core/`), qui refuse un appel sans utilisateur connecté et peut vérifier les droits de ses rôles (voir [rôles et permissions](ROLES_AND_PERMISSIONS.FR.md)). Les fonctions `*ForClient` et quelques autres (newsletter, formulaire de contact) servent le site public.
 
 ## Cloud Functions
 
-Les fichiers sont dans `apps/server/src/cloud/functions/`.
+Les fichiers sont dans `apps/server/src/cloud/functions/_core/` sauf mention contraire.
 
 | Fichier | Fonctions |
 |---|---|
-| `app.functions.ts` | `unsubscribeNewsletter`, `resubscribeNewsletter`, `addReasonToUnsubscribeToTheNewsletter`, `getObjectsCount` |
-| `article.functions.ts` | `getArticles`, `getArticle`, `getArticleForClient` |
-| `auth.functions.ts` | `verifyAccountEmail`, `sendVerificationCode`, `sendResetPasswordVerificationCode`, `resetPassword` |
+| `accountHelp.functions.ts` | `resendMemberPhoneVerificationCode`, `sendMemberPasswordResetCode`, `changeMemberContact`, `changeMemberCountry` |
+| `admins.functions.ts` | `getUsers`, `getUser`, `deleteUser`, `deleteUsers`, `destroyUsers`, `banUser`, `liftUserBan`, `toggleUsersSeen`, `getUserIdsFromRoles`, `sendMessageToUser` |
+| `app.functions.ts` | `unsubscribeNewsletter`, `resubscribeNewsletter`, `addReasonToUnsubscribeToTheNewsletter`, `getObjectsCount`, `incrementShareCount` |
+| `article.functions.ts` | `getArticles`, `getArticle`, `getArticleForClient`, `incrementArticleViewCount` |
+| `auditLog.functions.ts` | `getAuditLogs`, `getAuditLogByUserId`, `getUserAuditTrail` |
+| `auth.functions.ts` | `verifyAccount`, `changePassword`, `sendVerificationCode`, `sendResetPasswordVerificationCode`, `loginWithPhone`, `loginWithEmail`, `resetPassword` |
 | `category.functions.ts` | `getCategories`, `getCategory` |
-| `contact.functions.ts` | `getContacts`, `getContact` |
-| `misc.functions.ts` | `clearRecycleBinInCloud` |
+| `contact.functions.ts` | `createPublicContact`, `subscribeToNewsletter`, `confirmNewsletterSubscription`, `getContacts`, `getContact` |
+| `contactChange.functions.ts` | `requestContactChange`, `confirmContactChange` |
+| `contentVersion.functions.ts` | `getContentVersions`, `getContentVersionSnapshot` |
+| `dashboard.functions.ts` | `getDashboardKpis`, `getDashboardAlerts`, `getDashboardRecentActivity` |
+| `faq.functions.ts` | `getFaq` |
+| `globalSearch.functions.ts` | `globalSearch` |
+| `impersonation.functions.ts` | `impersonateUser`, `endImpersonationSession` |
+| `invitation.functions.ts` | `sendBOInvitation`, `verifyBOInvitationToken` |
+| `mfa.functions.ts` | `generateMfaSecret`, `confirmMfaEnrollment`, `verifyMfaLogin`, `disableMfa`, `regenerateMfaBackupCodes`, `adminResetMfa` |
+| `misc.functions.ts` | `clearRecycleBinInCloud`, `purgeOrphanedEditorFilesInCloud` |
+| `notification.functions.ts` | `getNotifications`, `getNotification`, `resendNotification`, `resendNotificationFailedDeliveries`, `getNotificationResends`, `setNotificationReceiverSeen`, `markAllMyNotificationsSeen`, `updateNotificationPreferences`, `bulkSetNotificationsReceiverSeen`, `bulkSoftDeleteNotifications`, `bulkRestoreNotifications`, `destroyNotifications`, `previewNotificationBroadcast`, `sendNotificationBroadcast`, `getNotificationBroadcastHistory`, `getNotificationSmsDailyCounts` |
 | `page.functions.ts` | `getPages`, `getPage` |
 | `pageSection.functions.ts` | `getPageSections` |
-| `project.functions.ts` | `getProjects`, `getProject`, `getProjectForClient` |
-| `role.functions.ts` | `getUserRoles`, `hasRole`, `addOrUpdateRolesToUser`, `removeRolesForUser`, `createRole`, `updateRole` |
-| `user.functions.ts` | `getUsers`, `getUser`, `deleteUser`, `getUserByEmail`, `deleteUsers`, `destroyUsers`, `toggleBanUser`, `createSessionTokenForAUser`, `toggleUserSeen`, `isUserExistsByEmail`, `getUserIdsFromRoles`, `sendEmailToUser`, `getNewUsersCount`, `saveUserLanguage` |
+| `passwordResetDelay.functions.ts` | `cancelPasswordResetDelay` |
+| `role.functions.ts` | `hasRole`, `addRolesToUser`, `getRolesDelegation`, `removeRolesForUser`, `createRole`, `updateRole`, `getRoleAuditLogs`, `getHighestRoleAccounts` |
+| `stepUpVerification.functions.ts` | `requestStepUpVerification`, `verifyStepUpCode` |
+| `user.functions.ts` | `getUserProfile`, `deleteAccount`, `exportMyData`, `saveUserLanguage` |
+| `userSession.functions.ts` | `registerSession`, `getUserSessions`, `revokeSession`, `revokeOtherSessions`, `adminGetUserSessions`, `adminRevokeUserSession`, `adminRevokeAllUserSessions` |
 | `utils.functions.ts` | `getJobStatus`, `destroyObjects` |
-| `test.functions.ts` | `createBatchTest`, `destroyBatchTest`, `sendArticleToNewsletterTest`, `sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest` (aides de test, pas pour la production) |
+| `test.functions.ts` | `getTestEmailSendersOptions`, `createBatchTest`, `destroyBatchTest`, `sendArticleToNewsletterTest`, `sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest`, `sendInvitationTest`, `sendWelcomeEmailTest`, `sendVerificationCodeSmsTest` (aides de test, importées seulement en développement local et en test) |
+| `_domain/project.functions.ts` | `getProjects`, `getProject`, `getProjectForClient` |
 
 ## Triggers
 
-Les fichiers sont dans `apps/server/src/cloud/triggers/`.
+Les fichiers sont dans `apps/server/src/cloud/triggers/_core/` sauf mention contraire.
 
 | Fichier | Hooks |
 |---|---|
-| `app.triggers.ts` | `afterSave` `App` |
+| `app.triggers.ts` | `beforeSave`, `afterSave` `App` |
 | `article.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `Article` (`afterSave` lance `sendArticleToNewsletterJob`) |
-| `auth.triggers.ts` | `beforeLogin`, `afterLogout` |
+| `auth.triggers.ts` | `beforeLogin`, `afterLogin`, `afterLogout` |
 | `category.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `Category` |
 | `contact.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `Contact` |
+| `country-scope.triggers.ts` | `beforeFind` sur les classes cloisonnées par pays |
 | `newsletter.triggers.ts` | `beforeSave`, `afterSave` `Newsletter` (`afterSave` lance `createContactToCloudJob`) |
-| `page.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` sur `Page` et sur `PageSection` |
-| `project.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `Project` |
-| `user.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `_User` (`beforeSave` donne le rôle Owner aux e-mails de `OWNERS_EMAILS`) |
-| `role.triggers.ts` | `afterSave`, `beforeDelete`, `afterDelete` `_Role` (voir [pièges](#pièges)) |
+| `notification.triggers.ts` | `beforeSave`, `afterSave` `Notification` |
+| `page.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `Page` |
+| `pageSection.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `PageSection` |
+| `role.triggers.ts` | `beforeSave`, `afterSave`, `beforeDelete`, `afterDelete` `_Role` |
+| `user.triggers.ts` | `beforeSave`, `afterSave`, `beforeDelete`, `afterDelete` `_User` |
+| `_domain/project.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `Project` |
 
 ## Cloud Jobs
 
-Les fichiers sont dans `apps/server/src/cloud/jobs/`. Un job s'exécute via `runJob(name, params)` (`utils/job.utils.cloud.ts`). Le côté planifié et récurrent est dans les [tâches planifiées](SCHEDULED_JOBS.FR.md).
+Les fichiers sont dans `apps/server/src/cloud/jobs/_core/` (`_domain/` n'a aucun job). Un job est déclaré avec `defineJob(name, handler)` et s'exécute via `runJob(name, params)` (`cloud/utils/_core/job.utils.cloud.ts`). Le côté planifié est dans les [tâches planifiées](SCHEDULED_JOBS.FR.md).
 
-| Fichier | Job | Lancé par |
-|---|---|---|
-| `category.jobs.ts` | `updateLinkedCategoryItemCountJob` | `category.service.cloud.ts` |
-| `email.jobs.ts` | `createContactToCloudJob` | `newsletter.triggers.ts` |
-| `misc.jobs.ts` | `clearRecycleBinInCloudJob` | la fonction `clearRecycleBinInCloud` |
-| `newsletter.jobs.ts` | `sendArticleToNewsletterJob` | `article.triggers.ts` |
-| `test.jobs.ts` | `createBatchTestJob`, `destroyBatchTestJob` | les fonctions de test `*BatchTest` |
+| Fichier | Jobs |
+|---|---|
+| `category.jobs.ts` | `updateLinkedCategoryItemCountJob` |
+| `cms.jobs.ts` | `purgeOrphanedEditorFilesJob` |
+| `email.jobs.ts` | `createContactToCloudJob` |
+| `impersonation.jobs.ts` | `revokeExpiredImpersonationSessionsJob` |
+| `misc.jobs.ts` | `clearRecycleBinInCloudJob` |
+| `newsletter.jobs.ts` | `sendArticleToNewsletterJob` |
+| `notification.jobs.ts` | `expireOldNotificationsJob`, `purgeOldNotificationsJob` |
+| `retention.jobs.ts` | `purgeOldLogsJob` |
+| `slack.jobs.ts` | `postDailySlackSummaryJob` |
+| `user.jobs.ts` | `deleteOrDestroyUserRelationsJob`, `liftExpiredBansJob`, `createUserAuditLogJob`, `purgeOrphanUserSessionsJob`, `purgeUnverifiedPhoneSignupsJob` |
+| `test.jobs.ts` | `createBatchTestJob`, `destroyBatchTestJob` |
 
 ## Pièges
 
-- `role.triggers.ts` existe mais n'est pas importé par `triggers/index.ts` : ses hooks `_Role` ne s'exécutent pas aujourd'hui.
-- `createDefaultRoles` (`services/right.service.cloud.ts`) n'est appelée nulle part (son appel dans `index.ts` est commenté) : le rôle Owner vient donc uniquement du flux `OWNERS_EMAILS`.
-- Tout nouveau fichier de fonctions, triggers ou jobs doit être ajouté à cette page dans le même changement (`.claude/rules/inventory.md`).
+- Le premier owner n'est plus créé par un trigger : au démarrage, `ensureOwnerInvitationsExist` invite chaque adresse de `OWNERS_EMAILS` avec le rôle `OWNER` (voir [rôles et permissions](ROLES_AND_PERMISSIONS.FR.md)).
+- Tout nouveau fichier de fonctions, triggers ou jobs doit être ajouté à cette page dans le même changement (`.claude/rules/inventory.md`) ; `node .claude/skills/inventory/scripts/inventory.mjs --list` affiche tous les noms.

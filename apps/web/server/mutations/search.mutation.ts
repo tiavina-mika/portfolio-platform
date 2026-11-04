@@ -5,18 +5,17 @@ import { z } from 'zod';
 import { locales } from '@/i18n/config';
 import { ISearchResult } from '@/types/app.type';
 import { goToItemBySlug } from '@/utils/app.utils';
+import { collections, SEARCH_EMPTY_RESULT_ID } from '@/utils/constants';
 import { escapeText } from '@/utils/utils';
 import { localeSchemaField } from '@/validations/app.validations';
 import { getParseServer } from '@/config/parse-server.config';
-import { IArticle } from '@/types/article.type';
-import { IPage } from '@/types/cms.type';
 
 type SearchOptions = {
   search: string;
   locale: string;
   fieldsToSearch?: string[];
 };
-const searchItems = (
+const searchItems = async (
   collection: string,
   {
     search,
@@ -25,8 +24,6 @@ const searchItems = (
   }: SearchOptions
 ) => {
   const Parse = getParseServer();
-
-  let query = new Parse.Query(collection);
 
   // search by translated fields
   const or: any[] = [];
@@ -42,13 +39,17 @@ const searchItems = (
     );
   });
 
-  query = Parse.Query.or(...or);
-
-  return query
-    .equalTo('deleted', false)
-    .equalTo('active', true)
-    .limit(10)
-    .find();
+  try {
+    return await Parse.Query.or(...or)
+      .equalTo('deleted', false)
+      .equalTo('active', true)
+      .limit(10)
+      .find();
+  }
+  catch (error) {
+    console.log(`searchItems (${collection}) error: `, error);
+    return [];
+  }
 };
 
 /**
@@ -69,21 +70,9 @@ export const searchData = async (values: z.infer<typeof searchSchema>) => {
 
   const { search, locale } = values;
   const options = { search, locale };
-  const projectOptions = {
-    ...options,
-    fieldsToSearch: [
-      'title',
-      'tags',
-      'description',
-      'content',
-      'society',
-      'name',
-      'societyDescription',
-    ],
-  };
   const searchResults = await Promise.all([
-    searchItems('Article', options),
-    searchItems('Project', projectOptions),
+    searchItems(collections.Article, options),
+    searchItems(collections.Project, options),
   ]);
 
   const length = searchResults.reduce((acc, result) => acc + result.length, 0);
@@ -92,7 +81,7 @@ export const searchData = async (values: z.infer<typeof searchSchema>) => {
   if (!length) {
     return [
       {
-        id: 'empty',
+        id: SEARCH_EMPTY_RESULT_ID,
         title: values.tNoResults,
         url: '',
       },

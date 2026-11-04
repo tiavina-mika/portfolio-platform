@@ -2,8 +2,6 @@ import { Dayjs } from 'dayjs';
 import { ComponentType } from 'react';
 import { z } from 'zod';
 
-import type { IFileCloud, ISEOFields } from '@shared/types';
-
 import { Locale } from '@/i18n/config';
 import {
   ContactSchema,
@@ -11,17 +9,6 @@ import {
   UnsubscribeReasonSchema,
 } from '@/validations/app.validations';
 
-interface IContactAttributes {
-  name: string;
-  email: string;
-  message: string;
-  createdAt?: string;
-  objectId: string;
-}
-
-export interface IContact extends Parse.Object<IContactAttributes> {
-  id: string;
-}
 interface IAppTranslatedFields {
   description: string;
   quote: string;
@@ -34,12 +21,12 @@ export interface IAppAttributes {
   updatedAt?: string;
   createdAt?: string;
   cv?: IFileCloud;
-  image?: IFileCloud;
+  image?: IUploadedFile;
   imageForDarkMode?: IFileCloud;
   translated: IAppTranslated;
 }
 
-export interface IApp extends Parse.Object<IAppAttributes> {
+export interface IApp extends IAppAttributes {
   id: string;
 }
 
@@ -53,6 +40,15 @@ export interface IMenuItem {
   label: string;
   onClick: () => void;
   id?: string;
+  /** path of the icon shown before the label */
+  icon?: string;
+  /** keyboard shortcut written after the label */
+  shortcut?: string;
+  disabled?: boolean;
+  /** drawn as a destructive action (delete, log out) */
+  destructive?: boolean;
+  /** the action calls the network: disabled while the menu is `offline` */
+  needsNetwork?: boolean;
 }
 
 export interface IInfo {
@@ -111,6 +107,13 @@ export interface IResponsiveBreakpoints {
   size: number;
 }
 
+export type ResponsiveScreens = {
+  isMobile: boolean;
+  isTablet: boolean;
+  isMobileAndTablet: boolean;
+  isDesktop: boolean;
+};
+
 export interface IUploadedFile {
   publicId: string;
   url: string;
@@ -148,7 +151,17 @@ export interface ISort {
   order: 'asc' | 'desc';
 }
 
-export type { IFileCloud, ISEOFields };
+export interface ISEOFields {
+  slug?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  tags?: string;
+}
+
+export interface IFileCloud {
+  url: string;
+  publicId: string;
+}
 
 export interface ISearchParams extends Pick<IPagination, 'page'>, ISort {
   tag?: string;

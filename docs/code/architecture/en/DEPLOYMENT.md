@@ -5,6 +5,7 @@
 - [Overview](#overview)
 - [Environments](#environments)
 - [Building and starting each app](#building-and-starting-each-app)
+- [Production commands](#production-commands)
 - [Environment variables at runtime](#environment-variables-at-runtime)
 - [Keeping the host awake](#keeping-the-host-awake)
 - [GitHub workflows](#github-workflows)
@@ -37,6 +38,30 @@ The release workflow documents the flow: `develop` is deployed to preproduction,
 The back-office is not deployed on its own: `pnpm build:bo:preprod` and `pnpm build:bo` in `apps/server` build `apps/bo` and then run `pnpm copy`, which copies `apps/bo/dist` into `apps/server/clientBuild/bo/preprod` or `.../prod` (the folder is chosen from `NODE_ENV`; the same two names are written in `config/copyBuilds.cjs` and in `src/utils/constants.ts` and must stay equal). A second script, `config/checkClientBuildSecrets.cjs`, scans that committed bundle for the literal value of any `VITE_*` variable whose name ends with `KEY`, `SECRET`, `TOKEN` or `PASSWORD`, because Vite inlines every `VITE_*` value in the browser code. Express serves the folder statically, and a catch-all registered after the `/parse`, `/files`, `/download` and `/ping` routes answers every other path with its `index.html` (the single-page app).
 
 `next build` of the website prerenders public pages with data read from the live Parse API, so it needs a reachable server.
+
+## Production commands
+
+Production is the `main` branch, with `NODE_ENV=production` for the server and `APP_ENV=production` for the website. The values of the variables come from the host (see below), never from a committed file.
+
+**On the host (Render)**, one service per app:
+
+| Service | Build Command | Start Command |
+|---|---|---|
+| server (also serves the back-office) | `mkdir -p "$HOME/.local/bin" && corepack enable --install-directory "$HOME/.local/bin" && export PATH="$HOME/.local/bin:$PATH" && pnpm install --frozen-lockfile --prod=false && pnpm --filter portfolio-bo exec vite build && pnpm --filter portfolio-server build && NODE_ENV=production pnpm --filter portfolio-server copy` | `pnpm --filter portfolio-server start` |
+| web | `mkdir -p "$HOME/.local/bin" && corepack enable --install-directory "$HOME/.local/bin" && export PATH="$HOME/.local/bin:$PATH" && pnpm install --frozen-lockfile --prod=false && pnpm --filter portfolio-web build:prod` | `pnpm --filter portfolio-web start` |
+
+**On a machine that has the `.env.prod` files** (to try a production build locally):
+
+```bash
+pnpm install --frozen-lockfile
+pnpm --filter portfolio-server build
+pnpm --filter portfolio-server build:bo      # bo build:prod + copy into clientBuild/bo/prod
+pnpm --filter portfolio-web build:prod
+pnpm --filter portfolio-server start         # NODE_ENV=production node --import tsx dist/index.js
+pnpm --filter portfolio-web start            # APP_ENV=production node server.js
+```
+
+The build of the website needs the production server to be reachable (see above). The step-by-step Render setup, and the differences with pre-production, are in [Pre-production and production](../../../services/render/en/RENDER_DEPLOYMENT.md#pre-production-and-production).
 
 ## Environment variables at runtime
 

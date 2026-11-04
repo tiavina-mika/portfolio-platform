@@ -41,19 +41,19 @@ All `VITE_*` variables are inlined in the browser bundle: none may be a secret.
 
 ```
 src/
-├── pages/          # Route pages
-├── components/     # Generic reusable UI components
-├── containers/     # Domain containers (may useDispatch directly — see forms-and-state.md)
-├── routes/         # TanStack Router route tree (public / protected)
-├── redux/          # actions + reducers + store
-├── hooks/          # Custom hooks
-├── utils/          # Utilities
-├── types/          # TypeScript types and enums
-├── validations/    # Zod schemas
-├── config/         # App config (http, i18n)
-├── constants/      # Constants
+├── components/     # Generic reusable UI components (flat)
+├── config/         # App config (http, i18n, domain-registrations.ts)
+├── redux/          # store.ts (flat), actions / reducers / factories split in _core and _domain
+├── routes/         # route tree: protected/private.routes.tsx is the composition point
+├── pages/ containers/ hooks/ services/ types/ utils/ validations/ constants/
+│                   # each split in _core/ (generic back-office) and _domain/ (the project domain)
 └── assets/
 ```
+
+`_core/` never imports `_domain/` (enforced by `coreDomainBoundaryConfig` in the ESLint config). The
+two meet only in the flat composition points: `src/config/domain-registrations.ts` (side-effect
+imports that fill the core registries: dashboard card and column, role rights),
+`src/routes/protected/private.routes.tsx`, `src/redux/store.ts` and `src/hooks/useNavigationMenus.tsx`.
 
 ---
 
@@ -81,13 +81,11 @@ does both) and served directly by the Express server — BO is not deployed as a
 
 ## Adding a New Domain Feature
 
-Checklist when adding a new domain (e.g. `testimonial`):
+Checklist when adding a new entity to the domain (e.g. `testimonial`), everything under `_domain/`:
 
-1. `src/types/testimonial.type.ts` — `ITestimonialAttributes`, enums (shared shape → `libs/shared-domain-types`)
-2. `src/validations/testimonial.validation.ts` — Zod schemas
-3. `src/redux/actions/testimonial.action.ts`
-4. `src/redux/reducers/testimonial.reducer.ts` — `createSlice` + selectors
-5. Register the reducer in `src/redux/store.ts`
-6. Add translation keys under the relevant i18n namespace, in every locale (`pnpm check-i18n`)
-7. Add the page in `src/pages/` (+ route and sidebar entry) and containers in `src/containers/<domain>/`
-8. Update `docs/features/bo/` (see `.claude/rules/feature-docs.md` at the root)
+1. `types/_domain/testimonial.type.ts` and `validations/_domain/testimonial.validations.ts`
+2. `services/_domain/testimonial.service.ts`, then `redux/actions/_domain` and `redux/reducers/_domain`
+3. Register the reducer in `src/redux/store.ts`
+4. Pages in `pages/_domain/testimonial/`, containers in `containers/_domain/testimonial/`, routes in `routes/protected/_domain/` (added in `private.routes.tsx`) and the sidebar entry in `useNavigationMenus.tsx`
+5. Translation keys in `config/i18n/locales/<lng>/_domain/`, in every locale (`pnpm check-i18n`)
+6. Update `docs/features/bo/` (see `.claude/rules/feature-docs.md` at the root)

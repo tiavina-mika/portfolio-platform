@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import { MouseEvent, useState, ReactNode } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
 
+import { FONT_SIZE_META } from '@/constants/_core/ui/ui.constants';
+
 type Props = {
   icon?: ReactNode;
   message: string;
@@ -28,6 +30,8 @@ const IconPopover = ({
     <div>
       <IconButton
         aria-haspopup="true"
+        // the glyph carries no text: the message it opens is what names the button
+        aria-label={message}
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
         aria-owns={open
@@ -53,7 +57,7 @@ const IconPopover = ({
           horizontal: 'left',
         }}
       >
-        <Typography sx={{ p: 1, fontSize: 14 }}>{message}</Typography>
+        <Typography sx={{ p: 1, fontSize: FONT_SIZE_META }}>{message}</Typography>
       </Popover>
     </div>
   );

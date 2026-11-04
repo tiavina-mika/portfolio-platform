@@ -1,7 +1,8 @@
 import { FormControl, FormHelperText } from '@mui/material';
+import { useId } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { ISelectOption } from '@/types/app.type';
+import { ISelectOption } from '@/types/_core/app.type';
 
 import AutocompleteInput, { AutocompleteInputProps } from '../inputs/AutocompleteInput';
 
@@ -31,8 +32,11 @@ const AutocompleteField = <T extends Record<string, any>>({
     setValue,
   } = useFormContext();
 
+  const helperTextId = useId();
+  const hasError = !!errors?.[name];
+
   return (
-    <FormControl component="fieldset" error={!!errors?.[name]} fullWidth={fullWidth}>
+    <FormControl component="fieldset" error={hasError} fullWidth={fullWidth}>
       <Controller
         control={control}
         defaultValue=""
@@ -44,6 +48,8 @@ const AutocompleteField = <T extends Record<string, any>>({
         }) => (
           <AutocompleteInput<T>
             {...otherProps}
+            aria-describedby={helperTextId}
+            aria-invalid={hasError}
             label={label}
             onChange={onChange}
             onInputChange={onSearch}
@@ -55,13 +61,16 @@ const AutocompleteField = <T extends Record<string, any>>({
           />
         )}
       />
-      {errors[name]
-        ? (
-          <FormHelperText error>{(errors as any)[name].message}</FormHelperText>
-        )
-        : (
-          <FormHelperText>{helperText}</FormHelperText>
-        )}
+      {/*
+        * only rendered when it carries something: an empty helper line still keeps its own margin,
+        * which lifts the field off the baseline it shares with the plain fields next to it
+        */}
+      {errors[name] && (
+        <FormHelperText error id={helperTextId}>{(errors as any)[name].message}</FormHelperText>
+      )}
+      {!errors[name] && !!helperText && (
+        <FormHelperText id={helperTextId}>{helperText}</FormHelperText>
+      )}
     </FormControl>
   );
 };

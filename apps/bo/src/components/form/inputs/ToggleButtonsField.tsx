@@ -2,37 +2,20 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
-  type Theme,
   ToggleButton,
   ToggleButtonGroup,
-  type ToggleButtonGroupProps,
-  Typography,
+  ToggleButtonGroupProps,
 } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { ISelectOption } from '@/types/app.type';
+import { CHIP_ICON_GAP } from '@/constants/_core/ui/ui.constants';
+import { ISelectOption } from '@/types/_core/app.type';
 
 const classes = {
-  toggleButtonGroup: (theme: Theme) => ({
-    '& .MuiToggleButtonGroup-grouped': {
-      textTransform: 'capitalize' as const,
-      borderColor: '#BDBDBD',
-      '&:first-of-type': {
-        borderTopLeftRadius: theme.shape.borderRadius,
-        borderBottomLeftRadius: theme.shape.borderRadius,
-      } as const,
-      '&:last-of-type': {
-        borderTopRightRadius: theme.shape.borderRadius,
-        borderBottomRightRadius: theme.shape.borderRadius,
-      } as const,
-    },
-  }),
-  toggleButton: (theme: Theme) => ({
-    '&.Mui-selected': {
-      backgroundColor: theme.palette.primary.main,
-      color: '#fff',
-    },
-  }),
+  // an option's glyph sits beside its label rather than replacing it — the label is the value
+  withIcon: {
+    gap: `${CHIP_ICON_GAP}px`,
+  },
 };
 
 type Props = {
@@ -41,10 +24,17 @@ type Props = {
   helperText?: string;
   options: ISelectOption<string | boolean>[];
   isMulti?: boolean;
+  /**
+   * Keep the current choice when the button already holding it is clicked again. A group standing
+   * for a filter has to be clearable — that is how the filter is removed — but one standing for a
+   * mandatory choice has nothing to fall back to, and clearing it only produces a required error on
+   * a control the user just pressed.
+   */
+  disableDeselect?: boolean;
 } & ToggleButtonGroupProps;
 
 const ToggleButtonsField = ({
-  name, label, helperText, isMulti, options, ...toggleButtonGroupProps
+  name, label, helperText, isMulti, options, disableDeselect, ...toggleButtonGroupProps
 }: Props) => {
   // hooks
   const {
@@ -73,19 +63,25 @@ const ToggleButtonsField = ({
             {...toggleButtonGroupProps}
             aria-label="text formatting"
             color="primary"
-            css={classes.toggleButtonGroup}
             exclusive={!isMulti}
-            onChange={(_, value: string[] | string) => onChange(value)}
             value={value}
+            onChange={(_, newValue: string[] | string) => {
+              if (disableDeselect && (newValue === null || newValue === undefined)) return;
+              onChange(newValue);
+            }}
           >
             {options.map((option, index: number) => (
               <ToggleButton
                 aria-label={option.label}
-                css={classes.toggleButton}
+                disabled={option.disabled}
                 key={option.label + index}
                 value={option.value}
+                css={option.icon
+                  ? classes.withIcon
+                  : undefined}
               >
-                <Typography>{option.label}</Typography>
+                {option.icon}
+                {option.label}
               </ToggleButton>
             ))}
           </ToggleButtonGroup>

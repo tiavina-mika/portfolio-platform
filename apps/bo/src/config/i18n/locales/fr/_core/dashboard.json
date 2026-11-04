@@ -1,0 +1,18 @@
+{
+  "thisWeek": "cette semaine",
+  "today": "aujourd'hui",
+  "updatedAt": "Mis à jour à {{time}}",
+  "loadError": "Une erreur s'est produite. Veuillez réessayer",
+  "recentActivity": "Activité récente",
+  "newUsers": "Nouveaux utilisateurs",
+  "noNewUsers": "Aucune inscription pour le moment",
+  "seeAllUsers": "Voir tous les utilisateurs",
+  "seeNewUsers_one": "Voir le nouvel utilisateur",
+  "seeNewUsers_other": "Voir les {{count}} nouveaux utilisateurs",
+  "partialNotice": "Certaines informations ne sont pas affichées pour votre poste.",
+  "noAccess": {
+    "title": "Aucune information à afficher",
+    "description": "Votre poste ne donne accès à aucune donnée du tableau de bord. Ouvrez l'une des pages autorisées pour votre poste.",
+    "linksLabel": "Pages accessibles"
+  }
+}

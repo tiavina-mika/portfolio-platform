@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 
-import { PREVIEW_PAGE_GRID } from '@/utils/constants';
+import { PREVIEW_LABEL_VALUE_SPACING } from '@/constants/_core/ui/page.constants';
 
 type Props = {
   label: string;
@@ -10,37 +10,43 @@ type Props = {
 };
 const LabelValue = ({ label, value, priority = 'right' }: Props) => {
   return (
-    (
-      <Grid container spacing={PREVIEW_PAGE_GRID.spacing}>
-        {/* Label (on the left, with responsive behavior) */}
-        <Grid
-          size={{
-            sm: 6,
-            xs: 12,
+    <Grid container spacing={PREVIEW_LABEL_VALUE_SPACING}>
+      {/* Label (on the left, with responsive behavior) */}
+      <Grid
+        size={{
+          sm: 6,
+          xs: 12,
+        }}
+      >
+        <Typography
+          variant="body1"
+          sx={{
+            fontWeight: priority === 'left'
+              ? 'bold'
+              : 'normal',
           }}
         >
-          <Typography
-            sx={{ fontWeight: priority === 'left' ? 'bold' : 'normal' }}
-            variant="body1"
-          >
-            {label}
-          </Typography>
-        </Grid>
-        {/* Value (on the right, with responsive behavior) */}
-        <Grid
-          size={{
-            sm: 6,
-            xs: 12,
-          }}
-        >
-          <Typography
-            sx={{ fontWeight: priority === 'right' ? 'bold' : 'normal' }}
-            variant="body1"
-          >{value}
-          </Typography>
-        </Grid>
+          {label}
+        </Typography>
       </Grid>
-    )
+      {/* Value (on the right, with responsive behavior) */}
+      <Grid
+        size={{
+          sm: 6,
+          xs: 12,
+        }}
+      >
+        <Typography
+          variant="body1"
+          sx={{
+            fontWeight: priority === 'right'
+              ? 'bold'
+              : 'normal',
+          }}
+        >{value}
+        </Typography>
+      </Grid>
+    </Grid>
   );
 };
 

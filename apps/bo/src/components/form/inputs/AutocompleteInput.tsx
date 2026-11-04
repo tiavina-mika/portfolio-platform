@@ -1,4 +1,3 @@
-import { css } from '@emotion/css';
 import {
   Autocomplete,
   Card,
@@ -10,62 +9,30 @@ import {
   type Theme,
   Typography,
 } from '@mui/material';
+import debounce from 'lodash/debounce';
 import {
-  type ReactNode, type SyntheticEvent, useEffect, useMemo, useState,
+  type ReactNode, type SyntheticEvent, useEffect, useMemo, useRef, useState,
 } from 'react';
 import { FiSearch, FiX } from 'react-icons/fi';
 
-import type { ISelectOption } from '@/types/app.type';
+import type { ISelectOption } from '@/types/_core/app.type';
+
+import { AUTOCOMPLETE_SEARCH_DEBOUNCE_MS } from '@/constants/_core/app.constants';
 
 import TextFieldInput from './TextFieldInput';
 
+/*
+ * outline, row height, focus halo and the option list all come from the theme's MuiOutlinedInput /
+ * MuiAutocomplete overrides — only the bits MUI hard-codes per instance are set here: the padding
+ * the multiple-value layout needs, and the placeholder tone
+ */
 const classes = {
   autocomplete: (theme: Theme) => ({
-    '& .MuiFormControl-root': {
-      padding: '0px !important',
-      borderRadius: 6,
-      '& label': {
-        fontSize: 14,
-        color: theme.palette.grey[600],
-      },
-      '& label.Mui-focused': { color: theme.palette.grey[800] },
-    },
-    '& .MuiInputBase-input': {
-      fontSize: '14px !important',
-      color: theme.palette.grey[800],
-      '&::placeholder': {
-        color: theme.palette.grey[300],
-        fontSize: 14,
-      },
-    },
-    '& fieldset': {
-      fontSize: 14,
-      color: theme.palette.grey[800],
-      border: `1px solid ${theme.palette.grey[300]}`,
-    },
-    '&.Mui-focused fieldset': {
-      fontSize: 14,
-      border: `1px solid ${theme.palette.grey[300]}`,
-    },
-    '& .MuiOutlinedInput-root': { '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: `1px solid ${theme.palette.grey[300]}` } },
-    '& .MuiAutocomplete-option': {
-      backgroundColor: '#000 !important',
-      color: 'blue',
-    },
-    '& .Mui-focused': { backgroundColor: theme.palette.grey[50] },
-  }),
-  paper: (theme: Theme) => ({
-    '& .MuiAutocomplete-listbox': {
-      margin: '-8px 0',
-      '& .MuiAutocomplete-option': {
-        fontFamily: 'Product Sans Regular',
-        fontSize: 14,
-        padding: 16,
-        borderTop: `1px solid ${theme.palette.grey[100]}`,
-      },
+    '& .MuiInputBase-input::placeholder': {
+      color: theme.palette.text.disabled,
+      opacity: 1,
     },
   }),
-  input: css({ '& .MuiInputBase-root': { padding: 8 } }),
 };
 
 const AutocompletePaper = (props: PaperProps) => {
@@ -127,10 +94,16 @@ const AutocompleteInput = <T extends Record<string, any>>({
   isSearch = false,
   multiple = false,
   disableNoOptions = true,
+  'aria-describedby': ariaDescribedBy,
+  'aria-invalid': ariaInvalid,
   ...props
 }: AutocompleteInputProps<T>) => {
   const [singleSelectionSelectedValues, setSingleSelectionSelectedValues] = useState<ISelectOption<T>[]>([]);
   const [dynamicOptions, setDynamicOptions] = useState<ISelectOption<T>[]>([]);
+  // mirrors the selection so the field still reflects a pick when used outside RHF (Storybook, no-op onChange)
+  const [internalValue, setInternalValue] = useState(value);
+
+  const currentValue = value ?? internalValue;
 
   const originalOptions = useMemo(() => [...options], [options]);
 
@@ -148,6 +121,7 @@ const AutocompleteInput = <T extends Record<string, any>>({
 
       setSingleSelectionSelectedValues(newValues);
       onChangeList?.(newValues);
+      setInternalValue(value);
       onChange(value);
 
       const index = options.findIndex((option: ISelectOption<T>) => {
@@ -156,12 +130,12 @@ const AutocompleteInput = <T extends Record<string, any>>({
         return option.value === optionValue.value;
       });
 
-      options.splice(index, 1);
-      setDynamicOptions(options);
+      setDynamicOptions(options.filter((_, optionIndex) => optionIndex !== index));
 
       return;
     }
 
+    setInternalValue(value);
     onChange(value);
   };
 
@@ -192,17 +166,31 @@ const AutocompleteInput = <T extends Record<string, any>>({
 
   const handleClearSingleValue = () => {
     onInputChange?.('');
+    setInternalValue(null);
     onChange(null);
   };
+
+  // keep the latest onInputChange without recreating the debounced function below
+  const onInputChangeRef = useRef(onInputChange);
+
+  onInputChangeRef.current = onInputChange;
+
+  const debouncedInputChange = useMemo(
+    () => debounce((value: string) => onInputChangeRef.current?.(value), AUTOCOMPLETE_SEARCH_DEBOUNCE_MS),
+    []
+  );
+
+  useEffect(() => () => debouncedInputChange.cancel(), [debouncedInputChange]);
 
   // when taping
   const handleInputChange = (_: SyntheticEvent, value: string, reason?: string) => {
     if (!onInputChange) return;
     if (reason === 'reset') {
+      debouncedInputChange.cancel();
       onInputChange('');
       return;
     }
-    onInputChange(value);
+    debouncedInputChange(value);
   };
 
   return (
@@ -228,7 +216,7 @@ const AutocompleteInput = <T extends Record<string, any>>({
           onInputChange={handleInputChange}
           slots={{ paper: AutocompletePaper }}
           sx={{ flex: 1 }}
-          value={value}
+          value={currentValue}
           getOptionLabel={(option: ISelectOption<T> | string): string => {
             return typeof option === 'string' ? option : option.label;
           }}
@@ -249,7 +237,8 @@ const AutocompleteInput = <T extends Record<string, any>>({
           renderInput={params => (
             <TextFieldInput
               {...params}
-              className={classes.input}
+              aria-describedby={ariaDescribedBy}
+              aria-invalid={ariaInvalid}
               label={label}
               placeholder={placeholder}
               right={<Right multiple={multiple} onClear={handleClearSingleValue} right={right} />}

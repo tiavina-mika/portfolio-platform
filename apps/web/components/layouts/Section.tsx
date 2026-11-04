@@ -20,6 +20,14 @@ export type SectionProps = {
    * e.g. md: 1023px, lg: 1232px, xl: 1620px
    */
   size?: 'md' | 'lg' | 'xl';
+  /**
+   * names the section for screen readers, by the id of its heading
+   */
+  'aria-labelledby'?: string;
+  /**
+   * names the section for screen readers, when it has no visible heading
+   */
+  'aria-label'?: string;
 };
 
 const Section = ({
@@ -30,9 +38,13 @@ const Section = ({
   as: Component = 'div',
   fullWidth = false,
   size = 'xl',
+  'aria-labelledby': ariaLabelledBy,
+  'aria-label': ariaLabel,
 }: SectionProps) => {
   return (
     <Component
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
       className={cn(
         'flex flex-row items-center justify-center self-stretch',
         rootClassName
