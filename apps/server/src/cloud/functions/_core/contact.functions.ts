@@ -27,7 +27,7 @@ Parse.Cloud.define(
   'createPublicContact',
   parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<void> => {
     const {
-      email, name, message, acceptNewsLetter, locale, recaptchaToken,
+      email, phone, name, message, acceptNewsLetter, locale, recaptchaToken,
     } = request.params;
 
     if (!(await verifyRecaptchaToken(recaptchaToken))) {
@@ -39,6 +39,9 @@ Parse.Cloud.define(
     contact.set('email', email);
     contact.set('name', name);
     contact.set('message', message);
+
+    // optional; stored without the separators a person types (spaces, dots, dashes, parentheses)
+    if (phone) contact.set('phone', phone.replace(/[\s().-]/g, ''));
 
     if (acceptNewsLetter) contact.set('acceptNewsLetter', acceptNewsLetter);
 
