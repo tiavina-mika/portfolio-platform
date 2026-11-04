@@ -11,7 +11,7 @@
     "@shared/types": "workspace:*"
   },
   "devDependencies": {
-    "@cspell/eslint-plugin": "^9.8.0",
+    "@cspell/eslint-plugin": "^10.4.0",
     "@shared/eslint-config": "workspace:*",
     "eslint": "^9.39.5",
     "typescript-eslint": "^8.65.0"
