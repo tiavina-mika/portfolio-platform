@@ -11,7 +11,6 @@ export const STORYBOOK_ENV: Record<string, string> = {
   APP_URL: 'http://localhost:6016',
   NEXT_PUBLIC_SERVER_URL: 'http://localhost:1337/parse',
   NEXT_PUBLIC_APP_URL: 'http://localhost:6016',
-  NEXT_PUBLIC_GOOGLE_MAP_KEY: 'storybook',
   NEXT_PUBLIC_RECAPTCHA_SITE_KEY: 'storybook',
 };
 

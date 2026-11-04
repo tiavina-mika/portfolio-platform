@@ -130,9 +130,9 @@
 ## 8. Restes côté site
 
 - **Gravité** : 🟡 Faible · **Type** : Bug · **Statut** : ⏳ à faire
-- **Concerné** : `apps/web/app/[locale]/layout.tsx`, `apps/web/components/Map.tsx`, `apps/web/components/Avatar.tsx`, `apps/web/utils/user.utils.ts`, `apps/web/global.d.ts`, `apps/web/translations`
+- **Concerné** : `apps/web/app/[locale]/layout.tsx`, `apps/web/components/Avatar.tsx`, `apps/web/utils/user.utils.ts`, `apps/web/global.d.ts`, `apps/web/translations`
 
-**Ce qui peut arriver** — la langue des messages d'erreur zod n'est plus chargée dans le layout (à vérifier : les messages de validation sont-ils traduits) ; `Map.tsx` n'a aucun importeur, et `Avatar.tsx` (seul utilisateur de `user.utils.ts`) non plus ; le type `Messages` de `global.d.ts` n'a pas les espaces de noms `home` et `project` ; des clés de traduction sont obsolètes ; la FAQ n'est pas portée ; la langue `mg` est absente (`fr` et `en` seulement, 1lalana a `mg`).
+**Ce qui peut arriver** — la langue des messages d'erreur zod n'est plus chargée dans le layout (à vérifier : les messages de validation sont-ils traduits) ; `Avatar.tsx` (seul utilisateur de `user.utils.ts`) n'a aucun importeur ; le type `Messages` de `global.d.ts` n'a pas les espaces de noms `home` et `project` ; des clés de traduction sont obsolètes ; la FAQ n'est pas portée ; la langue `mg` est absente (`fr` et `en` seulement, 1lalana a `mg`).
 
 **Comment vérifier** — envoyer le formulaire de contact avec des données invalides en `en` ; chercher les importeurs.
 

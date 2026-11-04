@@ -14,7 +14,6 @@
 | Brevo | server | Transactional emails and newsletter contacts | `BREVO_API_KEY`, `ADMIN_EMAIL_SENDER` |
 | Cloudinary | server (web displays the files) | Image and file storage | `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` |
 | Google reCAPTCHA | web (token), server (check) | Bot protection of the contact and newsletter forms | `RECAPTCHA_SECRET_KEY` (server), `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` (web) |
-| Google Maps | web | Map display | `NEXT_PUBLIC_GOOGLE_MAP_KEY` |
 | Upstash Redis | server, web | Rate limits, Parse Server cache and LiveQuery, scheduled job lock | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `UPSTASH_REDIS_URL` |
 | MMSDuck | server | SMS: verification codes, notices, notification fallback | `MMSDUCK_API_KEY` |
 | Slack (alerts webhook) | server | Staff alerts and the daily summary | `SLACK_ALERTS_WEBHOOK_URL` |
@@ -42,7 +41,6 @@ Each guide has an English and a French version (the French file name ends with `
 | Upstash Redis | [UPSTASH_REDIS.md](upstash/en/UPSTASH_REDIS.md) | [UPSTASH_REDIS.FR.md](upstash/fr/UPSTASH_REDIS.FR.md) |
 | MMSDuck | [MMSDUCK.md](mmsduck/en/MMSDUCK.md) | [MMSDUCK.FR.md](mmsduck/fr/MMSDUCK.FR.md) |
 | Sentry | [SENTRY.md](sentry/en/SENTRY.md) | [SENTRY.FR.md](sentry/fr/SENTRY.FR.md) |
-| Google Maps | [GOOGLE_MAPS.md](google-maps/en/GOOGLE_MAPS.md) | [GOOGLE_MAPS.FR.md](google-maps/fr/GOOGLE_MAPS.FR.md) |
 | Render | [RENDER.md](render/en/RENDER.md) | [RENDER.FR.md](render/fr/RENDER.FR.md) |
 | Render, step-by-step deployment tutorial | [RENDER_DEPLOYMENT.md](render/en/RENDER_DEPLOYMENT.md) | [RENDER_DEPLOYMENT.FR.md](render/fr/RENDER_DEPLOYMENT.FR.md) |
 

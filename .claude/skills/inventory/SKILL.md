@@ -10,7 +10,7 @@ translated):
 | Page | Holds | Source of truth |
 |---|---|---|
 | `docs/inventory/README.md` | env variables by app (`server`, `bo`, `web`), Cloud Code files (functions, triggers, jobs) | `apps/*/.env.example`, `apps/server/src/cloud/{functions,triggers,jobs}/` |
-| `docs/services/README.md` | external services (MongoDB, Brevo, Cloudinary, reCAPTCHA, Google Maps…), what they are used for and their variables | the code that calls them |
+| `docs/services/README.md` | external services (MongoDB, Brevo, Cloudinary, reCAPTCHA…), what they are used for and their variables | the code that calls them |
 
 ## Usage
 

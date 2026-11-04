@@ -36,7 +36,7 @@ GitHub repo ──► tiavina-mika-bo.preprod (API + back-office) ──► Mong
 
 - A [Render](https://render.com) account, with your GitHub account connected (Account Settings → GitHub).
 - The repository pushed on GitHub, on the branch you want to deploy (`main` for production).
-- The accounts of the external services, with their keys at hand (see [services](../../README.md)): MongoDB Atlas, Cloudinary, Brevo, Google reCAPTCHA (site key and secret), Google Maps.
+- The accounts of the external services, with their keys at hand (see [services](../../README.md)): MongoDB Atlas, Cloudinary, Brevo, Google reCAPTCHA (site key and secret).
 - The two service names: `tiavina-mika-bo.preprod` (server + back-office) and `tiavina-mika-preprod` (website). Render derives each public URL `https://<slug>.onrender.com` from the name; always read the real URL under the service name in the dashboard. Below, **server URL** and **website URL** mean those two real URLs.
 
 ## Step 1: the database (MongoDB Atlas)
@@ -224,7 +224,6 @@ All of them are validated by `apps/web/env.ts`; a missing or invalid one stops t
 | `RECAPTCHA_SECRET_KEY` | reCAPTCHA **secret** key |
 | `NEXT_PUBLIC_SERVER_URL` | the same as `SERVER_URL` |
 | `NEXT_PUBLIC_APP_URL` | the same as `APP_URL` |
-| `NEXT_PUBLIC_GOOGLE_MAP_KEY` | Google Maps key (restrict it to your domain in Google Cloud) |
 | `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` | reCAPTCHA **site** key |
 
 `NEXT_PUBLIC_*` values are inlined at build time and visible in the browser. `APP_ENV` is set by the `build:preprod` and `start:preprod` scripts: do not set it.
@@ -237,11 +236,10 @@ All of them are validated by `apps/web/env.ts`; a missing or invalid one stops t
 ## Step 5: close the loop
 
 1. **reCAPTCHA**: in the Google reCAPTCHA admin, add the website domain (and your custom domain) to the key's domains.
-2. **Google Maps**: add the same domain to the key's HTTP referrer restrictions.
-3. **Brevo**: check that the `ADMIN_EMAIL_SENDER` and `SENDER_EMAIL` addresses are verified senders.
-4. **Back-office first login**: the server creates an Owner invitation for every address in `OWNERS_EMAILS` at boot. Open the invitation email, set the password, then sign in at the server URL.
-5. **Content**: create your first projects and articles in the back-office, then redeploy the website (Manual Deploy) if its build ran against an empty database.
-6. **Custom domain** (optional): Settings → Custom Domains on each service, add the DNS record Render shows, wait for the certificate. Then update `SERVER_URL`, `VITE_SERVER_URL`, `WEBSITE_URL`, `VITE_WEBSITE_URL`, `APP_URL`, `NEXT_PUBLIC_SERVER_URL` and `NEXT_PUBLIC_APP_URL`, and redeploy both services with the build cache cleared.
+2. **Brevo**: check that the `ADMIN_EMAIL_SENDER` and `SENDER_EMAIL` addresses are verified senders.
+3. **Back-office first login**: the server creates an Owner invitation for every address in `OWNERS_EMAILS` at boot. Open the invitation email, set the password, then sign in at the server URL.
+4. **Content**: create your first projects and articles in the back-office, then redeploy the website (Manual Deploy) if its build ran against an empty database.
+5. **Custom domain** (optional): Settings → Custom Domains on each service, add the DNS record Render shows, wait for the certificate. Then update `SERVER_URL`, `VITE_SERVER_URL`, `WEBSITE_URL`, `VITE_WEBSITE_URL`, `APP_URL`, `NEXT_PUBLIC_SERVER_URL` and `NEXT_PUBLIC_APP_URL`, and redeploy both services with the build cache cleared.
 
 ## Step 6: check that everything works
 

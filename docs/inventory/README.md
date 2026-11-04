@@ -91,7 +91,6 @@ Validated by `apps/web/env.ts`. `NEXT_PUBLIC_*` variables are exposed to the bro
 | `REVALIDATE_SECRET` | Optional locally: secret checked by `/api/revalidate`, which the server calls to invalidate the CMS cache. While unset the endpoint refuses every call |
 | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Optional: per-visitor rate limit of the contact and newsletter forms; without them the website does not limit (the server still applies its own limit) |
 | `NEXT_PUBLIC_SERVER_URL`, `NEXT_PUBLIC_APP_URL` | URLs exposed to the browser |
-| `NEXT_PUBLIC_GOOGLE_MAP_KEY` | Google Maps public key |
 | `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` | reCAPTCHA public site key (the token is sent to the server, which verifies it) |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional: Google Analytics 4 measurement id; unset means analytics is off |
 | `NEXT_PUBLIC_SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_ENVIRONMENT` | Optional: Sentry error reporting of the browser and the Next.js server (public DSN, same project as the back-office); unset means reporting is off |
