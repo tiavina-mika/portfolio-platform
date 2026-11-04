@@ -68,6 +68,51 @@ jobs:
       - name: Check translations
         run: pnpm check-i18n
 
+  # Render builds pre-production from `develop` and production from `main` with its own build command
+  # (install, `vite build` of the back-office, server build, `copy`), and a failed build leaves the
+  # previous version live without any sign on the PR. This job runs the same steps before the merge,
+  # with placeholder `VITE_*` values (the real ones live on the Render services), so a build that
+  # Render would reject fails here. The copy target differs per branch, as on Render.
+  render-build:
+    name: Render build (${{ github.base_ref == 'main' && 'production' || 'pre-production' }})
+    if: github.event_name == 'pull_request' && (github.base_ref == 'main' || github.base_ref == 'develop')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SERVER_NODE_ENV: ${{ github.base_ref == 'main' && 'production' || 'preProduction' }}
+      BO_BUNDLE_FOLDER: ${{ github.base_ref == 'main' && 'prod' || 'preprod' }}
+      VITE_ENVIRONMENT: ${{ github.base_ref == 'main' && 'production' || 'preProduction' }}
+      VITE_SERVER_URL: https://ci.invalid
+      VITE_PARSE_APP_ID: ci
+      VITE_APP_ACCESS_TAG: ci
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --prod=false
+
+      - name: Build the back-office
+        run: pnpm --filter portfolio-bo exec vite build
+
+      - name: Build the server
+        run: pnpm --filter portfolio-server build
+
+      - name: Copy the back-office into the server
+        run: NODE_ENV=$SERVER_NODE_ENV pnpm --filter portfolio-server copy
+
+      # `copy` exits 0 even when the folder it fills is empty
+      - name: Check the served back-office bundle
+        run: |
+          test -f apps/server/clientBuild/bo/$BO_BUNDLE_FOLDER/index.html
+          ls apps/server/clientBuild/bo/$BO_BUNDLE_FOLDER/assets/*.js > /dev/null
+
   # `commit-msg` is a local hook, which `--no-verify` skips: the same rule is checked here on the commits
   # a PR adds. Merge commits are ignored by commitlint itself.
   commits:

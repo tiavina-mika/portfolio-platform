@@ -76,7 +76,7 @@ Hors développement local, le serveur planifie une tâche `node-cron` toutes les
 
 | Workflow | Déclencheur | Ce qu'il fait |
 |---|---|---|
-| `ci.yml` (CI) | pull requests et pushs sur `develop` et `main`, manuel | sous Node 24 avec pnpm : `nx affected` lint, typecheck, build (sauf `web`, dont le build a besoin du CMS en ligne), tests (sauf `server` et `web`), builds Storybook, `pnpm check-i18n` ; messages de commit contrôlés par commitlint sur les pull requests ; lint Markdown, liens et ancres des docs, jumeaux de docs, contrôle des liens |
+| `ci.yml` (CI) | pull requests et pushs sur `develop` et `main`, manuel | sous Node 24 avec pnpm : `nx affected` lint, typecheck, build (sauf `web`, dont le build a besoin du CMS en ligne), tests (sauf `server` et `web`), builds Storybook, `pnpm check-i18n` ; messages de commit contrôlés par commitlint sur les pull requests ; sur les pull requests vers `main` et `develop`, le build tel que Render le lance (back-office, serveur, `copy`) ; lint Markdown, liens et ancres des docs, jumeaux de docs, contrôle des liens |
 | `security.yml` | pull requests et pushs sur `develop` et `main`, chaque lundi, manuel | `pnpm audit --prod` au niveau high (informatif pour l'instant) et un scan gitleaks |
 | `release.yml` | push sur `develop`, manuel | ouvre ou met à jour la pull request « chore(release): version packages » avec les changesets ; demande le secret `RELEASE_TOKEN` |
 | `storybook-tests.yml` | chaque nuit, manuel | exécute chaque story comme test dans Chromium, par tranches |
