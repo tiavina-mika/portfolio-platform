@@ -11,10 +11,10 @@ import {
 } from '@/containers/home/services/HomeServicesIcons';
 
 const SERVICES = [
-  { key: '1', Icon: PageWebIcon },
-  { key: '2', Icon: UserIcon },
-  { key: '3', Icon: SearchIcon },
-  { key: '4', Icon: SuccessIcon },
+  { key: '1', icon: <PageWebIcon className="size-6" /> },
+  { key: '2', icon: <UserIcon className="size-6" /> },
+  { key: '3', icon: <SearchIcon className="size-6" /> },
+  { key: '4', icon: <SuccessIcon className="size-6" /> },
 ];
 
 /**
@@ -31,7 +31,7 @@ const HomeServices = () => {
         md:grid-cols-2
       `}
       >
-        {SERVICES.map(({ key, Icon }, index) => (
+        {SERVICES.map(({ key, icon }, index) => (
           <RevealListItem className="flex min-w-0" index={index} key={key}>
             <article className="flex flex-1 flex-col gap-3 rounded-xl border bg-card p-5 text-card-foreground">
               <span
@@ -39,7 +39,7 @@ const HomeServices = () => {
                 className="inline-flex size-12 flex-none items-center justify-center rounded-lg bg-accent"
               >
                 {/* strokes use currentColor, so the icon follows light and dark mode */}
-                <Icon className="size-6" />
+                {icon}
               </span>
               <h3 className="text-lg leading-tight font-bold">{t(`items.${key}.title`)}</h3>
               <p className="text-base leading-normal text-muted-foreground">
