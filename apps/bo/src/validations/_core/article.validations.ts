@@ -146,6 +146,7 @@ type OptionalFileArraySchemaType = z.ZodType<File[] | undefined, File[] | undefi
 
 export const cmsSchema = z.object({
   active: z.boolean().optional(),
+  hasTableOfContents: z.boolean().optional(),
   bannerImage: generateFileSchema() as OptionalFileSchemaType,
   previewImage: generateFileSchema() as OptionalFileSchemaType,
   images: generateFileSchema(false, { max: CMS_GALLERY_MAX_IMAGES }) as OptionalFileArraySchemaType,

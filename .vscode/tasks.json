@@ -96,7 +96,8 @@
     {
       "label": "run-dev",
       "dependsOn": [
-        "Web"
+        "Server",
+        "BO"
       ],
       "dependsOrder": "parallel",
       "presentation": {

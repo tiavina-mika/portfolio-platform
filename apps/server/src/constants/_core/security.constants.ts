@@ -204,6 +204,7 @@ export const EXTRA_SCHEMA_FIELDS: Record<
     linkLocations: 'Array',
     editorFiles: 'Array',
     active: 'Boolean',
+    hasTableOfContents: 'Boolean',
     code: 'String',
   },
   // public contact form: the visitor's fields, then everything the beforeSave adds

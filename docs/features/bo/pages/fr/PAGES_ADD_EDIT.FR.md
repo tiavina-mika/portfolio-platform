@@ -44,7 +44,7 @@ Trois onglets de langue. Pour chaque langue :
   automatiquement et reste modifiable. Obligatoire en français.
 - **Titre** : affiché en haut de la page ; à défaut, c'est le nom qui est affiché.
 - **Description** (jusqu'à 2000 caractères).
-- **Contenu** : éditeur de texte riche (titres, liens, images…). Obligatoire en français. Un **sommaire** listant les titres du texte s’affiche à côté de l’éditeur pour s’y repérer (il n’est pas visible sur le site public).
+- **Contenu** : éditeur de texte riche (titres, liens, images…). Obligatoire en français. Un **sommaire** listant les titres du texte s’affiche à côté de l’éditeur pour s’y repérer (celui du site public se règle avec l’interrupteur « Sommaire »).
 - **Adresse (slug)**, **Tags** (séparés par une virgule), **Meta titre** et **Meta description** pour les
   moteurs de
   recherche (environ 70 et 170 caractères au maximum).
@@ -59,6 +59,7 @@ l'image** (petite taille, pour une carte ou une liste) et **Images** (jusqu'à 5
 ### Étape 3 — Visibilité, catégories et emplacement
 
 - **Actif** : interrupteur ; une page active est visible sur le site (activé par défaut à la création).
+- **Sommaire** : interrupteur, désactivé par défaut ; activé, la page affiche sur le site un sommaire cliquable construit à partir des titres du contenu (sans titre dans le texte, il n’y a pas de sommaire).
 - **Catégorie** : une ou plusieurs catégories, parmi celles qui existent.
 - **Emplacement du lien** : **Dans le menu**, **Dans le pied de page**, les deux, ou aucun.
 

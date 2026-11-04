@@ -78,6 +78,7 @@ export const pageStepThreeSchema = z.object({
   subcategory: z.string().optional(),
   subcategory2: z.string().optional(),
   active: z.boolean().optional(),
+  hasTableOfContents: z.boolean().optional(),
   // the country the page is written for
   country: z.string().optional(),
   linkLocations: z.array(z.enum(['menu', 'footer'])).optional(),

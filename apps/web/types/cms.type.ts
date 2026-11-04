@@ -111,6 +111,8 @@ export interface IPageAttributes {
   categories?: ICategory[];
   linkLocations?: ('menu' | 'footer')[];
   active: boolean;
+  // absent on a page saved before the field existed — reads as off
+  hasTableOfContents?: boolean;
 }
 
 export interface IPage extends IPageAttributes {

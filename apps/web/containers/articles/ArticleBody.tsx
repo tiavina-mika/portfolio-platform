@@ -2,8 +2,7 @@ import { useTranslations } from 'next-intl';
 
 import Section from '@/components/layouts/Section';
 import { CardImage } from '@/components/ui/Card';
-
-import ReadOnlyTextCodeEditor from './ReadOnlyTextCodeEditor';
+import ContentWithTableOfContents from '@/containers/common/ContentWithTableOfContents';
 
 type Props = {
   /**
@@ -15,6 +14,10 @@ type Props = {
    */
   content?: string;
   /**
+   * Shows a table of contents of the headings of the text, when the back-office asked for one
+   */
+  hasTableOfContents?: boolean;
+  /**
    * Images shown in a grid under the text
    */
   images?: { url: string }[];
@@ -23,7 +26,9 @@ type Props = {
 /**
  * The reading area of an article: the text of the CMS, then the images of the article in a grid
  */
-const ArticleBody = ({ title, content = '', images = [] }: Props) => {
+const ArticleBody = ({
+  title, content = '', hasTableOfContents = false, images = [],
+}: Props) => {
   const t = useTranslations('Article');
 
   return (
@@ -33,7 +38,7 @@ const ArticleBody = ({ title, content = '', images = [] }: Props) => {
       rootClassName="mt-6 lg:mt-8"
       size="md"
     >
-      <ReadOnlyTextCodeEditor content={content} />
+      <ContentWithTableOfContents content={content} hasTableOfContents={hasTableOfContents} />
 
       {images.length > 0 && (
         <ul

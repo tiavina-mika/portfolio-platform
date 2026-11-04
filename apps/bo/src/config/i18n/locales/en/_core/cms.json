@@ -4,6 +4,7 @@
   "content": "Content",
   "tableOfContents": "Table of contents",
   "tableOfContentsEmpty": "Add headings to generate the table of contents",
+  "tableOfContentsVisible": "Shows a clickable table of contents on the website, built from the headings of the content",
   "pages": "Pages",
   "page": "Page",
   "published": "Published",

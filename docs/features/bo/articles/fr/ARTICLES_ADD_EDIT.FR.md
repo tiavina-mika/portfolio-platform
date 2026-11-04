@@ -8,6 +8,7 @@
 - [Ce que l'on voit à l'écran](#ce-que-lon-voit-à-lécran)
   - [Détails (une version par langue)](#détails-une-version-par-langue)
   - [Actif](#actif)
+  - [Sommaire](#sommaire)
   - [Catégories](#catégories)
   - [Images](#images)
 - [Actions possibles](#actions-possibles)
@@ -58,7 +59,7 @@ erreur est signalé. Champs de chaque langue :
   peut le corriger. Laissé vide, il est déduit du titre à l'enregistrement.
 - **Description** (obligatoire en français, 2 000 caractères au maximum) : courte présentation affichée sous
   le titre.
-- **Contenu** : texte mis en forme, avec insertion d’images (obligatoire en français). Un **sommaire** listant les titres du texte s’affiche à côté de l’éditeur pour s’y repérer (il n’est pas visible sur le site public).
+- **Contenu** : texte mis en forme, avec insertion d’images (obligatoire en français). Un **sommaire** listant les titres du texte s’affiche à côté de l’éditeur pour s’y repérer (celui du site public se règle avec l’interrupteur « Sommaire » des réglages).
 - **Tags** (200 caractères au maximum, séparés par des virgules), **Meta titre** (70 caractères) et **Meta
   description** (170 caractères) pour le référencement. S'ils sont vides, ils sont complétés
   automatiquement à partir du titre et de la description.
@@ -66,6 +67,10 @@ erreur est signalé. Champs de chaque langue :
 ### Actif
 
 Un interrupteur, **activé par défaut** : un article actif est visible sur le site public.
+
+### Sommaire
+
+Un interrupteur, **désactivé par défaut** : activé, l’article affiche sur le site public un sommaire cliquable construit à partir des titres du texte (sans titre dans le texte, il n’y a pas de sommaire).
 
 ### Catégories
 

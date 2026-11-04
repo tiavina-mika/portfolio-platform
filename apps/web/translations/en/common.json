@@ -45,7 +45,8 @@
     "share": "Share this article",
     "copyLink": "Copy link",
     "linkCopied": "Link copied",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "tableOfContents": "Contents"
   },
   "Errors": {
     "somethingWentWrong": "Something went wrong. Please try again later."

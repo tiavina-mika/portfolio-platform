@@ -37,7 +37,7 @@ De haut en bas :
 1. **L'en-tête** : le fil d'Ariane, les catégories de l'article (chacune est un lien vers les articles
    de la catégorie), le titre, une description, le temps de lecture estimé, la date de publication
    (et la date de mise à jour quand l'article a été modifié), puis l'image de couverture.
-2. **Le contenu** : le texte complet, avec titres, listes et extraits de code.
+2. **Le contenu** : le texte complet, avec titres, listes et extraits de code. Quand l’option « Sommaire » est activée dans le back-office pour l’article, un **sommaire** liste les titres du texte : au-dessus du texte sous forme de puces sur mobile et tablette, dans une colonne qui suit la lecture sur grand écran. Un clic fait défiler jusqu’à la partie choisie et la partie en cours de lecture est mise en évidence. Sans titre dans le texte, il n’y a pas de sommaire.
 3. **Les images complémentaires**, quand il y en a.
 4. **Les mots-clés**, sous forme de liens.
 5. **Le partage** : le nombre de partages (quand il y en a) et sept icônes — Facebook, X, LinkedIn,

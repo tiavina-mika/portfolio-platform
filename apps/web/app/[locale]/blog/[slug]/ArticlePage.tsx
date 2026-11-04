@@ -97,6 +97,7 @@ const ArticlePage = ({
       />
       <ArticleBody
         content={getTranslatedField(translated, locale, 'content')}
+        hasTableOfContents={article.hasTableOfContents}
         images={article.images}
         title={title}
       />

@@ -45,7 +45,8 @@
     "share": "Partager cet article",
     "copyLink": "Copier le lien",
     "linkCopied": "Lien copié",
-    "loading": "Chargement..."
+    "loading": "Chargement...",
+    "tableOfContents": "Sommaire"
   },
   "Errors": {
     "somethingWentWrong": "Une erreur s'est produite. Veuillez réessayer plus tard."

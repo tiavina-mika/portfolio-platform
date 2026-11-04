@@ -46,7 +46,7 @@ par les personnes autorisées.
 
 - Un **en-tête** avec le fil d'Ariane, le titre de la page, une image de bannière (si elle est
   renseignée) et un texte de présentation.
-- Le **contenu principal** : texte mis en forme avec titres, listes et extraits de code.
+- Le **contenu principal** : texte mis en forme avec titres, listes et extraits de code. Quand l’option « Sommaire » est activée dans le back-office pour la page, un **sommaire** liste les titres du texte (au-dessus du texte sous forme de puces sur mobile et tablette, en colonne sur grand écran) ; un clic fait défiler jusqu’à la partie choisie. Il ne couvre pas les sections de la page.
 - Éventuellement des **images** complémentaires, en deux colonnes sur grand écran.
 - Éventuellement des **sections** : chaque section a un titre, un texte d'introduction et une suite
   de blocs (texte, image, cartes), tels qu'ils ont été composés dans le back-office.

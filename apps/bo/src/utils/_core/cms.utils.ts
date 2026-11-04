@@ -106,6 +106,8 @@ export const getArticleEditionInitialValues = async (
   if (!article) return;
   const values = {
     ...getValues(article, ['active', 'viewsGoal']),
+    // a flag set on the article only once an editor turned it on — absent reads as off
+    hasTableOfContents: !!article.hasTableOfContents,
     country: article.country ?? DEFAULT_COUNTRY_CODE,
     ...articleCodec.encode(article.translated as Record<string, any>),
     // plain category ids — matches the preloaded Select's value shape (see ArticleForm)
@@ -222,6 +224,7 @@ export const getPageStepThreeEditionInitialValues = <O extends IPageAttributes |
 
   const values: Record<string, any> = {
     active: !!page.active,
+    hasTableOfContents: !!page.hasTableOfContents,
     country: page.country ?? DEFAULT_COUNTRY_CODE,
     linkLocations: page.linkLocations || [],
     categories: getCategoriesPointersInitialValues(page, locale),
@@ -241,6 +244,7 @@ export const getFinalPageInitialValues = async <O extends IPage | null | undefin
   if (!page) {
     return {
       active: true,
+      hasTableOfContents: false,
       country: DEFAULT_COUNTRY_CODE,
       linkLocations: [],
       categories: [],

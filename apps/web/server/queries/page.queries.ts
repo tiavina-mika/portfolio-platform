@@ -37,7 +37,9 @@ export const getPage = async (
   try {
     const page = await withContentCountry(new Parse.Query(collections.Page))
       .equalTo(`translated.${locale}.slug`, slug)
-      .select(['translated', 'bannerImage', 'previewImage', 'images', 'blocks', 'code'])
+      .select([
+        'translated', 'bannerImage', 'previewImage', 'images', 'blocks', 'code', 'hasTableOfContents',
+      ])
       .include('blocks')
       .first();
 

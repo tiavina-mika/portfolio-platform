@@ -35,6 +35,8 @@ export interface IArticleAttributes {
   views?: number;
   viewsGoal?: number;
   active: boolean;
+  // shows a clickable table of contents, built from the headings of the content, on the website
+  hasTableOfContents?: boolean;
   // the country the article is written for — absent on an article saved before the field existed
   country?: string;
 }

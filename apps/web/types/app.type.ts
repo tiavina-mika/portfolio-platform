@@ -180,3 +180,9 @@ export type IUnsubscribeReasonSchemaInput = z.infer<
 >;
 
 export type ITranslated<T> = Record<string, T>;
+
+/** One entry of a table of contents: the id of the heading it jumps to and the text of that heading */
+export interface ITableOfContentsItem {
+  id: string;
+  label: string;
+}
