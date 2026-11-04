@@ -29,6 +29,7 @@ const HomeServices = () => {
       <ul className={`
         grid list-none grid-cols-1 gap-4 p-0
         md:grid-cols-2
+        2xl:grid-cols-4
       `}
       >
         {SERVICES.map(({ key, icon }, index) => (
