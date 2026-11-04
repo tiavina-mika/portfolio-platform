@@ -14,6 +14,7 @@ export const getObjectsCountSchema = z.object({
 export const contactSchema = z.object({
   // email there is encrypted, so its a string; optional for contacts saved before it was required
   email: z.string().email().optional(),
+  phone: z.string().optional(),
   name: z.string()
     .max(120),
   message: z.string()

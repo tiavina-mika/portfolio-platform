@@ -5,7 +5,7 @@ name: Release
 # While changesets are waiting in `.changeset/`, every push to `develop` re-runs
 # `pnpm version-packages` on a side branch and updates that PR: it shows the next version of each app
 # and the CHANGELOG.md entries about to be written. Merging it bumps the versions, writes the
-# changelogs and consumes the changesets; `release-notify.yml` then posts the notes to Slack. With no
+# changelogs and consumes the changesets. With no
 # changeset left, this workflow does nothing. Nothing is published: the apps are private packages.
 #
 # The PR is opened with `RELEASE_TOKEN`, a fine-grained token of a repository member, not with the

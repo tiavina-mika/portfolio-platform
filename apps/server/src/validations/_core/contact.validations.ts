@@ -1,4 +1,4 @@
-import { CONTACT_MESSAGE_MAX_LENGTH } from '@shared/constants';
+import { CONTACT_MESSAGE_MAX_LENGTH, CONTACT_PHONE_PATTERN } from '@shared/constants';
 import { z } from 'zod';
 
 import {
@@ -11,6 +11,7 @@ import {
  */
 export const createPublicContactSchema = z.object({
   email: z.string().email(),
+  phone: z.string().regex(CONTACT_PHONE_PATTERN).optional(),
   name: z.string().max(120),
   message: z.string().max(CONTACT_MESSAGE_MAX_LENGTH),
   acceptNewsLetter: z.boolean().optional(),

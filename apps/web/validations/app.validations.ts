@@ -1,3 +1,4 @@
+import { CONTACT_PHONE_PATTERN } from '@shared/constants';
 import { capitalize } from 'string-ts';
 import { z } from 'zod';
 import { zfd } from 'zod-form-data';
@@ -35,6 +36,13 @@ export const projectSearchParamsSchema = paginationSearchParamsSchema.extend({
 export const ContactSchema = zfd.formData(
   z.object({
     email: EmailFieldSchema,
+    // optional: an empty field is sent as no phone at all
+    phone: zfd.text(
+      z
+        .string()
+        .regex(CONTACT_PHONE_PATTERN, { message: 'error.invalidPhone' })
+        .optional()
+    ),
     name: zfd.text(
       z
         .string()

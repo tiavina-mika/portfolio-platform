@@ -36,8 +36,8 @@ Indexes: declared in code by the core (see the inventory page above). Existing r
 ## Server
 
 - Folders split in `_core` / `_domain`; `Project` functions are `getProjects`, `getProject`, `getProjectForClient`, with their triggers, dashboard figures and global-search entry.
-- About 150 Cloud Functions, 13 scheduled tasks, e-mail and SMS builders, Redis-backed rate limiting, Slack alerts (see [the inventory](../../../inventory/README.md)).
-- New environment variables and services: Upstash Redis, MMSDuck (SMS), Expo push, Slack alerts webhook, Sentry, `WEBSITE_REVALIDATE_SECRET`. The request header is now `X-portfolio-key`.
+- About 150 Cloud Functions, 13 scheduled tasks, e-mail and SMS builders, Redis-backed rate limiting (see [the inventory](../../../inventory/README.md)).
+- New environment variables and services: Upstash Redis, MMSDuck (SMS), Expo push, Sentry, `WEBSITE_REVALIDATE_SECRET`. The request header is now `X-portfolio-key`.
 - `validateEnv`: in `preProduction` and `production`, `OWNERS_EMAILS` needs two distinct addresses, and `MMSDUCK_API_KEY` and `WEBSITE_REVALIDATE_SECRET` are required.
 
 ## Back-office

@@ -53,7 +53,6 @@ Required only in the deployed environments (`preProduction` and `production`); o
 | `WEBSITE_REVALIDATE_SECRET` | Shared secret to invalidate the website CMS cache (must equal the web `REVALIDATE_SECRET`) |
 | `RECAPTCHA_SECRET_KEY` | reCAPTCHA v3 secret: the server verifies the token of the contact and newsletter forms. Skipped in development and test, fails closed elsewhere |
 | `MMSDUCK_API_KEY` | MMSDuck SMS provider key (optional: without it every SMS is refused with a warning) |
-| `SLACK_ALERTS_WEBHOOK_URL` | Optional: Slack incoming webhook of the staff alert channel; empty means nothing is posted |
 | `DOCS_FEATURES_PASSWORD`, `DOCS_BUSINESS_PASSWORD` | Optional, validated by `validateEnv()` but not in `.env.example`: passwords of the documentation sections served by the server; a section without one stays closed (404) |
 
 Also read by the code and set by the host or by tests only: `K_SERVICE` (Cloud Run marker), `TZ`, `E2E`, `E2E_ALLOWED_ORIGINS`, `REAL_SIGN_UP_VERIFICATION`.
@@ -103,11 +102,11 @@ Source: `apps/server/src/cloud/`. Each kind has a `_core/` folder (generic) and 
 |---|---|
 | Functions | `_core/`: `accountHelp`, `admins`, `app`, `article`, `auditLog`, `auth`, `category`, `contact`, `contactChange`, `contentVersion`, `dashboard`, `faq`, `globalSearch`, `impersonation`, `invitation`, `mfa`, `misc`, `notification`, `page`, `pageSection`, `passwordResetDelay`, `role`, `stepUpVerification`, `user`, `userSession`, `utils` (and `test`, local and test only). `_domain/`: `project` |
 | Triggers | `_core/`: `app`, `article`, `auth`, `category`, `contact`, `country-scope`, `newsletter`, `notification`, `page`, `pageSection`, `role`, `user`. `_domain/`: `project` |
-| Jobs | `_core/`: `category`, `cms`, `email`, `impersonation`, `misc`, `newsletter`, `notification`, `retention`, `slack`, `user` (and `test`). `_domain/`: none |
+| Jobs | `_core/`: `category`, `cms`, `email`, `impersonation`, `misc`, `newsletter`, `notification`, `retention`, `user` (and `test`). `_domain/`: none |
 
 ## Scheduled tasks
 
-Twelve `node-cron` tasks registered by `apps/server/src/config/scheduled-jobs.ts`: a keep-awake ping outside local development and Cloud Run, and eleven business jobs that only run in production. A Redis lock makes only one server instance run each tick. GitHub workflows run on schedules too. Details: [scheduled tasks](code/en/SCHEDULED_JOBS.md).
+Eleven `node-cron` tasks registered by `apps/server/src/config/scheduled-jobs.ts`: a keep-awake ping outside local development and Cloud Run, and ten business jobs that only run in production. A Redis lock makes only one server instance run each tick. GitHub workflows run on schedules too. Details: [scheduled tasks](code/en/SCHEDULED_JOBS.md).
 
 ## Roles and permissions
 
@@ -123,11 +122,11 @@ Verification and reset codes, invitations, step-up and contact-change codes, new
 
 ## GitHub workflows
 
-Eight workflows in `.github/workflows/`: CI, security, release, Storybook tests, Chromatic, Lighthouse and two Slack notifiers. Details: [CI workflows](code/en/CI_WORKFLOWS.md).
+Six workflows in `.github/workflows/`: CI, security, release, Storybook tests, Chromatic, Lighthouse. Details: [CI workflows](code/en/CI_WORKFLOWS.md).
 
 ## GitHub secrets and variables
 
-Secrets `RELEASE_TOKEN`, `SLACK_CHANGELOG_WEBHOOK_URL`, `CHROMATIC_PROJECT_TOKEN_WEB`; variable `LIGHTHOUSE_URLS`. Details: [GitHub variables and secrets](code/en/GITHUB_VARIABLES_AND_SECRETS.md).
+Secrets `RELEASE_TOKEN`, `CHROMATIC_PROJECT_TOKEN_WEB`; variable `LIGHTHOUSE_URLS`. Details: [GitHub variables and secrets](code/en/GITHUB_VARIABLES_AND_SECRETS.md).
 
 ## Detailed pages
 

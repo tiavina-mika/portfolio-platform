@@ -14,8 +14,6 @@ import './_core/cms.service.cloud';
 import './_core/userSession.service.cloud';
 import './_core/user-list.service.cloud';
 import './_core/sms-credit-alert.service.cloud';
-// the morning Slack summary; registers the sign-up count, a domain may add its own figures
-import './_core/daily-summary.service.cloud';
 
 // _domain = business-domain services (the portfolio projects)
 import './_domain/project-dashboard.service.cloud';

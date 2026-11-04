@@ -78,6 +78,13 @@ const ContactFormContent = ({
           placeholder={tContact('emailExample')}
           type="email"
         />
+        <TextField
+          autoComplete="tel"
+          label={tContact('phone')}
+          name="phone"
+          placeholder={tContact('phoneExample')}
+          type="tel"
+        />
         <TextAreaField
           required
           label={tContact('message')}

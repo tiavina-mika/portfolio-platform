@@ -13,7 +13,6 @@ Noms uniquement : les valeurs ne sont jamais écrites ici. Elles se règlent dan
 | Secret | Lu par | À quoi il sert |
 |---|---|---|
 | `RELEASE_TOKEN` | `release.yml` | Jeton fine-grained d'un membre du dépôt, utilisé pour ouvrir la pull request de release afin que les vérifications requises s'y exécutent |
-| `SLACK_CHANGELOG_WEBHOOK_URL` | `changeset-notify.yml`, `release-notify.yml` | Webhook entrant Slack pour les messages de changelog |
 | `CHROMATIC_PROJECT_TOKEN_WEB` | `chromatic.yml` | Jeton du projet Chromatic du Storybook web |
 | `GITHUB_TOKEN` | automatique | Fourni par GitHub à chaque exécution ; non configuré à la main |
 

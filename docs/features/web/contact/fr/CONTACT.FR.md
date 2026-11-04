@@ -39,13 +39,15 @@ Tout visiteur, sans connexion ni compte.
   formulaire sont empilés.
 - **Sur la page d'accueil** : le même formulaire, suivi des icônes des réseaux et moyens de contact du
   propriétaire.
-- Le formulaire comporte trois champs, tous obligatoires :
+- Le formulaire comporte quatre champs, dont un seul est facultatif :
   - **Nom**
   - **Email**
+  - **Téléphone** (facultatif)
   - **Message** (zone de texte de plusieurs lignes)
 - Un bouton **"Envoyer"**.
 
-Règles de saisie : l'email doit avoir un format valide, le nom ne dépasse pas 120 caractères et le
+Règles de saisie : l'email doit avoir un format valide, le téléphone, s'il est renseigné, doit ressembler à un numéro
+(chiffres, éventuellement précédés d'un « + », espaces, points et tirets acceptés), le nom ne dépasse pas 120 caractères et le
 message ne dépasse pas 500 caractères. Un champ mal rempli affiche un message d'erreur dans la langue
 du site.
 
@@ -53,7 +55,7 @@ du site.
 
 ### Envoyer un message
 
-Une fois les trois champs remplis, un clic sur "Envoyer" enregistre le message. Pendant l'envoi, le
+Une fois les champs obligatoires remplis, un clic sur "Envoyer" enregistre le message. Pendant l'envoi, le
 bouton indique que l'opération est en cours. Le titre **"Message envoyé"** et le texte **"Votre
 message a été envoyé. Je vous répondrai dans les meilleurs délais."** remplacent ensuite le
 formulaire, avec un bouton **"Envoyer un autre message"** pour en écrire un nouveau.

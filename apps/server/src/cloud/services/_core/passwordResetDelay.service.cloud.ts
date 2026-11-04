@@ -8,16 +8,13 @@ import {
   HIGHEST_LEVEL_ROLES, RECYCLED_NUMBER_RESET_DELAY_HOURS, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 import { ACCOUNT_NOTIFICATION_TYPE } from '@/constants/_core/notification.constants';
-import { SLACK_ALERT_ICONS } from '@/constants/_core/slack.constants';
-import { USER_BO_PATH } from '@/constants/_core/user.constants';
 import { getResetAvailableAt, isAccountInactive } from '@/utils/_core/account-activity.utils';
 import { logger } from '@/utils/_core/logger';
-import { getServerUrl } from '@/utils/_core/utils';
 
 import { createNotification } from './notification.service.cloud';
 import { getUsersFromRoles } from './userRole.service.cloud';
 import { sendPasswordResetDelayedEmail } from '../../emails/_core/user.email';
-import { alertStaff } from '../../utils/_core/staff-alert.utils.cloud';
+import { sendEmailToStaffInTheirOwnLocale } from '../../utils/_core/email.utils.cloud';
 
 /** The column holding an account's pending reset delay. Server-managed: a client never writes it. */
 export const PASSWORD_RESET_DELAY_FIELD = 'passwordResetDelay';
@@ -149,10 +146,10 @@ const warnSupportOfContestedReset = async (user: Parse.User): Promise<void> => {
   try {
     const agents = await getUsersFromRoles(HIGHEST_LEVEL_ROLES);
     const name = [user.get('firstName'), user.get('lastName')].filter(Boolean).join(' ');
-    const failures = await alertStaff(agents, (locale) => ({
+    const failures = await sendEmailToStaffInTheirOwnLocale(agents, (locale) => ({
       subject: translate('email.passwordResetContestedSubject', locale),
       message: translate('email.passwordResetContestedMessage', locale, { name, userId: user.id }),
-    }), { icon: SLACK_ALERT_ICONS.security, url: `${getServerUrl()}/${USER_BO_PATH}/${user.id}` });
+    }));
 
     failures.forEach(({ recipient, error }) => (
       logger.error(`Contested password reset e-mail failed for agent ${recipient.id}`, error)

@@ -42,7 +42,7 @@ De haut en bas, la page enchaîne les blocs suivants :
    tarifs adaptés aux startups et PME. Les cartes sont sur une colonne sur mobile et sur deux colonnes
    dès la tablette. Ce contenu est le même pour tous les visiteurs d'une langue donnée ; il ne
    se modifie pas dans le back-office.
-3. **"Projets développés récemment"** : le nombre total de projets entre parenthèses, une phrase de
+3. **"Mes dernières réalisations"** : le nombre total de projets entre parenthèses, une phrase de
    présentation, puis les cartes des derniers projets (jusqu'à 16). Chaque carte montre l'image, le
    nom, une courte description et un bouton **"Voir plus"**. Si d'autres projets existent, un bouton
    **"Voir N autres projets"** mène à la liste complète.

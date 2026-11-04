@@ -8,7 +8,6 @@
 - [Release](#release)
 - [Storybook et tests visuels](#storybook-et-tests-visuels)
 - [Lighthouse](#lighthouse)
-- [Notifications Slack](#notifications-slack)
 - [Pièges](#pièges)
 
 ## Vue d'ensemble
@@ -23,8 +22,6 @@ Les workflows sont dans `.github/workflows/`. Les secrets et variables qu'ils li
 | `storybook-tests.yml` | Storybook tests | Tous les jours 02:00 UTC, manuel |
 | `chromatic.yml` | Chromatic : Storybooks | Tous les quatre jours 03:00 UTC, manuel |
 | `lighthouse.yml` | Lighthouse | Le lundi 06:00 UTC, manuel |
-| `changeset-notify.yml` | Changesets to Slack | Push sur `develop` touchant `.changeset/*.md` |
-| `release-notify.yml` | Release notes to Slack | Push sur `develop` et `main` touchant `apps/*/CHANGELOG.md`, manuel |
 
 ## CI
 
@@ -57,10 +54,6 @@ Un nouveau push sur la même PR annule l'exécution précédente.
 ## Lighthouse
 
 `lighthouse.yml` audite un site déployé (les URL de la variable de dépôt `LIGHTHOUSE_URLS`) selon les budgets de `lighthouserc.json`.
-
-## Notifications Slack
-
-`changeset-notify.yml` et `release-notify.yml` lancent `scripts/post-changesets-to-slack.mjs` et `scripts/post-changelog-to-slack.mjs`, qui publient sur le webhook entrant Slack du secret `SLACK_CHANGELOG_WEBHOOK_URL`.
 
 ## Pièges
 

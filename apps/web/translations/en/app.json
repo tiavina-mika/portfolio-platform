@@ -47,6 +47,8 @@
     "socialTitle": "Follow me",
     "yourFullName": "Your full name",
     "emailExample": "your.email@example.com",
+    "phone": "Phone (optional)",
+    "phoneExample": "+261 34 00 000 00",
     "writeSomething": "Write something",
     "successTitle": "Message sent",
     "failTitle": "Could not send",

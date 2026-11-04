@@ -209,13 +209,5 @@
     "password": "Teny miafina",
     "submit": "Hiditra amin'ny antontan-taratasy",
     "wrongPassword": "Diso ny teny miafina."
-  },
-  "slack": {
-    "openInBackOffice": "Sokafy ao amin'ny back-office",
-    "scheduledJobFailed": "Tsy nahomby ny asa voalahatra {{- jobName}}",
-    "scheduledJobFailedDetails": "Hadisoana: {{- kind}} — ao amin'ny logs an'ny serivera ny antsipiriany",
-    "dailySummaryTitle": "Omaly tao amin'ny Portfolio ({{- date}})",
-    "dailySummaryFigure": "{{- label}}: {{- value}}",
-    "dailySummaryNewUsers": "Nisoratra anarana"
   }
 }

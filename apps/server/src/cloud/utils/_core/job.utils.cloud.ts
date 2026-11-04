@@ -5,63 +5,13 @@ import type { Request, Response, NextFunction } from 'express';
 import queue from 'async/queue.js';
 import throttle from 'lodash/throttle.js';
 
-import { translate } from '@/config/i18n';
 import { getRedis } from '@/config/redis';
 import { USE_MASTER_KEY, USE_READ_PREFERENCE } from '@/constants/_core/constants';
 import {
-  JOB_FAILURE_ALERT_INTERVAL_SECONDS, JOB_FAILURE_ALERT_KEY_PREFIX, JOB_SLOW_THRESHOLD_MS,
-  SCHEDULED_JOB_RUNNING_KEY_PREFIX, SCHEDULED_JOB_RUNNING_TTL_SECONDS, SCHEDULED_RUN_PARAM,
+  JOB_SLOW_THRESHOLD_MS, SCHEDULED_JOB_RUNNING_KEY_PREFIX, SCHEDULED_JOB_RUNNING_TTL_SECONDS,
+  SCHEDULED_RUN_PARAM,
 } from '@/constants/_core/job.constants';
-import { SLACK_ALERT_ICONS, SLACK_ALERT_LOCALE } from '@/constants/_core/slack.constants';
-import { isSlackAlertEnabled, postSlackAlert } from '@/services/slack.service';
 import { logger } from '@/utils/_core/logger';
-import { buildSlackAlertText } from '@/utils/_core/slack.utils';
-
-/**
- * What kind of error a job failed with — its class and, for a Parse error, its numeric code —
- * and nothing it says. A message quotes the data it choked on (a phone number in a duplicate-key
- * error, a URL with its token in a network error), and the Slack channel is read by all the staff:
- * the message stays in the server logs, where access is controlled.
- */
-const describeErrorKind = (error: unknown): string => {
-  const name = (error as Error | undefined)?.name ?? typeof error;
-  const code = (error as { code?: unknown } | undefined)?.code;
-
-  return typeof code === 'number' ? `${name}, code ${code}` : name;
-};
-
-/**
- * Posts a failed job to the staff's Slack alert channel, at most once per job per
- * `JOB_FAILURE_ALERT_INTERVAL_SECONDS`: a job failing on every tick would otherwise post on every
- * tick. The throttle key is written atomically (`NX`), so several server instances failing the same
- * job do not each post. Never throws — it runs inside the failure it reports.
- */
-export const alertStaffOfFailedJob = async (jobName: string, error: unknown): Promise<void> => {
-  if (!isSlackAlertEnabled()) return;
-
-  try {
-    const throttleKey = `${JOB_FAILURE_ALERT_KEY_PREFIX}:${jobName}`;
-    const isFirstAlert = await getRedis().set(throttleKey, Date.now(), {
-      nx: true,
-      ex: JOB_FAILURE_ALERT_INTERVAL_SECONDS,
-    });
-
-    if (!isFirstAlert) return;
-
-    await postSlackAlert(buildSlackAlertText({
-      icon: SLACK_ALERT_ICONS.job,
-      title: translate('slack.scheduledJobFailed', SLACK_ALERT_LOCALE, { jobName }),
-      details: translate('slack.scheduledJobFailedDetails', SLACK_ALERT_LOCALE, {
-        kind: describeErrorKind(error),
-      }),
-    }));
-  }
-  catch (alertError) {
-    logger.error(`[job:${jobName}] failure alert could not be sent`, {
-      error: (alertError as Error).message,
-    });
-  }
-};
 
 type JobRunningLock = { key: string; token: string };
 
@@ -118,10 +68,10 @@ const releaseJobRunningLock = async (jobName: string, { key, token }: JobRunning
 };
 
 /**
- * Registers a Parse Job, like `Parse.Cloud.job`, whose failure reaches the staff on Slack. Parse
- * only records a failed run in `_JobStatus`, which nobody reads, and the scheduler cannot see it:
- * `runJob` returns as soon as the job has started. The error is rethrown, so the run is still marked
- * failed in `_JobStatus`.
+ * Registers a Parse Job, like `Parse.Cloud.job`, whose failure is logged. Parse only records a
+ * failed run in `_JobStatus`, which nobody reads, and the scheduler cannot see it: `runJob` returns
+ * as soon as the job has started. The error is rethrown, so the run is still marked failed in
+ * `_JobStatus`.
  *
  * A run started by the scheduler (`SCHEDULED_RUN_PARAM`) is skipped when the previous run of the same
  * job, for the same country, is still going. Runs started by a trigger or by hand never wait.
@@ -161,7 +111,6 @@ export const defineJob = <T extends Parse.Cloud.Params = Parse.Cloud.Params>(
     }
     catch (error) {
       logger.error(`[job:${jobName}] failed`, { error: (error as Error)?.stack ?? String(error) });
-      await alertStaffOfFailedJob(jobName, error);
       throw error;
     }
     finally {

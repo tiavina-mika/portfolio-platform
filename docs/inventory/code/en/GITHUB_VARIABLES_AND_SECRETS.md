@@ -13,7 +13,6 @@ Names only: values are never written here. They are set in the repository settin
 | Secret | Read by | What for |
 |---|---|---|
 | `RELEASE_TOKEN` | `release.yml` | Fine-grained token of a repository member, used to open the release pull request so that required checks run on it |
-| `SLACK_CHANGELOG_WEBHOOK_URL` | `changeset-notify.yml`, `release-notify.yml` | Slack incoming webhook for the changelog posts |
 | `CHROMATIC_PROJECT_TOKEN_WEB` | `chromatic.yml` | Token of the Chromatic project of the web Storybook |
 | `GITHUB_TOKEN` | automatic | Provided by GitHub to every run; not configured by hand |
 

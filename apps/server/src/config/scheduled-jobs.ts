@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import { COUNTRIES, DEFAULT_COUNTRY, type Country } from '@shared/constants';
 import { schedule } from 'node-cron';
 
-import { alertStaffOfFailedJob, runJob } from '@/cloud/utils/_core/job.utils.cloud';
+import { runJob } from '@/cloud/utils/_core/job.utils.cloud';
 import { getRedis } from '@/config/redis';
 import {
   FORCE_PROD, IS_CLOUD_RUN, IS_LOCAL, IS_PROD,
@@ -80,8 +80,6 @@ const runScheduledJob = async (jobName: string, params?: { countryCode: string }
     }
     catch (error) {
       logger.error(`[job:${jobName}] cron error`, { error: (error as Error).stack });
-      // the job could not even start; a failure while it runs is reported by `defineJob`
-      await alertStaffOfFailedJob(jobName, error);
     }
   });
 
@@ -151,14 +149,6 @@ export const scheduleJobs = (serverUrl: string): void => {
      * so an edit still in progress (image uploaded, content not saved yet) is never touched
      */
     schedule('30 2 * * *', () => runScheduledJob('purgeOrphanedEditorFilesJob'));
-
-    /*
-     * Post yesterday's figures (sign-ups and whatever a domain registers) to the staff's
-     * Slack alert channel — runs daily at 07:30 (country time), before the 08:00 batch below, so
-     * the day is counted once it is over and read when the staff starts. Does nothing in an
-     * environment with no Slack channel
-     */
-    schedule('30 7 * * *', () => runScheduledJob('postDailySlackSummaryJob'), LOCAL_MORNING_SCHEDULE);
 
     /*
      * Lift expired temporary bans — runs daily at 08:15 (default country time, staff clock)

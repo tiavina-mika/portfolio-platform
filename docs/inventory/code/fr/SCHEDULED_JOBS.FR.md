@@ -11,7 +11,7 @@
 Tous les appels `schedule(...)` sont dans `apps/server/src/config/scheduled-jobs.ts` (`scheduleJobs`, appelée une fois au démarrage depuis `apps/server/src/index.ts`). Chaque exécution passe par `runScheduledJob`, qui :
 
 - prend un verrou Redis nommé d'après le job et la minute (`acquireScheduledJobLock`), pour qu'une seule instance du serveur exécute un tick quand plusieurs instances tournent ; si Redis est injoignable, le tick s'exécute quand même et l'échec est journalisé ;
-- exécute le Cloud Job et alerte l'équipe (Slack et e-mail) s'il échoue.
+- exécute le Cloud Job et journalise l'erreur s'il échoue.
 
 Le ping d'éveil tourne hors développement local et hors Cloud Run. Les jobs métier ne tournent **qu'en production** (`IS_PROD`, ou en local avec `FORCE_PROD` passé à true) : ils sont volontairement coupés en pré-production.
 
@@ -25,7 +25,6 @@ Le ping d'éveil tourne hors développement local et hors Cloud Run. Les jobs m�
 | `40 3 * * *` | `purgeOrphanUserSessionsJob` | Détruit les appareils sans jeton de session |
 | `30 4 * * 0` | `purgeOldNotificationsJob` | Purge hebdomadaire des anciennes notifications (dimanche) |
 | `45 4 * * 0` | `purgeOldLogsJob` | Destruction hebdomadaire des lignes d'audit, de modération et de liens expirés au-delà de leur durée de conservation |
-| `30 7 * * *` (fuseau du pays par défaut) | `postDailySlackSummaryJob` | Publie les chiffres de la veille sur le canal Slack de l'équipe |
 | `15 8 * * *` (fuseau du pays par défaut) | `liftExpiredBansJob` | Lève les bannissements temporaires expirés |
 
 ## Planifications GitHub Actions

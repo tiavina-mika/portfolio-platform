@@ -38,7 +38,7 @@ const ContactForm = ({
     failedMessage: tContact('failedMessage'),
     translationKey: 'Contact',
     recaptchaActionName: 'contactForm',
-    initialValue: { email: '', name: '', message: '' },
+    initialValue: { email: '', phone: '', name: '', message: '' },
   });
 
   return (
