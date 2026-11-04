@@ -56,7 +56,7 @@ src/
 ├── emails/         # HTML e-mail frame and templates
 ├── middlewares/    # Express middlewares
 ├── routes/         # Express routers
-├── services/       # Server-level services (email, SMS, Slack)
+├── services/       # Server-level services (email, SMS)
 ├── types/          # TypeScript types and ambient declarations (flat, not split)
 ├── utils/          # General utilities
 └── validations/    # Zod schemas

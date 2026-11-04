@@ -3,13 +3,12 @@ import { getRedis } from '@/config/redis';
 import {
   SMS_OUT_OF_CREDIT_ALERT_INTERVAL_SECONDS, VERIFICATION_SMS_DAILY_LIMIT_GLOBAL,
 } from '@/constants/_core/constants';
-import { SLACK_ALERT_ICONS } from '@/constants/_core/slack.constants';
 import { onSmsOutOfCredit } from '@/services/sms.service';
 import { logger } from '@/utils/_core/logger';
 import { onSmsDailyCeilingReached } from '@/utils/_core/sms-quota.utils';
 
 import { getUsersFromRoles } from './userRole.service.cloud';
-import { alertStaff } from '../../utils/_core/staff-alert.utils.cloud';
+import { sendEmailToStaffInTheirOwnLocale } from '../../utils/_core/email.utils.cloud';
 
 const OUT_OF_CREDIT_ALERT_KEY = 'sms:out-of-credit:alerted';
 
@@ -32,10 +31,10 @@ export const alertStaffOfSmsOutOfCredit = async (): Promise<boolean> => {
   if (!isFirstAlert) return false;
 
   const admins = await getUsersFromRoles(['OWNER', 'SUPER_ADMIN']);
-  const failures = await alertStaff(admins, (locale) => ({
+  const failures = await sendEmailToStaffInTheirOwnLocale(admins, (locale) => ({
     subject: translate('email.smsOutOfCreditSubject', locale),
     message: translate('email.smsOutOfCreditMessage', locale),
-  }), { icon: SLACK_ALERT_ICONS.sms });
+  }));
 
   failures.forEach(({ error }) => {
     logger.error('SMS out-of-credit alert e-mail failed', error);
@@ -75,12 +74,12 @@ export const alertStaffOfSmsDailyCeiling = async (): Promise<boolean> => {
   if (!isFirstAlert) return false;
 
   const admins = await getUsersFromRoles(['OWNER', 'SUPER_ADMIN']);
-  const failures = await alertStaff(admins, (locale) => ({
+  const failures = await sendEmailToStaffInTheirOwnLocale(admins, (locale) => ({
     subject: translate('email.smsDailyCeilingSubject', locale),
     message: translate('email.smsDailyCeilingMessage', locale, {
       limit: String(VERIFICATION_SMS_DAILY_LIMIT_GLOBAL),
     }),
-  }), { icon: SLACK_ALERT_ICONS.sms });
+  }));
 
   failures.forEach(({ error }) => {
     logger.error('SMS daily ceiling alert e-mail failed', error);

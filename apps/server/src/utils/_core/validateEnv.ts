@@ -85,13 +85,6 @@ const validateEnv = (env: Env = process.env): void => {
      */
     WEBSITE_REVALIDATE_SECRET: isDeployed(env) ? nonEmptyStr() : str({ default: '' }),
     /*
-     * Incoming webhook of the staff's Slack alert channel (see slack.service.ts): SOS,
-     * failed jobs, morning summary. Optional everywhere: without it no message is
-     * posted, and the e-mail of each alert still goes out — Slack is a second channel, not the
-     * only one.
-     */
-    SLACK_ALERTS_WEBHOOK_URL: str({ default: '' }),
-    /*
      * The back-office owners invited at boot (see ensureOwnerInvitationsExist). The deployed
      * environments refuse to start with fewer than two: a single owner who loses their
      * authenticator leaves the OWNER-only actions out of reach of everybody. Development and

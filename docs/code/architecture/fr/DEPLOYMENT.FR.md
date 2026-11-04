@@ -79,7 +79,6 @@ Hors développement local, le serveur planifie une tâche `node-cron` toutes les
 | `ci.yml` (CI) | pull requests et pushs sur `develop` et `main`, manuel | sous Node 24 avec pnpm : `nx affected` lint, typecheck, build (sauf `web`, dont le build a besoin du CMS en ligne), tests (sauf `server` et `web`), builds Storybook, `pnpm check-i18n` ; messages de commit contrôlés par commitlint sur les pull requests ; lint Markdown, liens et ancres des docs, jumeaux de docs, contrôle des liens |
 | `security.yml` | pull requests et pushs sur `develop` et `main`, chaque lundi, manuel | `pnpm audit --prod` au niveau high (informatif pour l'instant) et un scan gitleaks |
 | `release.yml` | push sur `develop`, manuel | ouvre ou met à jour la pull request « chore(release): version packages » avec les changesets ; demande le secret `RELEASE_TOKEN` |
-| `release-notify.yml`, `changeset-notify.yml` | push quand un changelog ou un changeset change | publient les notes de version et les nouveaux changesets dans un canal Slack |
 | `storybook-tests.yml` | chaque nuit, manuel | exécute chaque story comme test dans Chromium, par tranches |
 | `chromatic.yml` | planifié, manuel | publie les Storybooks sur Chromatic et capture les tests visuels |
 | `lighthouse.yml` | chaque lundi, manuel | audite les URL listées dans la variable de dépôt `LIGHTHOUSE_URLS` selon les budgets de `lighthouserc.json` |

@@ -36,8 +36,8 @@ Index : déclarés dans le code par le core (voir la page d'inventaire ci-dessus
 ## Serveur
 
 - Dossiers séparés en `_core` / `_domain` ; les fonctions de `Project` sont `getProjects`, `getProject`, `getProjectForClient`, avec leurs triggers, chiffres de tableau de bord et entrée de recherche globale.
-- Environ 150 Cloud Functions, 13 tâches planifiées, constructeurs d'e-mails et de SMS, limitation de débit sur Redis, alertes Slack (voir [l'inventaire](../../../inventory/README.md)).
-- Nouvelles variables d'environnement et services : Upstash Redis, MMSDuck (SMS), Expo push, webhook d'alertes Slack, Sentry, `WEBSITE_REVALIDATE_SECRET`. L'en-tête de requête est maintenant `X-portfolio-key`.
+- Environ 150 Cloud Functions, 13 tâches planifiées, constructeurs d'e-mails et de SMS, limitation de débit sur Redis (voir [l'inventaire](../../../inventory/README.md)).
+- Nouvelles variables d'environnement et services : Upstash Redis, MMSDuck (SMS), Expo push, Sentry, `WEBSITE_REVALIDATE_SECRET`. L'en-tête de requête est maintenant `X-portfolio-key`.
 - `validateEnv` : en `preProduction` et `production`, `OWNERS_EMAILS` exige deux adresses distinctes, et `MMSDUCK_API_KEY` et `WEBSITE_REVALIDATE_SECRET` sont requis.
 
 ## Back-office

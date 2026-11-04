@@ -83,7 +83,6 @@ Les fichiers sont dans `apps/server/src/cloud/jobs/_core/` (`_domain/` n'a aucun
 | `newsletter.jobs.ts` | `sendArticleToNewsletterJob` |
 | `notification.jobs.ts` | `expireOldNotificationsJob`, `purgeOldNotificationsJob` |
 | `retention.jobs.ts` | `purgeOldLogsJob` |
-| `slack.jobs.ts` | `postDailySlackSummaryJob` |
 | `user.jobs.ts` | `deleteOrDestroyUserRelationsJob`, `liftExpiredBansJob`, `createUserAuditLogJob`, `purgeOrphanUserSessionsJob`, `purgeUnverifiedPhoneSignupsJob` |
 | `test.jobs.ts` | `createBatchTestJob`, `destroyBatchTestJob` |
 

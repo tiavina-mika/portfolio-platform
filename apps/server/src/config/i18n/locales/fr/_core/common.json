@@ -209,13 +209,5 @@
     "password": "Mot de passe",
     "submit": "Accéder à la documentation",
     "wrongPassword": "Mot de passe incorrect."
-  },
-  "slack": {
-    "openInBackOffice": "Ouvrir dans le back-office",
-    "scheduledJobFailed": "Échec du job planifié {{- jobName}}",
-    "scheduledJobFailedDetails": "Erreur : {{- kind}} — le détail est dans les logs du serveur",
-    "dailySummaryTitle": "Hier sur Portfolio ({{- date}})",
-    "dailySummaryFigure": "{{- label}} : {{- value}}",
-    "dailySummaryNewUsers": "Inscrits"
   }
 }

@@ -25,8 +25,8 @@ const getActorLabel = (locale: Locale, actor?: User): string => {
  * The owners are not employees and seldom open the back-office: the e-mail is the only way they see
  * a compromised account, or an employee given more than they should have, before it is too late.
  *
- * E-mail only, never the Slack alert channel: every member of the staff reads that channel, and who
- * holds the highest roles, or when they sign in, is not for everybody to read.
+ * E-mail only, to the owners alone: who holds the highest roles, or when they sign in, is not
+ * for everybody to read.
  *
  * Never throws: the action it reports has already happened, and a failed alert must not turn it into
  * an error. A failure is logged.

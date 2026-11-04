@@ -27,12 +27,3 @@ export const SCHEDULED_JOB_RUNNING_TTL_SECONDS = 10 * 60;
  * first when deciding which cadence to loosen or which query to index
  */
 export const JOB_SLOW_THRESHOLD_MS = 30 * 1000;
-
-/** Redis key prefix of the throttle on the Slack alert of a failed job. */
-export const JOB_FAILURE_ALERT_KEY_PREFIX = 'job-failure:alerted';
-
-/*
- * A job failing on every tick (every 5 minutes for some) is reported once an hour: often enough to
- * know it is still broken, rarely enough to leave room in the channel for the other alerts
- */
-export const JOB_FAILURE_ALERT_INTERVAL_SECONDS = 60 * 60;

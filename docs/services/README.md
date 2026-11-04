@@ -16,15 +16,13 @@
 | Google reCAPTCHA | web (token), server (check) | Bot protection of the contact and newsletter forms | `RECAPTCHA_SECRET_KEY` (server), `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` (web) |
 | Upstash Redis | server, web | Rate limits, Parse Server cache and LiveQuery, scheduled job lock | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `UPSTASH_REDIS_URL` |
 | MMSDuck | server | SMS: verification codes, notices, notification fallback | `MMSDUCK_API_KEY` |
-| Slack (alerts webhook) | server | Staff alerts and the daily summary | `SLACK_ALERTS_WEBHOOK_URL` |
 | Sentry | bo, web | Error reporting (browser; also the Next.js server for the web) | `VITE_SENTRY_DSN`, `VITE_SENTRY_ENVIRONMENT` (bo), `NEXT_PUBLIC_SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_ENVIRONMENT` (web), `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, `SENTRY_PROJECT` (build time) |
 | Google Analytics 4 | web | Audience measurement (off when unset) | `NEXT_PUBLIC_GA_MEASUREMENT_ID` |
 | Render | server | Hosting the server (keep-awake cron for the free plan) | none in the code |
 | GitHub (Actions) | repository | CI, security checks, release pull request | secrets and variables listed in the [inventory](../inventory/code/en/GITHUB_VARIABLES_AND_SECRETS.md) |
 | Chromatic | CI | Published Storybooks and visual tests | `CHROMATIC_PROJECT_TOKEN_WEB` (GitHub secret) |
-| Slack (changelog webhook) | CI | Changelog and release notes posts | `SLACK_CHANGELOG_WEBHOOK_URL` (GitHub secret) |
 
-The back-office and the website report their errors (Sentry, one shared project, an `app` tag tells them apart); the server has no error-tracking service. The Slack alerts webhook has no guide of its own: see the variables above and [emails](../inventory/communication/en/EMAILS.md).
+The back-office and the website report their errors (Sentry, one shared project, an `app` tag tells them apart); the server has no error-tracking service.
 
 The full list of variables, by app, is in the [inventory](../inventory/README.md).
 
@@ -44,7 +42,7 @@ Each guide has an English and a French version (the French file name ends with `
 | Render | [RENDER.md](render/en/RENDER.md) | [RENDER.FR.md](render/fr/RENDER.FR.md) |
 | Render, step-by-step deployment tutorial | [RENDER_DEPLOYMENT.md](render/en/RENDER_DEPLOYMENT.md) | [RENDER_DEPLOYMENT.FR.md](render/fr/RENDER_DEPLOYMENT.FR.md) |
 
-GitHub, Chromatic and Slack are documented with the workflows that use them: [CI workflows](../inventory/code/en/CI_WORKFLOWS.md) and [GitHub variables and secrets](../inventory/code/en/GITHUB_VARIABLES_AND_SECRETS.md).
+GitHub and Chromatic are documented with the workflows that use them: [CI workflows](../inventory/code/en/CI_WORKFLOWS.md) and [GitHub variables and secrets](../inventory/code/en/GITHUB_VARIABLES_AND_SECRETS.md).
 
 ## Adding a service
 

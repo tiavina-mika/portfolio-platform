@@ -11,7 +11,7 @@
 All `schedule(...)` calls are in `apps/server/src/config/scheduled-jobs.ts` (`scheduleJobs`, called once at boot from `apps/server/src/index.ts`). Each run goes through `runScheduledJob`, which:
 
 - takes a Redis lock named after the job and the minute (`acquireScheduledJobLock`), so that only one server instance runs a tick when several instances are alive; if Redis cannot be reached the tick runs anyway and the failure is logged;
-- runs the Cloud Job and alerts the staff (Slack and e-mail) when it fails.
+- runs the Cloud Job and logs the error when it fails.
 
 The keep-awake ping runs outside local development and outside Cloud Run. The business jobs run **only in production** (`IS_PROD`, or locally with `FORCE_PROD` flipped to true): they are deliberately off in pre-production.
 
@@ -25,7 +25,6 @@ The keep-awake ping runs outside local development and outside Cloud Run. The bu
 | `40 3 * * *` | `purgeOrphanUserSessionsJob` | Destroys device rows without a session token |
 | `30 4 * * 0` | `purgeOldNotificationsJob` | Weekly purge of old notifications (Sundays) |
 | `45 4 * * 0` | `purgeOldLogsJob` | Weekly destruction of audit, moderation and expired-link rows past their retention |
-| `30 7 * * *` (default country time zone) | `postDailySlackSummaryJob` | Posts yesterday's figures to the staff Slack channel |
 | `15 8 * * *` (default country time zone) | `liftExpiredBansJob` | Lifts expired temporary bans |
 
 ## GitHub Actions schedules
