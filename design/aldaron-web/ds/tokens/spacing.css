@@ -1,0 +1,22 @@
+/* Aldaron — espacements, rayons, bordures, ombres, mouvement, états */
+:root{
+--space-0:0;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--space-20:80px;--space-24:96px;--space-32:128px;
+--radius:6px;--radius-sm:4px;--radius-md:6px;--radius-lg:8px;--radius-xl:12px;--radius-full:9999px;
+--border-width:1px;--border-width-strong:2px;
+--shadow-xs:0 1px 0 rgba(23,24,26,.04);
+--shadow-sm:0 1px 2px rgba(23,24,26,.06),0 1px 1px rgba(23,24,26,.04);
+--shadow-md:0 4px 12px -2px rgba(23,24,26,.08),0 2px 4px rgba(23,24,26,.04);
+--shadow-lg:0 16px 40px -8px rgba(23,24,26,.16),0 4px 12px rgba(23,24,26,.06);
+--ring-width:2px;--ring-offset:2px;
+--focus-ring:0 0 0 var(--ring-offset) var(--background),0 0 0 calc(var(--ring-offset) + var(--ring-width)) var(--ring);
+--hit-min:44px;--control-h-sm:36px;--control-h:44px;--control-h-lg:52px;
+--disabled-opacity:.45;/* @kind other */
+--ease-out:cubic-bezier(.2,.7,.2,1);/* @kind other */--ease-in-out:cubic-bezier(.6,0,.2,1);/* @kind other */
+--dur-fast:120ms;/* @kind other */--dur-base:180ms;/* @kind other */--dur-slow:260ms;/* @kind other */
+--container:1200px;--container-narrow:760px;--gutter:24px;
+}
+.dark{
+--shadow-sm:0 1px 2px rgba(0,0,0,.4);
+--shadow-md:0 4px 12px -2px rgba(0,0,0,.5);
+--shadow-lg:0 16px 40px -8px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04);
+}

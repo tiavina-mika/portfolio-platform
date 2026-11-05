@@ -1,0 +1,7 @@
+/* Reset minimal pour cartes et kits (pas pour la prod : shadcn fournit le sien) */
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--background);color:var(--foreground);font-family:var(--font-sans);font-size:var(--text-base);line-height:var(--lh-base);-webkit-font-smoothing:antialiased}
+a{color:var(--brand-text);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{color:var(--foreground)}
+:focus-visible{outline:none;box-shadow:var(--focus-ring);border-radius:var(--radius-sm)}
+::selection{background:var(--signal-100);color:var(--ink-900)}
