@@ -6,7 +6,7 @@ import { Skeleton } from '@/components/ui/Skeleton';
 const ProjectSkeleton = () => {
   return (
     <Section className="grid grid-cols-1" size="md">
-      <Card withShadow={false}>
+      <Card>
         <Skeleton className="h-4 w-24" />
         <Skeleton className="h-10 w-[85%]" />
         <Skeleton className="h-14 w-[85%]" />

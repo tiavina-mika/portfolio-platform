@@ -1,5 +1,6 @@
 'use client';
 
+import { MoreHorizontal } from 'lucide-react';
 import { ReactNode } from 'react';
 
 import {
@@ -12,7 +13,6 @@ import {
 } from '@/components/ui/DropdownMenu';
 import { IMenuItem } from '@/types/app.type';
 
-import NextIcon from './NextIcon';
 
 type Props = {
   menus: IMenuItem[];
@@ -24,7 +24,7 @@ const DropdownMenu = ({ menus, title, trigger }: Props) => {
     <UIDropdownMenu>
       <DropdownMenuTrigger>
         {trigger || (
-          <NextIcon alt="menus" size={18} src="/icons/more-horizontal.svg" />
+          <MoreHorizontal aria-hidden size={18} />
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">

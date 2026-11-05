@@ -1,9 +1,15 @@
-export type ButtonVariantType = 'contained' | 'outlined' | 'text';
+export type ButtonVariantType =
+  | 'primary' |
+  'brand' |
+  'secondary' |
+  'outline' |
+  'ghost' |
+  'destructive' |
+  'link';
 export type TextSizeType = 'sm' | 'md' | 'lg' | 'xl';
 export type TextVariantType = 'body-lg' | 'body' | 'body-strong' | 'small' | 'caption' | 'label';
 export type TextFormatType = 'caps' | 'numbers' | 'mono';
 export type TextClampType = 'none' | '1-line' | '3-lines';
-export type SimplePaletteColorOptions = 'light' | 'dark' | 'main' | 'discret';
 export type PaletteColor =
   | 'primary' |
   'secondary' |
@@ -11,7 +17,7 @@ export type PaletteColor =
   'info' |
   'success' |
   'warning';
-export type ButtonPaletteColor = PaletteColor | 'default';
+export type TextColorType = PaletteColor | 'default';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'icon';
 export type TitleLevel = 1 | 2 | 3 | 4 | 5 | 6;
 export type TitleSizeType = '4xl' | '3xl' | '2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs';

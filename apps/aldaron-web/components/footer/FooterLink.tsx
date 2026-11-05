@@ -10,12 +10,9 @@ const FooterLink = ({ href, children }: Props) => {
   return (
     <TextLink
 
+      className="text-base"
       href={href}
       underline={false}
-      className={`
-        font-primary text-base
-        dark:text-gray-300
-      `}
     >
       {children}
     </TextLink>

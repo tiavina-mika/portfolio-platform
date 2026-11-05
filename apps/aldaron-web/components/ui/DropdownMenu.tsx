@@ -1,13 +1,10 @@
 'use client';
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import {
-  ComponentProps,
-} from 'react';
+import { Check, ChevronRight, Dot } from 'lucide-react';
+import { ComponentProps } from 'react';
 
 import { cn } from '@/utils/app.utils';
-
-import NextIcon from '../NextIcon';
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
 
@@ -35,9 +32,9 @@ const DropdownMenuSubTrigger = ({
       data-slot="dropdown-menu-sub-trigger"
       className={cn(
         `
-          flex cursor-default items-center rounded-xs px-2 py-1.5 text-sm outline-hidden select-none
-          focus:bg-accent
-          data-[state=open]:bg-accent
+          flex min-h-10 cursor-default items-center rounded-sm px-2.5 text-[15px] outline-hidden select-none
+          focus:bg-muted
+          data-[state=open]:bg-muted
         `,
         inset && 'pl-8',
         className
@@ -45,7 +42,7 @@ const DropdownMenuSubTrigger = ({
       {...props}
     >
       {children}
-      <NextIcon className="ml-auto" size={18} src="/icons/chevron-right.svg" />
+      <ChevronRight aria-hidden className="ml-auto" size={16} />
     </DropdownMenuPrimitive.SubTrigger>
   );
 };
@@ -59,7 +56,7 @@ const DropdownMenuSubContent = ({
       data-slot="dropdown-menu-sub-content"
       className={cn(
         `
-          z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg
+          z-50 min-w-55 overflow-hidden rounded-lg border bg-popover p-1 text-popover-foreground shadow-lg
           data-[side=bottom]:slide-in-from-top-2
           data-[side=left]:slide-in-from-right-2
           data-[side=right]:slide-in-from-left-2
@@ -85,7 +82,7 @@ const DropdownMenuContent = ({
         data-slot="dropdown-menu-content"
         sideOffset={sideOffset}
         className={cn(
-          'z-50 min-w-[8rem] overflow-hidden rounded-md border bg-white p-1 text-popover-foreground shadow-md',
+          'z-50 min-w-55 overflow-hidden rounded-lg border bg-popover p-1 text-popover-foreground shadow-lg',
           `
             data-[side=bottom]:slide-in-from-top-2
             data-[side=left]:slide-in-from-right-2
@@ -119,11 +116,12 @@ const DropdownMenuItem = ({
       data-variant={variant}
       className={cn(
         `
-          relative flex cursor-default items-center rounded-xs px-2 py-1.5 text-sm outline-hidden
-          transition-colors select-none
+          relative flex min-h-10 cursor-default items-center gap-2.5 rounded-sm px-2.5 text-[15px]
+          outline-hidden transition-colors duration-120 select-none
           hover:cursor-pointer
-          focus:border-0 focus:bg-accent focus:text-accent-foreground
-          data-[disabled]:pointer-events-none data-[disabled]:opacity-50
+          focus:bg-muted
+          data-[disabled]:pointer-events-none data-[disabled]:opacity-45
+          data-[variant=destructive]:text-destructive-text data-[variant=destructive]:focus:bg-danger-subtle
         `,
         inset && 'pl-8',
         className
@@ -145,10 +143,10 @@ const DropdownMenuCheckboxItem = ({
       data-slot="dropdown-menu-checkbox-item"
       className={cn(
         `
-          relative flex cursor-default items-center rounded-xs py-1.5 pr-2 pl-8 text-sm outline-hidden
-          transition-colors select-none
-          focus:bg-accent focus:text-accent-foreground
-          data-[disabled]:pointer-events-none data-[disabled]:opacity-50
+          relative flex min-h-10 cursor-default items-center rounded-sm pr-2.5 pl-8 text-[15px] outline-hidden
+          transition-colors duration-120 select-none
+          focus:bg-muted
+          data-[disabled]:pointer-events-none data-[disabled]:opacity-45
         `,
         className
       )}
@@ -156,7 +154,7 @@ const DropdownMenuCheckboxItem = ({
     >
       <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
         <DropdownMenuPrimitive.ItemIndicator>
-          <NextIcon size={18} src="/icons/check.svg" />
+          <Check aria-hidden size={16} />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
       {children}
@@ -174,10 +172,10 @@ const DropdownMenuRadioItem = ({
       data-slot="dropdown-menu-radio-item"
       className={cn(
         `
-          relative flex cursor-default items-center rounded-xs py-1.5 pr-2 pl-8 text-sm outline-hidden
-          transition-colors select-none
-          focus:bg-accent focus:text-accent-foreground
-          data-[disabled]:pointer-events-none data-[disabled]:opacity-50
+          relative flex min-h-10 cursor-default items-center rounded-sm pr-2.5 pl-8 text-[15px] outline-hidden
+          transition-colors duration-120 select-none
+          focus:bg-muted
+          data-[disabled]:pointer-events-none data-[disabled]:opacity-45
         `,
         className
       )}
@@ -185,12 +183,7 @@ const DropdownMenuRadioItem = ({
     >
       <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
         <DropdownMenuPrimitive.ItemIndicator>
-          <NextIcon
-            className="fill-current"
-            size={18}
-            src="/icons/dot-circle-solid.svg"
-          />
-          {' '}
+          <Dot aria-hidden size={18} strokeWidth={4} />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
       {children}
@@ -210,7 +203,7 @@ const DropdownMenuLabel = ({
       data-inset={inset}
       data-slot="dropdown-menu-label"
       className={cn(
-        'px-2 py-1.5 text-sm font-semibold',
+        'px-2.5 pt-2.5 pb-1.5 label-mono text-muted-foreground',
         inset && 'pl-8',
         className
       )}
@@ -238,7 +231,7 @@ const DropdownMenuShortcut = ({
 }: ComponentProps<'span'>) => {
   return (
     <span
-      className={cn('ml-auto text-xs tracking-widest opacity-60', className)}
+      className={cn('ml-auto font-mono text-xs font-medium text-muted-foreground', className)}
       data-slot="dropdown-menu-shortcut"
 
       {...props}

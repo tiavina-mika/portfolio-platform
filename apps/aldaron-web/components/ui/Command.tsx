@@ -2,6 +2,7 @@
 
 
 import { Command as CommandPrimitive } from 'cmdk';
+import { Search } from 'lucide-react';
 import {
   ComponentProps,
 } from 'react';
@@ -9,7 +10,6 @@ import {
 import { Dialog, DialogContent } from '@/components/ui/Dialog';
 import { cn } from '@/utils/app.utils';
 
-import NextIcon from '../NextIcon';
 
 const Command = ({ className, ...props }: ComponentProps<typeof CommandPrimitive>) => (
   <CommandPrimitive
@@ -62,11 +62,7 @@ const CommandInput = ({ className, ...props }: ComponentProps<typeof CommandPrim
     cmdk-input-wrapper=""
     data-slot="command-input-wrapper"
   >
-    <NextIcon
-      className="mr-2 shrink-0 opacity-50"
-      size={12}
-      src="/icons/check.svg"
-    />
+    <Search aria-hidden className="mr-2 shrink-0 text-muted-foreground" size={14} />
 
     <CommandPrimitive.Input
       data-slot="command-input"

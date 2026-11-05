@@ -13,26 +13,49 @@ import TextLink from '../typography/TextLink';
 import Title, { TitleProps } from '../typography/Title';
 
 type WithChildrenProps = { children: ReactNode };
+type CardVariant = 'default' | 'muted' | 'inverted' | 'elevated';
+
 interface ICardProps extends ComponentProps<'div'> {
-  withShadow?: boolean;
+  /**
+   * `inverted` is for the offer put forward: one per section
+   * @default default
+   */
+  variant?: CardVariant;
+  /**
+   * The whole card is a click zone: its border darkens on hover
+   * @default false
+   */
+  isInteractive?: boolean;
   as?: 'div' | 'section' | 'article';
 }
+
+// a card stands out through its border, not a shadow
+const CARD_VARIANT_CLASSES: Record<CardVariant, string> = {
+  default: 'border-border bg-card text-card-foreground',
+  muted: 'border-transparent bg-muted',
+  inverted: 'border-transparent bg-primary text-primary-foreground',
+  elevated: 'border-transparent bg-card text-card-foreground shadow-md',
+};
 
 const Card = ({
   className,
   // eslint-disable-next-line @typescript-eslint/naming-convention
   as: Component = 'div',
-  withShadow = true,
+  variant = 'default',
+  isInteractive = false,
   ...props
 }: ICardProps) => {
   return (
     <Component
       data-slot="card"
+      data-variant={variant}
       className={cn(
-        'flex flex-1 flex-col gap-3 self-stretch',
-        { 'lg:rounded-lg lg:border lg:bg-card lg:shadow': withShadow },
-        // 'rounded-xl border bg-card text-card-foreground shadow',
-        '',
+        'flex min-w-0 flex-1 flex-col gap-3 self-stretch rounded-lg border',
+        CARD_VARIANT_CLASSES[variant],
+        isInteractive && `
+          transition-[border-color,box-shadow] duration-120 ease-out
+          hover:border-border-hover hover:shadow-sm
+        `,
         className
       )}
       {...props}
@@ -40,7 +63,7 @@ const Card = ({
   );
 };
 
-const SPACING_CLASSES = 'p-0 lg:p-7';
+const SPACING_CLASSES = 'p-4 lg:p-6';
 
 const CardHeader = ({ className, ...props }: ComponentProps<'div'>) => (
   <div
@@ -48,6 +71,23 @@ const CardHeader = ({ className, ...props }: ComponentProps<'div'>) => (
     className={cn(
       'flex flex-col space-y-1.5 pb-0!',
       SPACING_CLASSES,
+      className
+    )}
+    {...props}
+  />
+);
+
+/**
+ * The mono label above the title of a card
+ */
+const CardEyebrow = ({ className, ...props }: ComponentProps<'div'>) => (
+  <div
+    data-slot="card-eyebrow"
+    className={cn(
+      `
+        label-mono text-muted-foreground
+        in-data-[variant=inverted]:text-primary-foreground/72
+      `,
       className
     )}
     {...props}
@@ -88,7 +128,7 @@ const CardTitle = ({
     return (
       <TextLink useChildSpan href={href} underline={false}>
         <Title
-          className="hover:text-info-light hover:underline"
+          className="hover:text-brand-text hover:underline"
           gutterBottom={false}
           level={level}
         >
@@ -120,10 +160,14 @@ const CardDescription = ({
   <Text
     as="p"
     className={cn(
+      `
+        text-muted-foreground
+        in-data-[variant=inverted]:text-primary-foreground/72
+      `,
       size === 'sm'
-        ? 'text-sm text-muted-foreground'
+        ? 'text-sm'
         : `
-          text-base text-dark-400
+          text-base
           md:text-lg
         `,
       `
@@ -230,6 +274,7 @@ export {
   CardTitle,
   CardDescription,
   CardContent,
+  CardEyebrow,
   CardImage,
   CardSubtitle,
 };

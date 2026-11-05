@@ -36,13 +36,13 @@ const ICONS: Record<StatusBannerVariant, typeof CircleAlert> = {
 };
 
 const VARIANT_CLASSES: Record<StatusBannerVariant, string> = {
-  error: 'border-solid border-error',
-  offline: 'border-dashed border-foreground',
+  error: 'border-solid border-destructive',
+  offline: 'border-dashed border-input',
 };
 
 const SIZE_CLASSES = {
   md: 'gap-4 rounded-lg px-6 py-5 text-base',
-  sm: 'gap-3 rounded-[14px] px-4 py-3.5 text-sm',
+  sm: 'gap-3 rounded-lg px-4 py-3.5 text-sm',
 } as const;
 
 /**
@@ -60,7 +60,7 @@ const StatusBanner = ({
     <div
       role={variant === 'error' ? 'alert' : 'status'}
       className={cn(
-        'flex flex-wrap items-center border-[1.5px] bg-card text-foreground',
+        'flex flex-wrap items-center border bg-card text-foreground',
         VARIANT_CLASSES[variant],
         SIZE_CLASSES[size],
         className
@@ -68,22 +68,16 @@ const StatusBanner = ({
     >
       <Icon
         aria-hidden
-        className={cn('flex-none', { 'text-error': variant === 'error' })}
+        className={cn('flex-none', { 'text-destructive-text': variant === 'error' })}
         focusable="false"
         size={size === 'md' ? 24 : 22}
       />
       <span className="min-w-45 flex-1 leading-normal font-medium">{children}</span>
       {isRetryShown && (
         <Button
-          color="default"
-          fullWidth={false}
           onClick={onRetry}
           size="sm"
-          variant="outlined"
-          className={`
-            border-[1.5px] border-foreground px-5 text-base text-foreground
-            hover:bg-muted
-          `}
+          variant="outline"
         >
           {retryLabel}
         </Button>

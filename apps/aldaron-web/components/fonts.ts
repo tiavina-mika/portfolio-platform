@@ -1,47 +1,29 @@
 /**
- * font configuration
- * NOTE: when modifying this file, make sure to:
- * - update the font files in the public/fonts folder
- * - update the copied config in .storybook/preview.tsx
+ * The three families of the design system: Bricolage Grotesque for the titles, Instrument Sans for the
+ * text, JetBrains Mono for the labels, figures and code. Each one is exposed as a CSS variable, read by
+ * the Tailwind theme of `app/globals.css`.
  */
-import localFont from 'next/font/local';
+import { Bricolage_Grotesque, Instrument_Sans, JetBrains_Mono } from 'next/font/google';
 
-const basier = localFont({
-  variable: '--font-primary',
-  src: [
-    {
-      path: '../public/fonts/BasierCircle/BasierCircle-SemiBold.ttf',
-      weight: '600',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/BasierCircle/BasierCircle-Bold.ttf',
-      weight: '700',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/BasierCircle/BasierCircle-Medium.ttf',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/BasierCircle/BasierCircle-Regular.ttf',
-      weight: '400',
-      style: 'normal',
-    },
-  ],
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-bricolage',
+  display: 'swap',
 });
 
-const calibre = localFont({
-  src: '../public/fonts/Calibre/Calibre-Bold.otf',
-  variable: '--font-secondary',
-  weight: '600',
+const instrument = Instrument_Sans({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-instrument',
+  display: 'swap',
 });
 
-export const primaryFont = basier.variable;
-export const secondaryFont = calibre.variable;
+const jetbrains = JetBrains_Mono({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['400', '500', '600'],
+  variable: '--font-jetbrains',
+  display: 'swap',
+});
 
-export const primaryFontStyle = basier.style;
-export const secondaryFontStyle = calibre.style;
-
-export const fontsVariables = [primaryFont, secondaryFont].join(' ');
+export const fontsVariables = [bricolage.variable, instrument.variable, jetbrains.variable].join(' ');

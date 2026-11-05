@@ -5,7 +5,7 @@ import { Skeleton } from '@/components/ui/Skeleton';
  * The placeholder of a card of a list of pages or subcategories while it loads
  */
 const PageCardSkeleton = () => (
-  <Card withShadow={false}>
+  <Card>
     <Skeleton className={`
       h-[25vh] w-full rounded-lg
       md:h-[230px]

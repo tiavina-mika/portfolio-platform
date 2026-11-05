@@ -1,6 +1,6 @@
+import { Download } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import NextIcon from '@/components/NextIcon';
 import DownloadCV from '@/containers/home/download/DownloadCV';
 
 /**
@@ -10,30 +10,8 @@ const NavBarCvIcon = () => {
   const t = useTranslations('App');
 
   return (
-    <DownloadCV
-      className="flex flex-col items-center justify-center"
-      componentType="icon"
-    >
-      <NextIcon
-        alt=""
-        aria-hidden="true"
-        size={32}
-        src="/icons/download.svg"
-        className={`
-          block
-          dark:hidden
-        `}
-      />
-      <NextIcon
-        alt=""
-        aria-hidden="true"
-        size={32}
-        src="/icons/download-dark.svg"
-        className={`
-          hidden
-          dark:block
-        `}
-      />
+    <DownloadCV componentType="icon">
+      <Download aria-hidden size={20} />
       <span className="sr-only">{t('downloadCV')}</span>
     </DownloadCV>
   );

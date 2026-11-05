@@ -40,27 +40,25 @@ const CookieConsentBanner = () => {
       aria-live="polite"
       role="dialog"
       className={`
-        fixed right-4 bottom-4 z-50 flex w-[calc(100%-2rem)] max-w-sm flex-col gap-3 rounded-lg bg-white p-4
-        shadow-lg ring-1 ring-black/10
-        dark:bg-neutral-900 dark:ring-white/10
+        fixed right-4 bottom-4 z-50 flex w-[calc(100%-2rem)] max-w-sm flex-col gap-3 rounded-lg border
+        border-border bg-popover p-4 text-popover-foreground shadow-lg
       `}
     >
       <Text as="span" className="font-semibold" size="sm">{t('title')}</Text>
       <Text as="span" size="sm">{t('description')}</Text>
       <div className="flex flex-row gap-2">
         <Button
-          color="default"
+          fullWidth
           onClick={() => handleChoice('denied')}
           size="sm"
-          variant="outlined"
+          variant="outline"
         >
           {t('decline')}
         </Button>
         <Button
-          color="primary"
+          fullWidth
           onClick={() => handleChoice('granted')}
           size="sm"
-          variant="contained"
         >
           {t('accept')}
         </Button>

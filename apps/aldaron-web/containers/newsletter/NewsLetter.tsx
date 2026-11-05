@@ -45,7 +45,7 @@ const Newsletter = ({ locale }: Props) => {
           <NewsletterForm locale={locale} />
         </TranslationClientProvider>
         <Text
-          palette="light"
+          color="secondary"
           size="sm"
           className={`
             text-sm!

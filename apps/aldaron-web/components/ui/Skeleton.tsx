@@ -7,11 +7,7 @@ const Skeleton = ({ className, ...props }: ComponentProps<'div'>) => {
     <div
       data-slot="skeleton"
       className={cn(
-        `
-          bg-default/10
-          dark:bg-dark-100/10
-        `,
-        'animate-pulse rounded-xs bg-accent', className)}
+        'animate-pulse rounded-sm bg-muted', className)}
       {...props}
     />
   );

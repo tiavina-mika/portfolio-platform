@@ -2,24 +2,53 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 import ButtonComponent from '@/components/buttons/Button';
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   title: 'Components/Button',
   component: ButtonComponent,
-  parameters: {},
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
-  // More on argTypes: https://storybook.js.org/docs/api/argtypes
+  argTypes: {
+    variant: {
+      options: ['primary', 'brand', 'secondary', 'outline', 'ghost', 'destructive', 'link'],
+      control: { type: 'select' },
+    },
+    size: {
+      options: ['sm', 'md', 'lg', 'icon'],
+      control: { type: 'select' },
+    },
+  },
+  args: {
+    variant: 'primary',
+    size: 'md',
+    children: 'Save',
+    disabled: false,
+    loading: false,
+    fullWidth: false,
+  },
 } satisfies Meta<typeof ButtonComponent>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Button: Story = {
-  args: {
-    variant: 'contained',
-    children: 'Button',
-    disabled: false,
-  },
+export const Primary: Story = {};
+
+export const Brand: Story = {
+  args: { variant: 'brand', size: 'lg', children: 'Request a quote' },
 };
+
+export const Secondary: Story = { args: { variant: 'secondary' } };
+
+export const Outline: Story = { args: { variant: 'outline', children: 'Cancel' } };
+
+export const Ghost: Story = { args: { variant: 'ghost', children: 'Cancel' } };
+
+export const Destructive: Story = { args: { variant: 'destructive', children: 'Delete' } };
+
+export const Link: Story = { args: { variant: 'link', children: 'Read the article' } };
+
+export const Small: Story = { args: { size: 'sm' } };
+
+export const Loading: Story = { args: { loading: true, children: 'Saving…' } };
+
+export const Disabled: Story = { args: { disabled: true } };
+
+export const FullWidth: Story = { args: { fullWidth: true } };

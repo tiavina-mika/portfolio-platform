@@ -1,7 +1,7 @@
 /* eslint-disable @cspell/spellchecker */
 import { DEFAULT_COUNTRY } from '@shared/constants';
 
-export const APP_NAME = 'Tiavina Michael RALAINIRINA';
+export const APP_NAME = 'Aldaron';
 export const AUTHOR_USERNAME = 'tiavina-mika';
 export const APP_SHORT_NAME = 'Mika';
 
@@ -52,7 +52,7 @@ export const COOKIES = {
 };
 
 export const IMAGES = {
-  logo: '/images/logo.svg',
+  logo: '/brand/png/aldaron-symbol.png',
   projects: '/images/developer-illustration.jpg',
   technologies: '/images/brain.webp',
 };
@@ -116,18 +116,44 @@ export const OG_IMAGE_SIZE = { width: 1200, height: 630 };
 export const OG_CARD_TITLE_MAX_LENGTH = 110;
 export const OG_CARD_SUBTITLE_MAX_LENGTH = 120;
 export const OG_CARD_LABEL_MAX_LENGTH = 24;
+// distance between the vertical rules of the share card, the grid of the brand visuals
+export const OG_CARD_RULE_SPACING = 80;
 
 /*
- * Colors of the share card. Raw hex on purpose: the card is an image, always dark whatever the
- * visitor's theme, and the image renderer reads no CSS variable.
+ * Colors of the share card. Raw hex on purpose: the card is an image, always light whatever the
+ * visitor's theme, and the image renderer reads no CSS variable. Same values as the light theme.
  */
 export const OG_CARD_COLORS = {
-  background: '#171717',
-  text: '#fafafa',
-  subtitle: '#d4d4d4',
-  muted: '#a3a3a3',
-  chipBackground: '#262626',
-  chipText: '#b2ce66',
+  background: '#F6F3EE',
+  text: '#17181A',
+  subtitle: '#5E5A54',
+  chipBackground: '#FDF1EA',
+  chipText: '#B4400F',
+  rule: '#E3DED5',
+  brand: '#E2531B',
+};
+
+/*
+ * Colors of what the browser paints outside the page (address bar, install screen): the metadata
+ * reads no CSS variable. Same values as the theme tokens.
+ */
+export const THEME_COLORS = {
+  paper: '#F6F3EE',
+  ink: '#17181A',
+  night: '#121311',
+};
+
+// the shapes of the logo, shared by the site and the share card (which reads no CSS class)
+export const LOGO = {
+  viewBox: { horizontal: '0 0 133 32', symbol: '0 0 32 32' },
+  leftBracket: 'M4 4h10v4H8v16h6v4H4z',
+  center: {
+    x: 12.5, y: 12.5, width: 7, height: 7, rx: 1,
+  },
+  rightBracket: 'M28 4H18v4h6v16h-6v4h10z',
+  wordmarkTransform: 'translate(40 25) scale(.26) translate(-1.8 0)',
+
+  wordmark: 'M3.6 0L1.8-2.7L22.3-69L44.3-69L64.8-2.7L63 0L51 0L46.8-14L19.8-14L15.6 0L3.6 0ZM32.5-56L23.7-27L42.9-27L34.1-56L32.5-56ZM72.4-19.2L72.4-19.2L72.4-74L86.2-74L86.2-17.8Q86.2-11.6 92.6-10.9L92.6-10.9L92.6 1Q72.4 1 72.4-19.2ZM102.0-16.2L102.0-16.2L102.0-36.6Q102.0-52.8 118.2-52.8L118.2-52.8L133.6-52.8L133.6-74L147.4-74L147.4 0L118.2 0Q102.0 0 102.0-16.2ZM115.8-37.6L115.8-15.2Q115.8-12 119.0-12L119.0-12L133.6-12L133.6-40.8L119.0-40.8Q115.8-40.8 115.8-37.6L115.8-37.6ZM201.8 0L174.2 0Q158.0 0 158.0-15.9Q158.0-31.8 174.2-31.8L174.2-31.8L188.0-31.8L188.0-37.6Q188.0-40.8 184.8-40.8L184.8-40.8L163.6-40.8L163.6-48.3L169.6-52.8L185.6-52.8Q201.8-52.8 201.8-36.6L201.8-36.6L201.8 0ZM171.8-18L171.8-15.2Q171.8-12 175.0-12L175.0-12L188.0-12L188.0-21.2L175.0-21.2Q171.8-21.2 171.8-18L171.8-18ZM228.2 0L214.4 0L214.4-46Q218.1-52.8 228.6-52.8L228.6-52.8L239.4-52.8L245.4-48.3L245.4-40.8L232.3-40.8Q229.3-40.8 228.2-39.3L228.2-39.3L228.2 0ZM253.4-16.2L253.4-16.2L253.4-36.6Q253.4-52.8 269.6-52.8L269.6-52.8L283.6-52.8Q299.8-52.8 299.8-36.6L299.8-36.6L299.8-16.2Q299.8 0 283.6 0L283.6 0L269.6 0Q253.4 0 253.4-16.2ZM267.2-37.6L267.2-15.2Q267.2-12 270.4-12L270.4-12L282.8-12Q286-12 286-15.2L286-15.2L286-37.6Q286-40.8 282.8-40.8L282.8-40.8L270.4-40.8Q267.2-40.8 267.2-37.6L267.2-37.6ZM326.2 0L312.4 0L312.4-52.8L341.6-52.8Q357.8-52.8 357.8-36.6L357.8-36.6L357.8 0L344.0 0L344.0-37.6Q344.0-40.8 340.8-40.8L340.8-40.8L326.2-40.8L326.2 0Z',
 };
 
 /**

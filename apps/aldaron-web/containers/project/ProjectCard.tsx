@@ -41,10 +41,12 @@ const ProjectCard = ({
   const t = useTranslations('Common');
 
   return (
-    <Card className={`
-      group relative gap-5
-      lg:gap-0
-    `}
+    <Card
+      isInteractive
+      className={`
+        group relative gap-5
+        lg:gap-0
+      `}
     >
       <CardHeader>
         {imageUrl && (
@@ -68,7 +70,7 @@ const ProjectCard = ({
             underline={false}
             useChildSpan={false}
             className={`
-              group-hover:text-info-light group-hover:underline
+              group-hover:text-brand-text group-hover:underline
               after:absolute after:inset-0 after:content-['']
               focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-ring
             `}
@@ -82,8 +84,8 @@ const ProjectCard = ({
         <span
           aria-hidden
           className={cn(
-            buttonVariants({ variant: 'contained', color: 'primary', size: 'md' }),
-            'w-full text-center'
+            buttonVariants({ variant: 'outline' }),
+            'w-full'
           )}
         >
           {t('seeMore')}

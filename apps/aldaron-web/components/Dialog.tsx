@@ -50,7 +50,7 @@ const Dialog = ({
         <DialogFooter>
           <DialogClose asChild>
             {withCancelButton && (
-              <Button variant="text">{cancelButtonText || t('cancel')}</Button>
+              <Button variant="ghost">{cancelButtonText || t('cancel')}</Button>
             )}
           </DialogClose>
           <Button type="submit">{confirmButtonText || t('confirm')}</Button>

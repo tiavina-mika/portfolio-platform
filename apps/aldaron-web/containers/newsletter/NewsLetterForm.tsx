@@ -93,9 +93,10 @@ const NewsletterForm = ({ locale }: Props) => {
         type="email"
       />
       <Button
-        aria-busy={loading}
-        className="px-6 py-4"
+        fullWidth
         disabled={!isOnline}
+        loading={loading}
+        size="lg"
         type="submit"
       >
         {loading ? t('sending') : t('submit')}

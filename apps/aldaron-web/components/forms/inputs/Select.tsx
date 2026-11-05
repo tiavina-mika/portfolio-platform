@@ -60,7 +60,7 @@ const Select = ({
         onValueChange={onChange}
       >
         <SelectTrigger
-          className={cn('w-full', error ? 'border-red-500' : '', inputClassName)}
+          className={cn('w-full', error ? 'border-destructive' : '', inputClassName)}
           hideCaretIcon={hideCaretIcon}
         >
           <SelectValue placeholder={placeholder} />

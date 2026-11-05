@@ -1,10 +1,11 @@
 'use client';
 
+import { ChevronRight } from 'lucide-react';
+
 import { usePathname } from '@/i18n/routing';
 import { IMenu } from '@/types/app.type';
 import { cn, isLinkActive } from '@/utils/app.utils';
 
-import NextIcon from '../NextIcon';
 import TextLink from '../typography/TextLink';
 
 type Props = {
@@ -34,20 +35,14 @@ const NavBarLink = ({
       underline={false}
       className={cn(
         'flex flex-row justify-between py-3 font-medium',
-        { 'text-black dark:text-secondary': isActive },
+        { 'text-brand-text': isActive },
         variant === 'inline' && 'md:py-0',
         variant === 'row' && 'w-full'
       )}
     >
       {label}
       {variant === 'row' && (
-        <NextIcon
-          alt=""
-          aria-hidden="true"
-          className="opacity-50"
-          size={18}
-          src="/icons/chevron-right.svg"
-        />
+        <ChevronRight aria-hidden className="text-muted-foreground" size={18} />
       )}
     </TextLink>
   );

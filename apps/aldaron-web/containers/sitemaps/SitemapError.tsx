@@ -19,12 +19,11 @@ const SitemapError = ({ text, retryText, onRetry }: Props) => (
   <div
     role="alert"
     className={`
-      flex items-start gap-3 rounded-2xl border border-error bg-error/10 px-4 py-3.5 text-sm/snug
-      text-foreground
+      flex items-start gap-3 rounded-lg bg-danger-subtle px-4 py-3.5 text-sm/snug text-foreground
       lg:col-span-2
     `}
   >
-    <CircleAlert aria-hidden="true" className="shrink-0 text-error" size={22} />
+    <CircleAlert aria-hidden="true" className="shrink-0 text-destructive-text" size={22} />
     <div>
       {text}
       {' '}

@@ -2,14 +2,14 @@ import { HTMLAttributes, ReactNode } from 'react';
 
 import { cn } from '@/utils/app.utils';
 
-// Definition of Tailwind classes for each heading level
+// each level on the type scale of the theme, one step larger from md
 const headings = {
-  1: 'text-4xl md:text-6xl font-bold leading-tight',
-  2: 'text-3xl md:text-5xl font-bold leading-[1.2em]',
-  3: 'text-2xl md:text-4xl font-semibold leading-snug',
-  4: 'text-xl md:text-3xl font-semibold leading-normal',
-  5: 'text-lg md:text-2xl font-medium leading-normal',
-  6: 'text-base md:text-xl font-medium leading-normal',
+  1: 'text-h1 md:text-display',
+  2: 'text-h2 md:text-h1',
+  3: 'text-h3 md:text-h2',
+  4: 'text-h4 md:text-h3',
+  5: 'text-lg md:text-h4',
+  6: 'text-base md:text-lg',
 } as const;
 
 // Type for heading levels 1-6
@@ -24,6 +24,10 @@ export type TitleProps = {
   // To allow passing all native heading props (id, aria-label, etc.)
   HTMLAttributes<HTMLHeadingElement>;
 
+/**
+ * A heading. Its font and weight come from the base styles of `h1`…`h6`, and its color from its
+ * parent, so it stays readable on an inverted surface.
+ */
 const Title = ({
   level = 1,
   children,
@@ -38,10 +42,6 @@ const Title = ({
   return (
     <Tag
       className={cn(
-        `
-          font-primary font-bold text-default
-          dark:text-dark-300
-        `,
         headings[safeLevel],
         { 'pb-0': !gutterBottom },
         className)}

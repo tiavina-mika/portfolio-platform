@@ -1,4 +1,5 @@
 import { cva, type VariantProps } from 'class-variance-authority';
+import { ExternalLink } from 'lucide-react';
 import Link, { type LinkProps } from 'next/link';
 import React, { Fragment, ReactNode } from 'react';
 import { Balancer } from 'react-wrap-balancer';
@@ -6,7 +7,6 @@ import { Balancer } from 'react-wrap-balancer';
 import { Link as TranslatedLink } from '@/i18n/routing';
 import { cn } from '@/utils/app.utils';
 
-import NextIcon from '../NextIcon';
 import Text from './Text';
 
 
@@ -18,19 +18,18 @@ export const linkVariants = cva('', {
     },
     variant: {
       text: `
-        flex flex-row
-        hover:opacity-90
+        flex flex-row transition-colors duration-120
+        hover:text-brand-text
       `,
       button:
         `
-          rounded-md px-4 py-3 text-base
-          hover:opacity-75
-          md:px-6 md:py-4 md:text-lg
+          inline-flex h-11 items-center justify-center gap-2 rounded-md px-4.5 text-[15px] font-medium
+          transition-colors duration-120
         `,
     },
     color: {
-      active: 'text-primary',
-      default: 'text-default',
+      active: 'text-brand-text',
+      default: 'text-foreground',
     },
   },
   compoundVariants: [
@@ -40,9 +39,8 @@ export const linkVariants = cva('', {
       buttonVariant: 'outlined',
       class:
         `
-          border border-dark-300 text-black
-          hover:bg-neutral-50
-          dark:border-dark-400 dark:hover:bg-dark-500
+          border border-input text-foreground
+          hover:border-input-hover hover:bg-muted
         `,
     },
     {
@@ -50,9 +48,8 @@ export const linkVariants = cva('', {
       buttonVariant: 'contained',
       class:
         `
-          border border-primary bg-primary text-white
-          hover:bg-dark-500
-          dark:hover:bg-dark-500
+          border border-transparent bg-primary text-primary-foreground
+          hover:bg-primary-hover hover:text-primary-foreground
         `,
     },
     {
@@ -74,10 +71,6 @@ export type TextLinkProps = {
    */
   isExternal?: boolean;
   children?: ReactNode;
-  /**
-   * alt text for icon
-   */
-  alt?: string;
   /**
    * override styles
    * - if useChildSpan false => styles for <a>
@@ -142,7 +135,6 @@ LinkProps;
 
 const TextLink = ({
   children,
-  alt,
   shallow,
   replace,
   scroll,
@@ -167,7 +159,7 @@ const TextLink = ({
       as: 'span' as any,
       className: cn(linkVariants({ buttonVariant, variant, color }), className, {
         underline: underline && variant === 'text' && !withHover,
-        'hover:text-info-light hover:underline': withHover,
+        'hover:text-brand-text hover:underline': withHover,
       }),
     }
     : {}; // e.g: <a>text</a>
@@ -188,7 +180,7 @@ const TextLink = ({
         {isExternal ? (
           <Balancer as="span">
             <span className="max-w-full leading-relaxed">{children}</span>
-            <NextIcon alt={alt} size={12} src="/icons/external-link.svg" />
+            <ExternalLink aria-hidden size={12} />
           </Balancer>
         ) : (
           children

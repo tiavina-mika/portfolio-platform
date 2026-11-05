@@ -1,5 +1,7 @@
 import { OgCard as OgCardContent, OgCardLayoutEnum } from '@/types/og.type';
-import { APP_NAME, OG_CARD_COLORS, OG_IMAGE_SIZE } from '@/utils/constants';
+import {
+  LOGO, OG_CARD_COLORS, OG_CARD_RULE_SPACING, OG_IMAGE_SIZE,
+} from '@/utils/constants';
 import { normalizeOgCard } from '@/utils/og.utils';
 
 type ChipProps = {
@@ -21,10 +23,23 @@ const Chip = ({ label }: ChipProps) => (
   </span>
 );
 
+const LOGO_HEIGHT = 48;
+const LOGO_WIDTH = (LOGO_HEIGHT * 133) / 32;
+
+const Brand = () => (
+  <svg height={LOGO_HEIGHT} viewBox={LOGO.viewBox.horizontal} width={LOGO_WIDTH}>
+    <path d={LOGO.leftBracket} fill={OG_CARD_COLORS.text} />
+    <rect {...LOGO.center} fill={OG_CARD_COLORS.text} />
+    <path d={LOGO.rightBracket} fill={OG_CARD_COLORS.brand} />
+    <path d={LOGO.wordmark} fill={OG_CARD_COLORS.text} transform={LOGO.wordmarkTransform} />
+  </svg>
+);
+
 /**
  * The share card a link preview shows (1200×630), rendered to PNG by the OG image route.
  * Written for the image renderer: flex layout and inline styles only, fonts named as the route
- * registers them. Every text stays inside the central 630px square, so a square crop (WhatsApp
+ * registers them. The thin vertical rules and the orange base are the only decoration the brand allows
+ * on its visuals. Every text stays inside the central 630px square, so a square crop (WhatsApp
  * thumbnail) still reads.
  *
  * CASE 1 (centered: home, contact, blog, content pages): brand on top, chip, title, subtitle.
@@ -36,11 +51,7 @@ const OgCard = (card: OgCardContent) => {
   } = normalizeOgCard(card);
   const isCentered = layout === OgCardLayoutEnum.CENTERED;
   const titleSize = isCentered ? 68 : 72;
-  const brand = (
-    <span style={{ fontSize: 30, fontWeight: 700, color: OG_CARD_COLORS.text }}>
-      {APP_NAME}
-    </span>
-  );
+  const rulesCount = Math.floor(OG_IMAGE_SIZE.width / OG_CARD_RULE_SPACING);
 
   return (
     <div
@@ -55,18 +66,42 @@ const OgCard = (card: OgCardContent) => {
         boxSizing: 'border-box',
         backgroundColor: OG_CARD_COLORS.background,
         color: OG_CARD_COLORS.text,
-        fontFamily: 'Basier',
+        fontFamily: 'Instrument Sans',
+        position: 'relative',
       }}
     >
+      {Array.from({ length: rulesCount }, (_, index) => (
+        <div
+          key={index}
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: (index + 1) * OG_CARD_RULE_SPACING,
+            width: 1,
+            backgroundColor: OG_CARD_COLORS.rule,
+          }}
+        />
+      ))}
+      <div
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 12,
+          backgroundColor: OG_CARD_COLORS.brand,
+        }}
+      />
       {isCentered
-        ? brand
+        ? <Brand />
         : (
           <div style={{
             display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%',
           }}
           >
             {chip ? <Chip label={chip} /> : <span />}
-            {brand}
+            <Brand />
           </div>
         )}
 
@@ -84,6 +119,7 @@ const OgCard = (card: OgCardContent) => {
         {title && (
           <div
             style={{
+              fontFamily: 'Bricolage Grotesque',
               fontSize: titleSize,
               fontWeight: 700,
               lineHeight: 1.1,

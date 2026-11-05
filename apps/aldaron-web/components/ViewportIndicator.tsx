@@ -5,8 +5,8 @@ const ViewportIndicator = () => {
 
   return (
     <div className={`
-      fixed bottom-1 left-1 z-50 flex size-6 items-center justify-center rounded-full bg-gray-800 p-3
-      font-mono text-xs text-white
+      fixed bottom-1 left-1 z-50 flex size-6 items-center justify-center rounded-full bg-primary p-3 font-mono
+      text-xs text-primary-foreground
     `}
     >
       <div className={`

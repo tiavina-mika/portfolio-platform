@@ -36,7 +36,11 @@ const Socials = ({ className, isCentered = false }: Props) => {
               rel="noopener noreferrer"
               target="_blank"
             >
-              <div className="flex size-[42px] flex-row items-center justify-center rounded-sm bg-default">
+              <div className={`
+                flex size-11 flex-row items-center justify-center rounded-md bg-primary
+                dark:bg-secondary
+              `}
+              >
                 {/* light */}
                 <Image
                   alt=""

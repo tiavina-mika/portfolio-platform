@@ -105,7 +105,7 @@ const ArticleHeader = ({
       )}
 
       <div className={`
-        flex flex-wrap items-center gap-x-2.5 gap-y-1 self-stretch border-b border-b-dark-300 pb-3
+        flex flex-wrap items-center gap-x-2.5 gap-y-1 self-stretch border-b border-b-border pb-3
         md:pb-4
       `}
       >

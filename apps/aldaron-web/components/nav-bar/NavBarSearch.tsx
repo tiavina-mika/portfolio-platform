@@ -1,5 +1,6 @@
 'use client';
 
+import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { ChangeEvent } from 'react';
 
@@ -8,7 +9,6 @@ import { Locale } from '@/i18n/config';
 import { cn } from '@/utils/app.utils';
 
 import Loading from '../Loading';
-import NextIcon from '../NextIcon';
 import Text from '../typography/Text';
 import TextLink from '../typography/TextLink';
 import { Input } from '../ui/Input';
@@ -57,15 +57,11 @@ const NavBarSearch = ({
       )}
     >
       <div className="relative w-full">
-        <NextIcon
-          alt=""
-          aria-hidden="true"
-          src="/icons/search.svg"
+        <Search
+          aria-hidden
+          size={18}
           className={cn(
-            `
-              absolute top-1/2 left-5 size-5 -translate-y-1/2 transform text-gray-500
-              peer-focus:text-gray-900
-            `,
+            'absolute top-1/2 left-3.5 -translate-y-1/2 text-muted-foreground',
             searchIconClassName
           )}
         />
@@ -79,11 +75,7 @@ const NavBarSearch = ({
           value={query}
           className={cn(
             `
-              flex h-[50px] w-full rounded-3xl border border-input px-12 text-sm
-              placeholder:text-muted-foreground
-              focus-visible:border-ring focus-visible:ring-0 focus-visible:ring-transparent
-              focus-visible:ring-offset-0
-              disabled:opacity-50
+              flex px-10
               [&::-webkit-search-cancel-button]:hidden
             `,
             inputClassName
@@ -101,8 +93,8 @@ const NavBarSearch = ({
         {hasContent && (
           <div
             className={`
-              flex flex-col rounded-md border border-neutral-200 bg-white px-2 pt-2 pb-3 shadow-md
-              dark:border-neutral-700 dark:bg-neutral-900
+              flex flex-col rounded-lg border border-border bg-popover px-2 pt-2 pb-3 text-popover-foreground
+              shadow-lg
             `}
           >
             {results.map(result => (
@@ -120,7 +112,7 @@ const NavBarSearch = ({
             )}
             {hasError && !isLoading && (
               <div className="flex flex-wrap items-center gap-3 p-2" role="status">
-                <Text className="text-sm text-error">{t('searchUnavailable')}</Text>
+                <Text className="text-sm text-destructive-text">{t('searchUnavailable')}</Text>
                 <button
                   className="text-sm font-medium underline"
                   onClick={retry}

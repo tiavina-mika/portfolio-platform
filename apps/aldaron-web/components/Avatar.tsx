@@ -14,7 +14,7 @@ const Avatar = ({ user }: Props) => {
   if (!user.get('image')) {
     return (
       <div className={`
-        flex size-[24px] flex-row items-center justify-center rounded-[50%] bg-blue-200
+        flex size-[24px] flex-row items-center justify-center rounded-full bg-muted
         md:size-[40px]
       `}
       >
@@ -30,7 +30,7 @@ const Avatar = ({ user }: Props) => {
   }
   return (
     <div className={`
-      flex size-[24px] flex-row items-center justify-center rounded-[50%] bg-blue-200
+      flex size-[24px] flex-row items-center justify-center rounded-full bg-muted
       md:size-[40px]
     `}
     >

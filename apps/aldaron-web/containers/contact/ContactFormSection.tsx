@@ -36,7 +36,7 @@ const ContactFormSection = ({ children, socials }: Props) => {
     >
       <div className="flex flex-1 flex-col gap-10">
         <div>
-          <PageTitle className="2xl:text-10xl!">{t('contactMe')}</PageTitle>
+          <PageTitle>{t('contactMe')}</PageTitle>
           <PageDescription>{t('description')}</PageDescription>
         </div>
         <div className="max-xl:order-last">{socials}</div>

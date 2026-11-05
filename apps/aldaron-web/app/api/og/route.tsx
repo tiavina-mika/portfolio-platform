@@ -13,9 +13,9 @@ const loadFile = (relPath: string): Buffer => fs.readFileSync(join(publicCwd, re
 
 // read once per server process: the same files serve every card
 const fonts = [
-  { name: 'Basier', data: loadFile('fonts/BasierCircle/BasierCircle-Regular.ttf'), weight: 400 as const },
-  { name: 'Basier', data: loadFile('fonts/BasierCircle/BasierCircle-SemiBold.ttf'), weight: 600 as const },
-  { name: 'Basier', data: loadFile('fonts/BasierCircle/BasierCircle-Bold.ttf'), weight: 700 as const },
+  { name: 'Instrument Sans', data: loadFile('fonts/aldaron/instrument-sans-400.ttf'), weight: 400 as const },
+  { name: 'Instrument Sans', data: loadFile('fonts/aldaron/instrument-sans-600.ttf'), weight: 600 as const },
+  { name: 'Bricolage Grotesque', data: loadFile('fonts/aldaron/bricolage-grotesque-700.ttf'), weight: 700 as const },
 ].map((font) => ({ ...font, style: 'normal' as const }));
 
 /**

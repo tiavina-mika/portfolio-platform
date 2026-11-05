@@ -48,7 +48,7 @@ const NotFound = ({
     className={'flex min-h-[500px] flex-col items-center justify-center gap-8 py-12 text-center'}
   >
     <div className="flex flex-col items-center gap-4">
-      <span className="text-lg font-semibold text-primary-dark">{code}</span>
+      <span className="label-mono text-brand-text">{code}</span>
       <Title className="text-[120px]! font-semibold">404</Title>
       <div className="flex flex-col items-center gap-2">
         <Title className="text-3xl! font-semibold" level={2}>{title}</Title>

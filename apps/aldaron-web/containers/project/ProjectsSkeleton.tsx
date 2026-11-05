@@ -10,7 +10,7 @@ const ProjectsSkeleton = () => {
     <ProjectList>
       {Array.from({ length: SKELETON_COUNT }).map((_, index) => (
         <li className="flex min-w-0" key={index}>
-          <Card withShadow={false}>
+          <Card>
             {/* see CardImage */}
             <Skeleton className={`
               h-[25vh] w-full rounded-lg

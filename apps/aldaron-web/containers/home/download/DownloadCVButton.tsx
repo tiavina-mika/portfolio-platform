@@ -11,13 +11,14 @@ export type DownloadCVButtonProps = {
   children: ReactNode;
   className?: string;
   componentType?: 'button' | 'icon';
-} & Pick<ButtonProps, 'variant'>;
+} & Pick<ButtonProps, 'variant' | 'size'>;
 
 const DownloadCVButton = ({
   publicId,
   className,
   children,
   variant,
+  size,
   componentType = 'button',
 }: DownloadCVButtonProps) => {
   const handleDownload = () => {
@@ -33,6 +34,7 @@ const DownloadCVButton = ({
     <ButtonComponent
       className={className}
       onClick={handleDownload}
+      size={size}
       variant={variant}
     >
       {children}

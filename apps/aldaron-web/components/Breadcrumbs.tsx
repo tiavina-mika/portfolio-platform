@@ -1,3 +1,4 @@
+import { ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { ComponentPropsWithoutRef, Fragment } from 'react';
 
@@ -8,7 +9,6 @@ import { getBreadcrumbListJsonLd } from '@/utils/jsonLd.utils';
 import { cutText } from '@/utils/utils';
 
 import JsonLd from './JsonLd';
-import NextIcon from './NextIcon';
 import TextLink from './typography/TextLink';
 
 export type BreadcrumbsSegment = {
@@ -18,7 +18,6 @@ export type BreadcrumbsSegment = {
 
 type BreadcrumbsProps = ComponentPropsWithoutRef<'nav'> & {
   segments: BreadcrumbsSegment[];
-  separator?: string;
   truncationLength?: number;
   /**
    * current locale, used to build the absolute, locale-prefixed URLs in the BreadcrumbList JSON-LD
@@ -30,7 +29,6 @@ export type IBreadCrumbSegment = BreadcrumbsProps['segments'];
 
 export const Breadcrumbs = ({
   segments,
-  separator,
   truncationLength = 0,
   className,
   locale,
@@ -68,11 +66,11 @@ export const Breadcrumbs = ({
               className={cn(
                 `
                   truncate text-base font-normal transition-colors
-                  hover:opacity-70
+                  hover:text-foreground
                 `,
                 isLastSegment
-                  ? 'font-semibold text-primary-dark'
-                  : 'font-normal text-gray-600'
+                  ? 'font-semibold text-foreground'
+                  : 'font-normal text-muted-foreground'
               )}
             >
               {truncationLength > 0 && segment.name
@@ -81,12 +79,7 @@ export const Breadcrumbs = ({
             </TextLink>
             {/* do not display icon in the last link */}
             {!isLastSegment && (
-              <NextIcon
-                aria-hidden="true"
-                className="mx-2"
-                size={14}
-                src={`/icons/${separator || 'chevron-right'}.svg`}
-              />
+              <ChevronRight aria-hidden className="mx-2 flex-none" size={14} />
             )}
           </Fragment>
         );

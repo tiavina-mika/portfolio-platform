@@ -41,7 +41,7 @@ const HomeHeroContainer = ({
       image={image}
       imageDarkMode={imageDarkMode}
       title={APP_NAME}
-      titleClassName={cn(ENTRANCE_CLASSES, '2xl:text-10xl!')}
+      titleClassName={ENTRANCE_CLASSES}
       className={`
         md:pb-8
         xl:pb-10

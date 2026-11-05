@@ -1,46 +1,19 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import { HTMLAttributes, ReactNode } from 'react';
 
-
-import {
-  ButtonPaletteColor,
-  SimplePaletteColorOptions,
-  TextSizeType,
-} from '@/types/component.type';
+import { TextColorType, TextSizeType } from '@/types/component.type';
 import { cn } from '@/utils/app.utils';
 
-
-export const textVariants = cva('font-primary text-lg font-normal', {
+export const textVariants = cva('text-lg font-normal', {
   variants: {
     color: {
-      primary: `
-        text-primary
-        dark:text-primary-light
-      `,
-      secondary: `
-        text-secondary
-        dark:text-secondary-light
-      `,
-      success: `
-        text-success
-        dark:text-success-light
-      `,
-      error: `
-        text-error
-        dark:text-error-light
-      `,
-      info: `
-        text-info
-        dark:text-info-light
-      `,
-      warning: `
-        text-warning
-        dark:text-warning-light
-      `,
-      default: `
-        text-secondary
-        dark:text-dark-300
-      `,
+      primary: 'text-primary',
+      secondary: 'text-muted-foreground',
+      success: 'text-success',
+      error: 'text-destructive-text',
+      info: 'text-info',
+      warning: 'text-warning',
+      default: 'text-foreground',
     },
     size: {
       xl: `
@@ -68,127 +41,9 @@ export const textVariants = cva('font-primary text-lg font-normal', {
         md:text-xs
       `,
     },
-    palette: {
-      dark: '',
-      main: '',
-      light: '',
-    },
-  },
-  compoundVariants: [
-    // dark
-    {
-      palette: 'dark',
-      color: 'primary',
-      class: 'text-primary-dark',
-    },
-    {
-      palette: 'dark',
-      color: 'secondary',
-      class: 'text-secondary-dark',
-    },
-    {
-      palette: 'dark',
-      color: 'error',
-      class: 'text-error-dark',
-    },
-    {
-      palette: 'dark',
-      color: 'success',
-      class: 'text-success-dark',
-    },
-    {
-      palette: 'dark',
-      color: 'info',
-      class: 'text-info-dark',
-    },
-    {
-      palette: 'dark',
-      color: 'warning',
-      class: 'text-warning-dark',
-    },
-    {
-      palette: 'dark',
-      color: 'default',
-      class: 'text-default',
-    },
-    // light
-    {
-      palette: 'light',
-      color: 'primary',
-      class: 'text-primary-light',
-    },
-    {
-      palette: 'light',
-      color: 'secondary',
-      class: 'text-secondary-light',
-    },
-    {
-      palette: 'light',
-      color: 'error',
-      class: 'text-error-light',
-    },
-    {
-      palette: 'light',
-      color: 'success',
-      class: 'text-success-light',
-    },
-    {
-      palette: 'light',
-      color: 'info',
-      class: 'text-info-light',
-    },
-    {
-      palette: 'light',
-      color: 'warning',
-      class: 'text-warning-light',
-    },
-    {
-      palette: 'light',
-      color: 'default',
-      class: 'text-default-light',
-    },
-    // main
-    {
-      palette: 'main',
-      color: 'primary',
-      class: 'text-primary',
-    },
-    {
-      palette: 'main',
-      color: 'secondary',
-      class: 'text-secondary',
-    },
-    {
-      palette: 'main',
-      color: 'error',
-      class: 'text-error',
-    },
-    {
-      palette: 'main',
-      color: 'success',
-      class: 'text-success',
-    },
-    {
-      palette: 'main',
-      color: 'info',
-      class: 'text-info',
-    },
-    {
-      palette: 'main',
-      color: 'warning',
-      class: 'text-warning',
-    },
-    {
-      palette: 'main',
-      color: 'default',
-      class: 'text-default',
-    },
-  ],
-  defaultVariants: {
-    color: 'default',
   },
 });
-// --------- types --------- //
+
 export type TextProps = {
   /**
    * The size of the text
@@ -211,26 +66,19 @@ export type TextProps = {
    * @example primary, secondary, success, error, info, warning, default
    * @default default
    */
-  color?: ButtonPaletteColor;
+  color?: TextColorType;
   /**
    * The class name of the text to override default styles
-   * @example 'text-red-500'
+   * @example 'text-brand-text'
    * @default ''
    */
   className?: string;
-  /**
-   * The palette theme color of the text
-   * @example dark, main, light
-   * @default dark
-   */
-  palette?: SimplePaletteColorOptions;
 } & VariantProps<typeof textVariants>;
 
 type Props = HTMLAttributes<HTMLParagraphElement> & TextProps;
 const Text = ({
   children,
   color = 'default',
-  palette = 'dark',
   className,
   size = 'md',
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -239,7 +87,7 @@ const Text = ({
 }: Props) => {
   return (
     <Component
-      className={cn(textVariants({ color, size, palette }), className)}
+      className={cn(textVariants({ color, size }), className)}
       {...props}
     >
       {children}

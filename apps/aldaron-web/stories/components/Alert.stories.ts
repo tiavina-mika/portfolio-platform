@@ -2,29 +2,46 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 import AlertComponent from '@/components/Alert';
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   title: 'Components/Alert',
   component: AlertComponent,
-  parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
-    layout: 'fullscreen',
-  },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
-  // More on argTypes: https://storybook.js.org/docs/api/argtypes
+  argTypes: {
+    variant: {
+      options: ['neutral', 'info', 'success', 'warning', 'destructive'],
+      control: { type: 'select' },
+    },
+  },
+  args: {
+    variant: 'neutral',
+    title: 'Invitation sent',
+    children: 'The new user receives an email with a link to set a password.',
+  },
 } satisfies Meta<typeof AlertComponent>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Alert: Story = {
+export const Neutral: Story = {};
+
+export const Info: Story = { args: { variant: 'info' } };
+
+export const Success: Story = { args: { variant: 'success' } };
+
+export const Warning: Story = {
   args: {
-    variant: 'contained',
-    message: 'Hello, I am an alert!',
-    open: true,
-    color: 'info',
-    canBeClosed: true,
+    variant: 'warning',
+    title: 'Scheduled maintenance',
+    children: 'The site will be unavailable for a few minutes tonight.',
   },
 };
+
+export const Destructive: Story = {
+  args: {
+    variant: 'destructive',
+    title: 'The message could not be sent',
+    children: 'Check your connection, then send it again.',
+  },
+};
+
+export const MessageOnly: Story = { args: { title: undefined } };

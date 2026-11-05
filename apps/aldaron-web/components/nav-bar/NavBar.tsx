@@ -1,5 +1,6 @@
 'use client';
 
+import { Search, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import {
   ReactNode, useCallback, useEffect, useId, useState,
@@ -13,9 +14,7 @@ import { IMenu } from '@/types/app.type';
 import { cn } from '@/utils/app.utils';
 
 import Section from '../layouts/Section';
-import LogoSVG from '../LogoSVG';
-import LogoSVGMobile from '../LogoSVGMobile';
-import NextIcon from '../NextIcon';
+import Logo from '../Logo';
 import ToggleTheme from '../ToggleTheme';
 import AnimatedHamburgerMenu from './AnimatedHamburgerMenu';
 import NavBarLinks from './NavBarLinks';
@@ -86,9 +85,8 @@ const NavBar = ({
     <header
       className={cn(
         `
-          sticky top-0 z-50 self-stretch bg-white transition-shadow duration-200
+          sticky top-0 z-50 self-stretch bg-background transition-shadow duration-200
           motion-reduce:transition-none
-          dark:bg-neutral-900
         `,
         { 'shadow-md': isScrolled }
       )}
@@ -102,7 +100,7 @@ const NavBar = ({
         <Section className="flex flex-row items-center justify-between self-stretch">
           <div className="flex items-center self-stretch">
             <TextLink aria-label={t('home')} href="/">
-              <LogoSVG />
+              <Logo />
             </TextLink>
           </div>
           <div className="flex flex-1 flex-row items-center">
@@ -124,9 +122,8 @@ const NavBar = ({
       <div
         className={cn(
           `
-            flex h-[55px] flex-col justify-center border-b border-dark-300 bg-white
+            flex h-[55px] flex-col justify-center border-b border-border bg-background
             lg:hidden
-            dark:border-neutral-800/90 dark:bg-neutral-900
           `,
           { 'fixed top-0 right-0 left-0 z-50': isMenuOpen }
         )}
@@ -147,19 +144,14 @@ const NavBar = ({
                 onClick={toggleSearch}
                 type="button"
               >
-                <NextIcon
-                  alt=""
-                  aria-hidden="true"
-                  size={20}
-                  src="/icons/x.svg"
-                />
+                <X aria-hidden size={20} />
               </button>
             </div>
           ) : (
             <>
               <div className="flex flex-1 flex-row items-center">
                 <TextLink aria-label={t('home')} href="/">
-                  <LogoSVGMobile />
+                  <Logo className="h-7" />
                 </TextLink>
               </div>
               <div className="flex flex-row items-center justify-between gap-6">
@@ -169,26 +161,7 @@ const NavBar = ({
                   onClick={toggleSearch}
                   type="button"
                 >
-                  <NextIcon
-                    alt=""
-                    aria-hidden="true"
-                    size={20}
-                    src="/icons/search2.svg"
-                    className={`
-                      block
-                      dark:hidden
-                    `}
-                  />
-                  <NextIcon
-                    alt=""
-                    aria-hidden="true"
-                    size={20}
-                    src="/icons/search2-dark.svg"
-                    className={`
-                      hidden
-                      dark:block
-                    `}
-                  />
+                  <Search aria-hidden size={20} />
                 </button>
                 {cvIcon}
                 <AnimatedHamburgerMenu

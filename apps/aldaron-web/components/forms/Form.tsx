@@ -1,5 +1,6 @@
 'use client';
 
+import { CircleAlert } from 'lucide-react';
 import { useRef } from 'react';
 import { FormProvider } from 'react-hook-form';
 
@@ -122,7 +123,7 @@ const Form = ({
   if (successMessage && successTitle) {
     return (
       <section className="flex flex-col items-start gap-3" role="status">
-        <div className="flex items-center gap-3 text-xl font-bold text-primary-dark">
+        <div className="flex items-center gap-3 text-xl font-bold text-success">
           <svg
             aria-hidden
             className="flex-none"
@@ -142,10 +143,9 @@ const Form = ({
         <p className="text-base leading-[1.55] text-muted-foreground">{successMessage}</p>
         {successResetText && (
           <Button
-            className="border-foreground text-foreground"
             fullWidth={false}
             onClick={onSuccessReset}
-            variant="outlined"
+            variant="outline"
           >
             {successResetText}
           </Button>
@@ -159,22 +159,10 @@ const Form = ({
   return (
     <FormProvider {...form}>
       {successMessage && (
-        <Alert
-          canBeClosed={false}
-          color="success"
-          message={successMessage || ''}
-          open={!!successMessage}
-          variant="outlined"
-        />
+        <Alert variant="success">{successMessage}</Alert>
       )}
       {error && !hasErrorBanner && (
-        <Alert
-          canBeClosed={false}
-          color="error"
-          message={error}
-          open={!!error}
-          variant="outlined"
-        />
+        <Alert variant="destructive">{error}</Alert>
       )}
       <form
         className={cn('space-y-6', className)}
@@ -188,19 +176,11 @@ const Form = ({
           <div
             role="alert"
             className={`
-              flex items-start gap-3 rounded-2xl border border-error bg-error/10 px-4 py-3.5 text-sm
-              leading-[1.45] text-foreground
+              flex items-start gap-3 rounded-lg bg-danger-subtle px-4 py-3.5 text-sm leading-[1.45]
+              text-foreground
             `}
           >
-            <span
-              aria-hidden
-              className={`
-                flex size-6 flex-none items-center justify-center rounded-full bg-error text-sm font-bold
-                text-card
-              `}
-            >
-              !
-            </span>
+            <CircleAlert aria-hidden className="flex-none text-destructive-text" size={20} />
             <div>
               <b className="block text-[15px] font-bold">{errorTitle}</b>
               {error}
@@ -212,7 +192,7 @@ const Form = ({
                     type="button"
                     className={`
                       cursor-pointer font-semibold underline decoration-[1.5px] underline-offset-4
-                      focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-info
+                      focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ring
                     `}
                   >
                     {retryText}

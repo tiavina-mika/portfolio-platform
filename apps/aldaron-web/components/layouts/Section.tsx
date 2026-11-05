@@ -17,7 +17,7 @@ export type SectionProps = {
   as?: 'div' | 'section' | 'article' | 'header';
   /**
    * size of the center section
-   * e.g. md: 1023px, lg: 1232px, xl: 1620px
+   * e.g. md: 1023px, lg and xl: the content width of the theme (1200px)
    */
   size?: 'md' | 'lg' | 'xl';
   /**
@@ -53,13 +53,11 @@ const Section = ({
       <div
         className={cn(
           'flex flex-row',
-          // fullWidth ? 'w-full': 'w-[93%] xl:w-[90%]',
           {
             'w-full 2xl:max-w-[1620px]': fullWidth,
-            'w-[93%] xl:w-[90%] 2xl:max-w-[1620px]':
-              !fullWidth && size === 'xl',
-            'w-[93%] xl:max-w-[1023px]': !fullWidth && size === 'md',
-            'w-[93%] xl:max-w-[1232px]': !fullWidth && size === 'lg',
+            'w-full px-4 md:px-6': !fullWidth,
+            'max-w-content': !fullWidth && (size === 'xl' || size === 'lg'),
+            'max-w-[1023px]': !fullWidth && size === 'md',
           },
           className
         )}

@@ -2,10 +2,7 @@
 
 import { useFormStatus } from 'react-dom';
 
-import { cn } from '@/utils/app.utils';
-
 import Button, { ButtonProps } from '../buttons/Button';
-import Loading from '../Loading';
 
 type Props = {
   text: string;
@@ -30,13 +27,13 @@ const FormSubmitButton = ({
   return (
     <Button
       fullWidth
-      aria-busy={isLoading}
+      loading={isLoading}
+      size="lg"
       type="submit"
-      variant="contained"
       {...props}
-      className={cn('px-6 py-4', className)}
+      className={className}
     >
-      {isLoading ? (loadingText ?? <Loading />) : text}
+      {isLoading ? (loadingText ?? text) : text}
     </Button>
   );
 };

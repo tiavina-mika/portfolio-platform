@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { cache, ReactNode, Suspense } from 'react';
@@ -24,6 +24,7 @@ import { IMenu, ISelectOption } from '@/types/app.type';
 import { PagesForUrlsOutput } from '@/types/cms.type';
 import { OgCardLayoutEnum } from '@/types/og.type';
 import { getAlternates, getTranslatedAbsoluteUrl } from '@/utils/app.utils';
+import { THEME_COLORS } from '@/utils/constants';
 import { getPersonJsonLd, getWebSiteJsonLd } from '@/utils/jsonLd.utils';
 import { getSocialImages } from '@/utils/og.utils';
 
@@ -61,7 +62,7 @@ export const generateMetadata = async (props: MetaDataProps): Promise<Metadata> 
     metadataBase: new URL(siteConfig.url),
     title: {
       default: siteConfig.name,
-      template: `%s - ${siteConfig.name}`,
+      template: `%s · ${siteConfig.name}`,
     },
     description: t('home.metaDescription'),
     keywords: siteConfig.keywords,
@@ -85,9 +86,20 @@ export const generateMetadata = async (props: MetaDataProps): Promise<Metadata> 
     },
     twitter,
     icons: {
-      icon: '/favicon.ico',
+      icon: [
+        { url: '/favicon.ico', sizes: '48x48' },
+        { url: '/favicon.svg', type: 'image/svg+xml' },
+      ],
+      apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
     },
   };
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: THEME_COLORS.paper },
+    { media: '(prefers-color-scheme: dark)', color: THEME_COLORS.night },
+  ],
 };
 
 export const generateStaticParams = () => {
@@ -168,15 +180,8 @@ const RootLayout = async (props: Props) => {
   return (
     // {/* @issue: https://stackoverflow.com/questions/75337953/what-causes-nextjs-warning-extra-attributes-from-the-server-data-new-gr-c-s-c */}
     (
-      <html lang={locale} suppressHydrationWarning={isDev}>
-        <body
-          suppressHydrationWarning={isDev}
-          className={`
-            ${fontsVariables}
-            antialiased
-            dark:bg-neutral-900
-          `}
-        >
+      <html className={fontsVariables} lang={locale} suppressHydrationWarning={isDev}>
+        <body suppressHydrationWarning={isDev}>
           <JsonLd data={getPersonJsonLd()} />
           <JsonLd data={getWebSiteJsonLd()} />
           <WebVitals />
@@ -193,9 +198,9 @@ const RootLayout = async (props: Props) => {
                 className={`
                   sr-only
                   focus:not-sr-only focus:fixed focus:top-3.5 focus:left-6 focus:z-50 focus:inline-flex
-                  focus:h-11 focus:items-center focus:rounded-full focus:bg-foreground focus:px-5
-                  focus:text-sm focus:font-semibold focus:text-background focus:outline-3
-                  focus:outline-offset-3 focus:outline-ring
+                  focus:h-11 focus:items-center focus:rounded-md focus:bg-foreground focus:px-5 focus:text-sm
+                  focus:font-semibold focus:text-background focus:outline-3 focus:outline-offset-3
+                  focus:outline-ring
                 `}
               >
                 {tCommon('skipToContent')}
@@ -210,9 +215,8 @@ const RootLayout = async (props: Props) => {
                   <div
                     aria-hidden
                     className={`
-                      h-[55px] self-stretch border-b border-dark-300
+                      h-[55px] self-stretch border-b border-border
                       lg:h-[93px]
-                      dark:border-neutral-800/90
                     `}
                   />
                 )}

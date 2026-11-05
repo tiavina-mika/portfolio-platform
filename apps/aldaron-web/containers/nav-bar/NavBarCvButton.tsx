@@ -1,6 +1,6 @@
+import { Download } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import NextIcon from '@/components/NextIcon';
 import DownloadCV from '@/containers/home/download/DownloadCV';
 
 /**
@@ -11,34 +11,11 @@ const NavBarCvButton = () => {
 
   return (
     <DownloadCV
+      className="max-2xl:w-11 max-2xl:px-0"
       componentType="button"
-      variant="text"
-      className={`
-        flex flex-row items-center gap-2 rounded-md border! px-5 py-3 text-base font-medium
-        max-2xl:px-2 max-2xl:py-1
-        dark:bg-secondary dark:text-neutral-900! dark:hover:bg-secondary/90
-      `}
+      variant="outline"
     >
-      <NextIcon
-        alt=""
-        aria-hidden="true"
-        size={24}
-        src="/icons/download.svg"
-        className={`
-          block
-          dark:hidden
-        `}
-      />
-      <NextIcon
-        alt=""
-        aria-hidden="true"
-        size={24}
-        src="/icons/download-dark.svg"
-        className={`
-          hidden
-          dark:block
-        `}
-      />
+      <Download aria-hidden size={18} />
       <span className="max-2xl:sr-only">{t('downloadCV')}</span>
     </DownloadCV>
   );

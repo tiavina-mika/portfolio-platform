@@ -2,11 +2,10 @@
 'use client';
 
 import * as SelectPrimitive from '@radix-ui/react-select';
+import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 import { ComponentProps } from 'react';
 
 import { cn } from '@/utils/app.utils';
-
-import NextIcon from '../NextIcon';
 
 const Select = (props: ComponentProps<typeof SelectPrimitive.Root>) => (
   <SelectPrimitive.Root data-slot='select' {...props} />
@@ -36,17 +35,20 @@ const SelectTrigger = ({
     data-slot='select-trigger'
     className={cn(
       `
-        flex w-fit items-center justify-between gap-2 rounded-md border border-input bg-transparent px-3 py-2
-        text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none
-        focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50
-        disabled:cursor-not-allowed disabled:opacity-50
-        aria-invalid:border-destructive aria-invalid:ring-destructive/20
+        flex w-fit cursor-pointer items-center justify-between gap-2 rounded-md border border-input bg-card
+        pr-3 pl-3.5 text-[15px] whitespace-nowrap text-foreground transition-[border-color,box-shadow]
+        duration-120 ease-out outline-none
+        not-disabled:hover:border-input-hover
+        focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/22
+        focus-visible:ring-offset-0
+        disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-45
+        aria-expanded:border-ring aria-expanded:ring-[3px] aria-expanded:ring-ring/22
+        aria-invalid:border-destructive
         data-placeholder:text-muted-foreground
-        data-[size=default]:h-9
-        data-[size=sm]:h-8
+        data-[size=default]:h-11
+        data-[size=sm]:h-9 data-[size=sm]:text-sm
         *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex
         *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2
-        dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:ring-destructive/40
         [&_svg]:pointer-events-none [&_svg]:shrink-0
         [&_svg:not([class*=\'size-\'])]:size-4 [&_svg:not([class*=\'text-\'])]:text-muted-foreground
       `,
@@ -56,25 +58,8 @@ const SelectTrigger = ({
   >
     {children}
     {!hideCaretIcon && (
-      <SelectPrimitive.Icon className="flex">
-        {/* light */}
-        <NextIcon
-          size={16}
-          src="/icons/chevron-down.svg"
-          className={`
-            block opacity-50
-            dark:hidden
-          `}
-        />
-        {/* dark */}
-        <NextIcon
-          size={16}
-          src="/icons/chevron-down-dark.svg"
-          className={`
-            hidden opacity-50
-            dark:block
-          `}
-        />
+      <SelectPrimitive.Icon className="flex text-muted-foreground">
+        <ChevronDown aria-hidden size={16} />
       </SelectPrimitive.Icon>
     )}
   </SelectPrimitive.Trigger>
@@ -92,7 +77,7 @@ const SelectScrollUpButton = ({
     )}
     {...props}
   >
-    <NextIcon size={12} src="/icons/chevron-up.svg" />
+    <ChevronUp aria-hidden size={14} />
   </SelectPrimitive.ScrollUpButton>
 );
 
@@ -108,7 +93,7 @@ const SelectScrollDownButton = ({
     )}
     {...props}
   >
-    <NextIcon size={12} src="/icons/chevron-down.svg" />
+    <ChevronDown aria-hidden size={14} />
   </SelectPrimitive.ScrollDownButton>
 );
 
@@ -127,8 +112,8 @@ const SelectContent = ({
       className={cn(
         `
           relative z-50 max-h-(--radix-select-content-available-height) min-w-32
-          origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border
-          bg-popover text-popover-foreground shadow-md
+          origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-lg border
+          bg-popover text-popover-foreground shadow-lg
           data-[side=bottom]:slide-in-from-top-2
           data-[side=left]:slide-in-from-right-2
           data-[side=right]:slide-in-from-left-2
@@ -167,7 +152,7 @@ const SelectLabel = ({
   ...props
 }: ComponentProps<typeof SelectPrimitive.Label>) => (
   <SelectPrimitive.Label
-    className={cn('px-2 py-1.5 text-xs text-muted-foreground', className)}
+    className={cn('px-2.5 pt-2.5 pb-1.5 label-mono text-muted-foreground', className)}
     data-slot='select-label'
     {...props}
   />
@@ -182,10 +167,11 @@ const SelectItem = ({
     data-slot='select-item'
     className={cn(
       `
-        relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm
+        relative flex min-h-10 w-full cursor-pointer items-center gap-2 rounded-sm pr-8 pl-2.5 text-[15px]
         outline-hidden select-none
-        focus:bg-accent focus:text-accent-foreground
-        data-disabled:pointer-events-none data-disabled:opacity-50
+        focus:bg-muted
+        data-disabled:pointer-events-none data-disabled:opacity-45
+        data-[state=checked]:font-semibold
         [&_svg]:pointer-events-none [&_svg]:shrink-0
         [&_svg:not([class*=\'size-\'])]:size-4 [&_svg:not([class*=\'text-\'])]:text-muted-foreground
         *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2
@@ -196,7 +182,7 @@ const SelectItem = ({
   >
     <span className='absolute right-2 flex size-3.5 items-center justify-center'>
       <SelectPrimitive.ItemIndicator>
-        <NextIcon size={12} src="/icons/check.svg" />
+        <Check aria-hidden size={14} />
       </SelectPrimitive.ItemIndicator>
     </span>
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>

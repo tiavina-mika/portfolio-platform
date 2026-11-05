@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 
 import { cn } from '@/utils/app.utils';
 
-import { primaryFont } from '../fonts';
 import Title from './Title';
 
 type Props = {
@@ -22,15 +21,11 @@ const SectionTitle = ({ children, className, gutterBottom = true }: Props) => {
     >
       <Title
         level={2}
-        className={cn(
-          `
-            text-2xl! leading-[1.1]! font-bold
-            md:text-4xl!
-            lg:text-6xl!
-            xl:text-8xl!
-          `,
-          primaryFont
-        )}
+        className={`
+          text-h2!
+          lg:text-h1!
+          xl:text-display!
+        `}
       >
         {children}
       </Title>

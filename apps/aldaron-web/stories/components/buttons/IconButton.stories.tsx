@@ -1,7 +1,8 @@
+import { Trash2 } from 'lucide-react';
+
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 import IconButtonComponent from '@/components/buttons/IconButton';
-import NextIcon from '@/components/NextIcon';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -22,13 +23,7 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const IconButton: Story = {
   args: {
-    children: [
-      <NextIcon
-        aria-hidden="true"
-        key="01"
-        size={20}
-        src="/icons/trash.svg"
-      />,
-    ],
+    'aria-label': 'Delete',
+    children: <Trash2 aria-hidden size={18} />,
   },
 };

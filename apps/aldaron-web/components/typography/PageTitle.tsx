@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 
-import { secondaryFont } from '@/components/fonts';
 import Title from '@/components/typography/Title';
 import { cn } from '@/utils/app.utils';
 
@@ -13,23 +12,18 @@ const PageTitle = ({ children, className }: Props) => {
     <Title
       level={1}
       className={cn(
-        secondaryFont,
         `
-          mb-2! text-2xl! leading-[1em]!
-          md:text-3xl!
-          lg:mb-[20px]! lg:text-5xl!
-          xl:text-5xl!
-          2xl:text-6xl!
+          mb-2! text-h2!
+          md:text-h1!
+          lg:mb-5! lg:text-display!
+          2xl:text-display-xl!
         `,
         // if there are children, e.g: p, span, etc
         `
-          *:text-2xl! *:leading-[1.2em]!
-          md:*:text-3xl!
-          lg:*:mb-[20px]! lg:*:text-5xl!
-          xl:*:text-5xl!
-          2xl:*:text-6xl!
-          [&_p]:leading-[1.2em]!
-          [&_span]:leading-[1.4em]!
+          *:text-h2!
+          md:*:text-h1!
+          lg:*:mb-5! lg:*:text-display!
+          2xl:*:text-display-xl!
         `,
         className
       )}

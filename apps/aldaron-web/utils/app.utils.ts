@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
 import { Metadata } from 'next';
-import { twMerge } from 'tailwind-merge';
+import { extendTailwindMerge } from 'tailwind-merge';
 
 import env from '@/env';
 import { defaultLocale, Locale } from '@/i18n/config';
@@ -11,6 +11,14 @@ import {
 import { IMenu, IPaginationQuery } from '@/types/app.type';
 
 import { getCurrentLocale, getTranslatedField } from './translation.utils';
+
+/*
+ * Told about the type scale of the theme: otherwise `text-h1` is taken for a color, and merging it
+ * with `text-foreground` drops one of the two.
+ */
+const twMerge = extendTailwindMerge({
+  extend: { theme: { text: ['display-xl', 'display', 'h1', 'h2', 'h3', 'h4'] } },
+});
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 

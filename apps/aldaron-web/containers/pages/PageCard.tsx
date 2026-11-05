@@ -28,7 +28,7 @@ const PageCard = ({ page, locale, titleLevel = 3 }: Props) => {
   const description = getTranslatedField(translated, locale, 'description');
 
   return (
-    <Card as="article" className="group relative" withShadow={false}>
+    <Card isInteractive as="article" className="group relative">
       {/* the banner repeats the name written under it: a screen reader would say it twice */}
       {page.bannerImage?.url ? (
         <CardImage
@@ -63,7 +63,7 @@ const PageCard = ({ page, locale, titleLevel = 3 }: Props) => {
             className={`
               text-inherit no-underline decoration-[1.5px] underline-offset-4
               after:absolute after:inset-0 after:content-['']
-              hover:text-info-light hover:underline
+              hover:text-brand-text hover:underline
               focus-visible:rounded-md focus-visible:outline-3 focus-visible:outline-offset-4
               focus-visible:outline-ring
             `}

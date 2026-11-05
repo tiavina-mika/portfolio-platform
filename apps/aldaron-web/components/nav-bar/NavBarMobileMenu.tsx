@@ -39,20 +39,16 @@ const NavBarMobileMenu = ({
           transition={{ duration: 0.7 }}
           className={`
             fixed inset-x-0 top-[55px] bottom-0 z-50 flex flex-1 flex-col justify-between self-stretch
-            overflow-y-auto bg-white
+            overflow-y-auto bg-background
             lg:hidden
-            dark:bg-neutral-900
           `}
         >
           <nav aria-label={t('mainNavigation')} className="flex flex-1 flex-col self-stretch">
             <ul className="m-0 flex list-none flex-col self-stretch p-0">
               {menus.map((menu, index) => (
                 <li
+                  className="self-stretch border-b px-4"
                   key={menu.label + index}
-                  className={`
-                    self-stretch border-b px-4
-                    dark:border-neutral-800/90
-                  `}
                 >
                   <NavBarLink
                     href={menu.value}

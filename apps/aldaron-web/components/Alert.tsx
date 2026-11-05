@@ -1,117 +1,87 @@
-'use client';
-
-import { cva, type VariantProps } from 'class-variance-authority';
-import { useEffect, useState } from 'react';
-
+import { cva } from 'class-variance-authority';
+import {
+  CircleAlert, CircleCheck, Info, TriangleAlert,
+} from 'lucide-react';
+import { ReactNode } from 'react';
 
 import { cn } from '@/utils/app.utils';
 
-import { ButtonProps } from './buttons/Button';
-import IconButton from './buttons/IconButton';
-import NextIcon from './NextIcon';
+export type AlertVariant = 'neutral' | 'info' | 'success' | 'warning' | 'destructive';
 
-export const alertVariants = cva('rounded-md p-3 font-primary', {
-  variants: {
-    variant: {
-      contained: 'text-white',
-      outlined: '',
+const alertVariants = cva(
+  'grid grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-3 rounded-lg border px-4 py-3.5 text-sm',
+  {
+    variants: {
+      variant: {
+        neutral: 'border-border bg-card text-foreground',
+        info: 'border-transparent bg-info-subtle text-foreground',
+        success: 'border-transparent bg-success-subtle text-foreground',
+        warning: 'border-transparent bg-warning-subtle text-foreground',
+        destructive: 'border-transparent bg-danger-subtle text-foreground',
+      },
     },
-    color: {
-      success: '',
-      error: '',
-      info: '',
-      warning: '',
-    },
-  },
-  compoundVariants: [
-    {
-      variant: 'contained',
-      color: 'error',
-      class: 'bg-error',
-    },
-    {
-      variant: 'contained',
-      color: 'success',
-      class: 'bg-success',
-    },
-    {
-      variant: 'contained',
-      color: 'info',
-      class: 'bg-info',
-    },
-    {
-      variant: 'contained',
-      color: 'warning',
-      class: 'bg-warning',
-    },
-    // outlined
-    {
-      variant: 'outlined',
-      color: 'error',
-      class: 'bg-error-light text-error',
-    },
-    {
-      variant: 'outlined',
-      color: 'success',
-      class: 'bg-success-light text-success',
-    },
-    {
-      variant: 'outlined',
-      color: 'info',
-      class: 'bg-info-light text-info',
-    },
-    {
-      variant: 'outlined',
-      color: 'warning',
-      class: 'bg-warning-light text-warning',
-    },
-  ],
-});
+  }
+);
+
+const ICONS: Record<AlertVariant, typeof CircleAlert> = {
+  neutral: Info,
+  info: Info,
+  success: CircleCheck,
+  warning: TriangleAlert,
+  destructive: CircleAlert,
+};
+
+// the icon and the title carry the status color, the text stays readable on the soft background
+const ACCENT_CLASSES: Record<AlertVariant, string> = {
+  neutral: 'text-muted-foreground',
+  info: 'text-info',
+  success: 'text-success',
+  warning: 'text-warning',
+  destructive: 'text-destructive-text',
+};
 
 export type AlertProps = {
-  message: string;
+  /**
+   * @default neutral
+   */
+  variant?: AlertVariant;
+  title?: string;
+  /**
+   * The message
+   */
+  children?: ReactNode;
+  /**
+   * A button or a link, at the end of the alert
+   */
+  action?: ReactNode;
   className?: string;
-  open?: boolean;
-  canBeClosed?: boolean;
-} & Pick<ButtonProps, 'variant' | 'color'> &
-VariantProps<typeof alertVariants>;
+};
 
+/**
+ * A message that stays on screen: an icon and a text, never the color alone. A warning or an error is
+ * announced as an alert, the others as a status, so either is read without moving the focus.
+ */
 const Alert = ({
-  message,
+  variant = 'neutral',
+  title,
+  children,
+  action,
   className,
-  variant = 'contained',
-  color = 'info',
-  canBeClosed = true,
-  open = true,
 }: AlertProps) => {
-  const [isVisible, setIsVisible] = useState<boolean>(true);
-
-  useEffect(() => {
-    setIsVisible(open);
-  }, [open]);
-
-  const onClose = () => setIsVisible(false);
+  const Icon = ICONS[variant];
+  const accentClass = ACCENT_CLASSES[variant];
 
   return (
     <div
-      className={cn(
-        alertVariants({ variant, color }),
-        isVisible ? 'flex' : 'hidden',
-        'flex-row items-center justify-between',
-        className
-      )}
+      className={cn(alertVariants({ variant }), className)}
+      role={variant === 'destructive' || variant === 'warning' ? 'alert' : 'status'}
     >
-      {message}
-      {canBeClosed && (
-        <IconButton noHovered className="p-1" onClick={onClose}>
-          <NextIcon
-            size={16}
-            src={
-              variant === 'contained' ? '/icons/x2-white.svg' : '/icons/x2.svg'
-            }
-          />
-        </IconButton>
-      )}
+      <Icon aria-hidden className={cn('mt-px', accentClass)} size={20} />
+      <div className="flex flex-col gap-0.5">
+        {title && <p className={cn('text-[15px] font-semibold', accentClass)}>{title}</p>}
+        {children && <div>{children}</div>}
+      </div>
+      {action && <div className="flex items-center gap-2">{action}</div>}
     </div>
   );
 };

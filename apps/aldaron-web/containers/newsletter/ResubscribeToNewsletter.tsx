@@ -4,7 +4,6 @@ import { useTransition } from 'react';
 import toast from 'react-hot-toast';
 
 import Button from '@/components/buttons/Button';
-import Loading from '@/components/Loading';
 import { Locale } from '@/i18n/config';
 import { useRouter } from '@/i18n/routing';
 import { resubscribeToNewsletter } from '@/server/mutations/newsletter.mutation';
@@ -57,13 +56,11 @@ const ResubscribeToNewsletter = ({
 
   return (
     <Button
-      className="flex flex-row items-center"
-      color="default"
-      fullWidth={false}
+      loading={isPending}
       onClick={handleResubscribe}
-      variant="text"
+      variant="link"
     >
-      {label}. {isPending ? <Loading className="ml-2 size-3" /> : null}
+      {label}.
     </Button>
   );
 };

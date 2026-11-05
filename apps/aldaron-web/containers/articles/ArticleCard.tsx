@@ -45,7 +45,7 @@ const ArticleCard = ({
   title, href, imageUrl, category, description, meta, animated = true,
 }: Props) => {
   return (
-    <Card as="article" className="group relative" withShadow={false}>
+    <Card isInteractive as="article" className="group relative">
       {/* the cover carries no meaning of its own: the title says what the article is */}
       {imageUrl ? (
         <CardImage
@@ -81,7 +81,7 @@ const ArticleCard = ({
             className={`
               text-inherit no-underline decoration-[1.5px] underline-offset-4
               after:absolute after:inset-0 after:content-['']
-              hover:text-info-light hover:underline
+              hover:text-brand-text hover:underline
               focus-visible:rounded-md focus-visible:outline-3 focus-visible:outline-offset-4
               focus-visible:outline-ring
             `}

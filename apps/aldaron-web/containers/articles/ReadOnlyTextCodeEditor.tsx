@@ -14,7 +14,6 @@ const ReadOnlyTextCodeEditor = ({
         prose 
         prose-lg
         max-w-none
-        font-primary
         leading-relaxed
         text-base md:text-lg
         
@@ -33,17 +32,16 @@ const ReadOnlyTextCodeEditor = ({
         max-[767px]:prose-headings:mt-8 max-[767px]:prose-headings:mb-3
         max-[640px]:prose-headings:mt-5 max-[640px]:prose-headings:mb-2
 
-        prose-p:mb-5 prose-p:text-default dark:prose-p:text-white
+        prose-p:mb-5
         prose-p:md:mb-4
 
 
         prose-li:list-disc prose-li:list-decimal
         prose-ul:list-outside prose-ol:list-outside
-        prose-li:marker:text-black dark:prose-li:marker:text-white
         prose-li:my-1.5 prose-li:md:my-0.5
         prose-ul:ml-4 prose-ol:ml-4
 
-        prose-a:text-blue-500 prose-a:underline
+        prose-a:underline
       `}
       {...rest}
     />

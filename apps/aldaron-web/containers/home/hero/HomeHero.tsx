@@ -24,13 +24,7 @@ const HomeHero = ({ locale }: Props) => {
         <ErrorBoundary fallback={null}>
           <Suspense fallback={null}>
             <div>
-              <DownloadCV className={`
-                rounded-md bg-default px-4 py-3 text-base font-medium text-white
-                md:text-lg
-                lg:px-8 lg:py-4
-                dark:bg-secondary! dark:text-neutral-900!
-              `}
-              />
+              <DownloadCV size="lg" variant="brand" />
             </div>
           </Suspense>
         </ErrorBoundary>

@@ -19,7 +19,7 @@ const PageSubcategoryCard = ({ parentCategory, subcategory, locale }: Props) => 
   const name = getTranslatedField(subcategory.translated, locale, 'name');
 
   return (
-    <Card className="group relative" withShadow={false}>
+    <Card isInteractive className="group relative">
       {/* the name under the picture says what the link is */}
       {subcategory.image?.url ? (
         <CardImage
@@ -45,7 +45,7 @@ const PageSubcategoryCard = ({ parentCategory, subcategory, locale }: Props) => 
         className={`
           text-base font-medium no-underline decoration-[1.5px] underline-offset-4
           after:absolute after:inset-0 after:content-['']
-          hover:text-info-light hover:underline
+          hover:text-brand-text hover:underline
           focus-visible:rounded-md focus-visible:outline-3 focus-visible:outline-offset-4
           focus-visible:outline-ring
           md:text-xl

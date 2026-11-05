@@ -13,7 +13,7 @@ const PageDescription = ({ children }: Props) => {
   return (
 
     <Text className={`
-      text-lg leading-7 text-dark-400
+      text-lg leading-7 text-muted-foreground
       md:text-xl md:leading-normal!
     `}
     >

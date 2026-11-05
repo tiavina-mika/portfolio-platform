@@ -8,7 +8,7 @@ import { ReactNode } from 'react';
 import { ISelectOption } from '@/types/app.type';
 
 import Section from '../layouts/Section';
-import LogoSVG from '../LogoSVG';
+import Logo from '../Logo';
 import FooterBottom from './FooterBottom';
 import FooterLink from './FooterLink';
 import FooterTitle from './FooterTitle';
@@ -35,8 +35,7 @@ type Props = {
 };
 
 const DIVIDER_CLASS_NAME = `
-  h-1 self-stretch border-t border-t-dark-300
-  dark:border-neutral-700
+  h-1 self-stretch border-t border-t-border
 `;
 
 const FooterContainer = ({
@@ -55,12 +54,8 @@ const FooterContainer = ({
         `}
         >
           {/* ------------- left ------------- */}
-          <div className={`
-            flex flex-[1.8] flex-col gap-[13px] px-0
-            lg:pl-3
-          `}
-          >
-            <LogoSVG className="w-[50px]" />
+          <div className={'flex flex-[1.8] flex-col gap-3.5 px-0'}>
+            <Logo className="self-start" />
             <div className="flex flex-col gap-6">
               {quote}
               <Socials />

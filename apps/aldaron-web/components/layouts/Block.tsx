@@ -33,9 +33,9 @@ const Block = ({
       <Title
         level={2}
         className={`
-          text-2xl! font-extrabold
-          md:text-center md:text-6xl!
-          xl:text-10xl/34!
+          text-h3! font-extrabold
+          md:text-center md:text-display!
+          xl:text-display-xl!
         `}
       >
         {title}

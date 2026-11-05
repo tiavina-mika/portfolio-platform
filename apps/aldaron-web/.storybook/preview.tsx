@@ -11,51 +11,11 @@ import { defaultLocale, storybookLocalesOptions } from '../i18n/config';
 import ThemeProvider from '../providers/ThemeProvider';
 import { getTranslatedMessages } from '../utils/translation.utils';
 import { customViewports } from '../utils/viewports.utils';
-import localFont from 'next/font/local';
+import { fontsVariables } from '../components/fonts';
 import '../app/globals.css';
 
-// -------------------------------------------- //
-// ------------ font configuration ------------ //
-// -------------------------------------------- //
-/**
- * we copied the font configuration from web/components/fonts.ts
- * and changed the path to the fonts folder, storybook doesn't have access to the public folder
- * @see https://stackoverflow.com/questions/77027792/storybook-question-local-fonts-not-loading-next-13-tailwind-storybook-7
- */
-
-const basier = localFont({
-  variable: '--font-primary',
-  src: [
-    {
-      path: '../public/fonts/BasierCircle/BasierCircle-SemiBold.ttf',
-      weight: '600',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/BasierCircle/BasierCircle-Bold.ttf',
-      weight: '700',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/BasierCircle/BasierCircle-Medium.ttf',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/BasierCircle/BasierCircle-Regular.ttf',
-      weight: '400',
-      style: 'normal',
-    },
-  ],
-});
-
-const calibre = localFont({
-  src: '../public/fonts/Calibre/Calibre-Bold.otf',
-  variable: '--font-secondary',
-  weight: '600',
-});
-
-export const fontsVariables = [basier.variable, calibre.variable].join(' ');
+// on the root element like in /app/[locale]/layout.tsx: a dialog or a menu is portaled out of the story
+document.documentElement.classList.add(...fontsVariables.split(' '));
 
 // -------------------------------------------- //
 // --------- storybook configuration ---------- //
@@ -86,11 +46,10 @@ const preview: Preview = {
     },
   },
 
-  // add fonts to the storybook preview (like in /app/[locale]/layout.tsx)
   decorators: [
     (Story: FC, context: any) => {
       return (
-        <div className={`${fontsVariables} antialiased`}>
+        <div className="font-sans">
           <NextIntlClientProvider
             locale={context.globals.locale}
             messages={getTranslatedMessages(context.globals.locale)}
