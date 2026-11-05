@@ -28,7 +28,7 @@ const PageCard = ({ page, locale, titleLevel = 3 }: Props) => {
   const description = getTranslatedField(translated, locale, 'description');
 
   return (
-    <Card isInteractive as="article" className="group relative">
+    <Card isInteractive as="article" className="group relative gap-3">
       {/* the banner repeats the name written under it: a screen reader would say it twice */}
       {page.bannerImage?.url ? (
         <CardImage

@@ -8,7 +8,7 @@ const ArticleSkeleton = () => {
   return (
     <div className="flex flex-col self-stretch">
       <Section className="grid grid-cols-1" size="md">
-        <Card>
+        <Card className="gap-3">
           <Skeleton className="h-4 w-24" />
           <Skeleton className="h-10 w-[85%]" />
           <Skeleton className="h-14 w-[85%]" />

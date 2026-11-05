@@ -19,7 +19,7 @@ const PageSubcategoryCard = ({ parentCategory, subcategory, locale }: Props) => 
   const name = getTranslatedField(subcategory.translated, locale, 'name');
 
   return (
-    <Card isInteractive className="group relative">
+    <Card isInteractive className="group relative gap-3">
       {/* the name under the picture says what the link is */}
       {subcategory.image?.url ? (
         <CardImage

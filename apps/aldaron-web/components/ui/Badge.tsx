@@ -5,7 +5,10 @@ import { ComponentProps } from 'react';
 import { cn } from '@/utils/app.utils';
 
 const badgeVariants = cva(
-  'inline-flex items-center gap-1.5 rounded-full border border-transparent font-medium whitespace-nowrap',
+  `
+    inline-flex items-center gap-1.5 rounded-full border border-transparent leading-none font-medium
+    whitespace-nowrap
+  `,
   {
     variants: {
       variant: {

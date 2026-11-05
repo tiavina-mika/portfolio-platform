@@ -146,7 +146,7 @@ const Project = ({ project, locale, currentPathname }: Props) => {
       `}
       >
         <Card className={`
-          pb-12!
+          gap-3 pb-12!
           lg:pb-20!
         `}
         >

@@ -14,6 +14,7 @@ import Title, { TitleProps } from '../typography/Title';
 
 type WithChildrenProps = { children: ReactNode };
 type CardVariant = 'default' | 'muted' | 'inverted' | 'elevated';
+type CardPadding = 'sm' | 'md';
 
 interface ICardProps extends ComponentProps<'div'> {
   /**
@@ -26,8 +27,18 @@ interface ICardProps extends ComponentProps<'div'> {
    * @default false
    */
   isInteractive?: boolean;
+  /**
+   * The inner margin of the header, the content and the footer: `sm` is 16px, `md` is 24px
+   * @default md
+   */
+  padding?: CardPadding;
   as?: 'div' | 'section' | 'article';
 }
+
+const CARD_PADDING_CLASSES: Record<CardPadding, string> = {
+  sm: '[--card-pad:1rem]',
+  md: '[--card-pad:1.5rem]',
+};
 
 // a card stands out through its border, not a shadow
 const CARD_VARIANT_CLASSES: Record<CardVariant, string> = {
@@ -43,6 +54,7 @@ const Card = ({
   as: Component = 'div',
   variant = 'default',
   isInteractive = false,
+  padding = 'md',
   ...props
 }: ICardProps) => {
   return (
@@ -50,10 +62,11 @@ const Card = ({
       data-slot="card"
       data-variant={variant}
       className={cn(
-        'flex min-w-0 flex-1 flex-col gap-3 self-stretch rounded-lg border',
+        'flex min-w-0 flex-1 flex-col self-stretch rounded-lg border',
+        CARD_PADDING_CLASSES[padding],
         CARD_VARIANT_CLASSES[variant],
         isInteractive && `
-          transition-[border-color,box-shadow] duration-120 ease-out
+          cursor-pointer transition-[border-color,box-shadow] duration-120 ease-out
           hover:border-border-hover hover:shadow-sm
         `,
         className
@@ -63,13 +76,17 @@ const Card = ({
   );
 };
 
-const SPACING_CLASSES = 'p-4 lg:p-6';
+const SPACING_CLASSES = 'p-(--card-pad)';
 
+/**
+ * The top of a card, in a row: the eyebrow, the title and the description in one block, then an
+ * optional action (a badge, a menu) at the end
+ */
 const CardHeader = ({ className, ...props }: ComponentProps<'div'>) => (
   <div
     data-slot="card-header"
     className={cn(
-      'flex flex-col space-y-1.5 pb-0!',
+      'flex items-start justify-between gap-4 pb-0!',
       SPACING_CLASSES,
       className
     )}
@@ -85,7 +102,7 @@ const CardEyebrow = ({ className, ...props }: ComponentProps<'div'>) => (
     data-slot="card-eyebrow"
     className={cn(
       `
-        label-mono text-muted-foreground
+        mb-2.5 label-mono text-muted-foreground
         in-data-[variant=inverted]:text-primary-foreground/72
       `,
       className
@@ -104,8 +121,12 @@ const CardContent = ({ className, ...props }: ComponentProps<'div'>) => (
 
 const CardFooter = ({ className, ...props }: ComponentProps<'div'>) => (
   <div
-    className={cn(SPACING_CLASSES, 'flex items-center pt-0!', className)}
     data-slot="card-footer"
+    className={cn(
+      'flex items-center justify-end gap-2 border-t border-border px-(--card-pad) py-4',
+      'in-data-[variant=inverted]:border-[color-mix(in_oklab,var(--primary-foreground)_16%,transparent)]',
+      className
+    )}
     {...props}
   />
 );
@@ -119,6 +140,9 @@ type CardTitleProps = TitleProps &
   IWithLinkProps &
   ComponentProps<'div'>;
 
+// the level of a title is its place in the page; its size is always the one of a card title
+const CARD_TITLE_CLASSES = 'text-xl leading-tight tracking-[-0.01em] md:text-xl';
+
 const CardTitle = ({
   className, children, href, ...props
 }: CardTitleProps) => {
@@ -128,7 +152,7 @@ const CardTitle = ({
     return (
       <TextLink useChildSpan href={href} underline={false}>
         <Title
-          className="hover:text-brand-text hover:underline"
+          className={cn(CARD_TITLE_CLASSES, 'hover:text-brand-text hover:underline')}
           gutterBottom={false}
           level={level}
         >
@@ -140,7 +164,7 @@ const CardTitle = ({
 
   return (
     <Title
-      className={className}
+      className={cn(CARD_TITLE_CLASSES, className)}
       level={level}
       {...props}
     >
@@ -162,18 +186,18 @@ const CardDescription = ({
     className={cn(
       `
         text-muted-foreground
-        in-data-[variant=inverted]:text-primary-foreground/72
+        in-data-[variant=inverted]:text-[color-mix(in_oklab,var(--primary-foreground)_72%,var(--primary))]
       `,
       size === 'sm'
-        ? 'text-sm'
+        ? `
+          text-sm leading-[1.5]
+          md:text-sm
+        `
         : `
           text-base
           md:text-lg
         `,
-      `
-        max-md:leading-normal
-        lg:mt-1
-      `,
+      'mt-1.5',
       className
     )}
     {...props}

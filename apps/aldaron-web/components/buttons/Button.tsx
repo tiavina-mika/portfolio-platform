@@ -8,8 +8,8 @@ import { cn } from '@/utils/app.utils';
 export const buttonVariants = cva(
   `
     inline-flex cursor-pointer items-center justify-center rounded-md border border-transparent font-medium
-    whitespace-nowrap no-underline transition-[background-color,border-color,color,translate] duration-120
-    ease-out select-none
+    tracking-[-0.005em] whitespace-nowrap no-underline
+    transition-[background-color,border-color,color,translate] duration-120 ease-out select-none
     not-disabled:active:translate-y-px
     disabled:cursor-not-allowed disabled:opacity-45
   `,
@@ -30,7 +30,8 @@ export const buttonVariants = cva(
         `,
         outline: `
           border-input bg-transparent text-foreground
-          not-disabled:hover:border-input-hover not-disabled:hover:bg-muted
+          not-disabled:hover:border-[color-mix(in_oklab,var(--input),var(--foreground)_20%)]
+          not-disabled:hover:bg-muted
         `,
         ghost: `
           bg-transparent text-foreground
@@ -46,10 +47,10 @@ export const buttonVariants = cva(
         `,
       },
       size: {
-        sm: 'h-9 gap-1.5 px-3 text-sm',
-        md: 'h-11 gap-2 px-4.5 text-[15px]',
-        lg: 'h-13 gap-2 px-6 text-base',
-        icon: 'size-11 p-0',
+        sm: 'h-9 gap-1.5 px-3 text-sm leading-none',
+        md: 'h-11 gap-2 px-4.5 text-[15px] leading-none',
+        lg: 'h-13 gap-2 px-6 text-base leading-none',
+        icon: 'size-11 p-0 text-[15px] leading-none',
       },
     },
     compoundVariants: [
@@ -110,7 +111,14 @@ const Button = ({
     {...props}
   >
     {loading
-      ? <LoaderCircle aria-hidden className="animate-spin" size={size === 'sm' ? 14 : 16} />
+      ? (
+        <LoaderCircle
+          aria-hidden
+          className="animate-[spin_0.8s_linear_infinite]"
+          size={size === 'sm' ? 14 : 16}
+          strokeWidth={2}
+        />
+      )
       : iconLeft}
     {children}
     {iconRight}

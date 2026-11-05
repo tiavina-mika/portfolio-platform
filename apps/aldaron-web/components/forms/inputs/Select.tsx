@@ -12,6 +12,10 @@ import { TextSizeType } from '@/types/component.type';
 import { cn } from '@/utils/app.utils';
 
 export type SelectProps = {
+  /**
+   * The `id` of the trigger, for the `htmlFor` of a `FormField` label
+   */
+  id?: string;
   className?: string;
   inputClassName?: string;
   label?: string;
@@ -28,6 +32,7 @@ export type SelectProps = {
 };
 
 const Select = ({
+  id,
   label,
   placeholder,
   options,
@@ -60,8 +65,10 @@ const Select = ({
         onValueChange={onChange}
       >
         <SelectTrigger
-          className={cn('w-full', error ? 'border-destructive' : '', inputClassName)}
+          aria-invalid={error || undefined}
+          className={inputClassName}
           hideCaretIcon={hideCaretIcon}
+          id={id}
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>

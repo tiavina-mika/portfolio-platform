@@ -9,15 +9,18 @@ import { cn } from '@/utils/app.utils';
 export type AlertVariant = 'neutral' | 'info' | 'success' | 'warning' | 'destructive';
 
 const alertVariants = cva(
-  'grid grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-3 rounded-lg border px-4 py-3.5 text-sm',
+  `
+    grid grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-3 rounded-lg border px-4 py-3.5 text-sm
+    leading-[1.5] text-foreground
+  `,
   {
     variants: {
       variant: {
-        neutral: 'border-border bg-card text-foreground',
-        info: 'border-transparent bg-info-subtle text-foreground',
-        success: 'border-transparent bg-success-subtle text-foreground',
-        warning: 'border-transparent bg-warning-subtle text-foreground',
-        destructive: 'border-transparent bg-danger-subtle text-foreground',
+        neutral: 'border-border bg-card',
+        info: 'border-transparent bg-info-subtle',
+        success: 'border-transparent bg-success-subtle',
+        warning: 'border-transparent bg-warning-subtle',
+        destructive: 'border-transparent bg-danger-subtle',
       },
     },
   }
@@ -32,12 +35,27 @@ const ICONS: Record<AlertVariant, typeof CircleAlert> = {
 };
 
 // the icon and the title carry the status color, the text stays readable on the soft background
-const ACCENT_CLASSES: Record<AlertVariant, string> = {
+const ICON_CLASSES: Record<AlertVariant, string> = {
   neutral: 'text-muted-foreground',
   info: 'text-info',
   success: 'text-success',
   warning: 'text-warning',
   destructive: 'text-destructive-text',
+};
+
+// a neutral title keeps the text color; only a status tints it
+const TITLE_CLASSES: Record<AlertVariant, string> = {
+  ...ICON_CLASSES,
+  neutral: '',
+};
+
+// the message of a neutral alert is secondary text, the one of a status stays at full contrast
+const BODY_CLASSES: Record<AlertVariant, string> = {
+  neutral: 'text-muted-foreground',
+  info: 'text-foreground',
+  success: 'text-foreground',
+  warning: 'text-foreground',
+  destructive: 'text-foreground',
 };
 
 export type AlertProps = {
@@ -69,19 +87,19 @@ const Alert = ({
   className,
 }: AlertProps) => {
   const Icon = ICONS[variant];
-  const accentClass = ACCENT_CLASSES[variant];
 
   return (
     <div
       className={cn(alertVariants({ variant }), className)}
       role={variant === 'destructive' || variant === 'warning' ? 'alert' : 'status'}
     >
-      <Icon aria-hidden className={cn('mt-px', accentClass)} size={20} />
+      <Icon aria-hidden className={cn('mt-px', ICON_CLASSES[variant])} size={20} />
       <div className="flex flex-col gap-0.5">
-        {title && <p className={cn('text-[15px] font-semibold', accentClass)}>{title}</p>}
-        {children && <div>{children}</div>}
+        {title && <p className={cn('text-[15px] font-semibold', TITLE_CLASSES[variant])}>{title}</p>}
+        {children && <div className={BODY_CLASSES[variant]}>{children}</div>}
       </div>
-      {action && <div className="flex items-center gap-2">{action}</div>}
+      {/* the third column always exists, so the text wraps at the same width with or without an action */}
+      {action ? <div className="flex items-center gap-2">{action}</div> : <span aria-hidden />}
     </div>
   );
 };

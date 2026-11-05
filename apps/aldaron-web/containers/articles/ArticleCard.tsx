@@ -45,7 +45,7 @@ const ArticleCard = ({
   title, href, imageUrl, category, description, meta, animated = true,
 }: Props) => {
   return (
-    <Card isInteractive as="article" className="group relative">
+    <Card isInteractive as="article" className="group relative gap-3">
       {/* the cover carries no meaning of its own: the title says what the article is */}
       {imageUrl ? (
         <CardImage

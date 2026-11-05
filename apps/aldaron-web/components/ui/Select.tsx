@@ -2,7 +2,9 @@
 'use client';
 
 import * as SelectPrimitive from '@radix-ui/react-select';
-import { Check, ChevronDown, ChevronUp } from 'lucide-react';
+import {
+  Check, ChevronDown, ChevronsUpDown, ChevronUp,
+} from 'lucide-react';
 import { ComponentProps } from 'react';
 
 import { cn } from '@/utils/app.utils';
@@ -35,9 +37,9 @@ const SelectTrigger = ({
     data-slot='select-trigger'
     className={cn(
       `
-        flex w-fit cursor-pointer items-center justify-between gap-2 rounded-md border border-input bg-card
-        pr-3 pl-3.5 text-[15px] whitespace-nowrap text-foreground transition-[border-color,box-shadow]
-        duration-120 ease-out outline-none
+        flex w-full cursor-pointer items-center justify-between gap-2 rounded-md border border-input bg-card
+        pr-3 pl-3.5 text-left text-[15px] leading-none whitespace-nowrap text-foreground
+        transition-[border-color,box-shadow] duration-120 ease-out outline-none
         not-disabled:hover:border-input-hover
         focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/22
         focus-visible:ring-offset-0
@@ -59,7 +61,7 @@ const SelectTrigger = ({
     {children}
     {!hideCaretIcon && (
       <SelectPrimitive.Icon className="flex text-muted-foreground">
-        <ChevronDown aria-hidden size={16} />
+        <ChevronsUpDown aria-hidden size={16} strokeWidth={2} />
       </SelectPrimitive.Icon>
     )}
   </SelectPrimitive.Trigger>
@@ -102,6 +104,7 @@ const SelectContent = ({
   children,
   position = 'popper',
   align = 'center',
+  sideOffset = 6,
   ...props
 }: ComponentProps<typeof SelectPrimitive.Content>) => (
   <SelectPrimitive.Portal>
@@ -109,9 +112,10 @@ const SelectContent = ({
       align={align}
       data-slot='select-content'
       position={position}
+      sideOffset={sideOffset}
       className={cn(
         `
-          relative z-50 max-h-(--radix-select-content-available-height) min-w-32
+          relative z-50 max-h-[min(260px,var(--radix-select-content-available-height))] min-w-32
           origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-lg border
           bg-popover text-popover-foreground shadow-lg
           data-[side=bottom]:slide-in-from-top-2
@@ -121,13 +125,6 @@ const SelectContent = ({
           data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95
           data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95
         `,
-        position === 'popper' &&
-          `
-            data-[side=bottom]:translate-y-1
-            data-[side=left]:-translate-x-1
-            data-[side=right]:translate-x-1
-            data-[side=top]:-translate-y-1
-          `,
         className
       )}
       {...props}
@@ -167,25 +164,22 @@ const SelectItem = ({
     data-slot='select-item'
     className={cn(
       `
-        relative flex min-h-10 w-full cursor-pointer items-center gap-2 rounded-sm pr-8 pl-2.5 text-[15px]
-        outline-hidden select-none
+        relative flex min-h-10 w-full cursor-pointer items-center justify-between gap-2 rounded-sm px-2.5
+        text-[15px] outline-hidden select-none
         focus:bg-muted
         data-disabled:pointer-events-none data-disabled:opacity-45
         data-[state=checked]:font-semibold
         [&_svg]:pointer-events-none [&_svg]:shrink-0
         [&_svg:not([class*=\'size-\'])]:size-4 [&_svg:not([class*=\'text-\'])]:text-muted-foreground
-        *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2
       `,
       className
     )}
     {...props}
   >
-    <span className='absolute right-2 flex size-3.5 items-center justify-center'>
-      <SelectPrimitive.ItemIndicator>
-        <Check aria-hidden size={14} />
-      </SelectPrimitive.ItemIndicator>
-    </span>
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+    <SelectPrimitive.ItemIndicator className='flex'>
+      <Check aria-hidden size={16} strokeWidth={2} />
+    </SelectPrimitive.ItemIndicator>
   </SelectPrimitive.Item>
 );
 

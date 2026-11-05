@@ -65,7 +65,7 @@ const ArticleCards = ({
           <ul aria-hidden className={GRID_CLASSES}>
             {Array.from({ length: SKELETON_COUNT }).map((_, index) => (
               <li className="flex min-w-0" key={index}>
-                <Card>
+                <Card className="gap-3">
                   <Skeleton className={`
                     h-[25vh] w-full rounded-lg
                     md:h-[230px]

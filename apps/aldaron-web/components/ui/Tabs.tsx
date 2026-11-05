@@ -43,7 +43,7 @@ const TabsTrigger = ({ className, ...props }: ComponentProps<typeof TabsPrimitiv
     data-slot="tabs-trigger"
     className={cn(
       `
-        relative inline-flex cursor-pointer items-center gap-2 font-medium whitespace-nowrap
+        relative inline-flex cursor-pointer items-center gap-2 leading-none font-medium whitespace-nowrap
         text-muted-foreground transition-colors duration-120 ease-out
         not-disabled:hover:text-foreground
         disabled:cursor-not-allowed disabled:opacity-45
@@ -54,15 +54,33 @@ const TabsTrigger = ({ className, ...props }: ComponentProps<typeof TabsPrimitiv
         group-data-[variant=underline]/tabs-list:text-[15px]
         group-data-[variant=underline]/tabs-list:data-[state=active]:after:absolute
         group-data-[variant=underline]/tabs-list:data-[state=active]:after:inset-x-0
-        group-data-[variant=underline]/tabs-list:data-[state=active]:after:bottom-0
+        group-data-[variant=underline]/tabs-list:data-[state=active]:after:-bottom-px
         group-data-[variant=underline]/tabs-list:data-[state=active]:after:h-0.5
         group-data-[variant=underline]/tabs-list:data-[state=active]:after:bg-foreground
+        group-data-[variant=underline]/tabs-list:data-[state=active]:after:content-['']
       `,
       `
         group-data-[variant=pill]/tabs-list:min-h-9 group-data-[variant=pill]/tabs-list:rounded-md
         group-data-[variant=pill]/tabs-list:px-3.5 group-data-[variant=pill]/tabs-list:text-sm
         group-data-[variant=pill]/tabs-list:data-[state=active]:bg-card
         group-data-[variant=pill]/tabs-list:data-[state=active]:shadow-sm
+      `,
+      className
+    )}
+    {...props}
+  />
+);
+
+/**
+ * A count after the label of a tab (the number of items it holds)
+ */
+const TabsCount = ({ className, ...props }: ComponentProps<'span'>) => (
+  <span
+    data-slot="tabs-count"
+    className={cn(
+      `
+        rounded-full bg-muted px-1.5 py-[3px] font-mono text-xs leading-none font-medium text-muted-foreground
+        group-data-[variant=pill]/tabs-list:bg-background
       `,
       className
     )}
@@ -79,5 +97,5 @@ const TabsContent = ({ className, ...props }: ComponentProps<typeof TabsPrimitiv
 );
 
 export {
-  Tabs, TabsList, TabsTrigger, TabsContent,
+  Tabs, TabsList, TabsTrigger, TabsCount, TabsContent,
 };

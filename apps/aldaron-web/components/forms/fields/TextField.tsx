@@ -2,8 +2,7 @@
 
 import { Controller, useFormContext } from 'react-hook-form';
 
-import Stack from '@/components/Stack';
-import { FieldDescription, FieldError, FieldLabel } from '@/components/ui/Field';
+import FormField from '@/components/forms/FormField';
 import { Input, InputProps } from '@/components/ui/Input';
 
 type Props = {
@@ -22,35 +21,36 @@ const TextField = ({
   } = useFormContext();
 
   const messageId = `${name}-message`;
+  const errorMessage = (errors as any)[name]?.message as string | undefined;
 
   return (
     <Controller
       control={control}
       name={name}
       render={({ field }) => (
-        <Stack className={rootClassName} spacing={1.5}>
-          {label && (
-            <FieldLabel htmlFor={name}>
-              {label} {inputProps.required && '*'}
-            </FieldLabel>
-          )}
-          <Input
-            aria-describedby={errors[name] ? messageId : undefined}
-            id={name}
-            {...inputProps}
-            {...field}
-            error={!!errors[name]?.message}
-            placeholder={
-              inputProps.placeholder && inputProps.required && !label
-                ? `${inputProps.placeholder} *`
-                : inputProps.placeholder
-            }
-          />
-          {description && <FieldDescription>{description}</FieldDescription>}
-          {errors[name] && (
-            <FieldError id={messageId}>{(errors as any)[name]?.message}</FieldError>
-          )}
-        </Stack>
+        <div className={rootClassName}>
+          <FormField
+            description={description}
+            error={errorMessage}
+            errorId={messageId}
+            htmlFor={name}
+            label={label}
+            required={inputProps.required}
+          >
+            <Input
+              aria-describedby={errorMessage ? messageId : undefined}
+              id={name}
+              {...inputProps}
+              {...field}
+              error={!!errorMessage}
+              placeholder={
+                inputProps.placeholder && inputProps.required && !label
+                  ? `${inputProps.placeholder} *`
+                  : inputProps.placeholder
+              }
+            />
+          </FormField>
+        </div>
       )}
     />
   );
