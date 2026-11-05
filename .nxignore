@@ -1,0 +1,3 @@
+# next-intl "Project" namespace files, not Nx project definitions
+apps/web/translations/*/project.json
+apps/aldaron-web/translations/*/project.json

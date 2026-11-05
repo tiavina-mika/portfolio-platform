@@ -30,6 +30,12 @@ const APPS = [
   { name: 'bo', localesDir: 'apps/bo/src/config/i18n/locales', sourceDir: 'apps/bo/src', checkUsage: true },
   { name: 'server', localesDir: 'apps/server/src/config/i18n/locales', sourceDir: 'apps/server/src', checkUsage: false },
   { name: 'web', localesDir: 'apps/web/translations', sourceDir: 'apps/web', checkUsage: false },
+  {
+    name: 'aldaron-web',
+    localesDir: 'apps/aldaron-web/translations',
+    sourceDir: 'apps/aldaron-web',
+    checkUsage: false,
+  },
 ];
 
 /** `t('ns:some.key')`, `i18n.t("ns:some.key")` — the only form this can resolve with certainty. */
