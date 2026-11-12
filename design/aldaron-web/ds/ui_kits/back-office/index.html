@@ -1,0 +1,38 @@
+<!-- @dsCard group="Back-office" viewport="1440x900" name="Back-office du socle" subtitle="Connexion + MFA, tableau de bord, contenus, utilisateurs, paramètres" -->
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Aldaron — Back-office</title>
+<link rel="icon" href="../../assets/icons/favicon.svg"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide-react@0.460.0/dist/umd/lucide-react.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel" src="Shell.jsx"></script>
+<script type="text/babel" src="Login.jsx"></script>
+<script type="text/babel" src="Dashboard.jsx"></script>
+<script type="text/babel" src="Users.jsx"></script>
+<script type="text/babel" src="Content.jsx"></script>
+<script type="text/babel" src="Settings.jsx"></script>
+<script type="text/babel">
+const { Toaster, Button, Card } = window.AldaronDesignSystem_1daf3c;
+const TITLES = { dashboard: 'Tableau de bord', content: 'Contenus', contacts: 'Contacts reçus', users: 'Utilisateurs', roles: 'Rôles et droits', audit: "Journal d'audit", settings: 'Paramètres' };
+function App() {
+  const [auth, setAuth] = React.useState(() => localStorage.getItem('ald-bo-auth') === '1');
+  const [page, setPage] = React.useState(() => localStorage.getItem('ald-bo-page') || 'dashboard');
+  const [dark, setDark] = React.useState(false);
+  const [editing, setEditing] = React.useState(false);
+  React.useEffect(() => { document.documentElement.classList.toggle('dark', dark); }, [dark]);
+  React.useEffect(() => { localStorage.setItem('ald-bo-page', page); setEditing(false); }, [page]);
+  const login = () => { localStorage.setItem('ald-bo-auth', '1'); setAuth(true); };
+  const logout = () => { localStorage.setItem('ald-bo-auth', '0'); setAuth(false); };
+  if (!auth) return <Login onDone={login} dark={dark} />;
+  let body, actions = null, title = TITLES[page];
+  if (page === 'dashboard') body = <Dashboard go={setPage} />;
+  else if (page === 'users') body = <Users />;
+  else if (page === 'content') { body = <Content editing={editing} setEditing={setEditing} />; if (editing) { title = 'Modifier l\'article'; actions = <Button variant="ghost" iconLeft={Ic('ArrowLeft', 16)} onClick={() => setEditing(false)}>Retour</Button>; } else actions = <Button iconLeft={Ic('Plus', 16)} onClick={() => setEditing(true)}>Nouvel article</Button>; }
+  else if (page === 'settings') body = <Settings />;
+  else body = <Card variant="muted" title="Écran non maquetté" description="Cet écran du socle n'est pas encore recréé dans le kit. Il suit les mêmes motifs que Utilisateurs (tableau + actions)." />;
+  return (<><Shell page={page} setPage={setPage} title={title} actions={actions} onLogout={logout} dark={dark} setDark={setDark}>{body}</Shell><Toaster /></>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script></body></html>

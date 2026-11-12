@@ -4,10 +4,15 @@
 
 - [L'idée en une phrase](#lidée-en-une-phrase)
 - [Positionnement](#positionnement)
-- [Le socle à 5 000 €](#le-socle-à-5-000-)
+- [Le socle à 2 000 €](#le-socle-à-2-000-)
   - [Ce qui est inclus](#ce-qui-est-inclus)
   - [Ce qui n'est pas inclus](#ce-qui-nest-pas-inclus)
+- [La formule minimum à 1 000 €](#la-formule-minimum-à-1-000-)
 - [Les leviers de prix](#les-leviers-de-prix)
+- [L'application mobile](#lapplication-mobile)
+  - [Contenu du socle mobile](#contenu-du-socle-mobile)
+  - [Prix des écrans mobiles](#prix-des-écrans-mobiles)
+  - [Publication sur les stores](#publication-sur-les-stores)
 - [Exemples de devis](#exemples-de-devis)
 - [Le template est l'actif principal](#le-template-est-lactif-principal)
 - [Vérification économique](#vérification-économique)
@@ -20,7 +25,7 @@
 
 ## L'idée en une phrase
 
-Aldaron est une société de développement qui livre aux startups un produit web (et mobile en option) **avec l'authentification, la gestion des rôles, le CMS et un back-office déjà en place dès le premier jour**, à partir d'un prix plancher de 5 000 €, parce que chaque projet démarre d'un template éprouvé au lieu d'une page blanche.
+Aldaron est une société de développement qui livre aux startups un produit web (et mobile en option) **avec l'authentification, la gestion des rôles, le CMS et un back-office déjà en place dès le premier jour**, à partir de 2 000 € pour le socle complet et d'un prix plancher de 1 000 € pour les bases seules, parce que chaque projet démarre d'un template éprouvé au lieu d'une page blanche.
 
 > Hypothèse de lecture : le nom « Aldaron », le NIF et le STAT existent déjà (société déjà enregistrée). Si le nom est en réalité pris par un tiers, c'est à régler avant tout le reste (voir [Questions ouvertes](#questions-ouvertes)).
 
@@ -30,13 +35,13 @@ Aldaron est une société de développement qui livre aux startups un produit we
 |---|---|
 | Cible | Uniquement des startups (pré-seed à série A). Pas d'agence, pas de grand compte, pas de petit commerce |
 | Promesse | Un MVP réel, avec ses outils d'administration, livré vite, sans que la startup réinvente login, rôles et back-office |
-| Ce qui nous distingue | Le back-office, les rôles et le CMS ne sont pas « en phase 2 » : ils sont dans le prix de départ |
-| Ce qu'on ne fait pas | Projets sous 5 000 €, sites vitrines seuls, refontes graphiques sans produit, régie à l'heure sans périmètre |
+| Ce qui nous distingue | Le back-office, les rôles et le CMS ne sont pas « en phase 2 » : ils sont dans le prix du socle |
+| Ce qu'on ne fait pas | Projets sous 1 000 €, sites vitrines seuls, refontes graphiques sans produit, régie à l'heure sans périmètre |
 | Argument de vente | Délai et prix prévisibles : on part d'une base déjà exploitée en production, on ne facture que ce qui est spécifique |
 
-Le plancher de 5 000 € est un filtre autant qu'un prix : il écarte les clients qui cherchent un site à bas coût et qui coûteraient plus en support qu'ils ne rapportent.
+Le plancher de 1 000 € (la formule minimum) est un filtre autant qu'un prix : il couvre environ 9 jours de travail au tarif de référence de 114 € par jour. En dessous, le temps de vente et de support dépasse ce que le projet rapporte.
 
-## Le socle à 5 000 €
+## Le socle à 2 000 €
 
 ### Ce qui est inclus
 
@@ -44,7 +49,7 @@ Basé sur ce que `1lalana-platform` contient déjà (partie générique `_core`)
 
 | Bloc | Contenu |
 |---|---|
-| Authentification | Connexion, mot de passe oublié, invitations par email, double authentification (MFA), vérification renforcée pour les actions sensibles |
+| Authentification | Connexion, création de compte, mot de passe oublié, invitations par email, double authentification (MFA), vérification renforcée pour les actions sensibles |
 | Rôles et droits | Rôles configurables, droits par écran et par action, gestion des employés / utilisateurs du back-office |
 | CMS | Pages et sections, articles, catégories, historique des versions des contenus |
 | Site web public | Next.js, multilingue (**anglais et français inclus**, site et back-office), SEO de base (sitemap, robots, manifest), formulaire de contact, newsletter, thème clair / sombre |
@@ -63,6 +68,19 @@ Basé sur ce que `1lalana-platform` contient déjà (partie générique `_core`)
 - L'hébergement et la maintenance après les 30 jours.
 - Le design sur mesure de zéro : le socle applique la charte du client sur un système de design existant.
 
+## La formule minimum à 1 000 €
+
+Le socle complet reste l'offre de référence. Quand un projet web n'a pas besoin du site public ni d'un back-office complexe, on ne vend pas le socle complet : on vend la formule minimum, qui ne contient que les bases d'un produit où l'on se connecte. Une application mobile seule ne prend pas la formule minimum : elle part de la base technique d'Entraid'ei (Expo, Supabase), et le socle mobile couvre déjà l'authentification et la mise en production (voir [L'application mobile](#lapplication-mobile)).
+
+| Bloc | Contenu |
+|---|---|
+| Authentification | Connexion, création de compte, mot de passe oublié, invitations par email, double authentification (MFA), vérification renforcée pour les actions sensibles |
+| Mise en production | Environnements préproduction et production, déploiement, nom de domaine configuré |
+| Durée | À partir de **deux semaines** après la signature, pour la formule seule |
+| Cadre | Marque du client appliquée (logo, couleurs, textes), formation d'une demi-journée, 30 jours de correction de bugs après livraison |
+
+Le prix de 1 000 € correspond à environ 9 jours de travail au tarif de référence de 114 € par jour (voir [Vérification économique](#vérification-économique)). Rôles, CMS, site public, back-office et email / SMS ne sont pas inclus : chaque besoin se facture avec les leviers ci-dessous. Si un projet en demande plusieurs et que le total approche 2 000 €, le socle complet est plus avantageux.
+
 ## Les leviers de prix
 
 Le socle couvre le « squelette ». Chaque ajout se facture selon **huit leviers**, du plus simple au plus variable :
@@ -72,11 +90,11 @@ Le socle couvre le « squelette ». Chaque ajout se facture selon **huit leviers
 | Page publique sur mesure | par page | à partir de 40 € (mise en page spécifique codée, selon sa complexité). Les pages et contenus créés dans le CMS sont **gratuits** et illimités |
 | Écran back-office supplémentaire | par écran | 40 € (liste + formulaire standard) à 70 € (filtres, graphiques, workflow) |
 | Complexité métier | par fonctionnalité | multiplicateur sur les écrans concernés : ×1 simple, ×1,5 moyenne, ×2,5 élevée |
-| Intégration tierce | par service | 400 € (service simple : cartes, CRM…) à 1 200 € (paiement) |
+| Intégration tierce | par service | 400 € (service simple : cartes, CRM…) à 1 200 € (service complexe : scan de document, messagerie temps réel…) ; paiement : 60 € par intégration de paiement |
 | Envoi email / SMS sur mesure | par implémentation | 30 € (ex. : un email ou un SMS envoyé lors d'une notification) |
 | Langue supplémentaire (au-delà de l'anglais et du français, inclus) | par langue | **10 %** du coût des écrans traduits si la langue est en alphabet latin, de gauche à droite (espagnol, allemand, malgache…) et que le client fournit les textes ; **15 %** si Aldaron traduit ou fait relire, ou si la langue demande de l'adaptation (arabe en lecture inversée, alphabet non latin, textes longs qui cassent les mises en page) |
 | Design et maquettes | par écran, ou forfait | 50 % du prix de développement de l'écran maquetté (maquettes Figma validées avant le code) ; forfait de 500 à 1 000 € pour une identité et un kit d'interface propres au client |
-| Application mobile | socle + écrans | socle mobile 1 000 € (Expo, authentification, navigation, notifications push, publication sur les stores) puis écrans à 250 € (standard) à 600 € (complexe) |
+| Application mobile | socle + écrans | socle mobile 1 000 € puis écrans à partir de 60 € avec suppléments cumulables (voir [L'application mobile](#lapplication-mobile)) |
 
 Règles à fixer pour éviter les débats :
 
@@ -89,13 +107,65 @@ Règles à fixer pour éviter les débats :
 - Deux tours de modifications par écran maquetté, ensuite un avenant. Les maquettes sont validées par écrit avant le code, et tout changement après validation est facturé.
 - Un client peut apporter son propre designer. Une maquette qui ignore le système de design oblige à créer des composants : le multiplicateur de complexité s'applique.
 
+## L'application mobile
+
+### Contenu du socle mobile
+
+| Bloc | Contenu |
+|---|---|
+| Projet | Application Expo configurée, marque du client appliquée (logo, couleurs, thème clair / sombre, icône et écran de démarrage), anglais et français |
+| Authentification | Connexion, mot de passe oublié, MFA, comme sur le web |
+| Données et droits | Avec un projet web : branchement sur le serveur existant, avec les mêmes rôles et droits que le back-office. Application mobile seule : base technique d'Entraid'ei (Supabase), sans formule minimum |
+| Navigation | Onglets et pile d'écrans |
+| Notifications push | L'infrastructure (réception, enregistrement des appareils). L'envoi lié à un écran précis est le supplément « service » de la grille ci-dessous |
+| Environnements | Préproduction et production, version de test distribuée au client (TestFlight et test interne Google) |
+| Publication | Publication initiale sur les stores (voir [Publication sur les stores](#publication-sur-les-stores)) |
+| Garantie | 30 jours de correction de bugs, comme le socle web |
+
+Ne sont pas inclus : les écrans métier, les services sur mesure (SMS, email) autres que les notifications push de base, les comptes Apple et Google et leurs frais, le mode hors ligne poussé, la maintenance après les 30 jours.
+
+### Prix des écrans mobiles
+
+Un prix de base et des suppléments cumulables.
+
+| Élément | Prix |
+|---|---|
+| Écran de base (liste, détail, formulaire simple) | 60 € |
+| + Caméra, envoi de fichier | + 10 € |
+| + Service (SMS, email, notification push) | + 20 € |
+| + Géolocalisation, carte | + 30 € |
+| + Filtres, graphiques, workflow à étapes | + 20 € |
+| + Paiement | + 120 € |
+
+Exemples de cumul : formulaire avec notification push = 80 € ; carte et filtres = 110 € ; paiement = 180 € ; tous les suppléments sauf le paiement = 140 €. Le supplément paiement est distinct de l'intégration tierce à 60 €, qui est un service configuré une seule fois.
+
+### Publication sur les stores
+
+Le client crée et possède ses comptes développeur Apple et Google ; Aldaron publie dessus en tant que membre de l'équipe. Aldaron ne publie jamais sous son propre compte : transférer une application d'un compte à un autre est lourd, et la maîtrise des avis et des statistiques serait perdue.
+
+| Prestation | Prix |
+|---|---|
+| Publication initiale (iOS et Android), une soumission par store et une resoumission après refus | incluse dans le socle |
+| Resoumission supplémentaire après un refus dû à une demande du client | 60 € chacune |
+| Publication d'une mise à jour (hors forfait de maintenance) | 40 € par store |
+| Création du compte développeur Apple ou Google à la place du client (dossier D-U-N-S, vérifications) | 100 € |
+| Fiches des stores traduites au-delà de l'anglais et du français | 10 % du coût des textes, comme pour les langues |
+
+- Les frais des comptes sont refacturés sans marge : 99 $ par an pour Apple, 25 $ une fois pour Google.
+- Un seul store (souvent Android pour un MVP) : le socle baisse d'environ 150 €.
+- Les mises à jour sont incluses dans le forfait de maintenance mensuel.
+- Les délais de validation (Apple de 1 à 3 jours, parfois plus ; Google de quelques heures à quelques jours) ne sont pas maîtrisés : à prévoir dans le planning.
+- Un compte Apple organisation demande un numéro D-U-N-S, qui peut prendre des semaines : à lancer dès la signature.
+
 ## Exemples de devis
 
 | Cas | Détail | Total |
 |---|---|---|
-| Minimal : site + back-office d'une startup SaaS | Socle + 2 pages publiques sur mesure (80 €) | **5 080 €** |
-| MVP web avec paiement | Socle + 3 écrans standard (120 €) + 2 écrans complexes (140 €) + paiement (1 200 €) | **6 460 €** |
-| MVP web + mobile | Socle + 3 écrans standard (120 €) + 2 complexes (140 €) + paiement (1 200 €) + socle mobile (1 000 €) + 6 écrans mobiles standard (1 500 €) + 2 complexes (1 200 €) | **10 160 €** |
+| Plancher : connexion seule | Formule minimum (connexion, création de compte, mot de passe oublié) | **1 000 €** |
+| Minimal : site + back-office d'une startup SaaS | Socle + 2 pages publiques sur mesure (80 €) | **2 080 €** |
+| MVP web avec paiement | Socle + 3 écrans standard (120 €) + 2 écrans complexes (140 €) + paiement (60 €) | **2 320 €** |
+| MVP web + mobile | Socle + 3 écrans standard (120 €) + 2 complexes (140 €) + paiement (60 €) + socle mobile (1 000 €) + 6 écrans mobiles de base (360 €) + 2 écrans mobiles avec carte et filtres (2 × 110 € = 220 €) | **3 900 €** |
+| Application mobile seule, sans site ni back-office complexe | Socle mobile sur la base technique d'Entraid'ei (1 000 €) + écrans mobiles à la grille | **à partir de 1 000 €** |
 
 Facturation proposée : 40 % à la signature, 30 % à la livraison de la préproduction, 30 % à la mise en production.
 
@@ -115,20 +185,22 @@ Question de fond : comment un correctif ou une amélioration du template arrive-
 
 Le prix n'a de sens que rapporté au temps réel. À mesurer avant de publier une grille :
 
-1. Chronométrer l'adaptation du template sur un vrai projet pilote : marque, déploiement, configuration, formation. Objectif de départ : **moins de 15 jours de travail** pour le socle.
-2. À 5 000 € pour 15 jours, le tarif journalier effectif est d'environ 330 €. Il faut que ce chiffre soit viable au regard des coûts réels (salaires, outils, hébergement, temps commercial, fiscalité).
+1. Chronométrer l'adaptation du template sur un vrai projet pilote : marque, déploiement, configuration, formation. Objectif de départ : **moins de 15 jours de travail** pour le socle complet, et **moins de 9 jours** pour la formule minimum.
+2. Le tarif de référence est de **114 € par jour**. Il vient d'un calcul sur le projet Entraid'ei : 5 000 € pour environ 44 jours de travail effectif, développé avec Claude à environ 10 écrans par jour. À ce tarif, la formule minimum à 1 000 € représente environ 9 jours de travail ; le socle complet à 2 000 €, s'il tient en 15 jours, rapporte environ 133 € par jour. Il faut que ce chiffre soit viable au regard des coûts réels (Claude, outils, hébergement, temps commercial, fiscalité).
 3. Mesurer le temps réel d'un écran standard, d'un écran complexe, d'une intégration, sur 1lalana lui-même, et recaler les fourchettes ci-dessus.
 4. Prévoir le temps non facturable : avant-vente, réunions, support après livraison. Il pèse souvent 25 à 35 % du temps total.
+5. Le rythme de 10 écrans par jour mesure la production, pas la livraison : relecture, fidélité à la maquette, tests sur appareils et corrections en plus. À valider sur le pilote, du premier prompt à l'écran relu et testé.
 
-**Plancher interne par TJM (jamais affiché au client).** Le prix reste un forfait ; le TJM sert seulement à vérifier qu'un devis rapporte au moins le minimum selon sa durée. Un devis dont le total est inférieur à ce plancher est relevé ou refusé.
+**Plancher interne (jamais affiché au client).** Le prix reste un forfait ; le tarif de référence sert seulement à vérifier qu'un devis rapporte au moins le minimum. Plancher du devis = jours de travail estimés × 114 €, avec un minimum de 1 000 €. Un devis dont le total est inférieur à ce plancher est relevé ou refusé.
 
-| Durée du projet | TJM plancher | Plancher du devis |
-|---|---|---|
-| 15 jours | 90 € | 1 350 € |
-| 2 mois (environ 44 jours ouvrés) | 75 € | 3 300 € |
-| 3 mois (environ 66 jours ouvrés) | 60 € | 3 960 € |
+| Durée du projet | Plancher du devis |
+|---|---|
+| 9 jours (formule minimum) | 1 000 € (le minimum) |
+| 15 jours | 1 710 € |
+| 2 mois (environ 44 jours ouvrés) | 5 016 € |
+| 3 mois (environ 66 jours ouvrés) | 7 524 € |
 
-Le TJM dégressif est une remise de volume sur les projets longs. Il doit être confronté au coût journalier réel d'Aldaron (outils, hébergement, charges, impôts) : si ce coût est supérieur à 60 €, le plancher de 3 mois est trop bas. Les prix d'écrans (40 à 70 €) correspondent à environ une demi-journée au TJM de 90 €.
+Le tarif est fixe, sans dégressivité. Il doit être confronté au coût journalier réel d'Aldaron (Claude, outils, hébergement, charges, impôts) : si ce coût dépasse 114 €, le plancher est trop bas. Au tarif de 114 €, un écran à 60 € représente environ une demi-journée, alors que le rythme avec Claude est d'environ 10 écrans par jour : la marge sur les écrans finance la relecture, les tests, la vente et le support.
 
 ## Risques et points faibles
 
@@ -137,6 +209,7 @@ Le TJM dégressif est une remise de volume sur les projets longs. Il doit être 
 | Startups à trésorerie fragile | Impayés, projets abandonnés en cours de route | Acompte de 40 %, jalons de paiement, propriété du code transférée au paiement final |
 | Dérive du périmètre | Le prix de départ attire des demandes « un peu plus » à chaque réunion | Grille de complexité écrite, avenants, périmètre signé |
 | Stack lourde pour un petit client | Parse Server, MongoDB et monorepo Nx demandent de l'exploitation | Hébergement géré par Aldaron dans le forfait mensuel, ou option plus légère |
+| Dépendance à l'outil | Les prix supposent environ 10 écrans par jour avec Claude ; à la main, le même travail prend plusieurs fois plus de temps | Mesurer le rythme réel sur le pilote, prévoir une clause de révision des prix si l'outil change de tarif ou de disponibilité |
 | Un seul développeur | Congés, maladie, goulot d'étranglement sur les ventes et le code | Limiter le nombre de projets simultanés, documenter, prévoir un renfort ponctuel |
 | Propriété intellectuelle | Le client croit posséder le template | Contrat : le template reste à Aldaron, le client reçoit une licence perpétuelle sur son projet |
 | Concurrence | Outils no-code, agences à bas prix, freelances | Ne pas rivaliser sur le prix : rivaliser sur le délai, la qualité du back-office et le suivi |
@@ -158,7 +231,7 @@ Chaque question est suivie d'une recommandation. Celles qui touchent au droit, �
 - Qui héberge : le client sur son compte, ou Aldaron ?
   - **Recommandation :** les comptes (hébergement, domaine, comptes des stores) appartiennent au client, qui peut ainsi partir avec son produit. Aldaron les administre dans le cadre du forfait de maintenance mensuel, et propose l'hébergement géré comme option pour les startups sans compétence technique.
 - Le mobile est-il toujours Expo, et la publication sur les stores est-elle incluse ?
-  - **Recommandation :** oui, Expo, comme dans le template : c'est la seule façon de tenir un socle mobile à 1 000 €. La publication sur les stores est incluse dans ce socle ; les frais des comptes développeur Apple et Google restent à la charge du client.
+  - **Recommandation :** oui, Expo, comme dans le template : c'est la seule façon de tenir un socle mobile à 1 000 €. La publication initiale sur les stores est incluse dans ce socle (voir [Publication sur les stores](#publication-sur-les-stores)) ; les frais des comptes développeur Apple et Google restent à la charge du client.
 - Faut-il un second plancher (par exemple 15 000 €) pour les projets avec mobile ?
   - **Recommandation :** non. Le mobile est un levier de prix comme les autres, et un second plancher compliquerait l'offre sans protéger la marge, que le plancher de TJM contrôle déjà.
 - Quel premier client pilote, et à quelles conditions (tarif réduit contre un témoignage) ?
@@ -231,7 +304,7 @@ et une paire de polices chacune), puis attends mon choix. Ensuite, produis :
   pas la structure.
 
 ## Étape 2 — après ma validation seulement
-Pages du site : accueil, offre et prix (le socle à 5 000 € et les options),
+Pages du site : accueil, offre et prix (le socle à 2 000 €, la formule minimum à 1 000 € et les options),
 réalisations, à propos, contact. Je te donnerai le contenu à ce moment-là.
 ````
 

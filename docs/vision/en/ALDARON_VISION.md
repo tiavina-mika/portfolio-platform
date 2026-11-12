@@ -4,10 +4,15 @@
 
 - [The idea in one sentence](#the-idea-in-one-sentence)
 - [Positioning](#positioning)
-- [The 5,000 € foundation](#the-5000--foundation)
+- [The 2,000 € foundation](#the-2000--foundation)
   - [What is included](#what-is-included)
   - [What is not included](#what-is-not-included)
+- [The minimum package at 1,000 €](#the-minimum-package-at-1000-)
 - [Pricing levers](#pricing-levers)
+- [The mobile app](#the-mobile-app)
+  - [Mobile foundation content](#mobile-foundation-content)
+  - [Mobile screen prices](#mobile-screen-prices)
+  - [Store publishing](#store-publishing)
 - [Sample quotes](#sample-quotes)
 - [The template is the main asset](#the-template-is-the-main-asset)
 - [Economic check](#economic-check)
@@ -20,7 +25,7 @@
 
 ## The idea in one sentence
 
-Aldaron is a development company that delivers startups a web product (and a mobile app as an option) **with authentication, role management, a CMS and a back-office already in place on day one**, from a floor price of 5,000 €, because every project starts from a proven template instead of a blank page.
+Aldaron is a development company that delivers startups a web product (and a mobile app as an option) **with authentication, role management, a CMS and a back-office already in place on day one**, from 2,000 € for the full foundation and a floor price of 1,000 € for the basics alone, because every project starts from a proven template instead of a blank page.
 
 > Reading assumption: the name "Aldaron", the NIF and the STAT already exist (the company is already registered). If the name is actually taken by a third party, that must be settled before anything else (see [Open questions](#open-questions)).
 
@@ -30,13 +35,13 @@ Aldaron is a development company that delivers startups a web product (and a mob
 |---|---|
 | Target | Startups only (pre-seed to series A). No agencies, no large accounts, no small shops |
 | Promise | A real MVP, with its admin tools, delivered fast, without the startup reinventing login, roles and back-office |
-| What sets us apart | The back-office, roles and CMS are not "phase 2": they are in the starting price |
-| What we do not do | Projects under 5,000 €, brochure sites alone, redesigns without a product, hourly work without a scope |
+| What sets us apart | The back-office, roles and CMS are not "phase 2": they are in the foundation price |
+| What we do not do | Projects under 1,000 €, brochure sites alone, redesigns without a product, hourly work without a scope |
 | Selling point | Predictable time and price: we start from a base already run in production and only bill what is specific |
 
-The 5,000 € floor is a filter as much as a price: it rules out clients looking for a cheap site, who would cost more in support than they bring in.
+The 1,000 € floor (the minimum package) is a filter as much as a price: it covers about 9 days of work at the reference rate of 114 € per day. Below that, the sales and support time exceeds what the project earns.
 
-## The 5,000 € foundation
+## The 2,000 € foundation
 
 ### What is included
 
@@ -44,7 +49,7 @@ Based on what `1lalana-platform` already contains (the generic `_core` part), to
 
 | Block | Content |
 |---|---|
-| Authentication | Login, forgotten password, email invitations, two-factor authentication (MFA), step-up verification for sensitive actions |
+| Authentication | Login, account creation, forgotten password, email invitations, two-factor authentication (MFA), step-up verification for sensitive actions |
 | Roles and rights | Configurable roles, rights per screen and per action, management of employees / back-office users |
 | CMS | Pages and sections, articles, categories, content version history |
 | Public website | Next.js, multilingual (**English and French included**, site and back-office), basic SEO (sitemap, robots, manifest), contact form, newsletter, light / dark theme |
@@ -63,6 +68,19 @@ Based on what `1lalana-platform` already contains (the generic `_core` part), to
 - Hosting and maintenance after the 30 days.
 - Custom design from scratch: the foundation applies the client's brand to an existing design system.
 
+## The minimum package at 1,000 €
+
+The full foundation remains the reference offer. When a web project does not need the public website or a complex back-office, the full foundation is not sold: the minimum package is, which contains only the basics of a product where people sign in. A mobile app alone does not take the minimum package: it starts from the Entraid'ei technical base (Expo, Supabase), and the mobile foundation already covers authentication and going live (see [The mobile app](#the-mobile-app)).
+
+| Block | Content |
+|---|---|
+| Authentication | Login, account creation, forgotten password, email invitations, two-factor authentication (MFA), step-up verification for sensitive actions |
+| Going live | Pre-production and production environments, deployment, domain name configured |
+| Duration | From **two weeks** after signature, for the package alone |
+| Frame | Client branding applied (logo, colors, texts), half a day of training, 30 days of bug fixing after delivery |
+
+The 1,000 € price corresponds to about 9 days of work at the reference rate of 114 € per day (see [Economic check](#economic-check)). Roles, CMS, public website, back-office and email / SMS are not included: each need is billed with the levers below. If a project needs several of them and the total approaches 2,000 €, the full foundation is the better deal.
+
 ## Pricing levers
 
 The foundation covers the "skeleton". Every addition is billed along **eight levers**, from the simplest to the most variable:
@@ -72,11 +90,11 @@ The foundation covers the "skeleton". Every addition is billed along **eight lev
 | Custom public page | per page | from 40 € (specific coded layout, depending on its complexity). Pages and content created in the CMS are **free** and unlimited |
 | Extra back-office screen | per screen | 40 € (standard list + form) to 70 € (filters, charts, workflow) |
 | Business complexity | per feature | multiplier on the screens concerned: ×1 simple, ×1.5 medium, ×2.5 high |
-| Third-party integration | per service | 400 € (simple service: maps, CRM…) to 1,200 € (payment) |
+| Third-party integration | per service | 400 € (simple service: maps, CRM…) to 1,200 € (complex service: document scan, real-time messaging…); payment: 60 € per payment integration |
 | Custom email / SMS sending | per implementation | 30 € (e.g. an email or SMS sent on a notification) |
 | Extra language (beyond the included English and French) | per language | **10 %** of the cost of the translated screens if the language uses the Latin alphabet, left to right (Spanish, German, Malagasy…) and the client supplies the texts; **15 %** if Aldaron translates or proofreads, or if the language needs adaptation (Arabic right-to-left, non-Latin script, long texts that break layouts) |
 | Design and mockups | per screen, or flat fee | 50 % of the development price of the mocked-up screen (Figma mockups validated before coding); flat fee of 500 to 1,000 € for an identity and UI kit specific to the client |
-| Mobile app | foundation + screens | mobile foundation 1,000 € (Expo, authentication, navigation, push notifications, store publishing), then screens at 250 € (standard) to 600 € (complex) |
+| Mobile app | foundation + screens | mobile foundation 1,000 €, then screens from 60 € with stackable extras (see [The mobile app](#the-mobile-app)) |
 
 Rules to settle up front to avoid arguments:
 
@@ -89,13 +107,65 @@ Rules to settle up front to avoid arguments:
 - Two rounds of changes per mocked-up screen, then an amendment. Mockups are validated in writing before coding, and any change after validation is billed.
 - A client may bring their own designer. A mockup that ignores the design system forces new components to be built: the complexity multiplier applies.
 
+## The mobile app
+
+### Mobile foundation content
+
+| Block | Content |
+|---|---|
+| Project | Configured Expo app, client branding applied (logo, colors, light / dark theme, icon and splash screen), English and French |
+| Authentication | Login, forgotten password, MFA, as on the web |
+| Data and rights | With a web project: connection to the existing server, with the same roles and rights as the back-office. Mobile app alone: the Entraid'ei technical base (Supabase), without the minimum package |
+| Navigation | Tabs and screen stack |
+| Push notifications | The infrastructure (receiving, registering devices). Sending tied to a specific screen is the "service" extra in the grid below |
+| Environments | Pre-production and production, test build delivered to the client (TestFlight and Google internal testing) |
+| Publishing | Initial store publication (see [Store publishing](#store-publishing)) |
+| Warranty | 30 days of bug fixing, like the web foundation |
+
+Not included: business screens, custom services (SMS, email) other than basic push notifications, Apple and Google accounts and their fees, advanced offline mode, maintenance after the 30 days.
+
+### Mobile screen prices
+
+A base price and stackable extras.
+
+| Item | Price |
+|---|---|
+| Base screen (list, detail, simple form) | 60 € |
+| + Camera, file upload | + 10 € |
+| + Service (SMS, email, push notification) | + 20 € |
+| + Geolocation, map | + 30 € |
+| + Filters, charts, multi-step workflow | + 20 € |
+| + Payment | + 120 € |
+
+Stacking examples: form with a push notification = 80 €; map and filters = 110 €; payment = 180 €; every extra except payment = 140 €. The payment extra is separate from the 60 € payment integration, which is a service configured once.
+
+### Store publishing
+
+The client creates and owns their Apple and Google developer accounts; Aldaron publishes on them as a team member. Aldaron never publishes under its own account: moving an app from one account to another is heavy, and control of reviews and statistics would be lost.
+
+| Service | Price |
+|---|---|
+| Initial publication (iOS and Android), one submission per store and one resubmission after a rejection | included in the foundation |
+| Extra resubmission after a rejection caused by a client request | 60 € each |
+| Publishing an update (outside the maintenance plan) | 40 € per store |
+| Creating the Apple or Google developer account on the client's behalf (D-U-N-S file, checks) | 100 € |
+| Store listings translated beyond English and French | 10 % of the cost of the texts, as for languages |
+
+- Account fees are re-billed at cost, with no margin: 99 $ per year for Apple, 25 $ once for Google.
+- A single store (often Android for an MVP): the foundation drops by about 150 €.
+- Updates are included in the monthly maintenance plan.
+- Review times (Apple 1 to 3 days, sometimes more; Google a few hours to a few days) are out of our control: allow for them in the schedule.
+- An Apple organization account needs a D-U-N-S number, which can take weeks: start it at signature.
+
 ## Sample quotes
 
 | Case | Detail | Total |
 |---|---|---|
-| Minimal: a SaaS startup's site + back-office | Foundation + 2 custom public pages (80 €) | **5,080 €** |
-| Web MVP with payment | Foundation + 3 standard screens (120 €) + 2 complex screens (140 €) + payment (1,200 €) | **6,460 €** |
-| Web + mobile MVP | Foundation + 3 standard screens (120 €) + 2 complex (140 €) + payment (1,200 €) + mobile foundation (1,000 €) + 6 standard mobile screens (1,500 €) + 2 complex (1,200 €) | **10,160 €** |
+| Floor: login only | Minimum package (login, account creation, forgotten password) | **1,000 €** |
+| Minimal: a SaaS startup's site + back-office | Foundation + 2 custom public pages (80 €) | **2,080 €** |
+| Web MVP with payment | Foundation + 3 standard screens (120 €) + 2 complex screens (140 €) + payment (60 €) | **2,320 €** |
+| Web + mobile MVP | Foundation + 3 standard screens (120 €) + 2 complex (140 €) + payment (60 €) + mobile foundation (1,000 €) + 6 basic mobile screens (360 €) + 2 mobile screens with map and filters (2 × 110 € = 220 €) | **3,900 €** |
+| Mobile app alone, no website or complex back-office | Mobile foundation on the Entraid'ei technical base (1,000 €) + mobile screens at grid prices | **from 1,000 €** |
 
 Proposed invoicing: 40 % at signature, 30 % at pre-production delivery, 30 % at go-live.
 
@@ -115,20 +185,22 @@ Underlying question: how does a fix or improvement to the template reach project
 
 The price only makes sense against real time. To measure before publishing a grid:
 
-1. Time the adaptation of the template on a real pilot project: branding, deployment, configuration, training. Starting target: **under 15 working days** for the foundation.
-2. At 5,000 € for 15 days, the effective daily rate is about 330 €. That figure must be viable against real costs (salaries, tools, hosting, sales time, taxes).
+1. Time the adaptation of the template on a real pilot project: branding, deployment, configuration, training. Starting target: **under 15 working days** for the full foundation, and **under 9 days** for the minimum package.
+2. The reference rate is **114 € per day**. It comes from a calculation on the Entraid'ei project: 5,000 € for about 44 days of actual work, built with Claude at about 10 screens per day. At that rate, the 1,000 € minimum package is about 9 days of work; the full 2,000 € foundation, if it fits in 15 days, earns about 133 € per day. That figure must be viable against real costs (Claude, tools, hosting, sales time, taxes).
 3. Measure the real time of a standard screen, a complex screen, an integration, on 1lalana itself, and recalibrate the ranges above.
 4. Account for non-billable time: pre-sales, meetings, post-delivery support. It often weighs 25 to 35 % of total time.
+5. The pace of 10 screens per day measures output, not delivery: review, fidelity to the mockup, testing on devices and fixes come on top. Validate it on the pilot, from the first prompt to a screen that is reviewed and tested.
 
-**Internal daily-rate floor (never shown to the client).** The price stays a flat fee; the daily rate (TJM) is only used to check that a quote earns at least the minimum for its duration. A quote whose total is below this floor is raised or declined.
+**Internal floor (never shown to the client).** The price stays a flat fee; the reference rate is only used to check that a quote earns at least the minimum. Quote floor = estimated working days × 114 €, with a minimum of 1,000 €. A quote whose total is below this floor is raised or declined.
 
-| Project duration | Floor daily rate | Quote floor |
-|---|---|---|
-| 15 days | 90 € | 1,350 € |
-| 2 months (about 44 working days) | 75 € | 3,300 € |
-| 3 months (about 66 working days) | 60 € | 3,960 € |
+| Project duration | Quote floor |
+|---|---|
+| 9 days (minimum package) | 1,000 € (the minimum) |
+| 15 days | 1,710 € |
+| 2 months (about 44 working days) | 5,016 € |
+| 3 months (about 66 working days) | 7,524 € |
 
-The degressive daily rate is a volume discount on long projects. It must be checked against Aldaron's real daily cost (tools, hosting, charges, taxes): if that cost is above 60 €, the 3-month floor is too low. The screen prices (40 to 70 €) correspond to about half a day at the 90 € daily rate.
+The rate is fixed, with no volume discount. It must be checked against Aldaron's real daily cost (Claude, tools, hosting, charges, taxes): if that cost is above 114 €, the floor is too low. At 114 €, a 60 € screen is worth about half a day, while the pace with Claude is about 10 screens per day: the margin on screens funds review, testing, sales and support.
 
 ## Risks and weak points
 
@@ -137,6 +209,7 @@ The degressive daily rate is a volume discount on long projects. It must be chec
 | Startups with fragile cash | Unpaid invoices, projects abandoned midway | 40 % deposit, payment milestones, code ownership transferred on final payment |
 | Scope creep | The low starting price attracts "just a bit more" requests at every meeting | Written complexity grid, amendments, signed scope |
 | Heavy stack for a small client | Parse Server, MongoDB and an Nx monorepo need operating | Hosting managed by Aldaron within the monthly plan, or a lighter option |
+| Dependence on the tool | The prices assume about 10 screens per day with Claude; by hand, the same work takes several times longer | Measure the real pace on the pilot, plan a price-review clause if the tool changes its pricing or availability |
 | A single developer | Leave, illness, bottleneck on both sales and code | Cap simultaneous projects, document, plan for occasional help |
 | Intellectual property | The client believes they own the template | Contract: the template stays with Aldaron, the client gets a perpetual license on their project |
 | Competition | No-code tools, low-price agencies, freelancers | Do not compete on price: compete on delivery time, back-office quality and follow-up |
@@ -158,7 +231,7 @@ Each question is followed by a recommendation. Those touching law, tax or the tr
 - Who hosts: the client on their account, or Aldaron?
   - **Recommendation:** the accounts (hosting, domain, store accounts) belong to the client, who can thus leave with their product. Aldaron administers them under the monthly maintenance plan, and offers managed hosting as an option for startups without technical skills.
 - Is mobile always Expo, and is store publishing included?
-  - **Recommendation:** yes, Expo, as in the template: it is the only way to hold a 1,000 € mobile foundation. Store publishing is included in that foundation; the Apple and Google developer account fees stay with the client.
+  - **Recommendation:** yes, Expo, as in the template: it is the only way to hold a 1,000 € mobile foundation. Initial store publishing is included in that foundation (see [Store publishing](#store-publishing)); the Apple and Google developer account fees stay with the client.
 - Is a second floor (for example 15,000 €) needed for projects with mobile?
   - **Recommendation:** no. Mobile is a pricing lever like the others, and a second floor would complicate the offer without protecting the margin, which the daily-rate floor already controls.
 - Which first pilot client, and on what terms (reduced rate in exchange for a testimonial)?
@@ -227,7 +300,7 @@ font pairing each), then wait for my choice. Then produce:
   structure.
 
 ## Step 2 — only after my validation
-Site pages: home, offer and pricing (the 5,000 € foundation and the options),
+Site pages: home, offer and pricing (the 2,000 € foundation, the 1,000 € minimum package and the options),
 projects, about, contact. I will give you the content at that point.
 ````
 

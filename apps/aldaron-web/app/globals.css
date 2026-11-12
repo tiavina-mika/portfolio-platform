@@ -1,0 +1,336 @@
+/* 1. Import external */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css');
+/* 2. Import Tailwind CSS and styles */
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* 3. Plugins */
+@plugin 'tailwindcss-animate';
+@plugin "@tailwindcss/forms";
+@plugin "tailwind-highlightjs";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * 4. Aldaron design tokens. Every color of the site comes from here: a client's brand is applied by
+ * changing these values, never the components.
+ */
+:root {
+  --radius: 0.375rem;
+
+  /* surfaces and text */
+  --background: #F6F3EE;
+  --foreground: #17181A;
+  --card: #FFFFFF;
+  --card-foreground: #17181A;
+  --popover: #FFFFFF;
+  --popover-foreground: #17181A;
+  --primary: #17181A;
+  --primary-foreground: #F6F3EE;
+  --secondary: #EEEAE3;
+  --secondary-foreground: #17181A;
+  --muted: #EEEAE3;
+  --muted-foreground: #5E5A54;
+  --accent: #FDF1EA;
+  --accent-foreground: #B4400F;
+
+  /* the brand color: `brand` only carries ink text, orange text always uses `brand-text` */
+  --brand: #E2531B;
+  --brand-foreground: #17181A;
+  --brand-text: #B4400F;
+
+  /* status: dark text on a soft background; red text always uses `destructive-text` */
+  --destructive: #B42318;
+  --destructive-foreground: #FFFFFF;
+  --destructive-text: #B42318;
+  --danger-subtle: #F9E1DE;
+  --success: #1E6B47;
+  --success-subtle: #E3EFE7;
+  --warning: #8A5A00;
+  --warning-subtle: #F7EBCF;
+  --info: #1D5C8C;
+  --info-subtle: #E0ECF5;
+
+  /* lines */
+  --border: #E3DED5;
+  --input: #CFC8BD;
+  --ring: #E2531B;
+
+  /* data */
+  --chart-1: #E2531B;
+  --chart-2: #1E5B43;
+  --chart-3: #C9A66B;
+  --chart-4: #4F6D8A;
+  --chart-5: #7D776E;
+
+  /* sidebar */
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #17181A;
+  --sidebar-primary: #17181A;
+  --sidebar-primary-foreground: #F6F3EE;
+  --sidebar-accent: #EEEAE3;
+  --sidebar-accent-foreground: #17181A;
+  --sidebar-border: #E3DED5;
+  --sidebar-ring: #E2531B;
+
+  /* what floats */
+  --overlay: rgb(14 15 13 / .48);
+  --selection: #FBE3D6;
+  --selection-foreground: #17181A;
+  --elevation-xs: 0 1px 0 rgb(23 24 26 / .04);
+  --elevation-sm: 0 1px 2px rgb(23 24 26 / .06), 0 1px 1px rgb(23 24 26 / .04);
+  --elevation-md: 0 4px 12px -2px rgb(23 24 26 / .08), 0 2px 4px rgb(23 24 26 / .04);
+  --elevation-lg: 0 16px 40px -8px rgb(23 24 26 / .16), 0 4px 12px rgb(23 24 26 / .06);
+}
+
+.dark {
+  --background: #121311;
+  --foreground: #EEEAE3;
+  --card: #1A1C19;
+  --card-foreground: #EEEAE3;
+  --popover: #1F211D;
+  --popover-foreground: #EEEAE3;
+  --primary: #EEEAE3;
+  --primary-foreground: #17181A;
+  --secondary: #272924;
+  --secondary-foreground: #EEEAE3;
+  --muted: #232521;
+  --muted-foreground: #A19B92;
+  --accent: #2E211A;
+  --accent-foreground: #F26A33;
+
+  --brand: #F26A33;
+  --brand-foreground: #0E0F0D;
+  --brand-text: #F26A33;
+
+  --destructive: #D93A2E;
+  --destructive-foreground: #FFFFFF;
+  /* the fill of a dark destructive button is too dim for text: 3.7:1 on the soft background */
+  --destructive-text: #F26B5E;
+  --danger-subtle: #2E1714;
+  --success: #5BC58B;
+  --success-subtle: #17271E;
+  --warning: #F0B940;
+  --warning-subtle: #2B2312;
+  --info: #6AAEE0;
+  --info-subtle: #14222E;
+
+  --border: #2C2D29;
+  --input: #3A3B36;
+  --ring: #F26A33;
+
+  --chart-1: #F26A33;
+  --chart-2: #3E8463;
+  --chart-3: #C9A66B;
+  --chart-4: #7C9BB8;
+  --chart-5: #A19B92;
+
+  --sidebar: #161715;
+  --sidebar-foreground: #EEEAE3;
+  --sidebar-primary: #EEEAE3;
+  --sidebar-primary-foreground: #17181A;
+  --sidebar-accent: #232521;
+  --sidebar-accent-foreground: #EEEAE3;
+  --sidebar-border: #2C2D29;
+  --sidebar-ring: #F26A33;
+
+  --overlay: rgb(0 0 0 / .64);
+  --elevation-xs: 0 1px 0 rgb(0 0 0 / .3);
+  --elevation-sm: 0 1px 2px rgb(0 0 0 / .4);
+  --elevation-md: 0 4px 12px -2px rgb(0 0 0 / .5);
+  --elevation-lg: 0 16px 40px -8px rgb(0 0 0 / .6), 0 0 0 1px rgb(255 255 255 / .04);
+}
+
+/* 5. Static scales */
+@theme {
+  /* type scale: size, line height and tracking travel together */
+  --text-display-xl: 4.5rem;
+  --text-display-xl--line-height: 1;
+  --text-display-xl--letter-spacing: -0.035em;
+  --text-display: 3.5rem;
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.03em;
+  --text-h1: 2.5rem;
+  --text-h1--line-height: 1.08;
+  --text-h1--letter-spacing: -0.025em;
+  --text-h2: 2rem;
+  --text-h2--line-height: 1.12;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h3: 1.5rem;
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.015em;
+  --text-h4: 1.25rem;
+  --text-h4--line-height: 1.3;
+  --text-h4--letter-spacing: -0.01em;
+
+  --leading-normal: 1.55;
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --container-content: 1200px;
+  --container-narrow: 760px;
+
+  --flex-2: 2 2 0%;
+  --breakpoint-xs: 360px;
+}
+
+/* 6. Tokens exposed as Tailwind utilities */
+@theme inline {
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --radius-sm: calc(var(--radius) - 2px); /* 4px */
+  --radius-md: var(--radius); /* 6px */
+  --radius-lg: calc(var(--radius) + 2px); /* 8px */
+  --radius-xl: calc(var(--radius) + 6px); /* 12px */
+
+  --shadow-xs: var(--elevation-xs);
+  --shadow-sm: var(--elevation-sm);
+  --shadow-md: var(--elevation-md);
+  --shadow-lg: var(--elevation-lg);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-text: var(--brand-text);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-text: var(--destructive-text);
+  --color-danger-subtle: var(--danger-subtle);
+  --color-success: var(--success);
+  --color-success-subtle: var(--success-subtle);
+  --color-warning: var(--warning);
+  --color-warning-subtle: var(--warning-subtle);
+  --color-info: var(--info);
+  --color-info-subtle: var(--info-subtle);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-overlay: var(--overlay);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* hover states: a filled surface moves towards the page background, never through opacity */
+  --color-primary-hover: color-mix(in oklab, var(--primary) 86%, var(--background));
+  --color-brand-hover: color-mix(in oklab, var(--brand) 88%, #000);
+  --color-secondary-hover: color-mix(in oklab, var(--secondary), var(--foreground) 8%);
+  --color-destructive-hover: color-mix(in oklab, var(--destructive) 88%, #000);
+  --color-input-hover: color-mix(in oklab, var(--input), var(--foreground) 28%);
+  --color-border-hover: color-mix(in oklab, var(--border), var(--foreground) 22%);
+}
+
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans leading-normal antialiased;
+  }
+
+  /*
+   * Plain letter-spacing rather than a tracking utility: a utility would set the variable the type
+   * scale reads, and override the tracking of `text-h1`, `text-display`…
+   */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display font-bold;
+    letter-spacing: -0.015em;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  ::selection {
+    background: var(--selection);
+    color: var(--selection-foreground);
+  }
+
+  /* the stroke of every Lucide icon, set once rather than on each of them */
+  .lucide {
+    stroke-width: 1.75;
+  }
+}
+
+@layer components {
+  /*
+    .prose is used by tailwind typography plugin
+    We used it in ReadOnlyTextCodeEditor.tsx for styling stringified rich text content from database
+    Here we override some styles to make sure that span, strong and b tags inherit the text color
+  */
+  .prose {
+    /* Child elements inside paragraphs can not be styled independently, so we override their color here */
+    & p span, p strong, p b {
+      color: var(--inherit) !important;
+    }
+
+  }
+
+  .divider {
+    height: 1px;
+    width: 100%;
+    background-color: var(--border);
+  }
+}
+
+@layer utilities {
+  /*
+   * The typography plugin writes its own grays on `.prose`, in this same layer: the doubled class wins
+   * over them so the rich text follows the theme. The code blocks keep their colors: their highlighting
+   * theme is dark whatever the visitor's theme.
+   */
+  .prose.prose {
+    --tw-prose-body: var(--foreground);
+    --tw-prose-headings: var(--foreground);
+    --tw-prose-lead: var(--muted-foreground);
+    --tw-prose-links: var(--brand-text);
+    --tw-prose-bold: var(--foreground);
+    --tw-prose-counters: var(--muted-foreground);
+    --tw-prose-bullets: var(--muted-foreground);
+    --tw-prose-hr: var(--border);
+    --tw-prose-quotes: var(--foreground);
+    --tw-prose-quote-borders: var(--border);
+    --tw-prose-captions: var(--muted-foreground);
+    --tw-prose-code: var(--foreground);
+    --tw-prose-th-borders: var(--input);
+    --tw-prose-td-borders: var(--border);
+  }
+}

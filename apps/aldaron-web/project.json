@@ -1,0 +1,32 @@
+{
+  "name": "aldaron-web",
+  "targets": {
+    "dev": {
+      "command": "pnpm dev",
+      "options": { "cwd": "apps/aldaron-web" }
+    },
+    "typecheck": {
+      "command": "pnpm typecheck",
+      "options": { "cwd": "apps/aldaron-web" }
+    },
+    "build": {
+      "command": "pnpm build",
+      "options": { "cwd": "apps/aldaron-web" },
+      "outputs": ["{projectRoot}/.next"]
+    },
+    "sb": {
+      "command": "pnpm sb",
+      "options": { "cwd": "apps/aldaron-web" }
+    },
+    "build-sb": {
+      "command": "pnpm build-sb",
+      "options": { "cwd": "apps/aldaron-web" },
+      "outputs": ["{projectRoot}/storybook-static"]
+    },
+    "test-storybook": {
+      "command": "pnpm test-storybook",
+      "options": { "cwd": "apps/aldaron-web" }
+    }
+  },
+  "tags": ["scope:app", "type:app"]
+}
