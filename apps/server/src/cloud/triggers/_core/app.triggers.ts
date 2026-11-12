@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/require-await */
+import { revalidateWebCacheTag } from '@/utils/_core/revalidate.utils';
+
 import { destroyOldFilesAfterUpdate } from '../../utils/_core/cms.utils.cloud';
 import { parseFunction } from '../../utils/_core/utils.cloud';
 
@@ -25,6 +27,12 @@ Parse.Cloud.afterSave(
     const prevApp = request.original;
     const user = request.user;
     const dirtyKeys: string[] = Array.isArray(request.context.dirtyKeys) ? request.context.dirtyKeys : [];
+
+    /*
+     * the website caches the App (CV, images, quote) for hours; without this it keeps handing out
+     * the public id of a CV that was just replaced and deleted
+     */
+    await revalidateWebCacheTag('app');
 
     if (!user) return;
 

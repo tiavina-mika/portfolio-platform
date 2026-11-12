@@ -1,9 +1,8 @@
 import dayjs from 'dayjs';
 import { type Request, type Response } from 'express';
 
-import type { DownloadFileInput } from '@/types/app.type';
-
 import { generatePrivateDownloadUrl } from '@/api/_core/cloudinary.api';
+import { USE_MASTER_KEY } from '@/constants/_core/constants';
 import { logger } from '@/utils/_core/logger';
 
 
@@ -14,25 +13,32 @@ import { logger } from '@/utils/_core/logger';
  * @param res
  * @param next
  */
-export const downloadCV = async (req: Request, res: Response): Promise<void> => {
+export const downloadCV = async (_req: Request, res: Response): Promise<void> => {
   try {
-    const { publicId }: DownloadFileInput = req.query;
-
-    const query = new Parse.Query('App');
-
-    if (publicId) {
-      query.equalTo('cv.publicId', publicId);
-    }
-
-    const app = await query.ascending('createdAt').first();
+    const app = await new Parse.Query('App').ascending('createdAt').first(USE_MASTER_KEY);
 
     if (!app) {
       throw new Error('App not found');
     }
 
-    const tempPublicLink = generatePrivateDownloadUrl(publicId!, 'pdf');
+    /*
+     * always serve the CV stored today, not the public id sent by the client: a page cached by the
+     * browser or the website can still carry the id of a CV that has since been replaced
+     */
+    const publicId: string | undefined = app.get('cv')?.publicId;
+
+    if (!publicId) {
+      throw new Error('CV not found');
+    }
+
+    const tempPublicLink = generatePrivateDownloadUrl(publicId, 'pdf');
 
     const result = await fetch(tempPublicLink);
+
+    if (!result.ok) {
+      throw new Error(`CV download failed (${result.status})`);
+    }
+
     const arrayBuffer = await result.arrayBuffer();
     const uint8Array = new Uint8Array(arrayBuffer); // Create a typed array for the ArrayBuffer
 
