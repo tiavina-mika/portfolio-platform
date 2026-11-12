@@ -112,8 +112,8 @@ export const orderSelectOptions: ISelectOption[] = [
  * validated nor written back to the App — it would be edited in the back-office and silently lost.
  */
 export const appTranslatedFieldsObj: TranslatedFieldOption[] = [
-  { name: 'title', required: true, max: 200 },
-  { name: 'description', required: true, max: 200 },
+  { name: 'title', required: false, max: 200 },
+  { name: 'description', required: true, max: 300 },
   { name: 'quote', required: true, max: 100 },
 ];
 

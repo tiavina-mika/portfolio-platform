@@ -129,7 +129,7 @@ const AppContentsForm = ({
           />
         </Box>
 
-        <SettingsRow required label={t('title')}>
+        <SettingsRow label={t('title')}>
           {locales.map((locale: string, index: number) => (
             <div css={classes.localeField(locale === tab)} key={locale}>
               <Suspense fallback={<TextEditorFieldSkeleton />}>
