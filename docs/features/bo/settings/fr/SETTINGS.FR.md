@@ -62,8 +62,8 @@ Section **Apparence**, avec application immédiate et sans bouton d'enregistreme
 
 Section **Détails** : un onglet par langue (français, anglais, malgache). Pour chaque langue, un **titre**,
 une **description** (texte mis en forme : gras, italique, souligné, lien, listes, citation) et une
-**citation** affichée en bas du site, sous le logo. Le français est obligatoire, les autres langues sont
-facultatives. Le bouton **Enregistrer** de l'en-tête valide ; le message « Sauvegardé avec succès » confirme.
+**citation** affichée en bas du site, sous le logo. Le titre est facultatif ; la description et la citation
+sont obligatoires en français, et toutes les langues autres que le français sont facultatives. Le bouton **Enregistrer** de l'en-tête valide ; le message « Sauvegardé avec succès » confirme.
 
 ### Modifier les images principales du site
 
