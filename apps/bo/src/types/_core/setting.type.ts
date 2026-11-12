@@ -64,14 +64,15 @@ export interface IThemeColors {
 
 /*
  * the sections the settings page is read as, in the order the rail lists them. The first two change
- * how the back-office looks for the person signed in; the last two edit what the public website
- * shows, so only those two are backed by a form that has to be saved.
+ * how the back-office looks for the person signed in; the last three edit what the public website
+ * shows, so only those three are backed by a form that has to be saved.
  */
 export enum SettingsSectionEnum {
   LANGUAGES = 'languages', // default
   APPEARANCE = 'appearance',
   DETAILS = 'details',
-  IMAGES = 'images'
+  IMAGES = 'images',
+  CV = 'cv'
 }
 
 export type SettingsSection = `${SettingsSectionEnum}`;

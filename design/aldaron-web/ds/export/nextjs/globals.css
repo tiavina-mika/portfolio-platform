@@ -1,0 +1,166 @@
+/* Aldaron — globals.css pour Next.js (App Router) + Tailwind CSS v4 + shadcn/ui.
+   Coller dans app/globals.css. Les polices viennent de next/font (voir guidelines/nextjs.md),
+   qui expose --font-familjen et --font-plex-mono sur <html>. */
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 0.375rem;
+  --background: #F6F3EE;
+  --foreground: #17181A;
+  --card: #FFFFFF;
+  --card-foreground: #17181A;
+  --popover: #FFFFFF;
+  --popover-foreground: #17181A;
+  --primary: #17181A;
+  --primary-foreground: #F6F3EE;
+  --secondary: #EEEAE3;
+  --secondary-foreground: #17181A;
+  --muted: #EEEAE3;
+  --muted-foreground: #5E5A54;
+  --accent: #FDF1EA;
+  --accent-foreground: #B4400F;
+  --brand: #E2531B;
+  --brand-foreground: #17181A;
+  --brand-text: #B4400F;
+  --destructive: #B42318;
+  --destructive-foreground: #FFFFFF;
+  --success: #1E6B47;
+  --success-subtle: #E3EFE7;
+  --warning: #8A5A00;
+  --warning-subtle: #F7EBCF;
+  --info: #1D5C8C;
+  --info-subtle: #E0ECF5;
+  --danger-subtle: #F9E1DE;
+  --border: #E3DED5;
+  --input: #CFC8BD;
+  --ring: #E2531B;
+  --chart-1: #E2531B;
+  --chart-2: #1E5B43;
+  --chart-3: #C9A66B;
+  --chart-4: #4F6D8A;
+  --chart-5: #7D776E;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #17181A;
+  --sidebar-primary: #17181A;
+  --sidebar-primary-foreground: #F6F3EE;
+  --sidebar-accent: #EEEAE3;
+  --sidebar-accent-foreground: #17181A;
+  --sidebar-border: #E3DED5;
+  --sidebar-ring: #E2531B;
+}
+
+.dark {
+  --background: #121311;
+  --foreground: #EEEAE3;
+  --card: #1A1C19;
+  --card-foreground: #EEEAE3;
+  --popover: #1F211D;
+  --popover-foreground: #EEEAE3;
+  --primary: #EEEAE3;
+  --primary-foreground: #17181A;
+  --secondary: #272924;
+  --secondary-foreground: #EEEAE3;
+  --muted: #232521;
+  --muted-foreground: #A19B92;
+  --accent: #2E211A;
+  --accent-foreground: #F26A33;
+  --brand: #F26A33;
+  --brand-foreground: #0E0F0D;
+  --brand-text: #F26A33;
+  --destructive: #D93A2E;
+  --destructive-foreground: #FFFFFF;
+  --success: #5BC58B;
+  --success-subtle: #17271E;
+  --warning: #F0B940;
+  --warning-subtle: #2B2312;
+  --info: #6AAEE0;
+  --info-subtle: #14222E;
+  --danger-subtle: #2E1714;
+  --border: #2C2D29;
+  --input: #3A3B36;
+  --ring: #F26A33;
+  --chart-1: #F26A33;
+  --chart-2: #3E8463;
+  --chart-3: #C9A66B;
+  --chart-4: #7C9BB8;
+  --chart-5: #A19B92;
+  --sidebar: #161715;
+  --sidebar-foreground: #EEEAE3;
+  --sidebar-primary: #EEEAE3;
+  --sidebar-primary-foreground: #17181A;
+  --sidebar-accent: #232521;
+  --sidebar-accent-foreground: #EEEAE3;
+  --sidebar-border: #2C2D29;
+  --sidebar-ring: #F26A33;
+}
+
+@theme inline {
+  --font-sans: var(--font-familjen), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-familjen), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --radius-sm: calc(var(--radius) - 2px);   /* 4px */
+  --radius-md: var(--radius);               /* 6px */
+  --radius-lg: calc(var(--radius) + 2px);   /* 8px */
+  --radius-xl: calc(var(--radius) + 6px);   /* 12px */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-text: var(--brand-text);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-subtle: var(--success-subtle);
+  --color-warning: var(--warning);
+  --color-warning-subtle: var(--warning-subtle);
+  --color-info: var(--info);
+  --color-info-subtle: var(--info-subtle);
+  --color-danger-subtle: var(--danger-subtle);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --shadow-xs: 0 1px 0 rgb(23 24 26 / .04);
+  --shadow-sm: 0 1px 2px rgb(23 24 26 / .06), 0 1px 1px rgb(23 24 26 / .04);
+  --shadow-md: 0 4px 12px -2px rgb(23 24 26 / .08), 0 2px 4px rgb(23 24 26 / .04);
+  --shadow-lg: 0 16px 40px -8px rgb(23 24 26 / .16), 0 4px 12px rgb(23 24 26 / .06);
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --text-display: 3.5rem;
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.03em;
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  body { @apply bg-background text-foreground font-sans antialiased; }
+  h1, h2, h3, h4 { @apply font-display font-bold tracking-tight; }
+  :focus-visible { @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background; }
+  ::selection { background: #FBE3D6; color: #17181A; }
+}

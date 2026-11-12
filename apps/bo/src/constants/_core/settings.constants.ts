@@ -8,6 +8,7 @@ import { SettingsSection, SettingsSectionEnum } from '@/types/_core/setting.type
 export const WEBSITE_SETTINGS_SECTIONS: SettingsSection[] = [
   SettingsSectionEnum.DETAILS,
   SettingsSectionEnum.IMAGES,
+  SettingsSectionEnum.CV,
 ];
 
 export const DEFAULT_SETTINGS_SECTION: SettingsSection = SettingsSectionEnum.LANGUAGES;
@@ -15,3 +16,4 @@ export const DEFAULT_SETTINGS_SECTION: SettingsSection = SettingsSectionEnum.LAN
 // the form each website section submits — the page head's save button acts on the open one
 export const APP_CONTENTS_FORM_ID = 'app-contents-form';
 export const APP_MAIN_IMAGES_FORM_ID = 'app-main-images-form';
+export const APP_CV_FORM_ID = 'app-cv-form';

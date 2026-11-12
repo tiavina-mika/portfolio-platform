@@ -1,0 +1,53 @@
+/* Aldaron — couleurs. Palette de base + jetons sémantiques au format shadcn/ui (clair :root, sombre .dark). */
+:root{
+/* Palette de marque */
+--ink-950:#0E0F0D;--ink-900:#17181A;--ink-800:#26272A;--ink-700:#3A3A3B;
+--stone-600:#5E5A54;--stone-500:#7D776E;--stone-400:#A19B92;--stone-300:#CFC8BD;--stone-200:#E3DED5;--stone-100:#EEEAE3;
+--paper-50:#F6F3EE;--paper-0:#FFFFFF;
+--signal-700:#B4400F;--signal-600:#C9480F;--signal-500:#E2531B;--signal-400:#F26A33;--signal-100:#FBE3D6;--signal-50:#FDF1EA;
+--forest-800:#163F2F;--forest-700:#1E5B43;--forest-500:#3E8463;--forest-100:#E2EDE6;
+--sand-500:#C9A66B;--slate-500:#4F6D8A;
+/* Sémantiques (base) */
+--green-700:#1E6B47;--green-100:#E3EFE7;--green-400:#5BC58B;
+--amber-700:#8A5A00;--amber-500:#E0A100;--amber-100:#F7EBCF;--amber-400:#F0B940;
+--red-700:#B42318;--red-600:#C8302A;--red-100:#F9E1DE;--red-400:#F26B5E;
+--blue-700:#1D5C8C;--blue-100:#E0ECF5;--blue-400:#6AAEE0;
+
+/* Jetons shadcn/ui — clair */
+--background:var(--paper-50);--foreground:var(--ink-900);
+--card:var(--paper-0);--card-foreground:var(--ink-900);
+--popover:var(--paper-0);--popover-foreground:var(--ink-900);
+--primary:var(--ink-900);--primary-foreground:var(--paper-50);
+--secondary:var(--stone-100);--secondary-foreground:var(--ink-900);
+--muted:var(--stone-100);--muted-foreground:var(--stone-600);
+--accent:var(--signal-50);--accent-foreground:var(--signal-700);
+--brand:var(--signal-500);--brand-foreground:var(--ink-900);--brand-text:var(--signal-700);
+--destructive:var(--red-700);--destructive-foreground:#FFFFFF;
+--success:var(--green-700);--success-subtle:var(--green-100);
+--warning:var(--amber-700);--warning-subtle:var(--amber-100);--warning-solid:var(--amber-500);
+--danger-subtle:var(--red-100);
+--info:var(--blue-700);--info-subtle:var(--blue-100);
+--border:var(--stone-200);--input:var(--stone-300);--ring:var(--signal-500);
+--chart-1:var(--signal-500);--chart-2:var(--forest-700);--chart-3:var(--sand-500);--chart-4:var(--slate-500);--chart-5:var(--stone-500);
+--sidebar:var(--paper-0);--sidebar-foreground:var(--ink-900);--sidebar-accent:var(--stone-100);--sidebar-border:var(--stone-200);
+--overlay:rgba(14,15,13,.48);
+}
+.dark{
+--background:#121311;--foreground:var(--stone-100);
+--card:#1A1C19;--card-foreground:var(--stone-100);
+--popover:#1F211D;--popover-foreground:var(--stone-100);
+--primary:var(--stone-100);--primary-foreground:var(--ink-900);
+--secondary:#272924;--secondary-foreground:var(--stone-100);
+--muted:#232521;--muted-foreground:var(--stone-400);
+--accent:#2E211A;--accent-foreground:var(--signal-400);
+--brand:var(--signal-400);--brand-foreground:var(--ink-950);--brand-text:var(--signal-400);
+--destructive:#D93A2E;--destructive-foreground:#FFFFFF;
+--success:var(--green-400);--success-subtle:#17271E;
+--warning:var(--amber-400);--warning-subtle:#2B2312;--warning-solid:var(--amber-400);
+--danger-subtle:#2E1714;
+--info:var(--blue-400);--info-subtle:#14222E;
+--border:#2C2D29;--input:#3A3B36;--ring:var(--signal-400);
+--chart-1:var(--signal-400);--chart-2:var(--forest-500);--chart-3:var(--sand-500);--chart-4:#7C9BB8;--chart-5:var(--stone-400);
+--sidebar:#161715;--sidebar-foreground:var(--stone-100);--sidebar-accent:#232521;--sidebar-border:#2C2D29;
+--overlay:rgba(0,0,0,.64);
+}

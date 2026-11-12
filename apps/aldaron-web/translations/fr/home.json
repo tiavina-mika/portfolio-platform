@@ -1,0 +1,35 @@
+{
+  "HomeHero": {
+    "loading": "Chargement de la présentation",
+    "error": "La présentation n'a pas pu être chargée.",
+    "offline": "Vous êtes hors ligne. La présentation s'affichera dès le retour de la connexion."
+  },
+  "HomeServices": {
+    "title": "Pourquoi moi ?",
+    "items": {
+      "1": {
+        "title": "Monter un projet de A à Z",
+        "description": "De la conception technique à la mise en ligne, je gère chaque étape et je choisis avec vous les technologies adaptées."
+      },
+      "2": {
+        "title": "Un renfort technique, un lead si besoin",
+        "description": "Développeur dans l'équipe ou référent technique, j'apporte mon expertise pour fiabiliser vos livraisons."
+      },
+      "3": {
+        "title": "Votre futur CTO",
+        "description": "Je définis la stratégie technologique et j'accompagne les décisions techniques pour soutenir la croissance et l'innovation de votre startup."
+      },
+      "4": {
+        "title": "Des tarifs adaptés aux startups et PME",
+        "description": "Une expertise de niveau haut de gamme à un tarif compétitif, avec des solutions ajustées à vos besoins et à votre marché."
+      }
+    }
+  },
+  "HomeProjects": {
+    "description": "Depuis 2016 j'ai eu l'opportunité de travailler sur des projets variés, allant du développement de sites web dynamiques à la création d'applications web complexes."
+  },
+  "HomeContact": {
+    "title": "Discutons ensemble",
+    "description": "N'hésitez pas à me contacter. Je suis toujours ouvert pour discuter de nouveaux projets, des idées innovantes ou de nouvelles opportunités."
+  }
+}

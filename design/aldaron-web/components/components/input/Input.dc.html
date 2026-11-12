@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Input Aldaron" description="Input : version définitive interactive avec tweaks." -->
+<helmet><script src="./ds-base.js"></script><style>body{margin:0}a{color:var(--brand-text)}a:hover{color:var(--foreground)}button{font-family:inherit}</style></helmet>
+<div class="{{ themeClass }}" style="background:var(--background);color:var(--foreground);font-family:var(--font-sans);min-height:100vh;padding:24px 16px 120px"><div ref="{{ frameRef }}" style="width:1200px;max-width:100%;margin:0 auto">
+<header style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--border)"><span style="font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)">Aldaron · components/input/Input</span></header>
+<div style="padding:36px 0 28px;display:grid;gap:12px"><h1 style="margin:0;font:700 clamp(32px,6vw,56px)/1.02 var(--font-display);letter-spacing:-0.03em;text-wrap:balance">{{ t.title }}</h1><p style="margin:0;font-size:18px;line-height:1.55;color:var(--muted-foreground);max-width:62ch">{{ t.subtitle }}</p></div>
+<div style="display:grid;gap:16px"><section style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;display:grid;gap:16px;align-content:start"><div style="font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ t.prev }}</div><div style="max-width:360px"><x-import component-from-global-scope="AldaronDesignSystem_1daf3c.FormField" label="{{ t.label }}" htmlFor="budget" description="{{ t.help }}" error="{{ error }}" hint-size="100%,100px"><x-import component-from-global-scope="AldaronDesignSystem_1daf3c.Input" id="budget" value="{{ v }}" onChange="{{ onV }}" placeholder="{{ t.ph }}" invalid="{{ invalid }}" disabled="{{ disabled }}" trailing="{{ trailing }}" hint-size="100%,44px"></x-import></x-import></div></section></div>
+</div></div>
+<aside aria-label="Tweaks" class="{{ themeClass }}" style="position:fixed;right:16px;bottom:16px;z-index:50;width:min(320px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;background:var(--popover);color:var(--popover-foreground);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-lg)">
+<button type="button" onClick="{{ togglePanel }}" aria-expanded="{{ open }}" style="width:100%;min-height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:none;border:0;color:inherit;font:600 14px/1 var(--font-sans);cursor:pointer;border-radius:12px" style-hover="background:var(--muted)" style-focus="outline:2px solid var(--ring);outline-offset:-2px">Tweaks<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">{{ panelSign }}</span></button>
+<sc-if value="{{ open }}" hint-placeholder-val="{{ true }}"><div style="padding:4px 16px 16px;display:grid;gap:14px;border-top:1px solid var(--border)">
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="4"><div style="display:grid;gap:6px;padding-top:10px"><span style="font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ g.title }}</span><div style="display:flex;gap:4px;flex-wrap:wrap"><sc-for list="{{ g.opts }}" as="o" hint-placeholder-count="3"><sc-if value="{{ o.active }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ o.on }}" aria-pressed="true" style="min-height:36px;padding:0 12px;border-radius:6px;font:500 13px/1 var(--font-sans);cursor:pointer;border:1px solid transparent;background:var(--primary);color:var(--primary-foreground)" style-hover="filter:brightness(.96)" style-focus="outline:2px solid var(--ring);outline-offset:2px">{{ o.label }}</button></sc-if><sc-if value="{{ o.idle }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ o.on }}" aria-pressed="false" style="min-height:36px;padding:0 12px;border-radius:6px;font:500 13px/1 var(--font-sans);cursor:pointer;border:1px solid var(--input);background:transparent;color:var(--foreground)" style-hover="background:var(--muted)" style-focus="outline:2px solid var(--ring);outline-offset:2px">{{ o.label }}</button></sc-if></sc-for></div></div></sc-for>
+</div></sc-if></aside>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = Object.assign({ theme: 'light', lang: 'fr', bp: 'desktop', open: true }, {"v":"","stt":"normal","unit":false});
+  CT = {"fr":{"theme":"Thème","light":"Clair","dark":"Sombre","lang":"Langue","bp":"Largeur","mobile":"Mobile","tablet":"Tablette","desktop":"Desktop","large":"Grand desktop","on":"Oui","off":"Non","normal":"Normal","disabled":"Désactivé","loading":"Chargement","invalid":"Erreur"},"en":{"theme":"Theme","light":"Light","dark":"Dark","lang":"Language","bp":"Width","mobile":"Mobile","tablet":"Tablet","desktop":"Desktop","large":"Large desktop","on":"Yes","off":"No","normal":"Normal","disabled":"Disabled","loading":"Loading","invalid":"Error"},"mg":{"theme":"Endrika","light":"Mazava","dark":"Maizina","lang":"Fiteny","bp":"Sakany","mobile":"Finday","tablet":"Takelaka","desktop":"Solosaina","large":"Solosaina lehibe","on":"Eny","off":"Tsia","normal":"Mahazatra","disabled":"Tsy mandeha","loading":"Mitondra","invalid":"Hadisoana"}};
+  PT = {"fr":{"title":"Champ","subtitle":"Libellé, aide et message d'erreur via FormField.","prev":"Aperçu","state":"État","unit":"Unité €","label":"Budget du projet","help":"Le socle démarre à 5 000 €.","err":"Saisissez un montant d'au moins 5 000 €.","ph":"5000","opt":"Optionnel"},"en":{"title":"Input","subtitle":"Label, help and error message through FormField.","prev":"Preview","state":"State","unit":"€ unit","label":"Project budget","help":"The base starts at €5,000.","err":"Enter an amount of at least €5,000.","ph":"5000","opt":"Optional"},"mg":{"title":"Saha fampidirana","subtitle":"Marika, fanampiana ary hafatra fahadisoana amin'ny FormField.","prev":"Topi-maso","state":"Toe-javatra","unit":"Singa €","label":"Teti-bola","help":"Manomboka amin'ny 5 000 € ny fototra.","err":"Soraty 5 000 € farafahakeliny.","ph":"5000","opt":"Tsy voatery"}};
+  frameRef = (el) => { this.frameEl = el; };
+  paintAll() { if (this.frameEl) this.frameEl.style.width = { mobile: 390, tablet: 768, desktop: 1200, large: 1600 }[this.state.bp] + 'px'; }
+  componentDidMount() { this.paintAll(); const w = () => { if (window.AldaronDesignSystem_1daf3c) this.forceUpdate(); else this._w = setTimeout(w, 50); }; w(); }
+  componentWillUnmount() { clearTimeout(this._w); }
+  componentDidUpdate() { this.paintAll(); }
+  tr() { return Object.assign({}, this.CT[this.state.lang], this.PT[this.state.lang]); }
+  G(title, key, list, T) { return { title: title, opts: list.map((p) => { const on = this.state[key] === p[0]; return { label: T[p[1]] || p[1], on: () => this.setState({ [key]: p[0] }), active: on, idle: !on }; }) }; }
+  baseGroups(T) { return [this.G(T.theme, 'theme', [['light', 'light'], ['dark', 'dark']], T), this.G(T.lang, 'lang', [['fr', 'FR'], ['en', 'EN'], ['mg', 'MG']], T), this.G(T.bp, 'bp', [['mobile', 'mobile'], ['tablet', 'tablet'], ['desktop', 'desktop'], ['large', 'large']], T)]; }
+  common(T) { const s = this.state; return { themeClass: s.theme === 'dark' ? 'dark' : '', t: T, frameRef: this.frameRef, open: s.open, panelSign: s.open ? '−' : '+', togglePanel: () => this.setState({ open: !s.open }) }; }
+  build(s, T) { return {groups:[this.G(T.state,'stt',[['normal','normal'],['invalid','invalid'],['disabled','disabled']],T),this.G(T.unit,'unit',[[true,'on'],[false,'off']],T)],vals:{v:s.v,onV:(e)=>this.setState({v:e.target.value}),invalid:s.stt==='invalid',disabled:s.stt==='disabled',error:s.stt==='invalid'?T.err:undefined,trailing:s.unit?'€':undefined}}; }
+  renderVals() { const s = this.state; const T = this.tr(); const R = this.build(s, T); return Object.assign(this.common(T), { groups: R.groups.concat(this.baseGroups(T)) }, R.vals); }
+}
+</script>
+</body>
+</html>

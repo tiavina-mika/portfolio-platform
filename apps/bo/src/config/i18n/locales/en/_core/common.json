@@ -483,6 +483,9 @@
     "imageForDarkModeDescription": "Image displayed when the application is in dark mode",
     "website": "Website",
     "backOffice": "Back office",
+    "cv": "CV",
+    "cvDescription": "The CV offered for download on the public website (PDF)",
+    "uploadCV": "Upload CV",
     "quote": "Quote",
     "quoteDescription": "Quote displayed below the logo in the footer"
   },

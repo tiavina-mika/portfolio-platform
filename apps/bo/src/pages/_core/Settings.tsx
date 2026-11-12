@@ -9,11 +9,12 @@ import { useSelector } from 'react-redux';
 import Head from '@/components/Head';
 import Layout from '@/components/layouts/Layout';
 import {
-  APP_CONTENTS_FORM_ID, APP_MAIN_IMAGES_FORM_ID, DEFAULT_SETTINGS_SECTION,
+  APP_CONTENTS_FORM_ID, APP_CV_FORM_ID, APP_MAIN_IMAGES_FORM_ID, DEFAULT_SETTINGS_SECTION,
 } from '@/constants/_core/settings.constants';
 import { SETTINGS_RAIL_WIDTH } from '@/constants/_core/ui/entity.constants';
 import { CONTENT_GAP } from '@/constants/_core/ui/page.constants';
 import AppContentsForm from '@/containers/_core/settings/app/AppContentsForm';
+import AppCvForm from '@/containers/_core/settings/app/AppCvForm';
 import AppMainImagesForm from '@/containers/_core/settings/app/AppMainImagesForm';
 import SettingsAppearancePanel from '@/containers/_core/settings/SettingsAppearancePanel';
 import SettingsLanguagePanel from '@/containers/_core/settings/SettingsLanguagePanel';
@@ -27,6 +28,7 @@ import { SettingsSection, SettingsSectionEnum } from '@/types/_core/setting.type
 const SECTION_FORM_IDS: Partial<Record<SettingsSection, string>> = {
   [SettingsSectionEnum.DETAILS]: APP_CONTENTS_FORM_ID,
   [SettingsSectionEnum.IMAGES]: APP_MAIN_IMAGES_FORM_ID,
+  [SettingsSectionEnum.CV]: APP_CV_FORM_ID,
 };
 
 const classes = {
@@ -124,6 +126,9 @@ const Settings = () => {
           )}
           {section === SettingsSectionEnum.IMAGES && (
             <AppMainImagesForm onDirtyChange={handleDirtyChange} />
+          )}
+          {section === SettingsSectionEnum.CV && (
+            <AppCvForm onDirtyChange={handleDirtyChange} />
           )}
         </div>
       </Box>

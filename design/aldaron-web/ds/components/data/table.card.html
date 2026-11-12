@@ -1,0 +1,30 @@
+<!-- @dsCard group="Components" viewport="700x360" name="Table" subtitle="Tableau back-office : statuts, rôles, chiffres mono" -->
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide-react@0.460.0/dist/umd/lucide-react.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0}.pane{padding:20px;display:grid;gap:16px;background:var(--background);color:var(--foreground)}.l{font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)}.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.cap{display:grid;gap:6px;justify-items:start}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const DS = window.AldaronDesignSystem_1daf3c;
+const L = window.LucideReact || {};
+const Ic = (n, s = 16) => { const C = L[n]; return C ? <C size={s} strokeWidth={1.75} /> : null; };
+
+const { Table, Badge, Button } = DS;
+const rows = [
+  { id: 1, name: 'Marie Rakoto', email: 'marie@startup.eu', role: 'Administrateur', status: 'active', last: '05/11 09:42' },
+  { id: 2, name: 'Thomas Weber', email: 'thomas@startup.eu', role: 'Éditeur', status: 'invited', last: '—' },
+  { id: 3, name: 'Lina Haddad', email: 'lina@startup.eu', role: 'Lecteur', status: 'suspended', last: '28/10 17:05' },
+];
+const S = { active: ['success', 'Actif'], invited: ['warning', 'Invité'], suspended: ['destructive', 'Suspendu'] };
+function App() { return (<div className="pane">
+  <Table selected={[1]} columns={[
+    { key: 'name', header: 'Utilisateur', render: r => <div><div style={{ fontWeight: 500 }}>{r.name}</div><div style={{ color: 'var(--muted-foreground)', fontSize: 13 }}>{r.email}</div></div> },
+    { key: 'role', header: 'Rôle', render: r => <Badge variant="outline">{r.role}</Badge> },
+    { key: 'status', header: 'Statut', render: r => <Badge variant={S[r.status][0]} dot>{S[r.status][1]}</Badge> },
+    { key: 'last', header: 'Connexion', numeric: true },
+  ]} rows={rows} footer={<><span>3 sur 24 utilisateurs</span><Button size="sm" variant="outline">Suivant</Button></>} />
+</div>); }
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script></body></html>

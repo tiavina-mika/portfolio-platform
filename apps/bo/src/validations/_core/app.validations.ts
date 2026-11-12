@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 import { readOnlyLocales } from '@/config/i18n';
 import { appTranslatedFieldsObj } from '@/constants/_core/app.constants';
+import { MAX_CV_SIZE_MB } from '@/constants/_core/file.constants';
 import { generateFileSchema, generateTranslatedFieldsInputSchema, getTranslatedFieldsCodec } from '@/validations/_core/zodSchema.validations';
 
 type ZodLiteralType = string | number | boolean | bigint;
@@ -78,6 +79,10 @@ export const appMainImagesSchema = z.object({
   imageForDarkMode: generateFileSchema(
     false, { maxSize: 6, extensions: appFileTypes }
   ) as OptionalFileSchemaType,
+});
+
+export const appCvSchema = z.object({
+  cv: generateFileSchema(true, { maxSize: MAX_CV_SIZE_MB, extensions: ['pdf'] }) as OptionalFileSchemaType,
 });
 
 export const optionSchema = z.object({

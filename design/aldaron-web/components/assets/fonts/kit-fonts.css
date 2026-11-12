@@ -1,0 +1,13 @@
+/* Webfonts auto-hébergés (OFL), sous-ensemble latin. Production Next.js : next/font/google (voir nextjs/SETUP.md). */
+@font-face{font-family:'Bricolage Grotesque';font-style:normal;font-weight:400;font-display:swap;src:url('../assets/fonts/bricolage-grotesque-400.woff2') format('woff2')}
+@font-face{font-family:'Bricolage Grotesque';font-style:normal;font-weight:500;font-display:swap;src:url('../assets/fonts/bricolage-grotesque-500.woff2') format('woff2')}
+@font-face{font-family:'Bricolage Grotesque';font-style:normal;font-weight:600;font-display:swap;src:url('../assets/fonts/bricolage-grotesque-600.woff2') format('woff2')}
+@font-face{font-family:'Bricolage Grotesque';font-style:normal;font-weight:700;font-display:swap;src:url('../assets/fonts/bricolage-grotesque-700.woff2') format('woff2')}
+@font-face{font-family:'Bricolage Grotesque';font-style:normal;font-weight:800;font-display:swap;src:url('../assets/fonts/bricolage-grotesque-800.woff2') format('woff2')}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400;font-display:swap;src:url('../assets/fonts/instrument-sans-400.woff2') format('woff2')}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:500;font-display:swap;src:url('../assets/fonts/instrument-sans-500.woff2') format('woff2')}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:600;font-display:swap;src:url('../assets/fonts/instrument-sans-600.woff2') format('woff2')}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:700;font-display:swap;src:url('../assets/fonts/instrument-sans-700.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('../assets/fonts/jetbrains-mono-400.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('../assets/fonts/jetbrains-mono-500.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:600;font-display:swap;src:url('../assets/fonts/jetbrains-mono-600.woff2') format('woff2')}

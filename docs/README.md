@@ -23,6 +23,7 @@
 | [services/](services/README.md) | Developers | One entry per external service, with a guide for the ones that need one |
 | [features/](features/README.md) | Non-technical readers | What each back-office and website screen does (French) |
 | [inventory/](inventory/README.md) | Developers | Census of env variables, Cloud Code and external services |
+| [vision/](vision/README.md) | Founders | Business vision and strategy not tied to the code (Aldaron) |
 
 ## Rules
 

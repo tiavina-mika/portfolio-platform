@@ -4,7 +4,7 @@ import {
 import { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  FiFileText, FiGlobe, FiImage, FiSun,
+  FiFileText, FiGlobe, FiImage, FiPaperclip, FiSun,
 } from 'react-icons/fi';
 
 import type { ReactElement } from 'react';
@@ -62,6 +62,11 @@ const groups: SectionGroup[] = [
         value: SettingsSectionEnum.IMAGES,
         labelKey: 'images',
         icon: <FiImage size={SETTINGS_RAIL_ICON_SIZE} />,
+      },
+      {
+        value: SettingsSectionEnum.CV,
+        labelKey: 'app.cv',
+        icon: <FiPaperclip size={SETTINGS_RAIL_ICON_SIZE} />,
       },
     ],
   },

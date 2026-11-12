@@ -488,6 +488,9 @@
     "imageForDarkModeDescription": "Image affichée en mode nuit",
     "website": "Site web",
     "backOffice": "Back office",
+    "cv": "CV",
+    "cvDescription": "Le CV proposé en téléchargement sur le site public (PDF)",
+    "uploadCV": "Déposer le CV",
     "quote": "Citation",
     "quoteDescription": "Citation affichée sur le pied de page au-dessous du logo"
   },
