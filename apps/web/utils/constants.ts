@@ -78,7 +78,7 @@ export const EMAIL = 'tiavinamika@gmail.com';
 export const PHONE = '+261341865749';
 
 export const CONTACTS = [
-  'VN 50B, Ambohitsoa',
+  'Ambohitsoa',
   'Antananarivo, Madagascar',
   EMAIL,
 ];
