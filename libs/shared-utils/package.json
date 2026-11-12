@@ -15,7 +15,7 @@
   "devDependencies": {
     "@cspell/eslint-plugin": "^9.8.0",
     "@shared/eslint-config": "workspace:*",
-    "axios": "^1.19.0",
+    "axios": "^1.21.1",
     "eslint": "^9.39.5",
     "typescript-eslint": "^8.65.0"
   }
