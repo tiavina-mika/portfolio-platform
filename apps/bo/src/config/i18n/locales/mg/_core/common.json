@@ -486,6 +486,9 @@
     "imageForDarkModeDescription": "Image affichée en mode nuit",
     "website": "Tranonkala",
     "backOffice": "Back office",
+    "cv": "CV",
+    "cvDescription": "Ny CV azo alaina ao amin'ny tranonkala (PDF)",
+    "uploadCV": "Alefaso ny CV",
     "quote": "Citation",
     "quoteDescription": "Citation aseho eo amin'ny tongotry ny pejy ambanin'ny logo"
   },

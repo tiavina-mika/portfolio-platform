@@ -2,6 +2,7 @@ import { type Action } from '@reduxjs/toolkit';
 
 import i18n, { locales } from '@/config/i18n';
 import { APP_NAME, appTranslatedFieldsObj } from '@/constants/_core/app.constants';
+import { MAX_CV_SIZE_MB } from '@/constants/_core/file.constants';
 import { WEBSITE_SETTINGS_SECTIONS } from '@/constants/_core/settings.constants';
 import { actionWithLoader, onEnterActionWithLoader } from '@/redux/actions/_core/util.action';
 import {
@@ -15,7 +16,9 @@ import {
   filtersDatesQuery, markAllEntitiesSeenInCloud, markEntityAsSeen, saveApp, toggleEntitiesSeenByIds,
 } from '@/services/_core/app.service';
 import { fetchCurrentUserSessionToken } from '@/services/_core/auth.service';
-import { IAppInput, IAppMainImagesInput, ISettingsInput } from '@/types/_core/app.type';
+import {
+  IAppCvInput, IAppInput, IAppMainImagesInput, ISettingsInput,
+} from '@/types/_core/app.type';
 import { Locale, SettingsSection } from '@/types/_core/setting.type';
 import { applySeenToItems } from '@/utils/_core/app.utils';
 import { uploadFilesAPI } from '@/utils/_core/file.utils';
@@ -283,7 +286,9 @@ export const destroyObjects = (
  * @param values
  * @returns
  */
-export const createOrUpdateApp = (values: Partial<IAppInput> & Partial<IAppMainImagesInput>): any => {
+export const createOrUpdateApp = (
+  values: Partial<IAppInput> & Partial<IAppMainImagesInput> & Partial<IAppCvInput>
+): any => {
   return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
     const state = getState?.()!;
     const locale = getSettingsLocaleSelector(state);
@@ -347,6 +352,28 @@ export const createOrUpdateApp = (values: Partial<IAppInput> & Partial<IAppMainI
         }
       }
     }
+    // the CV is a PDF, so it skips the image breakpoints and keeps one stable public id
+    if (sessionToken && values.cv) {
+      const responses = await uploadFilesAPI({
+        folder: 'app',
+        sessionToken,
+        files: [values.cv],
+        locale,
+        config: {
+          use_filename: false,
+          public_id: `${slugify(APP_NAME)}-cv`,
+        },
+        validation: {
+          maxFileSize: MAX_CV_SIZE_MB,
+          acceptedFileTypes: ['pdf'],
+        },
+      });
+
+      if (responses?.[0]) {
+        [newValues.cv] = responses;
+      }
+    }
+
     const savedApp = await saveApp(app, newValues);
 
     dispatch(loadAppSlice(savedApp));

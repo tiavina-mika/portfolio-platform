@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import i18n from '@/config/i18n';
 import {
-  IApp, IAppInput, IListTabValue, ITableHeadCell, IToFilters,
+  IApp, IAppCvInput, IAppInput, IListTabValue, ITableHeadCell, IToFilters,
 } from '@/types/_core/app.type';
 import { getFileFromUrl } from '@/utils/_core/file.utils';
 
@@ -139,6 +139,12 @@ export const getAppMainImagesEditionInitialValues = async (app: IApp): Promise<I
       ? [images[1]]
       : [],
   };
+};
+
+export const getAppCvEditionInitialValues = async (app: IApp): Promise<IAppCvInput> => {
+  const url = (app.get('cv') as { url?: string } | undefined)?.url;
+
+  return { cv: url ? await getFileFromUrl(url) : undefined };
 };
 
 export const validateTabSearch = (search: string) => z.object({ tab: z.string().optional() }).parse(search);

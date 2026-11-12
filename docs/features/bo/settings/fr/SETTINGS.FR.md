@@ -11,6 +11,7 @@
   - [Changer le thème, la couleur et le menu](#changer-le-thème-la-couleur-et-le-menu)
   - [Modifier les textes du site](#modifier-les-textes-du-site)
   - [Modifier les images principales du site](#modifier-les-images-principales-du-site)
+  - [Déposer le CV](#déposer-le-cv)
 - [Cas d'utilisation typiques](#cas-dutilisation-typiques)
 - [Points d'attention / limites actuelles](#points-dattention--limites-actuelles)
 
@@ -20,8 +21,8 @@ Menu de gauche → groupe **Administration** → **Paramètres**. Adresse : `/pa
 
 ## À quoi sert cette page
 
-Elle regroupe les réglages de l'application : la langue et l'apparence du back-office, et les textes et
-images principaux du site public.
+Elle regroupe les réglages de l'application : la langue et l'apparence du back-office, et les textes,
+images principales et CV du site public.
 
 ## Qui peut l'utiliser
 
@@ -35,7 +36,7 @@ images principaux du site public.
 Un volet de navigation à gauche (sur petit écran, il passe au-dessus) avec deux groupes :
 
 - **Back office** : **Langues** (section ouverte par défaut) et **Apparence** ;
-- **Site web** : **Détails** et **Images**.
+- **Site web** : **Détails**, **Images** et **CV**.
 
 À droite, la section choisie. L'en-tête de la page indique, pour les sections du site web, si des
 modifications ne sont pas encore enregistrées, et porte le bouton **Enregistrer**. Le choix de la section
@@ -69,17 +70,25 @@ facultatives. Le bouton **Enregistrer** de l'en-tête valide ; le message « Sau
 Section **Images** : une **image pour le mode jour** et une **image pour le mode nuit**, affichées en haut
 de la page d'accueil du site. Le bouton **Enregistrer** de l'en-tête valide.
 
+### Déposer le CV
+
+Section **CV** : déposer un fichier **PDF** (5 Mo maximum). Une fois enregistré, il est proposé en
+téléchargement sur le site public (bouton « Télécharger mon CV »). Déposer un nouveau fichier remplace
+le précédent. Le bouton **Enregistrer** de l'en-tête valide.
+
 ## Cas d'utilisation typiques
 
 1. **Passer le back-office en anglais ou en malgache** pour un collaborateur.
 2. **Changer la citation du pied de page** dans les trois langues.
 3. **Remplacer l'image d'accueil**, avec une version adaptée au mode nuit.
 4. **Choisir un menu plus sombre** ou aux couleurs du thème.
+5. **Mettre à jour le CV** téléchargeable depuis le site.
 
 ## Points d'attention / limites actuelles
 
 - La **langue, le thème, la couleur et le style du menu** sont propres à l'appareil et au navigateur : ils
   ne suivent pas le compte d'un appareil à un autre.
-- Les textes et images du site sont **uniques pour tout le site** : il n'existe qu'un seul jeu de réglages,
+- Les textes, images et le CV du site sont **uniques pour tout le site** : il n'existe qu'un seul jeu de réglages,
   partagé par tous.
-- Le dépôt du CV, qui existait avant l'adoption du nouveau back-office, n'est plus proposé ici.
+- Le CV est **unique** et au format **PDF** uniquement ; tant qu'aucun CV n'est déposé, le bouton de
+  téléchargement n'apparaît pas sur le site.

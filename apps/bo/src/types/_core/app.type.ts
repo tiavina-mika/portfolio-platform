@@ -9,6 +9,7 @@ import type { DateType } from '@/types/_core/utils.type';
 
 import { Store } from '@/redux/store';
 import {
+  appCvSchema,
   appMainImagesSchema,
   appSchema,
   autoCompleteOptionSchema,
@@ -34,6 +35,7 @@ export type IAutocompleteOption = z.infer<typeof autoCompleteOptionSchema>;
 
 export type IAppInput = z.infer<typeof appSchema>;
 export type IAppMainImagesInput = z.infer<typeof appMainImagesSchema>;
+export type IAppCvInput = z.infer<typeof appCvSchema>;
 
 interface IAppTranslated {
   title: string;

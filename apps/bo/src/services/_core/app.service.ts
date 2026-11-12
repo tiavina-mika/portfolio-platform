@@ -111,7 +111,7 @@ export const destroyObjectsByIds = async (ids: string[], collection: string): Pr
   return Parse.Cloud.run('destroyObjects', { ids, collection });
 };
 
-const APP_PROPERTIES = new Set(['translated', 'image', 'imageForDarkMode']);
+const APP_PROPERTIES = new Set(['translated', 'image', 'imageForDarkMode', 'cv']);
 
 export const saveApp = async (
   app: Parse.Object,
