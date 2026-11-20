@@ -1,4 +1,4 @@
-# Entraid'ei — lot à 5 000 € (mobile seul, design fourni)
+# Entraid'ei — premier lot (mobile seul, design fourni)
 
 ## Table des matières
 
@@ -8,136 +8,134 @@
 - [Règle de comptage et correspondance avec la maquette](#règle-de-comptage-et-correspondance-avec-la-maquette)
 - [Hypothèses et risques](#hypothèses-et-risques)
 
-> Variante du [devis complet](ENTRAIDEI_QUOTE.FR.md) pour un budget de 5 000 € en 3 mois, application mobile seule. Même grille que [la vision Aldaron](ALDARON_VISION.FR.md). Pour tout le périmètre à 5 000 €, voir [tout le mobile pour 5 000 €](ENTRAIDEI_FULL_5000.FR.md). Les écrans sont comptés à partir de la liste des écrans du projet ; les montants sont des hypothèses à valider.
+> Première étape du projet de 44 jours ([estimation complète](ENTRAIDEI_QUOTE.FR.md)) : 52 écrans, application mobile seule. Ce lot n'est pas vendu à part : c'est la première livraison des 5 000 € à prix fixe du projet ([tout le mobile pour 5 000 €](ENTRAIDEI_FULL_5000.FR.md)) et elle déclenche la deuxième échéance. En interne, il pèse environ 14 jours de travail, soit environ un tiers du projet. Les montants en euros du détail ci-dessous sont la **valeur interne** de l'ancienne grille d'écrans (114 € = 1 jour de travail), utilisée comme poids : ce ne sont pas des prix par écran et ils ne sont jamais montrés au client (voir [la vision Aldaron](ALDARON_VISION.FR.md)). Les écrans sont comptés à partir de la liste des écrans du projet ; les chiffres sont des hypothèses à valider.
 
 ## Base de calcul
 
-Le budget est fixé d'abord, puis le périmètre est découpé pour qu'il tienne dedans. Ce n'est pas un prix donné à un périmètre complet.
+Le lot est estimé écran par écran avec les repères internes, pour en connaître le poids interne en jours. Il est la première étape du projet complet, pas une version réduite pour tenir un budget.
 
 | Étape | Calcul | Résultat |
 |---|---|---|
-| Budget cible | | 5 000 € |
-| Socle mobile (Expo, authentification, navigation, push, publication sur les stores) | | 1 000 € |
-| Reste pour les écrans | 5 000 − 1 000 | 4 000 € |
-| Écrans retenus | 52 écrans, grille de 60 € de base avec suppléments, ×1,5 sur le parrainage et les demandes de contact | 3 980 € |
-| **Prix du lot** | 1 000 + 3 980 | **4 980 €** |
-| Marge | 5 000 − 4 980 | 20 € |
+| Socle mobile (Expo, authentification, navigation, push, publication sur les stores) | 270 € / 114 € | 2,4 jours |
+| Écrans retenus | 52 écrans, valeur de base de 16 € avec suppléments, ×1,5 sur le parrainage et les demandes de contact : 1 058 € / 114 € | 9,3 jours |
+| **Durée du lot** | 2,4 + 9,3 | **11,6 jours** |
+| Part du cœur du projet | 11,6 / 39,1 | 30 % |
 
-Ce qui est à 0 € dans ce lot :
-- **Le socle web** (site public, CMS, back-office) : pas de web, la modération se fait à la main dans le tableau de bord de la base de données.
-- **Les maquettes** : le design est fourni par le client (la maquette existe déjà). Il doit s'appuyer sur le système de design existant : une maquette qui l'ignore oblige à créer des composants, et le multiplicateur de complexité s'applique alors.
+Ce qui n'est pas dans le lot :
+- **Le web** (site public, back-office) : pas de web, la modération se fait à la main dans le tableau de bord de la base de données.
+- **Les maquettes** : le design est fourni par le client (la maquette existe déjà). Il doit s'appuyer sur le système de design existant : une maquette qui l'ignore oblige à créer des composants, donc du temps en plus.
 - **Les intégrations tierces** : aucune dans ce lot.
 
-Contrôle du plancher : le plancher d'un devis est le nombre de jours de travail × 114 €. Avec Claude à environ 10 écrans par jour, le lot représente environ 14 jours de travail (52 écrans = 5,2 jours ; socle mobile, relecture et stores en hypothèse), soit un plancher d'environ 1 600 € : à 4 980 €, le lot le passe largement (environ 355 € par jour).
+Contrôle de la durée : avec Claude à environ 10 écrans par jour, le lot représente environ 14 jours de travail avec la relecture, les tests et les stores (52 écrans = 5,2 jours ; le reste en hypothèse). C'est environ un tiers des 44 jours internes du projet complet : le reste sert à construire la suite, ou à absorber un imprévu.
 
 ## Contenu du lot
 
-| Module | Écrans | Montant |
+| Module | Écrans | Valeur interne |
 |---|---|---|
-| Accueil et connexion (code par e-mail ou SMS, sans Google ni Apple) | 7 | 480 € |
-| Inscription par formulaire | 10 | 680 € |
-| Parrainage (×1,5) | 10 | 1 020 € |
-| Photo, foulard, carte de membre | 5 | 310 € |
-| Messages et demandes de contact (×1,5), avec signalement et blocage | 9 | 770 € |
-| Notifications | 1 | 80 € |
-| Paramètres (réglages, suppression du compte) | 2 | 140 € |
-| Pages légales (CGU, confidentialité, charte, mentions, mes données) | 5 | 320 € |
-| États (hors connexion, erreur, mise à jour obligatoire) | 3 | 180 € |
-| **Total écrans** | **52** | **3 980 €** |
+| Accueil et connexion (code par e-mail ou SMS, sans Google ni Apple) | 7 | 127 € |
+| Inscription par formulaire | 10 | 181 € |
+| Parrainage (×1,5) | 10 | 272 € |
+| Photo, foulard, carte de membre | 5 | 83 € |
+| Messages et demandes de contact (×1,5), avec signalement et blocage | 9 | 204 € |
+| Notifications | 1 | 21 € |
+| Paramètres (réglages, suppression du compte) | 2 | 37 € |
+| Pages légales (CGU, confidentialité, charte, mentions, mes données) | 5 | 85 € |
+| États (hors connexion, erreur, mise à jour obligatoire) | 3 | 48 € |
+| **Total écrans** | **52** | **1 058 €** |
 
 À la fin du lot, un ancien peut s'inscrire, se faire parrainer par trois membres, recevoir son accès, écrire à ses parrains et à ses filleuls (qui acceptent ou refusent la demande), être prévenu par des notifications, et supprimer son compte. Écrire à un autre membre passe par les annonces ou l'annuaire, dans les lots suivants.
 
 ## Détail des écrans
 
-Prix de base de 60 €. Les suppléments sont ceux de la grille : service (+20 €, envoi d'e-mail, de SMS ou de notification), caméra ou envoi de fichier (+10 €), carte ou géolocalisation (+30 €), workflow à étapes (+20 €). Le parrainage et les demandes de contact portent le ×1,5.
+Valeur de base de 16 €. Les suppléments sont ceux de l'ancienne grille : service (+5 €, envoi d'e-mail, de SMS ou de notification), caméra ou envoi de fichier (+3 €), carte ou géolocalisation (+8 €), workflow à étapes (+5 €). Le parrainage et les demandes de contact portent le ×1,5.
 
-### Accueil et connexion (480 €)
+### Accueil et connexion (127 €)
 
-| Écran | Supplément | Prix |
+| Écran | Supplément | Valeur |
 |---|---|---|
-| Choix de la langue | | 60 € |
-| Accueil | | 60 € |
-| Connexion (e-mail ou téléphone) | service | 80 € |
-| Code de confirmation | service | 80 € |
-| Plus accès à mon e-mail ou téléphone | | 60 € |
-| Plus accès · nouvelles coordonnées | service | 80 € |
-| Plus accès · demande envoyée | | 60 € |
+| Choix de la langue | | 16 € |
+| Accueil | | 16 € |
+| Connexion (e-mail ou téléphone) | service | 21 € |
+| Code de confirmation | service | 21 € |
+| Plus accès à mon e-mail ou téléphone | | 16 € |
+| Plus accès · nouvelles coordonnées | service | 21 € |
+| Plus accès · demande envoyée | | 16 € |
 
-### Inscription par formulaire (680 €)
+### Inscription par formulaire (181 €)
 
-| Écran | Supplément | Prix |
+| Écran | Supplément | Valeur |
 |---|---|---|
-| Coordonnées | | 60 € |
-| E-mail déjà utilisé | | 60 € |
-| Vérification par e-mail ou SMS | service | 80 € |
-| Lien avec les EEIF (6 onglets) | workflow | 80 € |
-| Groupe local | | 60 € |
-| Ville, pays, arrondissement | carte | 90 € |
-| Langues parlées | | 60 € |
-| Situation, secteurs, CV | envoi de fichier | 70 € |
-| Engagement (charte) | | 60 € |
-| Autorisation des notifications | | 60 € |
+| Coordonnées | | 16 € |
+| E-mail déjà utilisé | | 16 € |
+| Vérification par e-mail ou SMS | service | 21 € |
+| Lien avec les EEIF (6 onglets) | workflow | 21 € |
+| Groupe local | | 16 € |
+| Ville, pays, arrondissement | carte | 24 € |
+| Langues parlées | | 16 € |
+| Situation, secteurs, CV | envoi de fichier | 19 € |
+| Engagement (charte) | | 16 € |
+| Autorisation des notifications | | 16 € |
 
-### Parrainage (1 020 €)
+### Parrainage (272 €)
 
-| Écran | Base et supplément | Prix (×1,5) |
+| Écran | Base et supplément | Valeur (×1,5) |
 |---|---|---|
-| Recherche d'un parrain, accès aux contacts | 60 € + service | 120 € |
-| Tu ne trouves personne ? | 60 € + service | 120 € |
-| Demande d'aide envoyée | 60 € | 90 € |
-| En attente de validation | 60 € + workflow | 120 € |
-| Trouver un autre parrain | 60 € | 90 € |
-| Demande de parrainage reçue (côté parrain) | 60 € + service | 120 € |
-| Lien avec la personne | 60 € | 90 € |
-| Parrainage confirmé (1er, 2e, 3e parrain) | 60 € | 90 € |
-| Souhaiter la bienvenue | 60 € | 90 € |
-| Accès débloqué, bienvenue dans l'app | 60 € | 90 € |
+| Recherche d'un parrain, accès aux contacts | 16 € + service | 32 € |
+| Tu ne trouves personne ? | 16 € + service | 32 € |
+| Demande d'aide envoyée | 16 € | 24 € |
+| En attente de validation | 16 € + workflow | 32 € |
+| Trouver un autre parrain | 16 € | 24 € |
+| Demande de parrainage reçue (côté parrain) | 16 € + service | 32 € |
+| Lien avec la personne | 16 € | 24 € |
+| Parrainage confirmé (1er, 2e, 3e parrain) | 16 € | 24 € |
+| Souhaiter la bienvenue | 16 € | 24 € |
+| Accès débloqué, bienvenue dans l'app | 16 € | 24 € |
 
-### Photo, foulard, carte de membre (310 €)
+### Photo, foulard, carte de membre (83 €)
 
-| Écran | Supplément | Prix |
+| Écran | Supplément | Valeur |
 |---|---|---|
-| Photo de profil | caméra | 70 € |
-| Aperçu et recadrage | | 60 € |
-| Foulard | | 60 € |
-| Écussons (présentation) | | 60 € |
-| Carte prête | | 60 € |
+| Photo de profil | caméra | 19 € |
+| Aperçu et recadrage | | 16 € |
+| Foulard | | 16 € |
+| Écussons (présentation) | | 16 € |
+| Carte prête | | 16 € |
 
-### Messages et demandes de contact (770 €)
+### Messages et demandes de contact (204 €)
 
-| Écran | Base et supplément | Prix |
+| Écran | Base et supplément | Valeur |
 |---|---|---|
-| Messages (liste) | 60 € + workflow | 80 € |
-| Demande reçue | 60 € + service, ×1,5 | 120 € |
-| Refuser une demande | 60 €, ×1,5 | 90 € |
-| Mes demandes envoyées | 60 €, ×1,5 | 90 € |
-| Conversation | 60 € + service | 80 € |
-| Signaler | 60 € + service | 80 € |
-| Bloquer | 60 € | 60 € |
-| Remercier | 60 € + workflow | 80 € |
-| Contacter un membre (depuis le parrainage) | 60 €, ×1,5 | 90 € |
+| Messages (liste) | 16 € + workflow | 21 € |
+| Demande reçue | 16 € + service, ×1,5 | 32 € |
+| Refuser une demande | 16 €, ×1,5 | 24 € |
+| Mes demandes envoyées | 16 €, ×1,5 | 24 € |
+| Conversation | 16 € + service | 21 € |
+| Signaler | 16 € + service | 21 € |
+| Bloquer | 16 € | 16 € |
+| Remercier | 16 € + workflow | 21 € |
+| Contacter un membre (depuis le parrainage) | 16 €, ×1,5 | 24 € |
 
-### Notifications, paramètres, légal, états (720 €)
+### Notifications, paramètres, légal, états (191 €)
 
-| Écran | Supplément | Prix |
+| Écran | Supplément | Valeur |
 |---|---|---|
-| Notifications (liste) | workflow | 80 € |
-| Paramètres | | 60 € |
-| Supprimer mon compte (raisons, confirmation, fin) | service | 80 € |
-| CGU | | 60 € |
-| Politique de confidentialité | | 60 € |
-| Charte de la communauté | | 60 € |
-| Mentions légales | | 60 € |
-| Mes données et autorisations | service | 80 € |
-| Hors connexion | | 60 € |
-| Erreur générale | | 60 € |
-| Mise à jour obligatoire | | 60 € |
+| Notifications (liste) | workflow | 21 € |
+| Paramètres | | 16 € |
+| Supprimer mon compte (raisons, confirmation, fin) | service | 21 € |
+| CGU | | 16 € |
+| Politique de confidentialité | | 16 € |
+| Charte de la communauté | | 16 € |
+| Mentions légales | | 16 € |
+| Mes données et autorisations | service | 21 € |
+| Hors connexion | | 16 € |
+| Erreur générale | | 16 € |
+| Mise à jour obligatoire | | 16 € |
 
 ## Règle de comptage et correspondance avec la maquette
 
-La maquette compte 210 écrans. Le lot en facture 52. L'écart tient à la règle de la grille : **le prix est par vue distincte, ses états et variantes sont inclus**. Une fenêtre (menu, confirmation) ou une autorisation du système n'est pas un écran. Un écran réutilisé à plusieurs endroits (la saisie du code) n'est compté qu'une fois.
+La maquette compte 203 écrans. Le lot en compte 52. L'écart tient à la règle de comptage : **une vue distincte compte pour un écran, ses états et variantes sont inclus**. Une fenêtre (menu, confirmation) ou une autorisation du système n'est pas un écran. Un écran réutilisé à plusieurs endroits (la saisie du code) n'est compté qu'une fois.
 
-| Module | Écrans facturés | Écrans de la maquette couverts | Ce que la différence contient |
+| Module | Écrans comptés | Écrans de la maquette couverts | Ce que la différence contient |
 |---|---|---|---|
 | Accueil et connexion | 7 | 13 | Code incorrect, code expiré, code reçu par SMS, connexion en cours, Face ID |
 | Inscription par formulaire | 10 | 16 | Les 6 onglets de l'étape 3 (un seul écran), e-mail déjà utilisé, code, langues |
@@ -150,13 +148,13 @@ La maquette compte 210 écrans. Le lot en facture 52. L'écart tient à la règl
 | États | 3 | 3 | |
 | **Total** | **52** | **86** | |
 
-Sur les 210 écrans de la maquette, 86 sont couverts par ce lot, 7 sont les appels (hors périmètre) et 117 viennent dans les lots suivants.
+Sur les 203 écrans de la maquette, 86 sont couverts par ce lot et 117 viennent dans les lots suivants.
 
 ## Hypothèses et risques
 
-1. **Messagerie limitée aux parrains et filleuls.** Une demande de contact part normalement d'une annonce ou de l'annuaire, qui sont dans des lots suivants. Dans ce lot, on peut écrire à ses parrains et à ses filleuls, depuis les écrans du parrainage. Écrire à n'importe quel membre vient avec les annonces ou l'annuaire. La conversation est construite sur le temps réel de la base de données, pas sur le service tiers du projet (Stream, 1 200 € d'intégration en plus) : cela demande plus de travail que le prix de l'écran ne le couvre (lecture, hors ligne, notifications), mais évite le coût mensuel du service au-delà de 1 000 utilisateurs actifs.
+1. **Messagerie limitée aux parrains et filleuls.** Une demande de contact part normalement d'une annonce ou de l'annuaire, qui sont dans des lots suivants. Dans ce lot, on peut écrire à ses parrains et à ses filleuls, depuis les écrans du parrainage. Écrire à n'importe quel membre vient avec les annonces ou l'annuaire. La conversation est construite sur le temps réel de la base de données, pas sur le service tiers du projet (Stream, environ 4 à 5 jours d'intégration en plus) : cela demande plus de travail que le prix de l'écran ne le couvre (lecture, hors ligne, notifications), mais évite le coût mensuel du service au-delà de 1 000 utilisateurs actifs.
 2. **Pas d'inscription par passeport.** Tout nouveau membre passe par le parrainage. L'équipe EEIF répond aux demandes d'aide (« Tu ne trouves personne ? ») par e-mail et valide les comptes à la main.
 3. **Modération manuelle.** Sans back-office, les signalements arrivent par e-mail ou dans la base ; l'avertissement et la suspension se font à la main. Les écrans correspondants viennent dans un lot suivant.
-4. **Design fourni.** Si le design ne suit pas le système de design existant, ou change après la livraison des écrans, le multiplicateur de complexité s'applique et les changements sont facturés par avenant.
-5. **Délai de 3 mois.** 52 écrans en 66 jours ouvrés est tenable avec un développement assisté par Claude ; la base de temps est détaillée dans [tout le mobile pour 5 000 €](ENTRAIDEI_FULL_5000.FR.md#base-de-calcul). Les délais de validation des stores (Apple 1 à 3 jours, parfois plus) et l'ouverture d'un compte Apple organisation (numéro D-U-N-S, plusieurs semaines) sont à lancer dès la signature.
+4. **Design fourni.** Si le design ne suit pas le système de design existant, ou change après la livraison des écrans, cela consomme du temps : un changement est un échange avec un autre besoin, ou un nouveau devis.
+5. **Livraison du lot.** 52 écrans en environ 14 jours internes de travail, soit près de trois semaines de calendrier, est tenable avec un développement assisté par Claude ; la base de temps est détaillée dans [tout le mobile pour 5 000 €](ENTRAIDEI_FULL_5000.FR.md#base-de-calcul). Les délais de validation des stores (Apple 1 à 3 jours, parfois plus) et l'ouverture d'un compte Apple organisation (numéro D-U-N-S, plusieurs semaines) sont à lancer dès la signature.
 6. **Contenus à fournir par le client** : textes de la charte, des CGU et de la politique de confidentialité, mentions légales, couleurs des foulards manquants.

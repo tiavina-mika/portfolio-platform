@@ -3,94 +3,63 @@
 ## Table des matières
 
 - [Base de calcul](#base-de-calcul)
-- [Répartition du prix](#répartition-du-prix)
+- [Paiement](#paiement)
 - [Contenu](#contenu)
 - [Hypothèses et risques](#hypothèses-et-risques)
 
-> Tout le projet Entraid'ei pour 5 000 € en 3 mois, design fourni : les 210 écrans de la maquette (appels compris), l'hébreu, la messagerie temps réel, le scan du passeport, Google et Apple, et le back-office de modération. Même grille que [la vision Aldaron](ALDARON_VISION.FR.md) ; le détail écran par écran est dans le [devis complet](ENTRAIDEI_QUOTE.FR.md). Les montants sont des hypothèses à valider.
+> Le projet Entraid'ei à prix fixe, environ 5 000 €, design fourni : l'application mobile, la messagerie temps réel, le scan du passeport, Google et Apple, et le back-office de modération. Le client ne voit que le prix. Les jours ci-dessous sont l'estimation interne d'Aldaron, qui fixe le prix à la valeur interne de 114 € par jour (voir [la vision Aldaron](ALDARON_VISION.FR.md) et l'[estimation de faisabilité](ENTRAIDEI_QUOTE.FR.md)). Les montants sont des hypothèses à valider.
 
 ## Base de calcul
 
-Le périmètre est fixé (tout) et le prix est un forfait. La grille ne donne donc pas le prix : elle donne la **valeur** du périmètre, et le forfait est une remise sur cette valeur.
+Calcul interne, jamais montré au client. L'estimation du périmètre donne 39,1 jours ; avec une marge de 10 % pour la relecture, les tests et les imprévus, cela fait 44 jours annoncés (39,1 ÷ 0,9, arrondi au jour supérieur), soit 5 016 € à 114 € par jour, chiffrés **5 000 €** (arrondi à la centaine la plus proche, bien au-dessus du minimum de 2 500 €). Le prix est fixe : les jours de marge ne sont pas facturés à part, ils absorbent les imprévus.
 
-| Étape | Calcul | Résultat |
-|---|---|---|
-| Socle mobile | | 1 000 € |
-| Écrans mobiles (environ 125) | | 9 320 € |
-| Intégrations : passeport 1 200 €, Google et Apple 800 €, géocodage 400 €, messagerie temps réel (Stream) 1 200 € | | 3 600 € |
-| Appels audio (environ 6 écrans et une intégration à 1 200 €) | | 1 700 € |
-| Hébreu (15 % du coût des écrans traduits) | 15 % de 9 320 € | 1 400 € |
-| Back-office de modération (13 écrans) | | 730 € |
-| **Valeur du périmètre à la grille** | | **17 750 €** |
-| Forfait | | 5 000 € |
-| Remise | 17 750 − 5 000 | 12 750 € (72 %) |
-| Part du forfait pour chaque euro de grille | 5 000 / 17 750 | 0,282 |
+| Poste | Jours |
+|---|---|
+| Socle mobile | 2,4 |
+| Écrans mobiles (environ 125) | 21,8 |
+| Intégrations : passeport, Google et Apple, géocodage, messagerie temps réel | 8,5 |
+| Back-office de modération (13 écrans) | 6,4 |
+| **Total** | **39,1** |
+| Jours annoncés (39,1 ÷ 0,9, arrondi au jour supérieur) | 44 |
 
-À zéro dans ce forfait : le socle web (site public, CMS), la formule minimum et les maquettes. Une application mobile seule part de la base technique d'Entraid'ei (Expo, Supabase) : le socle mobile couvre déjà l'authentification et la mise en production. Le design est fourni et doit suivre le système de design existant, sinon le multiplicateur de complexité s'applique.
+L'estimation occupe 89 % des jours annoncés : les environ 5 jours de marge servent à la relecture, aux tests et aux imprévus.
 
-Contrôle du plancher : le plancher d'un devis est le nombre de jours de travail × 114 €, avec un minimum de 1 000 €. Sur la base de temps ci-dessous (environ 44 jours), il est de 5 016 € : le forfait de 5 000 € est pile à ce niveau, ce qui est logique puisque le tarif de 114 € vient de ce calcul. Il n'y a donc aucune marge de sécurité sur le prix.
+Deux précisions de lecture :
 
-**Base de temps.** Le développement est fait avec Claude, à environ 10 écrans par jour (chiffre fourni, à mesurer).
+- **Connexion et inscription.** Le socle mobile couvre la logique d'authentification (comptes, sessions, mise en production). Les écrans « Accueil et connexion » et d'inscription sont comptés à part parce qu'ils reprennent la mise en page de la maquette : ce n'est pas un doublon.
+- **Intégrations.** Chaque service est compté une seule fois, configuration comprise.
+
+**Deuxième estimation, par le bas.** Le développement est fait avec Claude, à environ 10 écrans par jour (chiffre fourni, à mesurer).
 
 | Poste | Calcul | Jours |
 |---|---|---|
-| Écrans mobiles, appels compris (environ 131) et back-office (13) | 144 / 10 | 14,5 |
-| Socle mobile et intégrations (passeport, Google et Apple, géocodage, messagerie temps réel, appels) | hypothèse | 14 |
-| Hébreu (écriture de droite à gauche) | hypothèse | 3 |
-| Relecture, corrections, tests sur appareils | hypothèse, environ 30 % du reste | 10 |
+| Écrans mobiles (environ 125) et back-office (13) | 138 / 10 | 13,8 |
+| Socle mobile et intégrations (passeport, Google et Apple, géocodage, messagerie temps réel) | hypothèse | 12 |
+| Relecture, corrections, tests sur appareils | hypothèse, environ 30 % du reste | 8 |
 | Stores (soumission, resoumission) | hypothèse | 2 |
-| **Total** | | **environ 44** |
+| **Total** | | **environ 36** |
 
-Sur 44 jours de travail effectif, 5 000 € font environ **114 € par jour**, et il reste 22 jours de marge sur les 66 du délai. Les lignes marquées « hypothèse » ne viennent pas d'une mesure : voir [Hypothèses et risques](#hypothèses-et-risques).
+Les deux estimations (36 et 39 jours) tiennent dans les 44 jours annoncés, avec une marge de 5 à 8 jours. Les lignes marquées « hypothèse » ne viennent pas d'une mesure : voir [Hypothèses et risques](#hypothèses-et-risques).
 
-## Répartition du prix
+## Paiement
 
-Le forfait est réparti au prorata de la valeur de la grille. Utile pour les jalons de facturation.
-
-| Poste | Valeur à la grille | Part du forfait |
-|---|---|---|
-| Socle mobile | 1 000 € | 282 € |
-| Accueil et connexion (7 écrans) | 480 € | 135 € |
-| Inscription par passeport (6 écrans) | 390 € | 110 € |
-| Inscription par formulaire (10 écrans) | 680 € | 192 € |
-| Parrainage (10 écrans, ×1,5) | 1 020 € | 287 € |
-| Photo, foulard, carte de membre (5 écrans) | 310 € | 87 € |
-| Explorer et filtres (11 écrans) | 830 € | 234 € |
-| Annonces (8 écrans, ×1,5) | 900 € | 254 € |
-| Messages et demandes (9 écrans) | 770 € | 217 € |
-| Notifications (1 écran) | 80 € | 23 € |
-| Profil, écussons, CV (15 écrans) | 1 090 € | 307 € |
-| Paramètres et aide (11 écrans) | 640 € | 180 € |
-| Pages légales (6 écrans) | 380 € | 107 € |
-| Annuaire, favoris, filtres (21 écrans) | 1 450 € | 408 € |
-| États et modération (5 écrans) | 300 € | 84 € |
-| Scan et vérification du passeport | 1 200 € | 338 € |
-| Connexion Google et Apple | 800 € | 225 € |
-| Géocodage des villes et recherche par rayon | 400 € | 113 € |
-| Messagerie temps réel (Stream) | 1 200 € | 338 € |
-| Appels audio | 1 700 € | 479 € |
-| Hébreu | 1 400 € | 394 € |
-| Back-office de modération (13 écrans) | 730 € | 206 € |
-| **Total** | **17 750 €** | **5 000 €** |
-
-Facturation proposée : 40 % à la signature (2 000 €), 30 % à la préproduction (1 500 €), 30 % à la mise en production (1 500 €).
+Le prix de 5 000 € est payé en trois échéances liées à l'avancement : **2 000 € à la signature (40 %), 1 500 € à la livraison du premier lot (30 %), 1 500 € à la mise en ligne (30 %)**, avant la remise du code et des comptes. Le premier lot ([52 écrans](ENTRAIDEI_LOT_5000.FR.md), en interne environ 14 jours de travail) fait office de démonstration de mi-parcours. Si la startup arrête en cours de route, les échéances déjà payées restent acquises à Aldaron et le code produit jusqu'à la dernière échéance payée lui est remis.
 
 ## Contenu
 
-Les 210 écrans de la maquette, sans exception : les 203 écrans de l'application, les 7 écrans d'appels, en français, en anglais et en hébreu. Les états, variantes et fenêtres sont inclus dans le prix de la vue (un prix par vue distincte, soit environ 131 vues facturées).
+Les 203 écrans de l'application, en français et en anglais. Les états, variantes et fenêtres sont inclus dans la vue (une vue distincte compte pour un écran, soit environ 125 vues).
 
 Le back-office web couvre les 13 écrans de modération : signalements (liste et fiche), sanctions, fiche membre, demandes d'aide au parrainage, pertes d'accès, référentiels (groupes locaux, secteurs et catégories, langues), FAQ, versions légales, version minimale de l'app, export RGPD.
 
-Entraid'ei n'a pas de paiement. S'il y en avait un, ce serait 60 € de plus par intégration de paiement, hors forfait.
+Entraid'ei n'a pas de paiement. S'il y en avait un, ce serait en interne environ 4 à 5 jours de plus, soit environ 500 € de plus sur le devis.
 
 ## Hypothèses et risques
 
 1. **Le chiffre de 10 écrans par jour mesure la production, pas la livraison.** Il ne dit pas combien de temps prennent la relecture, la fidélité à la maquette, les tests sur de vrais appareils et les corrections. À valider en chronométrant les 10 premiers écrans, du premier prompt à l'écran relu et testé, avant de signer.
-2. **Le forfait ne vaut que grâce à Claude.** Au rythme de la grille (un écran vaut environ une demi-journée à 90 € par jour), tout le périmètre représenterait environ 197 jours de travail à la main. Si l'outil n'est plus disponible ou change de tarif, le prix n'est plus tenable.
-3. **Le coût de Claude** (abonnement, jetons) est à retirer du forfait : il réduit le gain réel.
-4. **La remise de 72 % n'est pas une remise « modérée ».** La vision prévoit une remise modérée contre un témoignage. À écrire dans le contrat comme une remise pilote : valeur 17 750 €, forfait 5 000 €, avec la contrepartie (témoignage, étude de cas, droit de montrer le produit).
-5. **Tout dépassement est pour vous.** Un seul écran refait, un changement de design ou un retard de validation des stores mange la marge. Le périmètre doit être figé par écrit, avec la liste des écrans et la règle de comptage.
-6. **Le scan du passeport dépend de l'EEIF.** Sans base d'adhérents à interroger, son prix n'a plus de sens.
-7. **Coûts récurrents élevés pour le client.** La messagerie tierce passe d'environ 0 à environ 400 $ par mois au-delà de 1 000 utilisateurs actifs, et les appels audio ajoutent un coût à la minute. Le client doit le savoir avant de signer.
-8. **L'hébreu** : l'écriture de droite à gauche touche toutes les mises en page, et les textes doivent être fournis ou relus par le client.
-9. **Stores.** Les délais de validation (Apple 1 à 3 jours, parfois plus) et l'ouverture d'un compte Apple organisation (numéro D-U-N-S, plusieurs semaines) sont à lancer dès la signature.
+2. **Le prix ne tient que grâce à Claude.** Les jours internes supposent environ 10 écrans par jour avec l'outil. À la main, un écran prend environ une demi-journée : les 138 écrans représenteraient environ 69 jours, et tout le périmètre environ 100 jours de travail. Si l'outil n'est plus disponible ou change de tarif, le prix fixe n'est plus tenable et la perte est pour Aldaron.
+3. **Le coût de Claude** (abonnement, jetons) est à retirer du prix : il réduit le gain réel.
+4. **La marge est faible.** Environ 5 jours sur 44. La valeur interne de 114 € par jour vient de ce calcul (5 000 € pour 44 jours) : elle n'apporte aucune sécurité sur le prix.
+5. **Un dépassement est pour Aldaron.** Le prix est fixe : un écran refait, un changement de design ou un retard de validation des stores consomme la marge, puis oblige à retirer un besoin ou à faire un nouveau devis pour l'ajout. La liste initiale des besoins est écrite au contrat, avec la règle de comptage des écrans.
+6. **Le scan du passeport dépend de l'EEIF.** Sans base d'adhérents à interroger, il ne tient plus : un essai court et borné (en interne 2 jours), puis décision du client.
+7. **Coûts récurrents élevés pour le client.** La messagerie tierce passe d'environ 0 à environ 400 $ par mois au-delà de 1 000 utilisateurs actifs. Le client doit le savoir avant de signer.
+8. **Stores.** Les délais de validation (Apple 1 à 3 jours, parfois plus) et l'ouverture d'un compte Apple organisation (numéro D-U-N-S, plusieurs semaines) sont à lancer dès la signature.
