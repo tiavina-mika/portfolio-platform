@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 
 import JsonUploadButton from '@/components/JsonUploadButton';
 import {
-  ARTICLE_WEBSITE_BASE_PATH, ARTICLE_FORM_SECTIONS, creationUploadedFieldsToIgnore,
+  ARTICLE_WEBSITE_BASE_PATH, ARTICLE_FORM_SECTIONS, creationUploadedFieldsToIgnore, DEFAULT_WEBSITES,
 } from '@/constants/_core/cms.constants';
 import CmsSeoPreview from '@/containers/_core/cms/CmsSeoPreview';
 import CmsFormRenderedPreview from '@/containers/_core/cms/form/CmsFormRenderedPreview';
@@ -34,6 +34,7 @@ const initialValues = {
   hasTableOfContents: false,
   country: DEFAULT_COUNTRY_CODE,
   categories: [],
+  websites: DEFAULT_WEBSITES,
 };
 
 type Props = {

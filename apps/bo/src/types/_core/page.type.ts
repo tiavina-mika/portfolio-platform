@@ -5,6 +5,7 @@ import type { IListTabCounts, ISEOFields } from '@/types/_core/app.type';
 import type { ICategory } from '@/types/_core/category.type';
 import type { IFileCloud, ITranslatedFileCloud } from '@/types/_core/file.type';
 import type { IUser } from '@/types/_core/user.type';
+import type { IWebsiteAttributes } from '@/types/_core/website.type';
 
 import {
   sectionBlocksSchema,
@@ -70,7 +71,7 @@ export interface ISectionBlockProgress {
   hasErrors: boolean;
 }
 
-export interface IPageAttributes {
+export interface IPageAttributes extends IWebsiteAttributes {
   objectId: string;
   updatedAt?: string;
   createdAt?: string;

@@ -1,12 +1,12 @@
 import { DEFAULT_COUNTRY_CODE } from '@shared/constants';
-import { CategoryEntityEnum } from '@shared/types';
+import { CategoryEntityEnum, WebsiteEnum } from '@shared/types';
 
 import { StatusDotColor } from '@/components/StatusDot';
 import i18n from '@/config/i18n';
 import { DEFAULT_LOCALE } from '@/constants/_core/app.constants';
 import {
   ARTICLE_DEFAULT_VIEWS_GOAL, AVERAGE_READING_WORDS_PER_MINUTE, CATEGORY_PATH_SEPARATOR,
-  categoryEntityOptions,
+  categoryEntityOptions, DEFAULT_WEBSITES,
   imagePositionOptions, pageLinkLocationOptions,
 } from '@/constants/_core/cms.constants';
 import { Category } from '@/services/_core/category.service';
@@ -27,6 +27,7 @@ import {
   PageStatusEnum,
 } from '@/types/_core/page.type';
 import { Locale } from '@/types/_core/setting.type';
+import { IWebsiteAttributes } from '@/types/_core/website.type';
 import { getFileFromUrl } from '@/utils/_core/file.utils';
 import { getValues } from '@/utils/_core/parse.utils';
 import { getTranslatedField } from '@/utils/_core/settings.utils';
@@ -55,6 +56,33 @@ export const getCategoryLabelColor = (entity: CategoryEntityEnum): DefaultMUICol
  */
 const getField = (obj: Record<string, any>, field: string): any =>
   (typeof obj.get === 'function' ? obj.get(field) : obj[field]);
+
+/**
+ * The websites fields of a saved content, as the form edits them. A content saved before the
+ * fields existed has none, which reads as the portfolio alone.
+ */
+export const getWebsiteInitialValues = (item: IWebsiteAttributes): IWebsiteAttributes => ({
+  websites: item.websites?.length ? item.websites : DEFAULT_WEBSITES,
+  boxIncludes: item.boxIncludes ?? [],
+  boxPrice: item.boxPrice,
+  boxDurationDays: item.boxDurationDays,
+});
+
+/**
+ * The websites fields of a form, as they are saved. What the box includes, costs and takes is only
+ * kept while the box is one of the websites, and a field left empty is set to `null` too, so a value typed
+ * before the box was unticked does not stay behind on the content.
+ */
+export const getWebsiteValuesToSave = (values: IWebsiteAttributes): Record<string, unknown> => {
+  const isBox = !!values.websites?.includes(WebsiteEnum.BOX);
+
+  return {
+    websites: values.websites?.length ? values.websites : DEFAULT_WEBSITES,
+    boxIncludes: isBox ? values.boxIncludes ?? null : null,
+    boxPrice: isBox ? values.boxPrice ?? null : null,
+    boxDurationDays: isBox ? values.boxDurationDays ?? null : null,
+  };
+};
 
 export const getCMSImagesInitialValues = async <T extends Record<string, any>>(
   parseObj: T
@@ -109,6 +137,7 @@ export const getArticleEditionInitialValues = async (
     // a flag set on the article only once an editor turned it on — absent reads as off
     hasTableOfContents: !!article.hasTableOfContents,
     country: article.country ?? DEFAULT_COUNTRY_CODE,
+    ...getWebsiteInitialValues(article),
     ...articleCodec.encode(article.translated as Record<string, any>),
     // plain category ids — matches the preloaded Select's value shape (see ArticleForm)
     categories: getCategoriesPointersInitialValues(article, locale).map((option) => option.value),
@@ -226,6 +255,7 @@ export const getPageStepThreeEditionInitialValues = <O extends IPageAttributes |
     active: !!page.active,
     hasTableOfContents: !!page.hasTableOfContents,
     country: page.country ?? DEFAULT_COUNTRY_CODE,
+    ...getWebsiteInitialValues(page),
     linkLocations: page.linkLocations || [],
     categories: getCategoriesPointersInitialValues(page, locale),
     code: page.code || '',
@@ -246,6 +276,7 @@ export const getFinalPageInitialValues = async <O extends IPage | null | undefin
       active: true,
       hasTableOfContents: false,
       country: DEFAULT_COUNTRY_CODE,
+      websites: DEFAULT_WEBSITES,
       linkLocations: [],
       categories: [],
     };
@@ -272,13 +303,14 @@ export const getCategoryFormInitialValues = async (
 ): Promise<ICategoryInput> => {
   // ----------- creation ----------- //
   if (!category) {
-    return { active: true };
+    return { active: true, websites: DEFAULT_WEBSITES };
   }
   // ----------- update ----------- //
 
   const values: Record<string, any> = {
     ...getValues(category, ['active', 'entity', 'image', 'code']),
     ...categoryCodec.encode(category.translated as Record<string, any>),
+    ...getWebsiteInitialValues(category),
     // nested pointer — only `objectId` is available, not `id` (see toJSONWithId doc comment)
     parentCategory: category.parentCategory
       ? category.parentCategory.objectId

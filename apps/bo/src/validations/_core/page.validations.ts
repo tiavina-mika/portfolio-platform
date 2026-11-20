@@ -7,6 +7,7 @@ import {
 import { dateForAdvancedSearchSchema, optionSchema } from '@/validations/_core/app.validations';
 import { cmsSchema } from '@/validations/_core/article.validations';
 import { categoryOptionSchema } from '@/validations/_core/category.validations';
+import { websiteFieldsShape } from '@/validations/_core/website.validations';
 import {
   generateFileSchema,
   generateTranslatedFieldsInputSchema,
@@ -82,6 +83,7 @@ export const pageStepThreeSchema = z.object({
   // the country the page is written for
   country: z.string().optional(),
   linkLocations: z.array(z.enum(['menu', 'footer'])).optional(),
+  ...websiteFieldsShape,
   // trims a stray leading/trailing "_" left by typing a separator at the edge of the field
   code: z.string().optional().transform(value => value?.replace(/^_+|_+$/g, '')),
 });

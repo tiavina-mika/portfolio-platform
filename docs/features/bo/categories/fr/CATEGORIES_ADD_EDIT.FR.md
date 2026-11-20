@@ -35,6 +35,7 @@ Le titre de la fenêtre est « Créer une catégorie » ou « Modifier une caté
 - une **Image** (obligatoire) : utilisée par les moteurs de recherche et pour le partage sur les réseaux
   sociaux ;
 - **Catégorie pour** : « Article » ou « Page » ;
+- **Sites** : liste à choix multiples, **Portfolio** par défaut. On peut ajouter **Boîte** : la catégorie est réservée au site Aldaron quand « Boîte » est choisi seul. Dès que « Boîte » est choisi apparaissent le **contenu de la boîte** (Site web statique, Mobile, Back-office, Application web, au choix), le **prix en euros** et la **durée en jours**, tous facultatifs. Décocher « Boîte » efface ces trois informations. Pour l'instant ce choix est seulement enregistré : les sites publics ne l'utilisent pas encore ;
 - une case **Actif** : une catégorie active est visible pour les visiteurs (cochée par défaut).
 
 ## Actions possibles

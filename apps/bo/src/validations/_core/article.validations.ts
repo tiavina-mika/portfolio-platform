@@ -12,6 +12,7 @@ import {
 import { cutMetaText } from '@/utils/_core/utils';
 import { dateForAdvancedSearchSchema, tabAndCategoryRouteSearchParams } from '@/validations/_core/app.validations';
 import { categoryOptionSchema } from '@/validations/_core/category.validations';
+import { websiteFieldsShape } from '@/validations/_core/website.validations';
 import {
   generateFileSchema,
   generateTranslatedFieldsInputSchema,
@@ -178,6 +179,7 @@ export const articleSchema = cmsSchema
     categories: z.array(z.string()).min(1),
     image: generateFileSchema(true) as OptionalFileSchemaType,
     viewsGoal: viewsGoalSchema,
+    ...websiteFieldsShape,
   });
 
 /**
