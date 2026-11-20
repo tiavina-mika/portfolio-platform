@@ -3,6 +3,21 @@ export enum SexEnum {
   FEMALE = 'female'
 }
 
+/**
+ * Why the team deletes an account from the back-office. Stored as `deletionReason`, the field an
+ * account's own deletion also writes, so the recycle bin answers "why is this account gone?"
+ * whoever closed it.
+ */
+export enum AdminAccountDeletionReasonEnum {
+  FRAUD = 'fraud',
+  FAKE_ACCOUNT = 'fake_account',
+  DUPLICATE_ACCOUNT = 'duplicate_account',
+  /** the account holder asked support to close it, instead of doing it themselves */
+  MEMBER_REQUEST = 'member_request',
+  ABUSIVE_BEHAVIOR = 'abusive_behavior',
+  OTHER = 'other'
+}
+
 export enum BanReasonEnum {
   FRAUD = 'fraud',
   HARASSMENT = 'harassment',

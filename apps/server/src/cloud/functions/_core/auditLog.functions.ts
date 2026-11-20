@@ -15,11 +15,11 @@ Parse.Cloud.define(
   'getAuditLogs',
   fromBO(async (request: Parse.Cloud.FunctionRequest) => {
     const {
-      limit, skip, orderBy, order, search,
+      limit, skip, orderBy, order, search, inBin,
     } = request.params;
 
     return getAuditLogs({
-      limit, skip, orderBy, order, search,
+      limit, skip, orderBy, order, search, inBin,
     });
   }, ['find'], collections.UserAuditLog),
   parseFunctionValidation(getAuditLogsSchema)

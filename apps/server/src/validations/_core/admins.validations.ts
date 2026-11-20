@@ -1,5 +1,6 @@
 import { COUNTRIES } from '@shared/constants';
 import { MessageChannelEnum } from '@shared/types';
+import { adminAccountDeletionShape, hasAdminAccountDeletionDetails } from '@shared/validations';
 import {
   string, object, boolean, array, z, enum as zEnum,
 } from 'zod';
@@ -50,11 +51,14 @@ export const getUserSchema = object({
 
 export const deleteUserSchema = object({
   id: objectIdFieldSchema,
-});
+  ...adminAccountDeletionShape,
+}).refine(hasAdminAccountDeletionDetails, { path: ['reasonDetails'] });
 
+// one reason for the whole selection: a bulk deletion is one decision taken on several accounts
 export const deleteUsersSchema = object({
   ids: array(string()).nonempty(),
-});
+  ...adminAccountDeletionShape,
+}).refine(hasAdminAccountDeletionDetails, { path: ['reasonDetails'] });
 
 export const destroyUsersSchema = object({
   ids: array(string()).nonempty(),

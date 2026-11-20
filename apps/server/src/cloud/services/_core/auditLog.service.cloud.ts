@@ -9,12 +9,14 @@ type GetAuditLogsParams = {
   orderBy?: string;
   order?: 'asc' | 'desc';
   search?: Record<string, any>;
+  // only the accounts still in the recycle bin: the ones erased for good keep their log, not their bin row
+  inBin?: boolean;
 };
 
 const AUDIT_LOG_FIELDS = [
   'userId', 'action', 'emailBefore', 'usernameBefore', 'fullNameBefore',
-  'phoneBefore', 'deletionReason', 'deletionInitiatedBy', 'adminId',
-  'timestamp',
+  'phoneBefore', 'deletionReason', 'deletionReasonDetails', 'deletionInitiatedBy', 'adminId',
+  'timestamp', 'destroyedAt',
 ];
 
 export const getAuditLogByUserId = async (userId: string): Promise<Parse.Object | undefined> => {
@@ -30,6 +32,7 @@ export const getAuditLogs = async ({
   orderBy = 'timestamp',
   order = 'desc',
   search,
+  inBin,
 }: GetAuditLogsParams): Promise<{ results: Parse.Object[]; count: number }> => {
   let query = new Parse.Query(collections.UserAuditLog);
 
@@ -51,6 +54,10 @@ export const getAuditLogs = async ({
     filtersDatesQuery(query, search, ['timestamp']);
   }
 
+  if (inBin) {
+    query.doesNotExist('destroyedAt');
+  }
+
   query.select(AUDIT_LOG_FIELDS)
     .limit(limit)
     .skip(skip);
@@ -65,4 +72,32 @@ export const getAuditLogs = async ({
   const result: Record<string, any> = await query.withCount().find(USE_MASTER_KEY);
 
   return { results: result.results, count: result.count };
+};
+
+/**
+ * Records on their deletion log that these accounts were erased for good. The log itself stays — it
+ * is the trace that the account existed and why it was closed — but the account is no longer in the
+ * recycle bin, so it must stop being offered there.
+ * @param userIds the accounts just erased
+ * @param actorId the back-office user who erased them
+ */
+export const markAuditLogsAsDestroyed = async (userIds: string[], actorId: string): Promise<void> => {
+  if (!userIds.length) return;
+
+  const logs = await new Parse.Query(collections.UserAuditLog)
+    .containedIn('userId', userIds)
+    .doesNotExist('destroyedAt')
+    .select(['objectId'])
+    // an account restored then deleted again carries one log per deletion, hence the margin
+    .limit(userIds.length + DEFAULT_QUERY_LIMIT)
+    .find(USE_MASTER_KEY);
+
+  const destroyedAt = new Date();
+
+  logs.forEach((log) => {
+    log.set('destroyedAt', destroyedAt);
+    log.set('destroyedById', actorId);
+  });
+
+  await Parse.Object.saveAll(logs, USE_MASTER_KEY);
 };

@@ -33,7 +33,9 @@ import {
   generateEncryptedVerificationCode, getUserPlatforms, logoutUserOtherDevices, revertPlatformEscalation,
   revertRegisterStepOfUnverifiedAccount, revertServerManagedUserFields,
 } from '../../utils/_core/user.utils.cloud';
-import { parseFunction, setBooleanFields, shouldSkipTriggerCascade } from '../../utils/_core/utils.cloud';
+import {
+  getActingUser, parseFunction, setBooleanFields, shouldSkipTriggerCascade,
+} from '../../utils/_core/utils.cloud';
 import { parseTriggerValidation, signupTriggerValidation } from '../../utils/_core/validation.utils.cloud';
 
 
@@ -448,12 +450,16 @@ Parse.Cloud.afterSave(
       if (pendingInvitation) await grantInvitationRoles(user, pendingInvitation);
     }
 
-    // deleted — currentUser is null when saved via master key inside a Cloud Function (self-deletion)
+    /*
+     * deleted — a master-key save inside a Cloud Function carries no session: the back-office one
+     * names its admin in the save context, an account's own deletion names nobody, so the account
+     * is the one who deleted it
+     */
     if (dirtyKeys.includes('deleted') && user.get('deleted')) {
-      const deleted = currentUser ?? user;
-      const updatedUser = await deleteUser(user, deleted);
+      const deletedBy = getActingUser(request) ?? user;
+      const updatedUser = await deleteUser(user, deletedBy);
 
-      logger.info(`User ${updatedUser?.id} deleted by ${deleted.get('username')}`);
+      logger.info(`User ${updatedUser?.id} deleted by ${deletedBy.id}`);
     }
 
     logger.info(`End User update afterSave [${user.id}] by ${currentUser?.get('username')}`);

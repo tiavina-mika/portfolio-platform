@@ -7,7 +7,7 @@ import { IUserAuditLog } from '@/types/_core/auditLog.type';
 import { IUser } from '@/types/_core/user.type';
 import { DateType } from '@/types/_core/utils.type';
 import { displayDate, getAgeByBirthday, getParseDateValue } from '@/utils/_core/date.utils';
-import { getSexLabelByValue } from '@/utils/_core/user.utils';
+import { getDeletionReasonLabel, getSexLabelByValue } from '@/utils/_core/user.utils';
 
 type Props = {
   user: IUser;
@@ -69,7 +69,9 @@ const UserDetails = ({ user, deletionAudit }: Props) => {
     },
     {
       label: t('user:deletionReason'),
-      value: deletionAudit?.deletionReason ?? user.deletionReason,
+      value: deletionAudit?.deletionReason
+        ? getDeletionReasonLabel(deletionAudit.deletionReason, deletionAudit.deletionReasonDetails)
+        : getDeletionReasonLabel(user.deletionReason, user.deletionReasonDetails),
       hide: !isDeleted && !user.deletionReason,
     },
   ];

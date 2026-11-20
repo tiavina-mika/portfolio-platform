@@ -1,5 +1,5 @@
 import {
-  BanReasonEnum, BanTypeEnum, VerificationSmsErrorEnum,
+  type AdminAccountDeletionReasonEnum, BanReasonEnum, BanTypeEnum, VerificationSmsErrorEnum,
 } from '@shared/types';
 import dayjs from 'dayjs';
 
@@ -29,6 +29,7 @@ import { consumeSmsSendQuota } from '@/utils/_core/sms-quota.utils';
 import { appendBan, closeBanInForce } from '@/utils/_core/user.utils';
 import { escapeText } from '@/utils/_core/utils';
 
+import { markAuditLogsAsDestroyed } from './auditLog.service.cloud';
 import { createNotification, removeRecipientFromNotifications } from './notification.service.cloud';
 import { alertOwners } from './ownerAlert.service.cloud';
 import { createUserModerationLog } from './userModerationLog.service.cloud';
@@ -45,7 +46,7 @@ import { getUserPhoneSearchQueries } from '../../utils/_core/user-search.utils.c
 import {
   getBanMessage, generateEncryptedVerificationCode, getDecryptedUserCode, toActorSnapshot, toEmailRecipient,
 } from '../../utils/_core/user.utils.cloud';
-import { saveTriggerOptions } from '../../utils/_core/utils.cloud';
+import { actingUserContext, saveTriggerOptions } from '../../utils/_core/utils.cloud';
 
 /**
  * Business domains declare whether an account should be blocked from self-deletion
@@ -484,6 +485,29 @@ export const assertCanDeleteUsers = async (
   if (!remainingOwner) throw new Error(translate('error.cannotDeleteLastOwner', locale));
 };
 
+/**
+ * Moves an account to the recycle bin on an administrator's decision, with the reason they gave.
+ * The save is a master-key one, which carries no session: the admin's id goes along in the save
+ * context, so the triggers record them as the one who deleted it rather than the account holder.
+ * @param user the account to delete
+ * @param admin the back-office user deleting it
+ * @param reason why the team deletes it
+ * @param reasonDetails the admin's own wording, required by the validation when the reason is "other"
+ */
+export const binUserByAdmin = async (
+  user: Parse.User,
+  admin: Parse.User,
+  reason: AdminAccountDeletionReasonEnum,
+  reasonDetails?: string
+): Promise<Parse.User> => {
+  user.set('deleted', true);
+  user.set('deletionReason', reason);
+  if (reasonDetails) user.set('deletionReasonDetails', reasonDetails);
+  else user.unset('deletionReasonDetails');
+
+  return user.save(null, { ...USE_MASTER_KEY, ...actingUserContext(admin) });
+};
+
 export const deleteUser = async (
   user: Parse.User,
   currentUser: Parse.User,
@@ -536,22 +560,23 @@ export const destroyBinnedUsers = async (
     await assertCanActOnUser(actor, user, locale);
   }
 
-  let destroyedCount = 0;
+  const destroyedIds: string[] = [];
 
   try {
     for (const user of users) {
       await user.destroy(USE_MASTER_KEY);
-      destroyedCount += 1;
+      destroyedIds.push(user.id);
     }
   }
   finally {
-    // a failure partway still leaves accounts erased: the owners hear of those
-    if (destroyedCount) {
-      await alertOwners(OwnerAlertEventEnum.USERS_DESTROYED, actor, { count: String(destroyedCount) });
+    // a failure partway still leaves accounts erased: they leave the bin and the owners hear of them
+    if (destroyedIds.length) {
+      await markAuditLogsAsDestroyed(destroyedIds, actor.id);
+      await alertOwners(OwnerAlertEventEnum.USERS_DESTROYED, actor, { count: String(destroyedIds.length) });
     }
   }
 
-  return destroyedCount;
+  return destroyedIds.length;
 };
 
 /*

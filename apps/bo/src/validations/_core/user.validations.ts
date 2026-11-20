@@ -1,5 +1,5 @@
-import { ContactChangeTypeEnum } from '@shared/types';
-import { banFormSchema } from '@shared/validations';
+import { AdminAccountDeletionReasonEnum, ContactChangeTypeEnum } from '@shared/types';
+import { adminAccountDeletionShape, banFormSchema, hasAdminAccountDeletionDetails } from '@shared/validations';
 import { z } from 'zod';
 
 import i18n from '@/config/i18n';
@@ -49,6 +49,24 @@ export const notificationFilterSchema = z.object({
 });
 
 export const banUserFormSchema = banFormSchema;
+
+/*
+ * the server applies the same rule: "other" says nothing until it is written out. The reason keeps
+ * the shared enum but states its own refusal: the generic one of an empty select reads "invalid
+ * option", where the admin simply has not picked one yet
+ */
+export const deleteUserFormSchema = z.object({
+  ...adminAccountDeletionShape,
+  reason: z.enum(AdminAccountDeletionReasonEnum, { error: () => i18n.t('user:deletion.reasonRequired') }),
+}).superRefine((values, context) => {
+  if (hasAdminAccountDeletionDetails(values)) return;
+
+  context.addIssue({
+    code: 'custom',
+    path: ['reasonDetails'],
+    message: i18n.t('user:deletion.detailsRequired'),
+  });
+});
 
 /*
  * Helping a member back into their account is a decision taken on someone else's account: the

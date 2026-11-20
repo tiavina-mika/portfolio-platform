@@ -1,5 +1,5 @@
 import {
-  array, enum as zEnum, number, object, string,
+  array, boolean, enum as zEnum, number, object, string,
 } from 'zod';
 
 import { USER_AUDIT_TRAIL_MAX_LIMIT } from '@/constants/_core/user.constants';
@@ -14,6 +14,7 @@ const auditLogSearchSchema = object({
 
 export const getAuditLogsSchema = paginationQuerySchema.extend({
   search: auditLogSearchSchema,
+  inBin: boolean().optional(),
 });
 
 export const getAuditLogByUserIdSchema = object({

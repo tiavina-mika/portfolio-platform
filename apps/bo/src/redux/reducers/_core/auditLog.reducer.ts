@@ -22,6 +22,13 @@ export const auditLog = createSlice({
     setAuditLogLoadingSlice: (state: IUserAuditLogState, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
+    // the accounts just erased for good leave the recycle bin without reloading the page
+    removeAuditLogsByUserIdsSlice: (state: IUserAuditLogState, action: PayloadAction<string[]>) => {
+      const remaining = state.auditLogs.filter((log) => !action.payload.includes(log.userId));
+
+      state.count = Math.max(0, state.count - (state.auditLogs.length - remaining.length));
+      state.auditLogs = remaining;
+    },
     clearAuditLogsSlice: (state: IUserAuditLogState) => {
       state.auditLogs = [];
       state.count = 0;
@@ -36,6 +43,7 @@ export const {
   loadAuditLogsSlice,
   setAuditLogCountSlice,
   setAuditLogLoadingSlice,
+  removeAuditLogsByUserIdsSlice,
   clearAuditLogsSlice,
   setCurrentAuditLogSlice,
 } = auditLog.actions;

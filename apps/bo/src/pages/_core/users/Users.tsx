@@ -28,6 +28,7 @@ import { SKELETON_LINE_HEIGHT, SKELETON_PRIMARY_LINE_WIDTH } from '@/constants/_
 import { RELATION_OPTIONS_LIMIT, usersTabOptions } from '@/constants/_core/user.constants';
 import InviteUserForm from '@/containers/_core/roles/InviteUserForm';
 import AuditLogAdvancedFilterForm from '@/containers/_core/users/AuditLogAdvancedFilterForm';
+import DeleteUserForm from '@/containers/_core/users/DeleteUserForm';
 import RolesChip from '@/containers/_core/users/RolesChip';
 import SendMessageForm from '@/containers/_core/users/SendMessageForm';
 import UserAdvancedFilterForm from '@/containers/_core/users/UserAdvancedFilterForm';
@@ -40,7 +41,7 @@ import { loadAuditLogs } from '@/redux/actions/_core/auditLog.action';
 import { sendBOInvitation } from '@/redux/actions/_core/invitation.action';
 import { loadRoles } from '@/redux/actions/_core/role.action';
 import {
-  deleteUserById, deleteUsersById, exportUsers, goToUser, loadUsers, sendMessageToUser,
+  deleteUserById, deleteUsersById, destroyUsers, exportUsers, goToUser, loadUsers, sendMessageToUser,
   toggleUsersNotification,
 } from '@/redux/actions/_core/user.action';
 import { getAppCurrentUserSelector } from '@/redux/reducers/_core/app.reducer';
@@ -55,17 +56,18 @@ import {
 } from '@/types/_core/app.type';
 import { ISendInvitationInput } from '@/types/_core/invitation.type';
 import {
-  IUser, IUsersRouteSearchParams, SendMessageFormInput,
+  DeleteUserInput, IUser, IUsersRouteSearchParams, SendMessageFormInput,
 } from '@/types/_core/user.type';
 import { isCurrentTab } from '@/utils/_core/app.utils';
 import { displayDate } from '@/utils/_core/date.utils';
 import {
-  getAuditLogContactLines, getFullPhoneNumber, getUserAuditLogColumns,
+  getAuditLogContactLines, getDeletionReasonLabel, getFullPhoneNumber, getUserAuditLogColumns,
   getUserFullName, getUserLastConnectedAt, getUserLastPlatformLabel, getUserListColumns, getUserNameLines,
 } from '@/utils/_core/user.utils';
 
 const SEND_MESSAGE_TO_USER_FORM_ID = 'send-message-form-id';
 const INVITE_USER_FORM_ID = 'invite-user-form-id';
+const DELETE_USER_FORM_ID = 'delete-user-form-id';
 const AUDIT_LOG_TAB_KEY = 'auditLog';
 const ADMIN_TAB_KEY = 'platform';
 
@@ -274,6 +276,8 @@ const Users = () => {
   const searchParams: IUsersRouteSearchParams = usersRoute.useSearch();
 
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
+  // the accounts the deletion dialog is open for — `name` when it was opened from one row
+  const [pendingDeletion, setPendingDeletion] = useState<{ ids: string[]; name?: string } | null>(null);
   const {
     open: openInviteDialog, toggle: toggleInviteDialog,
   } = useToggle();
@@ -295,12 +299,12 @@ const Users = () => {
   // an account marked seen leaves this tab and stays on every other one
   const isUnseenTab = isCurrentTab(searchParams?.tab, 'news');
 
-  // delete a row
+  // delete a row: the reason is asked first, in the deletion dialog
   const handleDelete = useCallback(
     (user: IUser): void => {
-      dispatch(deleteUserById(user.id));
+      setPendingDeletion({ ids: [user.id], name: getUserFullName(user) || t('user:unnamedMember') });
     },
-    [dispatch]
+    [t]
   );
 
   // go to preview page
@@ -311,9 +315,38 @@ const Users = () => {
     [navigate]
   );
 
-  // delete selected rows
+  // erase for good accounts already in the recycle bin — asked to confirm first, by the list or the row menu
+  const handleDestroy = useCallback(
+    (ids: string[]): void => {
+      dispatch(destroyUsers(ids));
+    },
+    [dispatch]
+  );
+
+  /*
+   * delete selected rows: one reason for the whole selection, asked in the deletion dialog. In the
+   * recycle bin the accounts are already deleted, so the selection is erased for good instead
+   */
   const handleDeleteSelected = (ids: string[]) => {
-    dispatch(deleteUsersById(ids));
+    if (isRecycleBin) {
+      handleDestroy(ids);
+      return;
+    }
+
+    setPendingDeletion({ ids });
+  };
+
+  const handleCloseDeletionDialog = () => {
+    setPendingDeletion(null);
+  };
+
+  const handleDeleteFormSubmit = async (values: DeleteUserInput) => {
+    if (!pendingDeletion) return;
+    const { ids, name } = pendingDeletion;
+
+    // a row's own delete button names the account, the selection band does not
+    await dispatch(name ? deleteUserById(ids[0], values) : deleteUsersById(ids, values));
+    handleCloseDeletionDialog();
   };
 
   const handleCloseDialog = () => {
@@ -356,8 +389,11 @@ const Users = () => {
   const handleUpdateData = (queries: IQueriesInput) => {
     const newQueries = { ...queries, filters: { ...filters, ...queries.filters } };
 
-    if (newQueries.filters?.[AUDIT_LOG_TAB_KEY] || isCurrentTab(newQueries.filters?.tab)) {
-      dispatch(loadAuditLogs(newQueries));
+    const isBinQuery = isCurrentTab(newQueries.filters?.tab);
+
+    if (newQueries.filters?.[AUDIT_LOG_TAB_KEY] || isBinQuery) {
+      // the audit log keeps every deletion, the bin only the accounts not yet erased for good
+      dispatch(loadAuditLogs({ ...newQueries, inBin: isBinQuery }));
     }
     else {
       dispatch(loadUsers(newQueries));
@@ -498,6 +534,7 @@ const Users = () => {
         actions: (
           <ButtonActions
             value={getUserFullName(user)}
+            withDeletionModal={false}
             leadingActions={(
               <Tooltip title={t('user:sendMessage.sendTo', { name: getUserFullName(user) })}>
                 <IconButton aria-label="sendMessage" onClick={handleSelectRow(user)}>
@@ -564,7 +601,7 @@ const Users = () => {
         />
       ),
       initiatedBy: initiatedByLabel(log.deletionInitiatedBy),
-      deletionReason: log.deletionReason ?? '—',
+      deletionReason: getDeletionReasonLabel(log.deletionReason, log.deletionReasonDetails) || '—',
       ...Object.fromEntries(
         getUserAuditLogColumns().map((column) => [column.headCell.id, column.render(log)])
       ),
@@ -585,17 +622,18 @@ const Users = () => {
       email: log.emailBefore ?? '—',
       // masked by the server when the account was closed: enough to tell two members apart, no more
       phone: getFullPhoneNumber(log.phoneBefore) || '—',
-      deletionReason: log.deletionReason ?? '—',
+      deletionReason: getDeletionReasonLabel(log.deletionReason, log.deletionReasonDetails) || '—',
       deletedAt: displayDate(log.timestamp, false, true),
       actions: (
         <ActionsMenu
           label={log.fullNameBefore}
+          onDestroy={() => handleDestroy([log.userId])}
           onPreview={() => handlePreview(log.userId)}
           type="row"
         />
       ),
     }));
-  }, [auditLogs, handlePreview, t]);
+  }, [auditLogs, handleDestroy, handlePreview, t]);
 
   return (
     <>
@@ -607,7 +645,8 @@ const Users = () => {
         )}
       />
       <ListWithSelection<IData | IDataAuditLog | IDataRecycleBin>
-        canDelete={canDelete && !isAuditLogTab && !isRecycleBin}
+        // the recycle bin is only reached with the right to erase for good, which its delete action does
+        canDelete={isRecycleBin || (canDelete && !isAuditLogTab)}
         /*
          * a permission, not a statement about the open tab: it only decides whether the recycle
          * bin has a slot in the tab strip. Narrowing it per tab took that slot away from every
@@ -617,15 +656,19 @@ const Users = () => {
         canUpdate={canEdit}
         count={isAuditLogTab || isRecycleBin ? auditLogCount : count}
         defaultFilters={getDefaultFilters(searchParams)}
-        enableMultipleSelect={!canDestroy && !isAuditLogTab && !isRecycleBin}
+        // the audit log is a record: nothing on it is acted upon
+        enableMultipleSelect={!isAuditLogTab}
+        isDestruction={isRecycleBin}
         items={isAuditLogTab ? auditLogDataTable : isRecycleBin ? recycleBinDataTable : dataTable}
-        onDeleteSelected={isRecycleBin ? undefined : handleDeleteSelected}
+        onDeleteSelected={handleDeleteSelected}
         onExport={isAuditLogTab || isRecycleBin ? undefined : handleExport}
         onMarkAllAsSeen={isAuditLogTab || isRecycleBin ? undefined : handleMarkAllAsSeen}
         onMarkAsSeenSelected={isAuditLogTab || isRecycleBin ? undefined : handleSelectedAsSeen}
         onRowClick={isAuditLogTab ? undefined : handlePreview}
         onUpdateData={handleUpdateData}
         tabs={usersTabOptions}
+        // the accounts' tabs ask for a reason in their own dialog; erasing from the bin is only confirmed
+        withDeletionModal={isRecycleBin}
         headCells={isAuditLogTab
           ? (headCellsAuditLog as any)
           : isRecycleBin ? (headCellsRecycleBin) : filteredHeadCells}
@@ -660,6 +703,23 @@ const Users = () => {
             onSubmit={handleSendMessageFormSubmit}
             user={selectedUser}
           />
+        )}
+      </Dialog>
+      <Dialog
+        fullWidth
+        buttonColor="error"
+        description={t('user:deletion.description')}
+        formId={DELETE_USER_FORM_ID}
+        maxWidth="sm"
+        open={!!pendingDeletion}
+        primaryButtonText={t('delete')}
+        toggle={handleCloseDeletionDialog}
+        title={pendingDeletion?.name
+          ? t('user:deletion.title', { name: pendingDeletion.name })
+          : t('user:deletion.titleSelected', { count: pendingDeletion?.ids.length ?? 0 })}
+      >
+        {pendingDeletion && (
+          <DeleteUserForm formId={DELETE_USER_FORM_ID} onSubmit={handleDeleteFormSubmit} />
         )}
       </Dialog>
       {canCreate && canManageStaff && isAdminTab && (

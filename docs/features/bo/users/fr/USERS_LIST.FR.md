@@ -31,7 +31,7 @@ Droits de la ressource « Utilisateurs », réglés dans la page **Droits** :
 | Consulter | Ouvrir la fiche d'un utilisateur |
 | Créer | Avec la gestion du personnel : inviter un collègue (onglet Administrateurs) |
 | Supprimer | Mettre un compte à la corbeille |
-| Supprimer définitivement | Onglet « Corbeille » |
+| Supprimer définitivement | Onglet « Corbeille » : effacer un compte pour de bon |
 
 Les comptes Owner et Super Admin ont tous les droits.
 
@@ -47,7 +47,9 @@ Les comptes Owner et Super Admin ont tous les droits.
 - Affichage en tableau ou en vignettes, tri par colonne, 20 lignes par écran (50 ou 75 au choix) et bouton
   **Exporter** (CSV ou Excel).
 - L'onglet **Journaux d'audit** liste, pour chaque compte supprimé : le nom et les coordonnées d'origine, qui a
-  demandé la suppression (le membre, un administrateur ou le système), la raison et la date.
+  demandé la suppression (le titulaire du compte, un administrateur ou le système), la raison (avec les précisions
+  écrites par l'administrateur) et la date. Les comptes effacés pour de bon y restent consignés.
+- L'onglet **Corbeille** ne liste que les comptes qui n'ont pas encore été effacés pour de bon.
 
 ## Rechercher / filtrer
 
@@ -64,15 +66,20 @@ Les comptes Owner et Super Admin ont tous les droits.
 - **Inviter un administrateur** : dans l'onglet Administrateurs, le bouton d'invitation demande l'e-mail et
   le ou les postes à donner. La personne reçoit un lien pour créer son compte (voir
   [Connexion et création de compte](../../auth/fr/AUTH.FR.md)). L'invitation exige la gestion du personnel.
-- **Supprimer** : l'icône corbeille, après confirmation, met le compte à la corbeille ; la suppression est
-  consignée dans les journaux d'audit. L'icône n'est pas proposée sur sa propre ligne : on ne peut pas
-  supprimer son propre compte depuis le back-office.
-- **Supprimer plusieurs comptes** : cocher des lignes puis supprimer. La suppression est refusée, et
+- **Supprimer** : l'icône corbeille ouvre une fenêtre qui demande la **raison** de la suppression (fraude,
+  faux compte, compte en double, demande du titulaire, comportement abusif ou autre). Les précisions sont
+  obligatoires pour « Autre ». Une fois validée, le compte part à la corbeille, un message le confirme et la
+  suppression est consignée dans les journaux d'audit au nom de l'administrateur qui l'a faite. L'icône n'est
+  pas proposée sur sa propre ligne : on ne peut pas supprimer son propre compte depuis le back-office.
+- **Supprimer plusieurs comptes** : cocher des lignes puis supprimer ; une seule raison vaut pour toute la
+  sélection. La suppression est refusée, et
   **rien n'est supprimé**, si la sélection contient son propre compte, le compte d'un Propriétaire ou d'un
   Super Administrateur alors que la personne qui supprime n'a pas elle-même l'un de ces deux rôles, ou si
   elle supprimerait le dernier Propriétaire encore actif. Un message explique le refus.
 - **Marquer comme vu** : retire des comptes de l'onglet « Nouveaux ».
-- **Corbeille** : chaque ligne ne propose que l'aperçu.
+- **Corbeille** : chaque ligne propose l'aperçu et un bouton rouge **Supprimer définitivement** ; on peut aussi
+  cocher plusieurs lignes. Une confirmation rappelle que l'action est irréversible. Le compte effacé quitte la
+  corbeille, mais sa trace reste dans les journaux d'audit.
 
 ## Cas d'utilisation typiques
 
@@ -80,7 +87,8 @@ Les comptes Owner et Super Admin ont tous les droits.
 2. **Retrouver un compte** par nom, e-mail ou téléphone.
 3. **Voir qui a accès au back-office** : onglet « Administrateurs » (postes et double authentification).
 4. **Inviter un collègue** avec les bons postes.
-5. **Retrouver qui a supprimé un compte** : onglet « Journaux d'audit ».
+5. **Retrouver qui a supprimé un compte, et pourquoi** : onglet « Journaux d'audit ».
+6. **Effacer pour de bon** un compte déjà à la corbeille : onglet « Corbeille ».
 
 ## Points d'attention / limites actuelles
 

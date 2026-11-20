@@ -7,6 +7,7 @@ import type { IUserAuditLog } from '@/types/_core/auditLog.type';
 import type { UserSectionGroup } from '@/types/_core/user.type';
 
 import { StatusDotColor } from '@/components/StatusDot';
+import i18n from '@/config/i18n';
 import {
   DELETED_ACCOUNT_EMAIL_DOMAIN, PROFILE_COMPLETENESS_COMPLETE_RATIO, PROFILE_COMPLETENESS_PARTIAL_RATIO,
   userLocalStorageKey, notificationTypeOptions, sexOptions, USER_MESSAGE_TEMPLATE_KEYS, userPlatformOptions,
@@ -25,6 +26,24 @@ export const getNotificationTypeLabelByValue = (type: NotificationType): string 
   const typeOption = notificationTypeOptions.find((option: ISelectOption) => option.value === type);
 
   return typeOption?.label ?? type;
+};
+
+/**
+ * Why an account was deleted, as words. The stored reason is a team code when the account was
+ * deleted from the back-office, and the holder's own codes, comma-separated, when they deleted it
+ * themselves; a code the back-office has no label for reads as itself. The admin's own wording
+ * follows the reason.
+ */
+export const getDeletionReasonLabel = (reason?: string, details?: string): string => {
+  if (!reason) return '';
+
+  const label = reason
+    .split(',')
+    .map((code) => code.trim())
+    .map((code) => i18n.t(`user:deletion.reasons.${code}`, { defaultValue: code }))
+    .join(', ');
+
+  return details ? `${label} — ${details}` : label;
 };
 
 /**

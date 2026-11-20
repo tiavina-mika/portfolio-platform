@@ -18,7 +18,7 @@ import { roleNamesSchema } from '@/validations/_core/role.validations';
 import { countBadgeObjects } from '../../services/_core/badgeCount.service.cloud';
 import { attachUserListCounters, attachUserRoles } from '../../services/_core/user-list.service.cloud';
 import {
-  assertCanDeleteUsers, banUser, destroyBinnedUsers, getUserDetailsById, liftUserBan,
+  assertCanDeleteUsers, banUser, binUserByAdmin, destroyBinnedUsers, getUserDetailsById, liftUserBan,
   redactUserDetailsSecrets,
 } from '../../services/_core/user.service.cloud';
 import { getUserIdsFromRoles } from '../../services/_core/userRole.service.cloud';
@@ -201,7 +201,7 @@ Parse.Cloud.define(
 Parse.Cloud.define(
   'deleteUser',
   fromBO(async (request: Parse.Cloud.FunctionRequest): Promise<Parse.User> => {
-    const { id } = (request as any).params;
+    const { id, reason, reasonDetails } = (request as any).params;
 
     await assertInAgentCountries(collections.User, id);
     const user = await new Parse.Query(Parse.User).equalTo('objectId', id).first(USE_MASTER_KEY);
@@ -212,10 +212,7 @@ Parse.Cloud.define(
 
     await assertCanDeleteUsers(request.user!, [user], request.user!.get('locale') ?? DEFAULT_LANGUAGE);
 
-    user.set('deleted', true);
-    const updatedUser = await user.save(null, USE_MASTER_KEY);
-
-    return updatedUser;
+    return binUserByAdmin(user, request.user!, reason, reasonDetails);
   }, ['update'], collections.User),
   parseFunctionValidation(deleteUserSchema)
 );
@@ -223,7 +220,7 @@ Parse.Cloud.define(
 Parse.Cloud.define(
   'deleteUsers',
   fromBO(async (request: Parse.Cloud.FunctionRequest): Promise<Parse.User[]> => {
-    const { ids } = (request as any).params;
+    const { ids, reason, reasonDetails } = (request as any).params;
     const users: Parse.User[] = [];
 
     const usersToDelete = await scopeToAgentCountries(new Parse.Query(Parse.User))
@@ -235,10 +232,7 @@ Parse.Cloud.define(
     await assertCanDeleteUsers(request.user!, usersToDelete, request.user!.get('locale') ?? DEFAULT_LANGUAGE);
 
     for (const user of usersToDelete) {
-      user.set('deleted', true);
-      const updatedUser = await user.save(null, USE_MASTER_KEY);
-
-      users.push(updatedUser);
+      users.push(await binUserByAdmin(user, request.user!, reason, reasonDetails));
     }
 
     return users;

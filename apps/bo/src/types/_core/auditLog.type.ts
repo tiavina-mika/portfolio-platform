@@ -13,9 +13,12 @@ export interface IUserAuditLogAttributes extends IUserDefaultRecord {
   fullNameBefore?: string;
   phoneBefore?: { code: string; number: string };
   deletionReason?: string;
+  deletionReasonDetails?: string;
   deletionInitiatedBy: DeletionInitiatedBy;
   adminId?: string;
   timestamp: DateType;
+  // set when the account was erased for good: the log stays, the account leaves the recycle bin
+  destroyedAt?: DateType;
 }
 
 export type IUserAuditLog = IUserAuditLogAttributes & { id: string };

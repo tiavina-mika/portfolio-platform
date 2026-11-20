@@ -174,7 +174,7 @@ const findAccountDeletionEntries = async (userId: string, limit: number): Promis
   const logs = await new Parse.Query(collections.UserAuditLog)
     .equalTo('userId', userId)
     .equalTo('action', 'account_deleted')
-    .select(['deletionReason', 'deletionInitiatedBy', 'adminId', 'createdAt'])
+    .select(['deletionReason', 'deletionReasonDetails', 'deletionInitiatedBy', 'adminId', 'createdAt'])
     .descending('createdAt')
     .limit(limit)
     .find(USE_MASTER_KEY);
@@ -184,7 +184,10 @@ const findAccountDeletionEntries = async (userId: string, limit: number): Promis
     source: collections.UserAuditLog,
     action: UserAuditTrailActionEnum.ACCOUNT_DELETED,
     performedById: log.get('deletionInitiatedBy') === 'user' ? userId : log.get('adminId'),
-    details: log.get('deletionReason'),
+    // the reason code first, then the free text an administrator typed, when there is one
+    details: [log.get('deletionReason'), log.get('deletionReasonDetails')]
+      .filter(Boolean)
+      .join(' — ') || undefined,
     createdAt: toIso(log.createdAt)!,
   }));
 };

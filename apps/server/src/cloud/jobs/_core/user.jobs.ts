@@ -1,3 +1,4 @@
+import { UserAuditTrailInitiatorEnum } from '@shared/types';
 import dayjs from 'dayjs';
 
 import { collections, DISABLE_TRIGGERS_CONTEXT, USE_MASTER_KEY } from '@/constants/_core/constants';
@@ -43,11 +44,15 @@ defineJob('createUserAuditLogJob', async (request: Parse.Cloud.JobRequest<Create
   const user = await new Parse.Query(Parse.User)
     .select([
       'emailBefore', 'usernameBefore', 'firstNameBefore', 'lastNameBefore', 'phoneBefore',
-      'deletionReason',
+      'deletionReason', 'deletionReasonDetails', 'deletedBy',
     ])
     .get(userId, USE_MASTER_KEY);
 
   if (!user) return;
+
+  // an account deleted by anyone but its owner was deleted from the back-office
+  const deletedById: string | undefined = user.get('deletedBy')?.id;
+  const isDeletedByAdmin = !!deletedById && deletedById !== userId;
 
   const AuditLog = Parse.Object.extend(collections.UserAuditLog);
   const auditLog = new AuditLog();
@@ -59,7 +64,14 @@ defineJob('createUserAuditLogJob', async (request: Parse.Cloud.JobRequest<Create
   auditLog.set('fullNameBefore', `${user.get('firstNameBefore') ?? ''} ${user.get('lastNameBefore') ?? ''}`.trim());
   auditLog.set('phoneBefore', maskPhone(user.get('phoneBefore')));
   auditLog.set('deletionReason', user.get('deletionReason') ?? 'user_requested');
-  auditLog.set('deletionInitiatedBy', 'user');
+  const deletionReasonDetails: string | undefined = user.get('deletionReasonDetails');
+
+  if (deletionReasonDetails) auditLog.set('deletionReasonDetails', deletionReasonDetails);
+  auditLog.set(
+    'deletionInitiatedBy',
+    isDeletedByAdmin ? UserAuditTrailInitiatorEnum.ADMIN : UserAuditTrailInitiatorEnum.USER
+  );
+  if (isDeletedByAdmin) auditLog.set('adminId', deletedById);
   auditLog.set('timestamp', dayjs().toDate());
 
   await auditLog.save(null, USE_MASTER_KEY);

@@ -440,6 +440,26 @@
   },
   "accountDeleted": "Kaonty voafafa",
   "deletionReason": "Antony nanaforana",
+  "deletion": {
+    "title": "Hamafa an'i {{name}}",
+    "titleSelected_one": "Hamafa kaonty {{count}}",
+    "titleSelected_other": "Hamafa kaonty {{count}}",
+    "description": "Hafenina ny mombamomba ny kaonty ary apetraka ao amin'ny fako. Voatahiry ao ny antony sy ny daty namafana azy.",
+    "details": "Fanazavana",
+    "detailsRequired": "Lazao ny antony hamafana ny kaonty.",
+    "reasonRequired": "Mifidiana antony.",
+    "movedToBin_one": "Kaonty {{count}} nafindra any amin’ny fako",
+    "movedToBin_other": "Kaonty {{count}} nafindra any amin’ny fako",
+    "reasons": {
+      "fraud": "Hosoka",
+      "fake_account": "Kaonty sandoka",
+      "duplicate_account": "Kaonty miverina indroa",
+      "member_request": "Fangatahan'ny tompon'ny kaonty (amin'ny alalan'ny fanohanana)",
+      "abusive_behavior": "Fitondran-tena manararaotra",
+      "other": "Hafa",
+      "user_requested": "Nofafan'ny tompon'ny kaonty"
+    }
+  },
   "originalEmail": "Mailaka tany am-boalohany",
   "originalUsername": "Anarana tany am-boalohany",
   "viewAuditLog": "Jereo ny audit",

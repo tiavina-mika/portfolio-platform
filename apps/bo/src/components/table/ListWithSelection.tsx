@@ -35,6 +35,16 @@ type Props<IDataTable, IQuery> = {
    * offers, and ends on the destructive one.
    */
   extraSelectionActions?: IListSelectionAction[];
+  /*
+   * off when the page asks its own questions before deleting (a reason, for instance): the delete
+   * action then hands the selection over at once instead of asking for a generic confirmation first
+   */
+  withDeletionModal?: boolean;
+  /*
+   * on for a recycle bin, whose rows are already deleted: its delete action erases them for good, so
+   * it says so in its label and its confirmation rather than reading like the soft delete elsewhere
+   */
+  isDestruction?: boolean;
 } & Omit<ListProps<IDataTable, IQuery>, 'selectionOptions'>;
 
 const ListWithSelection = <
@@ -50,9 +60,12 @@ const ListWithSelection = <
   canUpdate,
   enableMultipleSelect = true,
   extraSelectionActions = [],
+  withDeletionModal = true,
+  isDestruction = false,
   ...rest
 }: Props<IDataTable, IQuery>) => {
   const { t } = useTranslation();
+  const deleteLabel = isDestruction ? t('destroyPermanently') : t('delete');
   const {
     open,
     toggle,
@@ -108,27 +121,37 @@ const ListWithSelection = <
           ...extraSelectionActions,
           ...seenActions,
           ...activeActions,
-          {
-            label: t('delete'),
-            onClick: toggle,
-            destructive: true,
-            display: !!canDelete && !!onDeleteSelected,
-            /*
-             * renderActionComponent below already makes the selection band skip its auto-reset —
-             * the Dialog owns the reset once confirmed
-             */
-            renderActionComponent: (selectedIds: string[], resetSelectedIds: () => void) => (
-              <Dialog
-                buttonColor="error"
-                description={t('sureToDeleteSelected', { count: selectedIds.length })}
-                maxWidth="xs"
-                onPrimaryButtonAction={handleDeleteSelected(selectedIds, resetSelectedIds)}
-                open={open}
-                title={t('delete')}
-                toggle={toggle}
-              />
-            ),
-          },
+          withDeletionModal
+            ? {
+              label: deleteLabel,
+              onClick: toggle,
+              destructive: true,
+              display: !!canDelete && !!onDeleteSelected,
+              /*
+               * renderActionComponent below already makes the selection band skip its auto-reset —
+               * the Dialog owns the reset once confirmed
+               */
+              renderActionComponent: (selectedIds: string[], resetSelectedIds: () => void) => (
+                <Dialog
+                  buttonColor="error"
+                  maxWidth="xs"
+                  onPrimaryButtonAction={handleDeleteSelected(selectedIds, resetSelectedIds)}
+                  open={open}
+                  title={isDestruction ? t('permanentDeletion') : t('delete')}
+                  toggle={toggle}
+                  description={[
+                    t('sureToDeleteSelected', { count: selectedIds.length }),
+                    isDestruction ? t('infoMessages.onDestructionMessage') : '',
+                  ].join(' ').trim()}
+                />
+              ),
+            }
+            : {
+              label: deleteLabel,
+              onClick: (ids: string[]) => onDeleteSelected?.(ids),
+              destructive: true,
+              display: !!canDelete && !!onDeleteSelected,
+            },
         ]
         : []}
       {...rest}

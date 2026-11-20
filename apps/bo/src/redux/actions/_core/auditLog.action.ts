@@ -28,11 +28,12 @@ export const loadAuditLogs = ({
   orderBy = 'timestamp',
   order = 'desc',
   search,
-}: IQueriesInput): any => {
+  inBin,
+}: IQueriesInput & { inBin?: boolean }): any => {
   return actionWithLoader(
     async (dispatch: AppDispatch): Promise<void> => {
       const result = await fetchAuditLogs({
-        limit, skip, orderBy, order, search,
+        limit, skip, orderBy, order, search, inBin,
       });
 
       dispatch(loadAuditLogsSlice(result.results as any));

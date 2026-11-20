@@ -134,6 +134,7 @@ export const USER_PROTECTED_FIELDS: string[] = [
   'lastNameBefore',
   'phoneBefore',
   'deletionReason',
+  'deletionReasonDetails',
   'bans',
 ];
 
@@ -180,7 +181,7 @@ export const USER_DETAILS_FIELDS: string[] = [
   'banned', 'bans',
   // record traceability
   'createdAt', 'updatedAt', 'seen', 'seenAt', 'lastSeenAt', 'seenCount', 'unseenAt',
-  'deleted', 'deletedAt', 'deletionReason',
+  'deleted', 'deletedAt', 'deletionReason', 'deletionReasonDetails',
 ];
 
 /**

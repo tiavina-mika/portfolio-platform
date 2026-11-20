@@ -11,13 +11,15 @@ export const fetchAuditLogs = async ({
   orderBy,
   order,
   search,
-}: IQueriesInput): Promise<{ results: IUserAuditLog[]; count: number }> => {
+  inBin,
+}: IQueriesInput & { inBin?: boolean }): Promise<{ results: IUserAuditLog[]; count: number }> => {
   const result: { results: Parse.Object[]; count: number } = await Parse.Cloud.run('getAuditLogs', {
     limit,
     skip,
     orderBy,
     order,
     search,
+    inBin,
   });
 
   return {

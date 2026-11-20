@@ -443,6 +443,26 @@
   },
   "accountDeleted": "Compte supprimé",
   "deletionReason": "Raison de suppression",
+  "deletion": {
+    "title": "Supprimer {{name}}",
+    "titleSelected_one": "Supprimer {{count}} compte",
+    "titleSelected_other": "Supprimer {{count}} comptes",
+    "description": "Le compte est anonymisé et placé dans la corbeille. La raison et la date de suppression y sont enregistrées.",
+    "details": "Précisions",
+    "detailsRequired": "Précisez la raison de la suppression.",
+    "reasonRequired": "Sélectionnez une raison.",
+    "movedToBin_one": "{{count}} compte déplacé vers la corbeille",
+    "movedToBin_other": "{{count}} comptes déplacés vers la corbeille",
+    "reasons": {
+      "fraud": "Fraude",
+      "fake_account": "Faux compte",
+      "duplicate_account": "Compte en double",
+      "member_request": "Demande du titulaire du compte (via le support)",
+      "abusive_behavior": "Comportement abusif",
+      "other": "Autre",
+      "user_requested": "Supprimé par le titulaire du compte"
+    }
+  },
   "originalEmail": "Email original",
   "originalUsername": "Nom d'utilisateur original",
   "viewAuditLog": "Voir l'audit",

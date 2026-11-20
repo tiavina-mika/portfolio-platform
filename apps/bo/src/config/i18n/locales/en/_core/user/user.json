@@ -442,6 +442,26 @@
   },
   "accountDeleted": "Account deleted",
   "deletionReason": "Deletion reason",
+  "deletion": {
+    "title": "Delete {{name}}",
+    "titleSelected_one": "Delete {{count}} account",
+    "titleSelected_other": "Delete {{count}} accounts",
+    "description": "The account is anonymized and moved to the recycle bin, where the reason and the deletion date are recorded.",
+    "details": "Details",
+    "detailsRequired": "Say why the account is deleted.",
+    "reasonRequired": "Select a reason.",
+    "movedToBin_one": "{{count}} account moved to the recycle bin",
+    "movedToBin_other": "{{count}} accounts moved to the recycle bin",
+    "reasons": {
+      "fraud": "Fraud",
+      "fake_account": "Fake account",
+      "duplicate_account": "Duplicate account",
+      "member_request": "Account holder's request (through support)",
+      "abusive_behavior": "Abusive behavior",
+      "other": "Other",
+      "user_requested": "Deleted by the account holder"
+    }
+  },
   "originalEmail": "Original email",
   "originalUsername": "Original username",
   "viewAuditLog": "View audit log",

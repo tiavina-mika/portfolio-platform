@@ -4,7 +4,7 @@ import Parse from 'parse';
 import { IFileCloud } from '@/types/_core/file.type';
 import { Locale } from '@/types/_core/setting.type';
 import {
-  BanUserInput, IPhone, IUser, IUserCloudInput, SendMessageInput,
+  BanUserInput, DeleteUserInput, IPhone, IUser, IUserCloudInput, SendMessageInput,
 } from '@/types/_core/user.type';
 import { IToggleSeenResult } from '@/types/_core/utils.type';
 import { uploadFilesAPI } from '@/utils/_core/file.utils';
@@ -89,12 +89,16 @@ export const fetchUsersForExport = async (
   };
 };
 
-export const deleteUserByIdInCloud = async (id: string): Promise<{ id: string }> => {
-  return Parse.Cloud.run('deleteUser', { id });
+// the reason goes along with the deletion: the recycle bin shows it, and the server refuses one without
+export const deleteUserByIdInCloud = async (
+  id: string,
+  values: DeleteUserInput
+): Promise<{ id: string }> => {
+  return Parse.Cloud.run('deleteUser', { id, ...values });
 };
 
-export const deleteUsersByIdsInCloud = async (ids: string[]): Promise<IUser[]> => {
-  const updatedUsers = await Parse.Cloud.run('deleteUsers', { ids });
+export const deleteUsersByIdsInCloud = async (ids: string[], values: DeleteUserInput): Promise<IUser[]> => {
+  const updatedUsers = await Parse.Cloud.run('deleteUsers', { ids, ...values });
 
   return updatedUsers.map((user: Parse.Object) => toJSONWithId<IUser>(user));
 };

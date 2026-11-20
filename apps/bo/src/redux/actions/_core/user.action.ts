@@ -23,6 +23,7 @@ import {
   setErrorSlice,
   setInfoMessageSlice,
 } from '@/redux/reducers/_core/app.reducer';
+import { removeAuditLogsByUserIdsSlice } from '@/redux/reducers/_core/auditLog.reducer';
 import {
   clearRolesDelegationSlice, clearRolesSlice, clearUserRolesSlice,
 } from '@/redux/reducers/_core/role.reducer';
@@ -69,6 +70,7 @@ import {
 import {
   ProfileUserInfoInput, IUser, SendMessageInput, IUserCloudInput,
   AccountHelpReasonInput, BanUserInput, ChangeMemberContactFormInput, ChangeMemberCountryFormInput,
+  DeleteUserInput,
 } from '@/types/_core/user.type';
 import {
   applySeenToItems, convertSearchParamsToFilters, isCurrentTab,
@@ -217,7 +219,7 @@ export const uploadCurrentUserProfileImage = (file: File): any => {
  * @param id
  * @returns
  */
-export const deleteUserById = (id: string): any => {
+export const deleteUserById = (id: string, values: DeleteUserInput): any => {
   return actionWithLoader(async (dispatch: AppDispatch): Promise<void | undefined> => {
     /*
      * only the user or the MasterKey can update or deleted its own account
@@ -225,9 +227,10 @@ export const deleteUserById = (id: string): any => {
      * so we use the parse cloud function to do that, instead of a REST API
      * you can sse the cloud function in server in the /cloud/hooks/users.js file
      */
-    const updatedUser = await deleteUserByIdInCloud(id);
+    const updatedUser = await deleteUserByIdInCloud(id, values);
 
     dispatch(deleteUsersSlice(updatedUser.id));
+    dispatch(setMessageSlice(i18n.t('user:deletion.movedToBin', { count: 1 })));
   },
   // rights
   {
@@ -236,7 +239,7 @@ export const deleteUserById = (id: string): any => {
   });
 };
 
-export const deleteUsersById = (ids: string[]): any => {
+export const deleteUsersById = (ids: string[], values: DeleteUserInput): any => {
   return actionWithLoader(async (dispatch: AppDispatch): Promise<void> => {
     /*
      * only the user or the MasterKey can update or deleted its own account
@@ -244,10 +247,11 @@ export const deleteUsersById = (ids: string[]): any => {
      * so we use the parse cloud function to do that, instead of a REST API
      * you can sse the cloud function in server in the /cloud/hooks/users.js file
      */
-    const updatedUsers = await deleteUsersByIdsInCloud(ids);
+    const updatedUsers = await deleteUsersByIdsInCloud(ids, values);
 
     // soft-deleted accounts leave the list right away, as a reload would do
     updatedUsers.forEach((deletedUser: IUser) => dispatch(deleteUsersSlice(deletedUser.id)));
+    dispatch(setMessageSlice(i18n.t('user:deletion.movedToBin', { count: updatedUsers.length })));
   },
   // rights
   {
@@ -257,11 +261,8 @@ export const deleteUsersById = (ids: string[]): any => {
 };
 
 /**
- * this will delete the data from database
- * be careful when using it,
- * only the highest level (ex: Admin) can do this
- * @param ids
- * @returns
+ * Erases for good accounts already in the recycle bin — only the highest roles may.
+ * @param ids the accounts to erase
  */
 export const destroyUsers = (ids: string[]): any => {
   return actionWithLoader(async (dispatch: AppDispatch): Promise<void> => {
@@ -281,10 +282,11 @@ export const destroyUsers = (ids: string[]): any => {
       )
     );
 
-    // reload the list of deleted requests
-    const params = { filters: { deleted: true } };
-
-    dispatch(loadUsers(params as any));
+    /*
+     * the recycle bin lists the accounts' deletion logs, which outlive the accounts: the erased
+     * ones are taken off the page the admin is on rather than reloading it from the first page
+     */
+    dispatch(removeAuditLogsByUserIdsSlice(ids));
   },
   // rights
   {

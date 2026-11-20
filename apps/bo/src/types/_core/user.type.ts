@@ -14,7 +14,7 @@ import { IRole } from '@/types/_core/role.type';
 import { sendMessageFormSchema, sendMessageSchema } from '@/validations/_core/email.validations';
 import {
   accountHelpReasonFormSchema, banUserFormSchema, changeMemberContactFormSchema,
-  changeMemberCountryFormSchema, userFilterSchema, usersRouteSearchParams,
+  changeMemberCountryFormSchema, deleteUserFormSchema, userFilterSchema, usersRouteSearchParams,
 } from '@/validations/_core/user.validations';
 
 
@@ -24,6 +24,7 @@ export type UserMessageTemplateKey = typeof USER_MESSAGE_TEMPLATE_KEYS[number];
 export type UserFiltersInput = z.infer<typeof userFilterSchema>;
 export type IUsersRouteSearchParams = z.infer<typeof usersRouteSearchParams>;
 export type BanUserInput = z.infer<typeof banUserFormSchema>;
+export type DeleteUserInput = z.infer<typeof deleteUserFormSchema>;
 export type AccountHelpReasonInput = z.infer<typeof accountHelpReasonFormSchema>;
 export type ChangeMemberContactFormInput = z.infer<typeof changeMemberContactFormSchema>;
 export type ChangeMemberCountryFormInput = z.infer<typeof changeMemberCountryFormSchema>;
@@ -111,7 +112,13 @@ export interface IUserAttributes extends IUserDefaultRecord {
    */
   notificationPreferences?: NotificationPreferences;
   spokenLanguages?: string[];
+  /**
+   * A team code (AdminAccountDeletionReasonEnum) when the account was deleted from the back-office,
+   * the account's own reasons, comma-separated, when it was deleted by its holder
+   */
   deletionReason?: string;
+  /** what the admin wrote along with the reason — always present when it is "other" */
+  deletionReasonDetails?: string;
   mfa?: IMfa;
 }
 
