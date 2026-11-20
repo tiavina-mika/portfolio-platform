@@ -33,6 +33,7 @@ import {
   resendNotificationFailedDeliveries, restoreNotifications,
 } from '@/redux/actions/_core/notification.action';
 import { goToList } from '@/redux/actions/_core/util.action';
+import { getAppLoadingSelector } from '@/redux/reducers/_core/app.reducer';
 import {
   getNotificationNotificationSelector, getNotificationResendableChannelsSelector,
   getNotificationResendsSelector,
@@ -75,6 +76,7 @@ const Notification = () => {
   const dispatch = useDispatch();
   const notification = useSelector(getNotificationNotificationSelector);
   const resends = useSelector(getNotificationResendsSelector);
+  const loading = useSelector(getAppLoadingSelector);
   const resendableChannels = useSelector(getNotificationResendableChannelsSelector);
   const { canDelete, canDestroy, canEdit } = useProtect(collection);
   const [isConfirmingFailuresResend, setIsConfirmingFailuresResend] = useState(false);
@@ -215,6 +217,7 @@ const Notification = () => {
           <NotificationFailureChips notification={notification} />
           {canResend && retryableFailedCount > 0 && (
             <Button
+              loading={loading}
               onClick={handleRequestAllFailuresResend}
               size="small"
               startIcon={<FiRefreshCw size={MENU_ITEM_ICON_SIZE} />}

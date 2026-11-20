@@ -497,7 +497,7 @@ export type TranslatedFieldOption = {
 export type MiscOption = {
   color: string;
   label: string;
-  action: () => void;
+  action: () => unknown;
   withSeparator?: boolean;
 };
 

@@ -15,6 +15,7 @@ type Props = {
   deletedAt?: DateType;
   canLift: boolean;
   onLift: () => void;
+  loading?: boolean;
 };
 
 /**
@@ -22,7 +23,7 @@ type Props = {
  * platform — by whom, until when and why — or that it was deleted.
  */
 const UserSuspensionBanner = ({
-  teamBan, deletedAt, canLift, onLift,
+  teamBan, deletedAt, canLift, onLift, loading = false,
 }: Props) => {
   const { t } = useTranslation(['user']);
 
@@ -64,6 +65,7 @@ const UserSuspensionBanner = ({
       action={canLift && (
         <Button
           color="inherit"
+          loading={loading}
           onClick={onLift}
           size="small"
           variant="outlined"

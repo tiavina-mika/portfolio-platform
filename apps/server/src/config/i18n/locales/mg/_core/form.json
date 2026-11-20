@@ -37,6 +37,11 @@
     "vehicleDocumentExpiryMismatch": "Ilaina ny daty fiafaran'ny fanontaniana ho an'ny fiantohana sy ny fitiliana ara-teknika, ary tsy tokony hofenoina ho an'ny taratasy fiaraha-miasa",
     "vehicleDocumentExpiryInPast": "Tsy maintsy ho amin'ny hoavy ny daty fiafaran'ny taratasy",
     "invalidContactPhone": "Tsy maintsy laharana finday manan-kery avy amin'ny firenena alefantsika SMS ny laharana",
+    "passwordNeedsLowercase": "Ny tenimiafina dia tsy maintsy misy litera kely iray farafahabatsiny",
+    "passwordNeedsUppercase": "Ny tenimiafina dia tsy maintsy misy litera lehibe iray farafahabatsiny",
+    "passwordNeedsDigit": "Ny tenimiafina dia tsy maintsy misy isa iray farafahabatsiny",
+    "passwordSameAsIdentifier": "Tsy tokony ho ny laharan'ny findainao na ny mailakao ny tenimiafina",
+    "passwordContainsEmailWord": "Tsy tokony hisy teny ao amin'ny mailakao ny tenimiafina",
     "contactEmailOrPhoneRequired": "Ampidiro ny mailaka na ny laharan-telefaona mba hahafahanay mamaly anao"
   },
   "name": {

@@ -1,6 +1,6 @@
 import { type Theme } from '@emotion/react';
 import {
-  Button, IconButton, Tooltip,
+  Button, CircularProgress, IconButton, Tooltip,
 } from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
@@ -12,7 +12,9 @@ import {
   FiRotateCcw, FiTrash,
 } from 'react-icons/fi';
 
-import { RowEditIcon, RowMoreIcon, RowPreviewIcon } from '@/components/icons/RowActionIcons';
+import {
+  RowDeleteIcon, RowEditIcon, RowMoreIcon, RowPreviewIcon,
+} from '@/components/icons/RowActionIcons';
 import { ROW_ACTIONS_ICON_SIZE } from '@/constants/_core/ui/list.constants';
 import { PAGE_HEAD_ACTION_ICON_SIZE } from '@/constants/_core/ui/page.constants';
 import {
@@ -41,17 +43,17 @@ const classes = {
 
 export type ActionsMenuProps = {
   onEdit?: () => void;
-  onDelete?: () => void;
+  onDelete?: () => void | Promise<unknown>;
   goToList?: () => void;
   onCreate?: () => void;
   onPreview?: () => void;
-  onDestroy?: () => void;
+  onDestroy?: () => void | Promise<unknown>;
   /**
    * Puts a row back where it came from. Only the recycle bin passes it: until now the bin offered
    * "destroy permanently" as its single action, so a row deleted by mistake could only be
    * destroyed for good or left there forever.
    */
-  onRestore?: () => void;
+  onRestore?: () => void | Promise<unknown>;
   onDownloadJson?: () => void;
   websiteUrl?: string;
   label?: string;
@@ -84,6 +86,8 @@ const ActionsMenu = ({
 }: ActionsMenuProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  // a delete, a destruction or a restore is a server call: the row stays inert until it settles
+  const [isBusy, setIsBusy] = useState<boolean>(false);
   const {
     t,
   } = useTranslation();
@@ -91,6 +95,16 @@ const ActionsMenu = ({
   const {
     open: openDeleteDialog, toggle: toggleDeleteDialog,
   } = useToggle();
+
+  const runBusy = async (action: () => void | Promise<unknown>) => {
+    setIsBusy(true);
+    try {
+      await action();
+    }
+    finally {
+      setIsBusy(false);
+    }
+  };
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
@@ -135,7 +149,13 @@ const ActionsMenu = ({
     event.stopPropagation();
     handleClose();
     if (!onRestore) return;
-    onRestore();
+    runBusy(onRestore);
+  };
+
+  const handleConfirmDelete = () => {
+    const confirmed = onDelete || onDestroy;
+
+    if (confirmed) runBusy(confirmed);
   };
 
   const handleConfirmDeleteDialogClick = (event: MouseEvent<HTMLDivElement>) => {
@@ -149,6 +169,15 @@ const ActionsMenu = ({
 
   const isRow = type === 'row';
   const isPreview = type === 'preview';
+  /*
+   * a recycle bin row: what is there is already deleted, so its delete action erases it for good.
+   * Called plainly "delete" and folded into the overflow menu, it read as the soft delete every
+   * other tab offers and could not be found at all — so it says what it does and, on a row, stands
+   * on the row itself like the delete button of the live tabs
+   */
+  const isDestruction = !!onDestroy && !onDelete;
+  const isDestroyOnRow = isRow && isDestruction;
+  const destroyLabel = t('destroyPermanently');
 
   const options = [
     {
@@ -202,8 +231,8 @@ const ActionsMenu = ({
     ...menus, // before delete
     {
       onClick: handleDelete,
-      display: !!onDelete || !!onDestroy,
-      label: t('delete'),
+      display: (!!onDelete || !!onDestroy) && !isDestroyOnRow,
+      label: isDestruction ? destroyLabel : t('delete'),
       icon: <FiTrash size={MENU_ITEM_ICON_SIZE} />,
       isDestructive: true,
     },
@@ -218,14 +247,14 @@ const ActionsMenu = ({
         <div css={classes.rowActions}>
           {onPreview && (
             <Tooltip title={t('viewDetails')}>
-              <IconButton aria-label="preview" onClick={handlePreview}>
+              <IconButton aria-label="preview" disabled={isBusy} onClick={handlePreview}>
                 <RowPreviewIcon size={ROW_ACTIONS_ICON_SIZE} />
               </IconButton>
             </Tooltip>
           )}
           {onEdit && (
             <Tooltip title={t('edit')}>
-              <IconButton aria-label="edit" onClick={handleEdit}>
+              <IconButton aria-label="edit" disabled={isBusy} onClick={handleEdit}>
                 <RowEditIcon size={ROW_ACTIONS_ICON_SIZE} />
               </IconButton>
             </Tooltip>
@@ -234,6 +263,20 @@ const ActionsMenu = ({
             <Tooltip title={t('otherActions')}>
               <IconButton aria-expanded={open} aria-label="otherActions" onClick={handleClick}>
                 <RowMoreIcon size={ROW_ACTIONS_ICON_SIZE} />
+              </IconButton>
+            </Tooltip>
+          )}
+          {isDestroyOnRow && (
+            <Tooltip title={destroyLabel}>
+              <IconButton
+                aria-label={destroyLabel}
+                color="error"
+                disabled={isBusy}
+                onClick={handleDelete}
+              >
+                {isBusy
+                  ? <CircularProgress aria-label={t('loading')} size={ROW_ACTIONS_ICON_SIZE} />
+                  : <RowDeleteIcon size={ROW_ACTIONS_ICON_SIZE} />}
               </IconButton>
             </Tooltip>
           )}
@@ -250,6 +293,7 @@ const ActionsMenu = ({
         <>
           {onEdit && (
             <Button
+              disabled={isBusy}
               onClick={handleEdit}
               startIcon={<FiEdit3 size={PAGE_HEAD_ACTION_ICON_SIZE} />}
               variant="contained"
@@ -270,7 +314,13 @@ const ActionsMenu = ({
 
     if (type === 'button') {
       return (
-        <Button endIcon={<FiChevronDown />} onClick={handleClick} variant="outlined">
+        <Button
+          disabled={isBusy}
+          endIcon={<FiChevronDown />}
+          loading={isBusy}
+          onClick={handleClick}
+          variant="outlined"
+        >
           Actions
         </Button>
       );
@@ -305,6 +355,7 @@ const ActionsMenu = ({
         {options.map((option, index) => (
           option.display && (
             <MenuItem
+              disabled={isBusy}
               key={index}
               onClick={option.onClick}
               css={'isDestructive' in option && option.isDestructive
@@ -325,9 +376,9 @@ const ActionsMenu = ({
         buttonColor="error"
         maxWidth="xs"
         onClick={handleConfirmDeleteDialogClick}
-        onPrimaryButtonAction={onDelete || onDestroy}
+        onPrimaryButtonAction={handleConfirmDelete}
         open={openDeleteDialog}
-        title={t('deletion')}
+        title={isDestruction ? t('permanentDeletion') : t('deletion')}
         toggle={handleCloseDeleteDialog}
         description={dialogDescription || (onDestroy
           ? t('infoMessages.onDestructionMessage')

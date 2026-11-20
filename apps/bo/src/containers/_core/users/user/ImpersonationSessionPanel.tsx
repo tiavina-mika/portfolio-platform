@@ -14,6 +14,7 @@ type Props = {
   session: ImpersonationSession;
   userFullName: string;
   onEndSession: () => void;
+  loading?: boolean;
 };
 
 /**
@@ -21,7 +22,9 @@ type Props = {
  * as a QR code to scan from the phone that will run the session, plus the raw link for a device
  * that cannot scan. The link is shown once — it is never stored anywhere the agent can go back to.
  */
-const ImpersonationSessionPanel = ({ session, userFullName, onEndSession }: Props) => {
+const ImpersonationSessionPanel = ({
+  session, userFullName, onEndSession, loading = false,
+}: Props) => {
   const { t } = useTranslation(['common', 'user']);
   const [isCopied, setIsCopied] = useState(false);
   const deepLink = buildImpersonationDeepLink(session);
@@ -59,6 +62,7 @@ const ImpersonationSessionPanel = ({ session, userFullName, onEndSession }: Prop
         </Button>
         <Button
           color="error"
+          loading={loading}
           onClick={onEndSession}
           startIcon={<FiXCircle />}
           variant="outlined"

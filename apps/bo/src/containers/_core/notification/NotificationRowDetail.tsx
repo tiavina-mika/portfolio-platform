@@ -68,6 +68,7 @@ type Props = {
   onResendFailed?: () => void;
   /** Pushes the send again to the recipients who have not opened it. */
   onResendUnread?: () => void;
+  loading?: boolean;
 };
 
 /**
@@ -80,7 +81,7 @@ type Props = {
  * row is the whole task.
  */
 const NotificationRowDetail = ({
-  notification, onResendFailed, onResendUnread,
+  notification, onResendFailed, onResendUnread, loading = false,
 }: Props) => {
   const { t } = useTranslation(['common', 'user']);
 
@@ -188,12 +189,12 @@ const NotificationRowDetail = ({
           * message to people it already reached is not a smaller version of this one
           */}
         {!!onResendFailed && failedCount > 0 && (
-          <Button onClick={onResendFailed} variant="outlined">
+          <Button loading={loading} onClick={onResendFailed} variant="outlined">
             {t('user:notifications.resendFailuresWithCount', { count: failedCount })}
           </Button>
         )}
         {!!onResendUnread && unreadCount > 0 && (
-          <Button onClick={onResendUnread} variant="outlined">
+          <Button loading={loading} onClick={onResendUnread} variant="outlined">
             {t('user:notifications.resendUnreadWithCount', { count: unreadCount })}
           </Button>
         )}

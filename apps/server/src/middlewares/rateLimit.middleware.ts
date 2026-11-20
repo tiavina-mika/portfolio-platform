@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { posix } from 'node:path';
 
 import type { NextFunction, Request, Response } from 'express';
@@ -21,9 +22,16 @@ export const RATE_LIMIT_MESSAGE_TEXT = 'Too many requests, please try again late
 const RATE_LIMIT_MESSAGE = { message: RATE_LIMIT_MESSAGE_TEXT };
 
 /**
- * Allowance of the auth limiter, shared with Parse Server's own `rateLimit` option (see index.ts)
- * so a caller gets the same budget whichever of the two it goes through.
+ * Allowances of the auth limiter. The address allowance is shared with Parse Server's own `rateLimit`
+ * option (see index.ts) so a caller gets the same budget whichever of the two it goes through.
+ *
+ * Wide on purpose: several people can leave through the one public address of an office or a mobile
+ * operator, so a tight cap per address refuses people who have done nothing. What stops a guess at one
+ * account is the cap on that account's identifier below, the account lockout and the per-code attempt
+ * limit; the address cap only bounds a script that spreads its tries over many identifiers.
  */
+export const AUTH_IP_RATE_LIMIT_MAX_REQUESTS = 100;
+/** Allowance for one identifier (email, phone number, session) tried from one address on one route. */
 export const AUTH_RATE_LIMIT_MAX_REQUESTS = 10;
 export const AUTH_RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
 
@@ -41,12 +49,23 @@ const lazyRatelimit = (factory: () => Ratelimit): (() => Ratelimit) => {
 };
 
 /**
- * Login, signup, and verification-code endpoints — brute-force / account-enumeration risk.
+ * Login, signup, and verification-code endpoints — brute-force / account-enumeration risk. Counted per
+ * address and route: the wide cap that bounds a script, not the one that protects an account.
  */
 const getAuthLimiter = lazyRatelimit(() => new Ratelimit({
   redis: getRedis(),
-  limiter: Ratelimit.slidingWindow(AUTH_RATE_LIMIT_MAX_REQUESTS, '15 m'),
+  limiter: Ratelimit.slidingWindow(AUTH_IP_RATE_LIMIT_MAX_REQUESTS, '15 m'),
   prefix: 'ratelimit:auth',
+}));
+
+/**
+ * The same routes, counted per address, route and identifier: a script aimed at one account is stopped
+ * after a few tries without taking the other people behind the same address down with it.
+ */
+const getAuthIdentifierLimiter = lazyRatelimit(() => new Ratelimit({
+  redis: getRedis(),
+  limiter: Ratelimit.slidingWindow(AUTH_RATE_LIMIT_MAX_REQUESTS, '15 m'),
+  prefix: 'ratelimit:authIdentifier',
 }));
 
 /**
@@ -169,11 +188,116 @@ const createRateLimiterMiddleware = (
 };
 
 /**
- * One allowance per route: a login and its second factor no longer draw on the same one.
+ * Every field a request can name an account with. Which of them a route really authenticates with is
+ * Parse Server's business, not the limiter's: a caller can add a field the route ignores, so none of them
+ * may be trusted to be "the" identifier.
  */
-export const authRateLimiter = createRateLimiterMiddleware(
+const AUTH_IDENTIFIER_FIELDS = ['email', 'phoneNumber', 'username', 'phone', '_SessionToken'];
+
+/**
+ * The routes whose credential is one of those fields (lower case, as Parse Server matches them): sign-in,
+ * sign-up and the code routes of a sign-up or a recovery. The others are counted per address only.
+ */
+const IDENTIFIED_AUTH_PATHS = new Set([
+  '/parse/login',
+  '/parse/users',
+  '/parse/functions/loginwithemail',
+  '/parse/functions/loginwithphone',
+  '/parse/functions/verifyaccount',
+  '/parse/functions/sendverificationcode',
+  '/parse/functions/sendresetpasswordverificationcode',
+]);
+
+/**
+ * Every account identifier the request carries, normalized and without duplicates. A request is counted
+ * against all of them: picking the first one present let a script keep the account it attacks in a field
+ * the route reads while a fresh random value in an earlier field gave every try a fresh allowance.
+ */
+export const getAuthIdentifiers = (source: unknown): string[] => {
+  if (typeof source !== 'object' || source === null) return [];
+
+  const values = source as Record<string, unknown>;
+  const identifiers = new Set<string>();
+
+  for (const field of AUTH_IDENTIFIER_FIELDS) {
+    // a sign-up carries its number as `phone: { code, number }`
+    const rawValue = field === 'phone'
+      ? (values.phone as { number?: unknown } | null | undefined)?.number
+      : values[field];
+
+    if (typeof rawValue === 'string' && rawValue.trim()) {
+      identifiers.add(rawValue.replace(/\s+/g, '').toLowerCase());
+    }
+  }
+
+  return [...identifiers];
+};
+
+/**
+ * One key per identifier: address, route and the identifier. The identifier goes through a hash: an e-mail
+ * address or a phone number has no business sitting in clear in the key names of the limiter's store. A
+ * request naming nobody has a single key with no identifier, shared by every such request of the address.
+ */
+const getAuthIdentifierKeys = async (req: Request, res: Response): Promise<string[]> => {
+  // Express and Parse Server both ignore the case of a path: one spelling must not be a fresh allowance
+  const routePath = req.path.toLowerCase();
+  const addressKey = `${routePath}:${getRequestIp(req)}:`;
+
+  /*
+   * A route that authenticates with something else (a reset token, a second-factor code) has no account
+   * field of its own: a caller could add a random `email` to every try and get a fresh allowance each
+   * time. Those routes keep one tight allowance per address, as they always had.
+   */
+  if (!IDENTIFIED_AUTH_PATHS.has(routePath)) return [addressKey];
+
+  await readTextPlainBody(req, res);
+
+  // `GET /parse/login` carries its credentials in the query string
+  const identifiers = getAuthIdentifiers(req.method === 'GET' ? req.query : req.body);
+
+  if (identifiers.length === 0) return [addressKey];
+
+  return identifiers.map((identifier) => (
+    `${addressKey}${createHash('sha256').update(identifier).digest('hex').slice(0, 32)}`
+  ));
+};
+
+/**
+ * Counts the request on the allowance of every identifier it names, and lets it through only if none of
+ * them is used up.
+ */
+const isAuthIdentifierAllowed = async (req: Request, res: Response): Promise<boolean> => {
+  if (skip()) return true;
+
+  const keys = await getAuthIdentifierKeys(req, res);
+  const results = await Promise.all(keys.map((key) => getAuthIdentifierLimiter().limit(key)));
+
+  return results.every(({ success }) => success);
+};
+
+/**
+ * One allowance per route: a login and its second factor no longer draw on the same one. Two caps apply:
+ * a wide one per address, then a tight one per identifier tried from that address.
+ */
+const authAddressRateLimiter = createRateLimiterMiddleware(
   getAuthLimiter,
   (req) => `${req.path}:${getRequestIp(req)}`
+);
+
+const isAuthRequestAllowed = async (req: Request, res: Response): Promise<boolean> => (
+  await authAddressRateLimiter.isAllowed(req, res) && await isAuthIdentifierAllowed(req, res)
+);
+
+export const authRateLimiter: RateLimiterMiddleware = Object.assign(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    if (!(await isAuthRequestAllowed(req, res))) {
+      res.status(429).json(RATE_LIMIT_MESSAGE);
+      return;
+    }
+
+    next();
+  },
+  { isAllowed: isAuthRequestAllowed }
 );
 export const docsLoginRateLimiter = createRateLimiterMiddleware(getDocsLoginLimiter);
 export const fileUploadRateLimiter = createRateLimiterMiddleware(getFileUploadLimiter);

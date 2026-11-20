@@ -71,6 +71,7 @@ Every `VITE_*` variable is inlined in the browser bundle and is **not a secret**
 | `VITE_ADMIN_EMAIL_SENDER` | Sender address shown to admins |
 | `VITE_LOCAL_SERVER_PORT` | Optional: local server port when it is not the default |
 | `VITE_DISABLE_SESSION_TIMEOUT` | Optional: `true` disables the inactivity logout (development) |
+| `VITE_SESSION_TIMEOUT_MINUTES` | Optional: default inactivity logout delay in minutes (15 to 480, 30 when unset) for roles with no delay of their own; meant for pre-production only |
 | `VITE_SUPPORT_PHONE_YAS`, `VITE_SUPPORT_PHONE_AIRTEL`, `VITE_SUPPORT_PHONE_ORANGE` | Optional: support phone numbers shown on the About page (they win over the defaults in the code) |
 | `VITE_SENTRY_DSN`, `VITE_SENTRY_ENVIRONMENT` | Sentry error reporting of the browser (public DSN) |
 | `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, `SENTRY_PROJECT` | Build time only: source map upload to Sentry |

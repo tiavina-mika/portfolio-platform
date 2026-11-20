@@ -1,4 +1,9 @@
-import { passwordFieldSchema } from '@shared/validations';
+import {
+  isPasswordContainingEmailWord,
+  isPasswordSameAsEmail,
+  isPasswordSameAsPhone,
+  passwordFieldSchema,
+} from '@shared/validations';
 import { z } from 'zod';
 
 import { isSmsReachablePhone } from '@/utils/_core/phone.utils';
@@ -6,10 +11,14 @@ import { isSmsReachablePhone } from '@/utils/_core/phone.utils';
 import { phoneFieldSchema as userPhoneFieldSchema } from './user.validations';
 import { localeFieldSchema } from './util.validations';
 
+/*
+ * `.refine` with a key, not `.regex`: the server rebuilds the message from the issue code and would
+ * otherwise only know the generic "invalid regex format", which has no translation
+ */
 export const strongPasswordFieldSchema = passwordFieldSchema
-  .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-  .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
-  .regex(/[0-9]/, 'Password must contain at least one number');
+  .refine((value) => /[a-z]/.test(value), { params: { key: 'passwordNeedsLowercase' } })
+  .refine((value) => /[A-Z]/.test(value), { params: { key: 'passwordNeedsUppercase' } })
+  .refine((value) => /[0-9]/.test(value), { params: { key: 'passwordNeedsDigit' } });
 
 /*
  * `.transform`, not `.refine`: the previous `.refine(value => value.toLowerCase())` validated
@@ -58,7 +67,15 @@ export const emailLoginSchema = z.object({
 export const emailSignUpSchema = z.object({
   email: emailFieldSchema,
   password: strongPasswordFieldSchema,
-});
+})
+  .refine(({ email, password }) => !isPasswordSameAsEmail(password, email), {
+    params: { key: 'passwordSameAsIdentifier' },
+    path: ['password'],
+  })
+  .refine(({ email, password }) => !isPasswordContainingEmailWord(password, email), {
+    params: { key: 'passwordContainsEmailWord' },
+    path: ['password'],
+  });
 
 /*
  * A sign-up may only use a mobile number of a country an SMS provider texts: any other number
@@ -71,7 +88,11 @@ export const phoneSignUpSchema = z.object({
     { params: { key: 'invalidContactPhone' } }
   ),
   password: strongPasswordFieldSchema,
-});
+}).refine(
+  ({ phone, password }) =>
+    !isPasswordSameAsPhone(password, { dialCode: phone.code, number: String(phone.number) }),
+  { params: { key: 'passwordSameAsIdentifier' }, path: ['password'] }
+);
 
 /**
  * `resetToken` is the single-use token minted by `verifyAccount` once the reset code was

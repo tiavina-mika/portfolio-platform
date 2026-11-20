@@ -10,6 +10,7 @@ import type { ActorSnapshot, IBan } from '@/types/user.type';
 import { translate } from '@/config/i18n';
 import { getRedis } from '@/config/redis';
 import {
+  FROM_PROJECT,
   MAX_VERIFICATION_ATTEMPTS,
   USE_MASTER_KEY,
   VERIFICATION_CODE_COOLDOWN_SECONDS, VERIFICATION_CODE_DAILY_LIMIT,
@@ -19,7 +20,7 @@ import { SERVER_MANAGED_USER_FIELDS } from '@/constants/_core/user.constants';
 import { formatDateInAppTimezone } from '@/utils/_core/date.utils';
 import { decrypt, encrypt } from '@/utils/_core/encrypt.utils';
 import { consumeSmsSendQuota } from '@/utils/_core/sms-quota.utils';
-import { formatFullName } from '@/utils/_core/user.utils';
+import { formatFullName, hasNoVerifiedContact } from '@/utils/_core/user.utils';
 import { generateNumber } from '@/utils/_core/utils';
 
 /*
@@ -80,6 +81,50 @@ export const revertServerManagedUserFields = (user: Parse.User, dirtyKeys: strin
   if (forbiddenKeys.length > 0) user.revert(...forbiddenKeys);
 
   return forbiddenKeys;
+};
+
+/**
+ * `platform` is written by the client at every sign-in, so an account cannot be allowed to move to the
+ * back-office platform on its own word: the sign-up check on an unconfirmed contact is skipped for it, and
+ * the back-office rules read it. A back-office account is born with an invitation (checked at sign-up).
+ * Reverting rather than throwing keeps a legitimate save working.
+ * @param user the account being saved by a client (not the master key)
+ * @param original the stored account
+ * @returns true when the platform was reverted
+ */
+export const revertPlatformEscalation = (user: Parse.User, original: Parse.User | undefined): boolean => {
+  const isEscalation = user.dirtyKeys().includes('platform') &&
+    user.get('platform') === FROM_PROJECT.BO &&
+    original?.get('platform') !== FROM_PROJECT.BO;
+
+  if (isEscalation) user.revert('platform');
+
+  return isEscalation;
+};
+
+/**
+ * An account that confirmed no contact yet has no step to move: the server advances it itself when the code
+ * is accepted (`verifyAccount`), and the client only writes the step once a contact is confirmed. Left
+ * writable, the step let a sign-up typed with somebody else's address or number write itself out of the one
+ * state the purge and the release of an unconfirmed sign-up look for, and keep that address or number
+ * locked for good. Reverting rather than throwing keeps a legitimate save working.
+ * @param user the account being saved by a client (not the master key)
+ * @param original the stored account
+ * @returns true when the step was reverted
+ */
+export const revertRegisterStepOfUnverifiedAccount = (
+  user: Parse.User,
+  original: Parse.User | undefined
+): boolean => {
+  const isStepMoved = user.dirtyKeys().includes('registerStep') && !!original &&
+    hasNoVerifiedContact({
+      emailVerified: original.get('emailVerified'),
+      phoneVerified: original.get('phoneVerified'),
+    });
+
+  if (isStepMoved) user.revert('registerStep');
+
+  return isStepMoved;
 };
 
 export type VerificationField =

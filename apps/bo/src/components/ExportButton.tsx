@@ -48,7 +48,7 @@ const DEFAULT_FORMAT: ExportFormat = 'csv';
 const DEFAULT_SCOPE: ExportScope = 'allFiltered';
 
 type Props = {
-  onExport: (format: ExportFormat, scope: ExportScope) => void;
+  onExport: (format: ExportFormat, scope: ExportScope) => void | Promise<void>;
   disabled?: boolean;
   /*
    * how many rows each scope covers. Omitted outside a list (a statistics page exports the one
@@ -69,6 +69,7 @@ const ExportButton = ({
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [format, setFormat] = useState<ExportFormat>(DEFAULT_FORMAT);
   const [scope, setScope] = useState<ExportScope>(DEFAULT_SCOPE);
+  const [isExporting, setIsExporting] = useState<boolean>(false);
 
   const handleClick = (event: MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
@@ -79,9 +80,15 @@ const ExportButton = ({
   const handleSelectFormat = (value: ExportFormat) => (): void => setFormat(value);
   const handleSelectScope = (value: ExportScope) => (): void => setScope(value);
 
-  const handleExport = (): void => {
-    onExport(format, scope);
+  const handleExport = async (): Promise<void> => {
     handleClose();
+    setIsExporting(true);
+    try {
+      await onExport(format, scope);
+    }
+    finally {
+      setIsExporting(false);
+    }
   };
 
   return (
@@ -89,7 +96,8 @@ const ExportButton = ({
       {withLabel
         ? (
           <Button
-            disabled={disabled}
+            disabled={disabled || isExporting}
+            loading={isExporting}
             onClick={handleClick}
             startIcon={<ExportIcon size={PAGE_HEAD_ACTION_ICON_SIZE} />}
             variant="outlined"
@@ -99,7 +107,7 @@ const ExportButton = ({
         )
         : (
           <ToolbarIconButton
-            disabled={disabled}
+            disabled={disabled || isExporting}
             icon={<ExportIcon size={TOOLBAR_ICON_BUTTON_GLYPH_SIZE} />}
             isMenuOpen={!!anchorEl}
             label={t('export')}

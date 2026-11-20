@@ -30,7 +30,8 @@ import { deleteFile } from '../../utils/_core/file.utils.cloud';
 import { runJob } from '../../utils/_core/job.utils.cloud';
 import { isHighestRole } from '../../utils/_core/role.utils.cloud';
 import {
-  generateEncryptedVerificationCode, getUserPlatforms, logoutUserOtherDevices, revertServerManagedUserFields,
+  generateEncryptedVerificationCode, getUserPlatforms, logoutUserOtherDevices, revertPlatformEscalation,
+  revertRegisterStepOfUnverifiedAccount, revertServerManagedUserFields,
 } from '../../utils/_core/user.utils.cloud';
 import { parseFunction, setBooleanFields, shouldSkipTriggerCascade } from '../../utils/_core/utils.cloud';
 import { parseTriggerValidation, signupTriggerValidation } from '../../utils/_core/validation.utils.cloud';
@@ -74,6 +75,14 @@ Parse.Cloud.beforeSave(
         ? dirtyKeys
         : dirtyKeys.filter((key) => !SIGN_UP_IDENTITY_FIELDS.includes(key));
       const revertedKeys = revertServerManagedUserFields(user, revertibleKeys);
+
+      if (user.existed() && revertPlatformEscalation(user, prevUser)) revertedKeys.push('platform');
+
+      if (user.existed() && revertRegisterStepOfUnverifiedAccount(user, prevUser)) {
+        revertedKeys.push('registerStep');
+        // the step did not move: the afterSave that texts a code when it reaches the phone step reads these keys
+        dirtyKeys.splice(dirtyKeys.indexOf('registerStep'), 1);
+      }
 
       if (revertedKeys.length > 0) {
         logger.warn(

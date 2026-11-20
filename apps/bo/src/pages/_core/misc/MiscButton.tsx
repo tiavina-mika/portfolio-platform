@@ -1,5 +1,6 @@
 import { Button, type Theme } from '@mui/material';
 import { green, grey, red } from '@mui/material/colors';
+import { useState } from 'react';
 
 const classes = {
   separator: (theme: Theme) => ({
@@ -90,7 +91,7 @@ const getButtonStyle = (color: string) => {
 type Props = {
   color: string;
   label: string;
-  action: () => void;
+  action: () => unknown;
   withSeparator?: boolean;
 };
 const MiscButton = ({
@@ -99,11 +100,25 @@ const MiscButton = ({
   action,
   withSeparator = false,
 }: Props) => {
+  const [isPending, setIsPending] = useState<boolean>(false);
+
+  // the action may be a thunk or a cloud call: the button stays busy until it settles
+  const handleClick = async () => {
+    setIsPending(true);
+    try {
+      await action();
+    }
+    finally {
+      setIsPending(false);
+    }
+  };
+
   return (
     <div className="flexColumn center">
       <Button
         css={[classes.button, getButtonStyle(color)]}
-        onClick={action}
+        loading={isPending}
+        onClick={handleClick}
         variant="contained"
       >
         {label}

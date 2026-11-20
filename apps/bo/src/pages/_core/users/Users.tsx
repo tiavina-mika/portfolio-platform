@@ -298,7 +298,7 @@ const Users = () => {
   // delete a row
   const handleDelete = useCallback(
     (user: IUser): void => {
-      dispatch(deleteUserById(user.id, true));
+      dispatch(deleteUserById(user.id));
     },
     [dispatch]
   );

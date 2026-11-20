@@ -5,6 +5,11 @@
   "globRoot": "./",
   "words": [
     "Brevo",
+    "loginwithemail",
+    "loginwithphone",
+    "verifyaccount",
+    "sendverificationcode",
+    "sendresetpasswordverificationcode",
     "bgcolor",
     "BREVO",
     "backoffice",

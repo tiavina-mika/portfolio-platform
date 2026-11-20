@@ -38,7 +38,6 @@ import {
   loadUsersSlice,
   setUsersCountSlice,
   updateUsersByUserSlice,
-  updateUsersByUsersSlice,
 } from '@/redux/reducers/_core/user.reducer';
 import { clearUserBlocksSlice } from '@/redux/reducers/_core/userBlock.reducer';
 import { clearUserSessionsSlice } from '@/redux/reducers/_core/userSession.reducer';
@@ -216,10 +215,9 @@ export const uploadCurrentUserProfileImage = (file: File): any => {
  * for user security reason, we do not delete the data from db
  * instead we just add a field "deleted" = true
  * @param id
- * @param redirectToRecycleBin redirect to recycle bin after the request is deleted
  * @returns
  */
-export const deleteUserById = (id: string, redirectToRecycleBin = false): any => {
+export const deleteUserById = (id: string): any => {
   return actionWithLoader(async (dispatch: AppDispatch): Promise<void | undefined> => {
     /*
      * only the user or the MasterKey can update or deleted its own account
@@ -228,11 +226,6 @@ export const deleteUserById = (id: string, redirectToRecycleBin = false): any =>
      * you can sse the cloud function in server in the /cloud/hooks/users.js file
      */
     const updatedUser = await deleteUserByIdInCloud(id);
-
-    if (redirectToRecycleBin) {
-    // dispatch(goToRecycleBin(RECYCLE_BIN_TAB_PATHNAMES.users));
-      return;
-    }
 
     dispatch(deleteUsersSlice(updatedUser.id));
   },
@@ -253,7 +246,8 @@ export const deleteUsersById = (ids: string[]): any => {
      */
     const updatedUsers = await deleteUsersByIdsInCloud(ids);
 
-    dispatch(updateUsersByUsersSlice(updatedUsers));
+    // soft-deleted accounts leave the list right away, as a reload would do
+    updatedUsers.forEach((deletedUser: IUser) => dispatch(deleteUsersSlice(deletedUser.id)));
   },
   // rights
   {

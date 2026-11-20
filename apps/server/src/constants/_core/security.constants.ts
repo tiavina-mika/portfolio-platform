@@ -242,5 +242,9 @@ export const EXTRA_SCHEMA_FIELDS: Record<
     seen: 'Boolean',
     platforms: 'Array',
     acceptedTermsAt: 'Date',
+    // set by the `_User` beforeSave trigger inside the anonymous sign-up save
+    country: 'String',
+    phoneVerified: 'Boolean',
+    verification: 'Object',
   },
 };

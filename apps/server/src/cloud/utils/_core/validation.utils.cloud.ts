@@ -96,10 +96,17 @@ export const parseFunctionValidation = (
  */
 export const signupTriggerValidation = <T extends Record<string, any>>() => {
   return async (request: T): Promise<void> => {
-    const { object, context }: T = request;
+    const { object, context, original }: T = request;
     const dirtyFields = context.dirtyKeys || [];
 
-    const isFromBO = object.get('platform') === FROM_PROJECT.BO || object.get('fromBO');
+    /*
+     * `platform` and `fromBO` are typed by the client: on an existing account only what is stored counts,
+     * otherwise a member could claim to be a back-office account and skip the profile validations. At
+     * sign-up the platform is the claim itself, and a back-office one needs an invitation (checked there).
+     */
+    const isFromBO = object.existed()
+      ? original?.get('platform') === FROM_PROJECT.BO
+      : object.get('platform') === FROM_PROJECT.BO;
 
     let schema: ZodObject<ZodRawShape> | null = null;
 

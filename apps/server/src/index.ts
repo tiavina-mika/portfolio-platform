@@ -38,7 +38,7 @@ import { USER_PROTECTED_FIELDS } from './constants/_core/user.constants';
 import correlationIdMiddleware from './middlewares/correlationId.middleware';
 import errorMiddleware from './middlewares/error.middleware';
 import {
-  AUTH_RATE_LIMIT_MAX_REQUESTS, AUTH_RATE_LIMIT_WINDOW_MS, authRateLimiter, batchRateLimiter,
+  AUTH_IP_RATE_LIMIT_MAX_REQUESTS, AUTH_RATE_LIMIT_WINDOW_MS, authRateLimiter, batchRateLimiter,
   RATE_LIMIT_MESSAGE_TEXT, RATE_LIMITED_POST_ROUTES,
 } from './middlewares/rateLimit.middleware';
 import createDocsRouter from './routes/_core/docs.route';
@@ -251,7 +251,8 @@ const init = async () => {
     rateLimit: IS_E2E ? [] : CREDENTIAL_RATE_LIMITED_PATHS.map((requestPath) => ({
       requestPath,
       requestTimeWindow: AUTH_RATE_LIMIT_WINDOW_MS,
-      requestCount: AUTH_RATE_LIMIT_MAX_REQUESTS,
+      // the wide cap per address: a batch sub-request cannot be keyed on an identifier, see the Express one
+      requestCount: AUTH_IP_RATE_LIMIT_MAX_REQUESTS,
       errorResponseMessage: RATE_LIMIT_MESSAGE_TEXT,
       redisUrl: process.env.UPSTASH_REDIS_URL,
     })),

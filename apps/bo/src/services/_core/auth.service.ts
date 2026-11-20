@@ -23,7 +23,16 @@ export const fetchCurrentUserSessionToken = async (): Promise<string | undefined
 };
 
 export const logOutCurrentUser = async (): Promise<void> => {
-  await Parse.User.logOut();
+  try {
+    await Parse.User.logOut();
+  } catch (error) {
+    /*
+     * the server refuses the logout when the stored session is already gone (revoked, database
+     * reset, expired): there is nothing left to close there, and failing here would leave the
+     * user stuck on the logout page instead of reaching the login page
+     */
+    console.log('Logout rejected by the server, clearing the local session anyway', error);
+  }
   resetSessionValidityCache();
 };
 

@@ -41,6 +41,7 @@ import {
   resendNotificationFailedDeliveries,
   restoreNotifications,
 } from '@/redux/actions/_core/notification.action';
+import { getAppLoadingSelector } from '@/redux/reducers/_core/app.reducer';
 import {
   getNotificationCountSelector,
   getNotificationNotificationsSelector,
@@ -166,6 +167,7 @@ const Notifications = () => {
   const tabCounts = useSelector(getNotificationTabCountsSelector);
   const typeCounts = useSelector(getNotificationTypeCountsSelector);
   const smsDailyCounts = useSelector(getNotificationSmsDailyCountsSelector);
+  const loading = useSelector(getAppLoadingSelector);
   const isSmsDailyCountsLoading = useSelector(getNotificationSmsDailyCountsLoadingSelector);
 
   /*
@@ -389,6 +391,7 @@ const Notifications = () => {
 
     return (
       <NotificationRowDetail
+        loading={loading}
         notification={notification}
         onResendFailed={canResend
           ? () => handleRequestFailuresResend([notification.id])
@@ -398,7 +401,7 @@ const Notifications = () => {
           : undefined}
       />
     );
-  }, [notifications, canEdit, handleRequestFailuresResend, handleResendUnread]);
+  }, [notifications, canEdit, loading, handleRequestFailuresResend, handleResendUnread]);
 
   const failuresToConfirm = failuresResendIds
     ? getNotificationsRetryableFailedCounts(

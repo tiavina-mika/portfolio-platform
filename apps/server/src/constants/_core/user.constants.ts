@@ -84,6 +84,8 @@ export const SERVER_MANAGED_USER_FIELDS: string[] = [
   'seenBy',
   'roles',
   'platforms',
+  // read by the validation to tell a back-office account from a member: a member must not claim it
+  'fromBO',
   'sexChangeCount',
   'birthdayChangeCount',
   'acceptedTermsAt',

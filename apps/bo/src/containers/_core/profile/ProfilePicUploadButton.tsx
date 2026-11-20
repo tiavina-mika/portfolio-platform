@@ -1,5 +1,6 @@
+import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
-import { ChangeEvent, useRef } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
@@ -40,18 +41,25 @@ const ProfilePicUploadButton = () => {
   } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
+  const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const handleUploadClick = () => {
     if (!inputRef.current) return;
     inputRef.current.click();
   };
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
     if (!file) return;
 
-    dispatch(uploadCurrentUserProfileImage(file));
+    setIsUploading(true);
+    try {
+      await dispatch(uploadCurrentUserProfileImage(file));
+    }
+    finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -66,10 +74,11 @@ const ProfilePicUploadButton = () => {
       <IconButton
         aria-label={t('user:profilePicture')}
         css={classes.button}
+        disabled={isUploading}
         onClick={handleUploadClick}
         title={t('user:profilePicture')}
       >
-        <ProfileCameraIcon />
+        {isUploading ? <CircularProgress aria-label={t('loading')} size={16} /> : <ProfileCameraIcon />}
       </IconButton>
     </>
   );

@@ -69,7 +69,7 @@ import {
 import {
   loadUserSessions, revokeAllUserSessionsById, revokeUserSessionById, suspendUserById,
 } from '@/redux/actions/_core/userSession.action';
-import { getAppCurrentUserSelector } from '@/redux/reducers/_core/app.reducer';
+import { getAppCurrentUserSelector, getAppLoadingSelector } from '@/redux/reducers/_core/app.reducer';
 import { getAuditLogCurrentSelector } from '@/redux/reducers/_core/auditLog.reducer';
 import {
   clearImpersonationSessionSlice, getImpersonationSessionSelector,
@@ -126,6 +126,7 @@ const User = () => {
   const navigate = useNavigate();
   const user = useSelector(getUserUserSelector);
   const currentUser = useSelector(getAppCurrentUserSelector);
+  const loading = useSelector(getAppLoadingSelector);
   const roles = useSelector(getRoleUserRolesSelector);
   const isRolesLoading = useSelector(getRoleUserRolesLoadingSelector);
   const sessions = useSelector(getUserSessionsSelector);
@@ -404,6 +405,7 @@ const User = () => {
           canRevoke={canUpdateUser}
           canSuspend={canSuspend}
           hasError={hasSessionsError}
+          isActionLoading={loading}
           loading={isSessionsLoading}
           onRetry={() => dispatch(loadUserSessions(user.id))}
           onRevoke={(sessionId: string) => dispatch(revokeUserSessionById(user.id, sessionId))}
@@ -474,6 +476,7 @@ const User = () => {
       count: isSuspended ? 1 : undefined,
       rightActions: (canSuspend || canLift) && (
         <Button
+          loading={canLift && loading}
           onClick={canLift ? handleLiftSuspension : toggleOpenSuspendDialog}
           size="small"
           variant="outlined"
@@ -635,6 +638,7 @@ const User = () => {
           <UserSuspensionBanner
             canLift={canLift}
             deletedAt={isDeleted ? user.deletedAt : undefined}
+            loading={loading}
             onLift={handleLiftSuspension}
             teamBan={teamBan}
           />
@@ -764,6 +768,7 @@ const User = () => {
       >
         {impersonationSession ? (
           <ImpersonationSessionPanel
+            loading={loading}
             onEndSession={handleEndImpersonationSession}
             session={impersonationSession}
             userFullName={userFullName}

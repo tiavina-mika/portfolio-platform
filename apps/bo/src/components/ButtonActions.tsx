@@ -1,5 +1,5 @@
 import {
-  IconButton, Theme, Tooltip,
+  CircularProgress, IconButton, Theme, Tooltip,
 } from '@mui/material';
 import { MouseEvent, ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +18,7 @@ const classes = {
 };
 
 type Props = {
-  onDelete?: () => void;
+  onDelete?: () => void | Promise<unknown>;
   onEdit?: () => void;
   onPreview?: () => void;
   value?: any;
@@ -50,8 +50,21 @@ const ButtonActions = ({
   } = useTranslation();
 
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  // the delete is a server call: the row stays inert until it settles
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
   const toggleDeleteModal = () => setOpenDeleteModal(!openDeleteModal);
+
+  const runDelete = async () => {
+    if (!onDelete) return;
+    setIsDeleting(true);
+    try {
+      await onDelete();
+    }
+    finally {
+      setIsDeleting(false);
+    }
+  };
 
   const handleDelete = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
@@ -59,7 +72,7 @@ const ButtonActions = ({
       toggleDeleteModal();
       return;
     }
-    onDelete?.();
+    runDelete();
   };
 
   const handleEdit = (event: MouseEvent<HTMLElement>) => {
@@ -84,7 +97,7 @@ const ButtonActions = ({
         {leadingActions}
         {onPreview && (
           <Tooltip title={t('viewDetails')}>
-            <IconButton aria-label="preview" onClick={handlePreview}>
+            <IconButton aria-label="preview" disabled={isDeleting} onClick={handlePreview}>
               {previewIcon === 'eye'
                 ? <RowPreviewIcon size={ROW_ACTIONS_ICON_SIZE} />
                 : <RowOpenIcon size={ROW_ACTIONS_ICON_SIZE} />}
@@ -93,15 +106,22 @@ const ButtonActions = ({
         )}
         {onEdit && (
           <Tooltip title={t('edit')}>
-            <IconButton aria-label="edit" onClick={handleEdit}>
+            <IconButton aria-label="edit" disabled={isDeleting} onClick={handleEdit}>
               <RowEditIcon size={ROW_ACTIONS_ICON_SIZE} />
             </IconButton>
           </Tooltip>
         )}
         {onDelete && (
           <Tooltip title={t('delete')}>
-            <IconButton aria-label="delete" color="error" onClick={handleDelete}>
-              <RowDeleteIcon size={ROW_ACTIONS_ICON_SIZE} />
+            <IconButton
+              aria-label="delete"
+              color="error"
+              disabled={isDeleting}
+              onClick={handleDelete}
+            >
+              {isDeleting
+                ? <CircularProgress aria-label={t('loading')} size={ROW_ACTIONS_ICON_SIZE} />
+                : <RowDeleteIcon size={ROW_ACTIONS_ICON_SIZE} />}
             </IconButton>
           </Tooltip>
         )}
@@ -113,7 +133,7 @@ const ButtonActions = ({
         description={dialogDescription ?? t('sureToDelete', { value })}
         maxWidth="xs"
         onClick={handleConfirmDeleteDialogClick}
-        onPrimaryButtonAction={onDelete}
+        onPrimaryButtonAction={runDelete}
         open={openDeleteModal}
         title={t('delete', { value })}
         toggle={toggleDeleteModal}

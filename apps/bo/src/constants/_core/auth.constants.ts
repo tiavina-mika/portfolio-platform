@@ -7,11 +7,29 @@ import {
 export const MINUTES_PER_HOUR = 60;
 export const MS_PER_MINUTE = 60 * 1000;
 
+const FALLBACK_SESSION_INACTIVITY_TIMEOUT_MINUTES = 30;
+
+/*
+ * an environment can raise or lower the default (a longer one on pre-production, where the team
+ * tests for hours) through `VITE_SESSION_TIMEOUT_MINUTES`; a value that is missing, not a number or
+ * outside the bounds a role is held to falls back to the standard delay rather than breaking the
+ * logout
+ */
+const getEnvSessionTimeoutMinutes = (): number => {
+  const minutes = Number(import.meta.env.VITE_SESSION_TIMEOUT_MINUTES);
+
+  const isValid = Number.isFinite(minutes) &&
+    minutes >= ROLE_SESSION_TIMEOUT_MIN_MINUTES &&
+    minutes <= ROLE_SESSION_TIMEOUT_MAX_MINUTES;
+
+  return isValid ? minutes : FALLBACK_SESSION_INACTIVITY_TIMEOUT_MINUTES;
+};
+
 /*
  * default auto-logout delay after this much inactivity (no mouse/keyboard/touch activity) — a role
  * can override it with its own `sessionTimeoutMinutes` (see getSessionInactivityTimeoutMs)
  */
-export const SESSION_INACTIVITY_TIMEOUT_MINUTES = 30;
+export const SESSION_INACTIVITY_TIMEOUT_MINUTES = getEnvSessionTimeoutMinutes();
 export const SESSION_INACTIVITY_TIMEOUT_MS = SESSION_INACTIVITY_TIMEOUT_MINUTES * MS_PER_MINUTE;
 
 // the roles of the signed-in account are re-read when the tab regains focus, at most this often

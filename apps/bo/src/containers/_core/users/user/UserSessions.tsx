@@ -69,6 +69,8 @@ type SessionCard = {
 type Props = {
   sessions: IUserActiveSession[];
   loading: boolean;
+  // a sign-out is in progress: the sign-out buttons wait for it
+  isActionLoading?: boolean;
   hasError: boolean;
   // closing a session takes the right to edit the account, reading them only the right to open it
   canRevoke: boolean;
@@ -89,7 +91,8 @@ type Props = {
  * device last signed in. No IP address nor location is stored with a session.
  */
 const UserSessions = ({
-  sessions, loading, hasError, canRevoke, canSuspend, onRetry, onRevoke, onRevokeAll, onSuspend,
+  sessions, loading, isActionLoading = false, hasError, canRevoke, canSuspend, onRetry, onRevoke,
+  onRevokeAll, onSuspend,
 }: Props) => {
   const { t } = useTranslation(['common', 'user']);
 
@@ -118,6 +121,7 @@ const UserSessions = ({
   const renderRevokeButton = (session: IUserActiveSession) => (
     <Button
       color="error"
+      disabled={isActionLoading}
       onClick={() => onRevoke(session.id)}
       size="small"
       variant="outlined"
@@ -245,6 +249,7 @@ const UserSessions = ({
         {canRevoke && (
           <Button
             color="error"
+            disabled={isActionLoading}
             onClick={onRevokeAll}
             size="small"
             startIcon={<FiLogOut />}

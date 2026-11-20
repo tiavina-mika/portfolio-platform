@@ -1,7 +1,7 @@
 import {
   alpha, Box, Button, IconButton, Modal, Theme, Typography,
 } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   FiChevronLeft, FiChevronRight, FiDownload, FiX,
@@ -150,6 +150,8 @@ const ImageLightbox = ({
     t,
   } = useTranslation();
 
+  const [isDownloading, setIsDownloading] = useState<boolean>(false);
+
   const isOpen = index !== null && !!images[index];
   const hasSeveral = images.length > 1;
 
@@ -180,7 +182,15 @@ const ImageLightbox = ({
 
   const goToPrevious = () => onChangeIndex((currentIndex - 1 + images.length) % images.length);
   const goToNext = () => onChangeIndex((currentIndex + 1) % images.length);
-  const handleDownload = () => downloadFileFromUrl(image.url, image.fileName);
+  const handleDownload = async () => {
+    setIsDownloading(true);
+    try {
+      await downloadFileFromUrl(image.url, image.fileName);
+    }
+    finally {
+      setIsDownloading(false);
+    }
+  };
 
   return (
     <Modal open onClose={onClose}>
@@ -192,6 +202,7 @@ const ImageLightbox = ({
           </Box>
           <Box sx={classes.actions}>
             <Button
+              loading={isDownloading}
               onClick={handleDownload}
               startIcon={<FiDownload size={LIGHTBOX_ACTION_ICON_SIZE} />}
               sx={classes.downloadButton}

@@ -13,6 +13,21 @@ const nonEmptyStr = makeValidator((input: string): string => {
   return input;
 });
 
+const AES_256_KEY_BYTES = 32;
+
+/*
+ * the static key goes straight into aes-256-ctr, which refuses anything but exactly 32 bytes:
+ * a trailing newline pasted with the secret is enough to break every MFA check and verification
+ * code at runtime with "Invalid key length", so the boot stops on it instead
+ */
+const aes256Key = makeValidator((input: string): string => {
+  if (Buffer.byteLength(input) !== AES_256_KEY_BYTES) {
+    throw new Error(`must be exactly ${AES_256_KEY_BYTES} bytes (no space or line break around it)`);
+  }
+
+  return input;
+});
+
 /*
  * a comma-separated list of at least MIN_OWNERS_COUNT distinct addresses: with a single owner, the
  * OWNER-only actions have no way back once that person loses their authenticator
@@ -52,7 +67,7 @@ const validateEnv = (env: Env = process.env): void => {
     WEBSITE_URL: url(),
     REST_API_KEY: str(),
     CRYPTO_FIXED_PART_KEY: str(),
-    CRYPTO_FIXED_FULL_KEY: str(),
+    CRYPTO_FIXED_FULL_KEY: aes256Key(),
     ADMIN_EMAIL_SENDER: str(),
     UPSTASH_REDIS_REST_URL: url(),
     UPSTASH_REDIS_REST_TOKEN: str(),

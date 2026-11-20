@@ -37,6 +37,11 @@
     "vehicleDocumentExpiryMismatch": "An expiry date is required for insurance and technical inspection, and must not be set for the registration",
     "vehicleDocumentExpiryInPast": "The document's expiry date must be in the future",
     "invalidContactPhone": "The number must be a valid mobile number of a country we send texts to",
+    "passwordNeedsLowercase": "Password must contain at least one lowercase letter",
+    "passwordNeedsUppercase": "Password must contain at least one uppercase letter",
+    "passwordNeedsDigit": "Password must contain at least one number",
+    "passwordSameAsIdentifier": "Your password must not be your phone number or your email",
+    "passwordContainsEmailWord": "Your password must not contain words from your email",
     "contactEmailOrPhoneRequired": "Enter an email or a phone number so that we can answer you"
   },
   "name": {

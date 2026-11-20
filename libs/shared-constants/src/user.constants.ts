@@ -5,6 +5,12 @@
 export const MINIMUM_AGE = 18;
 
 /**
+ * Shortest word of an email a password may not contain: shorter pieces ("jo", "mg") turn up by
+ * chance in too many passwords to say anything about the member.
+ */
+export const PASSWORD_EMAIL_WORD_MIN_LENGTH = 4;
+
+/**
  * Current version of the terms of service / privacy policy presented at sign-up.
  * Stored on the user as `consentVersion` (RGPD art. 7 proof of consent) — bump this when the
  * terms change so consent can be tracked against the version the user actually accepted.

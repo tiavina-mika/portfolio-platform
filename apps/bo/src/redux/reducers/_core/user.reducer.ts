@@ -66,26 +66,6 @@ export const user = createSlice({
       state.users = newUsers;
       state.user = action.payload;
     },
-    updateUsersByUsersSlice: (state: IUserState, action: PayloadAction<IUser[]>) => {
-      const newUsers = [];
-
-      for (const user of state.users) {
-        const currentUser = action.payload.find((updatedUser: IUser) => updatedUser.id === user.id);
-
-        if (currentUser) {
-          // push the updated users to the first line
-          newUsers.unshift({
-            ...user,
-            ...currentUser,
-          });
-        }
-        else {
-          newUsers.push(user);
-        }
-      }
-
-      state.users = newUsers;
-    },
     deleteUsersSlice: (state: IUserState, action: PayloadAction<string>) => {
       const newUsers = state.users.filter((user: IUser) => user.id !== action.payload);
 
@@ -108,7 +88,6 @@ export const {
   loadUsersSlice,
   setUsersCountSlice,
   updateUsersByUserSlice,
-  updateUsersByUsersSlice,
   clearUsersSlice,
   setUserSearchSlice,
   clearUserSearchSlice,

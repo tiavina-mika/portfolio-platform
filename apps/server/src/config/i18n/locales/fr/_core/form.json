@@ -37,6 +37,11 @@
     "vehicleDocumentExpiryMismatch": "La date de fin de validité est requise pour l'assurance et la visite technique, et ne doit pas être renseignée pour la carte grise",
     "vehicleDocumentExpiryInPast": "La date de fin de validité du document doit être dans le futur",
     "invalidContactPhone": "Le numéro doit être un numéro mobile valide d'un pays où nous envoyons des SMS",
+    "passwordNeedsLowercase": "Le mot de passe doit contenir au moins une lettre minuscule",
+    "passwordNeedsUppercase": "Le mot de passe doit contenir au moins une lettre majuscule",
+    "passwordNeedsDigit": "Le mot de passe doit contenir au moins un chiffre",
+    "passwordSameAsIdentifier": "Le mot de passe ne doit pas être votre téléphone ou votre email",
+    "passwordContainsEmailWord": "Le mot de passe ne doit pas contenir des mots de votre email",
     "contactEmailOrPhoneRequired": "Indiquez un email ou un numéro de téléphone pour que nous puissions vous répondre"
   },
   "name": {
