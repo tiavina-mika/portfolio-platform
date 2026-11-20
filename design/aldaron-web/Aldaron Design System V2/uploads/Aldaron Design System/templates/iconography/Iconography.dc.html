@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Icônes Aldaron" description="Lucide : recherche, taille, trait et couleur ; clic pour copier le SVG." -->
+<helmet><script src="./ds-base.js"></script><script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script><style>body{margin:0}a{color:var(--brand-text)}a:hover{color:var(--foreground)}button{font-family:inherit}</style></helmet>
+<div class="{{ themeClass }}" style="background:var(--background);color:var(--foreground);font-family:var(--font-sans);min-height:100vh;padding:24px 16px 120px"><div ref="{{ frameRef }}" style="width:1200px;max-width:100%;margin:0 auto">
+<header style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--border)"><span style="font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)">Aldaron · {{ t.kicker }}</span></header>
+<div style="padding:36px 0 28px;display:grid;gap:12px"><h1 style="margin:0;font:700 clamp(32px,6vw,56px)/1.02 var(--font-display);letter-spacing:-0.03em;text-wrap:balance">{{ t.title }}</h1><p style="margin:0;font-size:18px;line-height:1.55;color:var(--muted-foreground);max-width:62ch">{{ t.subtitle }}</p></div>
+
+<section style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;display:grid;gap:14px;align-content:start;"><div style="font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ t.lib }}</div><input type="search" value="{{ query }}" onInput="{{ setQuery }}" placeholder="{{ t.search }}" aria-label="{{ t.search }}" style="height:44px;padding:0 14px;border:1px solid var(--input);border-radius:6px;background:var(--background);color:var(--foreground);font:400 15px var(--font-sans)" style-focus="outline:none;border-color:var(--ring);box-shadow:0 0 0 3px color-mix(in oklab,var(--ring) 22%,transparent)"><div ref="{{ gridRef }}" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px;min-height:120px"></div><div style="font:500 13px var(--font-mono);color:var(--muted-foreground);min-height:18px">{{ status }}</div></section>
+</div></div>
+<aside aria-label="Tweaks" class="{{ themeClass }}" style="position:fixed;right:16px;bottom:16px;z-index:50;width:min(320px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;background:var(--popover);color:var(--popover-foreground);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-lg)">
+<button type="button" onClick="{{ togglePanel }}" aria-expanded="{{ open }}" style="width:100%;min-height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:none;border:0;color:inherit;font:600 14px/1 var(--font-sans);cursor:pointer;border-radius:12px" style-hover="background:var(--muted)" style-focus="outline:2px solid var(--ring);outline-offset:-2px">Tweaks<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">{{ panelSign }}</span></button>
+<sc-if value="{{ open }}" hint-placeholder-val="{{ true }}"><div style="padding:4px 16px 16px;display:grid;gap:14px;border-top:1px solid var(--border)">
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="4"><div style="display:grid;gap:6px;padding-top:10px"><span style="font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ g.title }}</span><div style="display:flex;gap:4px;flex-wrap:wrap"><sc-for list="{{ g.opts }}" as="o" hint-placeholder-count="3"><sc-if value="{{ o.active }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ o.on }}" aria-pressed="true" style="min-height:36px;padding:0 12px;border-radius:6px;font:500 13px/1 var(--font-sans);cursor:pointer;border:1px solid transparent;background:var(--primary);color:var(--primary-foreground)" style-hover="filter:brightness(.96)" style-focus="outline:2px solid var(--ring);outline-offset:2px">{{ o.label }}</button></sc-if><sc-if value="{{ o.idle }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ o.on }}" aria-pressed="false" style="min-height:36px;padding:0 12px;border-radius:6px;font:500 13px/1 var(--font-sans);cursor:pointer;border:1px solid var(--input);background:transparent;color:var(--foreground)" style-hover="background:var(--muted)" style-focus="outline:2px solid var(--ring);outline-offset:2px">{{ o.label }}</button></sc-if></sc-for></div></div></sc-for>
+<sc-for list="{{ ranges }}" as="r" hint-placeholder-count="1"><label style="display:grid;gap:6px"><span style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted-foreground)"><span>{{ r.title }}</span><span style="font-family:var(--font-mono)">{{ r.label }}</span></span><input type="range" min="{{ r.min }}" max="{{ r.max }}" step="{{ r.step }}" value="{{ r.val }}" onInput="{{ r.on }}" style="width:100%;height:44px;accent-color:var(--brand)"></label></sc-for>
+</div></sc-if></aside>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = Object.assign({ theme: 'light', lang: 'fr', bp: 'desktop', open: true, copied: '' }, {"size":24,"stroke":1.75,"color":"fg","query":""});
+  CT = {"fr":{"theme":"Thème","light":"Clair","dark":"Sombre","lang":"Langue","bp":"Largeur","mobile":"Mobile","tablet":"Tablette","desktop":"Desktop","large":"Grand desktop"},"en":{"theme":"Theme","light":"Light","dark":"Dark","lang":"Language","bp":"Width","mobile":"Mobile","tablet":"Tablet","desktop":"Desktop","large":"Large desktop"},"mg":{"theme":"Endrika","light":"Mazava","dark":"Maizina","lang":"Fiteny","bp":"Sakany","mobile":"Finday","tablet":"Takelaka","desktop":"Solosaina","large":"Solosaina lehibe"}};
+  PT = {"fr":{"kicker":"Icônes","title":"Icônes","subtitle":"Lucide, trait 1,75 px, 16 px en dense, 20 px par défaut, 24 px en marketing. Cliquez sur une icône pour copier son SVG.","lib":"Bibliothèque","search":"Rechercher une icône","gColor":"Couleur","gSize":"Taille","gStroke":"Trait","cFg":"Texte","cBrand":"Marque","cMuted":"Atténué","count":"icônes","copied":"SVG copié","empty":"Aucune icône."},"en":{"kicker":"Icons","title":"Icons","subtitle":"Lucide, 1.75 px stroke, 16 px when dense, 20 px by default, 24 px for marketing. Click an icon to copy its SVG.","lib":"Library","search":"Search an icon","gColor":"Colour","gSize":"Size","gStroke":"Stroke","cFg":"Text","cBrand":"Brand","cMuted":"Muted","count":"icons","copied":"SVG copied","empty":"No icon."},"mg":{"kicker":"Kisary","title":"Kisary","subtitle":"Lucide, tsipika 1,75 px, 16 px rehefa matevina, 20 px ho an ny ankapobeny, 24 px ho an ny marketing. Tsindrio ny kisary mba handika ny SVG.","lib":"Tahiry","search":"Hikaroka kisary","gColor":"Loko","gSize":"Habe","gStroke":"Tsipika","cFg":"Soratra","cBrand":"Marika","cMuted":"Malefaka","count":"kisary","copied":"Voadika ny SVG","empty":"Tsy misy kisary."}};
+  frameRef = (el) => { this.frameEl = el; };
+  paintAll() { if (this.frameEl) this.frameEl.style.width = { mobile: 390, tablet: 768, desktop: 1200, large: 1600 }[this.state.bp] + 'px'; if (this.paint) this.paint(); }
+  componentDidMount() { this.paintAll(); if (this.mounted) this.mounted(); }
+  componentDidUpdate() { this.paintAll(); }
+  tr() { return Object.assign({}, this.CT[this.state.lang], this.PT[this.state.lang]); }
+  G(title, key, list, T) { return { title: title, opts: list.map((p) => { const on = this.state[key] === p[0]; return { label: T[p[1]] || p[1], on: () => this.setState({ [key]: p[0] }), active: on, idle: !on }; }) }; }
+  baseGroups(T) { return [this.G(T.theme, 'theme', [['light', 'light'], ['dark', 'dark']], T), this.G(T.lang, 'lang', [['fr', 'FR'], ['en', 'EN'], ['mg', 'MG']], T), this.G(T.bp, 'bp', [['mobile', 'mobile'], ['tablet', 'tablet'], ['desktop', 'desktop'], ['large', 'large']], T)]; }
+  common(T) { const s = this.state; return { themeClass: s.theme === 'dark' ? 'dark' : '', t: T, frameRef: this.frameRef, open: s.open, panelSign: s.open ? '−' : '+', togglePanel: () => this.setState({ open: !s.open }) }; }
+  range(title, label, val, min, max, step, fn) { return { title: title, label: label, val: val, min: min, max: max, step: step, on: (e) => fn(+e.target.value) }; }
+  copyText(txt, key) { const done = () => { this.setState({ copied: key }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ copied: '' }), 1600); }; if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, done); else { const a = document.createElement('textarea'); a.value = txt; document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} a.remove(); done(); } }
+  NAMES = ["lock-keyhole","shield-check","key-round","user","users","user-plus","log-in","log-out","mail","send","inbox","bell","message-square","phone","file-text","file-plus","folder","image","layout-dashboard","list","table","bar-chart-3","line-chart","pie-chart","settings","sliders-horizontal","search","filter","plus","minus","check","x","pencil","trash-2","copy","download","upload","external-link","link","eye","eye-off","globe","languages","sun","moon","calendar","clock","history","scroll-text","rocket","credit-card","shield-alert","alert-triangle","info","circle-check","circle-x","ellipsis","chevron-down","chevron-right","arrow-right","arrow-left","menu","home"];
+  gridRef = (el) => { this.grid = el; };
+  mounted() { if (this.grid && !this._bound) { this._bound = true; this.grid.addEventListener('click', (e) => { const b = e.target.closest('button[data-n]'); if (!b) return; const svg = b.querySelector('svg'); if (svg) this.copyText(svg.outerHTML, b.getAttribute('data-n')); }); } if (!window.lucide) { clearTimeout(this._r); this._r = setTimeout(() => this.paintAll(), 250); } }
+  list() { const q = this.state.query.trim().toLowerCase(); return this.NAMES.filter((n) => !q || n.indexOf(q) >= 0); }
+  paint() {
+    if (!this.grid) return; if (!window.lucide) { clearTimeout(this._r); this._r = setTimeout(() => this.paintAll(), 250); return; }
+    const s = this.state; const col = { fg: 'var(--foreground)', brand: 'var(--brand-text)', muted: 'var(--muted-foreground)' }[s.color];
+    const sel = this.state.copied;
+    this.grid.innerHTML = this.list().map((n) => '<button type="button" data-n="' + n + '" title="' + n + '" style="display:grid;justify-items:center;gap:8px;padding:14px 6px;border:1px solid var(--border);border-radius:8px;background:var(--background);color:' + col + ';cursor:copy;font:400 11px var(--font-mono);min-width:0"><i data-lucide="' + n + '"></i><span style="color:var(--muted-foreground);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + n + '</span></button>').join('');
+    window.lucide.createIcons({ attrs: { width: s.size, height: s.size, 'stroke-width': s.stroke } });
+  }
+  renderVals() {
+    const s = this.state; const T = this.tr(); const n = this.list().length;
+    return Object.assign(this.common(T), {
+      groups: [this.G(T.gColor, 'color', [['fg', 'cFg'], ['brand', 'cBrand'], ['muted', 'cMuted']], T)].concat(this.baseGroups(T)),
+      ranges: [this.range(T.gSize, s.size + ' px', s.size, 14, 48, 2, (v) => this.setState({ size: v })), this.range(T.gStroke, s.stroke + ' px', s.stroke, 1, 2.5, 0.25, (v) => this.setState({ stroke: v }))],
+      gridRef: this.gridRef, query: s.query, setQuery: (e) => this.setState({ query: e.target.value }),
+      status: s.copied ? T.copied + ' : ' + s.copied : (n ? n + ' ' + T.count : T.empty)
+    });
+  }
+}
+</script>
+</body>
+</html>

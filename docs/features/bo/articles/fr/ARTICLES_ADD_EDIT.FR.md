@@ -8,6 +8,7 @@
 - [Ce que l'on voit à l'écran](#ce-que-lon-voit-à-lécran)
   - [Détails (une version par langue)](#détails-une-version-par-langue)
   - [Actif](#actif)
+  - [Sites](#sites)
   - [Sommaire](#sommaire)
   - [Catégories](#catégories)
   - [Images](#images)
@@ -67,6 +68,10 @@ erreur est signalé. Champs de chaque langue :
 ### Actif
 
 Un interrupteur, **activé par défaut** : un article actif est visible sur le site public.
+
+### Sites
+
+Une liste à choix multiples, **Portfolio** par défaut. On peut ajouter **Boîte** : l'article est réservé au site Aldaron quand « Boîte » est choisi seul. Dès que « Boîte » est choisi apparaissent le **contenu de la boîte** (Site web statique, Mobile, Back-office, Application web, au choix), le **prix en euros** et la **durée en jours**, tous facultatifs. Décocher « Boîte » efface ces trois informations. Pour l'instant ce choix est seulement enregistré : les sites publics ne l'utilisent pas encore.
 
 ### Sommaire
 

@@ -346,5 +346,22 @@
     "sectionDescriptionPlaceholder": "Famaritana fohy momba ny fizarana",
     "sectionPreview": "Topi-maso ny fizarana",
     "loadingSection": "Eo am-pakana ny fizarana…"
+  },
+  "website": {
+    "websites": "Tranokala",
+    "websitesHelper": "Tranokala aiza no aseho ity votoatiny ity. “Boaty” irery: natokana ho an’ny tranokalan’i Aldaron.",
+    "portfolio": "Portfolio",
+    "box": "Boaty",
+    "boxOnlyHelper": "Natokana ho an’ny tranokalan’i Aldaron: tsy aseho ao amin’ny portfolio.",
+    "boxIncludes": "Votoatin’ny boaty",
+    "boxIncludesHelper": "Ny ao anatin’ny boaty.",
+    "boxPrice": "Vidiny (€) (tsy voatery)",
+    "boxDurationDays": "Faharetana (andro) (tsy voatery)",
+    "include": {
+      "staticWebsite": "Tranokala statika",
+      "mobile": "Mobile",
+      "backOffice": "Back-office",
+      "webApp": "Rindrankajy web"
+    }
   }
 }

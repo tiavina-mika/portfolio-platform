@@ -2,7 +2,7 @@ import { CategoryEntityEnum } from '@shared/types';
 import Parse from 'parse';
 
 import { locales } from '@/config/i18n';
-import { CATEGORY_TREE_QUERY_LIMIT } from '@/constants/_core/cms.constants';
+import { CATEGORY_TREE_QUERY_LIMIT, WEBSITE_FIELDS } from '@/constants/_core/cms.constants';
 import {
   ICategory, ICategoryTypeEntity,
 } from '@/types/_core/category.type';
@@ -15,7 +15,9 @@ const collection = 'Category';
 
 export const Category = Parse.Object.extend(collection);
 
-const CATEGORY_PROPERTIES = new Set(['translated', 'active', 'entity', 'image', 'code', 'parentCategory']);
+const CATEGORY_PROPERTIES = new Set([
+  'translated', 'active', 'entity', 'image', 'code', 'parentCategory', ...WEBSITE_FIELDS,
+]);
 
 export const fetchCategory = async (id: string, include: string[] = []): Promise<ICategory | undefined> => {
   const category = await Parse.Cloud.run('getCategory', { id, include });

@@ -5,7 +5,7 @@ import { getParseServer } from '@/config/parse-server.config';
 import { defaultLocale, Locale, locales } from '@/i18n/config';
 import { ICategory } from '@/types/cms.type';
 import { ARTICLE_CATEGORIES_LIMIT, collections } from '@/utils/constants';
-import { serializeParseObject } from '@/utils/parse.utils';
+import { serializeParseObject, withContentWebsite } from '@/utils/parse.utils';
 import { getTranslatedField } from '@/utils/translation.utils';
 import { escapeText } from '@/utils/utils';
 
@@ -24,7 +24,7 @@ export const getCategoriesForUrls = async (): Promise<
   cacheTag('categories');
 
   try {
-    const categories = await new Parse.Query(collections.Category)
+    const categories = await withContentWebsite(new Parse.Query(collections.Category))
       .equalTo('deleted', false)
       .equalTo('active', true)
       .select(['translated', 'entity'])
@@ -62,7 +62,7 @@ export const getCategoryBySlug = async (
       );
     });
 
-    const category = await Parse.Query.or(...or)
+    const category = await withContentWebsite(Parse.Query.or(...or))
       .equalTo('deleted', false)
       .equalTo('active', true)
       .equalTo(`translated.${locale}.slug`, slug)
@@ -97,7 +97,7 @@ export const getRootPageCategorySlugsForLocale = async (locale: Locale): Promise
   try {
     const slugs: string[] = [];
 
-    await new Parse.Query(collections.Category)
+    await withContentWebsite(new Parse.Query(collections.Category))
       .equalTo('deleted', false)
       .equalTo('active', true)
       .equalTo('entity', CategoryEntityEnum.PAGE)
@@ -132,7 +132,7 @@ export const getSubcategories = async (parentCategoryId: string): Promise<ICateg
 
     parentCategory.id = parentCategoryId;
 
-    const subcategories = await new Parse.Query(collections.Category)
+    const subcategories = await withContentWebsite(new Parse.Query(collections.Category))
       .equalTo('parentCategory', parentCategory)
       .equalTo('deleted', false)
       .equalTo('active', true)
@@ -157,7 +157,7 @@ export const getArticleCategories = async (): Promise<ICategory[]> => {
   cacheTag('categories');
 
   try {
-    const categories = await new Parse.Query(collections.Category)
+    const categories = await withContentWebsite(new Parse.Query(collections.Category))
       .equalTo('deleted', false)
       .equalTo('active', true)
       .equalTo('entity', CategoryEntityEnum.ARTICLE)

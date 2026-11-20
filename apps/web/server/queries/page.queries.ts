@@ -20,7 +20,7 @@ import {
 import { getAbsoluteUrl, goToItemBySlug } from '@/utils/app.utils';
 import { goToSubcategory } from '@/utils/cms.utils';
 import { collections } from '@/utils/constants';
-import { serializeParseObject, withContentCountry } from '@/utils/parse.utils';
+import { serializeParseObject, withContentCountry, withContentWebsite } from '@/utils/parse.utils';
 import { retrievePathnameFromDynamicPathname } from '@/utils/next.utils';
 import { getTranslatedField } from '@/utils/translation.utils';
 
@@ -35,7 +35,7 @@ export const getPage = async (
   cacheTag('pages');
 
   try {
-    const page = await withContentCountry(new Parse.Query(collections.Page))
+    const page = await withContentWebsite(withContentCountry(new Parse.Query(collections.Page)))
       .equalTo(`translated.${locale}.slug`, slug)
       .select([
         'translated', 'bannerImage', 'previewImage', 'images', 'blocks', 'code', 'hasTableOfContents',
@@ -63,7 +63,7 @@ export const getPaginatedPages = async ({
   cacheTag('pages');
 
   try {
-    const query = withContentCountry(new Parse.Query(collections.Page)).limit(limit).skip(skip);
+    const query = withContentWebsite(withContentCountry(new Parse.Query(collections.Page))).limit(limit).skip(skip);
 
     if (orderedBy) {
       if (order === 'asc') {
@@ -136,7 +136,7 @@ export const getPagesForMenusUrls = async (
     categoryBucketsMap.set(categoryId, bucket);
   };
 
-  await withContentCountry(new Parse.Query(collections.Page))
+  await withContentWebsite(withContentCountry(new Parse.Query(collections.Page)))
     .equalTo('deleted', false)
     .equalTo('active', true)
     .include(['categories', 'categories.parentCategory'])
@@ -209,7 +209,7 @@ export const getPagesForMenusUrls = async (
   // resolve every root category's subcategories in a single batched query instead of one
   // query per category
   if (rootCategoriesById.size > 0) {
-    const subCategories = await new Parse.Query(collections.Category)
+    const subCategories = await withContentWebsite(new Parse.Query(collections.Category))
       .equalTo('deleted', false)
       .equalTo('active', true)
       .containedIn('parentCategory', Array.from(rootCategoriesById.values()))
@@ -280,7 +280,7 @@ export const getExistingPageSlugs = async (
   cacheTag('pages');
 
   try {
-    const pages = await withContentCountry(new Parse.Query(collections.Page))
+    const pages = await withContentWebsite(withContentCountry(new Parse.Query(collections.Page)))
       .equalTo('deleted', false)
       .equalTo('active', true)
       .containedIn(`translated.${locale}.slug`, slugs)
@@ -320,7 +320,7 @@ export const getPagesByCategory = async (
 
     categoryPointer.id = categoryId;
 
-    const result = (await withContentCountry(new Parse.Query(collections.Page))
+    const result = (await withContentWebsite(withContentCountry(new Parse.Query(collections.Page)))
       .equalTo('deleted', false)
       .equalTo('active', true)
       .equalTo('categories', categoryPointer)
@@ -386,7 +386,7 @@ export const getPageSlugsForLocale = async (locale: Locale): Promise<string[]> =
   try {
     const slugs: string[] = [];
 
-    await withContentCountry(new Parse.Query(collections.Page))
+    await withContentWebsite(withContentCountry(new Parse.Query(collections.Page)))
       .equalTo('deleted', false)
       .equalTo('active', true)
       .select([`translated.${locale}.slug`])
@@ -428,7 +428,7 @@ export const generatePagesSitemap = async (): Promise<
       ROUTES.pages.preview().pathname
     );
 
-    await withContentCountry(new Parse.Query(collections.Page))
+    await withContentWebsite(withContentCountry(new Parse.Query(collections.Page)))
       .equalTo('deleted', false)
       .equalTo('active', true)
       .select(['translated', 'updatedAt'])

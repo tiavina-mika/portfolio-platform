@@ -6,6 +6,7 @@ import { locales } from '@/i18n/config';
 import { ISearchResult } from '@/types/app.type';
 import { goToItemBySlug } from '@/utils/app.utils';
 import { collections, SEARCH_EMPTY_RESULT_ID } from '@/utils/constants';
+import { withContentWebsite } from '@/utils/parse.utils';
 import { escapeText } from '@/utils/utils';
 import { localeSchemaField } from '@/validations/app.validations';
 import { getParseServer } from '@/config/parse-server.config';
@@ -40,7 +41,7 @@ const searchItems = async (
   });
 
   try {
-    return await Parse.Query.or(...or)
+    return await withContentWebsite(Parse.Query.or(...or))
       .equalTo('deleted', false)
       .equalTo('active', true)
       .limit(10)

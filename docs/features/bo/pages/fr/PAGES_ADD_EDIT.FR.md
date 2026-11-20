@@ -59,6 +59,7 @@ l'image** (petite taille, pour une carte ou une liste) et **Images** (jusqu'à 5
 ### Étape 3 — Visibilité, catégories et emplacement
 
 - **Actif** : interrupteur ; une page active est visible sur le site (activé par défaut à la création).
+- **Sites** : liste à choix multiples, **Portfolio** par défaut. On peut ajouter **Boîte** : la page est réservé au site Aldaron quand « Boîte » est choisi seul. Dès que « Boîte » est choisi apparaissent le **contenu de la boîte** (Site web statique, Mobile, Back-office, Application web, au choix), le **prix en euros** et la **durée en jours**, tous facultatifs. Décocher « Boîte » efface ces trois informations. Pour l'instant ce choix est seulement enregistré : les sites publics ne l'utilisent pas encore.
 - **Sommaire** : interrupteur, désactivé par défaut ; activé, la page affiche sur le site un sommaire cliquable construit à partir des titres du contenu (sans titre dans le texte, il n’y a pas de sommaire).
 - **Catégorie** : une ou plusieurs catégories, parmi celles qui existent.
 - **Emplacement du lien** : **Dans le menu**, **Dans le pied de page**, les deux, ou aucun.

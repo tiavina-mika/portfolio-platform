@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Réalisations Aldaron" description="Page Réalisations : projets livrés, périmètre, délai et prix (données d'exemple)." -->
+<helmet><script src="./ds-base.js"></script><style>body{margin:0}a{color:var(--brand-text)}a:hover{color:var(--foreground)}button{font-family:inherit}</style></helmet>
+<div class="{{ themeClass }}" style="background:var(--background);color:var(--foreground);font-family:var(--font-sans);min-height:100vh;padding-bottom:48px"><div ref="{{ frameRef }}" style="width:1200px;max-width:100%;margin:0 auto;padding:0 {{ gutter }}px;box-sizing:border-box">
+<header style="display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px;border-bottom:1px solid var(--border);position:relative"><a href="../home/Home.dc.html" aria-label="Aldaron" style="display:flex;align-items:center;min-height:44px"><sc-if value="{{ isLight }}" hint-placeholder-val="{{ true }}"><img src="../../assets/logo/aldaron-horizontal.svg" alt="Aldaron" style="height:28px;display:block"></sc-if><sc-if value="{{ isDark }}" hint-placeholder-val="{{ false }}"><img src="../../assets/logo/aldaron-horizontal-dark.svg" alt="Aldaron" style="height:28px;display:block"></sc-if></a>
+<sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}"><nav aria-label="Principal" style="display:flex;gap:4px"><sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4"><a href="{{ n.href }}" style="display:flex;align-items:center;min-height:44px;padding:0 12px;color:{{ n.color }};box-shadow:{{ n.line }};text-decoration:none;font:500 15px/1 var(--font-sans);border-radius:0" aria-current="{{ n.cur }}" style-hover="color:var(--foreground)">{{ n.label }}</a></sc-for></nav></sc-if>
+<div style="display:flex;align-items:center;gap:8px"><x-import component-from-global-scope="AldaronDesignSystem_1daf3c.Button" variant="brand" size="sm" href="../pricing/simulator.html" hint-size="150px,36px">{{ t.ctaSim }}</x-import><sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ toggleMenu }}" aria-expanded="{{ menuOpen }}" aria-controls="menu" style="min-height:44px;padding:0 14px;border-radius:6px;border:1px solid var(--input);background:transparent;color:var(--foreground);font:500 15px/1 var(--font-sans);cursor:pointer" style-hover="background:var(--muted)" style-focus="outline:2px solid var(--ring);outline-offset:2px">{{ menuLabel }}</button></sc-if></div>
+<sc-if value="{{ showMenu }}" hint-placeholder-val="{{ false }}"><nav id="menu" aria-label="Principal" style="position:absolute;top:100%;left:0;right:0;z-index:5;background:var(--popover);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow-lg);padding:8px;display:grid;gap:4px"><sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4"><a href="{{ n.href }}" onClick="{{ closeMenu }}" style="display:flex;align-items:center;min-height:44px;padding:0 12px;border-radius:6px;color:var(--foreground);background:{{ n.bg }};text-decoration:none;font-weight:500" aria-current="{{ n.cur }}" style-hover="background:var(--muted)">{{ n.label }}</a></sc-for></nav></sc-if></header>
+<main id="top">
+<section style="padding:{{ heroPad }}px 0 {{ ctaPad }}px;display:grid;gap:28px;justify-items:start"><span style="font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ t.docLabel }}</span><h1 style="margin:0;font:700 {{ h1Size }}px/1.02 var(--font-display);letter-spacing:-0.035em;text-wrap:balance;max-width:16ch">{{ t.docTitle }}</h1><p style="margin:0;font-size:{{ leadSize }}px;line-height:1.55;color:var(--muted-foreground);max-width:56ch;text-wrap:pretty">{{ t.docSub }}</p></section>
+<section id="projets" style="padding:0 0 {{ secPad }}px;display:grid;gap:40px"><sc-if value="{{ showFilter }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px"><x-import component-from-global-scope="AldaronDesignSystem_1daf3c.Tabs" items="{{ filterItems }}" value="{{ flt }}" onChange="{{ onFilter }}" variant="pill" hint-size="100%,44px"></x-import><span aria-live="polite" style="font:500 13px/1 var(--font-mono);color:var(--muted-foreground)">{{ rangeText }}</span></div></sc-if><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;align-items:stretch"><sc-for list="{{ projects }}" as="p" hint-placeholder-count="4"><x-import component-from-global-scope="AldaronDesignSystem_1daf3c.Card" variant="default" eyebrow="{{ p.eyebrow }}" title="{{ p.name }}" description="{{ p.summary }}" style="height:100%" dc-props="{{ fullH }}" hint-size="100%,480px"><div style="display:grid;gap:20px"><div style="aspect-ratio:16/10;border-radius:6px;border:1px solid var(--border);background:repeating-linear-gradient(135deg,var(--muted) 0 12px,var(--card) 12px 24px);display:grid;place-items:center;padding:12px;text-align:center;font:500 12px/1.4 var(--font-mono);color:var(--muted-foreground)">{{ t.shot }}</div><ul style="list-style:none;margin:0;padding:0;display:grid"><sc-for list="{{ p.facts }}" as="f" hint-placeholder-count="4"><li style="display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-top:1px solid var(--border);font-size:15px;line-height:1.4"><span style="color:var(--muted-foreground)">{{ f.k }}</span><span style="font:500 14px/1.4 var(--font-mono);text-align:right">{{ f.v }}</span></li></sc-for></ul></div></x-import></sc-for></div>
+<sc-if value="{{ showPager }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="AldaronDesignSystem_1daf3c.Pagination" page="{{ pg }}" page-count="{{ pageCount }}" onChange="{{ onPage }}" compact="{{ compact }}" labels="{{ t.pgLabels }}" hint-size="100%,44px"></x-import></sc-if>
+<div><x-import component-from-global-scope="AldaronDesignSystem_1daf3c.Button" variant="outline" size="lg" href="../pricing/simulator.html" hint-size="240px,52px">{{ t.ctaSim }}</x-import></div></section>
+</main>
+<footer style="margin-top:{{ secPad }}px;border-top:1px solid var(--border);padding-top:48px;display:grid;gap:40px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:40px 32px">
+<div style="display:grid;gap:16px;align-content:start;max-width:34ch"><sc-if value="{{ isLight }}" hint-placeholder-val="{{ true }}"><img src="../../assets/logo/aldaron-horizontal.svg" alt="Aldaron" style="height:28px;display:block"></sc-if><sc-if value="{{ isDark }}" hint-placeholder-val="{{ false }}"><img src="../../assets/logo/aldaron-horizontal-dark.svg" alt="Aldaron" style="height:28px;display:block"></sc-if><p style="margin:0;font-size:15px;line-height:1.5;color:var(--muted-foreground);text-wrap:pretty">{{ t.footTag }}</p></div>
+<nav aria-label="{{ t.footNav }}"><h3 style="margin:0 0 12px;font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ t.footNav }}</h3><ul style="list-style:none;margin:0;padding:0;display:grid;gap:2px"><sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4"><li><a href="{{ n.href }}" style="display:inline-flex;align-items:center;min-height:44px;color:var(--muted-foreground);text-decoration:none;font-size:15px" style-hover="color:var(--foreground)">{{ n.label }}</a></li></sc-for></ul></nav>
+<nav aria-label="{{ t.footLegal }}"><h3 style="margin:0 0 12px;font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ t.footLegal }}</h3><ul style="list-style:none;margin:0;padding:0;display:grid;gap:2px"><sc-for list="{{ legalItems }}" as="n" hint-placeholder-count="2"><li><a href="{{ n.href }}" style="display:inline-flex;align-items:center;min-height:44px;color:var(--muted-foreground);text-decoration:none;font-size:15px" style-hover="color:var(--foreground)">{{ n.label }}</a></li></sc-for></ul></nav>
+<div><h3 style="margin:0 0 12px;font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ t.footContact }}</h3><ul style="list-style:none;margin:0;padding:0;display:grid;gap:2px"><li><a href="mailto:contact@aldaron.eu" style="display:inline-flex;align-items:center;min-height:44px;color:var(--muted-foreground);text-decoration:none;font-size:15px" style-hover="color:var(--foreground)">contact@aldaron.eu</a></li><li><a href="../contact/Contact.dc.html" style="display:inline-flex;align-items:center;min-height:44px;color:var(--muted-foreground);text-decoration:none;font-size:15px" style-hover="color:var(--foreground)">{{ t.footQuote }}</a></li></ul></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;padding-top:20px;border-top:1px solid var(--border);font:500 12px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)"><span>© 2026 Aldaron</span><span>{{ t.footer }}</span></div>
+</footer>
+</div></div>
+<aside aria-label="Tweaks" class="{{ themeClass }}" style="position:fixed;right:16px;bottom:16px;z-index:50;width:min(320px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;background:var(--popover);color:var(--popover-foreground);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-lg)">
+<button type="button" onClick="{{ togglePanel }}" aria-expanded="{{ open }}" style="width:100%;min-height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:none;border:0;color:inherit;font:600 14px/1 var(--font-sans);cursor:pointer;border-radius:12px" style-hover="background:var(--muted)" style-focus="outline:2px solid var(--ring);outline-offset:-2px">Tweaks<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">{{ panelSign }}</span></button>
+<sc-if value="{{ open }}" hint-placeholder-val="{{ true }}"><div style="padding:4px 16px 16px;display:grid;gap:14px;border-top:1px solid var(--border)">
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="5"><div style="display:grid;gap:6px;padding-top:10px"><span style="font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ g.title }}</span><div style="display:flex;gap:4px;flex-wrap:wrap"><sc-for list="{{ g.opts }}" as="o" hint-placeholder-count="3"><sc-if value="{{ o.active }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ o.on }}" aria-pressed="true" style="min-height:44px;padding:0 12px;border-radius:6px;font:500 13px/1 var(--font-sans);cursor:pointer;border:1px solid transparent;background:var(--primary);color:var(--primary-foreground)" style-focus="outline:2px solid var(--ring);outline-offset:2px">{{ o.label }}</button></sc-if><sc-if value="{{ o.idle }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ o.on }}" aria-pressed="false" style="min-height:44px;padding:0 12px;border-radius:6px;font:500 13px/1 var(--font-sans);cursor:pointer;border:1px solid var(--input);background:transparent;color:var(--foreground)" style-hover="background:var(--muted)" style-focus="outline:2px solid var(--ring);outline-offset:2px">{{ o.label }}</button></sc-if></sc-for></div></div></sc-for>
+</div></sc-if></aside>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { theme: 'light', lang: 'fr', bp: 'desktop', open: true, menu: false, prices: true, cas: 'fp', flt: 'all', pg: 1 };
+  PER = 4;
+  CT = {
+    fr: { theme: 'Thème', light: 'Clair', dark: 'Sombre', lang: 'Langue', bp: 'Largeur', mobile: 'Mobile', tablet: 'Tablette', desktop: 'Desktop', large: 'Grand desktop', on: 'Oui', off: 'Non', casT: 'Cas', std: 'Standard', fp: 'Filtre et pagination' },
+    en: { theme: 'Theme', light: 'Light', dark: 'Dark', lang: 'Language', bp: 'Width', mobile: 'Mobile', tablet: 'Tablet', desktop: 'Desktop', large: 'Large desktop', on: 'Yes', off: 'No', casT: 'Case', std: 'Standard', fp: 'Filter and pagination' },
+    mg: { theme: 'Endrika', light: 'Mazava', dark: 'Maizina', lang: 'Fiteny', bp: 'Sakany', mobile: 'Finday', tablet: 'Takelaka', desktop: 'Solosaina', large: 'Solosaina lehibe', on: 'Eny', off: 'Tsia', teaser: 'Bloc mpanao kajy', prices: 'Vidiny amin\'ny karatra', tDark: 'Maizina', tLight: 'Mazava', casT: 'Raharaha', std: 'Mahazatra', fp: 'Sivana sy pejy' }
+  };
+  PT = {
+    fr: { nav: ['Offre et prix', 'Simulateur', 'Réalisations', 'À propos', 'Contact'], menu: 'Menu', close: 'Fermer', ctaSim: 'Estimer mon prix', footer: 'Europe', footTag: 'Développement web et mobile pour startups, à prix fixe.', footNav: 'Navigation', footLegal: 'Légal', footContact: 'Contact', footQuote: 'Demander un devis ferme', legal: 'Mentions légales', privacy: 'Confidentialité',
+      docLabel: 'Réalisations', docTitle: 'Des produits livrés à prix fixe.', docSub: 'Quelques projets réalisés, avec leur périmètre, leur délai et leur prix.', shot: 'Capture d\'écran du produit', fSup: 'Supports', fScr: 'Écrans', fDel: 'Délai', fPrice: 'Prix', wk: 'semaines', pricesTw: 'Prix affichés', fAll: 'Tous', of: 'sur', word: 'réalisations', pgLabels: { nav: 'Pagination', prev: 'Précédent', next: 'Suivant', page: 'Page' },
+      supL: { web: 'Site web', app: 'Application web', mobile: 'Mobile', bo: 'Back-office' }, proj: [['Livraison', 'Application de livraison de repas pour une startup de Tananarive, avec un back-office pour suivre les commandes et les livreurs.'], ['Santé', 'Prise de rendez-vous en ligne pour des cabinets médicaux, avec un espace de gestion pour les praticiens.'], ['Voyage', 'Site vitrine d\'un voyagiste : circuits, galerie, formulaire de demande de devis.'], ['Éducation', 'Plateforme d\'apprentissage en ligne : cours, suivi des élèves, application mobile et administration.'], ['Commerce', 'Boutique en ligne pour un créateur local : catalogue, panier, paiement et application mobile de suivi des commandes.'], ['Finance', 'Facturation et suivi de trésorerie pour petites entreprises, avec un espace d\'administration.'], ['Immobilier', 'Site d\'annonces avec recherche par critères et back-office pour les agences.'], ['Services', 'Application mobile de suivi de consommation et de paiement des factures d\'eau.'], ['Restauration', 'Site vitrine d\'un restaurant : carte, horaires et demande de réservation par formulaire.'], ['Transport', 'Plateforme de covoiturage urbain : application web, application mobile et gestion des trajets.']] },
+    en: { nav: ['Offer and pricing', 'Simulator', 'Projects', 'About', 'Contact'], menu: 'Menu', close: 'Close', ctaSim: 'Estimate my price', footer: 'Europe', footTag: 'Web and mobile development for startups, at a fixed price.', footNav: 'Navigation', footLegal: 'Legal', footContact: 'Contact', footQuote: 'Request a firm quote', legal: 'Legal notice', privacy: 'Privacy',
+      docLabel: 'Projects', docTitle: 'Products delivered at a fixed price.', docSub: 'A few delivered projects, with their scope, lead time and price.', shot: 'Product screenshot', fSup: 'Platforms', fScr: 'Screens', fDel: 'Lead time', fPrice: 'Price', wk: 'weeks', pricesTw: 'Prices shown', fAll: 'All', of: 'of', word: 'projects', pgLabels: { nav: 'Pagination', prev: 'Previous', next: 'Next', page: 'Page' },
+      supL: { web: 'Website', app: 'Web app', mobile: 'Mobile', bo: 'Back office' }, proj: [['Delivery', 'Meal delivery app for an Antananarivo startup, with a back office to follow orders and couriers.'], ['Health', 'Online appointment booking for medical practices, with a management area for practitioners.'], ['Travel', 'Showcase site for a tour operator: tours, gallery, quote request form.'], ['Education', 'Online learning platform: courses, student tracking, mobile app and administration.'], ['Commerce', 'Online store for a local maker: catalogue, cart, payment and a mobile app to track orders.'], ['Finance', 'Invoicing and cash-flow tracking for small businesses, with an administration area.'], ['Real estate', 'Listings site with criteria search and a back office for agencies.'], ['Utilities', 'Mobile app to track consumption and pay water bills.'], ['Catering', 'Restaurant showcase site: menu, opening hours and a booking request form.'], ['Transport', 'Urban carpooling platform: web app, mobile app and trip management.']] },
+    mg: { nav: ['Tolotra sy vidiny', 'Mpanao kajy', 'Asa vita', 'Momba anay', 'Fifandraisana'], menu: 'Lisitra', close: 'Hidio', ctaSim: 'Tombano ny vidiny', footer: 'Eoropa', footTag: 'Fampandrosoana web sy finday ho an\'ny startup, amin\'ny vidiny raikitra.', footNav: 'Fitetezana', footLegal: 'Lalàna', footContact: 'Fifandraisana', footQuote: 'Angataho ny tolo-bidy raikitra', legal: 'Fanamarihana ara-dalàna', privacy: 'Fiarovana ny angon-drakitra',
+      docLabel: 'Asa vita', docTitle: 'Vokatra natolotra amin\'ny vidiny raikitra.', docSub: 'Tetikasa vitsivitsy vita, miaraka amin\'ny haben\'ny asa, ny fe-potoana ary ny vidiny.', shot: 'Sarin\'ny efijery ny vokatra', fSup: 'Fitaovana', fScr: 'Efijery', fDel: 'Fe-potoana', fPrice: 'Vidiny', wk: 'herinandro', pricesTw: 'Vidiny aseho', fAll: 'Rehetra', of: 'amin\'ny', word: 'asa vita', pgLabels: { nav: 'Pejy', prev: 'Teo aloha', next: 'Manaraka', page: 'Pejy' },
+      supL: { web: 'Tranonkala', app: 'Application web', mobile: 'Finday', bo: 'Back-office' }, proj: [['Famatsiana', 'Application fanaterana sakafo ho an\'ny startup any Antananarivo, miaraka amin\'ny back-office hanaraha-maso ny kaomandy sy ny mpitatitra.'], ['Fahasalamana', 'Famandrihana fotoana an-tserasera ho an\'ny biraon\'ny dokotera, miaraka amin\'ny toerana fitantanana ho an\'ny dokotera.'], ['Dia', 'Tranonkala fampisehoana ho an\'ny mpikarakara dia : tetezamita, galerie, taratasy fangatahana tolo-bidy.'], ['Fanabeazana', 'Sehatra fianarana an-tserasera : fampianarana, fanaraha-maso ny mpianatra, application finday ary fitantanana.'], ['Varotra', 'Fivarotana an-tserasera ho an\'ny mpamorona eo an-toerana : katalaogy, harona, fandoavam-bola ary application finday hanaraha-maso ny kaomandy.'], ['Vola', 'Famoahana faktiora sy fanaraha-maso ny tahiry vola ho an\'ny orinasa kely, miaraka amin\'ny toerana fitantanana.'], ['Trano', 'Tranonkala filazana varotra misy fikarohana araka ny fepetra sy back-office ho an\'ny masoivohitra.'], ['Serivisy', 'Application finday hanaraha-maso ny fanjifana sy handoavana ny faktiora rano.'], ['Sakafo', 'Tranonkala fampisehoana ho an\'ny trano fisakafoanana : menio, ora fiasana ary taratasy fangatahana famandrihana.'], ['Fitaterana', 'Sehatra fiara iombonana ao an-tanàn-dehibe : application web, application finday ary fitantanana ny dia.']] }
+  };
+  CUR = 2;
+  HREFS = ['../pricing/pricing.html', '../pricing/simulator.html', '#top', '../about/About.dc.html', '../contact/Contact.dc.html'];
+  PROJ = [
+    { n: 'Tsara Livraison', sup: ['mobile', 'bo'], scr: { mobile: 110, bo: 20 }, wk: 8, price: 3500 },
+    { n: 'Fanilo Santé', sup: ['app', 'bo'], scr: { app: 60, bo: 25 }, wk: 5, price: 2000 },
+    { n: 'Ravinala Voyages', sup: ['web'], scr: { web: 40 }, wk: 3, price: 1500 },
+    { n: 'Hasina Académie', sup: ['app', 'mobile', 'bo'], scr: { app: 70, mobile: 60, bo: 30 }, wk: 12, price: 6400 },
+    { n: 'Zanaka Boutique', sup: ['web', 'mobile'], scr: { web: 35, mobile: 30 }, wk: 6, price: 3000 },
+    { n: 'Vola Compta', sup: ['app', 'bo'], scr: { app: 45, bo: 20 }, wk: 6, price: 2800 },
+    { n: 'Tany Immobilier', sup: ['web', 'bo'], scr: { web: 30, bo: 15 }, wk: 4, price: 2000 },
+    { n: 'Rano Suivi', sup: ['mobile'], scr: { mobile: 50 }, wk: 5, price: 2000 },
+    { n: 'Soa Restaurant', sup: ['web'], scr: { web: 15 }, wk: 2, price: 1000 },
+    { n: 'Lalana Transport', sup: ['app', 'mobile'], scr: { app: 35, mobile: 45 }, wk: 7, price: 3400 }
+  ];
+  money(n, lang) { return new Intl.NumberFormat(lang === 'en' ? 'en-IE' : 'fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n); }
+  projects(T, s) {
+    return this.PROJ.map((p, i) => {
+      const facts = [{ k: T.fSup, v: p.sup.map((k) => T.supL[k]).join(' · ') }, { k: T.fScr, v: Object.keys(p.scr).map((k) => p.scr[k] + ' ' + T.supL[k].toLowerCase()).join(' · ') }, { k: T.fDel, v: p.wk + ' ' + T.wk }];
+      if (s.prices) facts.push({ k: T.fPrice, v: this.money(p.price, s.lang) });
+      return { sup: p.sup, name: p.n, eyebrow: T.proj[i][0], summary: T.proj[i][1], facts: facts };
+    });
+  }
+  frameRef = (el) => { this.frameEl = el; };
+  paintAll() { if (this.frameEl) this.frameEl.style.width = { mobile: 390, tablet: 768, desktop: 1200, large: 1600 }[this.state.bp] + 'px'; }
+  componentDidMount() { this.paintAll(); }
+  componentDidUpdate() { this.paintAll(); }
+  G(title, key, list, T) { return { title: title, opts: list.map((p) => { const on = this.state[key] === p[0]; return { label: T[p[1]] || p[1], on: () => this.setState({ [key]: p[0], menu: false, pg: 1 }), active: on, idle: !on }; }) }; }
+  renderVals() {
+    const s = this.state, C = this.CT[s.lang], T = this.PT[s.lang], m = s.bp === 'mobile', tab = s.bp === 'tablet';
+    const groups = [
+      this.G(C.casT, 'cas', [['std', 'std'], ['fp', 'fp']], C),
+      this.G(T.pricesTw, 'prices', [[true, 'on'], [false, 'off']], C),
+      this.G(C.theme, 'theme', [['light', 'light'], ['dark', 'dark']], C),
+      this.G(C.lang, 'lang', [['fr', 'FR'], ['en', 'EN'], ['mg', 'MG']], C),
+      this.G(C.bp, 'bp', [['mobile', 'mobile'], ['tablet', 'tablet'], ['desktop', 'desktop'], ['large', 'large']], C)
+    ];
+    const fp = s.cas === 'fp', all = this.projects(T, s);
+    let list = all.slice(0, 4), pageCount = 1, pg = 1, rangeText = '';
+    if (fp) {
+      const f = s.flt === 'all' ? all : all.filter((p) => p.sup.indexOf(s.flt) >= 0);
+      pageCount = Math.max(1, Math.ceil(f.length / this.PER)); pg = Math.min(s.pg, pageCount);
+      list = f.slice((pg - 1) * this.PER, pg * this.PER);
+      rangeText = f.length ? ((pg - 1) * this.PER + 1) + '–' + ((pg - 1) * this.PER + list.length) + ' ' + T.of + ' ' + f.length + ' ' + T.word : '';
+    }
+    const filterItems = [['all', T.fAll, all.length]].concat(['web', 'app', 'mobile', 'bo'].map((k) => [k, T.supL[k], all.filter((p) => p.sup.indexOf(k) >= 0).length])).map((a) => ({ value: a[0], label: a[1], count: a[2] }));
+    return {
+      showFilter: fp, showPager: fp && pageCount > 1, filterItems: filterItems, flt: s.flt, rangeText: rangeText, pg: pg, pageCount: pageCount, compact: m,
+      onFilter: (v) => this.setState({ flt: v, pg: 1 }), onPage: (p) => this.setState({ pg: p }),
+      t: T, themeClass: s.theme === 'dark' ? 'dark' : '', frameRef: this.frameRef, isDark: s.theme === 'dark', isLight: s.theme !== 'dark',
+      open: s.open, panelSign: s.open ? '−' : '+', togglePanel: () => this.setState({ open: !s.open }), groups: groups,
+      legalItems: [{ label: T.legal, href: '../legal/Legal.dc.html' }, { label: T.privacy, href: '../privacy/Privacy.dc.html' }],
+      navItems: T.nav.map((label, i) => { const cur = i === this.CUR; return { label: label, href: this.HREFS[i], cur: cur ? 'page' : 'false', color: cur ? 'var(--foreground)' : 'var(--muted-foreground)', line: cur ? 'inset 0 -2px 0 var(--brand)' : 'none', bg: cur ? 'var(--muted)' : 'transparent' }; }),
+      showNav: !m && !tab, isMobile: m || tab, showMenu: (m || tab) && s.menu, menuOpen: String(!!s.menu), menuLabel: s.menu ? T.close : T.menu,
+      toggleMenu: () => this.setState({ menu: !s.menu }), closeMenu: () => this.setState({ menu: false }),
+      gutter: m ? 20 : 32, heroPad: m ? 48 : 96, secPad: m ? 56 : 96, ctaPad: m ? 24 : 40,
+      h1Size: m ? 38 : tab ? 52 : 68, h2Size: m ? 30 : 40, leadSize: m ? 18 : 20,
+      projects: list,
+      fullH: { style: { height: '100%' } }
+    };
+  }
+}
+</script>
+</body>
+</html>

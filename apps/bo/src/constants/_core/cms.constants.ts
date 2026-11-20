@@ -1,3 +1,4 @@
+import { WebsiteEnum } from '@shared/types';
 import { PAGE_IMAGES_FIELDS, PAGE_SINGLE_IMAGE_FIELDS } from '@shared/validations';
 import { capitalize } from 'string-ts';
 
@@ -19,6 +20,21 @@ export const ARTICLE_DEFAULT_VIEWS_GOAL = 3000;
 // an editor typing a goal below this is fixing a typo, not describing an ambition
 export const ARTICLE_VIEWS_GOAL_MIN = 1;
 export const ARTICLE_VIEWS_GOAL_MAX = 1000000;
+
+/*
+ * the fields saved on an article, a page and a category to say which website they are written for,
+ * and, for the Aldaron website, what the box includes, what it costs and how long it takes
+ */
+export const WEBSITE_FIELDS = ['websites', 'boxIncludes', 'boxPrice', 'boxDurationDays'];
+
+// a content saved before the field existed, or created without picking one, belongs to the portfolio
+export const DEFAULT_WEBSITES = [WebsiteEnum.PORTFOLIO];
+
+// the box price is in euros
+export const BOX_PRICE_MIN = 1;
+export const BOX_PRICE_MAX = 1000000;
+export const BOX_DURATION_DAYS_MIN = 1;
+export const BOX_DURATION_DAYS_MAX = 365;
 
 // the gallery shown under a page or an article body — past this it stops being a gallery and becomes a slideshow
 export const CMS_GALLERY_MAX_IMAGES = 5;

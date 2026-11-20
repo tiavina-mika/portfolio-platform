@@ -1,3 +1,4 @@
+import { WebsiteEnum } from '@shared/types';
 import {
   endOfInZone, getContentCountriesConstraint, getContentCountryConstraint, startOfInZone,
 } from '@shared/utils';
@@ -263,6 +264,28 @@ export const contentCountryQuery = (query: Parse.Query, countryCode?: string | n
   else {
     query.notContainedIn('country', constraint.notContainedIn);
   }
+};
+
+/**
+ * keeps the editorial content (articles, pages, categories) written for one website. The portfolio
+ * also keeps the rows saved before the field existed, which carry no `websites` and are read as
+ * the portfolio's, so no migration is needed; the box (the Aldaron website) keeps only the rows that
+ * name it.
+ * @param query parse query to narrow, before any `select`/`include`: the portfolio case wraps it
+ * in a new query, so the caller chains the rest on the returned one
+ * @param website the website whose content is read; the portfolio when left out
+ * @returns the narrowed query
+ */
+export const contentWebsiteQuery = (query: Parse.Query, website = WebsiteEnum.PORTFOLIO): Parse.Query => {
+  if (website === WebsiteEnum.BOX) return query.equalTo('websites', WebsiteEnum.BOX);
+
+  return Parse.Query.and(
+    query,
+    Parse.Query.or(
+      new Parse.Query(query.className).equalTo('websites', WebsiteEnum.PORTFOLIO),
+      new Parse.Query(query.className).doesNotExist('websites')
+    )
+  );
 };
 
 /**

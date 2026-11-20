@@ -3,13 +3,13 @@ import Parse from 'parse';
 
 import { locales } from '@/config/i18n';
 import { ALL_TAB_COUNT_KEY } from '@/constants/_core/app.constants';
-import { ALL_PAGE_FIELDS, PAGE_SECTIONS_BY_PAGE_LIMIT } from '@/constants/_core/cms.constants';
+import { ALL_PAGE_FIELDS, PAGE_SECTIONS_BY_PAGE_LIMIT, WEBSITE_FIELDS } from '@/constants/_core/cms.constants';
 import { IListTabCounts } from '@/types/_core/app.type';
 import {
   IPage, IPageInput, IPageSection,
 } from '@/types/_core/page.type';
 import { Locale } from '@/types/_core/setting.type';
-import { getCategoryPointersFromIds } from '@/utils/_core/cms.utils';
+import { getCategoryPointersFromIds, getWebsiteValuesToSave } from '@/utils/_core/cms.utils';
 import { uploadFormFiles, uploadUpdatedFormFiles } from '@/utils/_core/file.utils';
 import { setValues, toJSONWithId } from '@/utils/_core/parse.utils';
 import { pageCodec } from '@/validations/_core/page.validations';
@@ -22,6 +22,7 @@ export const PAGE_PROPERTIES = new Set([
   'categories',
   'linkLocations',
   ...ALL_PAGE_FIELDS,
+  ...WEBSITE_FIELDS,
 ]);
 
 export const fetchPage = async (id: string, include: string[] = []): Promise<IPage | undefined> => {
@@ -130,6 +131,7 @@ export const savePage = async ({
     ...uploadValues,
     editorFiles: editorTempFiles,
     translated: pageCodec.decode(values),
+    ...getWebsiteValuesToSave(values),
   };
 
   if (values.categories) {

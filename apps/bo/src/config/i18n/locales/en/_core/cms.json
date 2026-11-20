@@ -346,5 +346,22 @@
     "sectionDescriptionPlaceholder": "Short description of the section",
     "sectionPreview": "Section preview",
     "loadingSection": "Loading the section…"
+  },
+  "website": {
+    "websites": "Websites",
+    "websitesHelper": "Which websites show this content. “Box” alone: reserved for the Aldaron website.",
+    "portfolio": "Portfolio",
+    "box": "Box",
+    "boxOnlyHelper": "Reserved for the Aldaron website: not shown on the portfolio.",
+    "boxIncludes": "Box content",
+    "boxIncludesHelper": "What the box includes.",
+    "boxPrice": "Price (€) (optional)",
+    "boxDurationDays": "Duration (days) (optional)",
+    "include": {
+      "staticWebsite": "Static website",
+      "mobile": "Mobile",
+      "backOffice": "Back-office",
+      "webApp": "Web application"
+    }
   }
 }

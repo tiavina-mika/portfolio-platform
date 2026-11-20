@@ -1,3 +1,4 @@
+import { WebsiteEnum } from '@shared/types';
 import { z } from 'zod';
 
 import {
@@ -11,6 +12,8 @@ export const articleForClientSchema = z.object({
   defaultLocale: z.string(),
   // the country whose website asks; the default country's content when left out
   country: countryCodeFieldSchema.optional(),
+  // the website that asks; the portfolio's content when left out
+  website: z.enum(WebsiteEnum).optional(),
 });
 
 const articlesFiltersSchema = z.object({

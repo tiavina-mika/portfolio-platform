@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="À propos Aldaron" description="Page À propos du site public : qui est Aldaron, pour qui, comment." -->
+<helmet><script src="../skeleton.js"></script><script src="../currency.js"></script><script src="./ds-base.js"></script><style>body{margin:0}a{color:var(--brand-text)}a:hover{color:var(--foreground)}button{font-family:inherit}</style></helmet>
+<div class="{{ themeClass }}" style="background:var(--background);color:var(--foreground);font-family:var(--font-sans);min-height:100vh;padding-bottom:48px"><div ref="{{ frameRef }}" style="width:1200px;max-width:100%;margin:0 auto;padding:0 {{ gutter }}px;box-sizing:border-box">
+<header style="display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px;border-bottom:1px solid var(--border);position:relative"><a href="../home/Home.dc.html" aria-label="Aldaron" style="display:flex;align-items:center;min-height:44px"><sc-if value="{{ isLight }}" hint-placeholder-val="{{ true }}"><img src="../../assets/logo/aldaron-horizontal.svg" alt="Aldaron" style="height:28px;display:block"></sc-if><sc-if value="{{ isDark }}" hint-placeholder-val="{{ false }}"><img src="../../assets/logo/aldaron-horizontal-dark.svg" alt="Aldaron" style="height:28px;display:block"></sc-if></a>
+<sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}"><nav aria-label="Principal" style="display:flex;gap:4px"><sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4"><a href="{{ n.href }}" style="display:flex;align-items:center;min-height:44px;padding:0 12px;color:{{ n.color }};box-shadow:{{ n.line }};text-decoration:none;font:500 15px/1 var(--font-sans);border-radius:0" aria-current="{{ n.cur }}" style-hover="color:var(--foreground)">{{ n.label }}</a></sc-for></nav></sc-if>
+<div style="display:flex;align-items:center;gap:8px"><x-import component-from-global-scope="AldaronDesignSystem_1daf3c.Button" variant="brand" size="sm" href="../pricing/simulator.html" hint-size="150px,36px">{{ t.ctaSim }}</x-import><sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ toggleMenu }}" aria-expanded="{{ menuOpen }}" aria-controls="menu" style="min-height:44px;padding:0 14px;border-radius:6px;border:1px solid var(--input);background:transparent;color:var(--foreground);font:500 15px/1 var(--font-sans);cursor:pointer" style-hover="background:var(--muted)" style-focus="outline:2px solid var(--ring);outline-offset:2px">{{ menuLabel }}</button></sc-if></div>
+<sc-if value="{{ showMenu }}" hint-placeholder-val="{{ false }}"><nav id="menu" aria-label="Principal" style="position:absolute;top:100%;left:0;right:0;z-index:5;background:var(--popover);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow-lg);padding:8px;display:grid;gap:4px"><sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4"><a href="{{ n.href }}" onClick="{{ closeMenu }}" style="display:flex;align-items:center;min-height:44px;padding:0 12px;border-radius:6px;color:var(--foreground);background:{{ n.bg }};text-decoration:none;font-weight:500" aria-current="{{ n.cur }}" style-hover="background:var(--muted)">{{ n.label }}</a></sc-for></nav></sc-if></header>
+<main id="top">
+<section style="padding:{{ heroPad }}px 0 {{ secPad }}px;display:grid;gap:28px;justify-items:start"><span style="font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ t.label }}</span><h1 style="margin:0;font:700 {{ h1Size }}px/1.02 var(--font-display);letter-spacing:-0.035em;text-wrap:balance;max-width:16ch">{{ t.h1 }}</h1><p style="margin:0;font-size:{{ leadSize }}px;line-height:1.55;color:var(--muted-foreground);max-width:60ch;text-wrap:pretty">{{ t.sub }}</p></section>
+<section id="principes" style="padding:{{ secPad }}px 0;border-top:1px solid var(--border);display:grid;gap:32px"><div style="display:grid;gap:12px"><span style="font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ t.valLabel }}</span><h2 style="margin:0;font:700 {{ h2Size }}px/1.05 var(--font-display);letter-spacing:-0.03em;text-wrap:balance;max-width:20ch">{{ t.valTitle }}</h2></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;align-items:stretch"><sc-for list="{{ values }}" as="v" hint-placeholder-count="3"><x-import component-from-global-scope="AldaronDesignSystem_1daf3c.Card" variant="default" eyebrow="{{ v.n }}" title="{{ v.title }}" description="{{ v.desc }}" style="height:100%" dc-props="{{ fullH }}" hint-size="100%,200px"></x-import></sc-for></div></section>
+<section id="pour-qui" style="padding:{{ secPad }}px 0;border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px 64px;align-items:start">
+<div style="display:grid;gap:16px"><span style="font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ t.forLabel }}</span><h2 style="margin:0;font:700 {{ h2Size }}px/1.05 var(--font-display);letter-spacing:-0.03em;text-wrap:balance;max-width:20ch">{{ t.forTitle }}</h2><p style="margin:0;font-size:18px;line-height:1.6;color:var(--muted-foreground);text-wrap:pretty">{{ t.forText }}</p></div>
+<div style="display:grid;gap:32px"><div style="display:grid;gap:12px"><b style="font:600 18px/1.3 var(--font-sans)">{{ t.doTitle }}</b><ul style="list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:16px;line-height:1.45"><sc-for list="{{ dos }}" as="i" hint-placeholder-count="4"><li style="display:flex;gap:10px"><span style="font:500 15px/1.45 var(--font-mono);color:var(--brand-text)">+</span><span>{{ i.l }}</span></li></sc-for></ul></div>
+<div style="display:grid;gap:12px"><b style="font:600 18px/1.3 var(--font-sans)">{{ t.dontTitle }}</b><ul style="list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:16px;line-height:1.45"><sc-for list="{{ donts }}" as="i" hint-placeholder-count="2"><li style="display:flex;gap:10px"><span style="font:500 15px/1.45 var(--font-mono);color:var(--muted-foreground)">−</span><span>{{ i.l }}</span></li></sc-for></ul></div>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><x-import component-from-global-scope="AldaronDesignSystem_1daf3c.Button" variant="outline" size="lg" href="../pricing/pricing.html" hint-size="240px,52px">{{ t.ctaPricing }}</x-import></div></div></section>
+<section id="contact" style="padding:{{ secPad }}px 0 0;border-top:1px solid var(--border)"><div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:{{ ctaPad }}px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap"><div style="display:grid;gap:12px;max-width:52ch"><h2 style="margin:0;font:700 {{ h2Size }}px/1.05 var(--font-display);letter-spacing:-0.03em;text-wrap:balance">{{ t.ctaTitle }}</h2><p style="margin:0;font-size:18px;line-height:1.55;color:var(--muted-foreground)">{{ t.ctaSub }}</p></div><x-import component-from-global-scope="AldaronDesignSystem_1daf3c.Button" variant="brand" size="lg" href="../contact/Contact.dc.html" hint-size="240px,52px">{{ t.ctaQuote }}</x-import></div></section>
+</main>
+<footer style="margin-top:{{ secPad }}px;border-top:1px solid var(--border);padding-top:48px;display:grid;gap:40px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:40px 32px">
+<div style="display:grid;gap:16px;align-content:start;max-width:34ch"><sc-if value="{{ isLight }}" hint-placeholder-val="{{ true }}"><img src="../../assets/logo/aldaron-horizontal.svg" alt="Aldaron" style="height:28px;display:block"></sc-if><sc-if value="{{ isDark }}" hint-placeholder-val="{{ false }}"><img src="../../assets/logo/aldaron-horizontal-dark.svg" alt="Aldaron" style="height:28px;display:block"></sc-if><p style="margin:0;font-size:15px;line-height:1.5;color:var(--muted-foreground);text-wrap:pretty">{{ t.footTag }}</p><div style="display:flex;gap:4px;margin-left:-10px"><a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:var(--muted-foreground)" style-hover="color:var(--foreground)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a><a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:var(--muted-foreground)" style-hover="color:var(--foreground)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.88v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a><a href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:var(--muted-foreground)" style-hover="color:var(--foreground)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg></a></div></div>
+<nav aria-label="{{ t.footNav }}"><h3 style="margin:0 0 12px;font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ t.footNav }}</h3><ul style="list-style:none;margin:0;padding:0;display:grid;gap:2px"><sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4"><li><a href="{{ n.href }}" style="display:inline-flex;align-items:center;min-height:44px;color:var(--muted-foreground);text-decoration:none;font-size:15px" style-hover="color:var(--foreground)">{{ n.label }}</a></li></sc-for></ul></nav>
+
+<div><h3 style="margin:0 0 12px;font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ t.footContact }}</h3><ul style="list-style:none;margin:0;padding:0;display:grid;gap:2px"><li><a href="mailto:contact@aldaron.eu" style="display:inline-flex;align-items:center;min-height:44px;color:var(--muted-foreground);text-decoration:none;font-size:15px" style-hover="color:var(--foreground)">contact@aldaron.eu</a></li><li><a href="../contact/Contact.dc.html" style="display:inline-flex;align-items:center;min-height:44px;color:var(--muted-foreground);text-decoration:none;font-size:15px" style-hover="color:var(--foreground)">{{ t.footQuote }}</a></li></ul></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px;padding-top:12px;border-top:1px solid var(--border);font:500 12px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)"><span style="flex:1 1 0;min-width:160px">© 2026 Aldaron · {{ t.footer }}</span><nav aria-label="{{ t.footLegal }}" style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px 24px"><sc-for list="{{ legalItems }}" as="n" hint-placeholder-count="2"><a href="{{ n.href }}" style="display:inline-flex;align-items:center;min-height:44px;color:var(--muted-foreground);text-decoration:none;font:500 12px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase" style-hover="color:var(--foreground)">{{ n.label }}</a></sc-for></nav><div role="group" aria-label="{{ t.langLabel }}" style="flex:1 1 0;min-width:160px;display:flex;justify-content:flex-end;gap:4px"><sc-for list="{{ langs }}" as="l" hint-placeholder-count="3"><button type="button" onClick="{{ l.on }}" aria-pressed="{{ l.pressed }}" style="min-height:44px;min-width:44px;padding:0 10px;border-radius:6px;border:1px solid {{ l.border }};background:{{ l.bg }};color:{{ l.fg }};font:500 12px/1 var(--font-mono);letter-spacing:.08em;cursor:pointer" style-focus="outline:2px solid var(--ring);outline-offset:2px">{{ l.label }}</button></sc-for></div></div>
+</footer>
+</div></div>
+<aside aria-label="Tweaks" class="{{ themeClass }}" style="position:fixed;right:16px;bottom:16px;z-index:50;width:min(320px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;background:var(--popover);color:var(--popover-foreground);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-lg)">
+<button type="button" onClick="{{ togglePanel }}" aria-expanded="{{ open }}" style="width:100%;min-height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:none;border:0;color:inherit;font:600 14px/1 var(--font-sans);cursor:pointer;border-radius:12px" style-hover="background:var(--muted)" style-focus="outline:2px solid var(--ring);outline-offset:-2px">Tweaks<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">{{ panelSign }}</span></button>
+<sc-if value="{{ open }}" hint-placeholder-val="{{ true }}"><div style="padding:4px 16px 16px;display:grid;gap:14px;border-top:1px solid var(--border)">
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="5"><div style="display:grid;gap:6px;padding-top:10px"><span style="font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ g.title }}</span><div style="display:flex;gap:4px;flex-wrap:wrap"><sc-for list="{{ g.opts }}" as="o" hint-placeholder-count="3"><sc-if value="{{ o.active }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ o.on }}" aria-pressed="true" style="min-height:44px;padding:0 12px;border-radius:6px;font:500 13px/1 var(--font-sans);cursor:pointer;border:1px solid transparent;background:var(--primary);color:var(--primary-foreground)" style-focus="outline:2px solid var(--ring);outline-offset:2px">{{ o.label }}</button></sc-if><sc-if value="{{ o.idle }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ o.on }}" aria-pressed="false" style="min-height:44px;padding:0 12px;border-radius:6px;font:500 13px/1 var(--font-sans);cursor:pointer;border:1px solid var(--input);background:transparent;color:var(--foreground)" style-hover="background:var(--muted)" style-focus="outline:2px solid var(--ring);outline-offset:2px">{{ o.label }}</button></sc-if></sc-for></div></div></sc-for>
+</div></sc-if></aside>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { theme: 'light', lang: 'fr', bp: 'desktop', open: true, menu: false };
+  CT = {
+    fr: { theme: 'Thème', light: 'Clair', dark: 'Sombre', lang: 'Langue', bp: 'Largeur', mobile: 'Mobile', tablet: 'Tablette', desktop: 'Desktop', large: 'Grand desktop', on: 'Oui', off: 'Non', },
+    en: { theme: 'Theme', light: 'Light', dark: 'Dark', lang: 'Language', bp: 'Width', mobile: 'Mobile', tablet: 'Tablet', desktop: 'Desktop', large: 'Large desktop', on: 'Yes', off: 'No', },
+    mg: { theme: 'Endrika', light: 'Mazava', dark: 'Maizina', lang: 'Fiteny', bp: 'Sakany', mobile: 'Finday', tablet: 'Takelaka', desktop: 'Solosaina', large: 'Solosaina lehibe', on: 'Eny', off: 'Tsia', teaser: 'Bloc mpanao kajy', prices: 'Vidiny amin\'ny karatra', tDark: 'Maizina', tLight: 'Mazava' }
+  };
+  PT = {
+    fr: {
+      nav: ['Offre et prix', 'Simulateur', 'Réalisations', 'À propos', 'Contact'], menu: 'Menu', close: 'Fermer',
+      ctaSim: 'Estimer mon prix', ctaPricing: 'Voir l\'offre et les prix', ctaQuote: 'Demander un devis ferme',
+      label: 'À propos', h1: 'Une société de développement pour les startups.',
+      sub: 'Aldaron conçoit et développe des produits web et mobiles pour les startups, du pré-seed à la série A. Nous travaillons au périmètre et à prix fixe : vous connaissez le prix avant que le développement commence.',
+      valLabel: 'Principes', valTitle: 'Comment nous travaillons.',
+      values: [['Un prix fixé avant de commencer', 'Le devis ferme suit un cadrage gratuit. Il ne change pas pendant le projet.'], ['Des démonstrations, pas des rapports', 'Les maquettes sont validées avant le développement, et le produit vous est présenté à mi-parcours.'], ['Le code vous appartient', 'Le code et les comptes vous sont remis à la mise en ligne.']],
+      forLabel: 'Pour qui', forTitle: 'Des startups qui veulent un produit, pas des heures.', forText: 'Nous travaillons uniquement avec des startups, du pré-seed à la série A. Chaque projet a un périmètre écrit et un prix fixé à la signature.',
+      doTitle: 'Ce que nous construisons', dos: ['Sites web statiques', 'Applications web', 'Applications mobiles iOS et Android', 'Back-offices'],
+      dontTitle: 'Ce que nous ne faisons pas', donts: ['Régie à l\'heure sans périmètre', 'Refonte graphique sans produit'],
+      ctaTitle: 'Parlons de votre produit.', ctaSub: 'Le cadrage est gratuit. Nous revenons vers vous avec un devis ferme.', footTag: 'Développement web et mobile pour startups, à prix fixe.', footNav: 'Navigation', footLegal: 'Légal', langLabel: 'Langue', footContact: 'Contact', footQuote: 'Demander un devis ferme', legal: 'Mentions légales', privacy: 'Confidentialité', footer: 'Europe'
+    },
+    en: {
+      nav: ['Offer and pricing', 'Simulator', 'Projects', 'About', 'Contact'], menu: 'Menu', close: 'Close',
+      ctaSim: 'Estimate my price', ctaPricing: 'See the offer and pricing', ctaQuote: 'Request a firm quote',
+      label: 'About', h1: 'A development company for startups.',
+      sub: 'Aldaron designs and builds web and mobile products for startups, from pre-seed to Series A. We work on scope at a fixed price: you know the price before development starts.',
+      valLabel: 'Principles', valTitle: 'How we work.',
+      values: [['A price fixed before we start', 'The firm quote follows a free scoping. It does not change during the project.'], ['Demos, not reports', 'Mockups are approved before development, and the product is presented to you halfway through.'], ['The code is yours', 'Code and accounts are handed over to you at launch.']],
+      forLabel: 'Who for', forTitle: 'Startups that want a product, not hours.', forText: 'We only work with startups, from pre-seed to Series A. Every project has a written scope and a price fixed at signing.',
+      doTitle: 'What we build', dos: ['Static websites', 'Web apps', 'iOS and Android mobile apps', 'Back offices'],
+      dontTitle: 'What we do not do', donts: ['Hourly work without a defined scope', 'Visual redesign without a product'],
+      ctaTitle: 'Let\'s talk about your product.', ctaSub: 'Scoping is free. We come back to you with a firm quote.', footTag: 'Web and mobile development for startups, at a fixed price.', footNav: 'Navigation', footLegal: 'Legal', langLabel: 'Language', footContact: 'Contact', footQuote: 'Request a firm quote', legal: 'Legal notice', privacy: 'Privacy', footer: 'Europe'
+    },
+    mg: {
+      nav: ['Tolotra sy vidiny', 'Mpanao kajy', 'Asa vita', 'Momba anay', 'Fifandraisana'], menu: 'Lisitra', close: 'Hidio',
+      ctaSim: 'Tombano ny vidiny', ctaPricing: 'Jereo ny tolotra sy ny vidiny', ctaQuote: 'Angataho ny tolo-bidy raikitra',
+      label: 'Momba anay', h1: 'Orinasa mpamorona ho an\'ny startup.',
+      sub: 'Aldaron dia mamolavola sy manamboatra vokatra web sy finday ho an\'ny startup, manomboka amin\'ny pre-seed ka hatramin\'ny séries A. Miasa araka ny haben\'ny tetikasa sy amin\'ny vidiny raikitra izahay : fantatrao ny vidiny alohan\'ny hanombohan\'ny fampandrosoana.',
+      valLabel: 'Fitsipika', valTitle: 'Ny fomba fiasanay.',
+      values: [['Vidiny raikitra alohan\'ny hanombohana', 'Manaraka fandrafetana maimaim-poana ny tolo-bidy raikitra. Tsy miova mandritra ny tetikasa izy.'], ['Demo, fa tsy tatitra', 'Ekena alohan\'ny fampandrosoana ny maquette, ary asehonay anao eo antenatenany ny vokatra.'], ['Anao ny kaody', 'Atolotra anao amin\'ny famoahana ny kaody sy ny kaonty.']],
+      forLabel: 'Ho an\'iza', forTitle: 'Startup mila vokatra, fa tsy ora.', forText: 'Miara-miasa amin\'ny startup ihany izahay, manomboka amin\'ny pre-seed ka hatramin\'ny séries A. Manana faritra voasoratra sy vidiny raikitra rehefa manao sonia ny tetikasa tsirairay.',
+      doTitle: 'Izay ataonay', dos: ['Tranonkala static', 'Application web', 'Application finday iOS sy Android', 'Back-office'],
+      dontTitle: 'Izay tsy ataonay', donts: ['Asa isan\'ora tsy misy faritra mazava', 'Fanovana endrika tsy misy vokatra'],
+      ctaTitle: 'Resaho ny vokatrao.', ctaSub: 'Maimaim-poana ny fandrafetana. Hiverina aminao miaraka amin\'ny tolo-bidy raikitra izahay.', footTag: 'Fampandrosoana web sy finday ho an\'ny startup, amin\'ny vidiny raikitra.', footNav: 'Fitetezana', footLegal: 'Lalàna', langLabel: 'Fiteny', footContact: 'Fifandraisana', footQuote: 'Angataho ny tolo-bidy raikitra', legal: 'Fanamarihana ara-dalàna', privacy: 'Fiarovana ny angon-drakitra', footer: 'Eoropa'
+    }
+  };
+  CUR = 3;
+  HREFS = ['../pricing/pricing.html', '../pricing/simulator.html', '../projects/Projects.dc.html', '#top', '../contact/Contact.dc.html'];
+  frameRef = (el) => { this.frameEl = el; };
+  paintAll() { if (this.frameEl) this.frameEl.style.width = { mobile: 390, tablet: 768, desktop: 1200, large: 1600 }[this.state.bp] + 'px'; }
+  componentDidMount() { this.paintAll(); }
+  componentDidUpdate() { this.paintAll(); }
+  G(title, key, list, T) { return { title: title, opts: list.map((p) => { const on = this.state[key] === p[0]; return { label: T[p[1]] || p[1], on: () => this.setState({ [key]: p[0], menu: false }), active: on, idle: !on }; }) }; }
+  renderVals() {
+    const s = this.state, C = this.CT[s.lang], T = this.PT[s.lang], m = s.bp === 'mobile', tab = s.bp === 'tablet';
+    const groups = [
+      this.G(C.theme, 'theme', [['light', 'light'], ['dark', 'dark']], C),
+      this.G(C.lang, 'lang', [['fr', 'FR'], ['en', 'EN'], ['mg', 'MG']], C),
+      this.G(C.bp, 'bp', [['mobile', 'mobile'], ['tablet', 'tablet'], ['desktop', 'desktop'], ['large', 'large']], C)
+    ];
+    return {
+      t: T, themeClass: s.theme === 'dark' ? 'dark' : '', frameRef: this.frameRef, isDark: s.theme === 'dark', isLight: s.theme !== 'dark',
+      open: s.open, panelSign: s.open ? '−' : '+', togglePanel: () => this.setState({ open: !s.open }), groups: groups,
+      langs: ['fr','en','mg'].map((k) => { const on = s.lang === k; return { label: k.toUpperCase(), on: () => this.setState({ lang: k }), pressed: String(on), bg: on ? 'var(--primary)' : 'transparent', fg: on ? 'var(--primary-foreground)' : 'var(--muted-foreground)', border: on ? 'transparent' : 'var(--input)' }; }),
+      legalItems: [{ label: T.legal, href: '../legal/Legal.dc.html' }, { label: T.privacy, href: '../privacy/Privacy.dc.html' }],
+      navItems: T.nav.map((label, i) => { const cur = i === this.CUR; return { label: label, href: this.HREFS[i], cur: cur ? 'page' : 'false', color: cur ? 'var(--foreground)' : 'var(--muted-foreground)', line: cur ? 'inset 0 -2px 0 var(--brand)' : 'none', bg: cur ? 'var(--muted)' : 'transparent' }; }),
+      showNav: !m && !tab, isMobile: m || tab, showMenu: (m || tab) && s.menu, menuOpen: String(!!s.menu), menuLabel: s.menu ? T.close : T.menu,
+      toggleMenu: () => this.setState({ menu: !s.menu }), closeMenu: () => this.setState({ menu: false }),
+      gutter: m ? 20 : 32, heroPad: m ? 40 : 72, secPad: m ? 40 : 64, ctaPad: m ? 24 : 40,
+      h1Size: m ? 38 : tab ? 52 : 68, h2Size: m ? 30 : 40, leadSize: m ? 18 : 20,
+      values: T.values.map((x, i) => ({ n: '0' + (i + 1), title: x[0], desc: x[1] })),
+      dos: T.dos.map((l) => ({ l })), donts: T.donts.map((l) => ({ l })),
+      fullH: { style: { height: '100%' } }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><meta name="design_doc_mode" content="canvas"><link rel="stylesheet" href="../../styles.css"><style>body{margin:0;background:transparent}a{color:var(--brand-text)}a:hover{color:var(--foreground)}</style></helmet>
+<section id="tour-1" data-screen-label="Tour 1" style="display:grid;gap:28px;padding:40px;font-family:var(--font-sans);color:var(--foreground)">
+<div style="display:flex;align-items:baseline;gap:16px"><h1 style="margin:0;font:700 40px/1 var(--font-display);letter-spacing:-0.025em">Tour 1</h1><p style="margin:0;font-size:18px;color:var(--muted-foreground)">Formes : rayons, bordures, ombres</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start;max-width:1200px">
+<div id="1a" style="width:560px;display:grid;gap:14px">
+<div style="display:flex;align-items:center;gap:12px"><span style="font:600 14px/1 var(--font-mono);padding:6px 10px;border-radius:4px;background:var(--primary);color:var(--primary-foreground)">1a</span><h2 style="margin:0;font:700 22px/1.2 var(--font-display)">Petits rayons, bordure, sans ombre (actuel) (recommandé)</h2></div>
+<div style="display:grid;gap:3px;font-size:14px;line-height:1.5"><div style="font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground);margin-bottom:6px">Avantages et inconvénients</div><div style="color:var(--success)">+ Précis, « outil », cohérent avec la grille et le mono</div><div style="color:var(--success)">+ Proche des valeurs par défaut shadcn : peu de surcharge</div><div style="color:var(--success)">+ Dense en back-office sans paraître brut</div><div style="color:var(--destructive)">- Moins doux et accueillant que 1c</div></div>
+<div style="background:#F6F3EE;border:1px solid var(--border);border-radius:8px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start">
+<div style="background:#FFFFFF;border:1px solid #E3DED5;border-radius:8px;padding:20px;display:grid;gap:8px"><span style="font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:#5E5A54">Socle</span><b style="font-size:24px;letter-spacing:-0.02em">5 000 €</b><span style="height:24px;width:max-content;padding:0 9px;border-radius:99px;background:#FDF1EA;color:#B4400F;display:flex;align-items:center;font-size:12px;font-weight:500">Inclus</span></div>
+<div style="display:grid;gap:10px"><span style="height:44px;border:1px solid #CFC8BD;border-radius:6px;background:#fff;display:flex;align-items:center;padding:0 14px;color:#5E5A54;font-size:15px">vous@startup.eu</span><span style="height:44px;border-radius:6px;background:#17181A;color:#F6F3EE;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:15px">Envoyer</span><code style="font:400 12px var(--font-mono);color:#5E5A54">4 · 6 · 8 · 12 px</code></div>
+</div>
+</div>
+<div id="1b" style="width:560px;display:grid;gap:14px">
+<div style="display:flex;align-items:center;gap:12px"><span style="font:600 14px/1 var(--font-mono);padding:6px 10px;border-radius:4px;background:var(--primary);color:var(--primary-foreground)">1b</span><h2 style="margin:0;font:700 22px/1.2 var(--font-display)">Angles vifs</h2></div>
+<div style="display:grid;gap:3px;font-size:14px;line-height:1.5"><div style="font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground);margin-bottom:6px">Avantages et inconvénients</div><div style="color:var(--success)">+ Très ingénierie, style « plan technique », distinctif</div><div style="color:var(--destructive)">- Froid, à l'opposé de « chaleureux »</div><div style="color:var(--destructive)">- Les badges et interrupteurs carrés se lisent mal</div></div>
+<div style="background:#F6F3EE;border:1px solid var(--border);border-radius:8px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start">
+<div style="background:#FFFFFF;border:1px solid #CFC8BD;border-radius:0;padding:20px;display:grid;gap:8px"><span style="font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:#5E5A54">Socle</span><b style="font-size:24px;letter-spacing:-0.02em">5 000 €</b><span style="height:24px;width:max-content;padding:0 9px;border-radius:0;background:#FDF1EA;color:#B4400F;display:flex;align-items:center;font-size:12px;font-weight:500">Inclus</span></div>
+<div style="display:grid;gap:10px"><span style="height:44px;border:1px solid #CFC8BD;border-radius:0;background:#fff;display:flex;align-items:center;padding:0 14px;color:#5E5A54;font-size:15px">vous@startup.eu</span><span style="height:44px;border-radius:0;background:#17181A;color:#F6F3EE;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:15px">Envoyer</span><code style="font:400 12px var(--font-mono);color:#5E5A54">0 · 0 · 2 px</code></div>
+</div>
+</div>
+<div id="1c" style="width:560px;display:grid;gap:14px">
+<div style="display:flex;align-items:center;gap:12px"><span style="font:600 14px/1 var(--font-mono);padding:6px 10px;border-radius:4px;background:var(--primary);color:var(--primary-foreground)">1c</span><h2 style="margin:0;font:700 22px/1.2 var(--font-display)">Arrondi doux, ombres</h2></div>
+<div style="display:grid;gap:3px;font-size:14px;line-height:1.5"><div style="font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground);margin-bottom:6px">Avantages et inconvénients</div><div style="color:var(--success)">+ Accueillant, grand public</div><div style="color:var(--destructive)">- Look « app générique », moins sérieux pour un devis</div><div style="color:var(--destructive)">- Les ombres alourdissent les écrans denses du back-office</div></div>
+<div style="background:#F6F3EE;border:1px solid var(--border);border-radius:8px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start">
+<div style="background:#FFFFFF;border-radius:16px;padding:20px;display:grid;gap:8px;box-shadow:0 8px 24px -6px rgba(23,24,26,.14)"><span style="font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:#5E5A54">Socle</span><b style="font-size:24px;letter-spacing:-0.02em">5 000 €</b><span style="height:24px;width:max-content;padding:0 9px;border-radius:99px;background:#FDF1EA;color:#B4400F;display:flex;align-items:center;font-size:12px;font-weight:500">Inclus</span></div>
+<div style="display:grid;gap:10px"><span style="height:44px;border:1px solid #E3DED5;border-radius:12px;background:#fff;display:flex;align-items:center;padding:0 14px;color:#5E5A54;font-size:15px">vous@startup.eu</span><span style="height:44px;border-radius:12px;background:#17181A;color:#F6F3EE;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:15px;box-shadow:0 4px 12px -2px rgba(23,24,26,.24)">Envoyer</span><code style="font:400 12px var(--font-mono);color:#5E5A54">12 · 16 px + ombres</code></div>
+</div>
+</div>
+<div id="1d" style="width:560px;display:grid;gap:14px">
+<div style="display:flex;align-items:center;gap:12px"><span style="font:600 14px/1 var(--font-mono);padding:6px 10px;border-radius:4px;background:var(--primary);color:var(--primary-foreground)">1d</span><h2 style="margin:0;font:700 22px/1.2 var(--font-display)">Contrôles en pilule</h2></div>
+<div style="display:grid;gap:3px;font-size:14px;line-height:1.5"><div style="font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground);margin-bottom:6px">Avantages et inconvénients</div><div style="color:var(--success)">+ Boutons très identifiables sur le site marketing</div><div style="color:var(--destructive)">- Les champs en pilule gênent les formulaires longs et les textarea</div><div style="color:var(--destructive)">- Mélange de deux langages (pilule et carte à angles)</div></div>
+<div style="background:#F6F3EE;border:1px solid var(--border);border-radius:8px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start">
+<div style="background:#FFFFFF;border:1px solid #E3DED5;border-radius:8px;padding:20px;display:grid;gap:8px"><span style="font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:#5E5A54">Socle</span><b style="font-size:24px;letter-spacing:-0.02em">5 000 €</b><span style="height:24px;width:max-content;padding:0 9px;border-radius:99px;background:#FDF1EA;color:#B4400F;display:flex;align-items:center;font-size:12px;font-weight:500">Inclus</span></div>
+<div style="display:grid;gap:10px"><span style="height:44px;border:1px solid #CFC8BD;border-radius:99px;background:#fff;display:flex;align-items:center;padding:0 18px;color:#5E5A54;font-size:15px">vous@startup.eu</span><span style="height:44px;border-radius:99px;background:#17181A;color:#F6F3EE;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:15px">Envoyer</span><code style="font:400 12px var(--font-mono);color:#5E5A54">pilule · 8 px cartes</code></div>
+</div>
+</div>
+</div>
+</section>
+</x-dc>
+</body>
+</html>
