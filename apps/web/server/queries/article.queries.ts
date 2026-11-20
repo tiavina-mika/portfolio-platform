@@ -13,7 +13,7 @@ import { retrievePathnameFromDynamicPathname } from '@/utils/next.utils';
 import { getTranslatedField } from '@/utils/translation.utils';
 import { escapeUnSlugifyText } from '@/utils/utils';
 import { getParseServer } from '@/config/parse-server.config';
-import { serializeParseObject, withContentCountry } from '@/utils/parse.utils';
+import { serializeParseObject, withContentCountry, withContentWebsite } from '@/utils/parse.utils';
 import { IArticle } from '@/types/article.type';
 
 import { getCategoryBySlug } from './category.queries';
@@ -102,7 +102,7 @@ export const getArticles = async ({
     }
 
     // after the tag search above, which replaces the query it started from
-    withContentCountry(query);
+    query = withContentWebsite(withContentCountry(query));
 
     // default query
     query
@@ -147,7 +147,7 @@ export const getArticleSlugsForLocale = async (locale: Locale): Promise<string[]
   try {
     const slugs: string[] = [];
 
-    await withContentCountry(new Parse.Query(collections.Article))
+    await withContentWebsite(withContentCountry(new Parse.Query(collections.Article)))
       .equalTo('deleted', false)
       .equalTo('active', true)
       .select([`translated.${locale}.slug`])
@@ -189,7 +189,7 @@ export const generateArticlesSitemap = async (): Promise<
       ROUTES.articles.preview().pathname
     );
 
-    await withContentCountry(new Parse.Query(collections.Article))
+    await withContentWebsite(withContentCountry(new Parse.Query(collections.Article)))
       .equalTo('deleted', false)
       .equalTo('active', true)
       .select(['translated', 'updatedAt'])
@@ -248,7 +248,7 @@ export const getRelatedArticles = async (
   try {
     const Parse = getParseServer();
 
-    const articles = await withContentCountry(new Parse.Query(collections.Article))
+    const articles = await withContentWebsite(withContentCountry(new Parse.Query(collections.Article)))
       .equalTo('deleted', false)
       .equalTo('active', true)
       .notEqualTo('objectId', article.id)
