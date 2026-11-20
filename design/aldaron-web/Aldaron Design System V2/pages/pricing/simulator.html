@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aldaron · Simulateur</title>
+<style>
+/* ==========================================================================
+   1. VARIABLES — jetons Aldaron (clair :root, sombre .dark)
+   ========================================================================== */
+@font-face{font-family:'Familjen Grotesk';font-weight:400;font-display:swap;src:url('../../assets/fonts/familjen-grotesk-400.woff2') format('woff2')}
+@font-face{font-family:'Familjen Grotesk';font-weight:500;font-display:swap;src:url('../../assets/fonts/familjen-grotesk-500.woff2') format('woff2')}
+@font-face{font-family:'Familjen Grotesk';font-weight:600;font-display:swap;src:url('../../assets/fonts/familjen-grotesk-600.woff2') format('woff2')}
+@font-face{font-family:'Familjen Grotesk';font-weight:700;font-display:swap;src:url('../../assets/fonts/familjen-grotesk-700.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-weight:400;font-display:swap;src:url('../../assets/fonts/ibm-plex-mono-400.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-weight:500;font-display:swap;src:url('../../assets/fonts/ibm-plex-mono-500.woff2') format('woff2')}
+:root{
+  --ink-950:#0E0F0D;--ink-900:#17181A;
+  --stone-600:#5E5A54;--stone-400:#A19B92;--stone-300:#CFC8BD;--stone-200:#E3DED5;--stone-100:#EEEAE3;
+  --paper-50:#F6F3EE;--paper-0:#FFFFFF;
+  --signal-700:#B4400F;--signal-500:#E2531B;--signal-400:#F26A33;--signal-50:#FDF1EA;
+  --green-700:#1E6B47;--green-400:#5BC58B;--red-700:#B42318;--red-400:#F26B5E;
+  --background:var(--paper-50);--foreground:var(--ink-900);
+  --card:var(--paper-0);--card-foreground:var(--ink-900);
+  --popover:var(--paper-0);--popover-foreground:var(--ink-900);
+  --primary:var(--ink-900);--primary-foreground:var(--paper-50);
+  --muted:var(--stone-100);--muted-foreground:var(--stone-600);
+  --brand:var(--signal-500);--brand-foreground:var(--ink-900);--brand-text:var(--signal-700);
+  --destructive:var(--red-700);--success:var(--green-700);
+  --border:var(--stone-200);--input:var(--stone-300);--ring:var(--signal-500);
+  --font-sans:'Familjen Grotesk',ui-sans-serif,system-ui,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;
+  --radius-md:6px;--radius-lg:8px;
+  --shadow-lg:0 16px 40px -8px rgba(23,24,26,.16),0 4px 12px rgba(23,24,26,.06);
+  --focus-ring:0 0 0 2px var(--background),0 0 0 4px var(--ring);
+  --hit-min:44px;--control-h:44px;--control-h-lg:52px;--disabled-opacity:.45;
+  --ease-out:cubic-bezier(.2,.7,.2,1);--dur-fast:120ms;
+}
+.dark{
+  --background:#121311;--foreground:var(--stone-100);
+  --card:#1A1C19;--card-foreground:var(--stone-100);
+  --popover:#1F211D;--popover-foreground:var(--stone-100);
+  --primary:var(--stone-100);--primary-foreground:var(--ink-900);
+  --muted:#232521;--muted-foreground:var(--stone-400);
+  --brand:var(--signal-400);--brand-foreground:var(--ink-950);--brand-text:var(--signal-400);
+  --destructive:var(--red-400);--success:var(--green-400);
+  --border:#2C2D29;--input:#3A3B36;--ring:var(--signal-400);
+  --shadow-lg:0 16px 40px -8px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04);
+}
+
+/* ==========================================================================
+   2. BASE
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--muted);color:var(--foreground);font:400 16px/1.55 var(--font-sans);-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,ul,dl,dd,fieldset{margin:0;padding:0}
+ul{list-style:none}
+fieldset{border:0;min-width:0}
+a{color:var(--brand-text)}a:hover{color:var(--foreground)}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:none;box-shadow:var(--focus-ring)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)}
+
+/* ==========================================================================
+   3. PAGE — cadre (point de rupture simulé) et grille
+   ========================================================================== */
+.frame{container:page / inline-size;background:var(--background);margin-inline:auto;width:100%;max-width:1200px;min-height:100vh;border-inline:1px solid var(--border)}
+[data-bp=mobile] .frame{max-width:390px}
+[data-bp=tablet] .frame{max-width:768px}
+[data-bp=desktop] .frame{max-width:1200px}
+[data-bp=large] .frame{max-width:1600px}
+.wrap{padding:var(--space-8) var(--space-5) var(--space-12);display:grid;gap:var(--space-8)}
+.intro{display:grid;gap:var(--space-3);max-width:62ch}
+.intro h1{font:700 clamp(30px,7cqi,52px)/1.05 var(--font-sans);letter-spacing:-.03em;text-wrap:balance}
+.header{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);min-height:72px;position:relative}
+.logo{display:flex;align-items:center;min-height:var(--hit-min)}
+.logo img{height:28px;display:block}
+.logo-dark{display:none!important}
+.dark .logo-light{display:none!important}
+.dark .logo-dark{display:block!important}
+.header-end{display:flex;align-items:center;gap:var(--space-2)}
+.nav{display:none;position:absolute;top:100%;left:0;right:0;z-index:5;background:var(--popover);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:var(--space-2)}
+.nav.open{display:block}
+.nav ul{display:grid;gap:var(--space-1)}
+.nav a{display:flex;align-items:center;min-height:var(--hit-min);padding:0 var(--space-3);border-radius:var(--radius-md);color:var(--foreground);text-decoration:none;font-weight:500}
+.nav a:hover{background:var(--muted)}
+.nav a[aria-current=page]{background:var(--muted);color:var(--foreground)}
+.header .btn-cta{display:none}
+.footer{display:grid;gap:var(--space-8);padding-block:var(--space-12) var(--space-6);border-top:1px solid var(--border)}
+.foot-cols{display:grid;gap:var(--space-8);grid-template-columns:minmax(0,1fr)}
+.foot-brand{display:grid;gap:var(--space-4);align-content:start;max-width:34ch}
+.foot-brand img{height:28px;display:block}
+.foot-brand p{color:var(--muted-foreground);font-size:15px;line-height:1.5}
+.foot-col h3{font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text);margin-bottom:var(--space-3)}
+.foot-col ul{display:grid;gap:2px}
+.foot-col a{display:inline-flex;align-items:center;min-height:var(--hit-min);color:var(--muted-foreground);text-decoration:none;font-size:15px}
+.foot-col a:hover{color:var(--foreground)}
+.foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--space-2) var(--space-4);padding-top:var(--space-5);border-top:1px solid var(--border);font:500 12px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)}
+.lead{font-size:18px;color:var(--muted-foreground);text-wrap:pretty}
+.layout{display:grid;gap:var(--space-8);grid-template-columns:minmax(0,1fr);align-items:start}
+.form{display:grid;gap:var(--space-5)}
+
+/* ==========================================================================
+   4. COMPOSANTS
+   ========================================================================== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--control-h);padding:0 18px;border-radius:var(--radius-md);border:1px solid transparent;font:500 15px/1.2 var(--font-sans);cursor:pointer;text-decoration:none;user-select:none;text-align:center;transition:background-color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out)}
+.btn:active{transform:translateY(1px)}
+.btn--brand{background:var(--brand);color:var(--brand-foreground)}
+.btn--brand:hover{background:color-mix(in oklab,var(--brand) 88%,var(--ink-950))}
+.btn--outline{background:transparent;border-color:var(--input)}
+.btn--outline:hover{background:var(--muted);border-color:color-mix(in oklab,var(--input),var(--foreground) 20%)}
+.btn--block{width:100%}
+.btn--lg{min-height:var(--control-h-lg)}
+
+.chips{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+.chips-label{font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)}
+.chip{min-height:var(--hit-min);padding:0 14px;border-radius:var(--radius-md);border:1px solid var(--input);background:var(--card);cursor:pointer;font-weight:500;font-size:14px;transition:background-color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out)}
+.chip:hover{background:var(--muted)}
+.chip[aria-pressed=true]{border-color:var(--brand);background:var(--muted)}
+
+.step{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-6);display:grid;gap:var(--space-4)}
+.step legend{float:left;width:100%;padding:0;display:flex;align-items:center;gap:var(--space-3);font:700 20px/1.25 var(--font-sans);letter-spacing:-.01em;margin-bottom:var(--space-4)}
+.step legend+*{clear:both}
+.form{counter-reset:st}.step[hidden]{display:none}.step:not([hidden]){counter-increment:st}.num::before{content:counter(st)}
+.num{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:var(--radius-md);background:var(--primary);color:var(--primary-foreground);font:500 13px/1 var(--font-mono)}
+.help{font-size:15px;color:var(--muted-foreground);text-wrap:pretty}
+.opts{display:grid;gap:var(--space-2);grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
+.opt{position:relative;display:flex;align-items:flex-start;gap:var(--space-3);min-height:var(--hit-min);padding:var(--space-3) var(--space-4);border:1px solid var(--input);border-radius:var(--radius-md);background:var(--background);cursor:pointer;transition:background-color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out)}
+.opt:hover{background:var(--muted)}
+.opt input{flex:none;width:20px;height:20px;margin:2px 0 0;accent-color:var(--brand);cursor:pointer}
+.opt:has(input:checked){border-color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand)}
+.opt:has(input:focus-visible){box-shadow:var(--focus-ring)}
+.opt b{display:block;font-weight:600;line-height:1.3}
+.opt small{display:block;font-size:14px;color:var(--muted-foreground);line-height:1.4;margin-top:2px}
+.sub{display:grid;gap:var(--space-3);padding-top:var(--space-4);border-top:1px solid var(--border)}
+.sub legend{font:600 15px/1.3 var(--font-sans);margin-bottom:var(--space-3)}
+
+.size-row{display:grid;gap:var(--space-3)}
+.sup-ex{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:var(--space-1) var(--space-4);margin:0;font-size:14px;line-height:1.4;color:var(--muted-foreground)}
+.sup-ex dt{font-weight:600;color:var(--foreground)}
+.sup-ex[hidden],.sup-ex [hidden]{display:none}
+.design-rate{padding:var(--space-4);border:1px solid var(--brand);border-radius:var(--radius-md);background:color-mix(in oklab,var(--brand) 10%,var(--card));font-size:15px;color:var(--foreground);display:grid;gap:var(--space-1)}
+.dr-title{font:600 15px/1.3 var(--font-sans)}
+.design-rate[hidden]{display:none}
+.size-row label{font:600 15px/1.3 var(--font-sans)}
+.size-ctl{display:grid;grid-template-columns:minmax(0,1fr) 110px;gap:var(--space-4);align-items:center}
+input[type=range]{width:100%;height:var(--hit-min);accent-color:var(--brand);cursor:pointer;margin:0}
+.num-in{height:var(--control-h);padding:0 12px;border:1px solid var(--input);border-radius:var(--radius-md);background:var(--background);font:500 16px/1 var(--font-mono);width:100%}
+.sub[hidden],.fx[hidden],.size-row[hidden]{display:none}.fx{display:grid;gap:var(--space-3)}.pay-n{max-width:140px;cursor:pointer}
+
+.field{display:grid;gap:var(--space-2)}
+.field label{font:600 15px/1.3 var(--font-sans)}
+.field input,.field textarea{width:100%;min-height:var(--control-h);padding:10px 12px;border:1px solid var(--input);border-radius:var(--radius-md);background:var(--background)}
+.field textarea{min-height:200px;resize:vertical;line-height:1.5}
+.field .err{display:none;font-size:14px;color:var(--destructive)}
+.field.invalid .err{display:block}
+.field.invalid input{border-color:var(--destructive)}
+
+/* Résultat */
+.result{display:grid;gap:var(--space-5);background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-6)}
+.result h2{font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)}
+.price{font:700 clamp(32px,8cqi,44px)/1.05 var(--font-sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums;text-wrap:balance}
+.precision{font:500 14px/1.4 var(--font-mono);color:var(--muted-foreground);margin-top:var(--space-2)}
+.lines{display:grid;gap:var(--space-2)}.lines li{display:flex;justify-content:space-between;gap:var(--space-3);padding-top:var(--space-2);border-top:1px solid var(--border);font-size:15px}
+.disclaimer{font-size:14px;color:var(--muted-foreground)}
+.block{display:grid;gap:var(--space-2);padding-top:var(--space-4);border-top:1px solid var(--border)}
+.block h3{font:600 15px/1.3 var(--font-sans)}
+.ticks li{position:relative;padding-left:22px;font-size:15px}
+.ticks li::before{content:"";position:absolute;left:2px;top:.6em;width:8px;height:8px;background:var(--success)}
+.ticks.no li::before{background:var(--muted-foreground)}
+.block p{font-size:15px;color:var(--muted-foreground);text-wrap:pretty}
+.actions{display:grid;gap:var(--space-2)}
+
+/* Barre basse (étroit) */
+.bar{display:none}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--primary);color:var(--primary-foreground);padding:10px 16px;border-radius:var(--radius-md);font-size:14px;opacity:0;pointer-events:none;transition:opacity var(--dur-fast) var(--ease-out);z-index:30}
+.toast.show{opacity:1}
+
+/* Réglages */
+.gear{position:fixed;top:12px;right:12px;z-index:40;box-shadow:var(--shadow-lg);background:var(--card)}
+.panel{position:fixed;top:64px;right:12px;z-index:40;width:min(340px,calc(100vw - 24px));max-height:calc(100vh - 80px);overflow:auto;background:var(--popover);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:var(--space-4);display:grid;gap:var(--space-4)}
+.panel[hidden]{display:none}
+.panel h2{font:600 15px/1.3 var(--font-sans)}
+.panel fieldset{display:grid;gap:var(--space-2)}
+.panel legend{font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground);margin-bottom:var(--space-2)}
+.seg{display:flex;flex-wrap:wrap;gap:var(--space-1)}
+.seg label{display:inline-flex}
+.seg input{position:absolute;opacity:0;width:1px;height:1px}
+.seg span{display:inline-flex;align-items:center;min-height:var(--hit-min);padding:0 12px;border:1px solid var(--input);border-radius:var(--radius-md);cursor:pointer;font-size:14px;font-weight:500}
+.seg input:checked+span{background:var(--primary);color:var(--primary-foreground);border-color:var(--primary)}
+.seg input:focus-visible+span{box-shadow:var(--focus-ring)}
+.pgrid{display:grid;grid-template-columns:1fr 96px;gap:var(--space-2) var(--space-3);align-items:center}
+.pgrid label{font:400 13px/1.2 var(--font-mono)}
+.pgrid input{height:var(--hit-min);padding:0 8px;border:1px solid var(--input);border-radius:var(--radius-md);background:var(--background);font:500 14px var(--font-mono);width:100%}
+.calib{width:100%;border-collapse:collapse;font:400 13px/1.4 var(--font-mono)}
+.calib th,.calib td{text-align:right;padding:6px 4px;border-top:1px solid var(--border)}
+.calib th:first-child,.calib td:first-child{text-align:left;font-family:var(--font-sans)}
+.calib .ok{color:var(--success)}.calib .ko{color:var(--destructive)}
+
+/* ==========================================================================
+   5. ÉTATS — survol, focus et actifs sont déclarés avec chaque composant
+   ========================================================================== */
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ==========================================================================
+   6. RESPONSIVE — selon la largeur du cadre
+   ========================================================================== */
+@container page (min-width:640px){.foot-cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@container page (min-width:900px){.foot-cols{grid-template-columns:1.4fr 1fr 1fr 1fr}}
+@container page (min-width:880px){
+  .menu-btn{display:none}
+  .nav{display:block;position:static;background:none;border:0;box-shadow:none;padding:0}
+  .nav ul{display:flex;gap:var(--space-1)}
+  .nav a{color:var(--muted-foreground);font-size:15px}
+  .nav a:hover{background:none;color:var(--foreground)}
+  .nav a[aria-current=page]{background:none;color:var(--foreground);box-shadow:inset 0 -2px 0 var(--brand);border-radius:0}
+  .header .btn-cta{display:inline-flex}
+}
+@container page (max-width:879px){
+  .bar{display:flex;position:sticky;bottom:0;z-index:20;align-items:center;justify-content:space-between;gap:var(--space-3);padding:var(--space-3) var(--space-5);background:var(--popover);border-top:1px solid var(--border);box-shadow:var(--shadow-lg)}
+  .bar .price{font-size:22px}
+  .bar .btn{flex:none;max-width:48%}
+}
+@container page (max-width:479px){.size-ctl{grid-template-columns:minmax(0,1fr) 92px}.step{padding:var(--space-4)}.result{padding:var(--space-4)}}
+@container page (min-width:640px){.foot-cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@container page (min-width:900px){.foot-cols{grid-template-columns:1.4fr 1fr 1fr 1fr}}
+@container page (min-width:880px){
+  .wrap{padding-inline:var(--space-10)}
+  .layout{grid-template-columns:minmax(0,1fr) 380px;gap:var(--space-10)}
+  .result{position:sticky;top:var(--space-5)}
+}
+</style>
+<style>
+.footer{gap:40px;padding-block:48px 0}
+.footer .foot-cols{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:40px 32px}
+.footer .foot-col a,.footer .foot-cols nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--muted-foreground);text-decoration:none;font-size:15px}
+.footer .foot-col a:hover,.footer .foot-cols nav a:hover{color:var(--foreground)}
+.footer .foot-base{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px;padding-top:12px;border-top:1px solid var(--border);font:500 12px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)}
+.fb-l{flex:1 1 0;min-width:160px}
+.fb-m{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 24px}
+.fb-m a{display:inline-flex;align-items:center;min-height:44px;color:var(--muted-foreground);text-decoration:none;font:500 12px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase}
+.fb-m a:hover{color:var(--foreground)}
+.ft-lang{flex:1 1 0;min-width:160px;display:flex;justify-content:flex-end;gap:4px}
+.ft-lang button{min-height:44px;min-width:44px;padding:0 10px;border-radius:6px;border:1px solid var(--input);background:transparent;color:var(--foreground);font:500 12px/1 var(--font-mono);letter-spacing:.08em;cursor:pointer}
+.ft-lang button[aria-pressed=true]{background:var(--primary);color:var(--primary-foreground);border-color:transparent}
+.ft-lang button:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+</style>
+</head>
+<body data-bp="desktop">
+<button class="btn btn--outline gear" id="gear" aria-expanded="false" aria-controls="panel"></button>
+<aside class="panel" id="panel" hidden></aside>
+<div class="frame">
+  <div class="wrap">
+    <header class="header"><a class="logo" href="../home/Home.dc.html" aria-label="Aldaron"><img class="logo-light" src="../../assets/logo/aldaron-horizontal.svg" alt="Aldaron"><img class="logo-dark" src="../../assets/logo/aldaron-horizontal-dark.svg" alt=""></a><nav class="nav" id="nav" aria-label="Principal"><ul id="navList"></ul></nav><div class="header-end"><button type="button" class="btn btn--brand btn-cta" data-act="quote" id="hdrQuote"></button><button type="button" class="btn btn--outline menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav"></button></div></header>
+    <header class="intro"><p class="eyebrow" id="t-eyebrow"></p><h1 id="t-title"></h1><p class="lead" id="t-lead"></p></header>
+    <div class="chips-wrap" style="display:grid;gap:12px"><p class="chips-label" id="t-ex"></p><div class="chips" id="examples"></div></div>
+    <div class="layout">
+      <form class="form" id="form" novalidate onsubmit="return false"></form>
+      <aside class="result" id="result" aria-labelledby="t-res-h"></aside>
+    </div>
+    <footer class="footer"><div class="foot-cols"><div class="foot-brand"><img class="logo-light" src="../../assets/logo/aldaron-horizontal.svg" alt="Aldaron"><img class="logo-dark" src="../../assets/logo/aldaron-horizontal-dark.svg" alt=""><p data-t="footTag"></p><div style="display:flex;gap:4px;margin-left:-10px"><a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:var(--muted-foreground)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a><a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:var(--muted-foreground)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.88v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a><a href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:var(--muted-foreground)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg></a></div></div><nav aria-labelledby="fh-nav"><h3 id="fh-nav" data-t="footNav" style="margin:0 0 12px;font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)"></h3><ul id="footNavList" style="list-style:none;margin:0;padding:0;display:grid;gap:2px"></ul></nav><div class="foot-col"><h3 data-t="footContact" style="margin:0 0 12px;font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)"></h3><ul style="list-style:none;margin:0;padding:0;display:grid;gap:2px"><li><a href="mailto:contact@aldaron.eu">contact@aldaron.eu</a></li><li><a href="../contact/Contact.dc.html" data-t="footQuote"></a></li></ul></div></div><div class="foot-base"><span class="fb-l">© 2026 Aldaron · <span data-t="footer"></span></span><nav class="fb-m" aria-labelledby="fh-legal"><span id="fh-legal" data-t="footLegal" hidden></span><a href="../legal/Legal.dc.html" data-t="legal"></a><a href="../privacy/Privacy.dc.html" data-t="privacy"></a></nav><div class="ft-lang" role="group" aria-label="Langue"><button type="button" data-k="lang" data-v="fr" aria-pressed="false">FR</button><button type="button" data-k="lang" data-v="en" aria-pressed="false">EN</button><button type="button" data-k="lang" data-v="mg" aria-pressed="false">MG</button></div></div></footer>
+  </div>
+  <div class="bar" id="bar"></div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ==========================================================================
+   A. PRICING — toutes les valeurs de calcul, en euros, modifiables en direct
+   ========================================================================== */
+const PRICING = {
+  floor: 2500,
+  floorWeb: 1500,
+  designIdea: 8,
+  designSpec: 6,
+  base: 0,
+  screen: 25,
+  screenApp: 18,
+  screenRich: 30,
+  boFactor: 1.5,
+  complexity: { standard: 1, some: 1.5, heavy: 2.5 },
+  share: { few: 0.25, half: 0.5, most: 1 },
+  ceiling: 15000,
+  ceilingRich: 10000,
+  payFirst: 500,
+  payExtra: 22,
+  chat: 500
+};
+const DEFAULTS = JSON.parse(JSON.stringify(PRICING));
+
+/* Exemples en un clic : état + prix de référence pour le calibrage */
+const EXAMPLES = [
+  { id: 'saas',   ref: 1820, s: { prec: 'idea',   web: 25, mobile: 0, bo: 15, cx: 'standard' } },
+  { id: 'mobile', ref: 6200, s: { prec: 'spec',   web: 0, mobile: 200, bo: 0, cx: 'standard' } },
+  { id: 'back',   ref: 10500, s: { prec: 'mockup', web: 0, mobile: 180, bo: 40, cx: 'heavy' } },
+  { id: 'both',   ref: 9870, s: { prec: 'spec',   web: 140, mobile: 140, bo: 15, cx: 'standard', pay: { mobile: true, app: false }, payN: { mobile: 1, app: 1 } } }
+];
+
+const floorFor = s => s.mobile > 0 ? PRICING.floor : PRICING.floorWeb;
+function compute(s) {
+  const P = PRICING, k = 1 + (P.share[s.cxShare] ?? P.share.half) * (P.complexity[s.cx] - 1), rich = s.rich === 'rich', appRate = rich ? (s.mobile > 0 ? (P.screen + P.screenRich) / 2 : P.screenRich) : (s.mobile > 0 ? (P.screen + P.screenApp) / 2 : P.screenApp);
+  const boOnly = !!s.sup && s.sup.bo && !s.sup.web && !s.sup.app && !s.sup.mobile;
+  const boN = boOnly ? Math.max(15, s.bo) : s.bo;
+  const r100 = n => Math.round(n / 100) * 100;
+  const parts = { web: r100(s.web * P.screen * k), app: r100((s.app || 0) * appRate * k), mobile: r100(s.mobile * P.screen * k), bo: r100(boN * P.screen * P.boFactor * k) };
+  const total = parts.web + parts.app + parts.mobile + parts.bo;
+  const pp = k => s.pay && s.pay[k] ? P.payFirst + P.payExtra * (Math.min(5, Math.max(1, Math.round(s.payN[k]) || 1)) - 1) : 0;
+  parts.payMobile = pp('mobile'); parts.payApp = pp('app');
+  parts.chat = s.chat ? P.chat : 0;
+  const dRate = { idea: P.designIdea, spec: P.designSpec, mockup: 0 }[s.prec || 'idea'], dScreens = s.web + boN + Math.max(s.app || 0, s.mobile) + 0.5 * Math.min(s.app || 0, s.mobile);
+  parts.design = r100(dScreens * dRate);
+  const pay = parts.payMobile + parts.payApp + parts.chat + parts.design;
+  const base = Math.max(boOnly ? 0 : floorFor(s), total);
+  parts.floorAdj = base - total;
+  const price = base + pay;
+  return { parts, total, price, over: total > (rich ? P.ceilingRich : P.ceiling), atFloor: !boOnly && base <= floorFor(s) && !pay, boOnly };
+}
+
+/* ==========================================================================
+   B. TEXTES — fr / en
+   ========================================================================== */
+const I18N = {
+  fr: {
+    nav: ['Offre et prix', 'Simulateur', 'Réalisations', 'À propos', 'Contact'], menu: 'Menu', footer: 'Europe', footTag: 'Développement web et mobile pour startups, à prix fixe.', footNav: 'Navigation', footLegal: 'Légal', footContact: 'Contact', footQuote: 'Demander un devis ferme', legal: 'Mentions légales', privacy: 'Confidentialité', eyebrow: 'Simulateur de prix', title: 'Estimez le prix de votre produit', lead: 'Répondez aux questions : l\u2019estimation se met à jour à chaque réponse.',
+    examples: 'Exemples en un clic',
+    ex: { saas: 'Première version d\u2019un SaaS', mobile: 'Application mobile de plus de 100 écrans', back: 'Application mobile avec back-office complexe', both: 'Produit web et mobile avec paiement' },
+    richQ: 'Votre interface web est-elle simple ou riche ?', rich: { simple: ['Simple', 'Pages, listes, formulaires'], rich: ['Riche', 'Tableaux, filtres, tableaux de bord, rôles, éditeur'] }, payRich: 'Livraison par lots, chaque lot étant payé à sa livraison ; les lots sont convenus lors du cadrage.',
+    sup: 'Quels supports ?', s6: 'Des fonctions particulières ?', fxPay: ['Paiement en ligne', 'Encaisser des paiements dans le produit'], fxN: 'Nombre d\u2019intégrations de paiement', fxHelp: 'La première est comprise, chaque intégration supplémentaire coûte {a}.', lPay: 'Paiement en ligne', lDesign: 'Maquettes', designPer: '{a} par écran', designTotal: 'soit {a} pour vos écrans', designNone: 'Aucun frais : vous apportez la vôtre', payDesign: 'Les maquettes sont validées avant le début du développement.', lChat: 'Discussion instantanée', fxChat: ['Discussion instantanée', 'Messagerie en temps réel entre utilisateurs'], s1: 'Qu\u2019apportez-vous ?', prec: { idea: ['Une idée', 'Quelques phrases pour décrire le besoin'], spec: ['Un cahier des charges', 'Un document qui décrit le produit'], mockup: ['Une maquette', 'Les écrans sont déjà dessinés'] },
+    s2: 'Site web', s3: 'Mobile', s3help: 'Une vue distincte compte pour un écran ; ses états et variantes sont inclus. Sélectionnez un ou plusieurs supports.', screens: 'Nombre d’écrans (approximatif)',
+    supEx: { web: 'Portfolio, site vitrine, site statique, page de présentation d\u2019un produit, site associatif', app: 'SaaS, tableau de bord, espace client, plateforme de réservation, outil interne', mobile: 'Application iOS et Android', bo: 'Gestion des contenus, des utilisateurs et des commandes, modération, statistiques, exports' }, lWeb: 'Site web statique', lApp: 'Application web', lMobile: 'Mobile', lBo: 'Back-office', lFloor: 'Complément au minimum de commande',
+    s4: 'Back-office', bo: { none: ['Aucun', 'Pas d\u2019espace d\u2019administration'], simple: ['Simple', 'Gérer les contenus et les utilisateurs'], advanced: ['Avancé', 'Rôles, modération, exports'] },
+    s5: 'Quelle complexité métier ?',
+    cxLabel: 'Complexité métier', cx: { standard: ['Standard', 'Listes, fiches et formulaires simples.'], some: ['Quelques parcours complexes', '1 à 3 flux avec étapes, validations ou rôles, par exemple une demande approuvée par un responsable.'], heavy: ['Très orienté métier', 'Les règles métier structurent le produit : facturation, planification, calculs réglementaires.'] },
+    cxHelp: 'Un parcours est une suite d\u2019écrans pour atteindre un objectif. S\u2019il se décrit en moins de 5 étapes, sans exception, il est standard.',
+    cxShareQ: 'Combien d\u2019écrans sont concernés ?', cxShare: { few: ['Environ un quart', 'Quelques écrans seulement'], half: ['Environ la moitié', 'Une bonne part du produit'], most: ['Presque tous', 'Toute l\u2019application'] },
+    resTitle: 'Votre estimation', from: 'À partir de {a}', between: 'Entre {a} et {b}', big: 'Projet d\u2019envergure : parlons-en',
+    empty: 'Répondez aux questions pour affiner l\u2019estimation.',
+    pm: 'Estimation à affiner ensemble', pi: 'Première estimation, à affiner ensemble', indicative: 'Estimation indicative, hors devis ferme.',
+    inclStore: 'Mise en production et publication sur l\u2019App Store et Google Play', maintTitle: 'Maintenance optionnelle', maintHint: '150 à 400 € par mois, après les 30 jours de correction de bugs', maintLine: 'Maintenance : 150 à 400 € par mois', inclTitle: 'Ce qui est compris', incl: ['Mise en production', 'Remise du code et des comptes', '30 jours de correction de bugs'],
+    exclTitle: 'Ce qui n\u2019est pas compris', exclWeb: 'Hébergement et services tiers : payés directement par la startup.', excl: ['Hébergement et services tiers, comptes des stores : payés directement par la startup.', 'Maintenance optionnelle de 150 à 400 € par mois.'],
+    pay: 'Prix fixe à la signature, payé en 3 échéances : 40 % à la signature, 30 % à la démonstration de mi-parcours, 30 % à la mise en ligne.',
+    cta: 'Demander un devis ferme (cadrage gratuit)', ctaShort: 'Demander un devis ferme', copy: 'Copier mon récapitulatif', copied: 'Récapitulatif copié.',
+    r: { with: 'Je viens avec', sup: 'Support', size: 'Taille', bo: 'Back-office', cx: 'Complexité métier', none: 'aucune', about: 'environ {n} écrans' },
+    gear: 'Réglages', pTitle: 'Réglages', theme: 'Thème', light: 'Clair', dark: 'Sombre', lang: 'Langue', bp: 'Point de rupture', bps: { mobile: 'Mobile', tablet: 'Tablette', desktop: 'Ordinateur', large: 'Grand écran' },
+    pricing: 'Valeurs de PRICING', reset: 'Réinitialiser', calib: 'Calibrage des exemples', target: 'Cible'
+  },
+  en: {
+    nav: ['Offer and pricing', 'Simulator', 'Projects', 'About', 'Contact'], menu: 'Menu', footer: 'Europe', footTag: 'Web and mobile development for startups, at a fixed price.', footNav: 'Navigation', footLegal: 'Legal', footContact: 'Contact', footQuote: 'Request a firm quote', legal: 'Legal notice', privacy: 'Privacy', eyebrow: 'Price simulator', title: 'Estimate the price of your product', lead: 'Answer the questions: the estimate updates with every answer.',
+    examples: 'One-click examples',
+    ex: { saas: 'First version of a SaaS', mobile: 'Mobile app with 100+ screens', back: 'Mobile app with a complex back office', both: 'Web and mobile product with payment' },
+    richQ: 'Is your web interface simple or rich?', rich: { simple: ['Simple', 'Pages, lists, forms'], rich: ['Rich', 'Tables, filters, dashboards, roles, editor'] }, payRich: 'Delivery in batches, each batch paid on delivery; batches are agreed during scoping.',
+    sup: 'Which platforms?', s6: 'Any special features?', fxPay: ['Online payment', 'Take payments inside the product'], fxN: 'Number of payment integrations', fxHelp: 'The first one is included, each additional integration costs {a}.', lPay: 'Online payment', lDesign: 'Mockups', designPer: '{a} per screen', designTotal: 'that is {a} for your screens', designNone: 'No cost: you bring your own', payDesign: 'Mockups are approved before development starts.', lChat: 'Instant messaging', fxChat: ['Instant messaging', 'Real-time chat between users'], s1: 'What are you bringing?', prec: { idea: ['An idea', 'A few sentences describing the need'], spec: ['A requirements document', 'A document describing the product'], mockup: ['A mockup', 'The screens are already designed'] },
+    s2: 'Website', s3: 'Mobile', s3help: 'A distinct view counts as one screen; its states and variants are included. Select one or more platforms.', screens: 'Number of screens (approximate)',
+    supEx: { web: 'Portfolio, showcase site, static site, product landing page, nonprofit site', app: 'SaaS, dashboard, customer portal, booking platform, internal tool', mobile: 'iOS and Android app', bo: 'Managing content, users and orders, moderation, statistics, exports' }, lWeb: 'Static website', lApp: 'Web application', lMobile: 'Mobile', lBo: 'Back office', lFloor: 'Top-up to the minimum order',
+    s4: 'Back office', bo: { none: ['None', 'No admin area'], simple: ['Simple', 'Manage content and users'], advanced: ['Advanced', 'Roles, moderation, exports'] },
+    s5: 'How complex is the business logic?',
+    cxLabel: 'Business complexity', cx: { standard: ['Standard', 'Simple lists, detail pages and forms.'], some: ['A few complex flows', '1 to 3 flows with steps, validations or roles, for example a request approved by a manager.'], heavy: ['Highly business-specific', 'Business rules shape the product: billing, scheduling, regulatory calculations.'] },
+    cxHelp: 'A flow is a sequence of screens to reach a goal. If it can be described in fewer than 5 steps, with no exceptions, it is standard.',
+    cxShareQ: 'How many screens are concerned?', cxShare: { few: ['About a quarter', 'A few screens only'], half: ['About half', 'A good part of the product'], most: ['Almost all', 'The whole application'] },
+    resTitle: 'Your estimate', from: 'From {a}', between: 'Between {a} and {b}', big: 'Large project: let\u2019s talk',
+    empty: 'Answer the questions to refine the estimate.',
+    pm: 'Estimate, to refine together', pi: 'First estimate, to refine together', indicative: 'Indicative estimate, not a firm quote.',
+    inclStore: 'Go-live and publication on the App Store and Google Play', maintTitle: 'Optional maintenance', maintHint: '€150 to €400 per month, after the 30 days of bug fixing', maintLine: 'Maintenance: €150 to €400 per month', inclTitle: 'What is included', incl: ['Go-live', 'Handover of the code and accounts', '30 days of bug fixing'],
+    exclTitle: 'What is not included', exclWeb: 'Hosting and third-party services: paid directly by the startup.', excl: ['Hosting and third-party services, store accounts: paid directly by the startup.', 'Optional maintenance from €150 to €400 per month.'],
+    pay: 'Fixed price at signing, paid in 3 instalments: 40% at signing, 30% at the mid-way demo, 30% at launch.',
+    cta: 'Request a firm quote (free scoping)', ctaShort: 'Request a firm quote', copy: 'Copy my summary', copied: 'Summary copied.',
+    r: { with: 'I am bringing', sup: 'Platform', size: 'Size', bo: 'Back office', cx: 'Business complexity', none: 'none', about: 'about {n} screens' },
+    gear: 'Settings', pTitle: 'Settings', theme: 'Theme', light: 'Light', dark: 'Dark', lang: 'Language', bp: 'Breakpoint', bps: { mobile: 'Mobile', tablet: 'Tablet', desktop: 'Desktop', large: 'Large screen' },
+    pricing: 'PRICING values', reset: 'Reset', calib: 'Example calibration', target: 'Target'
+  },
+  mg: {
+    nav: ['Tolotra sy vidiny', 'Mpanao kajy', 'Asa vita', 'Momba anay', 'Fifandraisana'], menu: 'Lisitra', footer: 'Eoropa', footTag: 'Fampandrosoana web sy finday ho an\'ny startup, amin\'ny vidiny raikitra.', footNav: 'Fitetezana', footLegal: 'Lalàna', footContact: 'Fifandraisana', footQuote: 'Angataho ny tolo-bidy raikitra', legal: 'Fanamarihana ara-dalàna', privacy: 'Fiarovana ny angon-drakitra', eyebrow: 'Mpanao kajy vidiny', title: 'Tombano ny vidin\u2019ny vokatrao', lead: 'Valio ny fanontaniana : mivaingana isaky ny valinteny ny tombana.',
+    examples: 'Ohatra amin\u2019ny tsindry iray',
+    ex: { saas: 'Kinova voalohany an\u2019ny SaaS', mobile: 'Application finday misy efijery mihoatra ny 100', back: 'Application finday misy back-office sarotra', both: 'Vokatra web sy finday misy fandoavam-bola' },
+    richQ: 'Tsotra sa be fiasa ny interface web-nao ?', rich: { simple: ['Tsotra', 'Pejy, lisitra, taratasy fenoina'], rich: ['Be fiasa', 'Tabilao, sivana, tableau de bord, andraikitra, éditeur'] }, payRich: 'Fanaterana isaky ny lot, aloa rehefa tonga ny lot tsirairay ; ny lot dia ifanarahana rehefa mandrafitra.',
+    sup: 'Inona avy ny fitaovana ?', s1: 'Inona no entinao ?', prec: { idea: ['Hevitra', 'Fehezanteny vitsy mamaritra ny filàna'], spec: ['Taratasy fepetra', 'Taratasy mamaritra ny vokatra'], mockup: ['Maketa', 'Efa voasoratra ny efijery'] },
+    s2: 'Tranonkala', s3: 'Finday', s3help: 'Efijery iray ny fijery miavaka tsirairay ; tafiditra ao ny toetrany sy ny endriny samihafa. Safidio ny fitaovana iray na maromaro.', screens: 'Isan\u2019ny efijery (tombana)',
+    supEx: { web: 'Portfolio, tranonkala fampisehoana, tranonkala static, pejy fampahafantarana vokatra, tranonkala fikambanana', app: 'SaaS, tableau de bord, toerana ho an\u2019ny mpanjifa, sehatra famandrihana, fitaovana anatiny', mobile: 'Application iOS sy Android', bo: 'Fitantanana votoaty, mpampiasa ary kaomandy, fanara-maso, statistika, fakana angona' }, lWeb: 'Tranonkala static', lApp: 'Application web', lMobile: 'Finday', lBo: 'Back-office', lFloor: 'Famenoana ho amin\u2019ny kaomandy kely indrindra',
+    s4: 'Back-office', bo: { none: ['Tsy misy', 'Tsy misy toeran\u2019ny mpitantana'], simple: ['Tsotra', 'Mitantana ny votoaty sy ny mpampiasa'], advanced: ['Mandroso', 'Andraikitra, fanara-maso, fakana angona'] },
+    s5: 'Hatraiza ny fahasarotan\u2019ny asa ?', s6: 'Singa manokana ?', fxPay: ['Fandoavam-bola an-tserasera', 'Mandray fandoavam-bola ao anatin\u2019ny vokatra'], fxN: 'Isan\u2019ny fampidirana fandoavam-bola', fxHelp: 'Tafiditra ny voalohany, {a} ny fampidirana fanampiny tsirairay.', lPay: 'Fandoavam-bola an-tserasera', lDesign: 'Maketa', designPer: '{a} isaky ny efijery', designTotal: 'izany hoe {a} ho an\u2019ny efijerinao', designNone: 'Maimaim-poana : mitondra ny anao ianao', payDesign: 'Ekena ny maketa alohan\u2019ny fanombohan\u2019ny fampandrosoana.', lChat: 'Resaka avy hatrany', fxChat: ['Resaka avy hatrany', 'Fifandraisana mivantana eo amin\u2019ny mpampiasa'],
+    cxLabel: 'Fahasarotana', cx: { standard: ['Mahazatra', 'Lisitra, takila ary taratasy fenoina tsotra.'], some: ['Dingana sarotra vitsy', 'Dingana 1 ka hatramin\u2019ny 3 misy dingana, fanamarinana na andraikitra, ohatra fangatahana ekena avy amin\u2019ny tompon\u2019andraikitra.'], heavy: ['Mifototra tsara amin\u2019ny asa', 'Ny fitsipiky ny asa no manamboatra ny vokatra : faktiora, fandaharana, kajy ara-dalàna.'] },
+    cxShareQ: 'Efijery firy no voakasik\u2019izany ?', cxShare: { few: ['Eo amin\u2019ny ampahefatry', 'Efijery vitsy fotsiny'], half: ['Eo amin\u2019ny antsasany', 'Ampahany lehibe amin\u2019ny vokatra'], most: ['Saika ny rehetra', 'Ny application manontolo'] },
+    cxHelp: 'Ny dingana dia andiana efijery mba hahatratrarana tanjona. Raha azo faritana ao anatin\u2019ny dingana latsaky ny 5 izy, tsy misy afa-tsy, dia mahazatra.',
+    resTitle: 'Ny tombanao', from: 'Manomboka amin\u2019ny {a}', between: 'Eo anelanelan\u2019ny {a} sy {b}', big: 'Tetikasa lehibe : resahintsika',
+    empty: 'Valio ny fanontaniana mba hanatsarana ny tombana.',
+    pm: 'Tombana hatsaraintsika miaraka', pi: 'Tombana voalohany, hatsaraintsika miaraka', indicative: 'Tombana fanondroana, tsy tolo-bidy tsy miova.',
+    inclStore: 'Fampiasana amin\u2019ny tena izy sy famoahana ao amin\u2019ny App Store sy Google Play', maintTitle: 'Fikojakojana tsy voatery', maintHint: '150 hatramin\u2019ny 400 € isam-bolana, aorian\u2019ny andro 30 amin\u2019ny fanitsiana bug', maintLine: 'Fikojakojana : 150 hatramin\u2019ny 400 € isam-bolana', inclTitle: 'Ny tafiditra', incl: ['Fampiasana amin\u2019ny tena izy', 'Fanomezana ny kaody sy ny kaonty', 'Andro 30 amin\u2019ny fanitsiana bug'],
+    exclTitle: 'Ny tsy tafiditra', exclWeb: 'Hébergement sy serivisy hafa : aloan\u2019ny startup mivantana.', excl: ['Hébergement sy serivisy hafa, kaontin\u2019ny store : aloan\u2019ny startup mivantana.', 'Fikojakojana tsy voatery manomboka amin\u2019ny 150 hatramin\u2019ny 400 € isam-bolana.'],
+    pay: 'Vidiny tsy miova rehefa manao sonia, aloa in-3 : 40 % amin\u2019ny sonia, 30 % amin\u2019ny demo antenatenany, 30 % amin\u2019ny fampiharana.',
+    cta: 'Angataho ny tolo-bidy (fandrafetana maimaim-poana)', ctaShort: 'Angataho ny tolo-bidy', copy: 'Adikao ny famintinana', copied: 'Voaditra ny famintinana.',
+    r: { with: 'Entiko', sup: 'Fitaovana', size: 'Habe', bo: 'Back-office', cx: 'Fahasarotana', none: 'tsy misy', about: 'efijery {n} eo ho eo' },
+    gear: 'Fanamboarana', pTitle: 'Fanamboarana', theme: 'Lohahevitra', light: 'Mazava', dark: 'Maizina', lang: 'Fiteny', bp: 'Habe efijery', bps: { mobile: 'Finday', tablet: 'Tablette', desktop: 'Solosaina', large: 'Efijery lehibe' },
+    pricing: 'Sanda PRICING', reset: 'Averina', calib: 'Fanamarinana ny ohatra', target: 'Tanjona'
+  }
+};
+
+/* ==========================================================================
+   C. ÉTAT ET RENDU
+   ========================================================================== */
+const state = { cxShare: 'half', prec: 'spec', sup: { web: false, app: false, mobile: true, bo: false }, web: 0, app: 85, mobile: 100, bo: 15, pay: { mobile: false, app: false }, payN: { mobile: 1, app: 1 }, chat: false, cx: null, maint: false, rich: 'simple', answered: true };
+const SUPS = ['web', 'app', 'mobile', 'bo'];
+const NAVH = ['pricing.html', 'simulator.html', '../projects/Projects.dc.html', '../about/About.dc.html', '../contact/Contact.dc.html'];
+const INITIAL = JSON.parse(JSON.stringify(state));
+const SUPL = { web: 'lWeb', app: 'lApp', mobile: 'lMobile', bo: 'lBo' };
+const ui = { lang: 'fr', theme: matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light', bp: 'desktop' };
+const $ = (s, r = document) => r.querySelector(s);
+const T = () => I18N[ui.lang];
+const fill = (str, o) => str.replace(/\{(\w+)\}/g, (_, k) => o[k]);
+const money = n => new Intl.NumberFormat(ui.lang === 'en' ? 'en-IE' : 'fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n).replace(/\u202f/g, '\u00a0');
+const eff = () => { const o = { ...state, cx: state.cx || 'standard' }; SUPS.forEach(k => { if (!state.sup[k]) o[k] = 0; }); o.rich = state.sup.app && state.rich === 'rich' ? 'rich' : 'simple'; o.chat = state.chat && state.sup.mobile; o.pay = { mobile: state.pay.mobile && state.sup.mobile, app: state.pay.app && state.sup.app }; return o; };
+
+function radios(name, entries, withHint) {
+  return `<div class="opts">${entries.map(([v, label, hint]) => `<label class="opt"><input type="radio" name="${name}" value="${v}"><span><b>${label}</b>${withHint && hint ? `<small>${hint}</small>` : ''}</span></label>`).join('')}</div>`;
+}
+function buildStatic() {
+  const t = T();
+  document.documentElement.lang = ui.lang;document.querySelectorAll('.ft-lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===ui.lang));
+  $('#navList').innerHTML = t.nav.map((l, i) => '<li><a href="' + NAVH[i] + '"' + (i === 1 ? ' aria-current="page"' : '') + '>' + l + '</a></li>').join(''); $('#menuBtn').textContent = t.menu; $('#footNavList').innerHTML = t.nav.map((l, i) => '<li><a href="' + NAVH[i] + '">' + l + '</a></li>').join(''); document.querySelectorAll('[data-t]').forEach(el => { el.textContent = t[el.dataset.t]; }); $('#hdrQuote').textContent = t.ctaShort; $('#t-eyebrow').textContent = t.eyebrow; $('#t-title').textContent = t.title; $('#t-lead').textContent = t.lead; $('#t-ex').textContent = t.examples;
+  $('#examples').innerHTML = EXAMPLES.map(e => `<button type="button" class="chip" data-ex="${e.id}" aria-pressed="false">${t.ex[e.id]}</button>`).join('');
+  const num = () => `<span class="num" aria-hidden="true"></span>`;
+  const chatUi = () => `<div class="sub fx"><label class="opt"><input type="checkbox" name="chat" value="1"><span><b>${t.fxChat[0]}</b><small>${t.fxChat[1]}</small></span></label></div>`;
+  const payUi = k => `<div class="sub fx"><label class="opt"><input type="checkbox" name="pay" value="${k}"><span><b>${t.fxPay[0]}</b><small>${t.fxPay[1]}</small></span></label><div class="size-row" id="pay-sub-${k}" hidden><label for="payn-${k}">${t.fxN}</label><select class="num-in pay-n" id="payn-${k}" data-payn="${k}" aria-describedby="payn-h-${k}">${[1,2,3,4,5].map(n => `<option value="${n}">${n}</option>`).join('')}</select><p class="help" id="payn-h-${k}">${fill(t.fxHelp, { a: money(PRICING.payExtra) })}</p></div></div>`;
+  const richUi = () => `<fieldset class="sub"><legend>${t.richQ}</legend>${radios('rich', Object.entries(t.rich).map(([k, v]) => [k, v[0], v[1]]), true)}</fieldset>`;
+  const scr = (k, n, title) => `<fieldset class="step" data-sup="${k}"><legend>${num()}${title}</legend><div class="size-row"><label for="${k}-num" id="${k}-lbl">${t.screens}</label><div class="size-ctl"><input type="range" id="${k}-range" min="0" max="250" step="1" aria-labelledby="${k}-lbl"><input class="num-in" id="${k}-num" type="number" min="0" max="250" step="1" inputmode="numeric"></div></div>${k === 'app' ? richUi() : ''}${k === 'mobile' ? chatUi() : ''}${k === 'mobile' || k === 'app' ? payUi(k) : ''}</fieldset>`;
+  $('#form').innerHTML = `
+    <fieldset class="step"><legend>${num()}${t.s1}</legend>${radios('prec', Object.entries(t.prec).map(([k, v]) => [k, v[0], v[1]]), true)}<div class="design-rate" id="design-rate" aria-live="polite" hidden></div></fieldset>
+    <fieldset class="step"><legend>${num()}${t.sup}</legend><p class="help">${t.s3help}</p><div class="opts">${SUPS.map(k => `<label class="opt"><input type="checkbox" name="sup" value="${k}"><span><b>${t[SUPL[k]]}</b></span></label>`).join('')}</div><dl class="sup-ex">${SUPS.map(k => `<dt data-ex-k="${k}">${t[SUPL[k]]}</dt><dd data-ex-k="${k}">${t.supEx[k]}</dd>`).join('')}</dl></fieldset>
+    ${scr('web', 2, t.s2)}
+    ${scr('app', 3, t.lApp)}
+    ${scr('mobile', 4, t.s3)}
+    ${scr('bo', 5, t.s4)}
+    <fieldset class="step"><legend>${num()}${t.maintTitle}</legend><label class="opt"><input type="checkbox" name="maint" value="1"><span><b>${t.maintTitle}</b><small>${t.maintHint}</small></span></label></fieldset>`;
+  syncInputs();
+}
+function syncInputs() {
+  const f = $('#form');
+  f.querySelectorAll('input[type=radio]').forEach(i => i.checked = state[i.name] === i.value);
+  f.querySelectorAll('input[name=sup]').forEach(i => i.checked = state.sup[i.value]);
+  f.querySelector('input[name=chat]').checked = state.chat; f.querySelector('input[name=maint]').checked = state.maint;
+  ['mobile', 'app'].forEach(k => { $('#pay-sub-' + k).hidden = !state.pay[k]; f.querySelector('input[name=pay][value=' + k + ']').checked = state.pay[k]; $('#payn-' + k).value = state.payN[k]; });
+  f.querySelectorAll('[data-sup]').forEach(el => el.hidden = !state.sup[el.dataset.sup]);
+  f.querySelectorAll('[data-ex-k]').forEach(el => el.hidden = !state.sup[el.dataset.exK]);
+  f.querySelector('.sup-ex').hidden = !SUPS.some(k => state.sup[k]);
+  ['web', 'app', 'mobile', 'bo'].forEach(k => { $('#' + k + '-range').value = state[k]; $('#' + k + '-num').value = state[k]; });
+}
+function recap() {
+  const t = T(), r = t.r, s = eff();
+  return [
+    `${r.with} : ${t.prec[s.prec || 'idea'][0].toLowerCase()}`, [['web', t.lWeb], ['app', t.lApp], ['mobile', t.lMobile], ['bo', t.lBo]].filter(([k]) => state.sup[k]).map(([k, l]) => l + ' : ' + fill(r.about, { n: s[k] }) + (k === 'app' && s.rich === 'rich' ? ' (' + t.rich.rich[0].toLowerCase() + ')' : '')).join('\n'), ...(state.cx ? [r.cx + ' : ' + t.cx[state.cx][0].toLowerCase()] : []), ...(state.maint ? [T().maintLine] : []), ...(s.chat ? [t.lChat + ' (' + t.lMobile + ') : ' + money(PRICING.chat)] : []), ...[['mobile', 'payMobile', t.lMobile], ['app', 'payApp', t.lApp]].filter(([k]) => s.pay[k]).map(([k, p, l]) => t.lPay + ' (' + l + ') : ' + s.payN[k] + ' (' + money(compute(s).parts[p]) + ')'),
+  ].join('\n');
+}
+function priceText() {
+  const t = T(), c = compute(eff());
+  if (!state.answered && !c.boOnly || c.atFloor && !c.over) return { text: fill(t.from, { a: money(floorFor(eff())) }), c };
+  if (c.over) return { text: t.big, c };
+  return { text: money(c.price), c };
+}
+function updateResult() {
+  const t = T(), { text, c } = priceText();
+  let prec = t.empty;
+  if (state.answered && !c.over) {
+    const p = state.prec || 'idea';
+    prec = p === 'idea' ? t.pi : t.pm;
+  }
+  const ln = [['web', t.lWeb], ['app', t.lApp], ['mobile', t.lMobile], ['bo', t.lBo], ['design', t.lDesign], ['chat', t.lChat], ['payMobile', t.lPay + ' · ' + t.lMobile], ['payApp', t.lPay + ' · ' + t.lApp], ['floorAdj', t.lFloor]].filter(([k]) => c.parts[k] > 0);
+  const lines = state.answered && !c.over && ln.length ? `<ul class="lines">${ln.map(([k, l]) => `<li><span>${l}</span><span class="mono">${money(c.parts[k])}</span></li>`).join('')}</ul>` : '';
+  $('#result').innerHTML = `
+    <h2 id="t-res-h">${t.resTitle}</h2>
+    <div aria-live="polite" aria-atomic="true"><p class="price">${text}</p><p class="precision">${prec}</p>${state.maint ? `<p class="precision">${t.maintLine}</p>` : ''}</div>
+    ${lines}
+    <p class="disclaimer">${t.indicative}</p>
+    <div class="block"><h3>${t.inclTitle}</h3><ul class="ticks">${t.incl.map((i, n) => `<li>${n === 0 && state.sup.mobile ? t.inclStore : i}</li>`).join('')}</ul></div>
+    <div class="block"><h3>${t.exclTitle}</h3><ul class="ticks no">${(state.sup.mobile ? t.excl : [t.exclWeb, t.excl[1]]).filter((_, n) => n !== 1).map(i => `<li>${i}</li>`).join('')}</ul></div>
+    <div class="block"><p>${t.pay}${eff().rich === 'rich' ? ' ' + t.payRich : ''}${c.parts.design > 0 ? ' ' + t.payDesign : ''}</p></div>
+    <div class="actions"><button type="button" class="btn btn--brand btn--lg btn--block" data-act="quote">${t.cta}</button><button type="button" class="btn btn--outline btn--block" data-act="copy">${t.copy}</button></div>`;
+  $('#bar').innerHTML = `<p class="price" aria-hidden="true">${text}</p><button type="button" class="btn btn--brand" data-act="quote">${t.ctaShort}</button>`;
+  const dr = $('#design-rate'), p = state.prec;
+  if (dr) { dr.hidden = !p; if (p) { const r = { idea: PRICING.designIdea, spec: PRICING.designSpec, mockup: 0 }[p]; dr.innerHTML = `<b class="dr-title">${t.lDesign}</b><span>${r ? fill(t.designPer, { a: money(r) }) : t.designNone}</span>`; } }
+  updateCalib();
+}
+
+/* ==========================================================================
+   D. ÉVÉNEMENTS
+   ========================================================================== */
+const form = $('#form');
+form.addEventListener('change', e => {
+  const i = e.target; state.answered = true;
+  if (i.name === 'sup') { state.sup[i.value] = i.checked; if (!state.sup.app) state.rich = 'simple'; }
+  else if (i.name === 'pay') state.pay[i.value] = i.checked;
+  else if (i.name === 'maint') state.maint = i.checked;
+  else if (i.name === 'chat') state.chat = i.checked;
+  else if (i.dataset.payn) state.payN[i.dataset.payn] = +i.value;
+  else if (i.type === 'radio') state[i.name] = i.value;
+  else if (i.id.endsWith('-num')) state[i.id.replace('-num', '')] = clampScreens(i.value);
+  syncInputs(); updateResult();
+});
+form.addEventListener('input', e => {
+  const m = /^(web|app|mobile|bo)-(range|num)$/.exec(e.target.id); if (!m || e.target.value === '') return;
+  const k = m[1]; state[k] = clampScreens(e.target.value); state.answered = true;
+  $('#' + k + (m[2] === 'range' ? '-num' : '-range')).value = state[k];
+  updateResult();
+});
+const clampScreens = v => Math.min(250, Math.max(0, Math.round(+v) || 0));
+$('#examples').addEventListener('click', e => {
+  const b = e.target.closest('[data-ex]'); if (!b) return;
+  const ex = EXAMPLES.find(x => x.id === b.dataset.ex);
+  if (b.getAttribute('aria-pressed') === 'true') {
+    Object.assign(state, JSON.parse(JSON.stringify(INITIAL)));
+    document.querySelectorAll('[data-ex]').forEach(x => x.setAttribute('aria-pressed', 'false'));
+    syncInputs(); updateResult(); return;
+  }
+  Object.assign(state, { web: 0, app: 0, mobile: 0, bo: 0, rich: 'simple', cxShare: 'half', maint: false, chat: false, pay: { mobile: false, app: false }, payN: { mobile: 1, app: 1 } }, JSON.parse(JSON.stringify(ex.s)), { answered: true });
+  SUPS.forEach(k => state.sup[k] = state[k] > 0);
+  document.querySelectorAll('[data-ex]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  syncInputs(); updateResult();
+});
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-act]'); if (!a) return;
+  if (a.dataset.act === 'quote') openQuote(); else copyRecap();
+});
+function toast(msg) { const el = $('#toast'); el.textContent = msg; el.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('show'), 2200); }
+function copyRecap() {
+  const txt = recap(), done = () => toast(T().copied);
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(txt).then(done, () => fallback());
+  else fallback();
+  function fallback() { const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (_) {} ta.remove(); done(); }
+}
+$('#menuBtn').addEventListener('click', () => { const o = $('#nav').classList.toggle('open'); $('#menuBtn').setAttribute('aria-expanded', String(o)); });
+$('#nav').addEventListener('click', e => { if (e.target.closest('a')) { $('#nav').classList.remove('open'); $('#menuBtn').setAttribute('aria-expanded', 'false'); } });
+function openQuote() {
+  try { localStorage.setItem('aldaron-estimate', JSON.stringify({ text: recap(), sup: { web: !!state.sup.web, app: !!state.sup.app, mobile: !!state.sup.mobile, bo: !!state.sup.bo }, bring: state.prec || '' })); } catch (_) {}
+  location.href = '../contact/Contact.dc.html';
+}
+
+/* ==========================================================================
+   E. RÉGLAGES
+   ========================================================================== */
+const PRICING_KEYS = [['floor'], ['floorWeb'], ['designIdea'], ['designSpec'], ['base'], ['screen'], ['screenApp'], ['screenRich'], ['boFactor'], ['complexity', 'some'], ['complexity', 'heavy'], ['share', 'few'], ['share', 'half'], ['share', 'most'], ['ceiling'], ['payFirst'], ['payExtra'], ['chat']];
+const getP = k => k.reduce((o, x) => o[x], PRICING), setP = (k, v) => { const o = k.slice(0, -1).reduce((o, x) => o[x], PRICING); o[k[k.length - 1]] = v; };
+const seg = (name, entries) => `<div class="seg">${entries.map(([v, l]) => `<label><input type="radio" name="${name}" value="${v}" ${ui[name] === v ? 'checked' : ''}><span>${l}</span></label>`).join('')}</div>`;
+function buildPanel() {
+  const t = T(); $('#gear').textContent = t.gear; $('#gear').setAttribute('aria-label', t.gear);
+  $('#panel').innerHTML = `<h2>${t.pTitle}</h2>
+    <fieldset><legend>${t.theme}</legend>${seg('theme', [['light', t.light], ['dark', t.dark]])}</fieldset>
+    <fieldset><legend>${t.lang}</legend>${seg('lang', [['fr', 'Français'], ['en', 'English'], ['mg', 'Malagasy']])}</fieldset>
+    <fieldset><legend>${t.bp}</legend>${seg('bp', Object.entries(t.bps))}</fieldset>
+    <fieldset><legend>${t.pricing}</legend><div class="pgrid">${PRICING_KEYS.map((k, i) => `<label for="p${i}">${k.join('.')}</label><input id="p${i}" type="number" step="any" data-pk="${i}" value="${getP(k)}">`).join('')}</div><button type="button" class="btn btn--outline" id="p-reset">${t.reset}</button></fieldset>
+    <fieldset><legend>${t.calib}</legend><table class="calib"><thead><tr><th></th><th>${t.target}</th><th>=</th><th>%</th></tr></thead><tbody id="calib"></tbody></table></fieldset>`;
+  updateCalib();
+}
+function updateCalib() {
+  const el = $('#calib'); if (!el) return;
+  el.innerHTML = EXAMPLES.map(e => { const p = compute({ ...e.s }).price, d = (p - e.ref) / e.ref * 100; return `<tr><td>${T().ex[e.id]}</td><td>${e.ref}</td><td>${p}</td><td class="${Math.abs(d) <= 5 ? 'ok' : 'ko'}">${d > 0 ? '+' : ''}${d.toFixed(1)}</td></tr>`; }).join('');
+}
+$('#gear').addEventListener('click', () => { const p = $('#panel'); p.hidden = !p.hidden; $('#gear').setAttribute('aria-expanded', String(!p.hidden)); });
+$('#panel').addEventListener('change', e => {
+  const i = e.target;
+  if (i.name === 'theme' || i.name === 'bp' || i.name === 'lang') { ui[i.name] = i.value; applyUi(); if (i.name === 'lang') { buildStatic(); buildPanel(); $('#panel [name=lang]:checked').focus(); } updateResult(); }
+});
+$('#panel').addEventListener('input', e => {
+  const i = e.target; if (i.dataset.pk === undefined) return;
+  const v = parseFloat(i.value); if (isNaN(v)) return;
+  setP(PRICING_KEYS[+i.dataset.pk], v); buildStatic(); updateResult();
+});
+$('#panel').addEventListener('click', e => {
+  if (e.target.id !== 'p-reset') return;
+  PRICING_KEYS.forEach(k => setP(k, k.reduce((o, x) => o[x], DEFAULTS)));
+  buildPanel(); buildStatic(); updateResult();
+});
+function applyUi() { document.documentElement.classList.toggle('dark', ui.theme === 'dark'); document.body.dataset.bp = ui.bp; }
+
+/* ==========================================================================
+   F. DÉMARRAGE
+   ========================================================================== */
+applyUi(); buildStatic(); buildPanel(); updateResult();
+</script>
+<script src="../currency.js"></script>
+<script>document.querySelector('.ft-lang').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const r=document.querySelector('#panel [name=lang][value="'+b.dataset.v+'"]');if(r){r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));}});</script>
+</body>
+</html>

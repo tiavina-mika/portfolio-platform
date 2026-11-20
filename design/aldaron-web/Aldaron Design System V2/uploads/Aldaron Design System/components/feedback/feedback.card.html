@@ -1,0 +1,31 @@
+<!-- @dsCard group="Components" viewport="700x620" name="Badge, Alert, Toast" subtitle="Statuts, messages persistants, notifications" -->
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide-react@0.460.0/dist/umd/lucide-react.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0}.pane{padding:20px;display:grid;gap:16px;background:var(--background);color:var(--foreground)}.l{font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)}.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.cap{display:grid;gap:6px;justify-items:start}.g{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const DS = window.AldaronDesignSystem_1daf3c;
+const L = window.LucideReact || {};
+const Ic = (n, s = 16) => { const C = L[n]; return C ? <C size={s} strokeWidth={1.75} /> : null; };
+
+const { Badge, Alert, Toast, Button } = DS;
+function Set() { return (<>
+  <div className="row">
+    <Badge>Défaut</Badge><Badge variant="primary">Primary</Badge><Badge variant="brand" mono>Inclus</Badge><Badge variant="success" dot>Actif</Badge><Badge variant="warning" dot>Invité</Badge><Badge variant="destructive" dot>Suspendu</Badge><Badge variant="info">Brouillon</Badge><Badge variant="outline">Éditeur</Badge><Badge size="sm" mono square>v2.4.0</Badge>
+  </div>
+  <div className="g">
+    <Alert variant="info" title="Préproduction prête">Votre lien de recette est disponible.</Alert>
+    <Alert variant="warning" title="MFA non activée" action={<Button size="sm" variant="outline">Activer</Button>}>Obligatoire pour les administrateurs.</Alert>
+    <Alert variant="success" title="Domaine vérifié">Les emails partent depuis startup.eu.</Alert>
+    <Alert variant="destructive" title="Déploiement échoué">La préproduction n'a pas répondu.</Alert>
+  </div>
+  <div className="g">
+    <Toast isStatic variant="success" title="Invitation envoyée" description="marie@startup.eu recevra un email." onClose={() => {}} />
+    <Toast isStatic variant="inverted" title="Article publié" action={<Button size="sm" variant="secondary">Annuler</Button>} onClose={() => {}} />
+  </div></>); }
+function App() { return (<><div className="pane"><Set /></div><div className="pane dark"><Set /></div></>); }
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script></body></html>

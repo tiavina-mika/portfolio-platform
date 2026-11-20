@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Mentions légales Aldaron" description="Page Mentions légales du site public." -->
+<helmet><script src="./ds-base.js"></script><style>body{margin:0}a{color:var(--brand-text)}a:hover{color:var(--foreground)}button{font-family:inherit}</style></helmet>
+<div class="{{ themeClass }}" style="background:var(--background);color:var(--foreground);font-family:var(--font-sans);min-height:100vh;padding-bottom:48px"><div ref="{{ frameRef }}" style="width:1200px;max-width:100%;margin:0 auto;padding:0 {{ gutter }}px;box-sizing:border-box">
+<header style="display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px;border-bottom:1px solid var(--border);position:relative"><a href="../home/Home.dc.html" aria-label="Aldaron" style="display:flex;align-items:center;min-height:44px"><sc-if value="{{ isLight }}" hint-placeholder-val="{{ true }}"><img src="../../assets/logo/aldaron-horizontal.svg" alt="Aldaron" style="height:28px;display:block"></sc-if><sc-if value="{{ isDark }}" hint-placeholder-val="{{ false }}"><img src="../../assets/logo/aldaron-horizontal-dark.svg" alt="Aldaron" style="height:28px;display:block"></sc-if></a>
+<sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}"><nav aria-label="Principal" style="display:flex;gap:4px"><sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4"><a href="{{ n.href }}" style="display:flex;align-items:center;min-height:44px;padding:0 12px;color:{{ n.color }};box-shadow:{{ n.line }};text-decoration:none;font:500 15px/1 var(--font-sans);border-radius:0" aria-current="{{ n.cur }}" style-hover="color:var(--foreground)">{{ n.label }}</a></sc-for></nav></sc-if>
+<div style="display:flex;align-items:center;gap:8px"><x-import component-from-global-scope="AldaronDesignSystem_1daf3c.Button" variant="brand" size="sm" href="../pricing/simulator.html" hint-size="150px,36px">{{ t.ctaSim }}</x-import><sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ toggleMenu }}" aria-expanded="{{ menuOpen }}" aria-controls="menu" style="min-height:44px;padding:0 14px;border-radius:6px;border:1px solid var(--input);background:transparent;color:var(--foreground);font:500 15px/1 var(--font-sans);cursor:pointer" style-hover="background:var(--muted)" style-focus="outline:2px solid var(--ring);outline-offset:2px">{{ menuLabel }}</button></sc-if></div>
+<sc-if value="{{ showMenu }}" hint-placeholder-val="{{ false }}"><nav id="menu" aria-label="Principal" style="position:absolute;top:100%;left:0;right:0;z-index:5;background:var(--popover);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow-lg);padding:8px;display:grid;gap:4px"><sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4"><a href="{{ n.href }}" onClick="{{ closeMenu }}" style="display:flex;align-items:center;min-height:44px;padding:0 12px;border-radius:6px;color:var(--foreground);background:{{ n.bg }};text-decoration:none;font-weight:500" aria-current="{{ n.cur }}" style-hover="background:var(--muted)">{{ n.label }}</a></sc-for></nav></sc-if></header>
+<main id="top">
+<section style="padding:{{ heroPad }}px 0 {{ ctaPad }}px;display:grid;gap:20px;justify-items:start"><span style="font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ t.docLabel }}</span><h1 style="margin:0;font:700 {{ h1Size }}px/1.02 var(--font-display);letter-spacing:-0.035em;text-wrap:balance;max-width:16ch">{{ t.docTitle }}</h1><p style="margin:0;font:500 14px/1.5 var(--font-mono);color:var(--muted-foreground)">{{ t.docUpdated }}</p></section>
+<section style="padding:0 0 {{ secPad }}px;max-width:72ch"><sc-for list="{{ sections }}" as="s" hint-placeholder-count="5"><div style="display:grid;gap:12px;padding:32px 0;border-top:1px solid var(--border)"><h2 style="margin:0;font:700 24px/1.2 var(--font-display);letter-spacing:-0.02em">{{ s.title }}</h2><sc-for list="{{ s.lines }}" as="l" hint-placeholder-count="1"><p style="margin:0;font-size:17px;line-height:1.6;color:var(--muted-foreground);text-wrap:pretty">{{ l.t }}</p></sc-for></div></sc-for></section>
+</main>
+<footer style="margin-top:{{ secPad }}px;border-top:1px solid var(--border);padding-top:48px;display:grid;gap:40px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:40px 32px">
+<div style="display:grid;gap:16px;align-content:start;max-width:34ch"><sc-if value="{{ isLight }}" hint-placeholder-val="{{ true }}"><img src="../../assets/logo/aldaron-horizontal.svg" alt="Aldaron" style="height:28px;display:block"></sc-if><sc-if value="{{ isDark }}" hint-placeholder-val="{{ false }}"><img src="../../assets/logo/aldaron-horizontal-dark.svg" alt="Aldaron" style="height:28px;display:block"></sc-if><p style="margin:0;font-size:15px;line-height:1.5;color:var(--muted-foreground);text-wrap:pretty">{{ t.footTag }}</p></div>
+<nav aria-label="{{ t.footNav }}"><h3 style="margin:0 0 12px;font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ t.footNav }}</h3><ul style="list-style:none;margin:0;padding:0;display:grid;gap:2px"><sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4"><li><a href="{{ n.href }}" style="display:inline-flex;align-items:center;min-height:44px;color:var(--muted-foreground);text-decoration:none;font-size:15px" style-hover="color:var(--foreground)">{{ n.label }}</a></li></sc-for></ul></nav>
+<nav aria-label="{{ t.footLegal }}"><h3 style="margin:0 0 12px;font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ t.footLegal }}</h3><ul style="list-style:none;margin:0;padding:0;display:grid;gap:2px"><sc-for list="{{ legalItems }}" as="n" hint-placeholder-count="2"><li><a href="{{ n.href }}" style="display:inline-flex;align-items:center;min-height:44px;color:var(--muted-foreground);text-decoration:none;font-size:15px" style-hover="color:var(--foreground)">{{ n.label }}</a></li></sc-for></ul></nav>
+<div><h3 style="margin:0 0 12px;font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ t.footContact }}</h3><ul style="list-style:none;margin:0;padding:0;display:grid;gap:2px"><li><a href="mailto:contact@aldaron.eu" style="display:inline-flex;align-items:center;min-height:44px;color:var(--muted-foreground);text-decoration:none;font-size:15px" style-hover="color:var(--foreground)">contact@aldaron.eu</a></li><li><a href="../contact/Contact.dc.html" style="display:inline-flex;align-items:center;min-height:44px;color:var(--muted-foreground);text-decoration:none;font-size:15px" style-hover="color:var(--foreground)">{{ t.footQuote }}</a></li></ul></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;padding-top:20px;border-top:1px solid var(--border);font:500 12px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)"><span>© 2026 Aldaron</span><span>{{ t.footer }}</span></div>
+</footer>
+</div></div>
+<aside aria-label="Tweaks" class="{{ themeClass }}" style="position:fixed;right:16px;bottom:16px;z-index:50;width:min(320px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;background:var(--popover);color:var(--popover-foreground);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-lg)">
+<button type="button" onClick="{{ togglePanel }}" aria-expanded="{{ open }}" style="width:100%;min-height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:none;border:0;color:inherit;font:600 14px/1 var(--font-sans);cursor:pointer;border-radius:12px" style-hover="background:var(--muted)" style-focus="outline:2px solid var(--ring);outline-offset:-2px">Tweaks<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">{{ panelSign }}</span></button>
+<sc-if value="{{ open }}" hint-placeholder-val="{{ true }}"><div style="padding:4px 16px 16px;display:grid;gap:14px;border-top:1px solid var(--border)">
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="5"><div style="display:grid;gap:6px;padding-top:10px"><span style="font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)">{{ g.title }}</span><div style="display:flex;gap:4px;flex-wrap:wrap"><sc-for list="{{ g.opts }}" as="o" hint-placeholder-count="3"><sc-if value="{{ o.active }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ o.on }}" aria-pressed="true" style="min-height:44px;padding:0 12px;border-radius:6px;font:500 13px/1 var(--font-sans);cursor:pointer;border:1px solid transparent;background:var(--primary);color:var(--primary-foreground)" style-focus="outline:2px solid var(--ring);outline-offset:2px">{{ o.label }}</button></sc-if><sc-if value="{{ o.idle }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ o.on }}" aria-pressed="false" style="min-height:44px;padding:0 12px;border-radius:6px;font:500 13px/1 var(--font-sans);cursor:pointer;border:1px solid var(--input);background:transparent;color:var(--foreground)" style-hover="background:var(--muted)" style-focus="outline:2px solid var(--ring);outline-offset:2px">{{ o.label }}</button></sc-if></sc-for></div></div></sc-for>
+</div></sc-if></aside>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { theme: 'light', lang: 'fr', bp: 'desktop', open: true, menu: false };
+  CT = {
+    fr: { theme: 'Thème', light: 'Clair', dark: 'Sombre', lang: 'Langue', bp: 'Largeur', mobile: 'Mobile', tablet: 'Tablette', desktop: 'Desktop', large: 'Grand desktop', on: 'Oui', off: 'Non', },
+    en: { theme: 'Theme', light: 'Light', dark: 'Dark', lang: 'Language', bp: 'Width', mobile: 'Mobile', tablet: 'Tablet', desktop: 'Desktop', large: 'Large desktop', on: 'Yes', off: 'No', },
+    mg: { theme: 'Endrika', light: 'Mazava', dark: 'Maizina', lang: 'Fiteny', bp: 'Sakany', mobile: 'Finday', tablet: 'Takelaka', desktop: 'Solosaina', large: 'Solosaina lehibe', on: 'Eny', off: 'Tsia', teaser: 'Bloc mpanao kajy', prices: 'Vidiny amin\'ny karatra', tDark: 'Maizina', tLight: 'Mazava' }
+  };
+  PT = {
+    fr: { nav: ['Offre et prix', 'Simulateur', 'Réalisations', 'À propos', 'Contact'], menu: 'Menu', close: 'Fermer', ctaSim: 'Estimer mon prix', footer: 'Europe', footTag: 'Développement web et mobile pour startups, à prix fixe.', footNav: 'Navigation', footLegal: 'Légal', footContact: 'Contact', footQuote: 'Demander un devis ferme', legal: 'Mentions légales', privacy: 'Confidentialité',
+      docLabel: 'Légal', docTitle: 'Mentions légales', docUpdated: 'Dernière mise à jour : [à compléter]',
+      sections: [['Éditeur du site', ['Le site est édité par Aldaron, société de développement web et mobile pour startups.', 'Forme juridique et capital : [à compléter]', 'NIF : [à compléter] · STAT : [à compléter]', 'Siège social : [à compléter]', 'Directeur de la publication : [à compléter]', 'Contact : contact@aldaron.eu']], ['Hébergement', ['Hébergeur du site : [à compléter]']], ['Propriété intellectuelle', ['Les textes, le logo, les maquettes et le code de ce site appartiennent à Aldaron, sauf mention contraire. Toute reproduction sans accord écrit d\'Aldaron est interdite.']], ['Estimations et devis', ['Les estimations du simulateur de prix sont indicatives. Seul un devis ferme, établi après un cadrage, engage Aldaron.']], ['Données personnelles', ['Le traitement de vos données est décrit dans la politique de confidentialité.']]] },
+    en: { nav: ['Offer and pricing', 'Simulator', 'Projects', 'About', 'Contact'], menu: 'Menu', close: 'Close', ctaSim: 'Estimate my price', footer: 'Europe', footTag: 'Web and mobile development for startups, at a fixed price.', footNav: 'Navigation', footLegal: 'Legal', footContact: 'Contact', footQuote: 'Request a firm quote', legal: 'Legal notice', privacy: 'Privacy',
+      docLabel: 'Legal', docTitle: 'Legal notice', docUpdated: 'Last updated: [to be completed]',
+      sections: [['Site publisher', ['The site is published by Aldaron, a web and mobile development company for startups.', 'Legal form and capital: [to be completed]', 'Tax ID (NIF): [to be completed] · Statistical ID (STAT): [to be completed]', 'Registered office: [to be completed]', 'Publication director: [to be completed]', 'Contact: contact@aldaron.eu']], ['Hosting', ['Site host: [to be completed]']], ['Intellectual property', ['The texts, logo, mockups and code of this site belong to Aldaron unless stated otherwise. Any reproduction without Aldaron\'s written consent is forbidden.']], ['Estimates and quotes', ['Estimates from the price simulator are indicative. Only a firm quote, issued after scoping, binds Aldaron.']], ['Personal data', ['The processing of your data is described in the privacy policy.']]] },
+    mg: { nav: ['Tolotra sy vidiny', 'Mpanao kajy', 'Asa vita', 'Momba anay', 'Fifandraisana'], menu: 'Lisitra', close: 'Hidio', ctaSim: 'Tombano ny vidiny', footer: 'Eoropa', footTag: 'Fampandrosoana web sy finday ho an\'ny startup, amin\'ny vidiny raikitra.', footNav: 'Fitetezana', footLegal: 'Lalàna', footContact: 'Fifandraisana', footQuote: 'Angataho ny tolo-bidy raikitra', legal: 'Fanamarihana ara-dalàna', privacy: 'Fiarovana ny angon-drakitra',
+      docLabel: 'Lalàna', docTitle: 'Fanamarihana ara-dalàna', docUpdated: 'Fanavaozana farany : [ampidirina]',
+      sections: [['Mpamoaka ny tranonkala', ['Aldaron, orinasa mpamorona web sy finday ho an\'ny startup, no mamoaka ity tranonkala ity.', 'Endrika ara-dalàna sy tahirim-bola : [ampidirina]', 'NIF : [ampidirina] · STAT : [ampidirina]', 'Foibe : [ampidirina]', 'Talen\'ny famoahana : [ampidirina]', 'Fifandraisana : contact@aldaron.eu']], ['Fampiantranoana', ['Mpampiantrano ny tranonkala : [ampidirina]']], ['Fananana ara-tsaina', ['An\'i Aldaron ny lahatsoratra, ny logo, ny maquette ary ny kaody amin\'ity tranonkala ity, raha tsy misy filazana hafa. Mifady ny mandika izany raha tsy misy fanekena an-tsoratra avy amin\'i Aldaron.']], ['Tombana sy tolo-bidy', ['Fanondroana ny tombana avy amin\'ny mpanao kajy vidiny. Ny tolo-bidy raikitra aorian\'ny fandrafetana ihany no mamatotra an\'i Aldaron.']], ['Angon-drakitra manokana', ['Voalaza ao amin\'ny politikan\'ny fiarovana ny angon-drakitra ny fikarakarana ny angon-drakitrao.']]] }
+  };
+  CUR = -1;
+  HREFS = ['../pricing/pricing.html', '../pricing/simulator.html', '../projects/Projects.dc.html', '../about/About.dc.html', '../contact/Contact.dc.html'];
+  frameRef = (el) => { this.frameEl = el; };
+  paintAll() { if (this.frameEl) this.frameEl.style.width = { mobile: 390, tablet: 768, desktop: 1200, large: 1600 }[this.state.bp] + 'px'; }
+  componentDidMount() { this.paintAll(); }
+  componentDidUpdate() { this.paintAll(); }
+  G(title, key, list, T) { return { title: title, opts: list.map((p) => { const on = this.state[key] === p[0]; return { label: T[p[1]] || p[1], on: () => this.setState({ [key]: p[0], menu: false }), active: on, idle: !on }; }) }; }
+  renderVals() {
+    const s = this.state, C = this.CT[s.lang], T = this.PT[s.lang], m = s.bp === 'mobile', tab = s.bp === 'tablet';
+    const groups = [
+      this.G(C.theme, 'theme', [['light', 'light'], ['dark', 'dark']], C),
+      this.G(C.lang, 'lang', [['fr', 'FR'], ['en', 'EN'], ['mg', 'MG']], C),
+      this.G(C.bp, 'bp', [['mobile', 'mobile'], ['tablet', 'tablet'], ['desktop', 'desktop'], ['large', 'large']], C)
+    ];
+    return {
+      t: T, themeClass: s.theme === 'dark' ? 'dark' : '', frameRef: this.frameRef, isDark: s.theme === 'dark', isLight: s.theme !== 'dark',
+      open: s.open, panelSign: s.open ? '−' : '+', togglePanel: () => this.setState({ open: !s.open }), groups: groups,
+      legalItems: [{ label: T.legal, href: '../legal/Legal.dc.html' }, { label: T.privacy, href: '../privacy/Privacy.dc.html' }],
+      navItems: T.nav.map((label, i) => { const cur = i === this.CUR; return { label: label, href: this.HREFS[i], cur: cur ? 'page' : 'false', color: cur ? 'var(--foreground)' : 'var(--muted-foreground)', line: cur ? 'inset 0 -2px 0 var(--brand)' : 'none', bg: cur ? 'var(--muted)' : 'transparent' }; }),
+      showNav: !m && !tab, isMobile: m || tab, showMenu: (m || tab) && s.menu, menuOpen: String(!!s.menu), menuLabel: s.menu ? T.close : T.menu,
+      toggleMenu: () => this.setState({ menu: !s.menu }), closeMenu: () => this.setState({ menu: false }),
+      gutter: m ? 20 : 32, heroPad: m ? 48 : 96, secPad: m ? 56 : 96, ctaPad: m ? 24 : 40,
+      h1Size: m ? 38 : tab ? 52 : 68, h2Size: m ? 30 : 40, leadSize: m ? 18 : 20,
+      sections: T.sections.map((x) => ({ title: x[0], lines: x[1].map((t) => ({ t: t })) })),
+      fullH: { style: { height: '100%' } }
+    };
+  }
+}
+</script>
+</body>
+</html>

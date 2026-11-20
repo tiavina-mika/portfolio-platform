@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aldaron · Prototype</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ==========================================================================
+   Base
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{display:grid;grid-template-rows:auto minmax(0,1fr);background:var(--background);color:var(--foreground);font:400 15px/1.4 var(--font-sans)}
+a{color:var(--brand-text)}a:hover{color:var(--foreground)}
+
+/* ==========================================================================
+   Barre du prototype
+   ========================================================================== */
+.bar{display:flex;align-items:center;gap:var(--space-4,16px);flex-wrap:wrap;padding:6px 16px;border-bottom:1px solid var(--border);background:var(--card)}
+.bar__label{font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tabs button{min-height:44px;padding:0 14px;border-radius:6px;border:1px solid transparent;background:transparent;color:var(--muted-foreground);font:500 15px/1 var(--font-sans);cursor:pointer}
+.tabs button:hover{color:var(--foreground);background:var(--muted)}
+.tabs button[aria-current=page]{background:var(--primary);color:var(--primary-foreground)}
+.tabs button:focus-visible,.bar__open:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.bar__open{margin-left:auto;display:inline-flex;align-items:center;min-height:44px;font:500 14px/1 var(--font-sans);text-decoration:none;color:var(--muted-foreground)}
+.bar__open:hover{color:var(--foreground)}
+
+/* ==========================================================================
+   Écran
+   ========================================================================== */
+iframe{display:block;width:100%;height:100%;border:0;background:var(--background)}
+</style>
+</head>
+<body>
+<header class="bar">
+  <span class="bar__label">Prototype</span>
+  <nav class="tabs" id="tabs" aria-label="Écrans"></nav>
+  <a class="bar__open" id="open" href="#" target="_blank" rel="noopener">Ouvrir seul ↗</a>
+</header>
+<iframe id="screen" title="Écran du prototype"></iframe>
+<script>
+var PAGES = [
+  { id: 'home', label: 'Accueil', file: 'pages/home/Home.dc.html' },
+  { id: 'pricing', label: 'Offre et prix', file: 'pages/pricing/pricing.html' },
+  { id: 'simulator', label: 'Simulateur', file: 'pages/pricing/simulator.html' },
+  { id: 'projects', label: 'Réalisations', file: 'pages/projects/Projects.dc.html' },
+  { id: 'about', label: 'À propos', file: 'pages/about/About.dc.html' },
+  { id: 'contact', label: 'Contact', file: 'pages/contact/Contact.dc.html' },
+  { id: 'legal', label: 'Mentions légales', file: 'pages/legal/Legal.dc.html' },
+  { id: 'privacy', label: 'Confidentialité', file: 'pages/privacy/Privacy.dc.html' }
+];
+var KEY = 'aldaron-prototype-page';
+var frame = document.getElementById('screen'), tabs = document.getElementById('tabs'), open = document.getElementById('open');
+tabs.innerHTML = PAGES.map(function (p) { return '<button type="button" data-id="' + p.id + '">' + p.label + '</button>'; }).join('');
+function mark(id) {
+  var p = PAGES.find(function (x) { return x.id === id; }) || PAGES[0];
+  tabs.querySelectorAll('button').forEach(function (b) { if (b.dataset.id === p.id) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+  open.href = p.file;
+  try { localStorage.setItem(KEY, p.id); } catch (e) {}
+}
+function go(id) { var p = PAGES.find(function (x) { return x.id === id; }) || PAGES[0]; frame.src = p.file + '?v=' + Date.now(); mark(p.id); }
+tabs.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) go(b.dataset.id); });
+frame.addEventListener('load', function () {
+  try {
+    var path = frame.contentWindow.location.pathname;
+    var p = PAGES.find(function (x) { return path.slice(-x.file.length) === x.file; });
+    if (p) mark(p.id);
+  } catch (e) {}
+});
+var saved = null; try { saved = localStorage.getItem(KEY); } catch (e) {}
+go(saved || 'home');
+</script>
+</body>
+</html>

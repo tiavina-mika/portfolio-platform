@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aldaron · Offre et prix</title>
+<style>
+/* ==========================================================================
+   1. VARIABLES — jetons du système de design Aldaron (clair :root, sombre .dark)
+   ========================================================================== */
+@font-face{font-family:'Familjen Grotesk';font-weight:400;font-display:swap;src:url('../assets/fonts/familjen-grotesk-400.woff2') format('woff2')}
+@font-face{font-family:'Familjen Grotesk';font-weight:500;font-display:swap;src:url('../assets/fonts/familjen-grotesk-500.woff2') format('woff2')}
+@font-face{font-family:'Familjen Grotesk';font-weight:600;font-display:swap;src:url('../assets/fonts/familjen-grotesk-600.woff2') format('woff2')}
+@font-face{font-family:'Familjen Grotesk';font-weight:700;font-display:swap;src:url('../assets/fonts/familjen-grotesk-700.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-weight:400;font-display:swap;src:url('../assets/fonts/ibm-plex-mono-400.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-weight:500;font-display:swap;src:url('../assets/fonts/ibm-plex-mono-500.woff2') format('woff2')}
+:root{
+  --ink-950:#0E0F0D;--ink-900:#17181A;
+  --stone-600:#5E5A54;--stone-400:#A19B92;--stone-300:#CFC8BD;--stone-200:#E3DED5;--stone-100:#EEEAE3;
+  --paper-50:#F6F3EE;--paper-0:#FFFFFF;
+  --signal-700:#B4400F;--signal-500:#E2531B;--signal-400:#F26A33;--signal-50:#FDF1EA;
+  --green-700:#1E6B47;--green-400:#5BC58B;--red-700:#B42318;--red-400:#F26B5E;
+  --background:var(--paper-50);--foreground:var(--ink-900);
+  --card:var(--paper-0);--card-foreground:var(--ink-900);
+  --popover:var(--paper-0);--popover-foreground:var(--ink-900);
+  --primary:var(--ink-900);--primary-foreground:var(--paper-50);
+  --muted:var(--stone-100);--muted-foreground:var(--stone-600);
+  --brand:var(--signal-500);--brand-foreground:var(--ink-900);--brand-text:var(--signal-700);
+  --destructive:var(--red-700);--success:var(--green-700);
+  --border:var(--stone-200);--input:var(--stone-300);--ring:var(--signal-500);
+  --font-sans:'Familjen Grotesk',ui-sans-serif,system-ui,sans-serif;
+  --font-display:'Familjen Grotesk',ui-sans-serif,system-ui,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--space-20:80px;
+  --radius-md:6px;--radius-lg:8px;--radius-xl:12px;
+  --shadow-lg:0 16px 40px -8px rgba(23,24,26,.16),0 4px 12px rgba(23,24,26,.06);
+  --focus-ring:0 0 0 2px var(--background),0 0 0 4px var(--ring);
+  --hit-min:44px;--control-h-sm:36px;--control-h:44px;--control-h-lg:52px;
+  --disabled-opacity:.45;
+  --ease-out:cubic-bezier(.2,.7,.2,1);--dur-fast:120ms;
+}
+.dark{
+  --background:#121311;--foreground:var(--stone-100);
+  --card:#1A1C19;--card-foreground:var(--stone-100);
+  --popover:#1F211D;--popover-foreground:var(--stone-100);
+  --primary:var(--stone-100);--primary-foreground:var(--ink-900);
+  --muted:#232521;--muted-foreground:var(--stone-400);
+  --brand:var(--signal-400);--brand-foreground:var(--ink-950);--brand-text:var(--signal-400);
+  --destructive:var(--red-400);--success:var(--green-400);
+  --border:#2C2D29;--input:#3A3B36;--ring:var(--signal-400);
+  --shadow-lg:0 16px 40px -8px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04);
+}
+
+/* ==========================================================================
+   2. BASE
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:16px}
+body{margin:0;background:var(--muted);color:var(--foreground);font:400 16px/1.55 var(--font-sans);-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,ul,ol,dl,dd,figure,fieldset{margin:0;padding:0}
+ul,ol{list-style:none}
+fieldset{border:0;min-width:0}
+a{color:var(--brand-text)}
+a:hover{color:var(--foreground)}
+:focus-visible{outline:none;box-shadow:var(--focus-ring)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.eyebrow{font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+
+/* ==========================================================================
+   3. PAGE — cadre de largeur (tweak « Largeur ») et mise en page des sections
+   ========================================================================== */
+.frame{container:page / inline-size;background:var(--background);margin-inline:auto;width:100%;max-width:1200px;min-height:100vh;border-inline:1px solid var(--border)}
+[data-bp=mobile] .frame{max-width:390px}
+[data-bp=tablet] .frame{max-width:768px}
+[data-bp=desktop] .frame{max-width:1200px}
+[data-bp=large] .frame{max-width:1600px}
+.wrap{padding-inline:var(--space-5)}
+.section{display:grid;gap:var(--space-8);padding-block:var(--space-12);border-top:1px solid var(--border)}
+.section-head{display:grid;gap:var(--space-3);max-width:62ch}
+.section-head h2,.cta-block h2{font:700 clamp(28px,6cqi,44px)/1.05 var(--font-display);letter-spacing:-.03em;text-wrap:balance}
+.lead{font-size:18px;line-height:1.55;color:var(--muted-foreground);text-wrap:pretty}
+.note{font:500 14px/1.5 var(--font-mono);color:var(--muted-foreground);max-width:70ch}
+
+/* En-tête */
+.header{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);min-height:72px;position:relative}
+.header .logo{display:flex;align-items:center;min-height:var(--hit-min)}
+.header .logo img{height:28px;display:block}
+.header-end{display:flex;align-items:center;gap:var(--space-2)}
+.nav{display:none;position:absolute;top:100%;left:0;right:0;z-index:5;background:var(--popover);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:var(--space-2)}
+.nav.open{display:block}
+.nav ul{display:grid;gap:var(--space-1)}
+.nav a{display:flex;align-items:center;min-height:var(--hit-min);padding:0 var(--space-3);border-radius:var(--radius-md);color:var(--foreground);text-decoration:none;font-weight:500}
+.nav a:hover{background:var(--muted)}
+.menu-btn{display:inline-flex}
+.header .btn-cta{display:none}
+
+/* Hero */
+.hero{display:grid;gap:var(--space-6);justify-items:start;padding-block:var(--space-12)}
+.hero h1{font:700 clamp(40px,10cqi,84px)/1 var(--font-display);letter-spacing:-.035em;text-wrap:balance;max-width:14ch}
+.hero .lead{max-width:52ch}
+.btn-row{display:flex;flex-wrap:wrap;gap:var(--space-3)}
+.facts{display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-8);font:500 13px/1.4 var(--font-mono);letter-spacing:.04em;color:var(--muted-foreground)}
+.facts li{display:flex;align-items:center;gap:var(--space-2)}
+.facts li::before{content:"";width:6px;height:6px;background:var(--brand);flex:none}
+
+/* ==========================================================================
+   4. COMPOSANTS — Button, Card, champs (mêmes classes que le système)
+   ========================================================================== */
+.ald-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:var(--control-h);padding:0 18px;border-radius:var(--radius-md);border:1px solid transparent;font:500 15px/1 var(--font-sans);letter-spacing:-.005em;cursor:pointer;white-space:nowrap;text-decoration:none;user-select:none;transition:background-color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out)}
+.ald-btn:active:not(:disabled){transform:translateY(1px)}
+.ald-btn:disabled{opacity:var(--disabled-opacity);cursor:not-allowed}
+.ald-btn--brand{background:var(--brand);color:var(--brand-foreground)}
+.ald-btn--brand:hover:not(:disabled){background:color-mix(in oklab,var(--brand) 88%,var(--ink-950));color:var(--brand-foreground)}
+.ald-btn--outline{background:transparent;color:var(--foreground);border-color:var(--input)}
+.ald-btn--outline:hover:not(:disabled){background:var(--muted);color:var(--foreground);border-color:color-mix(in oklab,var(--input),var(--foreground) 20%)}
+.ald-btn--sm{height:var(--control-h-sm);padding:0 12px;font-size:14px}
+.ald-btn--lg{height:var(--control-h-lg);padding:0 24px;font-size:16px}
+.ald-btn--block{width:100%}
+.ald-btn--inv{background:transparent;color:inherit;border-color:currentColor}
+.ald-btn--inv:hover:not(:disabled){background:color-mix(in oklab,currentColor 15%,transparent);color:inherit}
+.ald-btn--sm{min-height:var(--hit-min)}
+.ald-card{background:var(--card);color:var(--card-foreground);border:1px solid var(--border);border-radius:var(--radius-lg);display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-6);min-width:0}
+.ald-card--inverted{background:var(--primary);color:var(--primary-foreground);border-color:transparent}
+.ald-card__eyebrow{font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)}
+.ald-card--inverted .ald-card__eyebrow,.ald-card--inverted .ald-card__desc{color:color-mix(in oklab,var(--primary-foreground) 78%,var(--primary))}
+.ald-card__title{font:700 20px/1.25 var(--font-display);letter-spacing:-.01em}
+.ald-card__desc{font-size:15px;line-height:1.5;color:var(--muted-foreground);text-wrap:pretty}
+.grid{display:grid;gap:var(--space-4);grid-template-columns:minmax(0,1fr)}
+
+/* Formules */
+.plan{height:100%}
+.plan .price{font:700 clamp(36px,9cqi,48px)/1 var(--font-display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.plan .rule{display:grid;gap:var(--space-2);padding-top:var(--space-4);border-top:1px solid currentColor}
+.plan .badge{font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase}
+
+
+/* Déroulé */
+.step-n{font:500 12px/1 var(--font-mono);letter-spacing:.08em;color:var(--brand-text)}
+
+/* Renvoi vers le simulateur */
+.sim-link{background:var(--primary);color:var(--primary-foreground);border-radius:var(--radius-lg);padding:var(--space-8) var(--space-6);display:grid;gap:var(--space-4);justify-items:start}
+.sim-link .eyebrow{color:inherit;opacity:.85}
+.sim-link h2{font:700 clamp(28px,6cqi,44px)/1.05 var(--font-display);letter-spacing:-.03em;text-wrap:balance}
+.sim-link p{font-size:18px;line-height:1.55;max-width:56ch;text-wrap:pretty;color:color-mix(in oklab,var(--primary-foreground) 85%,var(--primary))}
+
+/* Exemples, en plus */
+.list-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.list-box>li,.list-box>div{display:grid;gap:var(--space-3);padding:var(--space-5) var(--space-6);border-top:1px solid var(--border)}
+.list-box>:first-child{border-top:0}
+.ex b.t{font:600 17px/1.3 var(--font-sans)}
+.ex .p{font:700 24px/1.2 var(--font-display);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.ex .d{font:500 13px/1.4 var(--font-mono);color:var(--muted-foreground)}
+.extra{align-items:baseline}
+.extra-txt{display:grid;gap:var(--space-1)}
+.extra-txt b{font:600 17px/1.3 var(--font-sans)}
+.extra-txt span{font-size:15px;line-height:1.5;color:var(--muted-foreground);text-wrap:pretty;max-width:60ch}
+.extra-p{font:700 22px/1.2 var(--font-display);letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* Cadrage — formulaire */
+.form{display:grid;gap:var(--space-5);max-width:640px}
+.field{display:grid;gap:var(--space-2)}
+.field label,.field legend{font:600 15px/1.3 var(--font-sans);padding:0}
+.field .req{color:var(--brand-text)}
+.field .hint{font-size:13px;color:var(--muted-foreground)}
+.input{width:100%;min-height:var(--control-h);padding:10px var(--space-3);border-radius:var(--radius-md);border:1px solid var(--input);background:var(--card);color:var(--foreground);font:400 16px/1.4 var(--font-sans);transition:border-color var(--dur-fast) var(--ease-out)}
+textarea.input{min-height:96px;resize:vertical}
+.input:hover:not(:disabled){border-color:color-mix(in oklab,var(--input),var(--foreground) 30%)}
+.input:disabled{opacity:var(--disabled-opacity);cursor:not-allowed}
+.input[aria-invalid=true]{border-color:var(--destructive);border-width:2px}
+.error{display:none;gap:var(--space-2);color:var(--destructive);font:500 14px/1.4 var(--font-sans)}
+.error::before{content:"!";display:inline-grid;place-items:center;width:18px;height:18px;border:1.5px solid currentColor;border-radius:50%;font:600 12px/1 var(--font-mono);flex:none}
+.field.invalid .error{display:flex}
+.radios{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+.radios label{display:flex;align-items:center;gap:var(--space-2);min-height:var(--hit-min);padding:0 var(--space-4);border:1px solid var(--input);border-radius:var(--radius-md);cursor:pointer;font:500 15px/1 var(--font-sans)}
+.radios label:hover{background:var(--muted)}
+.radios label:has(input:checked){border-color:var(--primary);background:var(--muted)}
+.radios label:has(input:focus-visible){box-shadow:var(--focus-ring)}
+.radios input{accent-color:var(--brand);width:18px;height:18px;margin:0}
+.form-end{display:grid;gap:var(--space-3);justify-items:start}
+.success{display:none;padding:var(--space-4) var(--space-5);border:1px solid var(--success);border-radius:var(--radius-md);color:var(--success);font-weight:600}
+.success.show{display:block}
+.spin{width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite;display:none}
+.sending .spin{display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* CTA final, pied */
+.cta-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:var(--space-8) var(--space-6);display:grid;gap:var(--space-6);justify-items:start}
+.footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--space-4);padding-block:var(--space-6) var(--space-12);border-top:1px solid var(--border);font:500 12px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)}
+
+/* Panneau de tweaks (dans la page) */
+.tweaks{position:fixed;right:var(--space-4);bottom:var(--space-4);z-index:50;width:min(320px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;background:var(--popover);color:var(--popover-foreground);border:1px solid var(--border);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg)}
+.tweaks>button{width:100%;min-height:var(--hit-min);display:flex;align-items:center;justify-content:space-between;padding:0 var(--space-4);background:none;border:0;color:inherit;font:600 14px/1 var(--font-sans);cursor:pointer;border-radius:var(--radius-xl)}
+.tweaks .body{display:none;gap:var(--space-4);padding:var(--space-2) var(--space-4) var(--space-4);border-top:1px solid var(--border)}
+.tweaks.open .body{display:grid}
+.tweaks .grp{display:grid;gap:var(--space-2);padding-top:var(--space-2)}
+.tweaks .grp>span{font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brand-text)}
+.tweaks .opts{display:flex;flex-wrap:wrap;gap:var(--space-1)}
+.tweaks .opts button{min-height:var(--hit-min);padding:0 var(--space-3);border-radius:var(--radius-md);font:500 13px/1 var(--font-sans);cursor:pointer;border:1px solid var(--input);background:transparent;color:var(--foreground)}
+.tweaks .opts button:hover{background:var(--muted)}
+.tweaks .opts button[aria-pressed=true]{background:var(--primary);color:var(--primary-foreground);border-color:var(--primary)}
+
+/* ==========================================================================
+   5. ÉTATS — réduction des animations
+   ========================================================================== */
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation-duration:.01ms!important}html{scroll-behavior:auto}}
+
+/* ==========================================================================
+   6. RESPONSIVE — requêtes de conteneur (suivent la largeur du cadre)
+   ========================================================================== */
+@container page (min-width:640px){
+  .wrap{padding-inline:var(--space-8)}
+  .grid.c2,.grid.plans,.grid.steps,.grid.rules{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ex{grid-template-columns:minmax(0,1fr) auto;align-items:center}
+  .extra{grid-template-columns:minmax(0,1fr) auto;gap:var(--space-8)}
+  .extra-p{text-align:right}
+}
+@container page (min-width:900px){
+  .wrap{padding-inline:var(--space-10)}
+  .menu-btn{display:none}
+  .nav{display:block;position:static;background:none;border:0;box-shadow:none;padding:0}
+  .nav ul{display:flex;gap:var(--space-1)}
+  .nav a{color:var(--muted-foreground);font-size:15px}
+  .nav a:hover{background:none;color:var(--foreground)}
+  .header .btn-cta{display:inline-flex}
+  .grid.steps,.grid.rules{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .grid.plans{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .section{padding-block:var(--space-20)}
+  .hero{padding-block:var(--space-20)}
+}
+@container page (max-width:480px){
+  .btn-row .ald-btn{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="frame" id="frame">
+<div class="wrap">
+<header class="header">
+  <a class="logo" href="Home.html" aria-label="Aldaron"><img id="logo" src="../assets/logo/aldaron-horizontal.svg" alt="Aldaron"></a>
+  <nav class="nav" id="nav" aria-label="Principal"><ul id="navList"></ul></nav>
+  <div class="header-end">
+    <a class="ald-btn ald-btn--brand btn-cta" href="#cadrage" data-t="cta"></a>
+    <button type="button" class="ald-btn ald-btn--outline menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav" data-t="menu"></button>
+  </div>
+</header>
+<main id="top">
+  <section class="hero" aria-labelledby="h1">
+    <h1 id="h1" data-t="h1"></h1>
+    <p class="lead" data-t="sub"></p>
+    <div class="btn-row"><a class="ald-btn ald-btn--brand ald-btn--lg" href="#cadrage" data-t="cta"></a><a class="ald-btn ald-btn--outline ald-btn--lg" href="Simulator.html" data-t="cta2"></a></div>
+    <ul class="facts" id="facts"></ul>
+  </section>
+
+  <section class="section" id="tarifs" aria-labelledby="t-formules">
+    <div class="section-head"><span class="eyebrow" data-t="plansEyebrow"></span><h2 id="t-formules" data-t="plansTitle"></h2></div>
+    <ul class="grid plans" id="plans"></ul>
+    <p class="note" data-t="beyond"></p>
+  </section>
+
+  <section class="section" id="deroule" aria-labelledby="t-deroule">
+    <div class="section-head"><span class="eyebrow" data-t="flowEyebrow"></span><h2 id="t-deroule" data-t="flowTitle"></h2></div>
+    <ol class="grid steps" id="steps"></ol>
+  </section>
+
+  <section class="section" id="simulateur" aria-labelledby="t-sim">
+    <div class="sim-link"><span class="eyebrow" data-t="simEyebrow"></span><h2 id="t-sim" data-t="simTitle"></h2><p data-t="simSub"></p><a class="ald-btn ald-btn--brand ald-btn--lg" href="Simulator.html" data-t="simGo"></a></div>
+  </section>
+
+  <section class="section" id="exemples" aria-labelledby="t-ex">
+    <div class="section-head"><span class="eyebrow" data-t="exEyebrow"></span><h2 id="t-ex" data-t="exTitle"></h2></div>
+    <ul class="list-box" id="examples"></ul>
+  </section>
+
+  <section class="section" id="options" aria-labelledby="t-extra">
+    <div class="section-head"><span class="eyebrow" data-t="exEyebrow2"></span><h2 id="t-extra" data-t="extraTitle"></h2><p class="lead" data-t="extraSub"></p></div>
+    <ul class="list-box" id="extras"></ul>
+  </section>
+
+  <section class="section" id="regles" aria-labelledby="t-rules">
+    <div class="section-head"><span class="eyebrow" data-t="rulesEyebrow"></span><h2 id="t-rules" data-t="rulesTitle"></h2></div>
+    <ul class="grid rules" id="rules"></ul>
+  </section>
+
+  <section class="section" id="cadrage" aria-labelledby="t-form">
+    <div class="section-head"><span class="eyebrow" data-t="formEyebrow"></span><h2 id="t-form" data-t="formTitle"></h2><p class="lead" data-t="formSub"></p></div>
+    <form class="form" id="form" novalidate aria-labelledby="t-form">
+      <div class="field" id="f-name"><label for="name"><span data-t="fName"></span> <span class="req" aria-hidden="true">*</span></label><input class="input" id="name" name="name" autocomplete="name" required aria-describedby="e-name"><p class="error" id="e-name" data-t="eName"></p></div>
+      <div class="field" id="f-email"><label for="email"><span data-t="fEmail"></span> <span class="req" aria-hidden="true">*</span></label><input class="input" id="email" name="email" type="email" autocomplete="email" required aria-describedby="e-email"><p class="error" id="e-email" data-t="eEmail"></p></div>
+      <div class="field" id="f-product"><label for="product"><span data-t="fProduct"></span> <span class="req" aria-hidden="true">*</span></label><textarea class="input" id="product" name="product" rows="3" required aria-describedby="e-product"></textarea><p class="error" id="e-product" data-t="eProduct"></p></div>
+      <fieldset class="field" id="f-type"><legend><span data-t="fType"></span> <span class="req" aria-hidden="true">*</span></legend><div class="radios" id="types"></div><p class="error" id="e-type" data-t="eType"></p></fieldset>
+      <div class="field"><label for="needs" data-t="fNeeds"></label><textarea class="input" id="needs" name="needs" rows="4" aria-describedby="h-needs"></textarea><p class="hint" id="h-needs" data-t="hNeeds"></p></div>
+      <div class="field"><label for="date" data-t="fDate"></label><input class="input" id="date" name="date" type="date"></div>
+      <div class="form-end">
+        <button type="submit" class="ald-btn ald-btn--brand ald-btn--lg" id="submit"><span class="spin" aria-hidden="true"></span><span id="submitLabel"></span></button>
+        <p class="note" data-t="formNote"></p>
+        <p class="success" id="success" role="status" data-t="sent"></p>
+      </div>
+    </form>
+  </section>
+
+</main>
+<footer class="footer"><span>© 2026 Aldaron</span><span data-t="footer"></span></footer>
+</div>
+</div>
+
+<aside class="tweaks" id="tweaks" aria-label="Tweaks">
+  <button type="button" id="twBtn" aria-expanded="false">Tweaks<span class="mono" id="twSign">+</span></button>
+  <div class="body" id="twBody"></div>
+</aside>
+
+<script>
+/* ==========================================================================
+   Données : textes FR / EN
+   ========================================================================== */
+const I18N = {
+  fr: {
+    nav: ['Tarifs', 'Déroulé', 'Simulateur', 'Règles', 'Cadrage'], menu: 'Menu',
+    cta: 'Demander un devis', cta2: 'Estimer mon prix',
+    h1: 'Le prix de votre produit, écran par écran.',
+    sub: 'Le prix dépend du périmètre : supports, nombre d\'écrans, back-office et complexité métier. Il est fixé à la signature et ne change plus.',
+    facts: ['À partir de 1 500 €', 'Prix fixe à la signature', '30 jours de correction de bugs'],
+    plansEyebrow: 'Tarifs', plansTitle: 'Un prix par écran, selon le support',
+    plans: [
+      ['À partir de', 'Site ou application web', '1 500 €', '25 € par écran pour un site statique, 18 € pour une application web simple, 30 € pour une interface riche.'],
+      ['À partir de', 'Mobile', '2 500 €', '25 € par écran, iOS et Android. Publication sur l\'App Store et Google Play comprise.'],
+      ['Par écran', 'Back-office', '37,50 €', '1,5 fois le prix d\'un écran : contenus, utilisateurs, commandes, modération, statistiques, exports.']
+    ],
+    beyond: 'Une vue distincte compte pour un écran ; ses états et variantes sont inclus. Au-delà de 15 000 €, le prix est fixé ensemble lors du cadrage.',
+    flowEyebrow: 'Déroulé', flowTitle: 'Six étapes, du cadrage à l\'après.',
+    steps: [
+      ['Cadrage', 'Gratuit. Nous précisons le périmètre : supports, écrans, back-office, complexité.'],
+      ['Devis ferme', 'Le prix est fixé à la signature. 40 % sont payés à ce moment.'],
+      ['Maquettes', 'Les maquettes sont validées avant le début du développement.'],
+      ['Démonstration', 'À mi-parcours, nous présentons le produit. 30 % sont payés.'],
+      ['Mise en ligne', 'Mise en production, publication sur les stores, remise du code et des comptes. 30 % sont payés.'],
+      ['Après', '30 jours de correction de bugs, puis maintenance optionnelle.']
+    ],
+    simEyebrow: 'Simulateur de prix', simTitle: 'Estimez le prix de votre produit', simSub: 'Répondez à quelques questions sur vos supports, vos écrans et vos fonctions. L\'estimation se met à jour à chaque réponse.', simGo: 'Ouvrir le simulateur',
+    exEyebrow: 'Exemples', exTitle: 'Cinq cas',
+    examples: [
+      ['Site vitrine', 'Une maquette · jusqu\'à 60 écrans web', 1500],
+      ['Première version d\'un SaaS', 'Une maquette · application web simple de 50 écrans · back-office de 15 écrans', 1500],
+      ['Application mobile simple', 'Une maquette · jusqu\'à 100 écrans mobile', 2500],
+      ['Application mobile avec back-office', 'Une maquette · 60 écrans mobile · back-office de 25 écrans', 2500],
+      ['Produit web et mobile avec paiement', 'Une maquette · 40 écrans web · 60 écrans mobile · paiement en ligne', 3000]
+    ],
+    exEyebrow2: 'Options', extraTitle: 'Ce qui s\'ajoute au prix des écrans', extraSub: 'Chaque option apparaît dans le simulateur quand vous la choisissez.',
+    extras: [
+      ['Maquettes (si non fournies)', '6 à 8 € / écran', '8 € par écran à partir d\'une idée, 6 € à partir d\'un cahier des charges.'],
+      ['Paiement en ligne', '500 €', 'Pour la première intégration. 22 € par intégration supplémentaire.'],
+      ['Discussion instantanée', '500 €', 'Messagerie en temps réel entre utilisateurs.']
+    ],
+    rulesEyebrow: 'Règles', rulesTitle: 'Ce qui encadre chaque projet',
+    rules: [
+      ['Prix fixe', 'Le prix est fixé à la signature, après le cadrage. Il ne change pas pendant le projet.'],
+      ['Paiement en 3 échéances', '40 % à la signature, 30 % à la démonstration de mi-parcours, 30 % à la mise en ligne.'],
+      ['Minimum de commande', '1 500 € pour un site ou une application web, 2 500 € dès qu\'il y a du mobile.'],
+      ['Interface riche', 'Livraison par lots, chaque lot étant payé à sa livraison ; les lots sont convenus lors du cadrage.'],
+      ['Design', 'Votre charte est appliquée sur le système de design d\'Aldaron. Vous pouvez aussi apporter votre designer.'],
+      ['Maintenance', '150 à 400 € par mois, après les 30 jours de correction de bugs.'],
+      ['Propriété du code', 'Le code et les comptes vous sont remis à la mise en ligne.'],
+      ['Frais externes', 'Hébergement et services tiers, comptes des stores : payés directement par vous.']
+    ],
+    formEyebrow: 'Cadrage', formTitle: 'Parlez-nous de votre produit', formSub: 'Quelques lignes suffisent pour préparer le cadrage.',
+    fName: 'Nom', fEmail: 'E-mail', fProduct: 'Votre produit en une ou deux phrases', fType: 'Type de produit', fNeeds: 'Principaux besoins', hNeeds: 'Un besoin par ligne.', fDate: 'Date de lancement souhaitée',
+    types: ['Web', 'Mobile', 'Web et mobile'],
+    eName: 'Indiquez votre nom.', eEmail: 'Indiquez une adresse e-mail valide.', eProduct: 'Décrivez votre produit en une ou deux phrases.', eType: 'Choisissez un type de produit.',
+    submit: 'Demander un devis ferme', sending: 'Envoi en cours…', formNote: 'Ce n\'est pas un devis automatique : nous répondons personnellement.',
+    sent: 'Merci, votre demande est envoyée. Nous vous répondons personnellement.',
+    footer: 'Europe',
+    tw: { theme: 'Thème', lang: 'Langue', bp: 'Largeur', form: 'Formulaire', light: 'Clair', dark: 'Sombre', mobile: 'Mobile', tablet: 'Tablette', desktop: 'Desktop', large: 'Grand desktop', normal: 'Normal', error: 'Erreurs', sending: 'Envoi' }
+  },
+  en: {
+    nav: ['Pricing', 'Process', 'Simulator', 'Rules', 'Scoping'], menu: 'Menu',
+    cta: 'Request a quote', cta2: 'Estimate my price',
+    h1: 'The price of your product, screen by screen.',
+    sub: 'The price depends on scope: platforms, number of screens, back office and business complexity. It is fixed at signing and does not change.',
+    facts: ['From €1,500', 'Fixed price at signing', '30 days of bug fixes'],
+    plansEyebrow: 'Pricing', plansTitle: 'A price per screen, by platform',
+    plans: [
+      ['From', 'Website or web app', '€1,500', '€25 per screen for a static site, €18 for a simple web app, €30 for a rich interface.'],
+      ['From', 'Mobile', '€2,500', '€25 per screen, iOS and Android. Publication on the App Store and Google Play included.'],
+      ['Per screen', 'Back office', '€37.50', '1.5 times the price of a screen: content, users, orders, moderation, statistics, exports.']
+    ],
+    beyond: 'A distinct view counts as one screen; its states and variants are included. Above €15,000, the price is set together during scoping.',
+    flowEyebrow: 'Process', flowTitle: 'Six steps, from scoping to after.',
+    steps: [
+      ['Scoping', 'Free. We define the scope: platforms, screens, back office, complexity.'],
+      ['Firm quote', 'The price is fixed at signing. 40% is paid then.'],
+      ['Mockups', 'Mockups are approved before development starts.'],
+      ['Demo', 'Halfway through, we present the product. 30% is paid.'],
+      ['Launch', 'Production release, store publication, handover of code and accounts. 30% is paid.'],
+      ['After', '30 days of bug fixes, then optional maintenance.']
+    ],
+    simEyebrow: 'Price simulator', simTitle: 'Estimate the price of your product', simSub: 'Answer a few questions about your platforms, screens and features. The estimate updates with every answer.', simGo: 'Open the simulator',
+    exEyebrow: 'Examples', exTitle: 'Five cases',
+    examples: [
+      ['Showcase website', 'A mockup · up to 60 web screens', 1500],
+      ['First version of a SaaS', 'A mockup · simple 50-screen web app · 15-screen back office', 1500],
+      ['Simple mobile app', 'A mockup · up to 100 mobile screens', 2500],
+      ['Mobile app with back office', 'A mockup · 60 mobile screens · 25-screen back office', 2500],
+      ['Web and mobile product with payment', 'A mockup · 40 web screens · 60 mobile screens · online payment', 3000]
+    ],
+    exEyebrow2: 'Options', extraTitle: 'What adds to the price of screens', extraSub: 'Each option appears in the simulator when you select it.',
+    extras: [
+      ['Mockups (if not provided)', '€6 to €8 / screen', '€8 per screen from an idea, €6 from a specification.'],
+      ['Online payment', '€500', 'For the first integration. €22 per additional integration.'],
+      ['Instant chat', '€500', 'Real-time messaging between users.']
+    ],
+    rulesEyebrow: 'Rules', rulesTitle: 'What frames every project',
+    rules: [
+      ['Fixed price', 'The price is fixed at signing, after scoping. It does not change during the project.'],
+      ['Paid in 3 instalments', '40% at signing, 30% at the mid-way demo, 30% at launch.'],
+      ['Minimum order', '€1,500 for a website or web app, €2,500 as soon as mobile is involved.'],
+      ['Rich interface', 'Delivery in batches, each batch paid on delivery; batches are agreed during scoping.'],
+      ['Design', 'Your brand is applied on Aldaron\'s design system. You can also bring your own designer.'],
+      ['Maintenance', '€150 to €400 per month, after the 30 days of bug fixes.'],
+      ['Code ownership', 'Code and accounts are handed over to you at launch.'],
+      ['External costs', 'Hosting and third-party services, store accounts: paid directly by you.']
+    ],
+    formEyebrow: 'Scoping', formTitle: 'Tell us about your product', formSub: 'A few lines are enough to prepare the scoping.',
+    fName: 'Name', fEmail: 'Email', fProduct: 'Your product in one or two sentences', fType: 'Product type', fNeeds: 'Main needs', hNeeds: 'One need per line.', fDate: 'Desired launch date',
+    types: ['Web', 'Mobile', 'Web and mobile'],
+    eName: 'Enter your name.', eEmail: 'Enter a valid email address.', eProduct: 'Describe your product in one or two sentences.', eType: 'Choose a product type.',
+    submit: 'Request a firm quote', sending: 'Sending…', formNote: 'This is not an automatic quote: we reply personally.',
+    sent: 'Thank you, your request has been sent. We will reply personally.',
+    footer: 'Europe',
+    tw: { theme: 'Theme', lang: 'Language', bp: 'Width', form: 'Form', light: 'Light', dark: 'Dark', mobile: 'Mobile', tablet: 'Tablet', desktop: 'Desktop', large: 'Large desktop', normal: 'Normal', error: 'Errors', sending: 'Sending' }
+  },
+  mg: {
+    nav: ['Vidiny', 'Dingana', 'Mpanao kajy', 'Fitsipika', 'Fandrafetana'], menu: 'Lisitra',
+    cta: 'Angataho ny tolo-bidy', cta2: 'Tombano ny vidiny',
+    h1: 'Ny vidin\'ny vokatrao, isaky ny efijery.',
+    sub: 'Miankina amin\'ny haben\'ny tetikasa ny vidiny : fitaovana, isan\'ny efijery, back-office ary fahasarotan\'ny asa. Raikitra rehefa manao sonia izy ary tsy miova intsony.',
+    facts: ['Manomboka amin\'ny 1 500 €', 'Vidiny raikitra rehefa manao sonia', 'Fanitsiana bug mandritra ny 30 andro'],
+    plansEyebrow: 'Vidiny', plansTitle: 'Vidiny isaky ny efijery, araka ny fitaovana',
+    plans: [
+      ['Manomboka amin\'ny', 'Tranonkala na application web', '1 500 €', '25 € isaky ny efijery ho an\'ny tranonkala static, 18 € ho an\'ny application web tsotra, 30 € ho an\'ny interface be fiasa.'],
+      ['Manomboka amin\'ny', 'Finday', '2 500 €', '25 € isaky ny efijery, iOS sy Android. Tafiditra ny famoahana ao amin\'ny App Store sy Google Play.'],
+      ['Isaky ny efijery', 'Back-office', '37,50 €', 'Avo 1,5 heny noho ny vidin\'ny efijery iray : votoaty, mpampiasa, kaomandy, fanaraha-maso, antontan\'isa, fanondranana.']
+    ],
+    beyond: 'Efijery iray ny fijery tsirairay ; tafiditra ao aminy ny toe-javatra sy ny endriny samihafa. Mihoatra ny 15 000 €, raikitra miaraka mandritra ny fandrafetana ny vidiny.',
+    flowEyebrow: 'Dingana', flowTitle: 'Dingana enina, manomboka amin\'ny fandrafetana.',
+    steps: [
+      ['Fandrafetana', 'Maimaim-poana. Faritantsika ny haben\'ny tetikasa : fitaovana, efijery, back-office, fahasarotana.'],
+      ['Tolo-bidy raikitra', 'Raikitra rehefa manao sonia ny vidiny. 40 % no aloa amin\'izay.'],
+      ['Maquette', 'Ekena alohan\'ny hanombohan\'ny fampandrosoana ny maquette.'],
+      ['Demo', 'Eo antenatenany, asehontsika ny vokatra. 30 % no aloa.'],
+      ['Famoahana', 'Fampiasana amin\'ny tena izy, famoahana ao amin\'ny store, fanolorana ny kaody sy ny kaonty. 30 % no aloa.'],
+      ['Aorian\'izay', 'Fanitsiana bug mandritra ny 30 andro, avy eo fikojakojana tsy voatery.']
+    ],
+    simEyebrow: 'Mpanao kajy vidiny', simTitle: 'Tombano ny vidin\'ny vokatrao', simSub: 'Valio fanontaniana vitsivitsy momba ny fitaovana, ny efijery ary ny asa ilainao. Mivaingana isaky ny valinteny ny tombana.', simGo: 'Sokafy ny mpanao kajy',
+    exEyebrow: 'Ohatra', exTitle: 'Tranga dimy',
+    examples: [
+      ['Tranonkala fampisehoana', 'Maquette iray · efijery web hatramin\'ny 60', 1500],
+      ['Kinova voalohany an\'ny SaaS', 'Maquette iray · application web tsotra misy efijery 50 · back-office misy efijery 15', 1500],
+      ['Application finday tsotra', 'Maquette iray · efijery finday hatramin\'ny 100', 2500],
+      ['Application finday misy back-office', 'Maquette iray · efijery finday 60 · back-office misy efijery 25', 2500],
+      ['Vokatra web sy finday misy fandoavam-bola', 'Maquette iray · efijery web 40 · efijery finday 60 · fandoavam-bola an-tserasera', 3000]
+    ],
+    exEyebrow2: 'Safidy', extraTitle: 'Izay miampy ny vidin\'ny efijery', extraSub: 'Miseho ao amin\'ny mpanao kajy ny safidy tsirairay rehefa fidinao.',
+    extras: [
+      ['Maquette (raha tsy omenao)', '6 hatramin\'ny 8 € / efijery', '8 € isaky ny efijery avy amin\'ny hevitra, 6 € avy amin\'ny cahier des charges.'],
+      ['Fandoavam-bola an-tserasera', '500 €', 'Ho an\'ny fampidirana voalohany. 22 € isaky ny fampidirana fanampiny.'],
+      ['Resaka mivantana', '500 €', 'Hafatra mivantana eo amin\'ny mpampiasa.']
+    ],
+    rulesEyebrow: 'Fitsipika', rulesTitle: 'Izay mamaritra ny tetikasa tsirairay',
+    rules: [
+      ['Vidiny raikitra', 'Raikitra rehefa manao sonia ny vidiny, aorian\'ny fandrafetana. Tsy miova mandritra ny tetikasa izy.'],
+      ['Aloa in-3', '40 % amin\'ny sonia, 30 % amin\'ny demo antenatenany, 30 % amin\'ny famoahana.'],
+      ['Kaomandy farany ambany', '1 500 € ho an\'ny tranonkala na application web, 2 500 € raha misy finday.'],
+      ['Interface be fiasa', 'Atolotra isaky ny ampahany, aloa isaky ny fanolorana ; ifanarahana mandritra ny fandrafetana ireo ampahany.'],
+      ['Design', 'Ampiharina amin\'ny rafitra design an\'i Aldaron ny sarinao. Afaka mitondra ny designer-nao ihany koa ianao.'],
+      ['Fikojakojana', '150 hatramin\'ny 400 € isam-bolana, aorian\'ny fanitsiana bug mandritra ny 30 andro.'],
+      ['Fananana ny kaody', 'Atolotra anao amin\'ny famoahana ny kaody sy ny kaonty.'],
+      ['Fandaniana ivelany', 'Hébergement sy serivisy hafa, kaontin\'ny store : aloanao mivantana.']
+    ],
+    formEyebrow: 'Fandrafetana', formTitle: 'Resaho aminay ny vokatrao', formSub: 'Andalana vitsivitsy dia ampy hanomanana ny fandrafetana.',
+    fName: 'Anarana', fEmail: 'E-mailaka', fProduct: 'Ny vokatrao amin\'ny fehezanteny iray na roa', fType: 'Karazana vokatra', fNeeds: 'Filana lehibe', hNeeds: 'Filana iray isaky ny andalana.', fDate: 'Daty tianao hamoahana',
+    types: ['Web', 'Finday', 'Web sy finday'],
+    eName: 'Soraty ny anaranao.', eEmail: 'Soraty adiresy e-mailaka marina.', eProduct: 'Faritano amin\'ny fehezanteny iray na roa ny vokatrao.', eType: 'Safidio ny karazana vokatra.',
+    submit: 'Angataho ny tolo-bidy raikitra', sending: 'Alefa…', formNote: 'Tsy tolo-bidy mandeha ho azy ity : mamaly anao manokana izahay.',
+    sent: 'Misaotra, lasa ny fangatahanao. Mamaly anao manokana izahay.',
+    footer: 'Eoropa',
+    tw: { theme: 'Endrika', lang: 'Fiteny', bp: 'Sakany', form: 'Taratasy', light: 'Mazava', dark: 'Maizina', mobile: 'Finday', tablet: 'Takelaka', desktop: 'Solosaina', large: 'Solosaina lehibe', normal: 'Mahazatra', error: 'Hadisoana', sending: 'Fandefasana' }
+  }
+};
+
+
+/* ==========================================================================
+   État
+   ========================================================================== */
+const S = { lang: 'fr', theme: 'light', bp: 'desktop', form: 'normal', open: false };
+const FD = { name: '', email: '', product: '', type: '', needs: '', date: '' };
+const $ = id => document.getElementById(id);
+const L = () => I18N[S.lang];
+const eur = n => new Intl.NumberFormat(S.lang === 'en' ? 'en-IE' : 'fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+
+/* ==========================================================================
+   Rendu statique (par langue)
+   ========================================================================== */
+function renderStatic() {
+  const t = L();
+  document.documentElement.lang = S.lang;
+  document.querySelectorAll('[data-t]').forEach(el => { el.textContent = t[el.dataset.t]; });
+  const hrefs = ['#tarifs', '#deroule', '#simulateur', '#regles', '#cadrage'];
+  $('navList').innerHTML = t.nav.map((l, i) => `<li><a href="${hrefs[i]}">${l}</a></li>`).join('');
+  $('facts').innerHTML = t.facts.map(f => `<li>${f}</li>`).join('');
+  $('plans').innerHTML = t.plans.map((p, i) => {
+    const inv = i === 1;
+    return `<li><article class="ald-card plan${inv ? ' ald-card--inverted' : ''}"><span class="ald-card__eyebrow">${p[0]}</span><h3 class="ald-card__title">${p[1]}</h3><b class="price">${p[2]}</b><p class="ald-card__desc">${p[3]}</p></article></li>`;
+  }).join('');
+  $('steps').innerHTML = t.steps.map((s, i) => `<li><article class="ald-card" style="height:100%"><span class="step-n">0${i + 1}</span><h3 class="ald-card__title">${s[0]}</h3><p class="ald-card__desc">${s[1]}</p></article></li>`).join('');
+  $('examples').innerHTML = t.examples.map(e => `<li class="ex"><div style="display:grid;gap:4px"><b class="t">${e[0]}</b><span class="d">${e[1]}</span></div><span class="p">${eur(e[2])}</span></li>`).join('');
+  $('extras').innerHTML = t.extras.map(e => `<li class="extra"><div class="extra-txt"><b>${e[0]}</b><span>${e[2]}</span></div><span class="extra-p">${e[1]}</span></li>`).join('');
+  $('rules').innerHTML = t.rules.map(r => `<li><article class="ald-card" style="height:100%"><h3 class="ald-card__title">${r[0]}</h3><p class="ald-card__desc">${r[1]}</p></article></li>`).join('');
+  $('types').innerHTML = t.types.map((x, i) => `<label><input type="radio" name="type" value="${i}"${FD.type === String(i) ? ' checked' : ''}> ${x}</label>`).join('');
+  $('types').parentElement.setAttribute('aria-describedby', 'e-type');
+  ['name', 'email', 'product', 'needs', 'date'].forEach(k => { $(k).value = FD[k]; });
+  renderForm(); renderTweaks();
+}
+
+/* ==========================================================================
+   Formulaire
+   ========================================================================== */
+const VALID = {
+  name: v => v.trim().length > 1,
+  email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+  product: v => v.trim().length > 4,
+  type: v => v !== ''
+};
+function markField(k, show) {
+  const ok = VALID[k](FD[k]), box = $('f-' + k);
+  box.classList.toggle('invalid', show && !ok);
+  const input = $(k);
+  if (input) input.setAttribute('aria-invalid', String(show && !ok));
+  return ok;
+}
+function renderForm() {
+  const t = L(), f = $('form');
+  const sending = S.form === 'sending', sent = S.form === 'sent';
+  f.classList.toggle('sending', sending);
+  $('submit').disabled = sending || sent;
+  $('submitLabel').textContent = sending ? t.sending : t.submit;
+  $('success').classList.toggle('show', sent);
+  f.querySelectorAll('.input,input[type=radio]').forEach(el => { el.disabled = sending; });
+  const showErr = S.form === 'error';
+  Object.keys(VALID).forEach(k => markField(k, showErr || f.dataset.touched === '1' && f.dataset['v' + k] === '1'));
+}
+function validateAll() {
+  const f = $('form'); f.dataset.touched = '1';
+  Object.keys(VALID).forEach(k => { f.dataset['v' + k] = '1'; });
+  const oks = Object.keys(VALID).map(k => markField(k, true));
+  if (oks.includes(false)) { const first = Object.keys(VALID).find(k => !VALID[k](FD[k])); (first === 'type' ? document.querySelector('input[name=type]') : $(first)).focus(); return false; }
+  return true;
+}
+function setForm(mode) {
+  const f = $('form');
+  S.form = mode; f.dataset.touched = '0'; Object.keys(VALID).forEach(k => { delete f.dataset['v' + k]; });
+  renderForm(); renderTweaks();
+}
+
+/* ==========================================================================
+   Panneau de tweaks
+   ========================================================================== */
+function renderTweaks() {
+  const t = L().tw;
+  const g = (title, key, opts, cur) => `<div class="grp"><span>${title}</span><div class="opts" role="group" aria-label="${title}">${opts.map(o => `<button type="button" data-k="${key}" data-v="${o[0]}" aria-pressed="${String(String(cur) === String(o[0]))}">${o[1]}</button>`).join('')}</div></div>`;
+  $('twBody').innerHTML =
+    g(t.form, 'form', [['normal', t.normal], ['error', t.error], ['sending', t.sending]], S.form) +
+    g(t.theme, 'theme', [['light', t.light], ['dark', t.dark]], S.theme) +
+    g(t.lang, 'lang', [['fr', 'FR'], ['en', 'EN'], ['mg', 'MG']], S.lang) +
+    g(t.bp, 'bp', [['mobile', t.mobile], ['tablet', t.tablet], ['desktop', t.desktop], ['large', t.large]], S.bp);
+}
+function applyEnv() {
+  document.documentElement.classList.toggle('dark', S.theme === 'dark');
+  document.body.dataset.bp = S.bp;
+  $('logo').src = '../assets/logo/aldaron-horizontal' + (S.theme === 'dark' ? '-dark' : '') + '.svg';
+}
+
+/* ==========================================================================
+   Événements
+   ========================================================================== */
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.k) {
+    const k = b.dataset.k, v = b.dataset.v;
+    if (k === 'form') { setForm(v); if (v === 'error') { Object.keys(FD).forEach(x => { if (x !== 'needs' && x !== 'date') FD[x] = ''; }); renderStatic(); S.form = 'error'; renderForm(); renderTweaks(); } }
+    else { S[k] = v; applyEnv(); if (k === 'lang') renderStatic(); else renderTweaks(); }
+  }
+  else if (b.id === 'twBtn') { S.open = !S.open; $('tweaks').classList.toggle('open', S.open); b.setAttribute('aria-expanded', S.open); $('twSign').textContent = S.open ? '−' : '+'; }
+  else if (b.id === 'menuBtn') { const o = $('nav').classList.toggle('open'); b.setAttribute('aria-expanded', o); }
+});
+$('nav').addEventListener('click', e => { if (e.target.closest('a')) { $('nav').classList.remove('open'); $('menuBtn').setAttribute('aria-expanded', 'false'); } });
+$('form').addEventListener('input', e => {
+  const el = e.target, k = el.name; if (!(k in FD)) return;
+  FD[k] = el.value;
+  const f = $('form'); if (S.form === 'error' || f.dataset['v' + k] === '1') markField(k, true);
+});
+$('form').addEventListener('submit', e => {
+  e.preventDefault();
+  if (S.form === 'sending' || S.form === 'sent') return;
+  if (!validateAll()) { S.form = 'normal'; renderTweaks(); return; }
+  S.form = 'sending'; renderForm(); renderTweaks();
+  setTimeout(() => { S.form = 'sent'; renderForm(); renderTweaks(); }, 1400);
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { $('nav').classList.remove('open'); } });
+
+applyEnv(); renderStatic();
+</script>
+</body>
+</html>
