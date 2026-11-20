@@ -35,7 +35,9 @@
       "4": {
         "title": "Fitehirizana ao amin'ny navigateur-nao",
         "lines": {
-          "1": "Ny mpanao kajy dia mitahiry ny tombanao ao amin'ny fitehirizana an-toerana ao amin'ny navigateur-nao mba hakana azy ao amin'ny taratasy. Tsy alefa izy raha tsy alefanao ny taratasy, ary fafana rehefa alefa izany."
+          "1": "Ny mpanao kajy dia mitahiry ny tombanao ao amin'ny fitehirizana an-toerana ao amin'ny navigateur-nao mba hakana azy ao amin'ny taratasy. Tsy alefa izy raha tsy alefanao ny taratasy, ary fafana rehefa alefa izany.",
+          "2": "Ity tranokala ity koa dia mitahiry ao amin'ity fitehirizana ity ny vola nofidinao hampiseho ny vidiny sy, mandritra ny adiny roa ambin'ny folo, ny taha fanakalozana.",
+          "3": "Mba hahazoana ireo taha ireo, ny navigateur-nao dia manontany mivantana serivisy roa maimaim-poana momba ny taha fanakalozana (open.er-api.com, avy eo jsDelivr). Ireo serivisy ireo dia mahita ny adiresy IP-nao, tahaka ny tranokala rehetra tsidihinao ; tsy mandefa angona manokana ho azy ireo ny tranokala."
         }
       },
       "5": {

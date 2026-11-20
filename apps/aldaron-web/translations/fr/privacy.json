@@ -35,7 +35,9 @@
       "4": {
         "title": "Stockage dans votre navigateur",
         "lines": {
-          "1": "Le simulateur enregistre votre estimation dans le stockage local de votre navigateur pour la reprendre dans le formulaire. Elle n'est pas envoyée tant que vous n'envoyez pas le formulaire, et elle est supprimée à l'envoi."
+          "1": "Le simulateur enregistre votre estimation dans le stockage local de votre navigateur pour la reprendre dans le formulaire. Elle n'est pas envoyée tant que vous n'envoyez pas le formulaire, et elle est supprimée à l'envoi.",
+          "2": "Le site retient aussi dans ce stockage la devise choisie pour afficher les prix et, pendant douze heures, les taux de change.",
+          "3": "Pour obtenir ces taux, votre navigateur interroge directement deux services gratuits de taux de change (open.er-api.com, puis jsDelivr). Ces services voient votre adresse IP, comme tout site que vous visitez ; aucune donnée personnelle ne leur est transmise par le site."
         }
       },
       "5": {

@@ -35,7 +35,9 @@
       "4": {
         "title": "Storage in your browser",
         "lines": {
-          "1": "The simulator saves your estimate in your browser's local storage so it can be reused in the form. It is not sent until you submit the form, and it is deleted when you do."
+          "1": "The simulator saves your estimate in your browser's local storage so it can be reused in the form. It is not sent until you submit the form, and it is deleted when you do.",
+          "2": "The site also keeps in this storage the currency you picked to show the prices and, for twelve hours, the exchange rates.",
+          "3": "To get these rates, your browser asks two free exchange-rate services directly (open.er-api.com, then jsDelivr). These services see your IP address, as any site you visit does; the site sends them no personal data."
         }
       },
       "5": {

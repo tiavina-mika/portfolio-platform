@@ -40,7 +40,9 @@ Tout visiteur, sans connexion ni compte.
     à tout moment
   - **Stockage dans votre navigateur** : le simulateur garde l'estimation dans le navigateur pour la
     reprendre dans le formulaire ; elle n'est pas envoyée avant l'envoi du formulaire et elle est
-    supprimée à ce moment
+    supprimée à ce moment ; le site y garde aussi la devise choisie et, douze heures, les taux de change,
+    que le navigateur demande directement à deux services gratuits (qui voient l'adresse IP du visiteur,
+    sans aucune donnée personnelle envoyée par le site)
   - **Destinataires et conservation** : les données ne sont pas vendues
   - **Vos droits** : accès, rectification, suppression et retrait du consentement, en écrivant à
     contact@aldaron.eu

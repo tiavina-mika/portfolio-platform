@@ -1,8 +1,6 @@
 import { setRequestLocale } from 'next-intl/server';
 import { ReactNode } from 'react';
 
-import { Locale } from '@/i18n/config';
-
 type Props = {
   children: ReactNode;
   params: Promise<{ locale: string }>;
@@ -15,7 +13,7 @@ type Props = {
 const Layout = async (props: Props) => {
   const params = await props.params;
 
-  setRequestLocale(params.locale as Locale);
+  setRequestLocale(params.locale);
 
   return props.children;
 };
