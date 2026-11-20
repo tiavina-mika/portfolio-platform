@@ -1,0 +1,91 @@
+{
+  "ProjectsPage": {
+    "metadata": {
+      "title": "Projects",
+      "description": "A few delivered projects, with their scope, lead time and price."
+    },
+    "og": {
+      "chip": "Projects",
+      "title": "Products delivered at a fixed price.",
+      "subtitle": "A few delivered projects, with their scope, lead time and price."
+    },
+    "eyebrow": "Projects",
+    "title": "Products delivered at a fixed price.",
+    "description": "A few delivered projects, with their scope, lead time and price.",
+    "screenshot": "Product screenshot",
+    "filterAll": "All",
+    "supports": {
+      "web": "Website",
+      "app": "Web app",
+      "mobile": "Mobile",
+      "bo": "Back office"
+    },
+    "range": "{start}–{end} of {total} projects",
+    "facts": {
+      "supports": "Platforms",
+      "screens": "Screens",
+      "leadTime": "Lead time",
+      "price": "Price"
+    },
+    "weeks": "weeks",
+    "pagination": {
+      "nav": "Pagination",
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page"
+    },
+    "estimate": "Estimate my price",
+    "items": {
+      "tsaraLivraison": {
+        "eyebrow": "Delivery",
+        "summary": "Meal delivery app for an Antananarivo startup, with a back office to follow orders and couriers.",
+        "price": "€3,500"
+      },
+      "faniloSante": {
+        "eyebrow": "Health",
+        "summary": "Online appointment booking for medical practices, with a management area for practitioners.",
+        "price": "€2,000"
+      },
+      "ravinalaVoyages": {
+        "eyebrow": "Travel",
+        "summary": "Showcase site for a tour operator: tours, gallery, quote request form.",
+        "price": "€1,500"
+      },
+      "hasinaAcademie": {
+        "eyebrow": "Education",
+        "summary": "Online learning platform: courses, student tracking, mobile app and administration.",
+        "price": "€6,400"
+      },
+      "zanakaBoutique": {
+        "eyebrow": "Commerce",
+        "summary": "Online store for a local maker: catalogue, cart, payment and a mobile app to track orders.",
+        "price": "€3,000"
+      },
+      "volaCompta": {
+        "eyebrow": "Finance",
+        "summary": "Invoicing and cash-flow tracking for small businesses, with an administration area.",
+        "price": "€2,800"
+      },
+      "tanyImmobilier": {
+        "eyebrow": "Real estate",
+        "summary": "Listings site with criteria search and a back office for agencies.",
+        "price": "€2,000"
+      },
+      "ranoSuivi": {
+        "eyebrow": "Utilities",
+        "summary": "Mobile app to track consumption and pay water bills.",
+        "price": "€2,000"
+      },
+      "soaRestaurant": {
+        "eyebrow": "Catering",
+        "summary": "Restaurant showcase site: menu, opening hours and a booking request form.",
+        "price": "€1,000"
+      },
+      "lalanaTransport": {
+        "eyebrow": "Transport",
+        "summary": "Urban carpooling platform: web app, mobile app and trip management.",
+        "price": "€3,400"
+      }
+    }
+  }
+}

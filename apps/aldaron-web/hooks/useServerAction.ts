@@ -108,7 +108,8 @@ export const useServerAction = <
     setError('');
   };
 
-  const onSubmit = async (values: FormData) => {
+  // a native form passes its `FormData`, a form with a structured payload passes its own values
+  const onSubmit = async (values: FormData | Input) => {
     setLoading(true);
     // a new attempt hides the previous failure banner
     setError('');

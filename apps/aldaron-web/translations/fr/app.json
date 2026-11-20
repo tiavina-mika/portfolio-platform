@@ -1,12 +1,6 @@
 {
   "App": {
-    "description": "Je suis un <b>développeur Full Stack</b> avec plus de <b>8 années d'expérience</b> basé à Madagascar, possédant de solides connaissances en <b>développement informatique</b> et qui se consacre à fournir à ses clients des applications de tout genre prêtes pour la production. Mon objectif est de créer un code propre, fonctionnel et toujours conforme aux normes du web.",
-    "downloadMyCV": "Télécharger mon CV",
-    "downloadCV": "Télécharger CV",
-    "myProjects": "Mes projets",
     "subscribeToNewsletter": "S'abonner à ma newsletter",
-    "newsLetterDescription": "Abonnez-vous à ma newsletter pour pouvoir suivre et récevoir des offres spéciales et les articles / tutos que je publie occasionnellement sur mon blog",
-    "notSubscribedToNewsletter": "Vous n'êtes pas abonné à la newsletter",
     "unsubscribeMessage": "Vous pouvez se désabonner à tout moment en cliquant sur le lien de désabonnement contenu dans chacun de nos mails.",
     "gotToHomePage": "Aller à la page d'accueil",
     "contactMe": "Me contacter",
@@ -16,46 +10,15 @@
     "readBlog": "Lire le blog"
   },
   "Footer": {
+    "tagline": "Développement web et mobile pour startups, à prix fixe.",
+    "navigation": "Navigation",
     "contact": "Contact",
-    "contactMe": "Contactez-moi",
-    "privacyPolicy": "Politique de confidentialité",
-    "termsAndConditions": "Conditions d'utilisation",
-    "allRightsReserved": "Tous droits réservés",
-    "moreInfo": "Plus d'information",
-    "message": "La confiance en soi s'acquiert par l'expérience et le travail acharné.",
-    "myProjects": "Mes projets",
-    "siteMap": "Plan du site",
+    "quote": "Demander un devis ferme",
+    "legal": "Légal",
+    "legalNotice": "Mentions légales",
+    "privacy": "Confidentialité",
+    "region": "Europe",
     "socials": "Réseaux sociaux"
-  },
-  "Contact": {
-    "email": "Email",
-    "emailSent": "Un email a été envoyé à votre adresse email",
-    "name": "Nom",
-    "message": "Message",
-    "send": "Envoyer",
-    "contactMe": "Me contacter",
-    "subject": "Formulaire de contact du site",
-    "subscribe": "S'abonner",
-    "subscribeWithSuccess": "Vous êtes maintenant abonné à notre newsletter.",
-    "messageSent": "Votre message a été envoyé. Je vous répondrai dans les meilleurs délais.",
-    "description": "Pour tout nouveaux projets ou nouvelles collaborations, j'aimerais d'abord apprendre à vous connaître, vous et votre entreprise, par un appel ou une rencontre. Ensuite j'aimerai comprendre le contexte de votre entreprise, ses buts et objectifs à long terme. Après s'être mis d'accord sur la collaboration et la priorisation des tâches, nous rédigeons un accord et commençons la mission en quelques jours. Si vous avez un sujet intéressant en tête et souhaitez en savoir plus et entendre mon savoir-faire, il vous suffit de me contacter via le formulaire de contact.",
-    "fields": {
-      "name": "Nom",
-      "email": "Email",
-      "message": "Message"
-    },
-    "socialTitle": "Me suivre",
-    "yourFullName": "Votre nom complet",
-    "emailExample": "votre.email@exemple.com",
-    "phone": "Téléphone (facultatif)",
-    "phoneExample": "+261 34 00 000 00",
-    "writeSomething": "Écrivez quelque chose",
-    "successTitle": "Message envoyé",
-    "failTitle": "Envoi impossible",
-    "failedMessage": "Vérifiez votre connexion puis réessayez.",
-    "sending": "Envoi en cours…",
-    "again": "Envoyer un autre message",
-    "offline": "Vous êtes hors ligne. Reconnectez-vous pour envoyer votre message."
   },
   "Error": {
     "unknown": "Une erreur s'est produite. Veuillez réessayer plus tard.",
@@ -77,26 +40,21 @@
   },
   "NavBar": {
     "home": "Accueil",
+    "pricing": "Offre et prix",
+    "simulator": "Simulateur",
+    "projects": "Réalisations",
     "about": "À propos",
-    "articles": "Articles",
-    "blog": "Blog",
-    "contactMe": "Me contacter",
-    "toggleTheme": "Changer de thème",
-    "projects": "Projets",
-    "article": "Article",
     "contact": "Contact",
+    "estimate": "Estimer mon prix",
+    "currency": "Devise",
     "menu": "Menu",
-    "closeMenu": "Fermer le menu",
-    "mainNavigation": "Principale",
-    "search": "Rechercher",
-    "closeSearch": "Fermer la recherche",
-    "searching": "Recherche en cours…",
-    "searchUnavailable": "La recherche est indisponible. Réessayez dans un instant.",
-    "noResults": "Aucun résultat pour « {query} »."
+    "closeMenu": "Fermer",
+    "mainNavigation": "Principal",
+    "toggleTheme": "Changer de thème",
+    "blog": "Blog"
   },
   "LanguageSwitcher": {
-    "label": "Changer language",
-    "locale": "{locale, select, fr {Français} en {Anglais} other {Autres}}"
+    "label": "Langue"
   },
   "Sitemap": {
     "sitemap": "Plan du site",
@@ -144,19 +102,11 @@
   "Metadata": {
     "home": {
       "metaTitle": "Accueil",
-      "metaDescription": "Je suis un développeur Full Stack avec plus de 8 années d'expérience basé à Madagascar, possédant de solides connaissances en développement informatique et qui se consacre à fournir à ses clients des applications de tout genre prêtes pour la production. Mon objectif est de créer un code propre, fonctionnel et toujours conforme aux normes du web."
+      "metaDescription": "Site web, application web ou mobile, avec back-office si besoin. Le prix dépend du périmètre et il est fixé à la signature."
     },
     "articles": {
       "metaTitle": "Mon blog",
       "metaDescription": "Liste de tous les articles que j'ai écrits avec passion."
-    },
-    "projects": {
-      "metaTitle": "Mes réalisations",
-      "metaDescription": "Liste de tous les projets que j'ai développés avec passion."
-    },
-    "contact": {
-      "metaTitle": "Contactez-nous",
-      "metaDescription": "Contactez-nous pour obtenir de l'aide, des informations ou des suggestions. Le service {appName} se fera un plaisir de vous aider."
     },
     "sitemap": {
       "metaTitle": "Plan du site",
@@ -180,18 +130,8 @@
   },
   "OpenGraph": {
     "home": {
-      "title": "Développeur Full Stack",
-      "subtitle": "Projets, articles et contact."
-    },
-    "projects": {
-      "chip": "Projets",
-      "title": "Les projets de {appName}",
-      "subtitle": "Les applications que j'ai conçues et développées."
-    },
-    "contact": {
-      "chip": "Contact",
-      "title": "Me contacter",
-      "subtitle": "Un projet ou une question ? Écrivez-moi."
+      "title": "Votre produit, à prix fixe, écran par écran.",
+      "subtitle": "Développement web et mobile pour startups."
     },
     "blog": {
       "chip": "Blog",

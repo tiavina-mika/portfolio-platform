@@ -2,8 +2,6 @@ import { cacheLife, cacheTag } from "next/cache";
 
 import { getParseServer } from "@/config/parse-server.config";
 import { serializeParseObject } from "@/utils/parse.utils";
-import { IApp } from "@/types/app.type";
-import { collections } from "@/utils/constants";
 
 /**
  * get items only for urls used in sitemap page
@@ -34,25 +32,5 @@ export const getDataForUrls = async <R = Record<string, any>>(
   }
   catch (e) {
     console.log('getDataForUrls e: ', e);
-  }
-};
-
-/**
- * the single App object (CV, images, translated quote and description)
- * @returns the serialized object, undefined when none exists or the request failed
- */
-export const getApp = async (): Promise<IApp | undefined> => {
-  'use cache';
-  cacheLife('hours');
-  cacheTag('app');
-
-  try {
-    const Parse = getParseServer();
-    const app = await new Parse.Query(collections.App).ascending('createdAt').first();
-
-    return app ? serializeParseObject<IApp>(app) : undefined;
-  }
-  catch (e) {
-    console.log('getApp e: ', e);
   }
 };

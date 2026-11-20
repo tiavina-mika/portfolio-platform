@@ -1,0 +1,91 @@
+{
+  "ProjectsPage": {
+    "metadata": {
+      "title": "Réalisations",
+      "description": "Quelques projets réalisés, avec leur périmètre, leur délai et leur prix."
+    },
+    "og": {
+      "chip": "Réalisations",
+      "title": "Des produits livrés à prix fixe.",
+      "subtitle": "Quelques projets réalisés, avec leur périmètre, leur délai et leur prix."
+    },
+    "eyebrow": "Réalisations",
+    "title": "Des produits livrés à prix fixe.",
+    "description": "Quelques projets réalisés, avec leur périmètre, leur délai et leur prix.",
+    "screenshot": "Capture d'écran du produit",
+    "filterAll": "Tous",
+    "supports": {
+      "web": "Site web",
+      "app": "Application web",
+      "mobile": "Mobile",
+      "bo": "Back-office"
+    },
+    "range": "{start}–{end} sur {total} réalisations",
+    "facts": {
+      "supports": "Supports",
+      "screens": "Écrans",
+      "leadTime": "Délai",
+      "price": "Prix"
+    },
+    "weeks": "semaines",
+    "pagination": {
+      "nav": "Pagination",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "page": "Page"
+    },
+    "estimate": "Estimer mon prix",
+    "items": {
+      "tsaraLivraison": {
+        "eyebrow": "Livraison",
+        "summary": "Application de livraison de repas pour une startup de Tananarive, avec un back-office pour suivre les commandes et les livreurs.",
+        "price": "3 500 €"
+      },
+      "faniloSante": {
+        "eyebrow": "Santé",
+        "summary": "Prise de rendez-vous en ligne pour des cabinets médicaux, avec un espace de gestion pour les praticiens.",
+        "price": "2 000 €"
+      },
+      "ravinalaVoyages": {
+        "eyebrow": "Voyage",
+        "summary": "Site vitrine d'un voyagiste : circuits, galerie, formulaire de demande de devis.",
+        "price": "1 500 €"
+      },
+      "hasinaAcademie": {
+        "eyebrow": "Éducation",
+        "summary": "Plateforme d'apprentissage en ligne : cours, suivi des élèves, application mobile et administration.",
+        "price": "6 400 €"
+      },
+      "zanakaBoutique": {
+        "eyebrow": "Commerce",
+        "summary": "Boutique en ligne pour un créateur local : catalogue, panier, paiement et application mobile de suivi des commandes.",
+        "price": "3 000 €"
+      },
+      "volaCompta": {
+        "eyebrow": "Finance",
+        "summary": "Facturation et suivi de trésorerie pour petites entreprises, avec un espace d'administration.",
+        "price": "2 800 €"
+      },
+      "tanyImmobilier": {
+        "eyebrow": "Immobilier",
+        "summary": "Site d'annonces avec recherche par critères et back-office pour les agences.",
+        "price": "2 000 €"
+      },
+      "ranoSuivi": {
+        "eyebrow": "Services",
+        "summary": "Application mobile de suivi de consommation et de paiement des factures d'eau.",
+        "price": "2 000 €"
+      },
+      "soaRestaurant": {
+        "eyebrow": "Restauration",
+        "summary": "Site vitrine d'un restaurant : carte, horaires et demande de réservation par formulaire.",
+        "price": "1 000 €"
+      },
+      "lalanaTransport": {
+        "eyebrow": "Transport",
+        "summary": "Plateforme de covoiturage urbain : application web, application mobile et gestion des trajets.",
+        "price": "3 400 €"
+      }
+    }
+  }
+}

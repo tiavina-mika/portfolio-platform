@@ -1,0 +1,53 @@
+{
+  "LegalPage": {
+    "metadata": {
+      "title": "Fanamarihana ara-dalàna",
+      "description": "Mpamoaka ny tranonkala, fampiantranoana, fananana ara-tsaina ary sandan'ny tombana avy amin'i Aldaron."
+    },
+    "og": {
+      "chip": "Lalàna",
+      "title": "Fanamarihana ara-dalàna",
+      "subtitle": "Mpamoaka, fampiantranoana ary fananana ara-tsaina."
+    },
+    "label": "Lalàna",
+    "title": "Fanamarihana ara-dalàna",
+    "updated": "Fanavaozana farany : [ampidirina]",
+    "sections": {
+      "1": {
+        "title": "Mpamoaka ny tranonkala",
+        "lines": {
+          "1": "Aldaron, orinasa mpamorona web sy finday ho an'ny startup, no mamoaka ity tranonkala ity.",
+          "2": "Endrika ara-dalàna sy tahirim-bola : [ampidirina]",
+          "3": "NIF : [ampidirina] · STAT : [ampidirina]",
+          "4": "Foibe : [ampidirina]",
+          "5": "Talen'ny famoahana : [ampidirina]",
+          "6": "Fifandraisana : contact@aldaron.eu"
+        }
+      },
+      "2": {
+        "title": "Fampiantranoana",
+        "lines": {
+          "1": "Mpampiantrano ny tranonkala : [ampidirina]"
+        }
+      },
+      "3": {
+        "title": "Fananana ara-tsaina",
+        "lines": {
+          "1": "An'i Aldaron ny lahatsoratra, ny logo, ny maquette ary ny kaody amin'ity tranonkala ity, raha tsy misy filazana hafa. Mifady ny mandika izany raha tsy misy fanekena an-tsoratra avy amin'i Aldaron."
+        }
+      },
+      "4": {
+        "title": "Tombana sy tolo-bidy",
+        "lines": {
+          "1": "Fanondroana ny tombana avy amin'ny mpanao kajy vidiny. Ny tolo-bidy raikitra aorian'ny fandrafetana ihany no mamatotra an'i Aldaron."
+        }
+      },
+      "5": {
+        "title": "Angon-drakitra manokana",
+        "lines": {
+          "1": "Voalaza ao amin'ny politikan'ny fiarovana ny angon-drakitra ny fikarakarana ny angon-drakitrao."
+        }
+      }
+    }
+  }
+}

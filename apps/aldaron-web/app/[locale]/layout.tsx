@@ -1,8 +1,7 @@
 import { Metadata, Viewport } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { cache, ReactNode, Suspense } from 'react';
-import { capitalize } from 'string-ts';
+import { ReactNode, Suspense } from 'react';
 
 import Analytics from '@/components/Analytics';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
@@ -14,18 +13,15 @@ import ToasterProvider from '@/components/ToasterProvider';
 import ViewportIndicator from '@/components/ViewportIndicator';
 import WebVitals from '@/components/WebVitals';
 import { siteConfig } from '@/config/site';
-import NavBarCvButton from '@/containers/nav-bar/NavBarCvButton';
-import NavBarCvIcon from '@/containers/nav-bar/NavBarCvIcon';
+import CurrencySelect from '@/containers/currency/CurrencySelect';
 import { defaultLocale, Locale, locales } from '@/i18n/config';
 import { ROUTES } from '@/i18n/routes';
+import CurrencyProvider from '@/providers/CurrencyProvider';
 import ThemeProvider from '@/providers/ThemeProvider';
-import { getPagesForMenusUrls } from '@/server/queries/page.queries';
-import { IMenu, ISelectOption } from '@/types/app.type';
-import { PagesForUrlsOutput } from '@/types/cms.type';
 import { OgCardLayoutEnum } from '@/types/og.type';
 import { getAlternates, getTranslatedAbsoluteUrl } from '@/utils/app.utils';
 import { THEME_COLORS } from '@/utils/constants';
-import { getPersonJsonLd, getWebSiteJsonLd } from '@/utils/jsonLd.utils';
+import { getOrganizationJsonLd, getWebSiteJsonLd } from '@/utils/jsonLd.utils';
 import { getSocialImages } from '@/utils/og.utils';
 
 /*
@@ -70,7 +66,7 @@ export const generateMetadata = async (props: MetaDataProps): Promise<Metadata> 
     authors: [
       {
         name: siteConfig.author,
-        url: siteConfig.social.linkedIn,
+        url: siteConfig.social.linkedin,
       },
     ],
     creator: siteConfig.author,
@@ -106,19 +102,6 @@ export const generateStaticParams = () => {
   return locales.map((locale: Locale) => ({ locale }));
 };
 
-/**
- * get pages and cache them so that this can be duplicated
- * even if used in another components
- * NOTE: this request is also called in the footer links
- */
-export const getCachedPagesForUrls = cache(
-  async (locale: Locale): Promise<PagesForUrlsOutput> => {
-    const pages = await getPagesForMenusUrls(locale);
-
-    return pages;
-  }
-);
-
 /*
  * ----------------------------- //
  * ------------ page ----------- //
@@ -146,35 +129,13 @@ const RootLayout = async (props: Props) => {
 
   const isDev = process.env.APP_ENV === 'development';
 
-  const pages: PagesForUrlsOutput = await getCachedPagesForUrls(locale);
-
-  const menus: IMenu[] = [
-    {
-      label: t('home'),
-      value: ROUTES.home,
-      id: 'home',
-    },
-    {
-      label: t('projects'),
-      value: (ROUTES.projects as any).root,
-      id: 'projects',
-    },
-    {
-      label: t('blog'),
-      value: (ROUTES.articles as any).root,
-      id: 'articles',
-    },
-    {
-      label: t('contact'),
-      value: ROUTES.contact,
-      id: 'contact',
-    },
-    // ------ dynamic pages ------ //
-    ...pages.menus.map((page: ISelectOption) => ({
-      label: capitalize(page.label || ''),
-      value: page.value,
-      id: page.value,
-    })),
+  // the pages of the site, in the order of the navigation bar and of the footer
+  const menus = [
+    { id: 'pricing', label: t('pricing'), value: ROUTES.pricing },
+    { id: 'simulator', label: t('simulator'), value: ROUTES.simulator },
+    { id: 'projects', label: t('projects'), value: ROUTES.projects.root },
+    { id: 'about', label: t('about'), value: ROUTES.about },
+    { id: 'contact', label: t('contact'), value: ROUTES.contact },
   ];
 
   return (
@@ -182,7 +143,7 @@ const RootLayout = async (props: Props) => {
     (
       <html className={fontsVariables} lang={locale} suppressHydrationWarning={isDev}>
         <body suppressHydrationWarning={isDev}>
-          <JsonLd data={getPersonJsonLd()} />
+          <JsonLd data={getOrganizationJsonLd()} />
           <JsonLd data={getWebSiteJsonLd()} />
           <WebVitals />
           <Analytics />
@@ -193,70 +154,54 @@ const RootLayout = async (props: Props) => {
               attribute="class"
               defaultTheme="light"
             >
-              <a
-                href="#main-content"
-                className={`
-                  sr-only
-                  focus:not-sr-only focus:fixed focus:top-3.5 focus:left-6 focus:z-50 focus:inline-flex
-                  focus:h-11 focus:items-center focus:rounded-md focus:bg-foreground focus:px-5 focus:text-sm
-                  focus:font-semibold focus:text-background focus:outline-3 focus:outline-offset-3
-                  focus:outline-ring
-                `}
-              >
-                {tCommon('skipToContent')}
-              </a>
-              <div className="flex min-h-screen flex-col items-center justify-between">
-                {/* the bar reads `usePathname()` (a client hook resolved at request time) — isolated
-                    behind Suspense so it doesn't block the static shell shared by every route; the
-                    fallback keeps its height so the page does not jump when it streams in. The CV
-                    download buttons are server components (they read the App data): they are
-                    passed in as slots, each behind its own Suspense */}
-                <Suspense fallback={(
-                  <div
-                    aria-hidden
-                    className={`
-                      h-[55px] self-stretch border-b border-border
-                      lg:h-[93px]
-                    `}
-                  />
-                )}
-                >
-                  <NavBar
-                    locale={locale}
-                    menus={menus}
-                    cvButton={(
-                      <Suspense fallback={null}>
-                        <NavBarCvButton />
-                      </Suspense>
-                    )}
-                    cvIcon={(
-                      <Suspense fallback={null}>
-                        <NavBarCvIcon />
-                      </Suspense>
-                    )}
-                  />
-                </Suspense>
-                {/* the landmarks are siblings: the bar and the footer are not inside `main` */}
-                <main
-                  id="main-content"
+              <CurrencyProvider>
+                <a
+                  href="#main-content"
                   className={`
-                    flex flex-col self-stretch
-                    lg:items-center
+                    sr-only
+                    focus:not-sr-only focus:fixed focus:top-3.5 focus:left-6 focus:z-50 focus:inline-flex
+                    focus:h-11 focus:items-center focus:rounded-md focus:bg-foreground focus:px-5
+                    focus:text-sm focus:font-semibold focus:text-background focus:outline-3
+                    focus:outline-offset-3 focus:outline-ring
                   `}
                 >
-                  {/* catch-all boundary: some routes read dynamic APIs (searchParams, unbounded
+                  {tCommon('skipToContent')}
+                </a>
+                <div className="flex min-h-screen flex-col items-center justify-between">
+                  {/* the bar reads `usePathname()` (a client hook resolved at request time) — isolated
+                    behind Suspense so it doesn't block the static shell shared by every route; the
+                    fallback keeps its height so the page does not jump when it streams in */}
+                  <Suspense fallback={(
+                    <div
+                      aria-hidden
+                      className={'h-[73px] self-stretch border-b border-border'}
+                    />
+                  )}
+                  >
+                    <NavBar currencySelect={<CurrencySelect />} menus={menus} />
+                  </Suspense>
+                  {/* the landmarks are siblings: the bar and the footer are not inside `main` */}
+                  <main
+                    id="main-content"
+                    className={`
+                      flex flex-col self-stretch
+                      lg:items-center
+                    `}
+                  >
+                    {/* catch-all boundary: some routes read dynamic APIs (searchParams, unbounded
                       params) with no ancestor Suspense of their own — without one here, that
                       dynamism would otherwise block the shared static shell (nav/footer) from
                       prerendering at all */}
+                    <Suspense fallback={null}>
+                      {children}
+                    </Suspense>
+                  </main>
+                  {/* the language buttons read `usePathname()` — same reason as the bar above */}
                   <Suspense fallback={null}>
-                    {children}
+                    <Footer menus={menus} />
                   </Suspense>
-                </main>
-                {/* FooterBottom's LanguageSwitcher reads `usePathname()` — same reason as the bar above */}
-                <Suspense fallback={null}>
-                  <Footer locale={locale} />
-                </Suspense>
-              </div>
+                </div>
+              </CurrencyProvider>
               <ToasterProvider />
               <CookieConsentBanner />
 

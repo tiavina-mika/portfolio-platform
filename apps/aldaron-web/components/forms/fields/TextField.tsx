@@ -9,11 +9,16 @@ type Props = {
   name: string;
   label?: string;
   description?: string;
+  /**
+   * Writes "optional" after the label
+   * @default false
+   */
+  optional?: boolean;
   rootClassName?: string;
 } & InputProps;
 
 const TextField = ({
-  name, label, description, rootClassName, ...inputProps
+  name, label, description, optional = false, rootClassName, ...inputProps
 }: Props) => {
   const {
     control,
@@ -35,6 +40,7 @@ const TextField = ({
             errorId={messageId}
             htmlFor={name}
             label={label}
+            optional={optional}
             required={inputProps.required}
           >
             <Input

@@ -9,7 +9,7 @@ type Props<T extends Record<string, any>> = {
 };
 
 /**
- * One group of the sitemap (projects, pages, articles, categories): a title, then every link in a
+ * One group of the sitemap (pages, articles, categories): a title, then every link in a
  * list. A group without item renders nothing
  */
 const SitemapGroup = <T extends Record<string, any>>({

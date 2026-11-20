@@ -3,16 +3,19 @@
 import { z } from 'zod';
 
 import { action } from '@/config/safe-action';
-import {
-  ContactSchema,
-} from '@/validations/app.validations';
 import { getParseServer } from '@/config/parse-server.config';
 import { assertContactFormAllowed } from '@/server/formRateLimit.server';
+import { composeQuoteMessage } from '@/utils/contact.utils';
+import { QuoteRequestSchema } from '@/validations/contact.validation';
 
 const Parse = getParseServer();
 
-export const createContact = action
-  .inputSchema(ContactSchema)
+/**
+ * The quote request of the contact page. It is stored as a `Contact`: the answers the form asks beyond
+ * the name and the e-mail are written into the message (see `composeQuoteMessage`).
+ */
+export const createQuoteRequest = action
+  .inputSchema(QuoteRequestSchema)
   .bindArgsSchemas<[z.ZodString, z.ZodString]>([z.string(), z.string()])
   .action(async ({ parsedInput: values, bindArgsParsedInputs: [locale, recaptchaToken] }) => {
     /*
@@ -29,7 +32,13 @@ export const createContact = action
      * Cloud Function for the same reason. It throws `recaptchaVerificationFailed`, which
      * handleServerError translates through the `ServerError` namespace.
      */
-    await Parse.Cloud.run('createPublicContact', { ...values, locale, recaptchaToken });
+    await Parse.Cloud.run('createPublicContact', {
+      name: values.name,
+      email: values.email,
+      message: composeQuoteMessage(values),
+      locale,
+      recaptchaToken,
+    });
 
     return {
       success: true,

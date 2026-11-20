@@ -1,0 +1,61 @@
+{
+  "AboutPage": {
+    "metadata": {
+      "title": "Momba anay",
+      "description": "Aldaron dia mamolavola sy manamboatra vokatra web sy finday ho an'ny startup, manomboka amin'ny pre-seed ka hatramin'ny séries A. Miasa araka ny haben'ny tetikasa sy amin'ny vidiny raikitra izahay : fantatrao ny vidiny alohan'ny hanombohan'ny fampandrosoana."
+    },
+    "og": {
+      "chip": "Momba anay",
+      "title": "Orinasa mpamorona ho an'ny startup.",
+      "subtitle": "Aldaron dia mamolavola sy manamboatra vokatra web sy finday ho an'ny startup, manomboka amin'ny pre-seed ka hatramin'ny séries A."
+    },
+    "eyebrow": "Momba anay",
+    "title": "Orinasa mpamorona ho an'ny startup.",
+    "description": "Aldaron dia mamolavola sy manamboatra vokatra web sy finday ho an'ny startup, manomboka amin'ny pre-seed ka hatramin'ny séries A. Miasa araka ny haben'ny tetikasa sy amin'ny vidiny raikitra izahay : fantatrao ny vidiny alohan'ny hanombohan'ny fampandrosoana.",
+    "principles": {
+      "eyebrow": "Fitsipika",
+      "title": "Ny fomba fiasanay.",
+      "items": {
+        "1": {
+          "title": "Vidiny raikitra alohan'ny hanombohana",
+          "description": "Manaraka fandrafetana maimaim-poana ny tolo-bidy raikitra. Tsy miova mandritra ny tetikasa izy."
+        },
+        "2": {
+          "title": "Demo, fa tsy tatitra",
+          "description": "Ekena alohan'ny fampandrosoana ny maquette, ary asehonay anao eo antenatenany ny vokatra."
+        },
+        "3": {
+          "title": "Anao ny kaody",
+          "description": "Atolotra anao amin'ny famoahana ny kaody sy ny kaonty."
+        }
+      }
+    },
+    "audience": {
+      "eyebrow": "Ho an'iza",
+      "title": "Startup mila vokatra, fa tsy ora.",
+      "text": "Miara-miasa amin'ny startup ihany izahay, manomboka amin'ny pre-seed ka hatramin'ny séries A. Manana faritra voasoratra sy vidiny raikitra rehefa manao sonia ny tetikasa tsirairay.",
+      "build": {
+        "title": "Izay ataonay",
+        "items": {
+          "1": "Tranonkala static",
+          "2": "Application web",
+          "3": "Application finday iOS sy Android",
+          "4": "Back-office"
+        }
+      },
+      "avoid": {
+        "title": "Izay tsy ataonay",
+        "items": {
+          "1": "Asa isan'ora tsy misy faritra mazava",
+          "2": "Fanovana endrika tsy misy vokatra"
+        }
+      },
+      "pricing": "Jereo ny tolotra sy ny vidiny"
+    },
+    "cta": {
+      "title": "Resaho ny vokatrao.",
+      "description": "Maimaim-poana ny fandrafetana. Hiverina aminao miaraka amin'ny tolo-bidy raikitra izahay.",
+      "quote": "Angataho ny tolo-bidy raikitra"
+    }
+  }
+}

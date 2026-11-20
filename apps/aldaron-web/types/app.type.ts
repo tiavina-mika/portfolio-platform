@@ -3,32 +3,11 @@ import { ComponentType } from 'react';
 import { z } from 'zod';
 
 import { Locale } from '@/i18n/config';
+import { CURRENCIES } from '@/utils/constants';
 import {
-  ContactSchema,
   NewsletterSchema,
   UnsubscribeReasonSchema,
 } from '@/validations/app.validations';
-
-interface IAppTranslatedFields {
-  description: string;
-  quote: string;
-}
-
-export interface IAppTranslated extends Record<Locale, IAppTranslatedFields> {}
-
-export interface IAppAttributes {
-  objectId: string;
-  updatedAt?: string;
-  createdAt?: string;
-  cv?: IFileCloud;
-  image?: IUploadedFile;
-  imageForDarkMode?: IFileCloud;
-  translated: IAppTranslated;
-}
-
-export interface IApp extends IAppAttributes {
-  id: string;
-}
 
 export interface ISelectOption<T = string> {
   value: T;
@@ -173,7 +152,6 @@ export type ISearchResult = {
   url: string;
 };
 
-export type IContactInput = z.infer<typeof ContactSchema>;
 export type INewsletterInput = z.infer<typeof NewsletterSchema>;
 export type IUnsubscribeReasonSchemaInput = z.infer<
   typeof UnsubscribeReasonSchema
@@ -186,3 +164,7 @@ export interface ITableOfContentsItem {
   id: string;
   label: string;
 }
+
+export type Currency = (typeof CURRENCIES)[number];
+
+export type Rates = Record<Currency, number>;

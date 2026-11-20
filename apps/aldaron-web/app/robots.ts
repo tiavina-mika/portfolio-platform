@@ -10,13 +10,12 @@ import { getAbsoluteUrl } from '@/utils/app.utils';
  */
 
 const robots = (): MetadataRoute.Robots => {
-  // home sitemap + per-locale articles, projects and CMS pages sitemaps
+  // home sitemap + per-locale articles and CMS pages sitemaps
   const sitemaps = [
     `${getAbsoluteUrl()}/sitemap.xml`,
     ...locales.flatMap((locale) => [
       `${getAbsoluteUrl()}/${locale}/blog/sitemap.xml`,
       `${getAbsoluteUrl()}/${locale}/pages/sitemap.xml`,
-      `${getAbsoluteUrl()}/${locale}/projects/sitemap.xml`,
     ]),
   ];
 

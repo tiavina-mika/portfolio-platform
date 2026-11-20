@@ -1,73 +1,48 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 
-import Socials from '@/components/footer/Socials';
-import LanguageButtons from '@/components/languages/LanguageButtons';
-import ToggleTheme from '@/components/ToggleTheme';
 import { IMenu } from '@/types/app.type';
 
 import NavBarLink from './NavBarLink';
 
 type Props = {
-  /** id the burger button points at with aria-controls */
+  /** id the menu button points at with aria-controls */
   id: string;
   menus: IMenu[];
-  isOpen: boolean;
   /** called when a link is followed, to close the menu */
   onNavigate: () => void;
 };
 
 /**
- * The full-screen menu of the mobile bar (below lg)
+ * The menu that drops under the bar below lg: the page links in a floating panel
  */
-const NavBarMobileMenu = ({
-  id, menus, isOpen, onNavigate,
-}: Props) => {
+const NavBarMobileMenu = ({ id, menus, onNavigate }: Props) => {
   const t = useTranslations('NavBar');
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          animate={{ x: 0 }}
-          exit={{ transition: { duration: 0.4 } }}
-          id={id}
-          initial={{ x: -54 }}
-          key="menu"
-          transition={{ duration: 0.7 }}
-          className={`
-            fixed inset-x-0 top-[55px] bottom-0 z-50 flex flex-1 flex-col justify-between self-stretch
-            overflow-y-auto bg-background
-            lg:hidden
-          `}
-        >
-          <nav aria-label={t('mainNavigation')} className="flex flex-1 flex-col self-stretch">
-            <ul className="m-0 flex list-none flex-col self-stretch p-0">
-              {menus.map((menu, index) => (
-                <li
-                  className="self-stretch border-b px-4"
-                  key={menu.label + index}
-                >
-                  <NavBarLink
-                    href={menu.value}
-                    label={menu.label}
-                    onClick={onNavigate}
-                    variant="row"
-                  />
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <div className="flex flex-col gap-4 p-4">
-            <LanguageButtons />
-            <ToggleTheme />
-            <Socials isCentered className="pb-2" />
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <nav
+      aria-label={t('mainNavigation')}
+      id={id}
+      className={`
+        absolute inset-x-4 top-full z-50 rounded-lg border border-border bg-popover p-2 shadow-lg
+        md:inset-x-6
+        lg:hidden
+      `}
+    >
+      <ul className="m-0 grid list-none gap-1 p-0">
+        {menus.map(menu => (
+          <li key={menu.id}>
+            <NavBarLink
+              href={menu.value}
+              label={menu.label}
+              onClick={onNavigate}
+              variant="row"
+            />
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };
 

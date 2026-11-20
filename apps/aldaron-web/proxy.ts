@@ -34,7 +34,7 @@ export const config = {
   // Match only internationalized pathnames
   matcher: [
     '/',
-    '/(fr|en)/:path*',
+    '/(fr|en|mg)/:path*',
     /*
      * Enable redirects that add missing locales
      * (e.g. `/pathnames` -> `/en/pathnames`)

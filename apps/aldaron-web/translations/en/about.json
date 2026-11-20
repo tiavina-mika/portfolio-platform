@@ -1,0 +1,61 @@
+{
+  "AboutPage": {
+    "metadata": {
+      "title": "About",
+      "description": "Aldaron designs and builds web and mobile products for startups, from pre-seed to Series A. We work on scope at a fixed price: you know the price before development starts."
+    },
+    "og": {
+      "chip": "About",
+      "title": "A development company for startups.",
+      "subtitle": "Aldaron designs and builds web and mobile products for startups, from pre-seed to Series A."
+    },
+    "eyebrow": "About",
+    "title": "A development company for startups.",
+    "description": "Aldaron designs and builds web and mobile products for startups, from pre-seed to Series A. We work on scope at a fixed price: you know the price before development starts.",
+    "principles": {
+      "eyebrow": "Principles",
+      "title": "How we work.",
+      "items": {
+        "1": {
+          "title": "A price fixed before we start",
+          "description": "The firm quote follows a free scoping. It does not change during the project."
+        },
+        "2": {
+          "title": "Demos, not reports",
+          "description": "Mockups are approved before development, and the product is presented to you halfway through."
+        },
+        "3": {
+          "title": "The code is yours",
+          "description": "Code and accounts are handed over to you at launch."
+        }
+      }
+    },
+    "audience": {
+      "eyebrow": "Who for",
+      "title": "Startups that want a product, not hours.",
+      "text": "We only work with startups, from pre-seed to Series A. Every project has a written scope and a price fixed at signing.",
+      "build": {
+        "title": "What we build",
+        "items": {
+          "1": "Static websites",
+          "2": "Web apps",
+          "3": "iOS and Android mobile apps",
+          "4": "Back offices"
+        }
+      },
+      "avoid": {
+        "title": "What we do not do",
+        "items": {
+          "1": "Hourly work without a defined scope",
+          "2": "Visual redesign without a product"
+        }
+      },
+      "pricing": "See the offer and pricing"
+    },
+    "cta": {
+      "title": "Let's talk about your product.",
+      "description": "Scoping is free. We come back to you with a firm quote.",
+      "quote": "Request a firm quote"
+    }
+  }
+}

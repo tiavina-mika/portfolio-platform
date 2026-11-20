@@ -1,0 +1,62 @@
+{
+  "PrivacyPage": {
+    "metadata": {
+      "title": "Politique de confidentialité",
+      "description": "Les données que nous collectons, pourquoi, comment elles sont conservées et comment exercer vos droits."
+    },
+    "og": {
+      "chip": "Légal",
+      "title": "Politique de confidentialité",
+      "subtitle": "Vos données, leur usage et vos droits."
+    },
+    "label": "Légal",
+    "title": "Politique de confidentialité",
+    "updated": "Dernière mise à jour : [à compléter]",
+    "sections": {
+      "1": {
+        "title": "Données collectées",
+        "lines": {
+          "1": "Lorsque vous remplissez le formulaire de contact, nous recevons votre nom, votre adresse e-mail, la description de votre produit, les supports concernés, ce que vous apportez, vos besoins, vos pièces jointes et, si vous venez du simulateur, votre estimation.",
+          "2": "Seuls le nom, l'e-mail, la description du produit, les supports et votre consentement sont obligatoires."
+        }
+      },
+      "2": {
+        "title": "Pourquoi nous les utilisons",
+        "lines": {
+          "1": "Vos données servent uniquement à répondre à votre demande, à préparer le cadrage gratuit et à établir un devis ferme."
+        }
+      },
+      "3": {
+        "title": "Base légale",
+        "lines": {
+          "1": "Votre consentement, donné en cochant la case du formulaire. Vous pouvez le retirer à tout moment."
+        }
+      },
+      "4": {
+        "title": "Stockage dans votre navigateur",
+        "lines": {
+          "1": "Le simulateur enregistre votre estimation dans le stockage local de votre navigateur pour la reprendre dans le formulaire. Elle n'est pas envoyée tant que vous n'envoyez pas le formulaire, et elle est supprimée à l'envoi."
+        }
+      },
+      "5": {
+        "title": "Destinataires et conservation",
+        "lines": {
+          "1": "Vos données ne sont pas vendues.",
+          "2": "Destinataires et durée de conservation : [à compléter]"
+        }
+      },
+      "6": {
+        "title": "Vos droits",
+        "lines": {
+          "1": "Vous pouvez demander l'accès à vos données, leur rectification ou leur suppression, et retirer votre consentement, en écrivant à contact@aldaron.eu."
+        }
+      },
+      "7": {
+        "title": "Cookies et mesure d'audience",
+        "lines": {
+          "1": "[à compléter] selon les outils utilisés sur le site."
+        }
+      }
+    }
+  }
+}

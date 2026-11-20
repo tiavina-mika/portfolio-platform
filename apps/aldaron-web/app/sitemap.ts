@@ -1,35 +1,41 @@
 import { type MetadataRoute } from 'next';
 
-import { defaultLocale, locales } from '@/i18n/config';
-import { getAbsoluteUrl } from '@/utils/app.utils';
+import { defaultLocale, Locale, locales } from '@/i18n/config';
+import { ROUTES } from '@/i18n/routes';
+import { getTranslatedAbsoluteUrl } from '@/utils/app.utils';
+
+// the pages of the site that exist once, whatever the content of the database
+const STATIC_ROUTES = [
+  ROUTES.home,
+  ROUTES.pricing,
+  ROUTES.simulator,
+  ROUTES.projects.root,
+  ROUTES.about,
+  ROUTES.contact,
+  ROUTES.legal,
+  ROUTES.privacy,
+];
 
 /**
- * The function `sitemap` generates a sitemap for a website with multiple language alternatives.
- * Its for static routes
- * for dynamic routes, the sitemap.xml are located in the app directory (ex: /articles/sitemap.xml for articles).
- * NOTE: to add a new dynamic sitemap, you need to create a new file in the app directory (ex: /articles/sitemap.ts for articles)
- * @returns.
+ * The sitemap of the static pages, each one with its address in every language.
+ * NOTE: the pages that come from the database have their own sitemap, in their own folder of the app
+ * directory (ex: /blog/sitemap.ts for the articles).
  */
 // eslint-disable-next-line @typescript-eslint/require-await
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
-  const homeSiteMap: Record<string, any> = {
-    lastModified: new Date().toISOString(),
-    alternates: { languages: {} },
-  };
+  const lastModified = new Date().toISOString();
 
-  locales.forEach((locale) => {
-    // full url
-    const url = getAbsoluteUrl(`/${locale}`);
+  return STATIC_ROUTES.map((route) => {
+    const urlsByLocale = Object.fromEntries(
+      locales.map((locale: Locale) => [locale, getTranslatedAbsoluteUrl(route, { locale })])
+    ) as Record<Locale, string>;
 
-    if (locale === defaultLocale) {
-      homeSiteMap.url = url;
-    }
-    else {
-      homeSiteMap.alternates.languages[locale] = url;
-    }
+    return {
+      url: urlsByLocale[defaultLocale],
+      lastModified,
+      alternates: { languages: urlsByLocale },
+    };
   });
-
-  return [homeSiteMap as any];
 };
 
 export default sitemap;

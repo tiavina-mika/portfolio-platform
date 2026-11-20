@@ -1,0 +1,42 @@
+{
+  "Article": {
+    "relatedArticles": "Vakio koa",
+    "articles": "Lahatsoratra",
+    "anArticle": "lahatsoratra iray",
+    "theArticle": "ny lahatsoratra",
+    "categories": "Sokajy",
+    "category": "Sokajy",
+    "title": "Lohateny",
+    "content": "Votoaty",
+    "author": "Mpanoratra",
+    "createdAt": "Noforonina tamin'ny",
+    "updatedAt": "Nohavaozina tamin'ny",
+    "noArticlesYet": "Tsy mbola misy lahatsoratra.",
+    "viewAll": "Jereo daholo",
+    "message": {
+      "error": {
+        "notFound": "Tsy hita ny lahatsoratra."
+      }
+    },
+    "readingTime": "Famakiana {minutes} min",
+    "allCategories": "Rehetra",
+    "sortBy": "Alamino araka ny",
+    "newest": "Vaovao indrindra",
+    "oldest": "Tranainy indrindra",
+    "loading": "Eo am-pakana ny lahatsoratra",
+    "loadError": "Tsy nahomby ny fakana ny lahatsoratra. Jereo ny fifandraisanao amin'ny aterineto.",
+    "offline": "Tsy mifandray amin'ny aterineto ianao. Hiseho ny lahatsoratra rehefa miverina ny fifandraisana.",
+    "tags": "Marika",
+    "galleryImageAlt": "{title} ({position}/{total})"
+  },
+  "Page": {
+    "pages": "Pejy",
+    "category": "Sokajy",
+    "subcategories": "Sokajy kely",
+    "noPagesYet": "Tsy mbola misy pejy.",
+    "noSubcategories": "Tsy mbola misy sokajy kely.",
+    "loadingPages": "Eo am-pakana ny pejy",
+    "loadingSubcategories": "Eo am-pakana ny sokajy kely",
+    "viewAll": "Jereo daholo"
+  }
+}

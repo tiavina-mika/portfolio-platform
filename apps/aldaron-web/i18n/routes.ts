@@ -8,7 +8,12 @@ export type ITranslatedPathnames = Pathnames<typeof locales>;
 // the key used for routers and translated pathnames
 export const ROUTES = {
   home: '/',
+  pricing: '/pricing',
+  simulator: '/simulator',
+  about: '/about',
   contact: '/contact',
+  legal: '/legal',
+  privacy: '/privacy',
   sitemap: '/sitemap',
   articles: {
     root: '/blog',
@@ -20,11 +25,6 @@ export const ROUTES = {
   },
   projects: {
     root: '/projects',
-    // do not need the params when used with translatedPathnames
-    preview: (slug?: string) => ({
-      pathname: '/projects/[slug]',
-      params: { slug },
-    }),
   },
   pages: {
     // do not need the params when used with translatedPathnames
@@ -64,65 +64,36 @@ export const nonSEORoutes: string[] = [
   ROUTES.confirmNewsletter.preview().pathname,
 ];
 
-// and external paths, separated by locale.
+// a path written the same way in every language
+const sameInEveryLocale = (path: string) => ({ fr: path, en: path, mg: path });
+
+// and external paths, separated by locale. Every route lists its path for each language.
 export const translatedRoutes = {
-  /*
-   * If all locales use the same pathname, a
-   * single external path can be provided.
-   */
-  [ROUTES.home]: {
-    en: '/',
-    fr: '/',
-  },
+  [ROUTES.home]: sameInEveryLocale('/'),
 
-  /*
-   * If locales use different paths, you can
-   * specify each external path per locale.
-   */
-  [ROUTES.contact]: {
-    en: ROUTES.contact,
-    fr: '/contact',
-  },
-
-  [ROUTES.sitemap]: {
-    en: ROUTES.sitemap,
-    fr: '/plan-du-site',
-  },
-  [ROUTES.articles.root]: {
-    en: ROUTES.articles.root,
-    fr: '/blog',
-  },
-  [ROUTES.articles.preview().pathname]: {
-    en: '/blog/[slug]',
-    fr: '/blog/[slug]',
-  },
-  [ROUTES.projects.root]: {
-    en: ROUTES.projects.root,
-    fr: '/projets',
-  },
-  [ROUTES.projects.preview().pathname]: {
-    en: '/projects/[slug]',
-    fr: '/projets/[slug]',
-  },
-  [ROUTES.pages.preview().pathname]: {
-    en: '/[slug]',
-    fr: '/[slug]',
-  },
-  [ROUTES.pages.category().pathname]: {
-    en: '/[slug]/[subcategory]',
-    fr: '/[slug]/[subcategory]',
-  },
-  [ROUTES.pages.subsubcategory().pathname]: {
-    en: '/[slug]/[subcategory]/[subsubcategory]',
-    fr: '/[slug]/[subcategory]/[subsubcategory]',
-  },
+  // Malagasy keeps the English paths: its words are read in the page, not guessed in the URL
+  [ROUTES.pricing]: { fr: '/offre-et-prix', en: '/pricing', mg: '/pricing' },
+  [ROUTES.simulator]: { fr: '/simulateur', en: '/simulator', mg: '/simulator' },
+  [ROUTES.about]: { fr: '/a-propos', en: '/about', mg: '/about' },
+  [ROUTES.contact]: sameInEveryLocale(ROUTES.contact),
+  [ROUTES.legal]: { fr: '/mentions-legales', en: '/legal-notice', mg: '/legal-notice' },
+  [ROUTES.privacy]: { fr: '/confidentialite', en: '/privacy', mg: '/privacy' },
+  [ROUTES.sitemap]: { fr: '/plan-du-site', en: ROUTES.sitemap, mg: ROUTES.sitemap },
+  [ROUTES.articles.root]: sameInEveryLocale(ROUTES.articles.root),
+  [ROUTES.articles.preview().pathname]: sameInEveryLocale('/blog/[slug]'),
+  [ROUTES.projects.root]: { fr: '/projets', en: ROUTES.projects.root, mg: ROUTES.projects.root },
+  [ROUTES.pages.preview().pathname]: sameInEveryLocale('/[slug]'),
+  [ROUTES.pages.category().pathname]: sameInEveryLocale('/[slug]/[subcategory]'),
+  [ROUTES.pages.subsubcategory().pathname]: sameInEveryLocale('/[slug]/[subcategory]/[subsubcategory]'),
   [ROUTES.unsubscribeNewsletter.preview().pathname]: {
-    en: '/newsletter/[encryptedEmail]/unsubscribe',
     fr: '/newsletter/[encryptedEmail]/se-desabonner',
+    en: '/newsletter/[encryptedEmail]/unsubscribe',
+    mg: '/newsletter/[encryptedEmail]/unsubscribe',
   },
   // the server builds the confirmation links on exactly these paths — change both sides together
   [ROUTES.confirmNewsletter.preview().pathname]: {
-    en: '/newsletter/confirm/[token]',
     fr: '/newsletter/confirmer/[token]',
+    en: '/newsletter/confirm/[token]',
+    mg: '/newsletter/confirm/[token]',
   },
 } satisfies ITranslatedPathnames;

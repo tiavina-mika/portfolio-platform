@@ -5,7 +5,6 @@ import { locales, Locale } from '@/i18n/config';
 import { ROUTES } from '@/i18n/routes';
 import { OgCardLayoutEnum } from '@/types/og.type';
 import { getAlternates, getTranslatedAbsoluteUrl } from '@/utils/app.utils';
-import { APP_NAME } from '@/utils/constants';
 import { getSocialMetadata } from '@/utils/og.utils';
 
 import ContactUs from './ContactUsPage';
@@ -22,18 +21,14 @@ type MetaDataProps = {
 export const generateMetadata = async (props: MetaDataProps): Promise<Metadata> => {
   const params = await props.params;
   const locale = params.locale as Locale;
-  const t = await getTranslations({
-    locale,
-    namespace: 'Metadata',
-  });
-  const tOg = await getTranslations({ locale, namespace: 'OpenGraph' });
+  const t = await getTranslations({ locale, namespace: 'ContactPage' });
 
   const urlsByLocale = Object.fromEntries(
     locales.map((loc) => [loc, getTranslatedAbsoluteUrl(ROUTES.contact, { locale: loc })])
   );
 
-  const title = t('contact.metaTitle');
-  const description = t('contact.metaDescription', { appName: APP_NAME });
+  const title = t('metadata.title');
+  const description = t('metadata.description');
 
   return {
     title,
@@ -42,9 +37,9 @@ export const generateMetadata = async (props: MetaDataProps): Promise<Metadata> 
     ...getSocialMetadata({
       card: {
         layout: OgCardLayoutEnum.CENTERED,
-        chip: tOg('contact.chip'),
-        title: tOg('contact.title'),
-        subtitle: tOg('contact.subtitle', { appName: APP_NAME }),
+        chip: t('og.chip'),
+        title: t('og.title'),
+        subtitle: t('og.subtitle'),
       },
       title,
       description,

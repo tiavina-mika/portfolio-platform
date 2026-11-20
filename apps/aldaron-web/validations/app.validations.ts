@@ -1,5 +1,3 @@
-import { CONTACT_PHONE_PATTERN } from '@shared/constants';
-import { capitalize } from 'string-ts';
 import { z } from 'zod';
 import { zfd } from 'zod-form-data';
 
@@ -26,36 +24,6 @@ export const paginationSearchParamsSchema = z.object({
   tag: z.string().optional(),
   category: z.string().optional(),
 });
-
-export const projectSearchParamsSchema = paginationSearchParamsSchema.extend({
-  orderedBy: z.string().optional(),
-  technologies: z.string().optional(),
-  society: z.string().optional(),
-});
-
-export const ContactSchema = zfd.formData(
-  z.object({
-    email: EmailFieldSchema,
-    // optional: an empty field is sent as no phone at all
-    phone: zfd.text(
-      z
-        .string()
-        .regex(CONTACT_PHONE_PATTERN, { message: 'error.invalidPhone' })
-        .optional()
-    ),
-    name: zfd.text(
-      z
-        .string()
-        .max(120, getDynamicValidationError('error.max', 120))
-        .transform(capitalize)
-    ),
-    message: zfd.text(
-      z
-        .string()
-        .max(500, getDynamicValidationError('error.max', 500))
-    ),
-  })
-);
 
 export const NewsletterSchema = zfd.formData(
   z.object({

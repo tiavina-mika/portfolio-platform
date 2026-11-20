@@ -23,7 +23,6 @@ type Props = {
   children: ReactNode;
   articles: ReactNode;
   pages: ReactNode;
-  projects: ReactNode;
   categories: ReactNode;
   params: Promise<{
     locale: string;
@@ -31,7 +30,7 @@ type Props = {
 };
 
 /**
- * this route composes parallel slots (`@articles`/`@categories`/`@pages`/`@projects`) — despite every
+ * this route composes parallel slots (`@articles`/`@categories`/`@pages`) — despite every
  * dynamic access already being wrapped in `<Suspense>` (see below) and `setRequestLocale` +
  * explicit-locale `getTranslations` used throughout, the parallel-route + `cacheComponents`
  * static-shell validation still flags this route as accessing runtime data outside `<Suspense>`.
@@ -91,7 +90,6 @@ const Layout = async (props: Props) => {
     children,
     articles,
     pages,
-    projects,
     categories,
   } = props;
 
@@ -101,9 +99,6 @@ const Layout = async (props: Props) => {
       <TranslationClientProvider rootKeys={['Sitemap']}>
         {/* each parallel slot reads its own `params` independently of this layout's — isolated
             behind Suspense so cacheComponents can validate/prerender the static shell around it */}
-        <Suspense fallback={<SitemapGroupLoading />}>
-          {projects}
-        </Suspense>
         <Suspense fallback={<SitemapGroupLoading />}>
           {articles}
         </Suspense>

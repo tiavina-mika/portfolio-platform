@@ -1,0 +1,139 @@
+{
+  "SimulatorPage": {
+    "metadata": {
+      "title": "Price simulator",
+      "description": "Estimate the price of your product: answer the questions, the estimate updates with every answer."
+    },
+    "og": {
+      "chip": "Simulator",
+      "title": "Estimate the price of your product",
+      "subtitle": "Answer the questions: the estimate updates with every answer."
+    },
+    "eyebrow": "Price simulator",
+    "title": "Estimate the price of your product",
+    "lead": "Answer the questions: the estimate updates with every answer.",
+    "examples": {
+      "label": "One-click examples",
+      "saas": "First version of a SaaS",
+      "mobile": "Mobile app with 100+ screens",
+      "back": "Mobile app with a complex back office",
+      "both": "Web and mobile product with payment"
+    },
+    "steps": {
+      "bring": "What are you bringing?",
+      "platforms": "Which platforms?",
+      "web": "Website",
+      "app": "Web application",
+      "mobile": "Mobile",
+      "bo": "Back office",
+      "maintenance": "Optional maintenance"
+    },
+    "bring": {
+      "idea": {
+        "title": "An idea",
+        "hint": "A few sentences describing the need"
+      },
+      "spec": {
+        "title": "A requirements document",
+        "hint": "A document describing the product"
+      },
+      "mockup": {
+        "title": "A mockup",
+        "hint": "The screens are already designed"
+      }
+    },
+    "design": {
+      "label": "Mockups",
+      "perScreen": "{a} per screen",
+      "none": "No cost: you bring your own"
+    },
+    "platforms": {
+      "help": "A distinct view counts as one screen; its states and variants are included. Select one or more platforms.",
+      "web": "Static website",
+      "app": "Web application",
+      "mobile": "Mobile",
+      "bo": "Back office",
+      "examples": {
+        "web": "Portfolio, showcase site, static site, product landing page, nonprofit site",
+        "app": "SaaS, dashboard, customer portal, booking platform, internal tool",
+        "mobile": "iOS and Android app",
+        "bo": "Managing content, users and orders, moderation, statistics, exports"
+      }
+    },
+    "screens": "Number of screens (approximate)",
+    "rich": {
+      "question": "Is your web interface simple or rich?",
+      "simple": {
+        "title": "Simple",
+        "hint": "Pages, lists, forms"
+      },
+      "rich": {
+        "title": "Rich",
+        "hint": "Tables, filters, dashboards, roles, editor"
+      }
+    },
+    "chat": {
+      "title": "Instant messaging",
+      "hint": "Real-time chat between users"
+    },
+    "payment": {
+      "title": "Online payment",
+      "hint": "Take payments inside the product",
+      "count": "Number of payment integrations",
+      "help": "The first one is included, each additional integration costs {a}."
+    },
+    "maintenance": {
+      "title": "Optional maintenance",
+      "hint": "€150 to €400 per month, after the 30 days of bug fixing",
+      "line": "Maintenance: €150 to €400 per month"
+    },
+    "complexity": {
+      "label": "Business complexity",
+      "standard": "Standard",
+      "some": "A few complex flows",
+      "heavy": "Highly business-specific"
+    },
+    "recap": {
+      "with": "I am bringing",
+      "about": "about {n} screens"
+    },
+    "lines": {
+      "web": "Static website",
+      "app": "Web application",
+      "mobile": "Mobile",
+      "bo": "Back office",
+      "design": "Mockups",
+      "chat": "Instant messaging",
+      "payment": "Online payment",
+      "floor": "Top-up to the minimum order"
+    },
+    "result": {
+      "title": "Your estimate",
+      "from": "From {a}",
+      "large": "Large project: let’s talk",
+      "empty": "Answer the questions to refine the estimate.",
+      "refine": "Estimate, to refine together",
+      "firstEstimate": "First estimate, to refine together",
+      "indicative": "Indicative estimate, not a firm quote.",
+      "includedTitle": "What is included",
+      "included": {
+        "release": "Go-live",
+        "store": "Go-live and publication on the App Store and Google Play",
+        "handover": "Handover of the code and accounts",
+        "bugs": "30 days of bug fixing"
+      },
+      "excludedTitle": "What is not included",
+      "excluded": {
+        "mobile": "Hosting and third-party services, store accounts: paid directly by the startup.",
+        "web": "Hosting and third-party services: paid directly by the startup."
+      },
+      "payment": "Fixed price at signing, paid in 3 instalments: 40% at signing, 30% at the mid-way demo, 30% at launch.",
+      "paymentRich": "Delivery in batches, each batch paid on delivery; batches are agreed during scoping.",
+      "paymentDesign": "Mockups are approved before development starts.",
+      "request": "Request a firm quote (free scoping)",
+      "requestShort": "Request a firm quote",
+      "copy": "Copy my summary",
+      "copied": "Summary copied."
+    }
+  }
+}

@@ -55,13 +55,6 @@ export interface ICMSInputQuery extends IInputQuery {
   category?: string;
 }
 
-export interface IProjectInputQuery extends IInputQuery {
-  tag?: string;
-  technologies?: string;
-  society?: string;
-  otherThanProjectId?: string;
-}
-
 export type PagesForUrlsOutput = {
   footers: ISelectOption[];
   menus: ISelectOption[];

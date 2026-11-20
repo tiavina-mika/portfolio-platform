@@ -1,0 +1,139 @@
+{
+  "SimulatorPage": {
+    "metadata": {
+      "title": "Simulateur de prix",
+      "description": "Estimez le prix de votre produit : répondez aux questions, l’estimation se met à jour à chaque réponse."
+    },
+    "og": {
+      "chip": "Simulateur",
+      "title": "Estimez le prix de votre produit",
+      "subtitle": "Répondez aux questions : l’estimation se met à jour à chaque réponse."
+    },
+    "eyebrow": "Simulateur de prix",
+    "title": "Estimez le prix de votre produit",
+    "lead": "Répondez aux questions : l’estimation se met à jour à chaque réponse.",
+    "examples": {
+      "label": "Exemples en un clic",
+      "saas": "Première version d’un SaaS",
+      "mobile": "Application mobile de plus de 100 écrans",
+      "back": "Application mobile avec back-office complexe",
+      "both": "Produit web et mobile avec paiement"
+    },
+    "steps": {
+      "bring": "Qu’apportez-vous ?",
+      "platforms": "Quels supports ?",
+      "web": "Site web",
+      "app": "Application web",
+      "mobile": "Mobile",
+      "bo": "Back-office",
+      "maintenance": "Maintenance optionnelle"
+    },
+    "bring": {
+      "idea": {
+        "title": "Une idée",
+        "hint": "Quelques phrases pour décrire le besoin"
+      },
+      "spec": {
+        "title": "Un cahier des charges",
+        "hint": "Un document qui décrit le produit"
+      },
+      "mockup": {
+        "title": "Une maquette",
+        "hint": "Les écrans sont déjà dessinés"
+      }
+    },
+    "design": {
+      "label": "Maquettes",
+      "perScreen": "{a} par écran",
+      "none": "Aucun frais : vous apportez la vôtre"
+    },
+    "platforms": {
+      "help": "Une vue distincte compte pour un écran ; ses états et variantes sont inclus. Sélectionnez un ou plusieurs supports.",
+      "web": "Site web statique",
+      "app": "Application web",
+      "mobile": "Mobile",
+      "bo": "Back-office",
+      "examples": {
+        "web": "Portfolio, site vitrine, site statique, page de présentation d’un produit, site associatif",
+        "app": "SaaS, tableau de bord, espace client, plateforme de réservation, outil interne",
+        "mobile": "Application iOS et Android",
+        "bo": "Gestion des contenus, des utilisateurs et des commandes, modération, statistiques, exports"
+      }
+    },
+    "screens": "Nombre d’écrans (approximatif)",
+    "rich": {
+      "question": "Votre interface web est-elle simple ou riche ?",
+      "simple": {
+        "title": "Simple",
+        "hint": "Pages, listes, formulaires"
+      },
+      "rich": {
+        "title": "Riche",
+        "hint": "Tableaux, filtres, tableaux de bord, rôles, éditeur"
+      }
+    },
+    "chat": {
+      "title": "Discussion instantanée",
+      "hint": "Messagerie en temps réel entre utilisateurs"
+    },
+    "payment": {
+      "title": "Paiement en ligne",
+      "hint": "Encaisser des paiements dans le produit",
+      "count": "Nombre d’intégrations de paiement",
+      "help": "La première est comprise, chaque intégration supplémentaire coûte {a}."
+    },
+    "maintenance": {
+      "title": "Maintenance optionnelle",
+      "hint": "150 à 400 € par mois, après les 30 jours de correction de bugs",
+      "line": "Maintenance : 150 à 400 € par mois"
+    },
+    "complexity": {
+      "label": "Complexité métier",
+      "standard": "Standard",
+      "some": "Quelques parcours complexes",
+      "heavy": "Très orienté métier"
+    },
+    "recap": {
+      "with": "Je viens avec",
+      "about": "environ {n} écrans"
+    },
+    "lines": {
+      "web": "Site web statique",
+      "app": "Application web",
+      "mobile": "Mobile",
+      "bo": "Back-office",
+      "design": "Maquettes",
+      "chat": "Discussion instantanée",
+      "payment": "Paiement en ligne",
+      "floor": "Complément au minimum de commande"
+    },
+    "result": {
+      "title": "Votre estimation",
+      "from": "À partir de {a}",
+      "large": "Projet d’envergure : parlons-en",
+      "empty": "Répondez aux questions pour affiner l’estimation.",
+      "refine": "Estimation à affiner ensemble",
+      "firstEstimate": "Première estimation, à affiner ensemble",
+      "indicative": "Estimation indicative, hors devis ferme.",
+      "includedTitle": "Ce qui est compris",
+      "included": {
+        "release": "Mise en production",
+        "store": "Mise en production et publication sur l’App Store et Google Play",
+        "handover": "Remise du code et des comptes",
+        "bugs": "30 jours de correction de bugs"
+      },
+      "excludedTitle": "Ce qui n’est pas compris",
+      "excluded": {
+        "mobile": "Hébergement et services tiers, comptes des stores : payés directement par la startup.",
+        "web": "Hébergement et services tiers : payés directement par la startup."
+      },
+      "payment": "Prix fixe à la signature, payé en 3 échéances : 40 % à la signature, 30 % à la démonstration de mi-parcours, 30 % à la mise en ligne.",
+      "paymentRich": "Livraison par lots, chaque lot étant payé à sa livraison ; les lots sont convenus lors du cadrage.",
+      "paymentDesign": "Les maquettes sont validées avant le début du développement.",
+      "request": "Demander un devis ferme (cadrage gratuit)",
+      "requestShort": "Demander un devis ferme",
+      "copy": "Copier mon récapitulatif",
+      "copied": "Récapitulatif copié."
+    }
+  }
+}

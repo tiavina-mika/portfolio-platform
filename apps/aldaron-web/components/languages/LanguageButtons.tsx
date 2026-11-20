@@ -14,8 +14,8 @@ type Props = {
 };
 
 /**
- * One button per language, side by side, the current one is pressed. Used where a select would hide
- * the choice behind a second tap (the open mobile menu). Each language is written in its own language.
+ * One button per language, side by side (FR, EN, MG), the current one is pressed. Each button is named
+ * by its language written in its own language.
  */
 const LanguageButtons = ({ className }: Props) => {
   const t = useTranslations('LanguageSwitcher');
@@ -36,7 +36,7 @@ const LanguageButtons = ({ className }: Props) => {
   return (
     <div
       aria-label={t('label')}
-      className={cn('flex gap-2', { 'opacity-60': isPending }, className)}
+      className={cn('flex gap-1', { 'opacity-60': isPending }, className)}
       role="group"
     >
       {locales.map((locale: Locale) => {
@@ -44,6 +44,7 @@ const LanguageButtons = ({ className }: Props) => {
 
         return (
           <button
+            aria-label={LOCALE_NATIVE_NAMES[locale]}
             aria-pressed={isCurrent}
             disabled={isPending}
             key={locale}
@@ -52,20 +53,20 @@ const LanguageButtons = ({ className }: Props) => {
             type="button"
             className={cn(
               `
-                inline-flex min-h-11 flex-1 cursor-pointer items-center justify-center rounded-md border px-2
-                text-base transition-colors
-                focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ring
+                inline-flex size-11 cursor-pointer items-center justify-center rounded-md border px-2.5
+                font-mono text-xs font-medium tracking-[0.08em] transition-colors
+                hover:bg-muted
                 motion-reduce:transition-none
               `,
               isCurrent
-                ? 'border-foreground font-bold text-foreground'
-                : `
-                  border-input font-medium text-muted-foreground
-                  hover:bg-muted
+                ? `
+                  border-transparent bg-primary text-primary-foreground
+                  hover:bg-primary-hover
                 `
+                : 'border-input bg-transparent text-muted-foreground'
             )}
           >
-            {LOCALE_NATIVE_NAMES[locale]}
+            {locale.toUpperCase()}
           </button>
         );
       })}

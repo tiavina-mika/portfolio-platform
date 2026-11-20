@@ -1,0 +1,91 @@
+{
+  "ProjectsPage": {
+    "metadata": {
+      "title": "Asa vita",
+      "description": "Tetikasa vitsivitsy vita, miaraka amin'ny haben'ny asa, ny fe-potoana ary ny vidiny."
+    },
+    "og": {
+      "chip": "Asa vita",
+      "title": "Vokatra natolotra amin'ny vidiny raikitra.",
+      "subtitle": "Tetikasa vitsivitsy vita, miaraka amin'ny haben'ny asa, ny fe-potoana ary ny vidiny."
+    },
+    "eyebrow": "Asa vita",
+    "title": "Vokatra natolotra amin'ny vidiny raikitra.",
+    "description": "Tetikasa vitsivitsy vita, miaraka amin'ny haben'ny asa, ny fe-potoana ary ny vidiny.",
+    "screenshot": "Sarin'ny efijery ny vokatra",
+    "filterAll": "Rehetra",
+    "supports": {
+      "web": "Tranonkala",
+      "app": "Application web",
+      "mobile": "Finday",
+      "bo": "Back-office"
+    },
+    "range": "{start}–{end} amin'ny {total} asa vita",
+    "facts": {
+      "supports": "Fitaovana",
+      "screens": "Efijery",
+      "leadTime": "Fe-potoana",
+      "price": "Vidiny"
+    },
+    "weeks": "herinandro",
+    "pagination": {
+      "nav": "Pejy",
+      "previous": "Teo aloha",
+      "next": "Manaraka",
+      "page": "Pejy"
+    },
+    "estimate": "Tombano ny vidiny",
+    "items": {
+      "tsaraLivraison": {
+        "eyebrow": "Famatsiana",
+        "summary": "Application fanaterana sakafo ho an'ny startup any Antananarivo, miaraka amin'ny back-office hanaraha-maso ny kaomandy sy ny mpitatitra.",
+        "price": "3 500 €"
+      },
+      "faniloSante": {
+        "eyebrow": "Fahasalamana",
+        "summary": "Famandrihana fotoana an-tserasera ho an'ny biraon'ny dokotera, miaraka amin'ny toerana fitantanana ho an'ny dokotera.",
+        "price": "2 000 €"
+      },
+      "ravinalaVoyages": {
+        "eyebrow": "Dia",
+        "summary": "Tranonkala fampisehoana ho an'ny mpikarakara dia : tetezamita, galerie, taratasy fangatahana tolo-bidy.",
+        "price": "1 500 €"
+      },
+      "hasinaAcademie": {
+        "eyebrow": "Fanabeazana",
+        "summary": "Sehatra fianarana an-tserasera : fampianarana, fanaraha-maso ny mpianatra, application finday ary fitantanana.",
+        "price": "6 400 €"
+      },
+      "zanakaBoutique": {
+        "eyebrow": "Varotra",
+        "summary": "Fivarotana an-tserasera ho an'ny mpamorona eo an-toerana : katalaogy, harona, fandoavam-bola ary application finday hanaraha-maso ny kaomandy.",
+        "price": "3 000 €"
+      },
+      "volaCompta": {
+        "eyebrow": "Vola",
+        "summary": "Famoahana faktiora sy fanaraha-maso ny tahiry vola ho an'ny orinasa kely, miaraka amin'ny toerana fitantanana.",
+        "price": "2 800 €"
+      },
+      "tanyImmobilier": {
+        "eyebrow": "Trano",
+        "summary": "Tranonkala filazana varotra misy fikarohana araka ny fepetra sy back-office ho an'ny masoivohitra.",
+        "price": "2 000 €"
+      },
+      "ranoSuivi": {
+        "eyebrow": "Serivisy",
+        "summary": "Application finday hanaraha-maso ny fanjifana sy handoavana ny faktiora rano.",
+        "price": "2 000 €"
+      },
+      "soaRestaurant": {
+        "eyebrow": "Sakafo",
+        "summary": "Tranonkala fampisehoana ho an'ny trano fisakafoanana : menio, ora fiasana ary taratasy fangatahana famandrihana.",
+        "price": "1 000 €"
+      },
+      "lalanaTransport": {
+        "eyebrow": "Fitaterana",
+        "summary": "Sehatra fiara iombonana ao an-tanàn-dehibe : application web, application finday ary fitantanana ny dia.",
+        "price": "3 400 €"
+      }
+    }
+  }
+}

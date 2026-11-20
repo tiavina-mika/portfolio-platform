@@ -1,0 +1,133 @@
+{
+  "Home": {
+    "hero": {
+      "eyebrow": "Fampandrosoana web sy finday ho an'ny startup",
+      "title": "Ny vokatrao, amin'ny vidiny raikitra, isaky ny efijery.",
+      "description": "Tranonkala, application web na finday, miaraka amin'ny back-office raha ilaina. Miankina amin'ny haben'ny tetikasa ny vidiny ary raikitra rehefa manao sonia.",
+      "ctaSimulator": "Tombano ny vidiny",
+      "ctaPricing": "Jereo ny tolotra sy ny vidiny",
+      "facts": {
+        "1": "Manomboka amin'ny 1 500 €",
+        "2": "Vidiny raikitra rehefa manao sonia",
+        "3": "Fanitsiana bug mandritra ny 30 andro"
+      }
+    },
+    "supports": {
+      "eyebrow": "Izay ataonay",
+      "title": "Fitaovana efatra, vidiny isaky ny efijery.",
+      "description": "Efijery iray ny fijery tsirairay ; tafiditra ao aminy ny toe-javatra sy ny endriny samihafa.",
+      "minimumNote": "Kaomandy farany ambany : 1 500 € ho an'ny web, 2 500 € raha misy finday.",
+      "items": {
+        "1": {
+          "eyebrow": "Web",
+          "title": "Tranonkala static",
+          "description": "Portfolio, tranonkala fampisehoana, pejy fampahafantarana vokatra, tranonkala fikambanana.",
+          "price": "25 € / efijery"
+        },
+        "2": {
+          "eyebrow": "Web",
+          "title": "Application web",
+          "description": "SaaS, tableau de bord, toerana ho an'ny mpanjifa, sehatra famandrihana, fitaovana anatiny.",
+          "price": "18 hatramin'ny 30 € / efijery"
+        },
+        "3": {
+          "eyebrow": "Finday",
+          "title": "Application finday",
+          "description": "Application iOS sy Android, avoaka ao amin'ny App Store sy Google Play.",
+          "price": "25 € / efijery"
+        },
+        "4": {
+          "eyebrow": "Fitantanana",
+          "title": "Back-office",
+          "description": "Fitantanana votoaty, mpampiasa ary kaomandy, fanaraha-maso, antontan'isa, fanondranana.",
+          "price": "37,50 € / efijery"
+        }
+      }
+    },
+    "included": {
+      "eyebrow": "Izay tafiditra",
+      "title": "Izay rakotry ny vidiny, sy izay tsy rakotra.",
+      "yes": {
+        "eyebrow": "Tafiditra",
+        "title": "Amin'ny tetikasa tsirairay",
+        "items": {
+          "1": "Fampiasana amin'ny tena izy",
+          "2": "Famoahana ao amin'ny App Store sy Google Play",
+          "3": "Fanolorana ny kaody sy ny kaonty",
+          "4": "Fanitsiana bug mandritra ny 30 andro"
+        }
+      },
+      "no": {
+        "eyebrow": "Tsy tafiditra",
+        "title": "Aloanao",
+        "items": {
+          "1": "Hébergement sy serivisy hafa, kaontin'ny store : aloanao mivantana.",
+          "2": "Fikojakojana tsy voatery 150 hatramin'ny 400 € isam-bolana."
+        }
+      }
+    },
+    "process": {
+      "eyebrow": "Dingana",
+      "title": "Dingana efatra, fandoavana telo.",
+      "steps": {
+        "1": {
+          "title": "Fandrafetana",
+          "description": "Maimaim-poana. Faritantsika ny haben'ny tetikasa ary mahazo tolo-bidy raikitra ianao."
+        },
+        "2": {
+          "title": "Sonia",
+          "description": "Raikitra ny vidiny ary tsy miova intsony. Ekena alohan'ny fampandrosoana ny maquette.",
+          "payment": "40 %"
+        },
+        "3": {
+          "title": "Demo",
+          "description": "Eo antenatenany, asehonay anao ny vokatra.",
+          "payment": "30 %"
+        },
+        "4": {
+          "title": "Famoahana",
+          "description": "Fampiasana amin'ny tena izy, famoahana ary fanolorana ny kaody.",
+          "payment": "30 %"
+        }
+      }
+    },
+    "projects": {
+      "eyebrow": "Asa vita",
+      "title": "Vokatra natolotra amin'ny vidiny raikitra.",
+      "all": "Jereo ny asa vita rehetra",
+      "screenshot": "Sarin'ny efijery ny vokatra",
+      "weeks": "herinandro",
+      "supports": {
+        "mobile": "Finday",
+        "backOffice": "Back-office",
+        "webApp": "Application web",
+        "website": "Tranonkala"
+      },
+      "items": {
+        "1": {
+          "eyebrow": "Famatsiana",
+          "summary": "Application fanaterana sakafo ho an'ny startup any Antananarivo, miaraka amin'ny back-office hanaraha-maso ny kaomandy sy ny mpitatitra."
+        },
+        "2": {
+          "eyebrow": "Fahasalamana",
+          "summary": "Famandrihana fotoana an-tserasera ho an'ny biraon'ny dokotera, miaraka amin'ny toerana fitantanana ho an'ny dokotera."
+        },
+        "3": {
+          "eyebrow": "Dia",
+          "summary": "Tranonkala fampisehoana ho an'ny mpikarakara dia : tetezamita, galerie, taratasy fangatahana tolo-bidy."
+        }
+      }
+    },
+    "simulator": {
+      "eyebrow": "Mpanao kajy vidiny",
+      "title": "Tombano ny vidin'ny vokatrao",
+      "description": "Valio ny fanontaniana : mivaingana isaky ny valinteny ny tombana.",
+      "cta": "Sokafy ny mpanao kajy"
+    },
+    "contact": {
+      "title": "Resaho ny vokatrao.",
+      "description": "Maimaim-poana ny fandrafetana. Hiverina aminao miaraka amin'ny tolo-bidy raikitra izahay.",
+      "cta": "Angataho ny tolo-bidy raikitra"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "AboutPage": {
+    "metadata": {
+      "title": "À propos",
+      "description": "Aldaron conçoit et développe des produits web et mobiles pour les startups, du pré-seed à la série A. Nous travaillons au périmètre et à prix fixe : vous connaissez le prix avant que le développement commence."
+    },
+    "og": {
+      "chip": "À propos",
+      "title": "Une société de développement pour les startups.",
+      "subtitle": "Aldaron conçoit et développe des produits web et mobiles pour les startups, du pré-seed à la série A."
+    },
+    "eyebrow": "À propos",
+    "title": "Une société de développement pour les startups.",
+    "description": "Aldaron conçoit et développe des produits web et mobiles pour les startups, du pré-seed à la série A. Nous travaillons au périmètre et à prix fixe : vous connaissez le prix avant que le développement commence.",
+    "principles": {
+      "eyebrow": "Principes",
+      "title": "Comment nous travaillons.",
+      "items": {
+        "1": {
+          "title": "Un prix fixé avant de commencer",
+          "description": "Le devis ferme suit un cadrage gratuit. Il ne change pas pendant le projet."
+        },
+        "2": {
+          "title": "Des démonstrations, pas des rapports",
+          "description": "Les maquettes sont validées avant le développement, et le produit vous est présenté à mi-parcours."
+        },
+        "3": {
+          "title": "Le code vous appartient",
+          "description": "Le code et les comptes vous sont remis à la mise en ligne."
+        }
+      }
+    },
+    "audience": {
+      "eyebrow": "Pour qui",
+      "title": "Des startups qui veulent un produit, pas des heures.",
+      "text": "Nous travaillons uniquement avec des startups, du pré-seed à la série A. Chaque projet a un périmètre écrit et un prix fixé à la signature.",
+      "build": {
+        "title": "Ce que nous construisons",
+        "items": {
+          "1": "Sites web statiques",
+          "2": "Applications web",
+          "3": "Applications mobiles iOS et Android",
+          "4": "Back-offices"
+        }
+      },
+      "avoid": {
+        "title": "Ce que nous ne faisons pas",
+        "items": {
+          "1": "Régie à l'heure sans périmètre",
+          "2": "Refonte graphique sans produit"
+        }
+      },
+      "pricing": "Voir l'offre et les prix"
+    },
+    "cta": {
+      "title": "Parlons de votre produit.",
+      "description": "Le cadrage est gratuit. Nous revenons vers vous avec un devis ferme.",
+      "quote": "Demander un devis ferme"
+    }
+  }
+}

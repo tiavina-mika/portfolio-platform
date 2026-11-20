@@ -1,0 +1,147 @@
+{
+  "App": {
+    "subscribeToNewsletter": "Misoratra anarana amin'ny newsletter-ko",
+    "unsubscribeMessage": "Afaka miala amin'ny newsletter ianao amin'ny fotoana rehetra amin'ny alalan'ny rohy fialana hita ao amin'ny mailaka rehetra alefanay.",
+    "gotToHomePage": "Hiverina any amin'ny fandraisana",
+    "contactMe": "Mifandraisa amiko",
+    "pageNotFound": "Tsy hita ny pejy",
+    "pageNotFoundDescription": "Tsy misy intsony na nafindra ny pejy tadiavinao.",
+    "errorCode": "Hadisoana 404",
+    "readBlog": "Vakio ny blog"
+  },
+  "Footer": {
+    "tagline": "Fampandrosoana web sy finday ho an'ny startup, amin'ny vidiny raikitra.",
+    "navigation": "Fitetezana",
+    "contact": "Fifandraisana",
+    "quote": "Angataho ny tolo-bidy raikitra",
+    "legal": "Lalàna",
+    "legalNotice": "Fanamarihana ara-dalàna",
+    "privacy": "Fiarovana ny angon-drakitra",
+    "region": "Eoropa",
+    "socials": "Tambazotra sosialy"
+  },
+  "Error": {
+    "unknown": "Nisy hadisoana. Andramo indray rehefa afaka kelikely.",
+    "somethingWentWrong": "Nisy hadisoana.",
+    "tryAgain": "Avereno ny pejy na andramo indray rehefa afaka kelikely.",
+    "ifProblemPersist": "Raha mitohy ny olana, azafady",
+    "contactUs": "mifandraisa aminay"
+  },
+  "ServerError": {
+    "articleSave": "Tsy afaka voatahiry ny lahatsoratra.",
+    "emailAlreadyExists": "Efa misoratra anarana amin'ny newsletter io mailaka io.",
+    "emailRequired": "Ilaina ny mailaka.",
+    "localeRequired": "Ilaina ny fiteny.",
+    "paramsRequired": "Ilaina ny paramètre.",
+    "reasonRequired": "Ilaina ny antony.",
+    "somethingWentWrong": "Nisy tsy nety. Andramo indray rehefa afaka kelikely.",
+    "recaptchaVerificationFailed": "Tsy nahomby ny fanamarinana fa tsy robot ianao. Andramo indray.",
+    "tooManyRequests": "Be loatra ny fangatahana tao anatin'ny fotoana fohy. Andramo indray rehefa afaka adiny iray."
+  },
+  "NavBar": {
+    "home": "Fandraisana",
+    "pricing": "Tolotra sy vidiny",
+    "simulator": "Mpanao kajy",
+    "projects": "Asa vita",
+    "about": "Momba anay",
+    "contact": "Fifandraisana",
+    "estimate": "Tombano ny vidiny",
+    "currency": "Vola",
+    "menu": "Lisitra",
+    "closeMenu": "Hidio",
+    "mainNavigation": "Lehibe",
+    "toggleTheme": "Hanova endrika",
+    "blog": "Blog"
+  },
+  "LanguageSwitcher": {
+    "label": "Fiteny"
+  },
+  "Sitemap": {
+    "sitemap": "Sarintanin'ny tranonkala",
+    "description": "Sarintanin'ny tranonkala {appName}, ahafahanao mandeha any amin'ny pejy tianao amin'ny fanindriana ny rohy.",
+    "projects": "Asa vita",
+    "articles": "Lahatsoratra",
+    "loading": "Eo am-pakana ny sarintanin'ny tranonkala",
+    "loadError": "Tsy afaka nakarina ny sarintanin'ny tranonkala.",
+    "retry": "Andramo indray"
+  },
+  "Newsletter": {
+    "subscribe": "Hisoratra anarana amin'ny newsletter",
+    "unsubscribe": "Hiala amin'ny newsletter",
+    "resubscribe": "Hisoratra anarana indray",
+    "email": "Mailaka",
+    "subscribeWithSuccess": "Efa ho vita: jereo ny boaty mailakao ary ankatoavo ny fisoratanao anarana amin'ny rohy vao nalefako anao.",
+    "unsubscribeWithSuccess": "Tafiala soa aman-tsara tamin'ny newsletter ianao.",
+    "alreadySubscribed": "Efa misoratra anarana amin'ny newsletter io mailaka io.",
+    "youWillNotReceived": "Tsy handray ny vaovao farany sy ny lahatsoratra avy amin'i {appName} intsony ianao.",
+    "tellUsWhy": "Lazao anay ny antony tianao hialana",
+    "ifThisIsAMistake": "Raha diso izany, azonao atao ny",
+    "resubscribeSuccess": "Nisoratra anarana indray soa aman-tsara tamin'ny newsletter ianao.",
+    "resubscribeError": "Nisy hadisoana tamin'ny fisoratana anarana indray tamin'ny newsletter. Andramo indray rehefa afaka kelikely.",
+    "tooFrequently": "Niverimberina loatra ny fandefasana ny mailaka.",
+    "notInterested": "Tsy liana amin'ny votoaty aho",
+    "notRelevant": "Toa tsy mifanentana amiko ny votoaty",
+    "other": "Hafa",
+    "reason": "Antony",
+    "reasonSubmittedSuccessfully": "Voalefa soa aman-tsara ny antony.",
+    "confirmedTitle": "Voamarina ny fisoratanao anarana",
+    "confirmedDescription": "Misaotra! Handray ny vaovao sy ny lahatsoratra avy amin'i {appName} ianao izao. Misy rohy fialana ao amin'ny mailaka rehetra, azonao ampiasaina amin'ny fotoana rehetra.",
+    "title": "Misoratra anarana amin'ny newsletter-ko",
+    "description": "Misoratra anarana amin'ny newsletter-ko mba hahazo tolotra manokana sy ireo lahatsoratra sy tutorial ataoko indraindray ao amin'ny blog-ko.",
+    "unsubscribeMessage": "Afaka miala amin'ny newsletter ianao amin'ny fotoana rehetra amin'ny alalan'ny rohy fialana hita ao amin'ny mailaka rehetra.",
+    "emailLabel": "Adiresy mailaka",
+    "emailPlaceholder": "anarana@ohatra.com",
+    "emailRequired": "Ampidiro ny adiresy mailakao.",
+    "emailInvalid": "Ampidiro adiresy mailaka mety.",
+    "failText": "Nisy olana tamin'ny ilay faritra aminay.",
+    "failTitle": "Tsy afaka misoratra anarana",
+    "offlineText": "Tsy mifandray amin'ny aterineto ianao. Mifandraisa indray mba hisoratana anarana.",
+    "submit": "Hisoratra anarana",
+    "sending": "Eo am-pandefasana…"
+  },
+  "Metadata": {
+    "home": {
+      "metaTitle": "Fandraisana",
+      "metaDescription": "Tranonkala, application web na finday, miaraka amin'ny back-office raha ilaina. Miankina amin'ny haben'ny tetikasa ny vidiny ary raikitra rehefa manao sonia."
+    },
+    "articles": {
+      "metaTitle": "Ny blog-ko",
+      "metaDescription": "Lisitry ny lahatsoratra rehetra nosoratako tamim-pitiavana."
+    },
+    "sitemap": {
+      "metaTitle": "Sarintanin'ny tranonkala",
+      "metaDescription": "Sarintanin'ny tranonkala {appName}. Afaka mandeha any amin'ny pejy tianao ianao amin'ny fanindriana ny rohy."
+    },
+    "unsubscribeNewsletter": {
+      "metaTitle": "Hiala amin'ny newsletter",
+      "metaDescription": "Hiala amin'ny newsletter-n'i {appName}. Tsy handray fampahafantarana amin'ny mailaka intsony ianao."
+    },
+    "confirmNewsletter": {
+      "metaTitle": "Voamarina ny fisoratana anarana amin'ny newsletter",
+      "metaDescription": "Voamarina ny fisoratanao anarana amin'ny newsletter-n'i {appName}."
+    }
+  },
+  "Pagination": {
+    "label": "Fivezivezena amin'ny pejy",
+    "previous": "Teo aloha",
+    "next": "Manaraka",
+    "page": "Pejy {page}",
+    "current": "pejy ankehitriny"
+  },
+  "OpenGraph": {
+    "home": {
+      "title": "Ny vokatrao, amin'ny vidiny raikitra, isaky ny efijery.",
+      "subtitle": "Fampandrosoana web sy finday ho an'ny startup."
+    },
+    "blog": {
+      "chip": "Blog",
+      "title": "Ny blog-n'i {appName}",
+      "subtitle": "Lahatsoratra sy tutorial momba ny fampandrosoana web."
+    },
+    "sitemap": {
+      "chip": "Sarintanin'ny tranonkala",
+      "title": "Sarintanin'ny tranonkala",
+      "subtitle": "Ny pejy rehetra ao amin'i {appName} indray mijery."
+    }
+  }
+}
