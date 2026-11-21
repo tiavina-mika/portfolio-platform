@@ -76,7 +76,7 @@ Files are in `apps/server/src/cloud/jobs/_core/` (`_domain/` has no job). A job 
 | File | Jobs |
 |---|---|
 | `category.jobs.ts` | `updateLinkedCategoryItemCountJob` |
-| `cms.jobs.ts` | `purgeOrphanedEditorFilesJob` |
+| `cms.jobs.ts` | `purgeOrphanedEditorFilesJob`, `renameContentTargetFieldsJob` (one-off migration, run by hand) |
 | `email.jobs.ts` | `createContactToCloudJob` |
 | `impersonation.jobs.ts` | `revokeExpiredImpersonationSessionsJob` |
 | `misc.jobs.ts` | `clearRecycleBinInCloudJob` |

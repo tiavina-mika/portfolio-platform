@@ -15,7 +15,7 @@ import {
   CATEGORY_FORM_PATH_BOX_GAP, CATEGORY_FORM_PATH_BOX_PADDING_X, CATEGORY_FORM_PATH_BOX_PADDING_Y,
   FONT_SIZE_OVERLINE, RADIUS,
 } from '@/constants/_core/ui.constants';
-import CmsWebsiteFields from '@/containers/_core/cms/CmsWebsiteFields';
+import CmsTargetFields from '@/containers/_core/cms/CmsTargetFields';
 import { IChoiceChipOption } from '@/types/_core/app.type';
 import { ICategoryInput, ICategoryTypeEntity } from '@/types/_core/category.type';
 import { getCategoryEntityLabel } from '@/utils/_core/cms.utils';
@@ -137,8 +137,8 @@ const CategoryFormFilingSection = ({
         </Typography>
       </div>
 
-      {/* the websites showing this category, and what the box costs when it is one of them */}
-      <CmsWebsiteFields />
+      {/* where this category is published, and what the Aldaron offer costs when it is one of them */}
+      <CmsTargetFields />
 
       {/* technical code — not translated, independent of the translated name/slug */}
       <TextField

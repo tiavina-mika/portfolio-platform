@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { categoryTranslatedFieldsObj } from '@/constants/_core/cms.constants';
 import { CategoryLevelEnum } from '@/types/_core/category.type';
 import { dateForAdvancedSearchSchema } from '@/validations/_core/app.validations';
-import { websiteFieldsShape } from '@/validations/_core/website.validations';
+import { targetFieldsShape } from '@/validations/_core/target.validations';
 import { generateFileSchema, generateTranslatedFieldsInputSchema, getTranslatedFieldsCodec } from '@/validations/_core/zodSchema.validations';
 
 
@@ -30,7 +30,7 @@ export const categorySchema = z.object({
    */
   parentCategory: z.string().optional(),
   ...translatedCategoryFormFieldsSchema.shape,
-  ...websiteFieldsShape,
+  ...targetFieldsShape,
 });
 
 /**

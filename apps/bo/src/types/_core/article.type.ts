@@ -4,8 +4,8 @@ import { z } from 'zod';
 import type { ISEOFields } from '@/types/_core/app.type';
 import type { ICategory } from '@/types/_core/category.type';
 import type { IFileCloud, ITranslatedFileCloud } from '@/types/_core/file.type';
+import type { ITargetAttributes } from '@/types/_core/target.type';
 import type { IUser } from '@/types/_core/user.type';
-import type { IWebsiteAttributes } from '@/types/_core/website.type';
 
 import { articleFilterSchema, articleSchema } from '@/validations/_core/article.validations';
 
@@ -15,7 +15,7 @@ export interface IArticleTranslatedFields extends ISEOFields {
   description: string;
 }
 
-export interface IArticleAttributes extends IWebsiteAttributes {
+export interface IArticleAttributes extends ITargetAttributes {
   objectId: string;
   updatedAt?: string;
   createdAt?: string;

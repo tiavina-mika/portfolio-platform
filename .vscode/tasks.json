@@ -48,6 +48,29 @@
       "problemMatcher": []
     },
     {
+      "label": "Aldaron Web",
+      "type": "shell",
+      "command": ". ../../.vscode/use-node-24.sh && sleep 30 && pnpm dev",
+      "options": {
+        "cwd": "${workspaceFolder}/apps/aldaron-web",
+        "shell": {
+          "executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+          "args": [
+            "-c"
+          ]
+        }
+      },
+      "presentation": {
+        "panel": "dedicated",
+        "group": "portfolio",
+        "reveal": "always",
+        "focus": false,
+        "close": false
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
       "label": "Web: Storybook",
       "type": "shell",
       "command": ". ../../.vscode/use-node-24.sh && pnpm sb",
@@ -96,8 +119,7 @@
     {
       "label": "run-dev",
       "dependsOn": [
-        "Server",
-        "BO"
+        "Aldaron Web"
       ],
       "dependsOrder": "parallel",
       "presentation": {

@@ -5,8 +5,8 @@ import { z } from 'zod';
 import type { IEntityState } from '@/redux/factories/_core/entitySlice.factory';
 import type { ISelectOption } from '@/types/_core/app.type';
 import type { IFileCloud } from '@/types/_core/file.type';
+import type { ITargetAttributes } from '@/types/_core/target.type';
 import type { IUser } from '@/types/_core/user.type';
-import type { IWebsiteAttributes } from '@/types/_core/website.type';
 
 import { categoryFilterSchema, categorySchema } from '@/validations/_core/category.validations';
 
@@ -23,7 +23,7 @@ export interface ICategoryTranslatedFields {
 
 export type ICategoryTypeEntity = `${CategoryEntityEnum}`;
 export type ICategoryEntityOption = ISelectOption<ICategoryTypeEntity>;
-export interface ICategoryAttributes extends IWebsiteAttributes {
+export interface ICategoryAttributes extends ITargetAttributes {
   objectId: string;
   updatedAt?: string;
   createdAt?: string;

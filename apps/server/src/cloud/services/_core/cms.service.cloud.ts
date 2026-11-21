@@ -2,8 +2,8 @@ import { COUNTRIES, DEFAULT_COUNTRY_CODE } from '@shared/constants';
 
 import type { Locale } from '@/types/app.type';
 
-
 import { getArticleTranslatedDefaultValues, getPageTranslatedDefaultValues } from '@/cloud/utils/_core/cms.utils.cloud';
+import { getMongoCollection } from '@/cloud/utils/_core/db.utils.cloud';
 import { DEFAULT_LANGUAGE, locales, translate } from '@/config/i18n';
 import {
   collections, DEFAULT_QUERY_LIMIT, LOCALES, USE_MASTER_KEY,
@@ -227,4 +227,44 @@ export const getArticleEditorContentHaystack = async (): Promise<string> => {
   }
 
   return contents.join('\n');
+};
+
+// the classes carrying the target fields: what an editor publishes on a website
+const TARGET_CLASS_NAMES = [collections.Article, collections.Page, collections.Category];
+
+/**
+ * Moves the target fields saved under their former names onto the current ones, on every article, page
+ * and category: `websites` becomes `targets` (the value `box` becomes `aldaron`) and the three
+ * `box*` fields become `offer*`. Done in the database itself, in one update per class, so no trigger
+ * runs (a saved article would otherwise clear the website's cache and may start a newsletter send).
+ * A row already moved no longer carries `websites`, so a second run changes nothing.
+ * @returns how many rows were moved, per class
+ */
+export const renameContentTargetFields = async (): Promise<Record<string, number>> => {
+  const moved: Record<string, number> = {};
+
+  for (const className of TARGET_CLASS_NAMES) {
+    const collection = await getMongoCollection(className);
+    const result = await collection.updateMany({ websites: { $exists: true } }, [
+      {
+        $set: {
+          targets: {
+            $map: {
+              input: '$websites',
+              as: 'website',
+              in: { $cond: [{ $eq: ['$$website', 'box'] }, 'aldaron', '$$website'] },
+            },
+          },
+          offerIncludes: '$boxIncludes',
+          offerPrice: '$boxPrice',
+          offerDurationDays: '$boxDurationDays',
+        },
+      },
+      { $unset: ['websites', 'boxIncludes', 'boxPrice', 'boxDurationDays'] },
+    ]);
+
+    moved[className] = result.modifiedCount;
+  }
+
+  return moved;
 };

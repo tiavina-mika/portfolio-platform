@@ -5,7 +5,9 @@ import chunk from 'lodash/chunk.js';
 import { destroyFiles, listFilesByFolder, type ICloudinaryFile } from '@/api/_core/cloudinary.api';
 import { logger } from '@/utils/_core/logger';
 
-import { getArticleEditorContentHaystack, getPageEditorContentHaystack } from '../../services/_core/cms.service.cloud';
+import {
+  getArticleEditorContentHaystack, getPageEditorContentHaystack, renameContentTargetFields,
+} from '../../services/_core/cms.service.cloud';
 import { defineJob } from '../../utils/_core/job.utils.cloud';
 
 type PurgeOrphanedEditorFilesParams = {
@@ -78,3 +80,15 @@ defineJob(
     logger.info(`purgeOrphanedEditorFilesJob: done, ${totalDeleted} orphaned file(s) deleted in total`);
   }
 );
+
+/**
+ * One-off migration: the target fields of articles, pages and categories were saved as `websites`
+ * and `box*` before they became `targets` and `offer*`. Run it once right after deploying the
+ * rename: until then a content kept for Aldaron alone (`websites: ['box']`) has no `targets` and
+ * would be read as the portfolio's. Safe to run again.
+ */
+defineJob('renameContentTargetFieldsJob', async (): Promise<void> => {
+  const moved = await renameContentTargetFields();
+
+  logger.info('renameContentTargetFieldsJob: done', moved);
+});

@@ -2,10 +2,10 @@ import { ARTICLE_SINGLE_IMAGE_FIELDS } from '@shared/validations';
 import Parse from 'parse';
 
 import { locales } from '@/config/i18n';
-import { ALL_PAGE_FIELDS, WEBSITE_FIELDS } from '@/constants/_core/cms.constants';
+import { ALL_PAGE_FIELDS, TARGET_FIELDS } from '@/constants/_core/cms.constants';
 import { IArticle, IArticleInput } from '@/types/_core/article.type';
 import { Locale } from '@/types/_core/setting.type';
-import { getCategoryPointersFromIds, getWebsiteValuesToSave } from '@/utils/_core/cms.utils';
+import { getCategoryPointersFromIds, getTargetValuesToSave } from '@/utils/_core/cms.utils';
 import { uploadFormFiles, uploadUpdatedFormFiles } from '@/utils/_core/file.utils';
 import { setValues, toJSONWithId } from '@/utils/_core/parse.utils';
 import { articleCodec } from '@/validations/_core/article.validations';
@@ -14,7 +14,7 @@ const collection = 'Article';
 const Article = Parse.Object.extend(collection);
 
 export const ARTICLE_PROPERTIES = new Set([
-  'translated', 'categories', 'viewsGoal', ...ALL_PAGE_FIELDS, ...WEBSITE_FIELDS,
+  'translated', 'categories', 'viewsGoal', ...ALL_PAGE_FIELDS, ...TARGET_FIELDS,
 ]);
 
 export const fetchArticle = async (id: string, include: string[] = []): Promise<IArticle | undefined> => {
@@ -113,7 +113,7 @@ export const saveArticle = async ({
     ...uploadValues,
     editorFiles: editorTempFiles,
     translated: articleCodec.decode(values),
-    ...getWebsiteValuesToSave(values),
+    ...getTargetValuesToSave(values),
   };
 
   if (values.categories) {

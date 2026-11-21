@@ -8,7 +8,7 @@
 - [Ce que l'on voit à l'écran](#ce-que-lon-voit-à-lécran)
   - [Détails (une version par langue)](#détails-une-version-par-langue)
   - [Actif](#actif)
-  - [Sites](#sites)
+  - [Publié sur](#publié-sur)
   - [Sommaire](#sommaire)
   - [Catégories](#catégories)
   - [Images](#images)
@@ -69,9 +69,9 @@ erreur est signalé. Champs de chaque langue :
 
 Un interrupteur, **activé par défaut** : un article actif est visible sur le site public.
 
-### Sites
+### Publié sur
 
-Une liste à choix multiples, **Portfolio** par défaut. On peut ajouter **Boîte** : l'article est réservé au site Aldaron quand « Boîte » est choisi seul. Dès que « Boîte » est choisi apparaissent le **contenu de la boîte** (Site web statique, Mobile, Back-office, Application web, au choix), le **prix en euros** et la **durée en jours**, tous facultatifs. Décocher « Boîte » efface ces trois informations. Pour l'instant ce choix est seulement enregistré : les sites publics ne l'utilisent pas encore.
+Une liste à choix multiples, **Portfolio** par défaut. On peut ajouter **Aldaron** : l'article est réservé au site Aldaron quand « Aldaron » est choisi seul. Dès que « Aldaron » est choisi apparaissent le **contenu de l’offre** (Site web statique, Mobile, Back-office, Application web, au choix), le **prix en euros** et la **durée en jours**, tous facultatifs. Décocher « Aldaron » efface ces trois informations. Le site portfolio n’affiche que les contenus publiés sur « Portfolio ».
 
 ### Sommaire
 

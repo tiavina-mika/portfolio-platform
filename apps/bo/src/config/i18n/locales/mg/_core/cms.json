@@ -347,16 +347,16 @@
     "sectionPreview": "Topi-maso ny fizarana",
     "loadingSection": "Eo am-pakana ny fizarana…"
   },
-  "website": {
-    "websites": "Tranokala",
-    "websitesHelper": "Tranokala aiza no aseho ity votoatiny ity. “Boaty” irery: natokana ho an’ny tranokalan’i Aldaron.",
+  "target": {
+    "targets": "Aseho ao amin’ny",
+    "targetsHelper": "Aiza no aseho ity votoatiny ity. “Aldaron” irery: natokana ho an’ny tranokalan’i Aldaron.",
     "portfolio": "Portfolio",
-    "box": "Boaty",
-    "boxOnlyHelper": "Natokana ho an’ny tranokalan’i Aldaron: tsy aseho ao amin’ny portfolio.",
-    "boxIncludes": "Votoatin’ny boaty",
-    "boxIncludesHelper": "Ny ao anatin’ny boaty.",
-    "boxPrice": "Vidiny (€) (tsy voatery)",
-    "boxDurationDays": "Faharetana (andro) (tsy voatery)",
+    "aldaron": "Aldaron",
+    "aldaronOnlyHelper": "Natokana ho an’ny tranokalan’i Aldaron: tsy aseho ao amin’ny portfolio.",
+    "offerIncludes": "Votoatin’ny tolotra",
+    "offerIncludesHelper": "Ny ao anatin’ny tolotra.",
+    "offerPrice": "Vidiny (€) (tsy voatery)",
+    "offerDurationDays": "Faharetana (andro) (tsy voatery)",
     "include": {
       "staticWebsite": "Tranokala statika",
       "mobile": "Mobile",

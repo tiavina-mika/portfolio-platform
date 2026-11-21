@@ -1,12 +1,12 @@
 import { DEFAULT_COUNTRY_CODE } from '@shared/constants';
-import { CategoryEntityEnum, WebsiteEnum } from '@shared/types';
+import { CategoryEntityEnum, TargetEnum } from '@shared/types';
 
 import { StatusDotColor } from '@/components/StatusDot';
 import i18n from '@/config/i18n';
 import { DEFAULT_LOCALE } from '@/constants/_core/app.constants';
 import {
   ARTICLE_DEFAULT_VIEWS_GOAL, AVERAGE_READING_WORDS_PER_MINUTE, CATEGORY_PATH_SEPARATOR,
-  categoryEntityOptions, DEFAULT_WEBSITES,
+  categoryEntityOptions, DEFAULT_TARGETS,
   imagePositionOptions, pageLinkLocationOptions,
 } from '@/constants/_core/cms.constants';
 import { Category } from '@/services/_core/category.service';
@@ -27,7 +27,7 @@ import {
   PageStatusEnum,
 } from '@/types/_core/page.type';
 import { Locale } from '@/types/_core/setting.type';
-import { IWebsiteAttributes } from '@/types/_core/website.type';
+import { ITargetAttributes } from '@/types/_core/target.type';
 import { getFileFromUrl } from '@/utils/_core/file.utils';
 import { getValues } from '@/utils/_core/parse.utils';
 import { getTranslatedField } from '@/utils/_core/settings.utils';
@@ -58,29 +58,29 @@ const getField = (obj: Record<string, any>, field: string): any =>
   (typeof obj.get === 'function' ? obj.get(field) : obj[field]);
 
 /**
- * The websites fields of a saved content, as the form edits them. A content saved before the
+ * The target fields of a saved content, as the form edits them. A content saved before the
  * fields existed has none, which reads as the portfolio alone.
  */
-export const getWebsiteInitialValues = (item: IWebsiteAttributes): IWebsiteAttributes => ({
-  websites: item.websites?.length ? item.websites : DEFAULT_WEBSITES,
-  boxIncludes: item.boxIncludes ?? [],
-  boxPrice: item.boxPrice,
-  boxDurationDays: item.boxDurationDays,
+export const getTargetInitialValues = (item: ITargetAttributes): ITargetAttributes => ({
+  targets: item.targets?.length ? item.targets : DEFAULT_TARGETS,
+  offerIncludes: item.offerIncludes ?? [],
+  offerPrice: item.offerPrice,
+  offerDurationDays: item.offerDurationDays,
 });
 
 /**
- * The websites fields of a form, as they are saved. What the box includes, costs and takes is only
- * kept while the box is one of the websites, and a field left empty is set to `null` too, so a value typed
- * before the box was unticked does not stay behind on the content.
+ * The target fields of a form, as they are saved. What the offer includes, costs and takes is only
+ * kept while Aldaron is one of the targets, and a field left empty is set to `null` too, so a value typed
+ * before Aldaron was unchecked does not stay behind on the content.
  */
-export const getWebsiteValuesToSave = (values: IWebsiteAttributes): Record<string, unknown> => {
-  const isBox = !!values.websites?.includes(WebsiteEnum.BOX);
+export const getTargetValuesToSave = (values: ITargetAttributes): Record<string, unknown> => {
+  const isAldaron = !!values.targets?.includes(TargetEnum.ALDARON);
 
   return {
-    websites: values.websites?.length ? values.websites : DEFAULT_WEBSITES,
-    boxIncludes: isBox ? values.boxIncludes ?? null : null,
-    boxPrice: isBox ? values.boxPrice ?? null : null,
-    boxDurationDays: isBox ? values.boxDurationDays ?? null : null,
+    targets: values.targets?.length ? values.targets : DEFAULT_TARGETS,
+    offerIncludes: isAldaron ? values.offerIncludes ?? null : null,
+    offerPrice: isAldaron ? values.offerPrice ?? null : null,
+    offerDurationDays: isAldaron ? values.offerDurationDays ?? null : null,
   };
 };
 
@@ -137,7 +137,7 @@ export const getArticleEditionInitialValues = async (
     // a flag set on the article only once an editor turned it on — absent reads as off
     hasTableOfContents: !!article.hasTableOfContents,
     country: article.country ?? DEFAULT_COUNTRY_CODE,
-    ...getWebsiteInitialValues(article),
+    ...getTargetInitialValues(article),
     ...articleCodec.encode(article.translated as Record<string, any>),
     // plain category ids — matches the preloaded Select's value shape (see ArticleForm)
     categories: getCategoriesPointersInitialValues(article, locale).map((option) => option.value),
@@ -255,7 +255,7 @@ export const getPageStepThreeEditionInitialValues = <O extends IPageAttributes |
     active: !!page.active,
     hasTableOfContents: !!page.hasTableOfContents,
     country: page.country ?? DEFAULT_COUNTRY_CODE,
-    ...getWebsiteInitialValues(page),
+    ...getTargetInitialValues(page),
     linkLocations: page.linkLocations || [],
     categories: getCategoriesPointersInitialValues(page, locale),
     code: page.code || '',
@@ -276,7 +276,7 @@ export const getFinalPageInitialValues = async <O extends IPage | null | undefin
       active: true,
       hasTableOfContents: false,
       country: DEFAULT_COUNTRY_CODE,
-      websites: DEFAULT_WEBSITES,
+      targets: DEFAULT_TARGETS,
       linkLocations: [],
       categories: [],
     };
@@ -303,14 +303,14 @@ export const getCategoryFormInitialValues = async (
 ): Promise<ICategoryInput> => {
   // ----------- creation ----------- //
   if (!category) {
-    return { active: true, websites: DEFAULT_WEBSITES };
+    return { active: true, targets: DEFAULT_TARGETS };
   }
   // ----------- update ----------- //
 
   const values: Record<string, any> = {
     ...getValues(category, ['active', 'entity', 'image', 'code']),
     ...categoryCodec.encode(category.translated as Record<string, any>),
-    ...getWebsiteInitialValues(category),
+    ...getTargetInitialValues(category),
     // nested pointer — only `objectId` is available, not `id` (see toJSONWithId doc comment)
     parentCategory: category.parentCategory
       ? category.parentCategory.objectId

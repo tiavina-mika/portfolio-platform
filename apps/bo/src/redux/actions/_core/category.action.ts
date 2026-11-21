@@ -36,7 +36,7 @@ import {
 import { Locale } from '@/types/_core/setting.type';
 import {
   getCategoryEntityLabel, getCategoryStatus, getCategoryTranslationsCount,
-  getTranslatedCategoryStatusLabel, getWebsiteValuesToSave,
+  getTranslatedCategoryStatusLabel, getTargetValuesToSave,
 } from '@/utils/_core/cms.utils';
 import { displayDate } from '@/utils/_core/date.utils';
 import { isUpdatedFileChanged, uploadFilesAPI } from '@/utils/_core/file.utils';
@@ -190,7 +190,7 @@ export const createCategory = (
     const newValues: Record<string, any> = {
       ...values,
       translated: categoryCodec.decode(values),
-      ...getWebsiteValuesToSave(values),
+      ...getTargetValuesToSave(values),
       parentCategory: values.parentCategory
         ? convertIdToPointer<any>('Category', values.parentCategory as string)
         : undefined,
@@ -261,7 +261,7 @@ export const editCategory = (
     const newValues: Record<string, any> = {
       ...values,
       translated: categoryCodec.decode(values),
-      ...getWebsiteValuesToSave(values),
+      ...getTargetValuesToSave(values),
       parentCategory: values.parentCategory
         ? convertIdToPointer<any>('Category', values.parentCategory as string)
         : undefined,

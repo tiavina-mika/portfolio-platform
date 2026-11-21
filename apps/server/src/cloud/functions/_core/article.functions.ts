@@ -8,7 +8,7 @@ import {
 import { searchUserPointerQuery } from '../../services/_core/user.service.cloud';
 import { Article } from '../../triggers/_core/article.triggers';
 import {
-  contentCountriesQuery, contentCountryQuery, contentWebsiteQuery, convertIdToPointer, convertIdsToPointer,
+  contentCountriesQuery, contentCountryQuery, contentTargetQuery, convertIdToPointer, convertIdsToPointer,
   filtersDatesQuery,
   multiBooleanQuery,
 } from '../../utils/_core/parse.utils.cloud';
@@ -159,7 +159,7 @@ Parse.Cloud.define(
   'getArticleForClient',
   parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<Parse.Object | false> => {
     const {
-      slug, locale, defaultLocale, country, website,
+      slug, locale, defaultLocale, country, target,
     } = request.params;
     let query = new Parse.Query(Article);
 
@@ -172,7 +172,7 @@ Parse.Cloud.define(
 
     contentCountryQuery(query, country);
 
-    const article = await contentWebsiteQuery(query, website)
+    const article = await contentTargetQuery(query, target)
       .equalTo('deleted', false)
       .equalTo('active', true)
       .include(['categories', 'user'])

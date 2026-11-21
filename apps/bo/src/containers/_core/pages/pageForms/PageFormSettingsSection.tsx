@@ -11,7 +11,7 @@ import TextField from '@/components/form/fields/TextField';
 import { pageLinkLocationOptions } from '@/constants/_core/cms.constants';
 import { SETTINGS_ROW_GAP } from '@/constants/_core/ui.constants';
 import CmsCountryField from '@/containers/_core/cms/CmsCountryField';
-import CmsWebsiteFields from '@/containers/_core/cms/CmsWebsiteFields';
+import CmsTargetFields from '@/containers/_core/cms/CmsTargetFields';
 import { IPageFormInput } from '@/types/_core/page.type';
 import { formatTechnicalCode } from '@/utils/_core/utils';
 
@@ -60,8 +60,8 @@ const PageFormSettingsSection = () => {
         <CmsCountryField />
         <Divider />
 
-        {/* the websites showing this content, and what the box costs when it is one of them */}
-        <CmsWebsiteFields />
+        {/* where this content is published, and what the Aldaron offer costs when it is one of them */}
+        <CmsTargetFields />
         <Divider />
 
         {/* a table of contents of the content's headings, shown on the website */}

@@ -11,7 +11,7 @@ import CardFormBlock from '@/components/form/CardFormBlock';
 import DropzoneField from '@/components/form/dropzone/DropzoneField';
 import Form from '@/components/form/Form';
 import FullScreenDialog from '@/components/FullScreenDialog';
-import { CATEGORY_PATH_SEPARATOR, DEFAULT_WEBSITES } from '@/constants/_core/cms.constants';
+import { CATEGORY_PATH_SEPARATOR, DEFAULT_TARGETS } from '@/constants/_core/cms.constants';
 import { ACCEPTED_IMAGE_TYPES, MAX_IMAGE_SIZE_BYTES } from '@/constants/_core/file.constants';
 import {
   CATEGORY_FORM_COLUMN_GAP, CATEGORY_FORM_GAP, CATEGORY_FORM_PADDING, CATEGORY_FORM_PHONE_PADDING,
@@ -106,7 +106,7 @@ const CategoryFormDialog = ({
 
   const form = useForm<ICategoryInput>({
     resolver: zodResolver(categorySchema),
-    defaultValues: { active: true, entity: lockedEntity ?? defaultEntity, websites: DEFAULT_WEBSITES },
+    defaultValues: { active: true, entity: lockedEntity ?? defaultEntity, targets: DEFAULT_TARGETS },
   });
 
   const {
@@ -127,7 +127,7 @@ const CategoryFormDialog = ({
 
     const init = async () => {
       if (!category) {
-        reset({ active: true, entity: lockedEntity ?? defaultEntity, websites: DEFAULT_WEBSITES });
+        reset({ active: true, entity: lockedEntity ?? defaultEntity, targets: DEFAULT_TARGETS });
         return;
       }
 

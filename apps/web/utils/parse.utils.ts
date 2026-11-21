@@ -1,4 +1,4 @@
-import { WebsiteEnum } from '@shared/types';
+import { TargetEnum } from '@shared/types';
 import { getContentCountryConstraint } from '@shared/utils';
 
 
@@ -174,21 +174,21 @@ export const withContentCountry = <Q extends CountryQuery>(query: Q): Q => {
 type ParseQuery = InstanceType<ReturnType<typeof getParseServer>['Query']>;
 
 /**
- * Keeps the editorial content (articles, pages, categories) written for this website, the
- * portfolio. The rows saved before the field existed carry no `websites` and are the portfolio's
- * too, while a content that names only the box belongs to the Aldaron website and stays out.
+ * Keeps the editorial content (articles, pages, categories) published on this website, the
+ * portfolio. The rows saved before the field existed carry no `targets` and are the portfolio's
+ * too, while a content that names only `aldaron` belongs to the Aldaron website and stays out.
  * @param query the query to narrow, before any `select`/`include`: it is wrapped in a new query,
  * so the caller chains the rest on the returned one
  * @returns the narrowed query
  */
-export const withContentWebsite = (query: ParseQuery): ParseQuery => {
+export const withContentTarget = (query: ParseQuery): ParseQuery => {
   const parse = getParseServer();
 
   return parse.Query.and(
     query,
     parse.Query.or(
-      new parse.Query(query.className).equalTo('websites', WebsiteEnum.PORTFOLIO),
-      new parse.Query(query.className).doesNotExist('websites')
+      new parse.Query(query.className).equalTo('targets', TargetEnum.PORTFOLIO),
+      new parse.Query(query.className).doesNotExist('targets')
     )
   );
 };

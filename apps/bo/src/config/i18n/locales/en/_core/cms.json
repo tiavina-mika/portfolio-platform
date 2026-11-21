@@ -347,16 +347,16 @@
     "sectionPreview": "Section preview",
     "loadingSection": "Loading the section…"
   },
-  "website": {
-    "websites": "Websites",
-    "websitesHelper": "Which websites show this content. “Box” alone: reserved for the Aldaron website.",
+  "target": {
+    "targets": "Published on",
+    "targetsHelper": "Where this content is published. “Aldaron” alone: reserved for the Aldaron website.",
     "portfolio": "Portfolio",
-    "box": "Box",
-    "boxOnlyHelper": "Reserved for the Aldaron website: not shown on the portfolio.",
-    "boxIncludes": "Box content",
-    "boxIncludesHelper": "What the box includes.",
-    "boxPrice": "Price (€) (optional)",
-    "boxDurationDays": "Duration (days) (optional)",
+    "aldaron": "Aldaron",
+    "aldaronOnlyHelper": "Reserved for the Aldaron website: not shown on the portfolio.",
+    "offerIncludes": "Offer content",
+    "offerIncludesHelper": "What the offer includes.",
+    "offerPrice": "Price (€) (optional)",
+    "offerDurationDays": "Duration (days) (optional)",
     "include": {
       "staticWebsite": "Static website",
       "mobile": "Mobile",
