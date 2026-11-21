@@ -74,7 +74,7 @@ jobs:
           NEXT_PUBLIC_SERVER_URL: http://127.0.0.1:9/parse
           NEXT_PUBLIC_APP_URL: http://localhost:3000
           NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ci
-        run: pnpm nx affected -t build --projects=aldaron-web
+        run: pnpm nx run aldaron-web:build
 
       # the docs sites are copied into the server's `clientBuild/docs/`, which the deployment serves:
       # `docs:build` above only proves VitePress compiles, not that this copy works
