@@ -1,98 +1,62 @@
-import { useTranslations } from 'next-intl';
+import { ReactNode } from 'react';
 
-import { buttonVariants } from '@/components/buttons/Button';
-import TextLink from '@/components/typography/TextLink';
+import ScreenshotPlaceholder from '@/components/ScreenshotPlaceholder';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardImage,
-  CardTitle,
+  Card, CardContent, CardDescription, CardEyebrow, CardHeader, CardTitle,
 } from '@/components/ui/Card';
-import { cn } from '@/utils/app.utils';
 
-export type ProjectCardData = {
-  id: string;
+export type ProjectFact = {
+  label: string;
+  // a text, or a price that follows the currency the visitor chose
+  value: ReactNode;
+};
+
+type Props = {
   name: string;
-  description: string;
   /**
-   * Address of the project page
+   * The field of the project, above its name: "Delivery", "Health"
    */
-  href: any;
+  eyebrow: string;
+  summary: string;
   /**
-   * The preview picture, sized for the device. Without it the card has no picture
+   * What the placeholder says it stands for: "Product screenshot"
    */
-  imageUrl?: string;
+  screenshotLabel: string;
   /**
-   * Text alternative of the picture
+   * The scope of the project, one row each: supports, screens, lead time, price
    */
-  imageAlt?: string;
+  facts: ProjectFact[];
 };
 
 /**
- * A project of the portfolio as a card with one click zone: the name is the link and is stretched over
- * the whole card, so the link is named by the project alone. The "see more" button is only a cue.
+ * A delivered project: its field, name and summary, its screenshot, then the facts of its scope
  */
 const ProjectCard = ({
-  name, description, href, imageUrl, imageAlt,
-}: ProjectCardData) => {
-  const t = useTranslations('Common');
-
-  return (
-    <Card
-      isInteractive
-      className={`
-        group relative gap-5
-        lg:gap-0
-      `}
-    >
-      <CardHeader>
-        {imageUrl && (
-          <CardImage
-            alt={imageAlt || ''}
-            loading="lazy"
-            objectSize="scale-down"
-            src={imageUrl}
-            className={`
-              transition-transform duration-500 ease-in-out
-              group-hover:scale-105
-              motion-reduce:transition-none motion-reduce:group-hover:scale-100
-            `}
-          />
-        )}
-      </CardHeader>
-      <CardContent>
-        <CardTitle level={5}>
-          <TextLink
-            href={href}
-            underline={false}
-            useChildSpan={false}
-            className={`
-              group-hover:text-brand-text group-hover:underline
-              after:absolute after:inset-0 after:content-['']
-              focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-ring
-            `}
+  name, eyebrow, summary, screenshotLabel, facts,
+}: Props) => (
+  <Card as="article" className="h-full">
+    <CardHeader>
+      <div>
+        <CardEyebrow>{eyebrow}</CardEyebrow>
+        <CardTitle gutterBottom={false} level={2}>{name}</CardTitle>
+        <CardDescription>{summary}</CardDescription>
+      </div>
+    </CardHeader>
+    <CardContent className="flex-1 gap-5">
+      <ScreenshotPlaceholder label={screenshotLabel} />
+      <dl className="m-0 grid">
+        {facts.map(fact => (
+          <div
+            className="flex justify-between gap-4 border-t border-border py-2.5 text-[15px] leading-[1.4]"
+            key={fact.label}
           >
-            {name}
-          </TextLink>
-        </CardTitle>
-        <CardDescription size="md">{description}</CardDescription>
-      </CardContent>
-      <CardFooter className="flex flex-1 items-end self-stretch">
-        <span
-          aria-hidden
-          className={cn(
-            buttonVariants({ variant: 'outline' }),
-            'w-full'
-          )}
-        >
-          {t('seeMore')}
-        </span>
-      </CardFooter>
-    </Card>
-  );
-};
+            <dt className="text-muted-foreground">{fact.label}</dt>
+            <dd className="m-0 text-right font-mono text-sm font-medium">{fact.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </CardContent>
+  </Card>
+);
 
 export default ProjectCard;

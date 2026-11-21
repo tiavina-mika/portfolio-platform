@@ -52,8 +52,8 @@ const nextConfig = {
    * names, so the links already indexed or shared keep working
    */
   redirects: () => [
-    { source: '/:locale(fr|en)/articles', destination: '/:locale/blog', permanent: true },
-    { source: '/:locale(fr|en)/articles/:path*', destination: '/:locale/blog/:path*', permanent: true },
+    { source: '/:locale(fr|en|mg)/articles', destination: '/:locale/blog', permanent: true },
+    { source: '/:locale(fr|en|mg)/articles/:path*', destination: '/:locale/blog/:path*', permanent: true },
     { source: '/en/contact-me', destination: '/en/contact', permanent: true },
     { source: '/fr/contactez-moi', destination: '/fr/contact', permanent: true },
   ],

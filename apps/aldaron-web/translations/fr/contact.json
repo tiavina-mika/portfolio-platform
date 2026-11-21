@@ -1,0 +1,52 @@
+{
+  "ContactPage": {
+    "metadata": {
+      "title": "Demander un devis ferme",
+      "description": "Décrivez votre produit : le cadrage est gratuit et nous revenons vers vous avec un devis ferme."
+    },
+    "og": {
+      "chip": "Contact",
+      "title": "Parlons de votre produit.",
+      "subtitle": "Le cadrage est gratuit. Nous revenons vers vous avec un devis ferme."
+    },
+    "label": "Contact",
+    "title": "Parlons de votre produit.",
+    "subtitle": "Le cadrage est gratuit. Nous revenons vers vous avec un devis ferme.",
+    "name": "Nom",
+    "email": "E-mail",
+    "product": "Votre produit en une ou deux phrases",
+    "supports": "Supports",
+    "supportsHint": "Plusieurs choix possibles.",
+    "supportOptions": {
+      "web": "Site web statique",
+      "app": "Application web",
+      "mobile": "Application mobile",
+      "bo": "Back-office"
+    },
+    "bring": "Ce que vous apportez",
+    "bringOptions": {
+      "idea": "Une idée",
+      "spec": "Un cahier des charges",
+      "mockup": "Une maquette"
+    },
+    "estimate": "Estimation du simulateur",
+    "estimateHint": "Reprise de votre estimation. Vous pouvez la modifier.",
+    "needs": "Principaux besoins",
+    "needsHint": "Un besoin par ligne.",
+    "consent": "J'accepte que mes données soient utilisées pour répondre à ma demande.",
+    "errors": {
+      "name": "Indiquez votre nom.",
+      "email": "Indiquez une adresse e-mail valide.",
+      "product": "Décrivez votre produit en une ou deux phrases.",
+      "supports": "Choisissez au moins un support.",
+      "consent": "Acceptez pour envoyer votre demande."
+    },
+    "submit": "Demander un devis ferme",
+    "sending": "Envoi en cours…",
+    "note": "Ce n'est pas un devis automatique : nous répondons personnellement.",
+    "sent": "Merci, votre demande est envoyée. Nous vous répondons personnellement.",
+    "failTitle": "Votre demande n'a pas pu être envoyée",
+    "failText": "Réessayez dans un instant ou écrivez-nous à contact@aldaron.eu.",
+    "offline": "Vous êtes hors ligne. Vous pourrez envoyer votre demande dès le retour de la connexion."
+  }
+}

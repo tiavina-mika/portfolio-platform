@@ -20,11 +20,18 @@ type Story = StoryObj<typeof meta>;
 export const NavBar: Story = {
   args: {
     menus: [
-      { label: 'Home', value: '/' },
-      { label: 'Projects', value: '/projects' },
-      { label: 'Blog', value: '/blog' },
-      { label: 'Contact', value: '/contact' },
+      { id: 'pricing', label: 'Offer and pricing', value: '/pricing' },
+      { id: 'simulator', label: 'Simulator', value: '/simulator' },
+      { id: 'projects', label: 'Projects', value: '/projects' },
+      { id: 'about', label: 'About', value: '/about' },
+      { id: 'contact', label: 'Contact', value: '/contact' },
     ],
-    locale: 'en',
+  },
+};
+
+export const Mobile: Story = {
+  ...NavBar,
+  globals: {
+    viewport: { value: 'mobile1', isRotated: false },
   },
 };

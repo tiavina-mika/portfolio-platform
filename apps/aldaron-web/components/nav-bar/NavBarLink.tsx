@@ -1,7 +1,5 @@
 'use client';
 
-import { ChevronRight } from 'lucide-react';
-
 import { usePathname } from '@/i18n/routing';
 import { IMenu } from '@/types/app.type';
 import { cn, isLinkActive } from '@/utils/app.utils';
@@ -20,7 +18,8 @@ type Props = {
 };
 
 /**
- * A page link of the navigation. The current page is told with `aria-current`, never by color alone.
+ * A page link of the navigation. The current page is told with `aria-current` and a line under the
+ * link, never by color alone.
  */
 const NavBarLink = ({
   label, href, variant = 'inline', onClick,
@@ -34,16 +33,23 @@ const NavBarLink = ({
       onClick={onClick}
       underline={false}
       className={cn(
-        'flex flex-row justify-between py-3 font-medium',
-        { 'text-brand-text': isActive },
-        variant === 'inline' && 'md:py-0',
-        variant === 'row' && 'w-full'
+        `
+          flex min-h-11 flex-row items-center text-[15px] font-medium transition-colors duration-120
+          hover:text-foreground
+          motion-reduce:transition-none
+        `,
+        isActive ? 'text-foreground' : 'text-muted-foreground',
+        variant === 'inline' && cn('px-3', isActive && 'shadow-[inset_0_-2px_0_var(--brand)]'),
+        variant === 'row' && cn(
+          `
+            w-full rounded-md px-3
+            hover:bg-muted
+          `,
+          isActive && 'bg-muted'
+        )
       )}
     >
       {label}
-      {variant === 'row' && (
-        <ChevronRight aria-hidden className="text-muted-foreground" size={18} />
-      )}
     </TextLink>
   );
 };

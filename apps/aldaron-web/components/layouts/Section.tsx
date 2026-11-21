@@ -28,6 +28,10 @@ export type SectionProps = {
    * names the section for screen readers, when it has no visible heading
    */
   'aria-label'?: string;
+  /**
+   * the target of an anchor link
+   */
+  id?: string;
 };
 
 const Section = ({
@@ -40,11 +44,13 @@ const Section = ({
   size = 'xl',
   'aria-labelledby': ariaLabelledBy,
   'aria-label': ariaLabel,
+  id,
 }: SectionProps) => {
   return (
     <Component
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
+      id={id}
       className={cn(
         'flex flex-row items-center justify-center self-stretch',
         rootClassName

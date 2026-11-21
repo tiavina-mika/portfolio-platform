@@ -1,0 +1,52 @@
+{
+  "ContactPage": {
+    "metadata": {
+      "title": "Angataho ny tolo-bidy raikitra",
+      "description": "Faritano ny vokatrao: maimaim-poana ny fandrafetana ary hiverina aminao miaraka amin'ny tolo-bidy raikitra izahay."
+    },
+    "og": {
+      "chip": "Fifandraisana",
+      "title": "Resaho ny vokatrao.",
+      "subtitle": "Maimaim-poana ny fandrafetana. Hiverina aminao miaraka amin'ny tolo-bidy raikitra izahay."
+    },
+    "label": "Fifandraisana",
+    "title": "Resaho ny vokatrao.",
+    "subtitle": "Maimaim-poana ny fandrafetana. Hiverina aminao miaraka amin'ny tolo-bidy raikitra izahay.",
+    "name": "Anarana",
+    "email": "E-mailaka",
+    "product": "Ny vokatrao amin'ny fehezanteny iray na roa",
+    "supports": "Fitaovana",
+    "supportsHint": "Azo atao ny safidy maromaro.",
+    "supportOptions": {
+      "web": "Tranonkala static",
+      "app": "Application web",
+      "mobile": "Application finday",
+      "bo": "Back-office"
+    },
+    "bring": "Izay entinao",
+    "bringOptions": {
+      "idea": "Hevitra",
+      "spec": "Taratasy fepetra",
+      "mockup": "Maquette"
+    },
+    "estimate": "Tombana avy amin'ny mpanao kajy",
+    "estimateHint": "Alaina avy amin'ny tombanao. Azonao ovaina.",
+    "needs": "Filana lehibe",
+    "needsHint": "Filana iray isaky ny andalana.",
+    "consent": "Manaiky aho fa ampiasaina hamaliana ny fangatahako ny angon-drakitro.",
+    "errors": {
+      "name": "Soraty ny anaranao.",
+      "email": "Soraty adiresy e-mailaka marina.",
+      "product": "Faritano amin'ny fehezanteny iray na roa ny vokatrao.",
+      "supports": "Safidio farafahakeliny ny fitaovana iray.",
+      "consent": "Ekeo mba handefasana ny fangatahanao."
+    },
+    "submit": "Angataho ny tolo-bidy raikitra",
+    "sending": "Alefa…",
+    "note": "Tsy tolo-bidy mandeha ho azy ity : mamaly anao manokana izahay.",
+    "sent": "Misaotra, lasa ny fangatahanao. Mamaly anao manokana izahay.",
+    "failTitle": "Tsy lasa ny fangatahanao",
+    "failText": "Avereno afaka fotoana fohy, na soraty amin'ny contact@aldaron.eu.",
+    "offline": "Tsy mifandray ianao. Azonao alefa ny fangatahanao rehefa miverina ny fifandraisana."
+  }
+}

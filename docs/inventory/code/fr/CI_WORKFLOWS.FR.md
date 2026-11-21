@@ -27,10 +27,10 @@ Les workflows sont dans `.github/workflows/`. Les secrets et variables qu'ils li
 
 | Job | Ce qu'il lance |
 |---|---|
-| Lint, typecheck and build affected projects | `nx affected -t lint`, `typecheck`, `build --exclude=web`, `build-docs`, puis `pnpm check-i18n` |
+| Lint, typecheck and build affected projects | `nx affected -t lint`, `typecheck`, `build --exclude=web,aldaron-web`, un build `aldaron-web` à part, `build-docs`, puis `pnpm check-i18n` |
 | Render build (production or pre-production) | Sur les PR vers `main` (production) et `develop` (préproduction) : install, `vite build` du back-office, build du serveur et `copy`, avec des valeurs `VITE_*` factices, puis vérifie que le bundle copié contient `index.html` et des scripts |
 | Conventional commit messages | `commitlint` sur les commits ajoutés par une PR |
-| Unit tests of affected projects | `nx affected -t test --exclude=server,web` |
+| Unit tests of affected projects | `nx affected -t test --exclude=server,web,aldaron-web` |
 | Build affected Storybooks | `nx affected -t build-sb` |
 | Markdown lint and broken links | `pnpm lint:docs`, `pnpm check-doc-links` et `pnpm check-doc-twins` contre la branche de base, plus une vérification de liens `lychee` |
 
@@ -49,7 +49,7 @@ Un nouveau push sur la même PR annule l'exécution précédente.
 
 ## Storybook et tests visuels
 
-- `storybook-tests.yml` lance les tests Storybook du web de façon planifiée.
+- `storybook-tests.yml` lance les tests Storybook du web et d'aldaron-web de façon planifiée.
 - `chromatic.yml` publie les Storybooks sur Chromatic ; l'exécution planifiée est ignorée si `develop` n'a aucun commit des quatre derniers jours.
 
 ## Lighthouse
@@ -59,6 +59,7 @@ Un nouveau push sur la même PR annule l'exécution précédente.
 ## Pièges
 
 - `web` est exclu du build CI : `next build` lit le CMS depuis l'API Parse en ligne, qu'un runner CI ne peut pas joindre. Sa compilation est couverte par `web:typecheck`.
+- `aldaron-web` est construit dans la CI avec des valeurs d'environnement factices et un serveur injoignable : ses requêtes de contenu interceptent l'échec du fetch, les pages sont donc prérendues sans contenu, ce qui suffit à détecter une erreur de prérendu de production avant un déploiement.
 - La PR de release est ouverte avec `RELEASE_TOKEN` et non avec le `GITHUB_TOKEN` par défaut, sinon les vérifications requises ne s'exécuteraient jamais dessus.
 - Les workflows planifiés s'exécutent sur la branche par défaut (`main`), qui ne bouge qu'à une release.
 - `lighthouserc.json` est référencé par `lighthouse.yml` mais n'est pas à la racine du dépôt aujourd'hui.

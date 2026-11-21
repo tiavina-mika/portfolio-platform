@@ -1,35 +1,133 @@
 {
-  "HomeHero": {
-    "loading": "Loading the introduction",
-    "error": "The introduction could not be loaded.",
-    "offline": "You are offline. The introduction will show as soon as the connection is back."
-  },
-  "HomeServices": {
-    "title": "Why me?",
-    "items": {
-      "1": {
-        "title": "Develop a Project from A to Z",
-        "description": "I handle all stages of development, including technology selection, technical architecture, development, database integration, and deployment to production environments."
-      },
-      "2": {
-        "title": "Strengthen, integrate, or lead a team",
-        "description": "Collaborate effectively within an existing team to enhance its skills, optimize processes, and ensure project success by contributing my deep technical expertise and a results-oriented approach."
-      },
-      "3": {
-        "title": "Potential CTO of a Startup",
-        "description": "As a potential CTO of a startup, I can define technology strategies and guide technical decisions to ensure the company's growth and innovation."
-      },
-      "4": {
-        "title": "Competitive Pricing",
-        "description": "I offer competitive pricing for startups and SMEs, providing expertise equivalent to premium services, while ensuring solutions tailored to specific needs and market requirements."
+  "Home": {
+    "hero": {
+      "eyebrow": "Web and mobile development for startups",
+      "title": "Your product, at a fixed price, screen by screen.",
+      "description": "Website, web app or mobile app, with a back office if needed. The price depends on scope and is fixed at signing.",
+      "ctaSimulator": "Estimate my price",
+      "ctaPricing": "See the offer and pricing",
+      "facts": {
+        "1": "From €1,500",
+        "2": "Fixed price at signing",
+        "3": "30 days of bug fixes"
       }
+    },
+    "supports": {
+      "eyebrow": "What we build",
+      "title": "Four platforms, a price per screen.",
+      "description": "A distinct view counts as one screen; its states and variants are included.",
+      "minimumNote": "Minimum order: €1,500 for web, €2,500 as soon as mobile is involved.",
+      "items": {
+        "1": {
+          "eyebrow": "Web",
+          "title": "Static website",
+          "description": "Portfolio, showcase site, product landing page, nonprofit site.",
+          "price": "€25 / screen"
+        },
+        "2": {
+          "eyebrow": "Web",
+          "title": "Web app",
+          "description": "SaaS, dashboard, customer portal, booking platform, internal tool.",
+          "price": "€18 to €30 / screen"
+        },
+        "3": {
+          "eyebrow": "Mobile",
+          "title": "Mobile app",
+          "description": "iOS and Android app, published on the App Store and Google Play.",
+          "price": "€25 / screen"
+        },
+        "4": {
+          "eyebrow": "Administration",
+          "title": "Back office",
+          "description": "Content, user and order management, moderation, statistics, exports.",
+          "price": "€37.50 / screen"
+        }
+      }
+    },
+    "included": {
+      "eyebrow": "What is included",
+      "title": "What the price covers, and what it does not.",
+      "yes": {
+        "eyebrow": "Included",
+        "title": "In every project",
+        "items": {
+          "1": "Production release",
+          "2": "Publication on the App Store and Google Play",
+          "3": "Handover of code and accounts",
+          "4": "30 days of bug fixes"
+        }
+      },
+      "no": {
+        "eyebrow": "Not included",
+        "title": "Paid by you",
+        "items": {
+          "1": "Hosting and third-party services, store accounts: paid directly by you.",
+          "2": "Optional maintenance from €150 to €400 per month."
+        }
+      }
+    },
+    "process": {
+      "eyebrow": "Process",
+      "title": "Four steps, three payments.",
+      "steps": {
+        "1": {
+          "title": "Scoping",
+          "description": "Free. We define the scope and you receive a firm quote."
+        },
+        "2": {
+          "title": "Signing",
+          "description": "The price is fixed and does not change. Mockups are approved before development.",
+          "payment": "40%"
+        },
+        "3": {
+          "title": "Demo",
+          "description": "Halfway through, we present the product to you.",
+          "payment": "30%"
+        },
+        "4": {
+          "title": "Launch",
+          "description": "Production release, publication and code handover.",
+          "payment": "30%"
+        }
+      }
+    },
+    "projects": {
+      "eyebrow": "Projects",
+      "title": "Products delivered at a fixed price.",
+      "all": "See all projects",
+      "screenshot": "Product screenshot",
+      "weeks": "weeks",
+      "supports": {
+        "mobile": "Mobile",
+        "backOffice": "Back office",
+        "webApp": "Web app",
+        "website": "Website"
+      },
+      "items": {
+        "1": {
+          "eyebrow": "Delivery",
+          "summary": "Meal delivery app for an Antananarivo startup, with a back office to follow orders and couriers."
+        },
+        "2": {
+          "eyebrow": "Health",
+          "summary": "Online appointment booking for medical practices, with a management area for practitioners."
+        },
+        "3": {
+          "eyebrow": "Travel",
+          "summary": "Showcase site for a tour operator: tours, gallery, quote request form."
+        }
+      }
+    },
+    "simulator": {
+      "eyebrow": "Price simulator",
+      "title": "Estimate the price of your product",
+      "description": "Answer the questions: the estimate updates with every answer.",
+      "cta": "Open the simulator"
+    },
+    "contact": {
+      "title": "Let's talk about your product.",
+      "description": "Scoping is free. We come back to you with a firm quote.",
+      "cta": "Request a firm quote"
     }
-  },
-  "HomeProjects": {
-    "description": "Since 2016, I have had the opportunity to work on a variety of projects, ranging from the development of dynamic websites to the creation of complex web applications."
-  },
-  "HomeContact": {
-    "title": "Let's talk together",
-    "description": "Do not hesitate to contact me. I am always open to discuss new projects, innovative ideas or new opportunities."
   }
 }

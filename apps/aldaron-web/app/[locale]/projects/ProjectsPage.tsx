@@ -1,37 +1,45 @@
-import { ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
 
-type Props = {
-  /**
-   * The breadcrumbs, the title and the introduction
-   */
-  header: ReactNode;
-  /**
-   * The list of projects with its pagination. It loads its own data (and carries its own loading
-   * and error states), so the route streams it
-   */
-  projects: ReactNode;
-};
+import ButtonLink from '@/components/buttons/ButtonLink';
+import PageHero from '@/components/layouts/PageHero';
+import Section from '@/components/layouts/Section';
+import ProjectsGallery from '@/containers/project/ProjectsGallery';
+import { ROUTES } from '@/i18n/routes';
+import { PROJECTS } from '@/utils/project.constants';
 
 /**
- * The projects page layout: the header above the list. Each part owns its band, so the page only
- * sets the order
+ * The projects page: the hero, then the delivered projects and the way to estimate one's own
  */
-const ProjectsPage = ({ header, projects }: Props) => (
-  <div className={`
-    flex flex-col self-stretch pb-6
-    md:pb-8
-    lg:pb-16
-  `}
-  >
-    {header}
-    <div className={`
-      flex flex-col self-stretch pt-10
-      lg:pt-20
-    `}
-    >
-      {projects}
+const ProjectsPage = () => {
+  const t = useTranslations('ProjectsPage');
+
+  return (
+    <div className="flex flex-col self-stretch">
+      <PageHero
+        description={t('description')}
+        eyebrow={t('eyebrow')}
+        title={t('title')}
+        className={`
+          pb-6
+          md:pb-10
+        `}
+      />
+      <Section
+        as="section"
+        className={`
+          flex-col gap-10 pb-10
+          md:pb-16
+        `}
+      >
+        <ProjectsGallery projects={PROJECTS} />
+        <div>
+          <ButtonLink href={ROUTES.simulator} size="lg" variant="outline">
+            {t('estimate')}
+          </ButtonLink>
+        </div>
+      </Section>
     </div>
-  </div>
-);
+  );
+};
 
 export default ProjectsPage;

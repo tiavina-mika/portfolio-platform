@@ -1,35 +1,133 @@
 {
-  "HomeHero": {
-    "loading": "Chargement de la présentation",
-    "error": "La présentation n'a pas pu être chargée.",
-    "offline": "Vous êtes hors ligne. La présentation s'affichera dès le retour de la connexion."
-  },
-  "HomeServices": {
-    "title": "Pourquoi moi ?",
-    "items": {
-      "1": {
-        "title": "Monter un projet de A à Z",
-        "description": "De la conception technique à la mise en ligne, je gère chaque étape et je choisis avec vous les technologies adaptées."
-      },
-      "2": {
-        "title": "Un renfort technique, un lead si besoin",
-        "description": "Développeur dans l'équipe ou référent technique, j'apporte mon expertise pour fiabiliser vos livraisons."
-      },
-      "3": {
-        "title": "Votre futur CTO",
-        "description": "Je définis la stratégie technologique et j'accompagne les décisions techniques pour soutenir la croissance et l'innovation de votre startup."
-      },
-      "4": {
-        "title": "Des tarifs adaptés aux startups et PME",
-        "description": "Une expertise de niveau haut de gamme à un tarif compétitif, avec des solutions ajustées à vos besoins et à votre marché."
+  "Home": {
+    "hero": {
+      "eyebrow": "Développement web et mobile pour startups",
+      "title": "Votre produit, à prix fixe, écran par écran.",
+      "description": "Site web, application web ou mobile, avec back-office si besoin. Le prix dépend du périmètre et il est fixé à la signature.",
+      "ctaSimulator": "Estimer mon prix",
+      "ctaPricing": "Voir l'offre et les prix",
+      "facts": {
+        "1": "À partir de 1 500 €",
+        "2": "Prix fixe à la signature",
+        "3": "30 jours de correction de bugs"
       }
+    },
+    "supports": {
+      "eyebrow": "Ce que nous construisons",
+      "title": "Quatre supports, un prix par écran.",
+      "description": "Une vue distincte compte pour un écran ; ses états et variantes sont inclus.",
+      "minimumNote": "Minimum de commande : 1 500 € pour le web, 2 500 € dès qu'il y a du mobile.",
+      "items": {
+        "1": {
+          "eyebrow": "Web",
+          "title": "Site web statique",
+          "description": "Portfolio, site vitrine, page de présentation d'un produit, site associatif.",
+          "price": "25 € / écran"
+        },
+        "2": {
+          "eyebrow": "Web",
+          "title": "Application web",
+          "description": "SaaS, tableau de bord, espace client, plateforme de réservation, outil interne.",
+          "price": "18 à 30 € / écran"
+        },
+        "3": {
+          "eyebrow": "Mobile",
+          "title": "Application mobile",
+          "description": "Application iOS et Android, publiée sur l'App Store et Google Play.",
+          "price": "25 € / écran"
+        },
+        "4": {
+          "eyebrow": "Administration",
+          "title": "Back-office",
+          "description": "Gestion des contenus, des utilisateurs et des commandes, modération, statistiques, exports.",
+          "price": "37,50 € / écran"
+        }
+      }
+    },
+    "included": {
+      "eyebrow": "Ce qui est compris",
+      "title": "Ce que le prix couvre, et ce qu'il ne couvre pas.",
+      "yes": {
+        "eyebrow": "Compris",
+        "title": "Dans chaque projet",
+        "items": {
+          "1": "Mise en production",
+          "2": "Publication sur l'App Store et Google Play",
+          "3": "Remise du code et des comptes",
+          "4": "30 jours de correction de bugs"
+        }
+      },
+      "no": {
+        "eyebrow": "Non compris",
+        "title": "À votre charge",
+        "items": {
+          "1": "Hébergement et services tiers, comptes des stores : payés directement par vous.",
+          "2": "Maintenance optionnelle de 150 à 400 € par mois."
+        }
+      }
+    },
+    "process": {
+      "eyebrow": "Déroulé",
+      "title": "Quatre étapes, trois paiements.",
+      "steps": {
+        "1": {
+          "title": "Cadrage",
+          "description": "Gratuit. Nous précisons le périmètre et vous recevez un devis ferme."
+        },
+        "2": {
+          "title": "Signature",
+          "description": "Le prix est fixé et ne change plus. Les maquettes sont validées avant le développement.",
+          "payment": "40 %"
+        },
+        "3": {
+          "title": "Démonstration",
+          "description": "À mi-parcours, nous vous présentons le produit.",
+          "payment": "30 %"
+        },
+        "4": {
+          "title": "Mise en ligne",
+          "description": "Mise en production, publication et remise du code.",
+          "payment": "30 %"
+        }
+      }
+    },
+    "projects": {
+      "eyebrow": "Réalisations",
+      "title": "Des produits livrés à prix fixe.",
+      "all": "Voir toutes les réalisations",
+      "screenshot": "Capture d'écran du produit",
+      "weeks": "semaines",
+      "supports": {
+        "mobile": "Mobile",
+        "backOffice": "Back-office",
+        "webApp": "Application web",
+        "website": "Site web"
+      },
+      "items": {
+        "1": {
+          "eyebrow": "Livraison",
+          "summary": "Application de livraison de repas pour une startup de Tananarive, avec un back-office pour suivre les commandes et les livreurs."
+        },
+        "2": {
+          "eyebrow": "Santé",
+          "summary": "Prise de rendez-vous en ligne pour des cabinets médicaux, avec un espace de gestion pour les praticiens."
+        },
+        "3": {
+          "eyebrow": "Voyage",
+          "summary": "Site vitrine d'un voyagiste : circuits, galerie, formulaire de demande de devis."
+        }
+      }
+    },
+    "simulator": {
+      "eyebrow": "Simulateur de prix",
+      "title": "Estimez le prix de votre produit",
+      "description": "Répondez aux questions : l'estimation se met à jour à chaque réponse.",
+      "cta": "Ouvrir le simulateur"
+    },
+    "contact": {
+      "title": "Parlons de votre produit.",
+      "description": "Le cadrage est gratuit. Nous revenons vers vous avec un devis ferme.",
+      "cta": "Demander un devis ferme"
     }
-  },
-  "HomeProjects": {
-    "description": "Depuis 2016 j'ai eu l'opportunité de travailler sur des projets variés, allant du développement de sites web dynamiques à la création d'applications web complexes."
-  },
-  "HomeContact": {
-    "title": "Discutons ensemble",
-    "description": "N'hésitez pas à me contacter. Je suis toujours ouvert pour discuter de nouveaux projets, des idées innovantes ou de nouvelles opportunités."
   }
 }

@@ -1,0 +1,40 @@
+{
+  "Form": {
+    "title": "Ny lohateny",
+    "content": "Ny votoaty",
+    "active": "Ity saha ity",
+    "categories": "Ny sokajy",
+    "error": {
+      "invalidStringType": "Tsy maintsy soratra",
+      "invalidNumberType": "Tsy maintsy isa",
+      "invalidDateType": "Tsy maintsy daty",
+      "invalidBooleanType": "Tsy maintsy marina na diso",
+      "invalid": "{field} tsy mety",
+      "required": "Ilaina ny {field}",
+      "max": "Tokony hanana tarehintsoratra latsaky ny {value} ny {field}",
+      "min": "Tokony hanana tarehintsoratra mihoatra ny {value} ny {field}",
+      "tooLong": "Lava loatra ny {field}",
+      "tooShort": "Fohy loatra ny {field}",
+      "passwordNotMatch": "Tsy mitovy ny teny miafina",
+      "fileSizeLessThan": "Tsy maintsy latsaky ny {size} ny haben'ny rakitra",
+      "thisFileTypeNotAllowed": "Tsy ekena io karazana rakitra io",
+      "oneFileIsRequired": "Rakitra iray ihany no ilaina",
+      "fileSizeMax": "Tsy maintsy latsaky ny {size} ny haben'ny rakitra",
+      "acceptedFileType": "Ekena ny {fileTypes}",
+      "tooManyFiles": "Mihoatra ny isan'ny rakitra azo ekena",
+      "maxFilesAllowed": "{count} {file} farafahabetsany",
+      "invalidEmail": "Mailaka tsy mety",
+      "requiredEmail": "Ilaina ny mailaka",
+      "invalidPhone": "Laharana finday tsy mety",
+      "passwordMax": "Tsy tokony hihoatra ny 64 tarehintsoratra ny teny miafina",
+      "passwordMin": "Tokony hihoatra ny 8 tarehintsoratra ny teny miafina",
+      "dataNotExist": "Tsy misy ny angon-drakitra tianao ovaina",
+      "invalidInput": "Angon-drakitra tsy mety",
+      "needToSelectOne": "Tsy maintsy misafidy iray farafaharatsiny"
+    },
+    "save": "Hitahiry",
+    "confirm": "Hanamarina",
+    "submit": "Handefa",
+    "somethingWentWrong": "Nisy tsy nety. Andramo indray rehefa afaka kelikely."
+  }
+}

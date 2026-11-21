@@ -1,0 +1,139 @@
+{
+  "SimulatorPage": {
+    "metadata": {
+      "title": "Mpanao kajy vidiny",
+      "description": "Tombano ny vidin’ny vokatrao : valio ny fanontaniana, mivaingana isaky ny valinteny ny tombana."
+    },
+    "og": {
+      "chip": "Mpanao kajy",
+      "title": "Tombano ny vidin’ny vokatrao",
+      "subtitle": "Valio ny fanontaniana : mivaingana isaky ny valinteny ny tombana."
+    },
+    "eyebrow": "Mpanao kajy vidiny",
+    "title": "Tombano ny vidin’ny vokatrao",
+    "lead": "Valio ny fanontaniana : mivaingana isaky ny valinteny ny tombana.",
+    "examples": {
+      "label": "Ohatra amin’ny tsindry iray",
+      "saas": "Kinova voalohany an’ny SaaS",
+      "mobile": "Application finday misy efijery mihoatra ny 100",
+      "back": "Application finday misy back-office sarotra",
+      "both": "Vokatra web sy finday misy fandoavam-bola"
+    },
+    "steps": {
+      "bring": "Inona no entinao ?",
+      "platforms": "Inona avy ny fitaovana ?",
+      "web": "Tranonkala",
+      "app": "Application web",
+      "mobile": "Finday",
+      "bo": "Back-office",
+      "maintenance": "Fikojakojana tsy voatery"
+    },
+    "bring": {
+      "idea": {
+        "title": "Hevitra",
+        "hint": "Fehezanteny vitsy mamaritra ny filàna"
+      },
+      "spec": {
+        "title": "Taratasy fepetra",
+        "hint": "Taratasy mamaritra ny vokatra"
+      },
+      "mockup": {
+        "title": "Maketa",
+        "hint": "Efa voasoratra ny efijery"
+      }
+    },
+    "design": {
+      "label": "Maketa",
+      "perScreen": "{a} isaky ny efijery",
+      "none": "Maimaim-poana : mitondra ny anao ianao"
+    },
+    "platforms": {
+      "help": "Efijery iray ny fijery miavaka tsirairay ; tafiditra ao ny toetrany sy ny endriny samihafa. Safidio ny fitaovana iray na maromaro.",
+      "web": "Tranonkala static",
+      "app": "Application web",
+      "mobile": "Finday",
+      "bo": "Back-office",
+      "examples": {
+        "web": "Portfolio, tranonkala fampisehoana, tranonkala static, pejy fampahafantarana vokatra, tranonkala fikambanana",
+        "app": "SaaS, tableau de bord, toerana ho an’ny mpanjifa, sehatra famandrihana, fitaovana anatiny",
+        "mobile": "Application iOS sy Android",
+        "bo": "Fitantanana votoaty, mpampiasa ary kaomandy, fanara-maso, statistika, fakana angona"
+      }
+    },
+    "screens": "Isan’ny efijery (tombana)",
+    "rich": {
+      "question": "Tsotra sa be fiasa ny interface web-nao ?",
+      "simple": {
+        "title": "Tsotra",
+        "hint": "Pejy, lisitra, taratasy fenoina"
+      },
+      "rich": {
+        "title": "Be fiasa",
+        "hint": "Tabilao, sivana, tableau de bord, andraikitra, éditeur"
+      }
+    },
+    "chat": {
+      "title": "Resaka avy hatrany",
+      "hint": "Fifandraisana mivantana eo amin’ny mpampiasa"
+    },
+    "payment": {
+      "title": "Fandoavam-bola an-tserasera",
+      "hint": "Mandray fandoavam-bola ao anatin’ny vokatra",
+      "count": "Isan’ny fampidirana fandoavam-bola",
+      "help": "Tafiditra ny voalohany, {a} ny fampidirana fanampiny tsirairay."
+    },
+    "maintenance": {
+      "title": "Fikojakojana tsy voatery",
+      "hint": "150 hatramin’ny 400 € isam-bolana, aorian’ny andro 30 amin’ny fanitsiana bug",
+      "line": "Fikojakojana : 150 hatramin’ny 400 € isam-bolana"
+    },
+    "complexity": {
+      "label": "Fahasarotana",
+      "standard": "Mahazatra",
+      "some": "Dingana sarotra vitsy",
+      "heavy": "Mifototra tsara amin’ny asa"
+    },
+    "recap": {
+      "with": "Entiko",
+      "about": "efijery {n} eo ho eo"
+    },
+    "lines": {
+      "web": "Tranonkala static",
+      "app": "Application web",
+      "mobile": "Finday",
+      "bo": "Back-office",
+      "design": "Maketa",
+      "chat": "Resaka avy hatrany",
+      "payment": "Fandoavam-bola an-tserasera",
+      "floor": "Famenoana ho amin’ny kaomandy kely indrindra"
+    },
+    "result": {
+      "title": "Ny tombanao",
+      "from": "Manomboka amin’ny {a}",
+      "large": "Tetikasa lehibe : resahintsika",
+      "empty": "Valio ny fanontaniana mba hanatsarana ny tombana.",
+      "refine": "Tombana hatsaraintsika miaraka",
+      "firstEstimate": "Tombana voalohany, hatsaraintsika miaraka",
+      "indicative": "Tombana fanondroana, tsy tolo-bidy tsy miova.",
+      "includedTitle": "Ny tafiditra",
+      "included": {
+        "release": "Fampiasana amin’ny tena izy",
+        "store": "Fampiasana amin’ny tena izy sy famoahana ao amin’ny App Store sy Google Play",
+        "handover": "Fanomezana ny kaody sy ny kaonty",
+        "bugs": "Andro 30 amin’ny fanitsiana bug"
+      },
+      "excludedTitle": "Ny tsy tafiditra",
+      "excluded": {
+        "mobile": "Hébergement sy serivisy hafa, kaontin’ny store : aloan’ny startup mivantana.",
+        "web": "Hébergement sy serivisy hafa : aloan’ny startup mivantana."
+      },
+      "payment": "Vidiny tsy miova rehefa manao sonia, aloa in-3 : 40 % amin’ny sonia, 30 % amin’ny demo antenatenany, 30 % amin’ny fampiharana.",
+      "paymentRich": "Fanaterana isaky ny lot, aloa rehefa tonga ny lot tsirairay ; ny lot dia ifanarahana rehefa mandrafitra.",
+      "paymentDesign": "Ekena ny maketa alohan’ny fanombohan’ny fampandrosoana.",
+      "request": "Angataho ny tolo-bidy (fandrafetana maimaim-poana)",
+      "requestShort": "Angataho ny tolo-bidy",
+      "copy": "Adikao ny famintinana",
+      "copied": "Voaditra ny famintinana."
+    }
+  }
+}

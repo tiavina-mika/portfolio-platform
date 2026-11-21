@@ -1,0 +1,171 @@
+{
+  "globalError": {
+    "invalidStringType": "{{field}} dia tsy maintsy soratra",
+    "invalidNumberType": "{{field}} dia tsy maintsy isa",
+    "invalidDateType": "{{field}} dia tsy maintsy daty",
+    "invalidBooleanType": "{{field}} dia tsy maintsy sanda marina na diso",
+    "invalidFileType": "{{field}} dia tsy maintsy rakitra",
+    "invalidArrayType": "{{field}} dia tsy maintsy lisitra",
+    "invalidEnumType": "{{field}} dia tsy maintsy sanda mety",
+    "InvalidEnumValue": "{{field}} dia tsy maintsy iray amin'ireto sanda ireto: {{options}}",
+    "invalidSingleFile": "{{field}} dia tsy maintsy rakitra iray ihany. Nahazo lisitry ny rakitra.",
+    "tooBig": "{{field}} dia tsy tokony hihoatra ny {{value}}",
+    "tooSmall": "{{field}} dia tsy tokony ho latsaky ny {{value}}",
+    "tooBigText": "{{field}} dia tsy tokony hihoatra ny {{value}} tarehintsoratra",
+    "tooSmallText": "{{field}} dia tsy maintsy misy tarehintsoratra {{value}} farafaharatsiny",
+    "tooBigNumber": "{{field}} dia tsy maintsy ambany na mitovy amin'ny {{value}}",
+    "tooSmallNumber": "{{field}} dia tsy maintsy ambony na mitovy amin'ny {{value}}",
+    "tooBigArray": "{{field}} dia tsy tokony hisy singa mihoatra ny {{value}}",
+    "tooSmallFile": "{{field}} dia tsy maintsy manana habe latsaky ny {{value}}",
+    "tooSmallArray": "{{field}} dia tsy maintsy misy singa {{value}} farafaharatsiny",
+    "tooBigFile": "{{field}} dia tsy maintsy manana habe mihoatra ny {{value}}",
+    "tooFewFiles": "{{field}} dia tsy maintsy misy rakitra {{value}} farafaharatsiny",
+    "tooBigDate": "{{field}} dia tsy maintsy alohan'ny {{value}}",
+    "tooSmallDate": "{{field}} dia tsy maintsy aorian'ny {{value}}",
+    "file": "Ny rakitra",
+    "customBadInput": "{{field}}: fampidirana tsy mety",
+    "genericError": "Sanda tsy mety",
+    "requiredField": "{{field}} dia ilaina",
+    "invalidFileMimeType": "{{field}} dia tsy maintsy karazana {{extensions}}"
+  },
+  "name": {
+    "date": "ny daty",
+    "field": "ity saha ity",
+    "file": "Ny rakitra",
+    "name": "ny anarana",
+    "message": "ny hafatra",
+    "email": "ny mailaka"
+  },
+  "Zod": {
+    "errors": {
+      "invalid_type": "Niandry {expected}, nahazo {received}",
+      "invalid_type_received_undefined": "Ilaina",
+      "invalid_literal": "Sanda litera tsy mety, niandry {expected}",
+      "unrecognized_keys": "Fanalahidy tsy fantatra ao amin'ny zavatra: {keys}",
+      "invalid_union": "Fampidirana tsy mety",
+      "invalid_union_discriminator": "Sanda mpanavaka tsy mety. Niandry {options}",
+      "invalid_enum_value": "Sanda enum tsy mety. Niandry {options}, nahazo {reçues}",
+      "invalid_arguments": "Arguments tsy mety ho an'ny fonction",
+      "invalid_return_type": "Karazana valiny tsy mety ho an'ny fonction",
+      "invalid_date": "Daty tsy mety",
+      "custom": "Fampidirana tsy mety",
+      "invalid_intersection_types": "Tsy afaka nampifanarahana ny valin'ny intersection",
+      "not_multiple_of": "Ny isa dia tsy maintsy ho ampitomboin'ny {multipleOf}",
+      "not_finite": "Ny isa dia tsy maintsy ho voafetra",
+      "invalid_string": {
+        "email": "{validation} tsy mety",
+        "emoji": "{validation} tsy mety",
+        "url": "{validation} tsy mety",
+        "uuid": "{validation} tsy mety",
+        "ulid": "{validation} tsy mety",
+        "ip": "{validation} tsy mety",
+        "cuid": "{validation} tsy mety",
+        "cuid2": "{validation} tsy mety",
+        "regex": "Tsy mety",
+        "datetime": "{validation} tsy mety",
+        "date": "{validation} tsy mety",
+        "startsWith": "Fampidirana tsy mety: tsy maintsy manomboka amin'ny \"{startsWith}\"",
+        "endsWith": "Fampidirana tsy mety: tsy maintsy mifarana amin'ny \"{endsWith}\""
+      },
+      "too_small": {
+        "array": {
+          "exact": "{path, select, MissingTranslation {Lisitra} other {{path}}} dia tsy maintsy misy singa {minimum} tokoa",
+          "inclusive": "{path, select, MissingTranslation {Lisitra} other {{path}}} dia tsy maintsy misy singa {minimum} farafaharatsiny",
+          "not_inclusive": "{path, select, MissingTranslation {Lisitra} other {{path}}} dia tsy maintsy misy singa mihoatra ny {minimum}"
+        },
+        "string": {
+          "exact": "{path, select, MissingTranslation {Soratra} other {{path}}} dia tsy maintsy misy tarehintsoratra {minimum} tokoa",
+          "inclusive": "{path, select, MissingTranslation {Soratra} other {{path}}} dia tsy maintsy misy tarehintsoratra {minimum} farafaharatsiny",
+          "not_inclusive": "{path, select, MissingTranslation {Soratra} other {{path}}} dia tsy maintsy misy tarehintsoratra mihoatra ny {minimum}"
+        },
+        "number": {
+          "exact": "{path, select, MissingTranslation {Isa} other {{path}}} dia tsy maintsy {minimum} tokoa",
+          "inclusive": "{path, select, MissingTranslation {Isa} other {{path}}} dia tsy maintsy mihoatra na mitovy amin'ny {minimum}",
+          "not_inclusive": "{path, select, MissingTranslation {Isa} other {{path}}} dia tsy maintsy mihoatra ny {minimum}"
+        },
+        "bigint": {
+          "exact": "{path, select, MissingTranslation {Isa} other {{path}}} dia tsy maintsy {minimum} tokoa",
+          "inclusive": "{path, select, MissingTranslation {Isa} other {{path}}} dia tsy maintsy mihoatra na mitovy amin'ny {minimum}",
+          "not_inclusive": "{path, select, MissingTranslation {Isa} other {{path}}} dia tsy maintsy mihoatra ny {minimum}"
+        },
+        "set": {
+          "exact": "Fampidirana tsy mety",
+          "inclusive": "Fampidirana tsy mety",
+          "not_inclusive": "Fampidirana tsy mety"
+        },
+        "date": {
+          "exact": "Ny daty dia tsy maintsy {minimum, date, short} tokoa",
+          "inclusive": "Ny daty dia tsy maintsy mitovy na aorian'ny {minimum, date, short}",
+          "not_inclusive": "Ny daty dia tsy maintsy aorian'ny {minimum, date, short}"
+        }
+      },
+      "too_big": {
+        "array": {
+          "exact": "{path, select, MissingTranslation {Lisitra} other {{path}}} dia tsy maintsy misy singa {maximum} tokoa",
+          "inclusive": "{path, select, MissingTranslation {Lisitra} other {{path}}} dia tsy maintsy misy singa {maximum} farafahabetsany",
+          "not_inclusive": "{path, select, MissingTranslation {Lisitra} other {{path}}} dia tsy maintsy misy singa latsaky ny {maximum}"
+        },
+        "string": {
+          "exact": "{path, select, MissingTranslation {Soratra} other {{path}}} dia tsy maintsy misy tarehintsoratra {maximum} tokoa",
+          "inclusive": "{path, select, MissingTranslation {Soratra} other {{path}}} dia tsy maintsy misy tarehintsoratra {maximum} farafahabetsany",
+          "not_inclusive": "{path, select, MissingTranslation {Soratra} other {{path}}} dia tsy maintsy misy tarehintsoratra latsaky ny {maximum}"
+        },
+        "number": {
+          "exact": "{path, select, MissingTranslation {Isa} other {{path}}} dia tsy maintsy {maximum} tokoa",
+          "inclusive": "{path, select, MissingTranslation {Isa} other {{path}}} dia tsy maintsy ambany na mitovy amin'ny {maximum}",
+          "not_inclusive": "{path, select, MissingTranslation {Isa} other {{path}}} dia tsy maintsy latsaky ny {maximum}"
+        },
+        "bigint": {
+          "exact": "{path, select, MissingTranslation {Isa} other {{path}}} dia tsy maintsy {maximum} tokoa",
+          "inclusive": "{path, select, MissingTranslation {Isa} other {{path}}} dia tsy maintsy ambany na mitovy amin'ny {maximum}",
+          "not_inclusive": "{path, select, MissingTranslation {Isa} other {{path}}} dia tsy maintsy latsaky ny {maximum}"
+        },
+        "set": {
+          "exact": "Fampidirana tsy mety",
+          "inclusive": "Fampidirana tsy mety",
+          "not_inclusive": "Fampidirana tsy mety"
+        },
+        "date": {
+          "exact": "Ny daty dia tsy maintsy {maximum, date, short} tokoa",
+          "inclusive": "Ny daty dia tsy maintsy mitovy na alohan'ny {maximum, date, short}",
+          "not_inclusive": "Ny daty dia tsy maintsy alohan'ny {maximum, date, short}"
+        }
+      }
+    },
+    "validations": {
+      "email": "mailaka",
+      "emoji": "emoji",
+      "url": "url",
+      "uuid": "uuid",
+      "ulid": "ulid",
+      "ip": "ip",
+      "cuid": "cuid",
+      "cuid2": "cuid2",
+      "regex": "regex",
+      "datetime": "datetime",
+      "date": "daty"
+    },
+    "types": {
+      "function": "function",
+      "number": "number",
+      "string": "string",
+      "nan": "nan",
+      "integer": "integer",
+      "float": "float",
+      "boolean": "boolean",
+      "date": "date",
+      "bigint": "bigint",
+      "undefined": "undefined",
+      "symbol": "symbol",
+      "null": "null",
+      "array": "array",
+      "object": "object",
+      "unknown": "unknown",
+      "promise": "promise",
+      "void": "void",
+      "never": "never",
+      "map": "map",
+      "set": "set"
+    }
+  }
+}

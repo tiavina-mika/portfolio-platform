@@ -1,0 +1,181 @@
+{
+  "PricingPage": {
+    "metadata": {
+      "title": "Offer and pricing",
+      "description": "The price of your product, screen by screen: from €1,500, fixed at signing, with 30 days of bug fixes."
+    },
+    "og": {
+      "chip": "Offer and pricing",
+      "title": "The price of your product, screen by screen.",
+      "subtitle": "Fixed price at signing, from €1,500."
+    },
+    "hero": {
+      "title": "The price of your product, screen by screen.",
+      "description": "The price depends on scope: platforms, number of screens, back office and business complexity. It is fixed at signing and does not change.",
+      "quote": "Request a quote",
+      "simulator": "Estimate my price",
+      "facts": [
+        "From €1,500",
+        "Fixed price at signing",
+        "30 days of bug fixes"
+      ]
+    },
+    "plans": {
+      "eyebrow": "Pricing",
+      "title": "A price per screen, by platform",
+      "note": "A distinct view counts as one screen; its states and variants are included. Above €15,000, the price is set together during scoping.",
+      "items": [
+        {
+          "eyebrow": "From",
+          "title": "Website or web app",
+          "price": "€1,500",
+          "description": "€25 per screen for a static site, €18 for a simple web app, €30 for a rich interface."
+        },
+        {
+          "eyebrow": "From",
+          "title": "Mobile",
+          "price": "€2,500",
+          "description": "€25 per screen, iOS and Android. Publication on the App Store and Google Play included."
+        },
+        {
+          "eyebrow": "Per screen",
+          "title": "Back office",
+          "price": "€37.50",
+          "description": "1.5 times the price of a screen: content, users, orders, moderation, statistics, exports."
+        }
+      ]
+    },
+    "flow": {
+      "eyebrow": "Process",
+      "title": "Six steps, from scoping to after.",
+      "steps": [
+        {
+          "title": "Scoping",
+          "description": "Free. We define the scope: platforms, screens, back office, complexity."
+        },
+        {
+          "title": "Firm quote",
+          "description": "The price is fixed at signing. 40% is paid then."
+        },
+        {
+          "title": "Mockups",
+          "description": "Mockups are approved before development starts."
+        },
+        {
+          "title": "Demo",
+          "description": "Halfway through, we present the product. 30% is paid."
+        },
+        {
+          "title": "Launch",
+          "description": "Production release, store publication, handover of code and accounts. 30% is paid."
+        },
+        {
+          "title": "After",
+          "description": "30 days of bug fixes, then optional maintenance."
+        }
+      ]
+    },
+    "simulator": {
+      "eyebrow": "Price simulator",
+      "title": "Estimate the price of your product",
+      "description": "Answer a few questions about your platforms, screens and features. The estimate updates with every answer.",
+      "cta": "Open the simulator"
+    },
+    "examples": {
+      "eyebrow": "Examples",
+      "title": "Five cases",
+      "items": [
+        {
+          "title": "Showcase website",
+          "detail": "A mockup · up to 60 web screens",
+          "price": "€1,500"
+        },
+        {
+          "title": "First version of a SaaS",
+          "detail": "A mockup · simple 50-screen web app · 15-screen back office",
+          "price": "€1,500"
+        },
+        {
+          "title": "Simple mobile app",
+          "detail": "A mockup · up to 100 mobile screens",
+          "price": "€2,500"
+        },
+        {
+          "title": "Mobile app with back office",
+          "detail": "A mockup · 60 mobile screens · 25-screen back office",
+          "price": "€2,500"
+        },
+        {
+          "title": "Web and mobile product with payment",
+          "detail": "A mockup · 40 web screens · 60 mobile screens · online payment",
+          "price": "€3,000"
+        }
+      ]
+    },
+    "options": {
+      "eyebrow": "Options",
+      "title": "What adds to the price of screens",
+      "description": "Each option appears in the simulator when you select it.",
+      "items": [
+        {
+          "label": "Mockups (if not provided)",
+          "price": "€6 to €8 / screen",
+          "description": "€8 per screen from an idea, €6 from a specification."
+        },
+        {
+          "label": "Online payment",
+          "price": "€500",
+          "description": "For the first integration. €22 per additional integration."
+        },
+        {
+          "label": "Instant chat",
+          "price": "€500",
+          "description": "Real-time messaging between users."
+        }
+      ]
+    },
+    "rules": {
+      "eyebrow": "Rules",
+      "title": "What frames every project",
+      "items": [
+        {
+          "title": "Fixed price",
+          "description": "The price is fixed at signing, after scoping. It does not change during the project."
+        },
+        {
+          "title": "Paid in 3 instalments",
+          "description": "40% at signing, 30% at the mid-way demo, 30% at launch."
+        },
+        {
+          "title": "Minimum order",
+          "description": "€1,500 for a website or web app, €2,500 as soon as mobile is involved."
+        },
+        {
+          "title": "Rich interface",
+          "description": "Delivery in batches, each batch paid on delivery; batches are agreed during scoping."
+        },
+        {
+          "title": "Design",
+          "description": "Your brand is applied on Aldaron's design system. You can also bring your own designer."
+        },
+        {
+          "title": "Maintenance",
+          "description": "€150 to €400 per month, after the 30 days of bug fixes."
+        },
+        {
+          "title": "Code ownership",
+          "description": "Code and accounts are handed over to you at launch."
+        },
+        {
+          "title": "External costs",
+          "description": "Hosting and third-party services, store accounts: paid directly by you."
+        }
+      ]
+    },
+    "contact": {
+      "title": "Tell us about your product",
+      "description": "A few lines are enough to prepare the scoping.",
+      "cta": "Request a quote"
+    }
+  }
+}

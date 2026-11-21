@@ -1,0 +1,52 @@
+{
+  "ContactPage": {
+    "metadata": {
+      "title": "Request a firm quote",
+      "description": "Describe your product: scoping is free and we come back to you with a firm quote."
+    },
+    "og": {
+      "chip": "Contact",
+      "title": "Let's talk about your product.",
+      "subtitle": "Scoping is free. We come back to you with a firm quote."
+    },
+    "label": "Contact",
+    "title": "Let's talk about your product.",
+    "subtitle": "Scoping is free. We come back to you with a firm quote.",
+    "name": "Name",
+    "email": "Email",
+    "product": "Your product in one or two sentences",
+    "supports": "Platforms",
+    "supportsHint": "Several choices allowed.",
+    "supportOptions": {
+      "web": "Static website",
+      "app": "Web app",
+      "mobile": "Mobile app",
+      "bo": "Back office"
+    },
+    "bring": "What you bring",
+    "bringOptions": {
+      "idea": "An idea",
+      "spec": "A specification",
+      "mockup": "A mockup"
+    },
+    "estimate": "Simulator estimate",
+    "estimateHint": "Taken from your estimate. You can edit it.",
+    "needs": "Main needs",
+    "needsHint": "One need per line.",
+    "consent": "I agree that my data is used to answer my request.",
+    "errors": {
+      "name": "Enter your name.",
+      "email": "Enter a valid email address.",
+      "product": "Describe your product in one or two sentences.",
+      "supports": "Choose at least one platform.",
+      "consent": "Accept to send your request."
+    },
+    "submit": "Request a firm quote",
+    "sending": "Sending…",
+    "note": "This is not an automatic quote: we reply personally.",
+    "sent": "Thank you, your request has been sent. We will reply personally.",
+    "failTitle": "Your request could not be sent",
+    "failText": "Try again in a moment, or write to us at contact@aldaron.eu.",
+    "offline": "You are offline. You will be able to send your request as soon as the connection is back."
+  }
+}

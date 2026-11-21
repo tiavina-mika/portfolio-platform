@@ -2,19 +2,18 @@ import { BreadcrumbsSegment } from '@/components/Breadcrumbs';
 import { siteConfig } from '@/config/site';
 import { Locale } from '@/i18n/config';
 import { IArticle } from '@/types/article.type';
-import { IProject } from '@/types/project.type';
 import { getAbsoluteUrl } from '@/utils/app.utils';
 import { IMAGES } from '@/utils/constants';
 import { getTranslatedField } from '@/utils/translation.utils';
 
-export const getPersonJsonLd = () => ({
+export const getOrganizationJsonLd = () => ({
   '@context': 'https://schema.org',
-  '@type': 'Person',
+  '@type': 'Organization',
   name: siteConfig.name,
   url: siteConfig.url,
-  image: `${siteConfig.url}${IMAGES.logo}`,
-  // filter out temporary placeholder social links ('#') so structured data stays valid
-  sameAs: Object.values(siteConfig.social).filter((url) => url !== '#'),
+  logo: `${siteConfig.url}${IMAGES.logo}`,
+  email: siteConfig.email,
+  sameAs: Object.values(siteConfig.social),
 });
 
 export const getWebSiteJsonLd = () => ({
@@ -57,39 +56,6 @@ export const getArticleJsonLd = ({
         '@type': 'ImageObject',
         url: `${siteConfig.url}${IMAGES.logo}`,
       },
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': url,
-    },
-  };
-};
-
-type ProjectJsonLdParams = {
-  project: IProject;
-  locale: Locale;
-  url: string;
-  image: string;
-};
-
-export const getProjectJsonLd = ({
-  project, locale, url, image,
-}: ProjectJsonLdParams) => {
-  const translated = project.translated;
-
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'CreativeWork',
-    name: getTranslatedField(translated, locale, 'title'),
-    description: getTranslatedField(translated, locale, 'description'),
-    image,
-    url,
-    dateCreated: project.createdAt ? new Date(project.createdAt).toISOString() : undefined,
-    dateModified: project.updatedAt ? new Date(project.updatedAt).toISOString() : undefined,
-    keywords: project.technologies?.join(', ') || undefined,
-    author: {
-      '@type': 'Person',
-      name: siteConfig.name,
     },
     mainEntityOfPage: {
       '@type': 'WebPage',

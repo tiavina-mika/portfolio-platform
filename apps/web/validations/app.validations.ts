@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { zfd } from 'zod-form-data';
 
 import { locales } from '@/i18n/config';
+import { ProjectOrderByEnum } from '@/types/project.type';
 import { getDynamicValidationError } from '@/utils/utils';
 
 export const localeSchemaField = z.union([
@@ -28,7 +29,8 @@ export const paginationSearchParamsSchema = z.object({
 });
 
 export const projectSearchParamsSchema = paginationSearchParamsSchema.extend({
-  orderedBy: z.string().optional(),
+  // an unknown field in the address falls back to the default sort instead of being passed to Parse
+  orderedBy: z.enum(ProjectOrderByEnum).optional().catch(undefined),
   technologies: z.string().optional(),
   society: z.string().optional(),
 });

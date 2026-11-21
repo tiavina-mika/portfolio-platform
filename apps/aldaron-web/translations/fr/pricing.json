@@ -1,0 +1,181 @@
+{
+  "PricingPage": {
+    "metadata": {
+      "title": "Offre et prix",
+      "description": "Le prix de votre produit, écran par écran : à partir de 1 500 €, fixé à la signature, avec 30 jours de correction de bugs."
+    },
+    "og": {
+      "chip": "Offre et prix",
+      "title": "Le prix de votre produit, écran par écran.",
+      "subtitle": "Prix fixe à la signature, à partir de 1 500 €."
+    },
+    "hero": {
+      "title": "Le prix de votre produit, écran par écran.",
+      "description": "Le prix dépend du périmètre : supports, nombre d'écrans, back-office et complexité métier. Il est fixé à la signature et ne change plus.",
+      "quote": "Demander un devis",
+      "simulator": "Estimer mon prix",
+      "facts": [
+        "À partir de 1 500 €",
+        "Prix fixe à la signature",
+        "30 jours de correction de bugs"
+      ]
+    },
+    "plans": {
+      "eyebrow": "Tarifs",
+      "title": "Un prix par écran, selon le support",
+      "note": "Une vue distincte compte pour un écran ; ses états et variantes sont inclus. Au-delà de 15 000 €, le prix est fixé ensemble lors du cadrage.",
+      "items": [
+        {
+          "eyebrow": "À partir de",
+          "title": "Site ou application web",
+          "price": "1 500 €",
+          "description": "25 € par écran pour un site statique, 18 € pour une application web simple, 30 € pour une interface riche."
+        },
+        {
+          "eyebrow": "À partir de",
+          "title": "Mobile",
+          "price": "2 500 €",
+          "description": "25 € par écran, iOS et Android. Publication sur l'App Store et Google Play comprise."
+        },
+        {
+          "eyebrow": "Par écran",
+          "title": "Back-office",
+          "price": "37,50 €",
+          "description": "1,5 fois le prix d'un écran : contenus, utilisateurs, commandes, modération, statistiques, exports."
+        }
+      ]
+    },
+    "flow": {
+      "eyebrow": "Déroulé",
+      "title": "Six étapes, du cadrage à l'après.",
+      "steps": [
+        {
+          "title": "Cadrage",
+          "description": "Gratuit. Nous précisons le périmètre : supports, écrans, back-office, complexité."
+        },
+        {
+          "title": "Devis ferme",
+          "description": "Le prix est fixé à la signature. 40 % sont payés à ce moment."
+        },
+        {
+          "title": "Maquettes",
+          "description": "Les maquettes sont validées avant le début du développement."
+        },
+        {
+          "title": "Démonstration",
+          "description": "À mi-parcours, nous présentons le produit. 30 % sont payés."
+        },
+        {
+          "title": "Mise en ligne",
+          "description": "Mise en production, publication sur les stores, remise du code et des comptes. 30 % sont payés."
+        },
+        {
+          "title": "Après",
+          "description": "30 jours de correction de bugs, puis maintenance optionnelle."
+        }
+      ]
+    },
+    "simulator": {
+      "eyebrow": "Simulateur de prix",
+      "title": "Estimez le prix de votre produit",
+      "description": "Répondez à quelques questions sur vos supports, vos écrans et vos fonctions. L'estimation se met à jour à chaque réponse.",
+      "cta": "Ouvrir le simulateur"
+    },
+    "examples": {
+      "eyebrow": "Exemples",
+      "title": "Cinq cas",
+      "items": [
+        {
+          "title": "Site vitrine",
+          "detail": "Une maquette · jusqu'à 60 écrans web",
+          "price": "1 500 €"
+        },
+        {
+          "title": "Première version d'un SaaS",
+          "detail": "Une maquette · application web simple de 50 écrans · back-office de 15 écrans",
+          "price": "1 500 €"
+        },
+        {
+          "title": "Application mobile simple",
+          "detail": "Une maquette · jusqu'à 100 écrans mobile",
+          "price": "2 500 €"
+        },
+        {
+          "title": "Application mobile avec back-office",
+          "detail": "Une maquette · 60 écrans mobile · back-office de 25 écrans",
+          "price": "2 500 €"
+        },
+        {
+          "title": "Produit web et mobile avec paiement",
+          "detail": "Une maquette · 40 écrans web · 60 écrans mobile · paiement en ligne",
+          "price": "3 000 €"
+        }
+      ]
+    },
+    "options": {
+      "eyebrow": "Options",
+      "title": "Ce qui s'ajoute au prix des écrans",
+      "description": "Chaque option apparaît dans le simulateur quand vous la choisissez.",
+      "items": [
+        {
+          "label": "Maquettes (si non fournies)",
+          "price": "6 à 8 € / écran",
+          "description": "8 € par écran à partir d'une idée, 6 € à partir d'un cahier des charges."
+        },
+        {
+          "label": "Paiement en ligne",
+          "price": "500 €",
+          "description": "Pour la première intégration. 22 € par intégration supplémentaire."
+        },
+        {
+          "label": "Discussion instantanée",
+          "price": "500 €",
+          "description": "Messagerie en temps réel entre utilisateurs."
+        }
+      ]
+    },
+    "rules": {
+      "eyebrow": "Règles",
+      "title": "Ce qui encadre chaque projet",
+      "items": [
+        {
+          "title": "Prix fixe",
+          "description": "Le prix est fixé à la signature, après le cadrage. Il ne change pas pendant le projet."
+        },
+        {
+          "title": "Paiement en 3 échéances",
+          "description": "40 % à la signature, 30 % à la démonstration de mi-parcours, 30 % à la mise en ligne."
+        },
+        {
+          "title": "Minimum de commande",
+          "description": "1 500 € pour un site ou une application web, 2 500 € dès qu'il y a du mobile."
+        },
+        {
+          "title": "Interface riche",
+          "description": "Livraison par lots, chaque lot étant payé à sa livraison ; les lots sont convenus lors du cadrage."
+        },
+        {
+          "title": "Design",
+          "description": "Votre charte est appliquée sur le système de design d'Aldaron. Vous pouvez aussi apporter votre designer."
+        },
+        {
+          "title": "Maintenance",
+          "description": "150 à 400 € par mois, après les 30 jours de correction de bugs."
+        },
+        {
+          "title": "Propriété du code",
+          "description": "Le code et les comptes vous sont remis à la mise en ligne."
+        },
+        {
+          "title": "Frais externes",
+          "description": "Hébergement et services tiers, comptes des stores : payés directement par vous."
+        }
+      ]
+    },
+    "contact": {
+      "title": "Parlez-nous de votre produit",
+      "description": "Quelques lignes suffisent pour préparer le cadrage.",
+      "cta": "Demander un devis"
+    }
+  }
+}

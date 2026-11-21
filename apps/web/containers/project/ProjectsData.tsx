@@ -1,5 +1,6 @@
 import { Locale } from '@/i18n/config';
 import { getProjects } from '@/server/queries/project.queries';
+import { ProjectOrderByEnum } from '@/types/project.type';
 import { getPaginatedQuery } from '@/utils/app.utils';
 import { PAGINATION } from '@/utils/constants';
 import { getProjectCardData } from '@/utils/project.utils';
@@ -13,7 +14,7 @@ type Props = {
    * `desc` lists the newest first
    */
   order: 'asc' | 'desc';
-  orderedBy?: string;
+  orderedBy?: ProjectOrderByEnum;
   tag?: string;
   technologies?: string;
   /**

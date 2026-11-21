@@ -1,0 +1,64 @@
+{
+  "PrivacyPage": {
+    "metadata": {
+      "title": "Politikan'ny fiarovana ny angon-drakitra",
+      "description": "Ny angon-drakitra angonina, ny antony, ny fomba fitehirizana azy ary ny fampiasana ny zonao."
+    },
+    "og": {
+      "chip": "Lalàna",
+      "title": "Politikan'ny fiarovana ny angon-drakitra",
+      "subtitle": "Ny angon-drakitrao, ny fampiasana azy ary ny zonao."
+    },
+    "label": "Lalàna",
+    "title": "Politikan'ny fiarovana ny angon-drakitra",
+    "updated": "Fanavaozana farany : [ampidirina]",
+    "sections": {
+      "1": {
+        "title": "Angon-drakitra angonina",
+        "lines": {
+          "1": "Rehefa mameno ny taratasy fifandraisana ianao, mahazo ny anaranao, ny adiresy e-mailakao, ny famaritana ny vokatrao, ny fitaovana voakasika, izay entinao, ny filanao ary, raha avy any amin'ny mpanao kajy ianao, ny tombanao izahay.",
+          "2": "Ny anarana, ny e-mailaka, ny famaritana ny vokatra, ny fitaovana ary ny fanekenao ihany no tsy maintsy fenoina."
+        }
+      },
+      "2": {
+        "title": "Nahoana no ampiasainay izany",
+        "lines": {
+          "1": "Ny angon-drakitrao dia ampiasaina hamaliana ny fangatahanao, hanomanana ny fandrafetana maimaim-poana ary hanaovana tolo-bidy raikitra ihany."
+        }
+      },
+      "3": {
+        "title": "Fototra ara-dalàna",
+        "lines": {
+          "1": "Ny fanekenao, omenao amin'ny fanamarihana ny boaty ao amin'ny taratasy. Azonao ahena na oviana na oviana izany."
+        }
+      },
+      "4": {
+        "title": "Fitehirizana ao amin'ny navigateur-nao",
+        "lines": {
+          "1": "Ny mpanao kajy dia mitahiry ny tombanao ao amin'ny fitehirizana an-toerana ao amin'ny navigateur-nao mba hakana azy ao amin'ny taratasy. Tsy alefa izy raha tsy alefanao ny taratasy, ary fafana rehefa alefa izany.",
+          "2": "Ity tranokala ity koa dia mitahiry ao amin'ity fitehirizana ity ny vola nofidinao hampiseho ny vidiny sy, mandritra ny adiny roa ambin'ny folo, ny taha fanakalozana.",
+          "3": "Mba hahazoana ireo taha ireo, ny navigateur-nao dia manontany mivantana serivisy roa maimaim-poana momba ny taha fanakalozana (open.er-api.com, avy eo jsDelivr). Ireo serivisy ireo dia mahita ny adiresy IP-nao, tahaka ny tranokala rehetra tsidihinao ; tsy mandefa angona manokana ho azy ireo ny tranokala."
+        }
+      },
+      "5": {
+        "title": "Mpandray sy fotoana fitehirizana",
+        "lines": {
+          "1": "Tsy amidy ny angon-drakitrao.",
+          "2": "Mpandray sy faharetan'ny fitehirizana : [ampidirina]"
+        }
+      },
+      "6": {
+        "title": "Ny zonao",
+        "lines": {
+          "1": "Azonao angatahina ny fidirana amin'ny angon-drakitrao, ny fanitsiana na ny famafana azy, ary azonao ahena ny fanekenao, amin'ny fanoratana amin'ny contact@aldaron.eu."
+        }
+      },
+      "7": {
+        "title": "Cookies sy fandrefesana mpitsidika",
+        "lines": {
+          "1": "[ampidirina] araka ny fitaovana ampiasaina amin'ny tranonkala."
+        }
+      }
+    }
+  }
+}

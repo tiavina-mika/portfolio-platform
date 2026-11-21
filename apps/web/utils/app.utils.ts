@@ -90,7 +90,8 @@ export const getPaginatedQuery = (
 ): IPaginationQuery => {
   return {
     limit: perPage,
-    skip: (page - 1) * perPage,
+    // `?page=-3` in the address must not reach the database as a negative skip
+    skip: (Math.max(page, 1) - 1) * perPage,
   };
 };
 

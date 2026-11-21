@@ -59,6 +59,23 @@ jobs:
       - name: Build
         run: pnpm nx affected -t build --exclude=web,aldaron-web
 
+      # `aldaron-web` is built here, unlike `web`: its pages are mostly static, so the production prerender
+      # (`cacheComponents` rejects a page reading the request outside a cached scope) is the only check that
+      # catches a break before a deploy, and the typecheck cannot. Its content queries catch a failed fetch,
+      # so a server that does not answer only logs "fetch failed" and the pages prerender without content.
+      # The values are placeholders: nothing reaches 127.0.0.1:9. The fonts are downloaded at build time.
+      - name: Build aldaron-web
+        env:
+          APP_ENV: production
+          PARSE_APP_ID: ci
+          REST_API_KEY: ci
+          SERVER_URL: http://127.0.0.1:9/parse
+          APP_URL: http://localhost:3000
+          NEXT_PUBLIC_SERVER_URL: http://127.0.0.1:9/parse
+          NEXT_PUBLIC_APP_URL: http://localhost:3000
+          NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ci
+        run: pnpm nx run aldaron-web:build
+
       # the docs sites are copied into the server's `clientBuild/docs/`, which the deployment serves:
       # `docs:build` above only proves VitePress compiles, not that this copy works
       - name: Build docs sites

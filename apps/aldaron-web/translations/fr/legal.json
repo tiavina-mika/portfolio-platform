@@ -1,0 +1,53 @@
+{
+  "LegalPage": {
+    "metadata": {
+      "title": "Mentions légales",
+      "description": "Éditeur du site, hébergement, propriété intellectuelle et valeur des estimations d'Aldaron."
+    },
+    "og": {
+      "chip": "Légal",
+      "title": "Mentions légales",
+      "subtitle": "Éditeur, hébergement et propriété intellectuelle."
+    },
+    "label": "Légal",
+    "title": "Mentions légales",
+    "updated": "Dernière mise à jour : [à compléter]",
+    "sections": {
+      "1": {
+        "title": "Éditeur du site",
+        "lines": {
+          "1": "Le site est édité par Aldaron, société de développement web et mobile pour startups.",
+          "2": "Forme juridique et capital : [à compléter]",
+          "3": "NIF : [à compléter] · STAT : [à compléter]",
+          "4": "Siège social : [à compléter]",
+          "5": "Directeur de la publication : [à compléter]",
+          "6": "Contact : contact@aldaron.eu"
+        }
+      },
+      "2": {
+        "title": "Hébergement",
+        "lines": {
+          "1": "Hébergeur du site : [à compléter]"
+        }
+      },
+      "3": {
+        "title": "Propriété intellectuelle",
+        "lines": {
+          "1": "Les textes, le logo, les maquettes et le code de ce site appartiennent à Aldaron, sauf mention contraire. Toute reproduction sans accord écrit d'Aldaron est interdite."
+        }
+      },
+      "4": {
+        "title": "Estimations et devis",
+        "lines": {
+          "1": "Les estimations du simulateur de prix sont indicatives. Seul un devis ferme, établi après un cadrage, engage Aldaron."
+        }
+      },
+      "5": {
+        "title": "Données personnelles",
+        "lines": {
+          "1": "Le traitement de vos données est décrit dans la politique de confidentialité."
+        }
+      }
+    }
+  }
+}

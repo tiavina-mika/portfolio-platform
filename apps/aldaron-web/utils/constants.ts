@@ -2,8 +2,6 @@
 import { DEFAULT_COUNTRY } from '@shared/constants';
 
 export const APP_NAME = 'Aldaron';
-export const AUTHOR_USERNAME = 'tiavina-mika';
-export const APP_SHORT_NAME = 'Mika';
 
 export const collections = {
   Article: 'Article',
@@ -58,15 +56,10 @@ export const IMAGES = {
 };
 
 export const SOCIALS = [
-  {
-    label: 'linkedin',
-    name: 'LinkedIn',
-    value: 'https://www.linkedin.com/in/tiavina-michael-ralainirina/',
-  },
-  { label: 'whatsapp', name: 'WhatsApp', value: 'https://wa.me/+261341865749' },
-  { label: 'email', name: 'Email', value: 'mailto:tiavinamika@gmail.com' },
-  { label: 'youtube', name: 'YouTube', value: 'https://www.youtube.com/@tiavina-mika' },
-];
+  { label: 'linkedin', name: 'LinkedIn', value: 'https://www.linkedin.com/' },
+  { label: 'facebook', name: 'Facebook', value: 'https://www.facebook.com/' },
+  { label: 'youtube', name: 'YouTube', value: 'https://www.youtube.com/' },
+] as const;
 
 /*
  * The country whose editorial content (articles, pages) the website shows. The site has no
@@ -74,14 +67,8 @@ export const SOCIALS = [
  */
 export const WEB_COUNTRY_CODE = DEFAULT_COUNTRY.code;
 
-export const EMAIL = 'tiavinamika@gmail.com';
+export const EMAIL = 'contact@aldaron.eu';
 export const PHONE = '+261341865749';
-
-export const CONTACTS = [
-  'VN 50B, Ambohitsoa',
-  'Antananarivo, Madagascar',
-  EMAIL,
-];
 
 /*
  * average adult silent reading speed, used to turn an article's word count into a "x min read"
@@ -98,9 +85,6 @@ export const TABLE_OF_CONTENTS_ACTIVE_OFFSET = 140;
 
 // prefix of the ids given to the headings of a content, so they cannot collide with another id of the page
 export const TABLE_OF_CONTENTS_ID_PREFIX = 'toc-';
-
-// id of the placeholder row the search returns when nothing matches
-export const SEARCH_EMPTY_RESULT_ID = 'empty';
 
 // hosts allowed in next.config.mjs `images.remotePatterns` — any other one must skip the optimizer
 export const OPTIMIZED_IMAGE_HOSTNAMES = ['res.cloudinary.com'];
@@ -168,6 +152,7 @@ export const FORM_RATE_LIMIT_WINDOW = '1 h';
 export const LOCALE_NATIVE_NAMES = {
   fr: 'Français',
   en: 'English',
+  mg: 'Malagasy',
 } as const;
 
 // browser noise that says nothing about the site and would eat the Sentry quota
@@ -182,3 +167,39 @@ export const SENTRY_IGNORED_URLS = [
   /^moz-extension:\/\//,
   /^safari-extension:\/\//,
 ];
+
+/*
+ * ----------------------------- //
+ * --------- currency ---------- //
+ * ----------------------------- //
+ */
+// every price of the site is written in euros; the other currencies are a conversion of it
+export const CURRENCIES = ['EUR', 'USD', 'MGA'] as const;
+export const DEFAULT_CURRENCY = CURRENCIES[0];
+
+export const CURRENCY_STORAGE_KEY = 'aldaron-currency';
+export const RATES_STORAGE_KEY = 'aldaron-rates';
+
+// a rate is kept for 12 hours: the prices are an estimate, not a trade
+export const RATES_MAX_AGE_MS = 12 * 60 * 60 * 1000;
+
+// used until the rates are loaded, and when no free rate API answers
+export const FALLBACK_RATES = { EUR: 1, USD: 1.08, MGA: 4900 } as const;
+
+/*
+ * Free rate APIs that need no key, tried in order: each one is asked for the euro as base and
+ * answers the rates of the others
+ */
+export const RATES_API_URLS = [
+  'https://open.er-api.com/v6/latest/EUR',
+  'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json',
+] as const;
+
+// the Malagasy ariary is shown rounded to the nearest thousand: its smaller units are not used
+export const MGA_ROUNDING = 1000;
+
+/*
+ * The estimate the simulator keeps in the browser so the contact form can start from it: written when
+ * the visitor leaves the simulator for the quote request, read (and offered) by the contact page
+ */
+export const ESTIMATE_STORAGE_KEY = 'aldaron-estimate';

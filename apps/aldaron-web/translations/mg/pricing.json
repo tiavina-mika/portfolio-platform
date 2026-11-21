@@ -1,0 +1,181 @@
+{
+  "PricingPage": {
+    "metadata": {
+      "title": "Tolotra sy vidiny",
+      "description": "Ny vidin'ny vokatrao, isaky ny efijery : manomboka amin'ny 1 500 €, raikitra rehefa manao sonia, miaraka amin'ny fanitsiana bug mandritra ny 30 andro."
+    },
+    "og": {
+      "chip": "Tolotra sy vidiny",
+      "title": "Ny vidin'ny vokatrao, isaky ny efijery.",
+      "subtitle": "Vidiny raikitra rehefa manao sonia, manomboka amin'ny 1 500 €."
+    },
+    "hero": {
+      "title": "Ny vidin'ny vokatrao, isaky ny efijery.",
+      "description": "Miankina amin'ny haben'ny tetikasa ny vidiny : fitaovana, isan'ny efijery, back-office ary fahasarotan'ny asa. Raikitra rehefa manao sonia izy ary tsy miova intsony.",
+      "quote": "Angataho ny tolo-bidy",
+      "simulator": "Tombano ny vidiny",
+      "facts": [
+        "Manomboka amin'ny 1 500 €",
+        "Vidiny raikitra rehefa manao sonia",
+        "Fanitsiana bug mandritra ny 30 andro"
+      ]
+    },
+    "plans": {
+      "eyebrow": "Vidiny",
+      "title": "Vidiny isaky ny efijery, araka ny fitaovana",
+      "note": "Efijery iray ny fijery tsirairay ; tafiditra ao aminy ny toe-javatra sy ny endriny samihafa. Mihoatra ny 15 000 €, raikitra miaraka mandritra ny fandrafetana ny vidiny.",
+      "items": [
+        {
+          "eyebrow": "Manomboka amin'ny",
+          "title": "Tranonkala na application web",
+          "price": "1 500 €",
+          "description": "25 € isaky ny efijery ho an'ny tranonkala static, 18 € ho an'ny application web tsotra, 30 € ho an'ny interface be fiasa."
+        },
+        {
+          "eyebrow": "Manomboka amin'ny",
+          "title": "Finday",
+          "price": "2 500 €",
+          "description": "25 € isaky ny efijery, iOS sy Android. Tafiditra ny famoahana ao amin'ny App Store sy Google Play."
+        },
+        {
+          "eyebrow": "Isaky ny efijery",
+          "title": "Back-office",
+          "price": "37,50 €",
+          "description": "Avo 1,5 heny noho ny vidin'ny efijery iray : votoaty, mpampiasa, kaomandy, fanaraha-maso, antontan'isa, fanondranana."
+        }
+      ]
+    },
+    "flow": {
+      "eyebrow": "Dingana",
+      "title": "Dingana enina, manomboka amin'ny fandrafetana.",
+      "steps": [
+        {
+          "title": "Fandrafetana",
+          "description": "Maimaim-poana. Faritantsika ny haben'ny tetikasa : fitaovana, efijery, back-office, fahasarotana."
+        },
+        {
+          "title": "Tolo-bidy raikitra",
+          "description": "Raikitra rehefa manao sonia ny vidiny. 40 % no aloa amin'izay."
+        },
+        {
+          "title": "Maquette",
+          "description": "Ekena alohan'ny hanombohan'ny fampandrosoana ny maquette."
+        },
+        {
+          "title": "Demo",
+          "description": "Eo antenatenany, asehontsika ny vokatra. 30 % no aloa."
+        },
+        {
+          "title": "Famoahana",
+          "description": "Fampiasana amin'ny tena izy, famoahana ao amin'ny store, fanolorana ny kaody sy ny kaonty. 30 % no aloa."
+        },
+        {
+          "title": "Aorian'izay",
+          "description": "Fanitsiana bug mandritra ny 30 andro, avy eo fikojakojana tsy voatery."
+        }
+      ]
+    },
+    "simulator": {
+      "eyebrow": "Mpanao kajy vidiny",
+      "title": "Tombano ny vidin'ny vokatrao",
+      "description": "Valio fanontaniana vitsivitsy momba ny fitaovana, ny efijery ary ny asa ilainao. Mivaingana isaky ny valinteny ny tombana.",
+      "cta": "Sokafy ny mpanao kajy"
+    },
+    "examples": {
+      "eyebrow": "Ohatra",
+      "title": "Tranga dimy",
+      "items": [
+        {
+          "title": "Tranonkala fampisehoana",
+          "detail": "Maquette iray · efijery web hatramin'ny 60",
+          "price": "1 500 €"
+        },
+        {
+          "title": "Kinova voalohany an'ny SaaS",
+          "detail": "Maquette iray · application web tsotra misy efijery 50 · back-office misy efijery 15",
+          "price": "1 500 €"
+        },
+        {
+          "title": "Application finday tsotra",
+          "detail": "Maquette iray · efijery finday hatramin'ny 100",
+          "price": "2 500 €"
+        },
+        {
+          "title": "Application finday misy back-office",
+          "detail": "Maquette iray · efijery finday 60 · back-office misy efijery 25",
+          "price": "2 500 €"
+        },
+        {
+          "title": "Vokatra web sy finday misy fandoavam-bola",
+          "detail": "Maquette iray · efijery web 40 · efijery finday 60 · fandoavam-bola an-tserasera",
+          "price": "3 000 €"
+        }
+      ]
+    },
+    "options": {
+      "eyebrow": "Safidy",
+      "title": "Izay miampy ny vidin'ny efijery",
+      "description": "Miseho ao amin'ny mpanao kajy ny safidy tsirairay rehefa fidinao.",
+      "items": [
+        {
+          "label": "Maquette (raha tsy omenao)",
+          "price": "6 hatramin'ny 8 € / efijery",
+          "description": "8 € isaky ny efijery avy amin'ny hevitra, 6 € avy amin'ny cahier des charges."
+        },
+        {
+          "label": "Fandoavam-bola an-tserasera",
+          "price": "500 €",
+          "description": "Ho an'ny fampidirana voalohany. 22 € isaky ny fampidirana fanampiny."
+        },
+        {
+          "label": "Resaka mivantana",
+          "price": "500 €",
+          "description": "Hafatra mivantana eo amin'ny mpampiasa."
+        }
+      ]
+    },
+    "rules": {
+      "eyebrow": "Fitsipika",
+      "title": "Izay mamaritra ny tetikasa tsirairay",
+      "items": [
+        {
+          "title": "Vidiny raikitra",
+          "description": "Raikitra rehefa manao sonia ny vidiny, aorian'ny fandrafetana. Tsy miova mandritra ny tetikasa izy."
+        },
+        {
+          "title": "Aloa in-3",
+          "description": "40 % amin'ny sonia, 30 % amin'ny demo antenatenany, 30 % amin'ny famoahana."
+        },
+        {
+          "title": "Kaomandy farany ambany",
+          "description": "1 500 € ho an'ny tranonkala na application web, 2 500 € raha misy finday."
+        },
+        {
+          "title": "Interface be fiasa",
+          "description": "Atolotra isaky ny ampahany, aloa isaky ny fanolorana ; ifanarahana mandritra ny fandrafetana ireo ampahany."
+        },
+        {
+          "title": "Design",
+          "description": "Ampiharina amin'ny rafitra design an'i Aldaron ny sarinao. Afaka mitondra ny designer-nao ihany koa ianao."
+        },
+        {
+          "title": "Fikojakojana",
+          "description": "150 hatramin'ny 400 € isam-bolana, aorian'ny fanitsiana bug mandritra ny 30 andro."
+        },
+        {
+          "title": "Fananana ny kaody",
+          "description": "Atolotra anao amin'ny famoahana ny kaody sy ny kaonty."
+        },
+        {
+          "title": "Fandaniana ivelany",
+          "description": "Hébergement sy serivisy hafa, kaontin'ny store : aloanao mivantana."
+        }
+      ]
+    },
+    "contact": {
+      "title": "Resaho aminay ny vokatrao",
+      "description": "Andalana vitsivitsy dia ampy hanomanana ny fandrafetana.",
+      "cta": "Angataho ny tolo-bidy"
+    }
+  }
+}

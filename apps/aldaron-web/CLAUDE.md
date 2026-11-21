@@ -87,15 +87,15 @@ config/ public/
 
 ## Design system
 
-The Aldaron design system lives in `design/aldaron-web/ds`; the app applies it as follows:
+The Aldaron design system lives in `design/aldaron-web/Aldaron Design System V2`; the app applies it as follows:
 
 | What | Where |
 |---|---|
 | Color, shadow and type tokens (light and dark) | `app/globals.css` |
-| Fonts: Bricolage Grotesque, Instrument Sans, JetBrains Mono (`next/font/google`, so the build needs network access) | `components/fonts.ts` |
+| Fonts: Familjen Grotesk, IBM Plex Mono (`next/font/google`, so the build needs network access) | `components/fonts.ts` |
 | Logo, drawn with the tokens | `components/Logo.tsx`, shapes in `LOGO` (`utils/constants.ts`) |
 | Logo files, favicons, install icons | `public/brand/`, `public/` |
-| Share card, same fonts as TTF because its renderer does not read woff2 | `containers/og/OgCard.tsx`, `public/fonts/aldaron/` |
+| Share card, its fonts as TTF because its renderer does not read woff2 (still Instrument Sans and Bricolage Grotesque: to move to the design system families) | `containers/og/OgCard.tsx`, `public/fonts/aldaron/` |
 | Components | `components/buttons/`, `components/ui/`, `components/Alert.tsx` |
 
 - Orange text uses `text-brand-text` and red text `text-destructive-text`: `brand` and `destructive` are

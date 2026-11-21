@@ -1,58 +1,52 @@
+import { useTranslations } from 'next-intl';
+
+import ButtonLink from '@/components/buttons/ButtonLink';
+import PageSection from '@/components/layouts/PageSection';
+import SectionIntro from '@/components/layouts/SectionIntro';
+import Price from '@/containers/currency/Price';
+import { ROUTES } from '@/i18n/routes';
+import { HOME_FACT_KEYS } from '@/utils/home.constants';
+
 /**
- * The home hero with its database parts streamed in: an async tree, so it has no story
+ * The top of the home page: what Aldaron does, the two calls to action and the three facts that
+ * reassure (the entry price, the fixed price, the bug fixes)
  */
-import { Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
+const HomeHero = () => {
+  const t = useTranslations('Home.hero');
 
-import DownloadCV from '@/containers/home/download/DownloadCV';
-import { Locale } from '@/i18n/config';
-
-import DynamicHomeHeroTexts from './DynamicHomeHeroTexts';
-import DynamicHomeHeroVisual from './DynamicHomeHeroVisual';
-import HomeHeroContainer from './HomeHeroContainer';
-import HomeHeroTextsBoundary from './HomeHeroTextsBoundary';
-import HomeHeroTextsSkeleton from './HomeHeroTextsSkeleton';
-
-type Props = {
-  locale: Locale;
-};
-
-const HomeHero = ({ locale }: Props) => {
   return (
-    <HomeHeroContainer
-      action={(
-        <ErrorBoundary fallback={null}>
-          <Suspense fallback={null}>
-            <div>
-              <DownloadCV size="lg" variant="brand" />
-            </div>
-          </Suspense>
-        </ErrorBoundary>
-      )}
-      // the images load on their own too; on an error they stay out
-      image={(
-        <ErrorBoundary fallback={null}>
-          <Suspense fallback={null}>
-            <DynamicHomeHeroVisual theme="light" />
-          </Suspense>
-        </ErrorBoundary>
-      )}
-      imageDarkMode={(
-        <ErrorBoundary fallback={null}>
-          <Suspense fallback={null}>
-            <DynamicHomeHeroVisual theme="dark" />
-          </Suspense>
-        </ErrorBoundary>
-      )}
-      // the description loads on its own: a skeleton, then the text, or a banner with a retry button
-      texts={(
-        <HomeHeroTextsBoundary>
-          <Suspense fallback={<HomeHeroTextsSkeleton />}>
-            <DynamicHomeHeroTexts locale={locale} />
-          </Suspense>
-        </HomeHeroTextsBoundary>
-      )}
-    />
+    <PageSection
+      hasDivider={false}
+      className={`
+        items-start gap-7
+        md:pt-18
+      `}
+    >
+      <SectionIntro
+        className="gap-7"
+        description={t('description')}
+        eyebrow={t('eyebrow')}
+        level={1}
+        title={t('title')}
+      />
+      <div className="flex flex-wrap gap-3">
+        <ButtonLink href={ROUTES.simulator} size="lg" variant="brand">{t('ctaSimulator')}</ButtonLink>
+        <ButtonLink href={ROUTES.pricing} size="lg" variant="outline">{t('ctaPricing')}</ButtonLink>
+      </div>
+      <ul
+        className={`
+          m-0 flex list-none flex-wrap gap-x-8 gap-y-3 p-0 pt-4 font-mono text-[13px] leading-[1.4]
+          tracking-[0.04em] text-muted-foreground
+        `}
+      >
+        {HOME_FACT_KEYS.map(key => (
+          <li className="flex items-center gap-2" key={key}>
+            <span aria-hidden className="block size-1.5 flex-none bg-brand" />
+            <Price text={t(`facts.${key}`)} />
+          </li>
+        ))}
+      </ul>
+    </PageSection>
   );
 };
 

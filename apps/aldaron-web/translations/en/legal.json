@@ -1,0 +1,53 @@
+{
+  "LegalPage": {
+    "metadata": {
+      "title": "Legal notice",
+      "description": "Site publisher, hosting, intellectual property and the value of Aldaron's estimates."
+    },
+    "og": {
+      "chip": "Legal",
+      "title": "Legal notice",
+      "subtitle": "Publisher, hosting and intellectual property."
+    },
+    "label": "Legal",
+    "title": "Legal notice",
+    "updated": "Last updated: [to be completed]",
+    "sections": {
+      "1": {
+        "title": "Site publisher",
+        "lines": {
+          "1": "The site is published by Aldaron, a web and mobile development company for startups.",
+          "2": "Legal form and capital: [to be completed]",
+          "3": "Tax ID (NIF): [to be completed] · Statistical ID (STAT): [to be completed]",
+          "4": "Registered office: [to be completed]",
+          "5": "Publication director: [to be completed]",
+          "6": "Contact: contact@aldaron.eu"
+        }
+      },
+      "2": {
+        "title": "Hosting",
+        "lines": {
+          "1": "Site host: [to be completed]"
+        }
+      },
+      "3": {
+        "title": "Intellectual property",
+        "lines": {
+          "1": "The texts, logo, mockups and code of this site belong to Aldaron unless stated otherwise. Any reproduction without Aldaron's written consent is forbidden."
+        }
+      },
+      "4": {
+        "title": "Estimates and quotes",
+        "lines": {
+          "1": "Estimates from the price simulator are indicative. Only a firm quote, issued after scoping, binds Aldaron."
+        }
+      },
+      "5": {
+        "title": "Personal data",
+        "lines": {
+          "1": "The processing of your data is described in the privacy policy."
+        }
+      }
+    }
+  }
+}

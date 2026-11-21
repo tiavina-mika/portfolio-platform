@@ -35,3 +35,14 @@ export interface IProjectAttributes {
 export interface IProject extends IProjectAttributes {
   id: string;
 }
+
+/**
+ * the only fields the projects list may be sorted by: the sort comes from the address, so it must
+ * not name an arbitrary field of the class
+ */
+export enum ProjectOrderByEnum {
+  DATE_START = 'dateStart',
+  CREATED_AT = 'createdAt',
+  UPDATED_AT = 'updatedAt',
+  TITLE = 'title'
+}

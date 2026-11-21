@@ -27,10 +27,10 @@ Workflows are in `.github/workflows/`. Secrets and variables they read are in [G
 
 | Job | What it runs |
 |---|---|
-| Lint, typecheck and build affected projects | `nx affected -t lint`, `typecheck`, `build --exclude=web`, `build-docs`, then `pnpm check-i18n` |
+| Lint, typecheck and build affected projects | `nx affected -t lint`, `typecheck`, `build --exclude=web,aldaron-web`, a separate `aldaron-web` build, `build-docs`, then `pnpm check-i18n` |
 | Render build (production or pre-production) | On PRs into `main` (production) and `develop` (pre-production): install, back-office `vite build`, server build and `copy`, with placeholder `VITE_*` values, then checks the copied bundle holds `index.html` and scripts |
 | Conventional commit messages | `commitlint` on the commits a PR adds |
-| Unit tests of affected projects | `nx affected -t test --exclude=server,web` |
+| Unit tests of affected projects | `nx affected -t test --exclude=server,web,aldaron-web` |
 | Build affected Storybooks | `nx affected -t build-sb` |
 | Markdown lint and broken links | `pnpm lint:docs`, `pnpm check-doc-links` and `pnpm check-doc-twins` against the base branch, plus a `lychee` link check |
 
@@ -49,7 +49,7 @@ A new push to the same PR cancels the previous run.
 
 ## Storybook and visual tests
 
-- `storybook-tests.yml` runs the web Storybook tests on a schedule.
+- `storybook-tests.yml` runs the web and aldaron-web Storybook tests on a schedule.
 - `chromatic.yml` publishes the Storybooks to Chromatic; the scheduled run is skipped when `develop` has no commit from the last four days.
 
 ## Lighthouse
@@ -59,6 +59,7 @@ A new push to the same PR cancels the previous run.
 ## Gotchas
 
 - `web` is excluded from the CI build: `next build` reads the CMS from the live Parse API, which a CI runner cannot reach. Its compilation is covered by `web:typecheck`.
+- `aldaron-web` is built in the CI with placeholder environment values and an unreachable server: its content queries catch a failed fetch, so the pages prerender without content, which is enough to catch a production prerender error before a deploy.
 - The release PR is opened with `RELEASE_TOKEN`, not the default `GITHUB_TOKEN`, otherwise the required checks would never run on it.
 - Scheduled workflows run on the default branch (`main`), which only moves on a release.
 - `lighthouserc.json` is referenced by `lighthouse.yml` but is not at the repository root today.

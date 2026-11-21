@@ -3,10 +3,8 @@
 import { useTranslations } from 'next-intl';
 
 import { IMenu } from '@/types/app.type';
-import { cn } from '@/utils/app.utils';
 
 import NavBarLink from './NavBarLink';
-
 
 type Props = {
   menus: IMenu[];
@@ -20,17 +18,9 @@ const NavBarLinks = ({ menus }: Props) => {
 
   return (
     <nav aria-label={t('mainNavigation')}>
-      <ul className="flex flex-row items-center justify-between px-0">
-        {menus.map((menu, index) => (
-          <li
-            key={menu.label + index}
-            className={cn(`
-              flex flex-row items-center self-stretch
-              md:px-[10px]
-              lg:px-[1vw]
-              xl:px-[20px]
-            `, { 'lg:max-2xl:hidden': index === 0 })}
-          >
+      <ul className="m-0 flex list-none flex-row items-center gap-1 p-0">
+        {menus.map(menu => (
+          <li key={menu.id}>
             <NavBarLink href={menu.value} label={menu.label} />
           </li>
         ))}

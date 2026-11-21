@@ -1,0 +1,64 @@
+{
+  "PrivacyPage": {
+    "metadata": {
+      "title": "Privacy policy",
+      "description": "The data we collect, why, how it is kept and how to exercise your rights."
+    },
+    "og": {
+      "chip": "Legal",
+      "title": "Privacy policy",
+      "subtitle": "Your data, how it is used and your rights."
+    },
+    "label": "Legal",
+    "title": "Privacy policy",
+    "updated": "Last updated: [to be completed]",
+    "sections": {
+      "1": {
+        "title": "Data we collect",
+        "lines": {
+          "1": "When you fill in the contact form, we receive your name, your email address, the description of your product, the platforms concerned, what you bring, your needs and, if you come from the simulator, your estimate.",
+          "2": "Only the name, email, product description, platforms and your consent are required."
+        }
+      },
+      "2": {
+        "title": "Why we use it",
+        "lines": {
+          "1": "Your data is used only to answer your request, prepare the free scoping and issue a firm quote."
+        }
+      },
+      "3": {
+        "title": "Legal basis",
+        "lines": {
+          "1": "Your consent, given by ticking the box in the form. You can withdraw it at any time."
+        }
+      },
+      "4": {
+        "title": "Storage in your browser",
+        "lines": {
+          "1": "The simulator saves your estimate in your browser's local storage so it can be reused in the form. It is not sent until you submit the form, and it is deleted when you do.",
+          "2": "The site also keeps in this storage the currency you picked to show the prices and, for twelve hours, the exchange rates.",
+          "3": "To get these rates, your browser asks two free exchange-rate services directly (open.er-api.com, then jsDelivr). These services see your IP address, as any site you visit does; the site sends them no personal data."
+        }
+      },
+      "5": {
+        "title": "Recipients and retention",
+        "lines": {
+          "1": "Your data is not sold.",
+          "2": "Recipients and retention period: [to be completed]"
+        }
+      },
+      "6": {
+        "title": "Your rights",
+        "lines": {
+          "1": "You can ask for access to your data, its correction or deletion, and withdraw your consent, by writing to contact@aldaron.eu."
+        }
+      },
+      "7": {
+        "title": "Cookies and analytics",
+        "lines": {
+          "1": "[to be completed] depending on the tools used on the site."
+        }
+      }
+    }
+  }
+}
