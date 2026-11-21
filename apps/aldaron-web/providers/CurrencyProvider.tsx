@@ -19,14 +19,17 @@ import {
   getFallbackRates,
   parseCurrency,
   readStorage,
+  readStoredRates,
   writeStorage,
 } from '@/utils/currency.utils';
-
-type StoredRates = { savedAt: number; USD: number; MGA: number };
 
 export type CurrencyContextValue = {
   currency: Currency;
   setCurrency: (currency: Currency) => void;
+  /**
+   * True while the converted prices use the fixed fallback rates: no live rate could be fetched
+   */
+  isRateIndicative: boolean;
   /**
    * An amount in euros, written in the chosen currency
    */
@@ -39,20 +42,6 @@ export type CurrencyContextValue = {
 
 export const CurrencyContext = createContext<CurrencyContextValue | null>(null);
 
-const readStoredRates = (): StoredRates | null => {
-  const stored = readStorage(RATES_STORAGE_KEY);
-
-  if (!stored) return null;
-
-  try {
-    const rates = JSON.parse(stored) as StoredRates;
-
-    return Date.now() - rates.savedAt < RATES_MAX_AGE_MS ? rates : null;
-  } catch {
-    return null;
-  }
-};
-
 /**
  * The currency the prices are shown in (the euro, until the visitor picks another one) and the rates
  * that convert them. The choice is kept in the browser, and so are the rates for 12 hours. The first
@@ -62,6 +51,7 @@ const CurrencyProvider = ({ children }: { children: ReactNode }) => {
   const locale = useLocale();
   const [currency, setCurrencyState] = useState<Currency>(DEFAULT_CURRENCY);
   const [rates, setRates] = useState<Rates>(getFallbackRates);
+  const [isRateIndicative, setIsRateIndicative] = useState(true);
 
   useEffect(() => {
     const load = async () => {
@@ -69,10 +59,11 @@ const CurrencyProvider = ({ children }: { children: ReactNode }) => {
 
       if (stored) setCurrencyState(stored);
 
-      const cached = readStoredRates();
+      const cached = readStoredRates(readStorage(RATES_STORAGE_KEY), RATES_MAX_AGE_MS);
 
       if (cached) {
-        setRates(previous => ({ ...previous, USD: cached.USD, MGA: cached.MGA }));
+        setRates(previous => ({ ...previous, ...cached }));
+        setIsRateIndicative(false);
         return;
       }
 
@@ -81,6 +72,7 @@ const CurrencyProvider = ({ children }: { children: ReactNode }) => {
       if (!fresh) return;
 
       setRates(previous => ({ ...previous, ...fresh }));
+      setIsRateIndicative(false);
       writeStorage(RATES_STORAGE_KEY, JSON.stringify({ savedAt: Date.now(), ...fresh }));
     };
 
@@ -95,11 +87,12 @@ const CurrencyProvider = ({ children }: { children: ReactNode }) => {
   const value = useMemo<CurrencyContextValue>(() => ({
     currency,
     setCurrency,
+    isRateIndicative,
     formatPrice: (euros, withSymbol) => formatPrice(euros, {
       currency, rates, withSymbol, locale,
     }),
     convertPrices: text => convertPrices(text, currency, rates),
-  }), [currency, locale, rates, setCurrency]);
+  }), [currency, isRateIndicative, locale, rates, setCurrency]);
 
   return <CurrencyContext.Provider value={value}>{children}</CurrencyContext.Provider>;
 };

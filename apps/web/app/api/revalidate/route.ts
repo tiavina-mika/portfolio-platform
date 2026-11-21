@@ -1,10 +1,25 @@
+import { timingSafeEqual } from 'node:crypto';
+
 import { revalidateTag } from 'next/cache';
 
 import env from '@/env';
 
 interface IPostData {
-  tag: string;
+  tag?: unknown;
 }
+
+/**
+ * compares two secrets in constant time, so the response time does not reveal how many leading
+ * characters of a guess were right
+ */
+const isSameSecret = (received: string | null, expected: string): boolean => {
+  if (!received) return false;
+
+  const receivedBuffer = Buffer.from(received);
+  const expectedBuffer = Buffer.from(expected);
+
+  return receivedBuffer.length === expectedBuffer.length && timingSafeEqual(receivedBuffer, expectedBuffer);
+};
 
 /**
  * Invalidates a Next.js cache tag (see cacheTag() calls in server/queries/*.queries.ts).
@@ -15,13 +30,20 @@ interface IPostData {
 export const POST = async (request: Request) => {
   const secret = request.headers.get('x-revalidate-secret');
 
-  if (!env.REVALIDATE_SECRET || secret !== env.REVALIDATE_SECRET) {
+  if (!env.REVALIDATE_SECRET || !isSameSecret(secret, env.REVALIDATE_SECRET)) {
     return Response.json({ success: false, error: 'Unauthorized' }, { status: 401 });
   }
 
-  const body: IPostData = await request.json();
+  let body: IPostData;
 
-  if (!body.tag) {
+  try {
+    body = await request.json();
+  }
+  catch {
+    return Response.json({ success: false, error: 'invalid JSON body' }, { status: 400 });
+  }
+
+  if (typeof body?.tag !== 'string' || !body.tag) {
     return Response.json({ success: false, error: 'tag is required' }, { status: 400 });
   }
 

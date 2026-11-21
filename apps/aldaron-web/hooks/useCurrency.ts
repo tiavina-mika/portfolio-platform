@@ -10,6 +10,7 @@ import { convertPrices, formatPrice, getFallbackRates } from '@/utils/currency.u
 const euroOnly: CurrencyContextValue = {
   currency: DEFAULT_CURRENCY,
   setCurrency: () => undefined,
+  isRateIndicative: false,
   formatPrice: (euros, withSymbol) => formatPrice(euros, {
     currency: DEFAULT_CURRENCY, rates: getFallbackRates(), withSymbol,
   }),

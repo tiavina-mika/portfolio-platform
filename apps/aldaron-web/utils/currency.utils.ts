@@ -102,28 +102,59 @@ export const convertPrices = (text: string, currency: Currency, rates: Rates): s
     .replace(PREFIX, (_match, amount: string) => format(parseAmount(amount)));
 };
 
-type RatesResponse = {
+export type RatesResponse = {
   rates?: Partial<Record<string, number>>;
   eur?: Partial<Record<string, number>>;
 };
 
-// the two free APIs answer in a different shape: `rates.USD` or `eur.usd`
-const readRates = (data: RatesResponse): Pick<Rates, 'USD' | 'MGA'> | null => {
-  const usd = data.rates?.USD ?? data.eur?.usd;
-  const mga = data.rates?.MGA ?? data.eur?.mga;
+// a rate is a finite number above zero: anything else would write "NaN" or "0" as a price
+export const isValidRate = (value: unknown): value is number =>
+  typeof value === 'number' && Number.isFinite(value) && value > 0;
 
-  return usd && mga ? { USD: usd, MGA: mga } : null;
+type LiveRates = Pick<Rates, 'USD' | 'MGA'>;
+
+// the two free APIs answer in a different shape: `rates.USD` or `eur.usd`
+export const readRates = (data: RatesResponse | null): LiveRates | null => {
+  const usd = data?.rates?.USD ?? data?.eur?.usd;
+  const mga = data?.rates?.MGA ?? data?.eur?.mga;
+
+  return isValidRate(usd) && isValidRate(mga) ? { USD: usd, MGA: mga } : null;
+};
+
+/**
+ * The rates saved in the browser, `null` when they are missing, older than `maxAgeMs`, or not valid
+ * numbers (the storage can hold anything).
+ */
+export const readStoredRates = (
+  stored: string | null,
+  maxAgeMs: number,
+  now = Date.now()
+): LiveRates | null => {
+  if (!stored) return null;
+
+  try {
+    const data = JSON.parse(stored) as { savedAt?: unknown; USD?: unknown; MGA?: unknown } | null;
+
+    if (typeof data?.savedAt !== 'number' || now - data.savedAt >= maxAgeMs) return null;
+
+    return isValidRate(data.USD) && isValidRate(data.MGA) ? { USD: data.USD, MGA: data.MGA } : null;
+  } catch {
+    return null;
+  }
 };
 
 /**
  * The current rates of the dollar and the ariary against the euro, from the first free API that
  * answers. `null` when none does: the caller keeps its fallback rates.
  */
-export const fetchRates = async (): Promise<Pick<Rates, 'USD' | 'MGA'> | null> => {
+export const fetchRates = async (): Promise<LiveRates | null> => {
   for (const url of RATES_API_URLS) {
     try {
       const response = await fetch(url);
-      const rates = readRates((await response.json()) as RatesResponse);
+
+      if (!response.ok) continue;
+
+      const rates = readRates((await response.json()) as RatesResponse | null);
 
       if (rates) return rates;
     } catch {

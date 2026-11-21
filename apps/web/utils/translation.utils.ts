@@ -80,7 +80,7 @@ export const getTranslatedField = <T extends Record<string, any>>(
 
   // get default field value if the field is not translated
   if (!translatedValue) {
-    const defaultFieldValue = translated?.[defaultLocale][field];
+    const defaultFieldValue = translated?.[defaultLocale]?.[field];
 
     return defaultFieldValue;
   }

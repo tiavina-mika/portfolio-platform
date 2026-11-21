@@ -3,7 +3,6 @@ import { z } from 'zod';
 import {
   QUOTE_BRING_KEYS,
   QUOTE_FIELD_MAX_LENGTHS,
-  QUOTE_MAX_FILES,
   QUOTE_NAME_MIN_LENGTH,
   QUOTE_PRODUCT_MIN_LENGTH,
 } from '@/utils/contact.constants';
@@ -48,7 +47,6 @@ export const createQuoteRequestSchema = (messages: QuoteRequestMessages) => z.ob
   bring: z.enum(['', ...QUOTE_BRING_KEYS]),
   needs: z.string().trim().max(QUOTE_FIELD_MAX_LENGTHS.needs),
   estimate: z.string().trim().max(QUOTE_FIELD_MAX_LENGTHS.estimate),
-  fileNames: z.array(z.string().max(255)).max(QUOTE_MAX_FILES),
   consent: z.literal(true, { error: messages.consent }),
 });
 

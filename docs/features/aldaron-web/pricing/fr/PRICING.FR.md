@@ -83,5 +83,5 @@ Les boutons **« Demander un devis »** ouvrent la page de contact.
 - Les prix affichés sont une indication : le prix ferme est fixé à la signature, après le cadrage.
 - Les montants en dollars et en ariary sont une conversion approximative de l'euro : les taux viennent
   d'un service gratuit et sont rafraîchis au plus une fois toutes les 12 heures. Si ce service ne répond
-  pas, des taux de secours sont utilisés. Les ariary sont arrondis au millier.
+  pas, des taux de secours sont utilisés et la mention « Taux indicatif » apparaît à côté du sélecteur de devise. Les ariary sont arrondis au millier.
 - Le contenu de la page ne se modifie pas dans le back-office.

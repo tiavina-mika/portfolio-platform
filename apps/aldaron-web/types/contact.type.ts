@@ -14,9 +14,5 @@ export interface IQuoteRequestInput {
   bring: QuoteBring | '';
   needs: string;
   estimate: string;
-  /**
-   * The names of the attached files: the message tells the team which files the visitor meant to send
-   */
-  fileNames: string[];
   consent: boolean;
 }

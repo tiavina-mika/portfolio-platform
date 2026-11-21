@@ -27,7 +27,6 @@ const EMPTY_VALUES: IQuoteRequestInput = {
   bring: '',
   needs: '',
   estimate: '',
-  fileNames: [],
   consent: false,
 };
 
@@ -60,10 +59,6 @@ const meta = {
   tags: ['autodocs'],
   args: {
     action: fn(),
-    files: [],
-    rejectedNames: [],
-    onFilesAdd: fn(),
-    onFileRemove: fn(),
   },
 } satisfies Meta<typeof ContactFormContentDemo>;
 

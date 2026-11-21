@@ -31,7 +31,7 @@ Tout visiteur, sans connexion ni compte.
   mise à jour.
 - Un texte en sept parties, chacune séparée de la précédente par un trait :
   - **Données collectées** : ce que le formulaire de contact transmet (nom, e-mail, description du produit,
-    supports, ce que le visiteur apporte, besoins, pièces jointes et, s'il vient du simulateur, son
+    supports, ce que le visiteur apporte, besoins et, s'il vient du simulateur, son
     estimation) ; seuls le nom, l'e-mail, la description du produit, les supports et le consentement sont
     obligatoires
   - **Pourquoi nous les utilisons** : répondre à la demande, préparer le cadrage gratuit et établir un
@@ -59,7 +59,4 @@ Tout visiteur, sans connexion ni compte.
 - Plusieurs informations sont encore à renseigner et s'affichent entre crochets (« [à compléter] ») : la
   date de mise à jour, les destinataires et la durée de conservation, et la partie sur les cookies et la
   mesure d'audience, qui dépend des outils réellement utilisés sur le site.
-- La partie « Données collectées » mentionne les pièces jointes, que le formulaire ne transmet pas encore
-  (voir la [page Contact](../../contact/fr/CONTACT.FR.md)) ; le texte devra rester aligné sur ce que le site fait
-  réellement.
 - Le texte existe en français, en anglais et en malgache ; la langue se change dans le pied de page.

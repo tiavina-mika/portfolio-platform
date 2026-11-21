@@ -45,8 +45,6 @@ Tout visiteur, sans connexion ni compte.
   - **Estimation du simulateur** (facultatif, uniquement si le visiteur vient du simulateur) :
     reprise de son estimation, modifiable
   - **Principaux besoins** (facultatif) : un besoin par ligne
-  - **Pièces jointes** (facultatif) : bouton « Ajouter des fichiers », puis la liste des fichiers avec
-    leur taille et un bouton « Retirer » pour chacun
   - Une case de **consentement** (obligatoire) : « J'accepte que mes données soient utilisées pour
     répondre à ma demande. »
 - Le bouton **« Demander un devis ferme »**, suivi de la mention « Ce n'est pas un devis automatique :
@@ -55,8 +53,7 @@ Tout visiteur, sans connexion ni compte.
 Règles de saisie : le nom compte au moins 2 caractères, l'e-mail doit avoir un format valide, la
 description du produit compte au moins 5 caractères (300 au maximum), au moins un support doit être
 choisi et le consentement doit être coché. Les besoins sont limités à 300 caractères et l'estimation à
-400. Les pièces jointes sont des documents Word, des PDF ou des images, 10 Mo au maximum chacun, 10
-fichiers au maximum ; un fichier refusé (format ou taille) est nommé sous le bouton. Un champ mal rempli
+400. Un champ mal rempli
 affiche un message dans la langue du site, une fois que le visiteur a essayé d'envoyer, et ce message
 disparaît dès que le champ est corrigé.
 
@@ -97,9 +94,6 @@ l'adresse laissée.
 
 ## Points d'attention / limites actuelles
 
-- **Les pièces jointes ne sont pas envoyées.** Le visiteur peut choisir des fichiers, mais seuls leurs
-  noms sont écrits dans le message ; les fichiers eux-mêmes ne parviennent pas à Aldaron. Il faudra
-  prévoir leur réception côté serveur avant d'annoncer cette fonction.
 - Le message enregistré est limité à 1 000 caractères : si l'estimation est longue, elle est raccourcie
   pour tenir.
 - Le formulaire est protégé contre les envois automatisés par un contrôle invisible (reCAPTCHA) et par une

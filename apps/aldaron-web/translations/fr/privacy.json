@@ -16,7 +16,7 @@
       "1": {
         "title": "Données collectées",
         "lines": {
-          "1": "Lorsque vous remplissez le formulaire de contact, nous recevons votre nom, votre adresse e-mail, la description de votre produit, les supports concernés, ce que vous apportez, vos besoins, vos pièces jointes et, si vous venez du simulateur, votre estimation.",
+          "1": "Lorsque vous remplissez le formulaire de contact, nous recevons votre nom, votre adresse e-mail, la description de votre produit, les supports concernés, ce que vous apportez, vos besoins et, si vous venez du simulateur, votre estimation.",
           "2": "Seuls le nom, l'e-mail, la description du produit, les supports et votre consentement sont obligatoires."
         }
       },

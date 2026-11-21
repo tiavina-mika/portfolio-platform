@@ -13,7 +13,6 @@ import {
   QUOTE_FORM_RECAPTCHA_ACTION,
   QUOTE_SUPPORT_KEYS,
 } from '@/utils/contact.constants';
-import { addQuoteFiles } from '@/utils/contact.utils';
 import { clearStoredEstimate, readStoredEstimate } from '@/utils/estimate.utils';
 import { createQuoteRequestSchema } from '@/validations/contact.validation';
 
@@ -33,7 +32,6 @@ const INITIAL_VALUES: IQuoteRequestInput = {
   bring: '',
   needs: '',
   estimate: '',
-  fileNames: [],
   consent: false,
 };
 
@@ -45,8 +43,6 @@ const INITIAL_VALUES: IQuoteRequestInput = {
 const ContactForm = ({ locale }: ContactFormProps) => {
   const t = useTranslations('ContactPage');
   const isOnline = useIsOnline();
-  const [files, setFiles] = useState<File[]>([]);
-  const [rejectedNames, setRejectedNames] = useState<string[]>([]);
   const [hasStoredEstimate, setHasStoredEstimate] = useState(false);
 
   const schema = useMemo(
@@ -109,34 +105,18 @@ const ContactForm = ({ locale }: ContactFormProps) => {
       return;
     }
 
-    await onSubmit({ ...form.getValues(), fileNames: files.map(({ name }) => name) });
-  };
-
-  const handleFilesAdd = (incoming: File[]) => {
-    const result = addQuoteFiles(files, incoming);
-
-    setFiles(result.files);
-    setRejectedNames(result.rejectedNames);
-  };
-
-  const handleFileRemove = (index: number) => {
-    setFiles(previous => previous.filter((_file, fileIndex) => fileIndex !== index));
-    setRejectedNames([]);
+    await onSubmit(form.getValues());
   };
 
   return (
     <ContactFormContent
       action={handleAction}
       error={error}
-      files={files}
       form={form}
       hasEstimate={hasStoredEstimate && !sentSuccessMessage}
       isLoading={loading}
       isOffline={!isOnline}
       isSent={!!sentSuccessMessage}
-      onFileRemove={handleFileRemove}
-      onFilesAdd={handleFilesAdd}
-      rejectedNames={rejectedNames}
     />
   );
 };

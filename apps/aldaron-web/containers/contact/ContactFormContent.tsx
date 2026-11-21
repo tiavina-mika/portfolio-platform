@@ -14,8 +14,6 @@ import StatusBanner from '@/components/StatusBanner';
 import { IQuoteRequestInput } from '@/types/contact.type';
 import { QUOTE_BRING_KEYS, QUOTE_FIELD_MAX_LENGTHS, QUOTE_SUPPORT_KEYS } from '@/utils/contact.constants';
 
-import ContactFiles from './ContactFiles';
-
 export type ContactFormContentProps = {
   form: UseFormReturn<IQuoteRequestInput>;
   action: (values: FormData) => void | Promise<void>;
@@ -41,10 +39,6 @@ export type ContactFormContentProps = {
    * @default false
    */
   hasEstimate?: boolean;
-  files: File[];
-  rejectedNames: string[];
-  onFilesAdd: (files: File[]) => void;
-  onFileRemove: (index: number) => void;
 };
 
 const ERROR_CLASS_NAME = 'm-0 text-sm leading-[1.4] font-medium text-destructive-text';
@@ -64,10 +58,6 @@ const ContactFormContent = ({
   isOffline = false,
   error,
   hasEstimate = false,
-  files,
-  rejectedNames,
-  onFilesAdd,
-  onFileRemove,
 }: ContactFormContentProps) => {
   const t = useTranslations('ContactPage');
   const tCommon = useTranslations('Common');
@@ -196,14 +186,6 @@ const ContactFormContent = ({
         maxLength={QUOTE_FIELD_MAX_LENGTHS.needs}
         name="needs"
         rows={4}
-      />
-
-      <ContactFiles
-        disabled={isBusy}
-        files={files}
-        onAdd={onFilesAdd}
-        onRemove={onFileRemove}
-        rejectedNames={rejectedNames}
       />
 
       {/* ------------- consent ------------- */}

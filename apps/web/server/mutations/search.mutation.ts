@@ -7,6 +7,7 @@ import { ISearchResult } from '@/types/app.type';
 import { goToItemBySlug } from '@/utils/app.utils';
 import { collections, SEARCH_EMPTY_RESULT_ID } from '@/utils/constants';
 import { withContentWebsite } from '@/utils/parse.utils';
+import { getTranslatedField } from '@/utils/translation.utils';
 import { escapeText } from '@/utils/utils';
 import { localeSchemaField } from '@/validations/app.validations';
 import { getParseServer } from '@/config/parse-server.config';
@@ -103,7 +104,8 @@ export const searchData = async (values: z.infer<typeof searchSchema>) => {
 
         return {
           id: item.id,
-          title: translated[locale].title,
+          // the match may come from another language: falls back to the default one, never throws
+          title: getTranslatedField(translated, locale, 'title'),
           url: goToItemBySlug(translated, locale, pathname),
         };
       });
