@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { locales } from '@/i18n/config';
 import { ISearchResult } from '@/types/app.type';
 import { goToItemBySlug } from '@/utils/app.utils';
-import { collections, SEARCH_EMPTY_RESULT_ID } from '@/utils/constants';
+import { collections, PROJECT_TARGET_FIELD, SEARCH_EMPTY_RESULT_ID } from '@/utils/constants';
 import { withContentTarget } from '@/utils/parse.utils';
 import { getTranslatedField } from '@/utils/translation.utils';
 import { escapeText } from '@/utils/utils';
@@ -16,6 +16,8 @@ type SearchOptions = {
   search: string;
   locale: string;
   fieldsToSearch?: string[];
+  // the field saying where the content is published, which is not the same on every collection
+  targetField?: string;
 };
 const searchItems = async (
   collection: string,
@@ -23,6 +25,7 @@ const searchItems = async (
     search,
     locale,
     fieldsToSearch = ['title', 'tags', 'description', 'content'],
+    targetField,
   }: SearchOptions
 ) => {
   const Parse = getParseServer();
@@ -42,7 +45,7 @@ const searchItems = async (
   });
 
   try {
-    return await withContentTarget(Parse.Query.or(...or))
+    return await withContentTarget(Parse.Query.or(...or), targetField)
       .equalTo('deleted', false)
       .equalTo('active', true)
       .limit(10)
@@ -74,7 +77,7 @@ export const searchData = async (values: z.infer<typeof searchSchema>) => {
   const options = { search, locale };
   const searchResults = await Promise.all([
     searchItems(collections.Article, options),
-    searchItems(collections.Project, options),
+    searchItems(collections.Project, { ...options, targetField: PROJECT_TARGET_FIELD }),
   ]);
 
   const length = searchResults.reduce((acc, result) => acc + result.length, 0);

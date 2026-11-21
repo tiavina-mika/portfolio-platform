@@ -1,7 +1,7 @@
 import { cacheLife, cacheTag } from "next/cache";
 
 import { getParseServer } from "@/config/parse-server.config";
-import { serializeParseObject } from "@/utils/parse.utils";
+import { serializeParseObject, withContentTarget } from "@/utils/parse.utils";
 import { IApp } from "@/types/app.type";
 import { collections } from "@/utils/constants";
 
@@ -9,10 +9,13 @@ import { collections } from "@/utils/constants";
  * get items only for urls used in sitemap page
  * slug and title are the only fields needed
  * @example articles, pages, ...
+ * @param targetField when given, only the items published on this website are kept (the field holding
+ * where an item is published)
  * @returns
  */
 export const getDataForUrls = async <R = Record<string, any>>(
-  collection: string
+  collection: string,
+  targetField?: string
 ): Promise<R[] | undefined> => {
   'use cache';
   cacheLife('hours');
@@ -22,8 +25,12 @@ export const getDataForUrls = async <R = Record<string, any>>(
   try {
     const Parse = getParseServer();
 
+    const query = targetField
+      ? withContentTarget(new Parse.Query(collection), targetField)
+      : new Parse.Query(collection);
+
     const items =
-      (await new Parse.Query(collection)
+      (await query
         .equalTo('deleted', false)
         .equalTo('active', true)
         .select(['translated'])

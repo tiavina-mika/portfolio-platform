@@ -39,9 +39,11 @@ Parse.Cloud.define(
 Parse.Cloud.define(
   'getProjectForClient',
   parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<Parse.Object | false> => {
-    const { slug, locale, defaultLocale } = request.params;
+    const {
+      slug, locale, defaultLocale, target,
+    } = request.params;
 
-    return getProjectForClientService(slug, locale, defaultLocale);
+    return getProjectForClientService(slug, locale, defaultLocale, target);
   }),
   parseFunctionValidation(projectForClientSchema)
 );

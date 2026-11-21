@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { DOMAIN_COLLECTIONS } from '@shared/domain-constants';
+import { TargetEnum } from '@shared/types';
 import dayjs from 'dayjs';
 
 import { CMS_COUNTER_FIELDS } from '@/constants/_core/cms.constants';
@@ -52,6 +53,9 @@ Parse.Cloud.beforeSave(
     if (!project.existed() || !prevProject) {
       project.set('user', user);
       project.set('deleted', false);
+
+      // a project belongs to one website: the portfolio unless the editor chose Aldaron
+      if (!project.get('target')) project.set('target', TargetEnum.PORTFOLIO);
     }
   })
 );

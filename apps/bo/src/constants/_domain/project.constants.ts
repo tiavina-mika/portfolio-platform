@@ -38,6 +38,7 @@ export const PROJECT_FIELDS = [
   'name',
   'societyDescription',
   'active',
+  'target',
   'translated',
   'society',
   'website',

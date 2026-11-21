@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
+import { DEFAULT_TARGET } from '@/constants/_core/cms.constants';
 import { PROJECT_FORM_SECTIONS, PROJECT_WEBSITE_BASE_PATH } from '@/constants/_domain/project.constants';
 import CmsSeoPreview from '@/containers/_core/cms/CmsSeoPreview';
 import CmsFormRenderedPreview from '@/containers/_core/cms/form/CmsFormRenderedPreview';
@@ -27,6 +28,7 @@ const PROJECT_FORM_ID = 'project-form-id';
 
 const initialValues = {
   active: true,
+  target: DEFAULT_TARGET,
   types: [],
   technologies: [],
 };

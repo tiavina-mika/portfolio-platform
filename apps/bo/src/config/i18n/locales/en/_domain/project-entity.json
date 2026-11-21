@@ -53,6 +53,8 @@
       "openSource": "Open source"
     },
     "activeProjectVisible": "An active project is visible to users",
+    "target": "Published on",
+    "targetHelper": "The website showing this project: the portfolio or Aldaron, not both.",
     "errors": {
       "projectNotFound": "Project not found"
     },

@@ -16,6 +16,9 @@ export const collections = {
   Project: 'Project',
 };
 
+// a project is published on one website, so its target is one value, not the list the content keeps
+export const PROJECT_TARGET_FIELD = 'target';
+
 export const DISABLE_USER_ACCOUNT_CONFIRMATION = false;
 // the blog shows its categories as one row of filter chips: more would not fit a screen
 export const ARTICLE_CATEGORIES_LIMIT = 12;

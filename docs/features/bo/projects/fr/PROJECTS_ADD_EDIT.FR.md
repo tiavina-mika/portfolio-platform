@@ -77,6 +77,10 @@ Desktop, API).
 ### Réglages
 
 - **Actif** : un interrupteur ; un projet actif est visible sur le site public.
+- **Publié sur** : le site qui affiche le projet, **Portfolio** par défaut ou **Aldaron**. Le choix est
+  exclusif : un projet n'est jamais sur les deux sites. Un projet réservé à Aldaron n'apparaît pas sur le
+  site portfolio (liste, page du projet, recherche et plan du site). Les projets créés avant ce réglage
+  restent sur le portfolio.
 - **Société**, **Site web**, **Youtube** et une **période** (dates de début et de fin).
 - Des listes de **Liens**, **Dépôts** (GitHub, GitLab ou Bitbucket), **Liens npm** et **Liens Codesandbox**,
   à compléter par autant de lignes que nécessaire. Chaque adresse est contrôlée : le site web doit être une

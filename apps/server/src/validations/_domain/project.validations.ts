@@ -1,3 +1,4 @@
+import { TargetEnum } from '@shared/types';
 import { z } from 'zod';
 
 import {
@@ -8,6 +9,8 @@ export const projectForClientSchema = z.object({
   slug: z.string(),
   locale: z.string(),
   defaultLocale: z.string(),
+  // the website that asks, named by its target; the portfolio's projects when left out
+  target: z.enum(TargetEnum).optional(),
 });
 
 const projectsFiltersSchema = z.object({

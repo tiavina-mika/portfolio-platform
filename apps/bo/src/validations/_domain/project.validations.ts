@@ -1,3 +1,4 @@
+import { TargetEnum } from '@shared/types';
 import { z } from 'zod';
 
 import i18n from '@/config/i18n';
@@ -51,6 +52,8 @@ const hostUrlSchema = (hosts: string[], message: string) => z.string()
 
 export const projectSchema = z.object({
   active: z.boolean().optional(),
+  // one website, never both
+  target: z.enum(TargetEnum).optional(),
   image: generateFileSchema(true) as OptionalFileSchemaType,
   logo: generateFileSchema() as OptionalFileSchemaType,
   previewImage: generateFileSchema() as OptionalFileSchemaType,

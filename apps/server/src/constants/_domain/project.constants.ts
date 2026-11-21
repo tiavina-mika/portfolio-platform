@@ -21,7 +21,7 @@ export const PROJECT_SEARCH_TRANSLATED_FIELDS = [
  */
 export const PROJECT_LIST_FIELDS = [
   'translated', ...PROJECT_SINGLE_IMAGE_FIELDS, 'types', 'technologies', 'society', 'website', 'platforms',
-  'active', 'deleted', 'deletedAt', 'user', 'totalMediaShare', 'shares', 'createdAt', 'updatedAt',
+  'target', 'active', 'deleted', 'deletedAt', 'user', 'totalMediaShare', 'shares', 'createdAt', 'updatedAt',
 ];
 
 /** the columns the public project page renders (the translated text is narrowed to one locale) */

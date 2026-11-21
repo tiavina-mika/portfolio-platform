@@ -6,6 +6,7 @@ import type { IFileCloud, ITranslatedFileCloud } from '@/types/_core/file.type';
 import type { IUser } from '@/types/_core/user.type';
 import type { IParseServerDate } from '@/types/_core/utils.type';
 import type { IProjectTranslatedFields, IProjectUrl } from '@shared/domain-types';
+import type { TargetEnum } from '@shared/types';
 
 import { projectFilterSchema, projectSchema } from '@/validations/_domain/project.validations';
 
@@ -36,6 +37,11 @@ export interface IProjectAttributes {
   shares?: Record<string, number>;
   totalMediaShare?: number;
   active: boolean;
+  /*
+   * the one website showing the project; absent on a project saved before the field existed, which
+   * reads as the portfolio
+   */
+  target?: TargetEnum;
   platforms?: string[];
   technologies?: string[];
   types?: string[];

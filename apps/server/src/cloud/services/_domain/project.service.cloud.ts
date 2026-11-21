@@ -1,4 +1,5 @@
 import { DOMAIN_COLLECTIONS } from '@shared/domain-constants';
+import { TargetEnum } from '@shared/types';
 
 import { USE_MASTER_KEY } from '@/constants/_core/constants';
 import {
@@ -6,7 +7,7 @@ import {
 } from '@/constants/_domain/project.constants';
 import { escapeText, isBoolean } from '@/utils/_core/utils';
 
-import { filtersDatesQuery, multiBooleanQuery } from '../../utils/_core/parse.utils.cloud';
+import { contentTargetQuery, filtersDatesQuery, multiBooleanQuery } from '../../utils/_core/parse.utils.cloud';
 
 type ProjectsParams = {
   limit: number;
@@ -109,16 +110,19 @@ export const getProjectByIdService = async (
 
 /**
  * A published project by its slug, for the public website. The slug is looked up in the visitor's
- * locale first, then in the default one for a project not translated yet.
+ * locale first, then in the default one for a project not translated yet. A project belongs to one
+ * website only, so it is found only on the website named by `target`.
  * @returns the project narrowed to the visitor's locale, or `false` when there is none
  */
 export const getProjectForClientService = async (
-  slug: string, locale: string, defaultLocale: string
+  slug: string, locale: string, defaultLocale: string, target?: TargetEnum
 ): Promise<Parse.Object | false> => {
-  const project = await Parse.Query.or(
+  const slugQuery = Parse.Query.or(
     buildProjectQuery().equalTo(`translated.${locale}.slug`, slug),
     buildProjectQuery().equalTo(`translated.${defaultLocale}.slug`, slug)
-  )
+  );
+
+  const project = await contentTargetQuery(slugQuery, target, 'target')
     .equalTo('deleted', false)
     .equalTo('active', true)
     .select([`translated.${locale}`, ...PROJECT_FOR_CLIENT_FIELDS])

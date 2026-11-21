@@ -6,6 +6,7 @@ import { capitalize } from 'string-ts';
 import type { StatusDotColor } from '@/components/StatusDot';
 
 import i18n from '@/config/i18n';
+import { DEFAULT_TARGET } from '@/constants/_core/cms.constants';
 import { PROJECT_FIELDS, PROJECT_TYPES } from '@/constants/_domain/project.constants';
 import { ISelectOption } from '@/types/_core/app.type';
 import { IFileCloud } from '@/types/_core/file.type';
@@ -88,6 +89,8 @@ export const getProjectEditionInitialValues = async (
 
   return {
     ...getValues(project, PROJECT_FIELDS),
+    // a project saved before the field existed has none, which reads as the portfolio's
+    target: project.target ?? DEFAULT_TARGET,
     ...imagesFields,
     ...projectCodec.encode(project.translated as Record<string, any>),
     dateRange: [

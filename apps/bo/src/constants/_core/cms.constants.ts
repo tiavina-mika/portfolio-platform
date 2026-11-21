@@ -27,8 +27,12 @@ export const ARTICLE_VIEWS_GOAL_MAX = 1000000;
  */
 export const TARGET_FIELDS = ['targets', 'offerIncludes', 'offerPrice', 'offerDurationDays'];
 
-// a content saved before the field existed, or created without picking one, belongs to the portfolio
-export const DEFAULT_TARGETS = [TargetEnum.PORTFOLIO];
+/*
+ * a content saved before the field existed, or created without picking one, belongs to the portfolio;
+ * a project holds one target, an article, a page and a category a list of them
+ */
+export const DEFAULT_TARGET = TargetEnum.PORTFOLIO;
+export const DEFAULT_TARGETS = [DEFAULT_TARGET];
 
 // the offer price is in euros
 export const OFFER_PRICE_MIN = 1;

@@ -5,7 +5,7 @@ import { Locale } from '@/i18n/config';
 import { getDataForUrls } from '@/server/queries/app.queries';
 import { IProject } from '@/types/project.type';
 import { goToItemBySlug } from '@/utils/app.utils';
-import { collections } from '@/utils/constants';
+import { collections, PROJECT_TARGET_FIELD } from '@/utils/constants';
 import { getTranslatedField } from '@/utils/translation.utils';
 
 type Props = {
@@ -21,7 +21,7 @@ const SitemapProjectsSlot = async (props: Props) => {
 
   setRequestLocale(locale);
   const t = await getTranslations('Project');
-  const items = await getDataForUrls<IProject>(collections.Project);
+  const items = await getDataForUrls<IProject>(collections.Project, PROJECT_TARGET_FIELD);
 
   return (
     <SitemapGroup

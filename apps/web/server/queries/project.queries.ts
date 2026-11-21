@@ -10,9 +10,9 @@ import { IServerResponse } from '@/types/app.type';
 import { IProjectInputQuery } from '@/types/cms.type';
 import { IProject } from '@/types/project.type';
 import { getAbsoluteUrl } from '@/utils/app.utils';
-import { collections } from '@/utils/constants';
+import { collections, PROJECT_TARGET_FIELD } from '@/utils/constants';
 import { retrievePathnameFromDynamicPathname } from '@/utils/next.utils';
-import { serializeParseObject } from '@/utils/parse.utils';
+import { serializeParseObject, withContentTarget } from '@/utils/parse.utils';
 import { getTranslatedField } from '@/utils/translation.utils';
 import { escapeUnSlugifyText } from '@/utils/utils';
 
@@ -83,6 +83,9 @@ export const getProjects = async ({
       query = Parse.Query.or(...or);
     }
 
+    // after the tag search above, which replaces the query it started from
+    query = withContentTarget(query, PROJECT_TARGET_FIELD);
+
     // default query
     query.equalTo('deleted', false).equalTo('active', true);
 
@@ -136,7 +139,7 @@ export const getProjectSlugsForLocale = async (locale: Locale): Promise<string[]
   try {
     const slugs: string[] = [];
 
-    await new Parse.Query(collections.Project)
+    await withContentTarget(new Parse.Query(collections.Project), PROJECT_TARGET_FIELD)
       .equalTo('deleted', false)
       .equalTo('active', true)
       .select([`translated.${locale}.slug`])
@@ -178,7 +181,7 @@ export const generateProjectsSitemap = async (): Promise<
       ROUTES.projects.preview().pathname
     );
 
-    await new Parse.Query(collections.Project)
+    await withContentTarget(new Parse.Query(collections.Project), PROJECT_TARGET_FIELD)
       .equalTo('deleted', false)
       .equalTo('active', true)
       .select(['translated', 'updatedAt'])

@@ -267,22 +267,28 @@ export const contentCountryQuery = (query: Parse.Query, countryCode?: string | n
 };
 
 /**
- * keeps the editorial content (articles, pages, categories) published on one target. The portfolio
- * also keeps the rows saved before the field existed, which carry no `targets` and are read as
- * the portfolio's; `aldaron` (the Aldaron website) keeps only the rows that name it.
+ * keeps the editorial content (articles, pages, categories, projects) published on one target. The
+ * portfolio also keeps the rows saved before the field existed, which carry no target and are read
+ * as the portfolio's; `aldaron` (the Aldaron website) keeps only the rows that name it.
  * @param query parse query to narrow, before any `select`/`include`: the portfolio case wraps it
  * in a new query, so the caller chains the rest on the returned one
  * @param target the target whose content is read; the portfolio when left out
+ * @param field the field holding the target: `targets` (a list) for articles, pages and categories,
+ * `target` (one value) for a project
  * @returns the narrowed query
  */
-export const contentTargetQuery = (query: Parse.Query, target = TargetEnum.PORTFOLIO): Parse.Query => {
-  if (target === TargetEnum.ALDARON) return query.equalTo('targets', TargetEnum.ALDARON);
+export const contentTargetQuery = (
+  query: Parse.Query,
+  target = TargetEnum.PORTFOLIO,
+  field = 'targets'
+): Parse.Query => {
+  if (target === TargetEnum.ALDARON) return query.equalTo(field, TargetEnum.ALDARON);
 
   return Parse.Query.and(
     query,
     Parse.Query.or(
-      new Parse.Query(query.className).equalTo('targets', TargetEnum.PORTFOLIO),
-      new Parse.Query(query.className).doesNotExist('targets')
+      new Parse.Query(query.className).equalTo(field, TargetEnum.PORTFOLIO),
+      new Parse.Query(query.className).doesNotExist(field)
     )
   );
 };

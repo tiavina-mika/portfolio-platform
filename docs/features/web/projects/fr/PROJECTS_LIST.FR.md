@@ -40,7 +40,8 @@ Tout visiteur, sans connexion ni compte.
   voisines.
 - Pendant le chargement, des cartes grisées s'affichent à la place des projets ; si le chargement échoue, une bannière propose de réessayer, et hors connexion un message indique que les projets reviendront avec le réseau.
 
-Seuls les projets **actifs** (non désactivés ni supprimés dans le back-office) sont visibles. Le
+Seuls les projets **actifs** (non désactivés ni supprimés dans le back-office) et publiés sur le
+**Portfolio** sont visibles : un projet réservé à Aldaron n'apparaît pas ici. Le
 nom, la description et les textes s'affichent dans la langue du visiteur.
 
 ## Rechercher / filtrer
