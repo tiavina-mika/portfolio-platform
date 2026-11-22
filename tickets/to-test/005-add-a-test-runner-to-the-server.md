@@ -2,7 +2,7 @@
 type: chore
 apps: [server]
 branch: chore/add-server-test-runner
-pr:
+pr: https://github.com/tiavina-mika/portfolio-platform/pull/37
 ---
 
 ## Context
@@ -47,7 +47,7 @@ getting-started (EN + FR). Review: `docs/code/reviews/en/261122-chore-add-server
 
 **What Claude ran**: `pnpm nx run-many -t test lint typecheck build -p server` (green, 10 tests passed, no
 lint warning); no test file in `dist/` after the build; `pnpm lint:docs`, `pnpm check-doc-links`,
-`pnpm check-doc-twins --worktree` (green); the PR's CI.
+`pnpm check-doc-twins --worktree` (green); the CI of PR #37, whose `test` job runs `server:test`.
 
 **Untreated criterion**: "The docs no longer say the server has no test runner" is partial.
 `.claude/rules/engineering-principles.md` and `.claude/skills/dev/SKILL.md` still say it: edits under
