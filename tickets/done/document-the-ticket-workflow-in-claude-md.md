@@ -42,3 +42,6 @@ Work started on branch `docs/ticket-workflow-in-claude-md`.
 - How to test: read the "Monorepo Structure" tree and "Detailed rules" of `CLAUDE.md`; nothing else needs a human.
 - Not verified: nothing.
 - Left to do: nothing (`tickets/work/document-the-ticket-workflow-in-claude-md/remaining.md`).
+
+### 2026-11-22 · Claude · done
+Validated by the human. Merged with PR #35 (https://github.com/tiavina-mika/portfolio-platform/pull/35): `CLAUDE.md` now shows the tickets folder and names `/ticket`, `/dev` and `/auto`.
