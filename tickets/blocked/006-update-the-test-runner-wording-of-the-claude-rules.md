@@ -2,7 +2,7 @@
 type: docs
 apps: [server]
 branch: chore/block-test-runner-wording
-pr:
+pr: https://github.com/tiavina-mika/portfolio-platform/pull/38
 ---
 
 ## Context
