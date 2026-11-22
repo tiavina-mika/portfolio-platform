@@ -11,7 +11,7 @@ import CardFormBlock from '@/components/form/CardFormBlock';
 import DropzoneField from '@/components/form/dropzone/DropzoneField';
 import Form from '@/components/form/Form';
 import FullScreenDialog from '@/components/FullScreenDialog';
-import { CATEGORY_PATH_SEPARATOR, DEFAULT_TARGETS } from '@/constants/_core/cms.constants';
+import { CATEGORY_PATH_SEPARATOR } from '@/constants/_core/cms.constants';
 import { ACCEPTED_IMAGE_TYPES, MAX_IMAGE_SIZE_BYTES } from '@/constants/_core/file.constants';
 import {
   CATEGORY_FORM_COLUMN_GAP, CATEGORY_FORM_GAP, CATEGORY_FORM_PADDING, CATEGORY_FORM_PHONE_PADDING,
@@ -21,6 +21,7 @@ import {
 import CmsSeoPreview from '@/containers/_core/cms/CmsSeoPreview';
 import CmsFormSeoSection from '@/containers/_core/cms/form/CmsFormSeoSection';
 import { useTranslatedValuesByTab } from '@/hooks/_core/useTranslatedValuesByTab';
+import { useWorkspace } from '@/hooks/_core/useWorkspace';
 import { searchCategoriesForAutocomplete } from '@/redux/actions/_core/category.action';
 import { getSettingsLocaleSelector } from '@/redux/reducers/_core/settings.reducer';
 import { IChoiceChipOption } from '@/types/_core/app.type';
@@ -99,6 +100,8 @@ const CategoryFormDialog = ({
     t,
   } = useTranslation(['common', 'cms']);
   const locale = useSelector(getSettingsLocaleSelector);
+  // a new category is published on the website of the workspace it is created in
+  const { workspace } = useWorkspace();
   // get translated fields depending on the selected language (tabs)
   const {
     onTabChange, tab,
@@ -106,7 +109,7 @@ const CategoryFormDialog = ({
 
   const form = useForm<ICategoryInput>({
     resolver: zodResolver(categorySchema),
-    defaultValues: { active: true, entity: lockedEntity ?? defaultEntity, targets: DEFAULT_TARGETS },
+    defaultValues: { active: true, entity: lockedEntity ?? defaultEntity, targets: [workspace] },
   });
 
   const {
@@ -127,11 +130,11 @@ const CategoryFormDialog = ({
 
     const init = async () => {
       if (!category) {
-        reset({ active: true, entity: lockedEntity ?? defaultEntity, targets: DEFAULT_TARGETS });
+        reset({ active: true, entity: lockedEntity ?? defaultEntity, targets: [workspace] });
         return;
       }
 
-      const editionInitialValues = await getCategoryFormInitialValues(category);
+      const editionInitialValues = await getCategoryFormInitialValues(category, workspace);
 
       if (isCancelled) return;
       reset(editionInitialValues);
@@ -142,7 +145,7 @@ const CategoryFormDialog = ({
     return () => {
       isCancelled = true;
     };
-  }, [open, category, reset, locale, lockedEntity, defaultEntity]);
+  }, [open, category, reset, locale, lockedEntity, defaultEntity, workspace]);
 
   // the categories this one can hang under (levels 1 and 2 only — a category cannot be its own parent)
   useEffect(() => {

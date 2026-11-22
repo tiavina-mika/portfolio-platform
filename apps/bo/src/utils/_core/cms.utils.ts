@@ -6,7 +6,7 @@ import i18n from '@/config/i18n';
 import { DEFAULT_LOCALE } from '@/constants/_core/app.constants';
 import {
   ARTICLE_DEFAULT_VIEWS_GOAL, AVERAGE_READING_WORDS_PER_MINUTE, CATEGORY_PATH_SEPARATOR,
-  categoryEntityOptions, DEFAULT_TARGETS,
+  categoryEntityOptions, DEFAULT_TARGET, DEFAULT_TARGETS,
   imagePositionOptions, pageLinkLocationOptions,
 } from '@/constants/_core/cms.constants';
 import { Category } from '@/services/_core/category.service';
@@ -269,14 +269,16 @@ export const getPageStepThreeEditionInitialValues = <O extends IPageAttributes |
 
 export const getFinalPageInitialValues = async <O extends IPage | null | undefined>(
   page: O,
-  locale: Locale
+  locale: Locale,
+  // a new page is published on the website of the workspace it is created in
+  workspace: TargetEnum = DEFAULT_TARGET
 ): Promise<Partial<IPageFormInput> | undefined> => {
   if (!page) {
     return {
       active: true,
       hasTableOfContents: false,
       country: DEFAULT_COUNTRY_CODE,
-      targets: DEFAULT_TARGETS,
+      targets: [workspace],
       linkLocations: [],
       categories: [],
     };
@@ -299,11 +301,12 @@ export const getFinalPageInitialValues = async <O extends IPage | null | undefin
  * @returns
  */
 export const getCategoryFormInitialValues = async (
-  category: ICategory | null | undefined
+  category: ICategory | null | undefined,
+  workspace: TargetEnum = DEFAULT_TARGET
 ): Promise<ICategoryInput> => {
   // ----------- creation ----------- //
   if (!category) {
-    return { active: true, targets: DEFAULT_TARGETS };
+    return { active: true, targets: [workspace] };
   }
   // ----------- update ----------- //
 
