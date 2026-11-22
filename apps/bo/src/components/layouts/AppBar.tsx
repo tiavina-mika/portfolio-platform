@@ -19,10 +19,12 @@ import {
   RESPONSIVE_BREAKPOINT, SIDEBAR_RAIL_WIDTH, SIDEBAR_WIDTH, TOOLBAR_HEIGHT,
   TOOLBAR_HORIZONTAL_PADDING, TOOLBAR_SMALL_SCREEN_HEIGHT,
 } from '@/constants/_core/ui/ui.constants';
+import { WORKSPACES } from '@/constants/_core/workspace.constants';
 import { useAllowedCountryOptions } from '@/hooks/_core/useAllowedCountryOptions';
 import { useBreadcrumbTrail } from '@/hooks/_core/useBreadcrumbTrail';
 import { useBreakpoint } from '@/hooks/_core/useBreakpoint';
 import { useSidebarGroupLabel } from '@/hooks/_core/useSidebarGroupLabel';
+import { useWorkspace } from '@/hooks/_core/useWorkspace';
 import { getAppPageTitlePathnameSelector, getAppPageTitleSelector } from '@/redux/reducers/_core/app.reducer';
 import {
   changeMoneyCountrySlice, getSettingsIsSideBarOpenSelector, getSettingsMoneyCountrySelector,
@@ -185,6 +187,7 @@ const AppBar = ({
   const isSideBarOpen = useSelector(getSettingsIsSideBarOpenSelector);
   const moneyCountry = useSelector(getSettingsMoneyCountrySelector);
   const countryOptions = useAllowedCountryOptions();
+  const { workspace } = useWorkspace();
   const dispatch = useDispatch();
   const router = useRouter();
   const pathname = useRouterState({ select: state => state.location.pathname });
@@ -235,7 +238,7 @@ const AppBar = ({
         {/* ----- logo + breadcrumb ----- */}
         <Box sx={sx.brand}>
           {/* below `xl` the sidebar rail hides entirely, so the app bar carries the brand mark instead */}
-          {isCompactHeader && <Logo height={APPBAR_LOGO_HEIGHT} />}
+          {isCompactHeader && <Logo height={APPBAR_LOGO_HEIGHT} images={WORKSPACES[workspace].logo} />}
 
           {!isHome &&
               (sidebarGroupLabel || ancestors.length > 0 || (isCurrentTitleFresh && currentTitle)) && (

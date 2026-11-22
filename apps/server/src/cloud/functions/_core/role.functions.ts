@@ -1,8 +1,10 @@
+import { TargetEnum } from '@shared/types';
+
 import { STAFF_UI_RIGHT, USE_MASTER_KEY } from '@/constants/_core/constants';
 import { type IHighestRoleAccount, type IRolesDelegation } from '@/types/user.type';
 import {
-  addRolesToUserSchema, createRoleSchema, getHighestRoleAccountsSchema, getRolesDelegationSchema,
-  removeRolesForUserSchema, roleNamesSchema, updateRoleSchema,
+  addRolesToUserSchema, createRoleSchema, getCurrentUserWorkspacesSchema, getHighestRoleAccountsSchema,
+  getRolesDelegationSchema, removeRolesForUserSchema, roleNamesSchema, updateRoleSchema,
 } from '@/validations/_core/role.validations';
 import { getRoleAuditLogsSchema } from '@/validations/_core/roleAuditLog.validations';
 
@@ -11,7 +13,7 @@ import { getRoleAuditLogs } from '../../services/_core/roleAuditLog.service.clou
 import {
   addRolesToUser, getHighestRoleAccounts, getRolesDelegation, hasRole, removeRolesForUser,
 } from '../../services/_core/userRole.service.cloud';
-import { assertHasBoRight, checkHighestRole } from '../../utils/_core/role.utils.cloud';
+import { assertHasBoRight, checkHighestRole, getUserWorkspaces } from '../../utils/_core/role.utils.cloud';
 import { fromBO, parseFunction } from '../../utils/_core/utils.cloud';
 import { parseFunctionValidation } from '../../utils/_core/validation.utils.cloud';
 
@@ -29,6 +31,20 @@ Parse.Cloud.define('hasRole',
   }),
   // -------- validation -------- //
   parseFunctionValidation(roleNamesSchema)
+);
+
+/**
+ * The workspaces the signed-in user may work in, computed here from their roles: the back-office
+ * reads the answer and never recomputes it. Like `hasRole`, it answers any session: an account with
+ * no post works in the portfolio, and a call with no session gets that and nothing more.
+ */
+Parse.Cloud.define(
+  'getCurrentUserWorkspaces',
+  parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<TargetEnum[]> => (
+    request.user ? getUserWorkspaces(request.user) : [TargetEnum.PORTFOLIO]
+  )),
+  // -------- validation -------- //
+  parseFunctionValidation(getCurrentUserWorkspacesSchema)
 );
 
 Parse.Cloud.define(
@@ -79,7 +95,7 @@ Parse.Cloud.define(
     await checkHighestRole(request.user!, request.params.locale);
 
     const {
-      childRoleNames, roleName, rights, ui, translated, sessionTimeoutMinutes, countries,
+      childRoleNames, roleName, rights, ui, translated, sessionTimeoutMinutes, countries, workspaces,
     } = request.params;
 
     // the service stays idempotent for the server bootstrap; an admin must be told the name is taken
@@ -95,6 +111,7 @@ Parse.Cloud.define(
       translated,
       sessionTimeoutMinutes,
       countries,
+      workspaces,
       performedBy: request.user,
     });
 
@@ -111,7 +128,7 @@ Parse.Cloud.define(
     await checkHighestRole(request.user!, request.params.locale);
 
     const {
-      childRoleNames, name, rights, ui, translated, sessionTimeoutMinutes, countries,
+      childRoleNames, name, rights, ui, translated, sessionTimeoutMinutes, countries, workspaces,
     } = request.params;
 
     const updatedRole = await updateRole({
@@ -122,6 +139,7 @@ Parse.Cloud.define(
       translated,
       sessionTimeoutMinutes,
       countries,
+      workspaces,
       performedBy: request.user,
     });
 

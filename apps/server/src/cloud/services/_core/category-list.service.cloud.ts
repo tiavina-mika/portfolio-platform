@@ -1,6 +1,10 @@
+import type { TargetEnum } from '@shared/types';
+
 import { collections, USE_MASTER_KEY } from '@/constants/_core/constants';
 
-import { readGroupedObjectId, withComputedFields } from '../../utils/_core/parse.utils.cloud';
+import {
+  contentTargetQuery, readGroupedObjectId, withComputedFields,
+} from '../../utils/_core/parse.utils.cloud';
 
 type CategorySubcategoryCounts = {
   subcategoriesCount: number;
@@ -173,9 +177,9 @@ export type CategoryTabCounts = {
  * interrupted creation and is not a row anywhere, so counting it would advertise a tab holding one
  * row less than it says.
  */
-export const getCategoryTabCounts = async (): Promise<CategoryTabCounts> => {
+export const getCategoryTabCounts = async (workspace?: TargetEnum): Promise<CategoryTabCounts> => {
   const countByTab = async (deleted: boolean): Promise<number> => (
-    new Parse.Query(collections.Category)
+    contentTargetQuery(new Parse.Query(collections.Category), workspace)
       .equalTo('deleted', deleted)
       .exists('user')
       .count(USE_MASTER_KEY)

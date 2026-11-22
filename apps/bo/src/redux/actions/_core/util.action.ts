@@ -10,10 +10,13 @@ import {
   closeMessageSlice, endLoadingSlice, getAppCurrentUserSelector, getAppMessageSelector,
   loadCurrentUserSlice, setErrorSlice, startLoadingSlice,
 } from '@/redux/reducers/_core/app.reducer';
-import { getRoleCurrentUserRolesSelector, loadCurrentUserIsAdminSlice, loadCurrentUserRolesSlice } from '@/redux/reducers/_core/role.reducer';
+import {
+  getRoleCurrentUserRolesSelector, loadCurrentUserIsAdminSlice, loadCurrentUserRolesSlice,
+  loadCurrentUserWorkspacesSlice,
+} from '@/redux/reducers/_core/role.reducer';
 import { AppDispatch, AppThunkAction, RootState } from '@/redux/store';
 import { fetchCurrentUserJson } from '@/services/_core/auth.service';
-import { getRolesForUser, isAdmin } from '@/services/_core/role.service';
+import { fetchCurrentUserWorkspaces, getRolesForUser, isAdmin } from '@/services/_core/role.service';
 import { ITabSearchParams } from '@/types/_core/app.type';
 import { IRoleAction } from '@/types/_core/role.type';
 import { toJSONWithId } from '@/utils/_core/parse.utils';
@@ -28,11 +31,14 @@ import { canAccessTo } from '@/utils/_core/role.utils';
 export const refreshCurrentUserRoles = (): AppThunkAction => {
   return async (dispatch: AppDispatch): Promise<void> => {
     try {
-      const [currentUserRoles, isSuperAdmin] = await Promise.all([getRolesForUser(null, true), isAdmin()]);
+      const [currentUserRoles, isSuperAdmin, workspaces] = await Promise.all([
+        getRolesForUser(null, true), isAdmin(), fetchCurrentUserWorkspaces(),
+      ]);
       const roleObjects: any[] = currentUserRoles;
 
       dispatch(loadCurrentUserRolesSlice(roleObjects.map((role) => toJSONWithId(role))));
       dispatch(loadCurrentUserIsAdminSlice(isSuperAdmin));
+      dispatch(loadCurrentUserWorkspacesSlice(workspaces));
     }
     catch { /* keep what is shown: the next server call reports a real session problem on its own */ }
   };
@@ -63,18 +69,21 @@ export const onDashboardEnter = (): AppThunkAction => {
 
     const [currentUser, rolesResult] = await Promise.all([
       hasCurrentUser ? undefined : fetchCurrentUserJson(true),
-      hasRoles ? undefined : Promise.all([getRolesForUser(null, true), isAdmin()]),
+      hasRoles
+        ? undefined
+        : Promise.all([getRolesForUser(null, true), isAdmin(), fetchCurrentUserWorkspaces()]),
     ]);
 
     if (currentUser) dispatch(loadCurrentUserSlice(currentUser));
 
     if (!rolesResult) return;
 
-    const [currentUserRoles, isSuperAdmin] = rolesResult;
+    const [currentUserRoles, isSuperAdmin, workspaces] = rolesResult;
     const roleObjects: any[] = currentUserRoles;
 
     dispatch(loadCurrentUserRolesSlice(roleObjects.map((role) => toJSONWithId(role))));
     dispatch(loadCurrentUserIsAdminSlice(isSuperAdmin));
+    dispatch(loadCurrentUserWorkspacesSlice(workspaces));
   };
 };
 

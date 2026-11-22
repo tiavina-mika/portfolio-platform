@@ -378,6 +378,8 @@
   "appearance": "Apparence",
   "appearanceDescription": "Personnalisez le thème et les couleurs de l'interface",
   "languageDescription": "Choisissez la langue d'affichage du back-office",
+  "workspace": "Espace de travail",
+  "workspaceDescription": "Choisissez l'espace dans lequel vous travaillez : le logo, le menu et les listes suivent votre choix",
   "themeMode": "Mode",
   "sidebarStyle": "Style du menu latéral",
   "sidebarStyleDark": "Marine",

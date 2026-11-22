@@ -1,15 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { DEFAULT_TARGET } from '@/constants/_core/cms.constants';
 import { PROJECT_FORM_SECTIONS, PROJECT_WEBSITE_BASE_PATH } from '@/constants/_domain/project.constants';
 import CmsSeoPreview from '@/containers/_core/cms/CmsSeoPreview';
 import CmsFormRenderedPreview from '@/containers/_core/cms/form/CmsFormRenderedPreview';
 import CmsFormSeoSection from '@/containers/_core/cms/form/CmsFormSeoSection';
 import CmsFormWorkbench from '@/containers/_core/cms/form/CmsFormWorkbench';
+import { useWorkspace } from '@/hooks/_core/useWorkspace';
 import { getSettingsLocaleSelector } from '@/redux/reducers/_core/settings.reducer';
 import { CmsFormSectionEnum } from '@/types/_core/cms.type';
 import { IContentVersion } from '@/types/_core/contentVersion.type';
@@ -25,13 +25,6 @@ import ProjectFormSettingsSection from './ProjectFormSettingsSection';
 import ProjectFormSummary from './ProjectFormSummary';
 
 const PROJECT_FORM_ID = 'project-form-id';
-
-const initialValues = {
-  active: true,
-  target: DEFAULT_TARGET,
-  types: [],
-  technologies: [],
-};
 
 type Props = {
   onSubmit: (values: IProjectInput) => void;
@@ -54,6 +47,15 @@ const ProjectForm = ({
 }: Props) => {
   const { t } = useTranslation(['common', 'cms', 'project']);
   const locale = useSelector(getSettingsLocaleSelector);
+  const { workspace } = useWorkspace();
+
+  // a new project is published on the website of the workspace it is created in
+  const initialValues = useMemo(() => ({
+    active: true,
+    target: workspace,
+    types: [],
+    technologies: [],
+  }), [workspace]);
 
   const [isInitializing, setIsInitializing] = useState(true);
 
@@ -86,7 +88,7 @@ const ProjectForm = ({
     return () => {
       isCancelled = true;
     };
-  }, [project, reset, locale]);
+  }, [project, reset, locale, initialValues]);
 
   const renderSection = (section: CmsFormSectionEnum, tab: Locale) => {
     switch (section) {

@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 import {
   paginationQuerySchema, dateRangeFieldSchema, includeFieldSchema, localesFieldSchema, objectIdFieldSchema,
+  workspaceFieldSchema,
 } from './util.validations';
 
 const categoriesFiltersSchema = z.object({
@@ -29,6 +30,7 @@ export const getCategoriesSchema = paginationQuerySchema.extend({
   search: categoriesSearchSchema,
   locales: localesFieldSchema,
   include: includeFieldSchema,
+  workspace: workspaceFieldSchema,
 });
 
 export const getCategorySchema = z.object({

@@ -41,7 +41,7 @@ Files are in `apps/server/src/cloud/functions/_core/` unless noted.
 | `page.functions.ts` | `getPages`, `getPage` |
 | `pageSection.functions.ts` | `getPageSections` |
 | `passwordResetDelay.functions.ts` | `cancelPasswordResetDelay` |
-| `role.functions.ts` | `hasRole`, `addRolesToUser`, `getRolesDelegation`, `removeRolesForUser`, `createRole`, `updateRole`, `getRoleAuditLogs`, `getHighestRoleAccounts` |
+| `role.functions.ts` | `hasRole`, `getCurrentUserWorkspaces`, `addRolesToUser`, `getRolesDelegation`, `removeRolesForUser`, `createRole`, `updateRole`, `getRoleAuditLogs`, `getHighestRoleAccounts` |
 | `stepUpVerification.functions.ts` | `requestStepUpVerification`, `verifyStepUpCode` |
 | `user.functions.ts` | `getUserProfile`, `deleteAccount`, `exportMyData`, `saveUserLanguage` |
 | `userSession.functions.ts` | `registerSession`, `getUserSessions`, `revokeSession`, `revokeOtherSessions`, `adminGetUserSessions`, `adminRevokeUserSession`, `adminRevokeAllUserSessions` |

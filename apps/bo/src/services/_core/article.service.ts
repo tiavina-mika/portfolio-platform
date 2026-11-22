@@ -1,6 +1,8 @@
 import { ARTICLE_SINGLE_IMAGE_FIELDS } from '@shared/validations';
 import Parse from 'parse';
 
+import type { TargetEnum } from '@shared/types';
+
 import { locales } from '@/config/i18n';
 import { ALL_PAGE_FIELDS, TARGET_FIELDS } from '@/constants/_core/cms.constants';
 import { IArticle, IArticleInput } from '@/types/_core/article.type';
@@ -27,7 +29,7 @@ const toParseArticle = (article: IArticle): Parse.Object =>
   Parse.Object.fromJSON({ ...article, className: collection });
 
 export const fetchArticles = async ({
-  limit, skip, orderBy, order, filters, search, include,
+  limit, skip, orderBy, order, filters, search, include, workspace,
 }: {
   limit: number;
   skip: number;
@@ -36,13 +38,15 @@ export const fetchArticles = async ({
   filters?: Record<string, any>;
   search?: Record<string, any>;
   include: string[];
+  // the workspace whose articles are listed
+  workspace: TargetEnum;
 }): Promise<{ results: IArticle[]; count: number }> => {
   /*
    * result with count
    * we make it server side because we need to get user infos
    */
   const result: Record<string, any> = await Parse.Cloud.run('getArticles', {
-    limit, skip, orderBy, order, filters, search, locales, include,
+    limit, skip, orderBy, order, filters, search, locales, include, workspace,
   });
 
   return {

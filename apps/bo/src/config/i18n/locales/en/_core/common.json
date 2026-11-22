@@ -373,6 +373,8 @@
   "appearance": "Appearance",
   "appearanceDescription": "Customize the interface theme and colors",
   "languageDescription": "Choose the back-office display language",
+  "workspace": "Workspace",
+  "workspaceDescription": "Choose the workspace you work in: the logo, the menu and the lists follow your choice",
   "themeMode": "Mode",
   "sidebarStyle": "Sidebar style",
   "sidebarStyleDark": "Navy",

@@ -1,6 +1,7 @@
 import { PaletteMode } from '@mui/material';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { DEFAULT_COUNTRY_CODE } from '@shared/constants';
+import { TargetEnum } from '@shared/types';
 
 import { DEFAULT_LOCALE } from '@/constants/_core/app.constants';
 import { DEFAULT_SIDEBAR_STYLE, DEFAULT_THEME_COLOR } from '@/constants/_core/theme.constants';
@@ -44,6 +45,9 @@ export const settings: any = createSlice({
     changeSidebarStyleSlice: (state: ISettingState, action: PayloadAction<SidebarStyle>) => {
       state.sidebarStyle = action.payload;
     },
+    changeWorkspaceSlice: (state: ISettingState, action: PayloadAction<TargetEnum>) => {
+      state.workspace = action.payload;
+    },
     changePreviewLayoutSlice: (state: ISettingState, action: PayloadAction<PreviewLayout>) => {
       state.previewLayout = action.payload;
     },
@@ -64,6 +68,7 @@ export const {
   changeThemeColorSlice,
   changeIsSideBarOpenSlice,
   changeSidebarStyleSlice,
+  changeWorkspaceSlice,
   changePreviewLayoutSlice,
   changeIsPreviewSummaryReducedSlice,
   setCurrentCooperativeSlice,
@@ -104,7 +109,19 @@ export const getSettingsIsPreviewSummaryReducedSelector = (
 export const getSettingsMoneyCountrySelector = (state: Record<string, any>): string => (
   state.settings.moneyCountry ?? DEFAULT_COUNTRY_CODE
 );
-export const getSettingsLocaleSelector = (state: Record<string, any>): Locale => state.settings.locale;
+/*
+ * the workspace the person works in: the one they picked while their roles still open it, the
+ * portfolio otherwise. Read like this rather than written back, so a role taken away sends them back
+ * to the portfolio without touching their stored choice, and a state saved before the preference
+ * existed (no value at all) is the portfolio's too. The available workspaces live in the roles slice.
+ */
+export const getSettingsWorkspaceSelector = (state: Record<string, any>): TargetEnum => {
+  const stored: TargetEnum = state.settings.workspace ?? TargetEnum.PORTFOLIO;
+  const available: TargetEnum[] = state.role?.currentUserWorkspaces ?? [TargetEnum.PORTFOLIO];
+
+  return available.includes(stored) ? stored : TargetEnum.PORTFOLIO;
+};
+export const getSettingsLocaleSelector =(state: Record<string, any>): Locale => state.settings.locale;
 export const getSettingsIsAuthenticatedSelector = (state: Record<string, any>): boolean =>
   state.settings.isAuthenticated;
 

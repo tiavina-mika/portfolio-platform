@@ -1,9 +1,16 @@
 import { COUNTRIES, LANGUAGE_CODES } from '@shared/constants';
+import { TargetEnum } from '@shared/types';
 import {
   string, object, literal, union, array, coerce, enum as zEnum, date, number, null as zNull,
 } from 'zod';
 
 export const localeFieldSchema = zEnum(LANGUAGE_CODES);
+
+/**
+ * the workspace a back-office list or detail function reads for; the portfolio's when left out. The
+ * account's roles decide whether it may be read (see `resolveWorkspace`)
+ */
+export const workspaceFieldSchema = zEnum(TargetEnum).optional();
 
 /** the code of a country the platform runs in */
 export const countryCodeFieldSchema = string().refine((code) => code in COUNTRIES);

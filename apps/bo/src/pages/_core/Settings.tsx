@@ -19,10 +19,13 @@ import AppMainImagesForm from '@/containers/_core/settings/app/AppMainImagesForm
 import SettingsAppearancePanel from '@/containers/_core/settings/SettingsAppearancePanel';
 import SettingsLanguagePanel from '@/containers/_core/settings/SettingsLanguagePanel';
 import SettingsSectionsRail from '@/containers/_core/settings/SettingsSectionsRail';
+import SettingsWorkspacePanel from '@/containers/_core/settings/SettingsWorkspacePanel';
+import { useWorkspace } from '@/hooks/_core/useWorkspace';
 import { getAppLoadingSelector } from '@/redux/reducers/_core/app.reducer';
 import { settingsRoute } from '@/routes/protected/_core/private.routes';
 import { ISettingsSearchParams } from '@/types/_core/app.type';
 import { SettingsSection, SettingsSectionEnum } from '@/types/_core/setting.type';
+import { isSettingsSectionVisible } from '@/utils/_core/settings.utils';
 
 // the form the page head's save button submits, per website section
 const SECTION_FORM_IDS: Partial<Record<SettingsSection, string>> = {
@@ -53,9 +56,19 @@ const Settings = () => {
   const router = useRouterState();
   const loading = useSelector(getAppLoadingSelector);
 
+  const {
+    workspace, canSwitch,
+  } = useWorkspace();
+
   const searchParams: ISettingsSearchParams = settingsRoute.useSearch();
-  // the URL carries a free string, so an unknown value falls back to the section the page opens on
-  const section = (searchParams.section ?? DEFAULT_SETTINGS_SECTION) as SettingsSection;
+  const requestedSection = (searchParams.section ?? DEFAULT_SETTINGS_SECTION) as SettingsSection;
+  /*
+   * the URL carries a free string: a section the workspace hides (the website forms in Aldaron, the
+   * workspace choice for somebody who has none to make) falls back to the section the page opens on
+   */
+  const section = isSettingsSectionVisible(requestedSection, workspace, canSwitch)
+    ? requestedSection
+    : DEFAULT_SETTINGS_SECTION;
 
   /*
    * only the website sections carry a form, so the head states whether it still holds changes. The
@@ -121,6 +134,7 @@ const Settings = () => {
         <div>
           {section === SettingsSectionEnum.LANGUAGES && <SettingsLanguagePanel />}
           {section === SettingsSectionEnum.APPEARANCE && <SettingsAppearancePanel />}
+          {section === SettingsSectionEnum.WORKSPACE && <SettingsWorkspacePanel />}
           {section === SettingsSectionEnum.DETAILS && (
             <AppContentsForm onDirtyChange={handleDirtyChange} />
           )}

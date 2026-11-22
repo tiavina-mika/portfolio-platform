@@ -163,6 +163,8 @@ const categoryCrud = createCrudThunks<ICategory>({
   hasNoRightToDeleteMessage: i18n.t('common:errors.hasNoRightToDelete', { value: i18n.t('cms:category.categoryDeletedSuccessfully') }),
   getExportColumns: getCategoryExportColumns,
   exportFileNamePrefix: 'categories',
+  // the list is the one of the workspace the person works in
+  isWorkspaceScoped: true,
 });
 
 export const loadCategories: any = categoryCrud.loadList;

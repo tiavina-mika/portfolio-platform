@@ -1,6 +1,8 @@
 
 import { z } from 'zod';
 
+import type { TargetEnum } from '@shared/types';
+
 import { roleSchema, rolesForUserSchema } from '@/validations/_core/role.validations';
 
 /*
@@ -19,6 +21,8 @@ export type IRoleInput = z.infer<typeof roleSchema> & {
   sessionTimeoutHours?: number;
   /** the countries the role covers — none means every country */
   countries?: string[];
+  /** the workspaces the role opens — at least one */
+  workspaces?: TargetEnum[];
 };
 export type RolesForUserInput = z.infer<typeof rolesForUserSchema>;
 
@@ -75,6 +79,8 @@ export interface IRoleAttributes {
   sessionTimeoutMinutes?: number;
   /** the countries the role covers — left out or empty, it covers every country */
   countries?: string[];
+  /** the workspaces the role opens — left out, it opens the portfolio only */
+  workspaces?: TargetEnum[];
 }
 
 export type IRole = IRoleAttributes & { id: string };
@@ -111,6 +117,8 @@ export interface IRoleState {
   // the roles of the account being read are fetched after its page is drawn, under their own flag
   userRolesLoading: boolean;
   currentUserRoles: IRole[];
+  // the workspaces the signed-in account may work in, as the server computed them from its roles
+  currentUserWorkspaces: TargetEnum[];
   // the accounts holding a highest role, read by the owners and super administrators only
   highestRoleAccounts: IHighestRoleAccount[];
   highestRoleAccountsLoading: boolean;

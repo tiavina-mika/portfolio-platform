@@ -18,6 +18,8 @@ type ProjectsParams = {
   search?: Record<string, any>;
   locales: string[];
   include?: string[];
+  /** the workspace whose projects are listed; the portfolio's when left out */
+  workspace?: TargetEnum;
 };
 
 const buildProjectQuery = () => new Parse.Query(DOMAIN_COLLECTIONS.project);
@@ -27,7 +29,7 @@ const buildProjectQuery = () => new Parse.Query(DOMAIN_COLLECTIONS.project);
  * @returns the page of projects with the total count of the narrowed list
  */
 export const getProjectsService = async ({
-  limit, skip, orderBy, order, filters, search, locales, include = [],
+  limit, skip, orderBy, order, filters, search, locales, include = [], workspace,
 }: ProjectsParams): Promise<Record<string, any>> => {
   let query = buildProjectQuery();
 
@@ -63,6 +65,9 @@ export const getProjectsService = async ({
     // [true, false] query
     multiBooleanQuery(query, search.active, 'active');
   }
+
+  // a project belongs to one website, so the list is the one of the workspace the editor works in
+  query = contentTargetQuery(query, workspace, 'target');
 
   query.limit(limit)
     .skip(skip)

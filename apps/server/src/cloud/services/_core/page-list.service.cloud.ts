@@ -1,6 +1,10 @@
+import type { TargetEnum } from '@shared/types';
+
 import { collections, USE_MASTER_KEY } from '@/constants/_core/constants';
 
-import { readGroupedObjectId, withComputedFields } from '../../utils/_core/parse.utils.cloud';
+import {
+  contentTargetQuery, readGroupedObjectId, withComputedFields,
+} from '../../utils/_core/parse.utils.cloud';
 
 type PageSectionCounts = {
   sectionsCount: number;
@@ -112,9 +116,9 @@ export type PageTabCounts = {
  * creation and is not a row anywhere, so counting it would advertise a tab holding one row less
  * than it says.
  */
-export const getPageTabCounts = async (): Promise<PageTabCounts> => {
+export const getPageTabCounts = async (workspace?: TargetEnum): Promise<PageTabCounts> => {
   const countByTab = async (deleted: boolean): Promise<number> => (
-    new Parse.Query(collections.Page)
+    contentTargetQuery(new Parse.Query(collections.Page), workspace)
       .equalTo('deleted', deleted)
       .exists('user')
       .count(USE_MASTER_KEY)

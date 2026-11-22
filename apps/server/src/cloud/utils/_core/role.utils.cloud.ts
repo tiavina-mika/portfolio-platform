@@ -1,3 +1,5 @@
+import { TargetEnum } from '@shared/types';
+
 import type { DBRights, Locale } from '@/types/app.type';
 import type { IMfa } from '@/types/auth.type';
 import type { Role, User } from 'parse';
@@ -5,10 +7,10 @@ import type { Role, User } from 'parse';
 
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
 import { ENFORCE_HIGHEST_ROLES_MFA, HIGHEST_LEVEL_ROLES } from '@/constants/_core/constants';
-import { mergeRoleCountries } from '@/utils/_core/rights.utils';
+import { mergeRoleCountries, mergeRoleWorkspaces } from '@/utils/_core/rights.utils';
 
 import {
-  getRolesForUser, getRolesForUserByEntity, hasRole, hasRoleAsManager,
+  getRolesForUser, getRolesForUserByEntity, hasRole, hasRoleAsManager, toRoleGrants,
 } from '../../services/_core/userRole.service.cloud';
 
 const RIGHTS: DBRights[] = ['create', 'update', 'get', 'find', 'delete', 'destroy'];
@@ -58,6 +60,42 @@ export const getAllowedCountryCodes = async (user?: User): Promise<string[] | nu
   const roles = await getRolesForUser(user);
 
   return mergeRoleCountries((roles ?? []).map((role: Role) => ({ countries: role.get('countries') })));
+};
+
+/**
+ * The workspaces (portfolio, Aldaron) a back-office user may work in: the union of the workspaces of
+ * their roles, the portfolio for a role saved before the field existed, and every workspace for the
+ * highest roles, which do not store them. No user is the server itself (a master-key call, the only
+ * one `fromBO` lets through without a session), which is never limited.
+ * @param user
+ */
+export const getUserWorkspaces = async (user?: User): Promise<TargetEnum[]> => {
+  if (!user) return Object.values(TargetEnum);
+  if (await isHighestRole(user)) return Object.values(TargetEnum);
+
+  const roles = await getRolesForUser(user);
+
+  return mergeRoleWorkspaces((roles ?? []).map(toRoleGrants));
+};
+
+/**
+ * The workspace a list or a detail function reads for: the one the back-office asked for, the
+ * portfolio when it asked for none. The back-office selector decides only what it shows — this is
+ * where the account's roles decide whether it may be read at all.
+ * @param user the signed-in user of the request
+ * @param requested the workspace named by the request
+ * @param locale language of the refusal message
+ */
+export const resolveWorkspace = async (
+  user: User | undefined,
+  requested: TargetEnum = TargetEnum.PORTFOLIO,
+  locale: Locale = DEFAULT_LANGUAGE
+): Promise<TargetEnum> => {
+  if (!(await getUserWorkspaces(user)).includes(requested)) {
+    throw new Error(translate('error.unauthorizedToDoThisAction', locale));
+  }
+
+  return requested;
 };
 
 /**

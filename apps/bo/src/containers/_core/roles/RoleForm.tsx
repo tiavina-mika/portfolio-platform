@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Box, Typography } from '@mui/material';
+import { TargetEnum } from '@shared/types';
 import { useBlocker } from '@tanstack/react-router';
 import { useId, useRef, useState } from 'react';
 import { useForm, type FieldErrors, type Resolver } from 'react-hook-form';
@@ -24,6 +25,7 @@ import {
   ROLE_SESSION_TIMEOUT_STEP_HOURS,
   SESSION_INACTIVITY_TIMEOUT_HOURS,
 } from '@/constants/_core/auth.constants';
+import { DEFAULT_TARGETS } from '@/constants/_core/cms.constants';
 import { RIGHTS_FILTER_WIDTH, ROLE_FORM_NAV_WIDTH } from '@/constants/_core/ui/ui.constants';
 import { CONTENT_GAP, FORM_WORKBENCH_BREAKPOINT } from '@/constants/_core/ui.constants';
 import {
@@ -49,7 +51,7 @@ import RoleFormNav, { type RoleFormNavItem } from './RoleFormNav';
 const ROLE_TRANSLATED_FIELDS = roleTranslatedFieldsObj.map((field) => field.name);
 
 // the fields each section holds, which is how a refused field is traced back to its section
-const ACCESS_FIELDS = ['children', 'ui', 'countries', 'sessionTimeoutHours'];
+const ACCESS_FIELDS = ['children', 'ui', 'countries', 'workspaces', 'sessionTimeoutHours'];
 const NAME_FIELD = 'name';
 
 const classes = {
@@ -125,6 +127,8 @@ const getInitialValues = (selectedRole: IRole | null | undefined) => {
       rights: rightsWithLabel,
       ui: selectedRole.ui || [],
       countries: selectedRole.countries ?? [],
+      // a role saved before the field existed opens the portfolio only
+      workspaces: selectedRole.workspaces?.length ? selectedRole.workspaces : DEFAULT_TARGETS,
       sessionTimeoutHours: getSessionTimeoutHoursFromMinutes(selectedRole.sessionTimeoutMinutes),
       ...translatedFields,
     };
@@ -134,6 +138,7 @@ const getInitialValues = (selectedRole: IRole | null | undefined) => {
     name: '',
     children: [],
     countries: [],
+    workspaces: DEFAULT_TARGETS,
     rights: getRightsEntities().map((className: Omit<IRightsItem, 'rights'>) => ({
       ...className,
       rights: defaultRights,
@@ -149,6 +154,12 @@ const uiOptions: ISelectOption<UIRole>[] = [
   { value: UIRoleEnum.IMPERSONATION, label: i18n.t('common:misc.impersonation') },
   { value: UIRoleEnum.BROADCAST, label: i18n.t('user:notifications.broadcast.broadcast') },
   { value: UIRoleEnum.STAFF, label: i18n.t('common:misc.staff') },
+];
+
+// one choice per workspace a role can open
+const workspaceOptions: ISelectOption<TargetEnum>[] = [
+  { value: TargetEnum.PORTFOLIO, label: i18n.t('cms:target.portfolio') },
+  { value: TargetEnum.ALDARON, label: i18n.t('cms:target.aldaron') },
 ];
 
 const getErrorCountBySection = (errors: FieldErrors): Record<RoleFormSection, number> => {
@@ -432,6 +443,13 @@ const RoleForm = ({
                       label={t('user:role.menu')}
                       name="ui"
                       options={uiOptions}
+                    />
+                    <ChoiceChipsField
+                      multiple
+                      helperText={t('user:role.workspacesHelper')}
+                      label={t('user:role.workspaces')}
+                      name="workspaces"
+                      options={workspaceOptions}
                     />
                     <SelectField
                       isMulti

@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { TargetEnum } from '@shared/types';
 
 import {
   IHighestRoleAccount, IRole, IRolesDelegation, IRoleState, UIRoleEnum,
@@ -11,6 +12,8 @@ const initialState: IRoleState = {
   userRoles: [],
   userRolesLoading: false,
   currentUserRoles: [],
+  // until the server answers, the signed-in account is read as working in the portfolio only
+  currentUserWorkspaces: [TargetEnum.PORTFOLIO],
   highestRoleAccounts: [],
   highestRoleAccountsLoading: false,
   rolesDelegation: null,
@@ -36,6 +39,9 @@ export const role = createSlice({
     },
     loadCurrentUserRolesSlice: (state: IRoleState, action: PayloadAction<IRole[]>) => {
       state.currentUserRoles = action.payload;
+    },
+    loadCurrentUserWorkspacesSlice: (state: IRoleState, action: PayloadAction<TargetEnum[]>) => {
+      state.currentUserWorkspaces = action.payload;
     },
     loadHighestRoleAccountsSlice: (state: IRoleState, action: PayloadAction<IHighestRoleAccount[]>) => {
       state.highestRoleAccounts = action.payload;
@@ -72,6 +78,7 @@ export const role = createSlice({
     },
     clearCurrentUserRolesSlice: (state: IRoleState) => {
       state.currentUserRoles = [];
+      state.currentUserWorkspaces = [TargetEnum.PORTFOLIO];
     },
     setRoleLoadingSlice: (state: IRoleState, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
@@ -113,6 +120,7 @@ export const {
   loadCurrentUserIsAdminSlice,
   clearUserRolesSlice,
   loadCurrentUserRolesSlice,
+  loadCurrentUserWorkspacesSlice,
   clearCurrentUserRolesSlice,
   loadHighestRoleAccountsSlice,
   clearHighestRoleAccountsSlice,
@@ -140,6 +148,12 @@ export const getRoleUserRolesLoadingSelector = (
 export const getRoleCurrentUserRolesSelector = (
   state: Record<string, any>
 ): IRole[] => state.role.currentUserRoles;
+/*
+ * defaulted on read: the store of a session opened before the field existed has no value for it
+ */
+export const getRoleCurrentUserWorkspacesSelector = (state: Record<string, any>): TargetEnum[] => (
+  state.role.currentUserWorkspaces ?? [TargetEnum.PORTFOLIO]
+);
 export const getRoleHighestRoleAccountsSelector = (
   state: Record<string, any>
 ): IHighestRoleAccount[] => state.role.highestRoleAccounts;

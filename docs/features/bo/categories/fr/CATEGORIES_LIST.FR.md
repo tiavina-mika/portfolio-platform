@@ -77,3 +77,4 @@ Les comptes Owner et Super Admin ont tous les droits.
 - Pour les comptes qui peuvent supprimer définitivement, la sélection de plusieurs lignes n'est pas
   proposée : les suppressions se font ligne par ligne.
 - Il n'y a que deux types de catégories : articles et pages.
+- Quand la personne travaille dans l'espace **Aldaron** (voir [Paramètres](../../settings/fr/SETTINGS.FR.md)), la liste ne montre que les catégories d'Aldaron ; dans le portfolio, celles du portfolio. Une personne dont les postes n'ouvrent pas Aldaron ne voit jamais celles réservées à Aldaron.

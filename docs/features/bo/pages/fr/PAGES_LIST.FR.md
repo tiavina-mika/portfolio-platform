@@ -98,3 +98,4 @@ définitive, irréversible). Les catégories d'une page supprimée sont mises de
 - Un clic sur une ligne n'ouvre pas la page : il faut passer par le menu Actions.
 - Supprimer définitivement une page l'enlève aussi des sections qui la contenaient ; une section qui
   n'a plus aucune page est détruite à son tour (voir [Sections de page](PAGE_SECTIONS.FR.md)).
+- Quand la personne travaille dans l'espace **Aldaron** (voir [Paramètres](../../settings/fr/SETTINGS.FR.md)), la liste ne montre que les pages d'Aldaron ; dans le portfolio, celles du portfolio. Une personne dont les postes n'ouvrent pas Aldaron ne voit jamais celles réservées à Aldaron.

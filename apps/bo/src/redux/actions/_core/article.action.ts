@@ -25,7 +25,9 @@ import {
 } from '@/redux/reducers/_core/article.reducer';
 import { clearCategoriesOptionsSlice } from '@/redux/reducers/_core/category.reducer';
 import { clearContentVersionsSlice } from '@/redux/reducers/_core/contentVersion.reducer';
-import { getSettingsLocaleSelector } from '@/redux/reducers/_core/settings.reducer';
+import {
+  getSettingsLocaleSelector, getSettingsWorkspaceSelector,
+} from '@/redux/reducers/_core/settings.reducer';
 import { AppDispatch, AppThunkAction, RootState } from '@/redux/store';
 import {
   fetchArticle, fetchArticles, fetchArticlesForExport, saveArticle, setArticleActive,
@@ -111,14 +113,16 @@ export const loadArticles = (queries: IQueriesInput): any => {
     include = ['categories'],
   } = queries;
 
-  return actionWithLoader(async (dispatch: AppDispatch): Promise<void> => {
+  return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
+    // the list is the one of the workspace the person works in
+    const workspace = getSettingsWorkspaceSelector(getState?.()!);
     const result = await fetchArticles({
-      limit, skip, orderBy, order, filters, search, include,
+      limit, skip, orderBy, order, filters, search, include, workspace,
     });
 
     dispatch(loadArticlesSlice(result.results));
     dispatch(setArticlesCountSlice(result.count));
-    rememberListQuery(loadArticlesSlice, queries);
+    rememberListQuery(loadArticlesSlice, { ...queries, workspace });
   });
 };
 
@@ -131,7 +135,8 @@ export const exportArticles = (queries: IQueriesInput, format: ExportFormat): an
   return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
     const locale = getSettingsLocaleSelector(getState?.()!);
 
-    const result = await fetchArticlesForExport(queries, EXPORT_MAX_ROWS);
+    const workspace = getSettingsWorkspaceSelector(getState?.()!);
+    const result = await fetchArticlesForExport({ ...queries, workspace }, EXPORT_MAX_ROWS);
 
     await exportRows(result.results, getArticleExportColumns(locale), 'articles', format);
 
@@ -283,12 +288,14 @@ export const toggleArticlesByIds = (ids: string[], field: string, value = true):
  * @returns
  */
 export const onArticlesEnter = (route: any): any => {
-  return onEnterActionWithLoader((dispatch: AppDispatch): any => {
+  return onEnterActionWithLoader((dispatch: AppDispatch, getState?: () => RootState): any => {
     const values: Record<string, any> = {
       skip: DEFAULT_PAGINATION.currentPage,
       limit: DEFAULT_PAGINATION.rowsPerPage,
       orderBy: DEFAULT_PAGINATION.orderBy,
       order: DEFAULT_PAGINATION.order,
+      // part of the query, so rows loaded for the other workspace are not kept on screen
+      workspace: getSettingsWorkspaceSelector(getState?.()!),
     };
 
     const filters: Record<string, boolean | string> = { deleted: false };
