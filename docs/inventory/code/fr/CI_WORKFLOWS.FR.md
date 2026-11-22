@@ -30,7 +30,7 @@ Les workflows sont dans `.github/workflows/`. Les secrets et variables qu'ils li
 | Lint, typecheck and build affected projects | `nx affected -t lint`, `typecheck`, `build --exclude=web,aldaron-web`, un build `aldaron-web` à part, `build-docs`, puis `pnpm check-i18n` |
 | Render build (production or pre-production) | Sur les PR vers `main` (production) et `develop` (préproduction) : install, `vite build` du back-office, build du serveur et `copy`, avec des valeurs `VITE_*` factices, puis vérifie que le bundle copié contient `index.html` et des scripts |
 | Conventional commit messages | `commitlint` sur les commits ajoutés par une PR |
-| Unit tests of affected projects | `nx affected -t test --exclude=server,web,aldaron-web` |
+| Unit tests of affected projects | `nx affected -t test --exclude=web,aldaron-web` : les tests unitaires Vitest du serveur |
 | Build affected Storybooks | `nx affected -t build-sb` |
 | Markdown lint and broken links | `pnpm lint:docs`, `pnpm check-doc-links` et `pnpm check-doc-twins` contre la branche de base, plus une vérification de liens `lychee` |
 
