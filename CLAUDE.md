@@ -30,7 +30,8 @@ portfolio-platform/
 │   └── bo/         # Back-office admin panel (Vite + React + MUI)
 ├── libs/           # Shared libraries (shared-*) and shared configs (libs/config/eslint, libs/config/prettier)
 ├── docs/           # Project documentation (see docs/README.md)
-├── scripts/        # Repository checks: check-i18n, check-doc-twins, check-doc-links
+├── scripts/        # Repository checks: check-i18n, check-doc-twins, check-doc-links; the ticket loop
+├── tickets/        # Tickets as Markdown files: the folder is the status (backlog, todo, in-progress, to-test, blocked, done)
 ├── nx.json         # Nx workspace config
 ├── pnpm-workspace.yaml
 ├── package.json    # Root package.json (packageManager pin, root devDependencies)
@@ -79,7 +80,7 @@ Each app has its **own** `package.json` but there is a **single** `pnpm-lock.yam
 
 The server and the back-office are split in `_core/` (generic back-office) and `_domain/` (the `Project` domain): `_core` never imports `_domain`; see `docs/code/architecture/en/CORE_DOMAIN.md`. `apps/web` is not split.
 
-Topic rules live in `.claude/rules/` (code style, naming, TypeScript, component structure, forms, theming, accessibility, Parse patterns, docs, inventory, Storybook, design studies, git branches, implementation completeness). Per-app guidance is in `apps/<name>/CLAUDE.md` and `apps/<name>/.claude/rules/`.
+Topic rules live in `.claude/rules/` (code style, naming, TypeScript, component structure, forms, theming, accessibility, Parse patterns, docs, inventory, Storybook, design studies, git branches, tickets, implementation completeness). Tickets are files in `tickets/`: write them with `/ticket`, carry one out with `/dev`, chain them without a human with `/auto`. Per-app guidance is in `apps/<name>/CLAUDE.md` and `apps/<name>/.claude/rules/`.
 
 ### Environments
 
