@@ -163,7 +163,7 @@ const CategoryFormDialog = ({
        * the parent is optional, and the save itself will surface a server that is down
        */
       try {
-        const categories = await searchCategoriesForAutocomplete('', entity, {
+        const categories = await searchCategoriesForAutocomplete('', entity, workspace, {
           eligibleAsParent: true,
           excludeId: category?.id,
         });
@@ -183,7 +183,7 @@ const CategoryFormDialog = ({
     return () => {
       isCancelled = true;
     };
-  }, [open, entity, category?.id]);
+  }, [open, entity, category?.id, workspace]);
 
   const parentOptions: IChoiceChipOption[] = useMemo(
     () => getParentCategoryOptions(parentCategories, locale),

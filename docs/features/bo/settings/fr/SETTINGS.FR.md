@@ -67,6 +67,8 @@ et Aldaron : deux cartes, chacune avec son logo. Le choix s'applique aussitôt, 
 
 - le **logo** du menu latéral (ouvert ou replié) devient celui de l'espace ;
 - la **liste des projets**, des articles, des pages et des catégories ne montre que les contenus de cet espace ;
+- les **catégories proposées** dans les formulaires d'article et de page, et les catégories parentes proposées
+  à la création d'une catégorie, sont celles de cet espace ;
 - un nouveau projet, article, page ou catégorie est **prérempli** avec l'espace choisi dans « Publié sur » (modifiable) ;
 - dans Aldaron, les sections **Détails**, **Images** et **CV** (qui modifient le site du portfolio) ne sont pas
   proposées : une adresse qui les vise ouvre la section **Langues**.

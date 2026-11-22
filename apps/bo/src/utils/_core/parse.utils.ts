@@ -1,4 +1,27 @@
+import { TargetEnum } from '@shared/types';
+import Parse from 'parse';
+
 import { filter, isNull } from '@/utils/_core/utils';
+
+/**
+ * keeps the editorial rows (categories here) published on one target. The portfolio also keeps the
+ * rows saved before the field existed, which carry no target and are read as the portfolio's;
+ * Aldaron keeps only the rows that name it. Same rule as the server's lists.
+ * @param query parse query to narrow, before any `select`/`limit`: the portfolio case wraps it in a
+ * new query, so the caller chains the rest on the returned one
+ * @param target the workspace whose rows are read
+ */
+export const contentTargetQuery = (query: Parse.Query, target: TargetEnum): Parse.Query => {
+  if (target === TargetEnum.ALDARON) return query.equalTo('targets', TargetEnum.ALDARON);
+
+  return Parse.Query.and(
+    query,
+    Parse.Query.or(
+      new Parse.Query(query.className).equalTo('targets', TargetEnum.PORTFOLIO),
+      new Parse.Query(query.className).doesNotExist('targets')
+    )
+  );
+};
 
 /**
  * get values from a Parse.Object or a plain JSON object (some domains are still live
