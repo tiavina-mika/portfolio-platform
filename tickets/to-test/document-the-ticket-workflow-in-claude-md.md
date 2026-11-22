@@ -2,7 +2,7 @@
 type: docs
 apps: []
 branch: docs/ticket-workflow-in-claude-md
-pr:
+pr: https://github.com/tiavina-mika/portfolio-platform/pull/35
 ---
 
 ## Context
@@ -37,7 +37,7 @@ Work started on branch `docs/ticket-workflow-in-claude-md`.
 
 ### 2026-11-22 · Claude · to-test
 - Changed: `CLAUDE.md` shows `tickets/` in the structure tree and points to the tickets rule and the `/ticket`, `/dev`, `/auto` skills.
-- Branch: `docs/ticket-workflow-in-claude-md`. PR: see the `pr:` field.
+- Branch: `docs/ticket-workflow-in-claude-md`. PR: #35.
 - Ran: `pnpm lint:docs` (0 issues), `pnpm check-doc-links` (no broken link). All three criteria ticked.
 - How to test: read the "Monorepo Structure" tree and "Detailed rules" of `CLAUDE.md`; nothing else needs a human.
 - Not verified: nothing.
