@@ -58,6 +58,7 @@ Write-Log "Loop $verb (max: $maxLabel, since: $sinceLabel)"
 $cmd = '/dev --auto'
 if ($Since) { $cmd += " --since $Since" }
 
+try {
 while ($true) {
   if (Test-Path $stop) { Write-Log 'Stop requested (logs/auto/stop).'; break }
   if ($Max -gt 0 -and $done -ge $Max) { Write-Log "Maximum reached ($Max tickets)."; break }
@@ -72,10 +73,17 @@ while ($true) {
       Write-Log 'Dirty tree (tracked files modified): stop. Commit or cancel, then run /auto again.'
       break
     }
+    # Windows PowerShell 5.1 turns native stderr ("Already on 'develop'") into terminating errors under
+    # 'Stop': relax it for the git calls and rely on the exit codes instead.
+    $ErrorActionPreference = 'Continue'
     git fetch --prune 2>&1 | Out-Null
     git switch develop 2>&1 | Out-Null
+    $switchCode = $LASTEXITCODE
     git pull --ff-only 2>&1 | Out-Null
-    if ($LASTEXITCODE -ne 0) { Write-Log 'develop does not fast-forward: stop.'; break }
+    $pullCode = $LASTEXITCODE
+    $ErrorActionPreference = 'Stop'
+    if ($switchCode -ne 0) { Write-Log 'Cannot switch to develop: stop.'; break }
+    if ($pullCode -ne 0) { Write-Log 'develop does not fast-forward: stop.'; break }
   }
 
   $run = Join-Path $dir ('run-{0}.log' -f (Get-Date -Format 'yyyyMMdd-HHmmss'))
@@ -108,11 +116,15 @@ while ($true) {
   if ($state -eq 'FAIL' -and $resumes -lt 2) {
     $branch = (git branch --show-current)
     if ($branch -and $branch -notin 'develop', 'main') {
+      $ErrorActionPreference = 'Continue'
       $pr = gh pr list --head $branch --state open --json number | ConvertFrom-Json | Select-Object -First 1
+      $ErrorActionPreference = 'Stop'
       if ($pr) {
         $resumes++
         Write-Log "PR #$($pr.number) open and not merged: waiting for CI."
+        $ErrorActionPreference = 'Continue'
         gh pr checks $pr.number --watch 2>&1 | Out-Null
+        $ErrorActionPreference = 'Stop'
         Write-Log "CI finished for PR #$($pr.number): resuming the ticket (attempt $resumes/2)."
         $resuming = $true
         continue
@@ -129,6 +141,9 @@ while ($true) {
 
   $failures++
   if ($failures -ge 2) { Write-Log 'Two failures in a row: stop. The ticket stays in in-progress/, see the run-*.log.'; break }
+}
+} catch {
+  Write-Log "Loop crashed: $($_.Exception.Message)"
 }
 
 Write-Log "Loop finished: $done ticket(s) handled."
