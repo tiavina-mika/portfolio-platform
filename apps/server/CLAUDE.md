@@ -17,8 +17,20 @@ Node.js + Express + Parse Server backend (REST API + BaaS, Cloud Code) for the p
 | i18n | i18next with `fr`, `en`, `mg` locales (`src/config/i18n/locales/<locale>/_core/*.json`, set up in `src/config/i18n/index.ts`) |
 | Validation | Zod (`src/validations/_core/`, `src/validations/_domain/`) |
 | Package mgr | pnpm (single workspace root) |
+| Tests | Vitest (Node environment), `src/**/*.test.ts` next to the code they test |
 
-There is no test runner in this app today.
+---
+
+## Tests
+
+`pnpm nx run server:test` runs the unit tests with Vitest (`vitest.config.ts`, the `@/` alias is mapped
+there too). The CI job "Unit tests of affected projects" runs them on every PR that touches the server.
+
+- A test file sits next to the file it tests: `pii.utils.ts` → `pii.utils.test.ts`. The build leaves
+  `*.test.ts` out of `dist/`.
+- Pure logic first (utils, computations, validations): no Parse Server, no database, no network. A test
+  that needs Parse mocks it at the boundary, never an internal helper (`engineering-principles.md`).
+- Describe behaviour: `describe('<feature / scenario>')` + `it('should …')`.
 
 ---
 
@@ -28,6 +40,7 @@ There is no test runner in this app today.
 pnpm nx run server:dev   # tsx watch, NODE_ENV=development (or: pnpm dev in apps/server)
 pnpm build               # clean + typecheck + swc → dist/
 pnpm typecheck           # tsc --noEmit -p tsconfig.build.json
+pnpm nx run server:test  # Vitest unit tests (or: pnpm test in apps/server)
 pnpm start               # run dist/ build, NODE_ENV=production
 pnpm start:preprod       # run dist/ build, NODE_ENV=preProduction
 pnpm lint                # eslint --fix

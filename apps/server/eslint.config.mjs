@@ -116,6 +116,8 @@ export default defineConfig(
       '**/node_modules/',
       '**/.prettierrc.mjs',
       '**/eslint.config.mjs',
+      // tooling, outside the TypeScript project; its `vitest/config` import must stay extension-less
+      '**/vitest.config.ts',
       '**/demos/',
       '**/commitlint.config.mjs',
       // plain Node tooling, outside the TypeScript project the rules are typed against

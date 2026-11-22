@@ -45,6 +45,7 @@ pnpm nx run web:dev
 ```bash
 pnpm nx run-many -t lint
 pnpm nx run-many -t build
+pnpm nx run-many -t test   # unit tests (Vitest, the server today)
 pnpm check-i18n        # translations: parity between locales and keys used in the code
 pnpm check-doc-links   # relative links of the docs
 ```
