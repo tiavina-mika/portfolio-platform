@@ -10,7 +10,9 @@ import {
 import { createCrudThunks } from '@/redux/factories/_core/crudThunks.factory';
 import { clearErrorSlice, setInfoMessageSlice, setMessageSlice } from '@/redux/reducers/_core/app.reducer';
 import { clearContentVersionsSlice } from '@/redux/reducers/_core/contentVersion.reducer';
-import { getSettingsLocaleSelector } from '@/redux/reducers/_core/settings.reducer';
+import {
+  getSettingsLocaleSelector, getSettingsWorkspaceSelector,
+} from '@/redux/reducers/_core/settings.reducer';
 import {
   clearProjectCountSlice,
   clearProjectEditorTempFilesSlice,
@@ -100,14 +102,16 @@ export const loadProjects = (queries: IQueriesInput): any => {
     include = [],
   } = queries;
 
-  return actionWithLoader(async (dispatch: AppDispatch): Promise<void> => {
+  return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
+    // the list is the one of the workspace the person works in
+    const workspace = getSettingsWorkspaceSelector(getState?.()!);
     const result = await fetchProjects({
-      limit, skip, orderBy, order, filters, search, include,
+      limit, skip, orderBy, order, filters, search, include, workspace,
     });
 
     dispatch(loadProjectsSlice(result.results));
     dispatch(setProjectsCountSlice(result.count));
-    rememberListQuery(loadProjectsSlice, queries);
+    rememberListQuery(loadProjectsSlice, { ...queries, workspace });
   });
 };
 
@@ -122,7 +126,10 @@ export const exportProjects = (queries: IQueriesInput, format: ExportFormat): an
     const locale = getSettingsLocaleSelector(getState?.()!);
     const { ids, ...listQueries } = queries;
 
-    const result = await fetchEntityListForExport<IProject>('getProjects', listQueries, EXPORT_MAX_ROWS);
+    const workspace = getSettingsWorkspaceSelector(getState?.()!);
+    const result = await fetchEntityListForExport<IProject>(
+      'getProjects', { ...listQueries, workspace }, EXPORT_MAX_ROWS
+    );
     const rows = ids?.length
       ? result.results.filter((project) => ids.includes(project.id))
       : result.results;
@@ -279,12 +286,14 @@ export const toggleProjectsByIds = (ids: string[], field: string, value = true):
  * @returns
  */
 export const onProjectsEnter = (route: any): any => {
-  return onEnterActionWithLoader((dispatch: AppDispatch): any => {
+  return onEnterActionWithLoader((dispatch: AppDispatch, getState?: () => RootState): any => {
     const values: Record<string, any> = {
       skip: DEFAULT_PAGINATION.currentPage,
       limit: DEFAULT_PAGINATION.rowsPerPage,
       orderBy: DEFAULT_PAGINATION.orderBy,
       order: DEFAULT_PAGINATION.order,
+      // part of the query, so rows loaded for the other workspace are not kept on screen
+      workspace: getSettingsWorkspaceSelector(getState?.()!),
     };
 
     const filters: Record<string, boolean | string> = { deleted: false };

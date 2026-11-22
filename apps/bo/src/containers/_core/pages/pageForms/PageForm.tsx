@@ -14,6 +14,7 @@ import CmsSeoPreview from '@/containers/_core/cms/CmsSeoPreview';
 import CmsFormRenderedPreview from '@/containers/_core/cms/form/CmsFormRenderedPreview';
 import CmsFormSeoSection from '@/containers/_core/cms/form/CmsFormSeoSection';
 import CmsFormWorkbench from '@/containers/_core/cms/form/CmsFormWorkbench';
+import { useWorkspace } from '@/hooks/_core/useWorkspace';
 import { getSettingsLocaleSelector } from '@/redux/reducers/_core/settings.reducer';
 import { CmsFormSectionEnum } from '@/types/_core/cms.type';
 import { IContentVersion } from '@/types/_core/contentVersion.type';
@@ -52,6 +53,7 @@ const PageForm = ({
     t,
   } = useTranslation(['common', 'cms']);
   const locale = useSelector(getSettingsLocaleSelector);
+  const { workspace } = useWorkspace();
 
   const [uploadedJsonValues, setUploadedJsonValues] = useState<Partial<IPage>>({});
   const [isInitializing, setIsInitializing] = useState(true);
@@ -77,7 +79,7 @@ const PageForm = ({
 
     const init = async () => {
       setIsInitializing(true);
-      const editionInitialValues = await getFinalPageInitialValues(page, locale);
+      const editionInitialValues = await getFinalPageInitialValues(page, locale, workspace);
 
       if (isCancelled) return;
       reset({ ...editionInitialValues, ...uploadedJsonValues } as IPageFormInput);
@@ -89,10 +91,10 @@ const PageForm = ({
     return () => {
       isCancelled = true;
     };
-  }, [page, locale, reset, uploadedJsonValues]);
+  }, [page, locale, workspace, reset, uploadedJsonValues]);
 
   const handleTransformUploadedJsonData = async (data: Partial<IPage>) => {
-    const values = await getFinalPageInitialValues<IPage>(data as any, locale);
+    const values = await getFinalPageInitialValues<IPage>(data as any, locale, workspace);
 
     return values || {};
   };

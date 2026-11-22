@@ -1,3 +1,4 @@
+import { TargetEnum } from '@shared/types';
 import Parse from 'parse';
 
 import { HIGHEST_LEVEL_ROLES, RELATION_OPTIONS_LIMIT, ROLE_DEFAULT_LIMIT } from '@/constants/_core/user.constants';
@@ -143,6 +144,14 @@ export const isAdmin = async (): Promise<boolean> => {
   const hasRole = await Parse.Cloud.run('hasRole', { roleNames: HIGHEST_LEVEL_ROLES });
 
   return hasRole;
+};
+
+/**
+ * the workspaces the signed-in account may work in — computed by the server from the roles, the
+ * back-office reads the answer and never recomputes it
+ */
+export const fetchCurrentUserWorkspaces = async (): Promise<TargetEnum[]> => {
+  return Parse.Cloud.run('getCurrentUserWorkspaces');
 };
 
 // owners and super administrators only: the server refuses anybody else

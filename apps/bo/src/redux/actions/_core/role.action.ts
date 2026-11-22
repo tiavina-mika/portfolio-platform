@@ -1,5 +1,6 @@
 import i18n from '@/config/i18n';
 import { COLLECTIONS, Errors } from '@/constants/_core/app.constants';
+import { DEFAULT_TARGETS } from '@/constants/_core/cms.constants';
 import { DEFAULT_ROLES, RELATION_OPTIONS_LIMIT, ROLE_DEFAULT_LIMIT } from '@/constants/_core/user.constants';
 import {
   actionWithLoader, clearListUnlessLoadedWith, forgetListQuery, onEnterActionWithLoader, rememberListQuery,
@@ -156,6 +157,8 @@ export const createRole = (values: IRoleInput): any => {
       ui: values.ui,
       // an empty list takes the limit off: the role covers every country
       countries: values.countries ?? [],
+      // a role opens the portfolio unless the form says otherwise
+      workspaces: values.workspaces ?? DEFAULT_TARGETS,
       translated: roleCodec.decode(values),
       /*
        * the form asks for hours, the role stores minutes; null (not undefined) so an emptied
@@ -190,6 +193,7 @@ export const updateRole = (name: string, values: IRoleInput): any => {
       ui: values.ui,
       // an empty list takes the limit off: the role covers every country
       countries: values.countries ?? [],
+      workspaces: values.workspaces ?? DEFAULT_TARGETS,
       translated: roleCodec.decode(values),
       /*
        * the form asks for hours, the role stores minutes; null (not undefined) so an emptied

@@ -1,7 +1,12 @@
+import type { TargetEnum } from '@shared/types';
+
 import i18n, { locales } from '@/config/i18n';
 import { DEFAULT_LOCALE, PERSISTED_STATE_KEY } from '@/constants/_core/app.constants';
+import { WORKSPACES } from '@/constants/_core/workspace.constants';
 import { ISelectOption } from '@/types/_core/app.type';
-import { IStoredData, Locale } from '@/types/_core/setting.type';
+import {
+  IStoredData, Locale, SettingsSection, SettingsSectionEnum,
+} from '@/types/_core/setting.type';
 import { getLocalStorage, parseDeepJSON, setLocalStorage } from '@/utils/_core/utils';
 
 /**
@@ -73,6 +78,23 @@ export const localeOptions = orderedLocales.map(
     value: locale,
   })
 );
+
+/**
+ * Whether the settings page offers a section: the workspace hides the sections that only edit another
+ * workspace's website, and the workspace choice itself is shown only to somebody who has one to make.
+ * @param section the section asked for
+ * @param workspace the workspace the person works in
+ * @param canSwitch whether their roles open more than one workspace
+ */
+export const isSettingsSectionVisible = (
+  section: SettingsSection,
+  workspace: TargetEnum,
+  canSwitch: boolean
+): boolean => {
+  if (section === SettingsSectionEnum.WORKSPACE && !canSwitch) return false;
+
+  return !WORKSPACES[workspace].hiddenSettingsSections.includes(section);
+};
 
 /**
  * get translated field value from database

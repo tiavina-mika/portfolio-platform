@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import AutocompleteField, { AutocompleteProps } from '@/components/form/fields/AutocompleteField';
+import { useWorkspace } from '@/hooks/_core/useWorkspace';
 import { searchCategoriesForAutocomplete } from '@/redux/actions/_core/category.action';
 import { getSettingsLocaleSelector } from '@/redux/reducers/_core/settings.reducer';
 import { ISelectOption } from '@/types/_core/app.type';
@@ -37,6 +38,8 @@ const CategoriesSearchByEntityField = ({
   entity, name, label, placeholder, multiple = true, rootOnly, parentCategory, excludeId, ...otherProps
 }: Props) => {
   const locale = useSelector(getSettingsLocaleSelector);
+  // only the categories of the workspace the person works in are offered
+  const { workspace } = useWorkspace();
 
   const [categoryOptions, setCategoryOptions] = useState<ICategoryOption[]>([]);
   const [isCategoryOptionsLoading, setIsCategoryOptionsLoading] = useState<boolean>(false);
@@ -44,7 +47,7 @@ const CategoriesSearchByEntityField = ({
   /** autocomplete search — debouncing is handled by AutocompleteInput */
   const handleSearchCategory = async (search: string) => {
     setIsCategoryOptionsLoading(true);
-    const categories = (await searchCategoriesForAutocomplete(search, entity, {
+    const categories = (await searchCategoriesForAutocomplete(search, entity, workspace, {
       rootOnly, parentCategory, excludeId,
     })) || [];
     const newOptions = categories.map((category: ICategory) => ({

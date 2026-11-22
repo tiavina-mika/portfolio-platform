@@ -2,6 +2,7 @@ import { ROLE_SESSION_TIMEOUT_MAX_MINUTES, ROLE_SESSION_TIMEOUT_MIN_MINUTES } fr
 import isEqual from 'lodash/isEqual.js';
 
 import type { Locale } from '@/types/app.type';
+import type { TargetEnum } from '@shared/types';
 import type { Role, User } from 'parse';
 
 
@@ -12,7 +13,7 @@ import {
   DEFAULT_ROLE_RIGHTS, DEFAULT_ROLE_TRANSLATED_LABELS, DEFAULT_ROLE_UI,
 } from '@/constants/_core/role.constants';
 import { logger } from '@/utils/_core/logger';
-import { getChangedRightsClassNames } from '@/utils/_core/rights.utils';
+import { getChangedRightsClassNames, getRoleWorkspaces } from '@/utils/_core/rights.utils';
 import { getTranslatedField } from '@/utils/_core/utils';
 
 import { createRoleAuditLog } from './roleAuditLog.service.cloud';
@@ -57,6 +58,8 @@ type CreateRoleParams = {
   sessionTimeoutMinutes?: number | null;
   /** the countries the role covers, none for every country */
   countries?: string[];
+  /** the workspaces the role opens, none for the portfolio alone */
+  workspaces?: TargetEnum[];
   performedBy?: User;
 };
 
@@ -94,7 +97,7 @@ const setSessionTimeoutMinutes = (role: Role, sessionTimeoutMinutes?: number | n
  * @returns {Promise<Role>}
  */
 export const createRole = async ({
-  name, childNames, rights, ui, translated, sessionTimeoutMinutes, countries, performedBy,
+  name, childNames, rights, ui, translated, sessionTimeoutMinutes, countries, workspaces, performedBy,
 }: CreateRoleParams): Promise<Role> => {
   /*
    * actually we have only one Owner and one Super Admin
@@ -179,6 +182,10 @@ export const createRole = async ({
 
   if (countries?.length) {
     newRole.set('countries', countries);
+  }
+
+  if (workspaces?.length) {
+    newRole.set('workspaces', workspaces);
   }
 
   await newRole.save(null, USE_MASTER_KEY);
@@ -283,6 +290,8 @@ type UpdateRoleParams = {
   sessionTimeoutMinutes?: number | null;
   /** the countries the role covers, none for every country */
   countries?: string[];
+  /** the workspaces the role opens, left out to keep what is stored */
+  workspaces?: TargetEnum[];
   performedBy?: User;
 };
 
@@ -298,7 +307,7 @@ type UpdateRoleParams = {
  * @returns {Promise<Role>}
  */
 export const updateRole = async ({
-  name, childNames, rights, ui, translated, sessionTimeoutMinutes, countries, performedBy,
+  name, childNames, rights, ui, translated, sessionTimeoutMinutes, countries, workspaces, performedBy,
 }: UpdateRoleParams): Promise<Role> => {
   // the ACL of OWNER / SUPER_ADMIN does not stop the master key used below, so the rule lives here
   if (HIGHEST_LEVEL_ROLES.includes(name) && !(await isOwner(performedBy!))) {
@@ -314,7 +323,11 @@ export const updateRole = async ({
   const rightsBefore = role.get('rights');
   const uiBefore = role.get('ui');
   const hasChangedAppearance = hasChangedLabelsOrTimeout(role, translated, sessionTimeoutMinutes) ||
-    (!!countries && !isEqual([...countries].sort(), [...(role.get('countries') ?? [])].sort()));
+    (!!countries && !isEqual([...countries].sort(), [...(role.get('countries') ?? [])].sort())) ||
+    (!!workspaces && !isEqual(
+      [...workspaces].sort(),
+      [...getRoleWorkspaces({ workspaces: role.get('workspaces') })].sort()
+    ));
   const hasChangedHierarchy = await replaceChildRoles(role, childNames);
 
   if (rights) {
@@ -334,6 +347,10 @@ export const updateRole = async ({
   // an empty list takes the limit off: the role covers every country again
   if (countries) {
     role.set('countries', countries);
+  }
+
+  if (workspaces) {
+    role.set('workspaces', workspaces);
   }
 
   await role.save(null, USE_MASTER_KEY);

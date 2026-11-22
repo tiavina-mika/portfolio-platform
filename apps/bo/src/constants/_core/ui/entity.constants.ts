@@ -154,6 +154,9 @@ export const SETTINGS_SWATCH_ICON_SIZE = 14;
  * holds a miniature of the nav — the ground it would take and two bars standing for its items — so
  * the choice is made on what the menu will look like rather than on the name of a shade
  */
+// the workspaces are picked from their own logo, so a card holds the logo over the name
+export const SETTINGS_WORKSPACE_CARD_MIN_WIDTH = 160;
+export const SETTINGS_WORKSPACE_LOGO_HEIGHT = 32;
 export const SETTINGS_SIDEBAR_CARD_MIN_WIDTH = 96;
 export const SETTINGS_SIDEBAR_CARD_PADDING = 10;
 export const SETTINGS_SIDEBAR_CARD_GAP = 8;

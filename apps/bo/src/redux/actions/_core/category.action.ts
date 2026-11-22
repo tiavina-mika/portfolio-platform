@@ -22,7 +22,9 @@ import {
   setCategoryTabCountsSlice,
   updateCategoriesFieldSlice,
 } from '@/redux/reducers/_core/category.reducer';
-import { getSettingsLocaleSelector } from '@/redux/reducers/_core/settings.reducer';
+import {
+  getSettingsLocaleSelector, getSettingsWorkspaceSelector,
+} from '@/redux/reducers/_core/settings.reducer';
 import { AppDispatch, AppThunkAction, RootState } from '@/redux/store';
 import { fetchCurrentUserSessionToken } from '@/services/_core/auth.service';
 import {
@@ -66,7 +68,7 @@ export const loadCategoriesOptions = (entity: ICategoryTypeEntity): any => {
   return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
     const state = getState?.();
     const locale = getSettingsLocaleSelector(state as any);
-    const options = await fetchCategoryOptions(entity, locale);
+    const options = await fetchCategoryOptions(entity, locale, getSettingsWorkspaceSelector(state as any));
 
     dispatch(loadCategoriesOptionsSlice(options));
   }, { localLoadingAction: setCategoryLoadingSlice });
@@ -77,8 +79,8 @@ export const loadCategoriesOptions = (entity: ICategoryTypeEntity): any => {
  * record in the tree reads its levels from there instead of querying one level at a time
  */
 export const loadCategoryTree = (entity: ICategoryTypeEntity): any => {
-  return actionWithLoader(async (dispatch: AppDispatch): Promise<void> => {
-    const categories = await fetchCategoryTree(entity);
+  return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
+    const categories = await fetchCategoryTree(entity, getSettingsWorkspaceSelector(getState?.()!));
 
     dispatch(loadCategoriesSlice(categories));
   });
@@ -163,6 +165,8 @@ const categoryCrud = createCrudThunks<ICategory>({
   hasNoRightToDeleteMessage: i18n.t('common:errors.hasNoRightToDelete', { value: i18n.t('cms:category.categoryDeletedSuccessfully') }),
   getExportColumns: getCategoryExportColumns,
   exportFileNamePrefix: 'categories',
+  // the list is the one of the workspace the person works in
+  isWorkspaceScoped: true,
 });
 
 export const loadCategories: any = categoryCrud.loadList;

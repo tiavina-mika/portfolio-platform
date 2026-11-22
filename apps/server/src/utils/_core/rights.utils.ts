@@ -1,3 +1,4 @@
+import { TargetEnum } from '@shared/types';
 import isEqual from 'lodash/isEqual.js';
 import pickBy from 'lodash/pickBy.js';
 import uniq from 'lodash/uniq.js';
@@ -14,7 +15,45 @@ export const getChangedRightsClassNames = (before: RightsEntry[] = [], after: Ri
     .filter((className) => !isEqual(getGrantedRights(before, className), getGrantedRights(after, className)));
 
 /** what a role grants, as plain values */
-export type RoleGrants = { rights?: RightsEntry[]; ui?: string[]; countries?: string[] };
+export type RoleGrants = {
+  rights?: RightsEntry[];
+  ui?: string[];
+  countries?: string[];
+  workspaces?: TargetEnum[];
+};
+
+/**
+ * The workspaces one role opens. A role saved before the field existed (or saved with an empty list)
+ * opens the portfolio only, so nobody gains access to Aldaron by the field being introduced.
+ */
+export const getRoleWorkspaces = (role: RoleGrants): TargetEnum[] => (
+  role.workspaces?.length ? role.workspaces : [TargetEnum.PORTFOLIO]
+);
+
+/**
+ * The workspaces a set of roles opens: the roles add up, like rights. An account holding no role at
+ * all works in the portfolio. The highest roles open every workspace without storing it — the caller
+ * decides that before reading roles.
+ */
+export const mergeRoleWorkspaces = (roles: RoleGrants[]): TargetEnum[] => (
+  roles.length ? uniq(roles.flatMap(getRoleWorkspaces)) : [TargetEnum.PORTFOLIO]
+);
+
+/**
+ * Whether a row published on some targets is one the given workspaces may read: a row with no target
+ * is the portfolio's, and a row published on both is read from either workspace.
+ * @param targets the targets the row names (`targets` of an article, `[target]` of a project)
+ * @param workspaces the workspaces the reader may use
+ */
+export const isInWorkspaces = (
+  targets: (TargetEnum | undefined)[] | undefined,
+  workspaces: TargetEnum[]
+): boolean => {
+  const rowTargets = (targets ?? []).filter((target): target is TargetEnum => !!target);
+
+  return (rowTargets.length ? rowTargets : [TargetEnum.PORTFOLIO])
+    .some((target) => workspaces.includes(target));
+};
 
 /**
  * The countries a set of roles covers, or `null` when nothing limits it: a role lists the countries
@@ -55,5 +94,10 @@ export const isRoleWithinRights = (role: RoleGrants, giverRoles: RoleGrants[]): 
   const isInGiverCountries = giverCountries === null ||
     (roleCountries.length > 0 && roleCountries.every((country) => giverCountries.includes(country)));
 
-  return hasEveryRight && hasEveryScreen && isInGiverCountries;
+  // a post opening Aldaron cannot be handed out by somebody who cannot work in Aldaron themselves
+  const giverWorkspaces = mergeRoleWorkspaces(giverRoles);
+  const isInGiverWorkspaces = getRoleWorkspaces(role)
+    .every((workspace) => giverWorkspaces.includes(workspace));
+
+  return hasEveryRight && hasEveryScreen && isInGiverCountries && isInGiverWorkspaces;
 };

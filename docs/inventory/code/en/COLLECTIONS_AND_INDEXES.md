@@ -28,7 +28,7 @@ Domain class names are in `libs/shared-domain-constants` (`DOMAIN_COLLECTIONS`);
 | `ImpersonationSession` | "Login as" sessions | server, bo |
 | `ContentVersion` | History of the CMS content (Page, Article…) | server, bo |
 | `_User` | Back-office users | server, bo |
-| `_Role` | Roles and their `rights`, `ui` and `countries` fields | server, bo |
+| `_Role` | Roles and their `rights`, `ui`, `countries` and `workspaces` fields | server, bo |
 | `_Session` | Parse sessions | server |
 
 ## Indexes

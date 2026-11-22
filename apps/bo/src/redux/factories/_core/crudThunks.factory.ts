@@ -1,4 +1,5 @@
 import type { ActionCreatorWithPayload, ActionCreatorWithoutPayload } from '@reduxjs/toolkit';
+import type { TargetEnum } from '@shared/types';
 
 import i18n from '@/config/i18n';
 import {
@@ -8,7 +9,9 @@ import {
   actionWithLoader, clearListUnlessLoadedWith, onEnterActionWithLoader, rememberListQuery,
 } from '@/redux/actions/_core/util.action';
 import { setInfoMessageSlice, setMessageSlice } from '@/redux/reducers/_core/app.reducer';
-import { getSettingsLocaleSelector } from '@/redux/reducers/_core/settings.reducer';
+import {
+  getSettingsLocaleSelector, getSettingsWorkspaceSelector,
+} from '@/redux/reducers/_core/settings.reducer';
 import { AppDispatch, AppThunkAction, RootState } from '@/redux/store';
 import {
   fetchEntityList, fetchEntityListForExport, softDeleteEntity, toggleEntitiesFieldByIds,
@@ -69,6 +72,11 @@ export interface ICrudThunksConfig<TEntity extends IEntityWithId> {
   getExportColumns?: (locale: Locale) => IExportColumn<TEntity>[];
   // ex: 'categories' -> 'categories-2026-07-23.csv'
   exportFileNamePrefix?: string;
+  /*
+   * the list is the one of the workspace the person works in (portfolio or Aldaron): the workspace
+   * is sent with every read, and is part of the remembered query so switching it reloads the rows
+   */
+  isWorkspaceScoped?: boolean;
 }
 
 /**
@@ -81,8 +89,13 @@ export interface ICrudThunksConfig<TEntity extends IEntityWithId> {
 export const createCrudThunks = <TEntity extends IEntityWithId>(config: ICrudThunksConfig<TEntity>) => {
   const {
     collection, queryCollection = collection, listCloudFunction, getOne, slice, recycleBinField = 'deleted',
-    deletedMessage, hasNoRightToDeleteMessage, getExportColumns, exportFileNamePrefix,
+    deletedMessage, hasNoRightToDeleteMessage, getExportColumns, exportFileNamePrefix, isWorkspaceScoped,
   } = config;
+
+  // the workspace a scoped list is read for, none for a list that belongs to no workspace
+  const getWorkspaceQuery = (getState?: () => RootState): { workspace?: TargetEnum } => (
+    isWorkspaceScoped ? { workspace: getSettingsWorkspaceSelector(getState?.()!) } : {}
+  );
 
   const loadList = (queries: IQueriesInput): AppThunkAction => {
     const {
@@ -94,14 +107,15 @@ export const createCrudThunks = <TEntity extends IEntityWithId>(config: ICrudThu
       search,
     } = queries;
 
-    return actionWithLoader(async (dispatch: AppDispatch): Promise<void> => {
+    return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
+      const workspaceQuery = getWorkspaceQuery(getState);
       const result = await fetchEntityList<TEntity>(listCloudFunction, {
-        limit, skip, orderBy, order, filters, search,
+        limit, skip, orderBy, order, filters, search, ...workspaceQuery,
       });
 
       dispatch(slice.loadListSlice(result.results));
       dispatch(slice.setCountSlice(result.count));
-      rememberListQuery(slice.loadListSlice, queries);
+      rememberListQuery(slice.loadListSlice, { ...queries, ...workspaceQuery });
 
       /*
        * the strip above the list states every tab at once, including the one not being fetched
@@ -118,12 +132,14 @@ export const createCrudThunks = <TEntity extends IEntityWithId>(config: ICrudThu
    * shape (currentPage/rowsPerPage/orderBy/order) on every list page in the BO
    */
   const onListEnter = (route?: any): AppThunkAction => {
-    return onEnterActionWithLoader((dispatch: AppDispatch): any => {
+    return onEnterActionWithLoader((dispatch: AppDispatch, getState?: () => RootState): any => {
       const values: Record<string, any> = {
         skip: DEFAULT_PAGINATION.currentPage,
         limit: DEFAULT_PAGINATION.rowsPerPage,
         orderBy: DEFAULT_PAGINATION.orderBy,
         order: DEFAULT_PAGINATION.order,
+        // part of the query, so rows loaded for the other workspace are not kept on screen
+        ...getWorkspaceQuery(getState),
       };
 
       const filters: Record<string, boolean | string> = { [recycleBinField]: false };
@@ -233,7 +249,7 @@ export const createCrudThunks = <TEntity extends IEntityWithId>(config: ICrudThu
       const { ids, ...listQueries } = queries;
 
       const result = await fetchEntityListForExport<TEntity>(
-        listCloudFunction, listQueries, EXPORT_MAX_ROWS
+        listCloudFunction, { ...listQueries, ...getWorkspaceQuery(getState) }, EXPORT_MAX_ROWS
       );
 
       const rows = ids?.length

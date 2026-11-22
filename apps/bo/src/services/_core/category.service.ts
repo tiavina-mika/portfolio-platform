@@ -1,5 +1,6 @@
-import { CategoryEntityEnum } from '@shared/types';
 import Parse from 'parse';
+
+import type { TargetEnum } from '@shared/types';
 
 import { locales } from '@/config/i18n';
 import { CATEGORY_TREE_QUERY_LIMIT, TARGET_FIELDS } from '@/constants/_core/cms.constants';
@@ -7,7 +8,9 @@ import {
   ICategory, ICategoryTypeEntity,
 } from '@/types/_core/category.type';
 import { Locale } from '@/types/_core/setting.type';
-import { convertIdToPointer, setValues, toJSONWithId } from '@/utils/_core/parse.utils';
+import {
+  contentTargetQuery, convertIdToPointer, setValues, toJSONWithId,
+} from '@/utils/_core/parse.utils';
 import { getTranslatedField } from '@/utils/_core/settings.utils';
 import { escapeText } from '@/utils/_core/utils';
 
@@ -45,7 +48,8 @@ export type ISearchCategoriesOptions = {
  */
 export const searchCategories = async (
   search: string,
-  entity: ICategoryTypeEntity = CategoryEntityEnum.ARTICLE,
+  entity: ICategoryTypeEntity,
+  workspace: TargetEnum,
   options: ISearchCategoriesOptions = {}
 ): Promise<ICategory[]> => {
   let query = new Parse.Query(Category);
@@ -65,7 +69,8 @@ export const searchCategories = async (
     query = Parse.Query.or(...or);
   }
 
-  query
+  // only the categories of the workspace the person works in
+  query = contentTargetQuery(query, workspace)
     .equalTo('deleted', false)
     .equalTo('active', true)
     .equalTo('entity', entity);
@@ -94,9 +99,10 @@ export const searchCategories = async (
 
 export const fetchCategoryOptions = async (
   entity: ICategoryTypeEntity,
-  locale: Locale
+  locale: Locale,
+  workspace: TargetEnum
 ): Promise<{ value: string; label: string }[]> => {
-  const categories = await new Parse.Query(Category)
+  const categories = await contentTargetQuery(new Parse.Query(Category), workspace)
     .equalTo('deleted', false)
     .equalTo('active', true)
     .equalTo('entity', entity)
@@ -114,8 +120,11 @@ export const fetchCategoryOptions = async (
  * every active category of an entity with just what placing a record in the tree needs: its names
  * and its parent. The levels are derived from `parentCategory` by the caller.
  */
-export const fetchCategoryTree = async (entity: ICategoryTypeEntity): Promise<ICategory[]> => {
-  const categories = await new Parse.Query(Category)
+export const fetchCategoryTree = async (
+  entity: ICategoryTypeEntity,
+  workspace: TargetEnum
+): Promise<ICategory[]> => {
+  const categories = await contentTargetQuery(new Parse.Query(Category), workspace)
     .equalTo('deleted', false)
     .equalTo('active', true)
     .equalTo('entity', entity)

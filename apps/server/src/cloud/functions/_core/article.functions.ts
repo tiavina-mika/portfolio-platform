@@ -1,5 +1,6 @@
 import { collections, USE_MASTER_KEY } from '@/constants/_core/constants';
 import { scopeCountries } from '@/utils/_core/agent-context.utils';
+import { isInWorkspaces } from '@/utils/_core/rights.utils';
 import { escapeText, isBoolean } from '@/utils/_core/utils';
 import {
   articleForClientSchema, getArticlesSchema, getArticleSchema, incrementArticleViewCountSchema,
@@ -12,6 +13,7 @@ import {
   filtersDatesQuery,
   multiBooleanQuery,
 } from '../../utils/_core/parse.utils.cloud';
+import { getUserWorkspaces, resolveWorkspace } from '../../utils/_core/role.utils.cloud';
 import { fromBO, parseFunction } from '../../utils/_core/utils.cloud';
 import { parseFunctionValidation } from '../../utils/_core/validation.utils.cloud';
 
@@ -94,6 +96,11 @@ Parse.Cloud.define(
 
     if (countries) contentCountriesQuery(query, countries);
 
+    // the workspace the editor works in, if their roles open it: Aldaron content is never listed to others
+    const workspace = await resolveWorkspace(request.user, request.params.workspace, request.params.locale);
+
+    query = contentTargetQuery(query, workspace);
+
     query.limit(+limit)
       .skip(+skip)
       .equalTo('deleted', false)
@@ -149,6 +156,9 @@ Parse.Cloud.define(
 
     // false instead of undefined or null to avoid client serialization issues (the client return "ok" even if the page is not found)
     if (!article) return false;
+
+    // content kept for Aldaron alone does not exist for an account that cannot work in Aldaron
+    if (!isInWorkspaces(article.get('targets'), await getUserWorkspaces(request.user))) return false;
 
     return article;
   }, ['get'], collections.Article),

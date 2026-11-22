@@ -1,5 +1,7 @@
 import Parse from 'parse';
 
+import type { TargetEnum } from '@shared/types';
+
 import { locales } from '@/config/i18n';
 import { IListTabCounts } from '@/types/_core/app.type';
 import { toJSONWithId } from '@/utils/_core/parse.utils';
@@ -7,7 +9,7 @@ import { toJSONWithId } from '@/utils/_core/parse.utils';
 export const fetchEntityList = async <TEntity extends { id: string }>(
   listCloudFunction: string,
   {
-    limit, skip, orderBy, order, filters, search, include,
+    limit, skip, orderBy, order, filters, search, include, workspace,
   }: {
     limit: number;
     skip: number;
@@ -17,10 +19,12 @@ export const fetchEntityList = async <TEntity extends { id: string }>(
     search?: Record<string, any>;
     // the pointers to read along with each row, for a list endpoint that accepts them
     include?: string[];
+    // the workspace whose rows are listed, for a list endpoint that is scoped to one
+    workspace?: TargetEnum;
   }
 ): Promise<{ results: TEntity[]; count: number; tabCounts?: IListTabCounts }> => {
   const result: Record<string, any> = await Parse.Cloud.run(listCloudFunction, {
-    limit, skip, orderBy, order, filters, search, include, locales,
+    limit, skip, orderBy, order, filters, search, include, workspace, locales,
   });
 
   return {

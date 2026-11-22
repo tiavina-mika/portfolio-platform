@@ -376,6 +376,8 @@
   "appearance": "Endrika",
   "appearanceDescription": "Ovao ny lokon'ny endriky ny rafitra",
   "languageDescription": "Safidio ny fiteny ampiasaina amin'ny back-office",
+  "workspace": "Toerana iasana",
+  "workspaceDescription": "Safidio ny toerana iasanao: manaraka ny safidinao ny logo, ny menio ary ny lisitra",
   "themeMode": "Modely",
   "sidebarStyle": "Endriky ny menu ivelany",
   "sidebarStyleDark": "Manga maizina",

@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import {
   paginationQuerySchema, dateRangeFieldSchema, includeFieldSchema, localesFieldSchema, objectIdFieldSchema,
-  countryCodeFieldSchema,
+  countryCodeFieldSchema, workspaceFieldSchema,
 } from './util.validations';
 
 export const articleForClientSchema = z.object({
@@ -47,6 +47,7 @@ export const getArticlesSchema = paginationQuerySchema.extend({
   search: articlesSearchSchema,
   locales: localesFieldSchema,
   include: includeFieldSchema,
+  workspace: workspaceFieldSchema,
 });
 
 export const getArticleSchema = z.object({

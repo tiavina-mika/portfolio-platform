@@ -26,7 +26,9 @@ import {
   setPagesCountSlice,
   setPageTabCountsSlice,
 } from '@/redux/reducers/_core/page.reducer';
-import { getSettingsLocaleSelector } from '@/redux/reducers/_core/settings.reducer';
+import {
+  getSettingsLocaleSelector, getSettingsWorkspaceSelector,
+} from '@/redux/reducers/_core/settings.reducer';
 import { AppDispatch, AppThunkAction, RootState } from '@/redux/store';
 import { fetchCurrentUserSessionToken } from '@/services/_core/auth.service';
 import {
@@ -119,14 +121,16 @@ export const loadPages = (queries: IQueriesInput): any => {
     include = ['categories', 'user'],
   } = queries;
 
-  return actionWithLoader(async (dispatch: AppDispatch): Promise<void> => {
+  return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
+    // the list is the one of the workspace the person works in
+    const workspace = getSettingsWorkspaceSelector(getState?.()!);
     const result = await fetchPages({
-      limit, skip, orderBy, order, filters, search, include,
+      limit, skip, orderBy, order, filters, search, include, workspace,
     });
 
     dispatch(loadPagesSlice(result.results));
     dispatch(setPagesCountSlice(result.count));
-    rememberListQuery(loadPagesSlice, queries);
+    rememberListQuery(loadPagesSlice, { ...queries, workspace });
     // the strip above the list states both tabs at once, including the one not being fetched here
     dispatch(setPageTabCountsSlice(result.tabCounts));
   });
@@ -141,7 +145,8 @@ export const exportPages = (queries: IQueriesInput, format: ExportFormat): any =
   return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
     const locale = getSettingsLocaleSelector(getState?.()!);
 
-    const result = await fetchPagesForExport(queries, EXPORT_MAX_ROWS);
+    const workspace = getSettingsWorkspaceSelector(getState?.()!);
+    const result = await fetchPagesForExport({ ...queries, workspace }, EXPORT_MAX_ROWS);
 
     await exportRows(result.results, getPageExportColumns(locale), 'pages', format);
 
@@ -302,12 +307,14 @@ export const togglePageActive = (id: string, value: boolean): any => {
  * @returns
  */
 export const onPagesEnter = (route: any): any => {
-  return onEnterActionWithLoader((dispatch: AppDispatch): any => {
+  return onEnterActionWithLoader((dispatch: AppDispatch, getState?: () => RootState): any => {
     const values: Record<string, any> = {
       skip: DEFAULT_PAGINATION.currentPage,
       limit: DEFAULT_PAGINATION.rowsPerPage,
       orderBy: DEFAULT_PAGINATION.orderBy,
       order: DEFAULT_PAGINATION.order,
+      // part of the query, so rows loaded for the other workspace are not kept on screen
+      workspace: getSettingsWorkspaceSelector(getState?.()!),
     };
 
     const filters: Record<string, boolean | string> = { deleted: false };

@@ -1,4 +1,5 @@
 import { collections, USE_MASTER_KEY } from '@/constants/_core/constants';
+import { isInWorkspaces } from '@/utils/_core/rights.utils';
 import { escapeText, isBoolean } from '@/utils/_core/utils';
 import { getCategoriesSchema, getCategorySchema } from '@/validations/_core/category.validations';
 
@@ -7,7 +8,10 @@ import {
 } from '../../services/_core/category-list.service.cloud';
 import { searchUserPointerQuery } from '../../services/_core/user.service.cloud';
 import { Category } from '../../triggers/_core/category.triggers';
-import { convertIdToPointer, filtersDatesQuery, multiBooleanQuery } from '../../utils/_core/parse.utils.cloud';
+import {
+  contentTargetQuery, convertIdToPointer, filtersDatesQuery, multiBooleanQuery,
+} from '../../utils/_core/parse.utils.cloud';
+import { getUserWorkspaces, resolveWorkspace } from '../../utils/_core/role.utils.cloud';
 import { fromBO } from '../../utils/_core/utils.cloud';
 import { parseFunctionValidation } from '../../utils/_core/validation.utils.cloud';
 
@@ -111,6 +115,11 @@ Parse.Cloud.define(
       multiBooleanQuery(query, search.active, 'active');
     }
 
+    // the workspace the editor works in, if their roles open it: Aldaron content is never listed to others
+    const workspace = await resolveWorkspace(request.user, request.params.workspace, request.params.locale);
+
+    query = contentTargetQuery(query, workspace);
+
     query
       /*
        * `image` is not drawn in any column, but the edit dialog opens on the row the list already
@@ -157,7 +166,7 @@ Parse.Cloud.define(
      * how many categories each tab of the list holds — the count of the tab the reader is not on
      * cannot be derived from the rows just fetched, and the strip states both at once
      */
-    result.tabCounts = await getCategoryTabCounts();
+    result.tabCounts = await getCategoryTabCounts(workspace);
 
     return result;
   }, ['find'], collections.Category),
@@ -176,6 +185,9 @@ Parse.Cloud.define(
 
     // false instead of undefined or null to avoid client serialization issues (the client return "ok" even if the page is not found)
     if (!category) return false;
+
+    // content kept for Aldaron alone does not exist for an account that cannot work in Aldaron
+    if (!isInWorkspaces(category.get('targets'), await getUserWorkspaces(request.user))) return false;
 
     return category;
   }, ['get'], collections.Category),

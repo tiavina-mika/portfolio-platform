@@ -1,6 +1,8 @@
 import { PROJECT_SINGLE_IMAGE_FIELDS } from '@shared/validations';
 import Parse from 'parse';
 
+import type { TargetEnum } from '@shared/types';
+
 import { locales } from '@/config/i18n';
 import { PROJECT_COLLECTION, PROJECT_PROPERTIES } from '@/constants/_domain/project.constants';
 import { Locale } from '@/types/_core/setting.type';
@@ -22,7 +24,7 @@ export const fetchProject = async (id: string, include: string[] = []): Promise<
 };
 
 export const fetchProjects = async ({
-  limit, skip, orderBy, order, filters, search, include = [],
+  limit, skip, orderBy, order, filters, search, include = [], workspace,
 }: {
   limit: number;
   skip: number;
@@ -31,10 +33,12 @@ export const fetchProjects = async ({
   filters?: Record<string, any>;
   search?: Record<string, any>;
   include?: string[];
+  // the workspace whose projects are listed
+  workspace: TargetEnum;
 }): Promise<{ results: IProject[]; count: number }> => {
   // result with count, made server side because the list also carries the author of each project
   const result: Record<string, any> = await Parse.Cloud.run('getProjects', {
-    limit, skip, orderBy, order, filters, search, locales, include,
+    limit, skip, orderBy, order, filters, search, locales, include, workspace,
   });
 
   return {

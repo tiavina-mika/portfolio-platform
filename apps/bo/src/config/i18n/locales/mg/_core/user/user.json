@@ -244,6 +244,8 @@
     "uiDescription": "Menus inona no hitan'ny mpampiasa ny back-office",
     "countries": "Firenena",
     "countriesHelper": "Ireo firenena azon'ity toerana ity iasana. Avelao banga raha ho an'ny firenena rehetra. Ny mpikambana manana toerana maromaro dia afaka miasa amin'ny firenena rehetra misy ao amin'ny toerana ao aminy.",
+    "workspaces": "Toerana iasana",
+    "workspacesHelper": "Ireo toerana iasana azon'ity toerana ity iasana (portfolio, Aldaron). Ny mpikambana manana toerana maromaro dia afaka miasa amin'ny toerana iasana rehetra misy ao amin'ny toerana ao aminy.",
     "sessionTimeout": "Fe-potoana fivoahana ho azy (ora)",
     "sessionTimeoutHelper": "Eo anelanelan'ny {{min, number}} sy {{max, number}} ora, isaky ny {{step, number}} ora (15 minitra). Avelao foana raha hampiasa ny sanda mahazatra ({{default, number}} ora). Raha manana toerana maromaro ny mpampiasa, ny fe-potoana fohy indrindra no mihatra.",
     "resourceRights": "Zo mikasika ny données",

@@ -1,5 +1,6 @@
 import { collections, USE_MASTER_KEY } from '@/constants/_core/constants';
 import { scopeCountries } from '@/utils/_core/agent-context.utils';
+import { isInWorkspaces } from '@/utils/_core/rights.utils';
 import { escapeText, isBoolean } from '@/utils/_core/utils';
 import {
   getPagesSchema, getPageSchema,
@@ -11,8 +12,10 @@ import {
 import { searchUserPointerQuery } from '../../services/_core/user.service.cloud';
 import { Page } from '../../triggers/_core/page.triggers';
 import {
-  contentCountriesQuery, convertIdToPointer, convertIdsToPointer, filtersDatesQuery, multiBooleanQuery,
+  contentCountriesQuery, contentTargetQuery, convertIdToPointer, convertIdsToPointer, filtersDatesQuery,
+  multiBooleanQuery,
 } from '../../utils/_core/parse.utils.cloud';
+import { getUserWorkspaces, resolveWorkspace } from '../../utils/_core/role.utils.cloud';
 import { fromBO } from '../../utils/_core/utils.cloud';
 import { parseFunctionValidation } from '../../utils/_core/validation.utils.cloud';
 
@@ -121,6 +124,11 @@ Parse.Cloud.define(
 
     if (countries) contentCountriesQuery(query, countries);
 
+    // the workspace the editor works in, if their roles open it: Aldaron content is never listed to others
+    const workspace = await resolveWorkspace(request.user, request.params.workspace, request.params.locale);
+
+    query = contentTargetQuery(query, workspace);
+
     query
       .select(['translated', 'code', 'country', 'updatedBy', 'active', 'deleted', ...include])
       .limit(+limit)
@@ -165,7 +173,7 @@ Parse.Cloud.define(
      * how many pages each tab of the list holds — the count of the tab the reader is not on cannot
      * be derived from the rows just fetched, and the strip states both at once
      */
-    result.tabCounts = await getPageTabCounts();
+    result.tabCounts = await getPageTabCounts(workspace);
 
     return result;
   }, ['find'], collections.Page),
@@ -184,6 +192,9 @@ Parse.Cloud.define(
 
     // false instead of undefined or null to avoid client serialization issues (the client return "ok" even if the page is not found)
     if (!page) return false;
+
+    // content kept for Aldaron alone does not exist for an account that cannot work in Aldaron
+    if (!isInWorkspaces(page.get('targets'), await getUserWorkspaces(request.user))) return false;
 
     return page;
   }, ['get'], collections.Page),

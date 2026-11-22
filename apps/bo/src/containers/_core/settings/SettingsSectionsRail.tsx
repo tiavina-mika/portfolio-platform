@@ -4,7 +4,7 @@ import {
 import { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  FiFileText, FiGlobe, FiImage, FiPaperclip, FiSun,
+  FiFileText, FiGlobe, FiGrid, FiImage, FiPaperclip, FiSun,
 } from 'react-icons/fi';
 
 import type { ReactElement } from 'react';
@@ -15,7 +15,9 @@ import {
   SETTINGS_RAIL_ITEM_HEIGHT, SETTINGS_RAIL_ITEM_PADDING_X, SETTINGS_RAIL_PADDING,
 } from '@/constants/_core/ui/entity.constants';
 import { RADIUS } from '@/constants/_core/ui/ui.constants';
+import { useWorkspace } from '@/hooks/_core/useWorkspace';
 import { SettingsSection, SettingsSectionEnum } from '@/types/_core/setting.type';
+import { isSettingsSectionVisible } from '@/utils/_core/settings.utils';
 import { getAccentTextColor } from '@/utils/_core/theme/styles.utils';
 import { getDesignTokens, getSoftTintedBackground } from '@/utils/_core/theme/tokens.utils';
 
@@ -47,6 +49,11 @@ const groups: SectionGroup[] = [
         value: SettingsSectionEnum.APPEARANCE,
         labelKey: 'appearance',
         icon: <FiSun size={SETTINGS_RAIL_ICON_SIZE} />,
+      },
+      {
+        value: SettingsSectionEnum.WORKSPACE,
+        labelKey: 'workspace',
+        icon: <FiGrid size={SETTINGS_RAIL_ICON_SIZE} />,
       },
     ],
   },
@@ -145,10 +152,23 @@ const SettingsSectionsRail = ({
   const {
     t,
   } = useTranslation();
+  const {
+    workspace, canSwitch,
+  } = useWorkspace();
+
+  // a group left with no section does not keep its heading
+  const visibleGroups = groups
+    .map((group: SectionGroup) => ({
+      ...group,
+      sections: group.sections.filter(
+        (item: SectionItem) => isSettingsSectionVisible(item.value, workspace, canSwitch)
+      ),
+    }))
+    .filter((group: SectionGroup) => group.sections.length > 0);
 
   return (
     <Card className={className} css={classes.card}>
-      {groups.map((group: SectionGroup, groupIndex: number) => (
+      {visibleGroups.map((group: SectionGroup, groupIndex: number) => (
         <Fragment key={group.labelKey}>
           <Box css={classes.group(groupIndex === 0)}>
             <Typography variant="overline">{t(group.labelKey)}</Typography>

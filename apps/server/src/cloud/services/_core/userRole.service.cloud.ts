@@ -97,7 +97,7 @@ export const getRolesForUser = async (user?: User): Promise<Role[] | null> => {
   const query = new Parse.Query(Parse.Role);
 
   query.equalTo('users', user);
-  query.select(['name', 'rights', 'ui', 'sessionTimeoutMinutes', 'countries']);
+  query.select(['name', 'rights', 'ui', 'sessionTimeoutMinutes', 'countries', 'workspaces']);
   const roles = await query.find(USE_MASTER_KEY);
 
   return roles;
@@ -281,12 +281,13 @@ export const warnIfTooFewOwners = async (): Promise<void> => {
   );
 };
 
-const ROLE_GRANTS_FIELDS = ['name', 'rights', 'ui', 'countries'];
+const ROLE_GRANTS_FIELDS = ['name', 'rights', 'ui', 'countries', 'workspaces'];
 
-const toRoleGrants = (role: Role): RoleGrants => ({
+export const toRoleGrants = (role: Role): RoleGrants => ({
   rights: role.get('rights'),
   ui: role.get('ui'),
   countries: role.get('countries'),
+  workspaces: role.get('workspaces'),
 });
 
 type RoleAncestry = {

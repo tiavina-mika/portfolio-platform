@@ -1,6 +1,8 @@
 import { PAGE_IMAGES_FIELDS } from '@shared/validations';
 import Parse from 'parse';
 
+import type { TargetEnum } from '@shared/types';
+
 import { locales } from '@/config/i18n';
 import { ALL_TAB_COUNT_KEY } from '@/constants/_core/app.constants';
 import { ALL_PAGE_FIELDS, PAGE_SECTIONS_BY_PAGE_LIMIT, TARGET_FIELDS } from '@/constants/_core/cms.constants';
@@ -35,7 +37,7 @@ const toParsePage = (page: IPage): Parse.Object =>
   Parse.Object.fromJSON({ ...page, className: collection });
 
 export const fetchPages = async ({
-  limit, skip, orderBy, order, filters, search, include,
+  limit, skip, orderBy, order, filters, search, include, workspace,
 }: {
   limit: number;
   skip: number;
@@ -44,13 +46,15 @@ export const fetchPages = async ({
   filters?: Record<string, any>;
   search?: Record<string, any>;
   include: string[];
+  // the workspace whose pages are listed
+  workspace: TargetEnum;
 }): Promise<{ results: IPage[]; count: number; tabCounts: IListTabCounts }> => {
   /*
    * result with count
    * we make it server side because we need to get user infos
    */
   const result: Record<string, any> = await Parse.Cloud.run('getPages', {
-    limit, skip, orderBy, order, filters, search, locales, include,
+    limit, skip, orderBy, order, filters, search, locales, include, workspace,
   });
 
   return {

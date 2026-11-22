@@ -1,7 +1,9 @@
+import { TargetEnum } from '@shared/types';
 import {
-  any, array, coerce, object, preprocess, string,
+  any, array, coerce, enum as zEnum, object, preprocess, string,
 } from 'zod';
 
+import i18n from '@/config/i18n';
 import { ROLE_SESSION_TIMEOUT_MAX_HOURS, ROLE_SESSION_TIMEOUT_MIN_HOURS } from '@/constants/_core/auth.constants';
 import { roleTranslatedFieldsObj } from '@/constants/_core/user.constants';
 import { generateTranslatedFieldsInputSchema, getTranslatedFieldsCodec } from '@/validations/_core/zodSchema.validations';
@@ -29,6 +31,10 @@ export const roleSchema = object({
   children: array(string()),
   ui: array(string()).optional(),
   countries: array(string()).optional(),
+  // a role opens at least one workspace, or it would let its holders sign in and work nowhere
+  workspaces: array(zEnum(TargetEnum))
+    .min(1, i18n.t('form.error.required', { field: i18n.t('user:role.workspaces') }))
+    .optional(),
   rights: array(any()),
   sessionTimeoutHours: sessionTimeoutHoursSchema,
   ...translatedRoleFormFieldsSchema.shape,

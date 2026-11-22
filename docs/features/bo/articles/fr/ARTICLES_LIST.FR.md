@@ -120,3 +120,4 @@ création (voir la page « Articles (Ajout et modification) »).
   **Rechercher titre, contenu**.
 - La liste peut être exportée (bouton **Exporter** : fichier CSV ou Excel, pour la page affichée ou la
   sélection).
+- Quand la personne travaille dans l'espace **Aldaron** (voir [Paramètres](../../settings/fr/SETTINGS.FR.md)), la liste ne montre que les articles d'Aldaron ; dans le portfolio, celles du portfolio. Une personne dont les postes n'ouvrent pas Aldaron ne voit jamais celles réservées à Aldaron.

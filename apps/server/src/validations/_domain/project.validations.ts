@@ -3,6 +3,7 @@ import { z } from 'zod';
 
 import {
   paginationQuerySchema, dateRangeFieldSchema, includeFieldSchema, localesFieldSchema, objectIdFieldSchema,
+  workspaceFieldSchema,
 } from '../_core/util.validations';
 
 export const projectForClientSchema = z.object({
@@ -39,6 +40,7 @@ export const getProjectsSchema = paginationQuerySchema.extend({
   search: projectsSearchSchema,
   locales: localesFieldSchema,
   include: includeFieldSchema,
+  workspace: workspaceFieldSchema,
 });
 
 export const getProjectSchema = z.object({

@@ -1,18 +1,19 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DEFAULT_COUNTRY_CODE } from '@shared/constants';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import JsonUploadButton from '@/components/JsonUploadButton';
 import {
-  ARTICLE_WEBSITE_BASE_PATH, ARTICLE_FORM_SECTIONS, creationUploadedFieldsToIgnore, DEFAULT_TARGETS,
+  ARTICLE_WEBSITE_BASE_PATH, ARTICLE_FORM_SECTIONS, creationUploadedFieldsToIgnore,
 } from '@/constants/_core/cms.constants';
 import CmsSeoPreview from '@/containers/_core/cms/CmsSeoPreview';
 import CmsFormRenderedPreview from '@/containers/_core/cms/form/CmsFormRenderedPreview';
 import CmsFormSeoSection from '@/containers/_core/cms/form/CmsFormSeoSection';
 import CmsFormWorkbench from '@/containers/_core/cms/form/CmsFormWorkbench';
+import { useWorkspace } from '@/hooks/_core/useWorkspace';
 import { getSettingsLocaleSelector } from '@/redux/reducers/_core/settings.reducer';
 import { IArticle, IArticleInput } from '@/types/_core/article.type';
 import { CmsFormSectionEnum } from '@/types/_core/cms.type';
@@ -28,14 +29,6 @@ import ArticleFormSettingsSection from './ArticleFormSettingsSection';
 import ArticleFormSummary from './ArticleFormSummary';
 
 const ARTICLE_FORM_ID = 'article-form-id';
-
-const initialValues = {
-  active: true,
-  hasTableOfContents: false,
-  country: DEFAULT_COUNTRY_CODE,
-  categories: [],
-  targets: DEFAULT_TARGETS,
-};
 
 type Props = {
   onSubmit: (values: IArticleInput) => void;
@@ -59,6 +52,16 @@ const ArticleForm = ({
     t,
   } = useTranslation(['common', 'cms']);
   const locale = useSelector(getSettingsLocaleSelector);
+  const { workspace } = useWorkspace();
+
+  // a new article is published on the website of the workspace it is created in
+  const initialValues = useMemo(() => ({
+    active: true,
+    hasTableOfContents: false,
+    country: DEFAULT_COUNTRY_CODE,
+    categories: [],
+    targets: [workspace],
+  }), [workspace]);
 
   const [uploadedJsonValues, setUploadedJsonValues] = useState<Partial<IArticleInput>>({});
   const [isInitializing, setIsInitializing] = useState(true);
@@ -94,7 +97,7 @@ const ArticleForm = ({
     return () => {
       isCancelled = true;
     };
-  }, [article, reset, locale, uploadedJsonValues]);
+  }, [article, reset, locale, initialValues, uploadedJsonValues]);
 
   const handleJsonUploadSuccess = (data: Partial<IArticleInput>) => {
     setUploadedJsonValues(data);

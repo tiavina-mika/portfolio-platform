@@ -13,7 +13,7 @@ import Dialog from '@/components/Dialog';
 import Logo from '@/components/Logo';
 import PageContentSkeleton from '@/components/PageContentSkeleton';
 import ScreenSizeIndicator from '@/components/ScreenSizeIndicator';
-import { DOWNLOAD_ALERTS_LIMIT, IMAGES } from '@/constants/_core/app.constants';
+import { DOWNLOAD_ALERTS_LIMIT } from '@/constants/_core/app.constants';
 import {
   CONTENT_GAP, CONTENT_PADDING_BOTTOM, CONTENT_PADDING_TOP, CONTENT_PADDING_X,
   CONTENT_PADDING_X_MOBILE,
@@ -21,9 +21,11 @@ import {
 import {
   RADIUS_SM, RESPONSIVE_BREAKPOINT, SIDEBAR_RAIL_WIDTH, SIDEBAR_WIDTH,
 } from '@/constants/_core/ui/ui.constants';
+import { WORKSPACES } from '@/constants/_core/workspace.constants';
 import MfaRequiredBanner from '@/containers/_core/auth/MfaRequiredBanner';
 import { useInactivityLogout } from '@/hooks/_core/useInactivityLogout';
 import { useRefreshRolesOnFocus } from '@/hooks/_core/useRefreshRolesOnFocus';
+import { useWorkspace } from '@/hooks/_core/useWorkspace';
 import { useNotificationCountsLiveQuery } from '@/hooks/useNotificationCountsLiveQuery';
 import SnackBars from '@/pages/_core/SnackBars';
 import { getAppCurrentUserSelector } from '@/redux/reducers/_core/app.reducer';
@@ -171,6 +173,9 @@ const DashboardLayout = () => {
   const themeMode = useSelector(getSettingsThemeSelector);
   const themeColor = useSelector(getSettingsThemeColorSelector);
   const sidebarStyle = useSelector(getSettingsSidebarStyleSelector);
+  // the brand the sidebar wears follows the workspace the person works in
+  const { workspace } = useWorkspace();
+  const workspaceConfig = WORKSPACES[workspace];
   const dispatch = useDispatch();
   const {
     isWarningVisible, remainingSeconds, stayLoggedIn,
@@ -214,7 +219,11 @@ const DashboardLayout = () => {
             {isSideBarOpen
               ? (
                 <>
-                  <Logo variant={sidebarTokens.isLight ? 'auto' : 'white'} />
+                  <Logo
+                    images={workspaceConfig.logo}
+                    variant={sidebarTokens.isLight ? 'auto' : 'white'}
+                    width={workspaceConfig.logoWidth}
+                  />
                   {/* below `lg` the drawer becomes a full-screen overlay hiding the app bar's own
                       hamburger, so this is the only way to close it on mobile/tablet */}
                   <IconButton
@@ -241,8 +250,8 @@ const DashboardLayout = () => {
                     component="img"
                     sx={{ width: 24 }}
                     src={sidebarTokens.isLight
-                      ? IMAGES.blackIconLogo
-                      : IMAGES.whiteIconLogo}
+                      ? workspaceConfig.icon.black
+                      : workspaceConfig.icon.white}
                   />
                 </Box>
               )}

@@ -1,8 +1,9 @@
 import {
   COUNTRIES, ROLE_SESSION_TIMEOUT_MAX_MINUTES, ROLE_SESSION_TIMEOUT_MIN_MINUTES,
 } from '@shared/constants';
+import { TargetEnum } from '@shared/types';
 import {
-  string, object, array, boolean, partialRecord, number,
+  string, object, array, boolean, partialRecord, number, z,
 } from 'zod';
 
 import { collections } from '@/constants/_core/constants';
@@ -80,6 +81,15 @@ const roleCountriesSchema = array(
   string().refine((code) => code in COUNTRIES)
 ).max(Object.keys(COUNTRIES).length).optional();
 
+/*
+ * the workspaces a role opens. At least one: a role opening none would be a role that can sign in and
+ * work nowhere. `undefined` leaves whatever is already stored untouched
+ */
+const roleWorkspacesSchema = array(z.enum(TargetEnum))
+  .min(1)
+  .max(Object.keys(TargetEnum).length)
+  .optional();
+
 // applied at creation only: roles created before this format was enforced keep their name
 const roleNameSchema = string().regex(ROLE_NAME_PATTERN).max(ROLE_NAME_MAX_LENGTH);
 
@@ -91,6 +101,7 @@ export const createRoleSchema = object({
   translated: roleTranslatedSchema,
   sessionTimeoutMinutes: sessionTimeoutMinutesSchema,
   countries: roleCountriesSchema,
+  workspaces: roleWorkspacesSchema,
 });
 
 export const updateRoleSchema = object({
@@ -101,7 +112,11 @@ export const updateRoleSchema = object({
   translated: roleTranslatedSchema,
   sessionTimeoutMinutes: sessionTimeoutMinutesSchema,
   countries: roleCountriesSchema,
+  workspaces: roleWorkspacesSchema,
 });
+
+// the workspaces of the signed-in account take no parameter: they come from the session alone
+export const getCurrentUserWorkspacesSchema = object({});
 
 // the review of the highest-role accounts takes no filter: there are only a handful of them
 export const getHighestRoleAccountsSchema = object({});

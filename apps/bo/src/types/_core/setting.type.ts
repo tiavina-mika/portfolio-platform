@@ -1,6 +1,7 @@
 import { PaletteColorOptions, PaletteMode } from '@mui/material';
 
 import type { LanguageCode } from '@shared/constants';
+import type { TargetEnum } from '@shared/types';
 
 
 export type Locale = LanguageCode | '';
@@ -35,6 +36,11 @@ export interface ISettingState {
    */
   moneyCountry?: string;
   isAuthenticated?: boolean;
+  /**
+   * The workspace the signed-in person works in — a local preference like the theme, never stored on
+   * the server. Optional: a state saved before it existed has none and is read as the portfolio.
+   */
+  workspace?: TargetEnum;
   theme: PaletteMode;
   themeColor: string;
   isSideBarOpen: boolean;
@@ -62,14 +68,32 @@ export interface IThemeColors {
   colors: PaletteColorOptions;
 }
 
+/**
+ * What a workspace changes in the back-office: the brand the sidebar wears and the settings sections
+ * that make no sense in it. The one place to edit to add a workspace or hide a section.
+ */
+export interface IWorkspaceConfig {
+  /** the translation key of the workspace's name */
+  labelKey: string;
+  /** the logo of the open sidebar: for a light surface, and for a dark one */
+  logo: { default: string; white: string };
+  /** how wide that logo is drawn in the sidebar, in px */
+  logoWidth: number;
+  /** the symbol of the collapsed sidebar: for a light surface, and for a dark one */
+  icon: { black: string; white: string };
+  /** the settings sections hidden while working in this workspace */
+  hiddenSettingsSections: SettingsSection[];
+}
+
 /*
- * the sections the settings page is read as, in the order the rail lists them. The first two change
- * how the back-office looks for the person signed in; the last three edit what the public website
- * shows, so only those three are backed by a form that has to be saved.
+ * the sections the settings page is read as, in the order the rail lists them. The first three change
+ * how the back-office looks or what it shows for the person signed in; the last three edit what the
+ * public website shows, so only those three are backed by a form that has to be saved.
  */
 export enum SettingsSectionEnum {
   LANGUAGES = 'languages', // default
   APPEARANCE = 'appearance',
+  WORKSPACE = 'workspace',
   DETAILS = 'details',
   IMAGES = 'images',
   CV = 'cv'

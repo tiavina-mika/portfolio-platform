@@ -24,8 +24,8 @@ est `/postes`.
 ## À quoi sert cette page
 
 Un poste regroupe ce qu'une personne a le droit de faire dans le back-office : quelles rubriques elle peut
-lire, créer, modifier ou supprimer, quels menus elle voit, combien de temps sa session reste ouverte et pour
-quels pays. On attribue ensuite un ou plusieurs postes à chaque compte depuis sa fiche.
+lire, créer, modifier ou supprimer, quels menus elle voit, combien de temps sa session reste ouverte, pour
+quels pays et dans quels espaces de travail (portfolio, Aldaron). On attribue ensuite un ou plusieurs postes à chaque compte depuis sa fiche.
 
 Deux postes sont réservés au sommet : **Owner** (propriétaire) et **Super Admin**. Ils ont tous les droits
 partout, n'apparaissent pas dans la liste modifiable et ne se règlent pas ici. Trois postes de départ
@@ -66,6 +66,8 @@ Le formulaire s'ouvre en plein écran (« Ajouter un nouveau poste »), en deux 
   - les **menus** visibles (Divers : migrations, cron, tests ; diffusion ;
     impersonation ; gestion du personnel) ;
   - la **durée d'inactivité** avant déconnexion automatique (de 15 minutes à 8 heures) ;
+  - les **espaces de travail** ouverts : portfolio, Aldaron, ou les deux (au moins un ; le portfolio est coché
+    par défaut) ;
   - les **pays** couverts (aucun pays choisi = tous) ;
   - les **droits par ressource** : pour chaque rubrique (utilisateurs, postes, articles, pages, projets,
     catégories, contacts, notifications…), des cases lister, consulter, créer,
@@ -121,6 +123,8 @@ quand). L'aperçu d'un poste montre aussi son propre historique.
 
 ## Points d'attention / limites actuelles
 
+- Un poste qui ouvre Aldaron ne peut être donné que par quelqu'un qui travaille lui-même dans Aldaron. Un poste
+  créé avant cette option n'ouvre que le portfolio.
 - Les droits sont appliqués par le serveur : masquer un menu ne protège pas une rubrique, c'est la coche du
   droit qui compte.
 - Une personne sans aucun poste est déconnectée dès qu'elle tente d'entrer.

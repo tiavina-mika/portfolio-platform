@@ -112,3 +112,4 @@ formulaire de création (voir la page « Projets (Ajout et modification) »).
   taper un mot de son titre, de sa description ou de son contenu.
 - Depuis la corbeille, **« Voir l'aperçu » peut afficher « introuvable »** : la fiche d'un projet supprimé
   n'est pas toujours accessible.
+- Quand la personne travaille dans l'espace **Aldaron** (voir [Paramètres](../../settings/fr/SETTINGS.FR.md)), la liste ne montre que les projets d'Aldaron ; dans le portfolio, celles du portfolio. Une personne dont les postes n'ouvrent pas Aldaron ne voit jamais celles réservées à Aldaron.

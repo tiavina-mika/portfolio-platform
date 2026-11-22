@@ -28,7 +28,7 @@ Les noms de classes du domaine sont dans `libs/shared-domain-constants` (`DOMAIN
 | `ImpersonationSession` | Sessions « se connecter en tant que » | server, bo |
 | `ContentVersion` | Historique des contenus du CMS (Page, Article…) | server, bo |
 | `_User` | Utilisateurs du back-office | server, bo |
-| `_Role` | Rôles et leurs champs `rights`, `ui` et `countries` | server, bo |
+| `_Role` | Rôles et leurs champs `rights`, `ui`, `countries` et `workspaces` | server, bo |
 | `_Session` | Sessions Parse | server |
 
 ## Index
