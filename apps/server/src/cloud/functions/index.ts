@@ -30,6 +30,7 @@ import './_core/userSession.functions';
 
 // _domain = business-domain functions (the portfolio projects)
 import './_domain/client.functions';
+import './_domain/mission.functions';
 import './_domain/project.functions';
 import './_domain/quote.functions';
 

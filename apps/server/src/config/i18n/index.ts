@@ -10,6 +10,9 @@ import commonMg from './locales/mg/_core/common.json' with { type: 'json' };
 import clientEn from './locales/en/_domain/client.json' with { type: 'json' };
 import clientFr from './locales/fr/_domain/client.json' with { type: 'json' };
 import clientMg from './locales/mg/_domain/client.json' with { type: 'json' };
+import missionEn from './locales/en/_domain/mission.json' with { type: 'json' };
+import missionFr from './locales/fr/_domain/mission.json' with { type: 'json' };
+import missionMg from './locales/mg/_domain/mission.json' with { type: 'json' };
 import quoteEn from './locales/en/_domain/quote.json' with { type: 'json' };
 import quoteFr from './locales/fr/_domain/quote.json' with { type: 'json' };
 import quoteMg from './locales/mg/_domain/quote.json' with { type: 'json' };
@@ -17,9 +20,9 @@ import type { Locale } from "@/types/app.type";
 
 // the domain's own messages sit under their own top-level key, so merging them never replaces a core one
 export const resources = {
-  en: { common: { ...commonEn, ...clientEn, ...quoteEn } },
-  fr: { common: { ...commonFr, ...clientFr, ...quoteFr } },
-  mg: { common: { ...commonMg, ...clientMg, ...quoteMg } },
+  en: { common: { ...commonEn, ...clientEn, ...quoteEn, ...missionEn } },
+  fr: { common: { ...commonFr, ...clientFr, ...quoteFr, ...missionFr } },
+  mg: { common: { ...commonMg, ...clientMg, ...quoteMg, ...missionMg } },
 };
 
 export const locales = Object.keys(resources);

@@ -7,6 +7,7 @@ import { capitalize } from 'string-ts';
 import {
   BellIcon,
   BriefcaseIcon,
+  ClipboardCheckIcon,
   CodeIcon,
   ColumnsIcon,
   DashboardIcon,
@@ -82,6 +83,14 @@ export const useNavigationMenus = (): ISidebarMenu[] => {
           onClick: () => navigate(goToList('quotes')),
           icon: <FileTextIcon size={ICON_SIZE} />,
           className: COLLECTIONS.quote,
+          hasRightName: 'canFind',
+        },
+        {
+          id: PATH_NAMES.missions,
+          label: t('project:mission.missions'),
+          onClick: () => navigate(goToList('missions')),
+          icon: <ClipboardCheckIcon size={ICON_SIZE} />,
+          className: COLLECTIONS.mission,
           hasRightName: 'canFind',
         },
       ],

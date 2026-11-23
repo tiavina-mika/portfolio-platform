@@ -1,0 +1,34 @@
+{
+  "mission": {
+    "assigneeNotAllowed": "This person cannot open the Aldaron workspace: give the mission to a member of the team.",
+    "clientNotActive": "This client is archived or anonymized: put it back in the list before giving it a mission.",
+    "endBeforeStart": "The end date of a mission cannot come before its start date.",
+    "notFound": "Mission not found.",
+    "partiesFrozen": "A mission that is {{status}} keeps its client and its quote: only a planned mission can change them.",
+    "phaseNotAllowed": "The phase \"{{phase}}\" does not belong to a mission that is {{status}}.",
+    "phases": {
+      "byAgency": "cancelled by us",
+      "byClient": "cancelled by the client",
+      "clientReview": "client review",
+      "closed": "closed",
+      "design": "design",
+      "development": "development",
+      "handover": "handover",
+      "release": "release",
+      "scheduled": "scheduled",
+      "testing": "testing",
+      "unpaid": "unpaid",
+      "waitingClient": "waiting for the client",
+      "warranty": "warranty"
+    },
+    "quoteNotFound": "The quote of the mission was not found.",
+    "quoteNotLinkable": "Quote {{number}} cannot be the one of this mission: only an accepted quote of the same client can.",
+    "statusChangeNotAllowed": "A mission that is {{from}} cannot become {{to}}.",
+    "statuses": {
+      "cancelled": "cancelled",
+      "done": "done",
+      "inProgress": "in progress",
+      "planned": "planned"
+    }
+  }
+}

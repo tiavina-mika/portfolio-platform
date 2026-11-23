@@ -19,7 +19,7 @@ type QuotesParams = {
   skip: number;
   orderBy?: string;
   order?: 'asc' | 'desc';
-  filters?: { status?: QuoteStatusEnum };
+  filters?: { status?: QuoteStatusEnum; client?: string };
   search?: { text?: string };
 };
 
@@ -53,6 +53,7 @@ export const getQuotesService = async ({
 
   // one tab per status; the "all" tab sends none
   if (filters?.status) query.equalTo('status', filters.status);
+  if (filters?.client) query.equalTo('client', convertIdToPointer(DOMAIN_COLLECTIONS.client, filters.client));
 
   const sortField = orderBy && QUOTE_ORDER_FIELDS.includes(orderBy) ? orderBy : 'updatedAt';
 

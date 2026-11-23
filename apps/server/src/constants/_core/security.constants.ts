@@ -173,6 +173,8 @@ export const ALWAYS_LOCKED_CLASSES: string[] = [
   DOMAIN_COLLECTIONS.client,
   // the Aldaron quotes, same reason
   DOMAIN_COLLECTIONS.quote,
+  // the Aldaron missions, same reason
+  DOMAIN_COLLECTIONS.mission,
   // the numbering sequences: read and incremented by the triggers with the master key only
   collections.Counter,
 ];
@@ -184,7 +186,9 @@ export const ALWAYS_LOCKED_CLASSES: string[] = [
  * SDK call would skip the workspace check) and stays limited to `HIGHEST_LEVEL_ROLES`, who hold every
  * workspace. The role rights still apply: `fromBO` checks them in each function.
  */
-export const FUNCTION_ONLY_CLASSES: string[] = [DOMAIN_COLLECTIONS.client, DOMAIN_COLLECTIONS.quote];
+export const FUNCTION_ONLY_CLASSES: string[] = [
+  DOMAIN_COLLECTIONS.client, DOMAIN_COLLECTIONS.quote, DOMAIN_COLLECTIONS.mission,
+];
 
 /**
  * Fields pre-created in the schema (master key, at CLP rebuild time) so the column

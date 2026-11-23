@@ -19,8 +19,6 @@
     "reviseTitle": "Revise quote {{number}}",
     "reviseDescription": "A draft copy of this quote is created as version {{version}}, with the same number {{number}}. The version sent becomes expired at once: send the new one to the client.",
     "client": "Client",
-    "newClient": "New client",
-    "noClient": "No active client matches",
     "title": "Title",
     "lines": "Lines",
     "lineNumber": "Line {{index}}",

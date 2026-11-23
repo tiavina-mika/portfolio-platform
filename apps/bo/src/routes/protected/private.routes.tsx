@@ -13,6 +13,7 @@ import { privateLayout } from '@/routes/protected/_core/privateLayout.routes';
 import roleRoutes, { rolesLayout } from '@/routes/protected/_core/role.routes';
 import userRoutes, { usersLayout } from '@/routes/protected/_core/users.routes';
 import { clientsRoute } from '@/routes/protected/_domain/client.routes';
+import { missionsRoute } from '@/routes/protected/_domain/mission.routes';
 import projectRoutes, { projectsLayout } from '@/routes/protected/_domain/project.routes';
 import { quotesRoute } from '@/routes/protected/_domain/quote.routes';
 
@@ -29,6 +30,7 @@ const privateRoutes = privateLayout.addChildren([
   projectsLayout.addChildren(projectRoutes),
   clientsRoute,
   quotesRoute,
+  missionsRoute,
   pagesLayout.addChildren(pageRoutes),
   pageSectionsLayout.addChildren(pageSectionRoutes),
   usersLayout.addChildren(userRoutes),

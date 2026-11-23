@@ -10,12 +10,12 @@ import SelectField from '@/components/form/fields/SelectField';
 import TextField from '@/components/form/fields/TextField';
 import Form from '@/components/form/Form';
 import { QUOTE_CURRENCY_OPTIONS, QUOTE_EMPTY_LINE, QUOTE_FORM_ID } from '@/constants/_domain/quote.constants';
+import ClientPickerField from '@/containers/_domain/client/ClientPickerField';
 import { getSettingsDefaultCurrencySelector } from '@/redux/reducers/_core/settings.reducer';
 import { IQuote, IQuoteFormValues, IQuoteFromContact } from '@/types/_domain/quote.type';
 import { getNewQuoteCurrency } from '@/utils/_domain/quote.utils';
 import { quoteSchema } from '@/validations/_domain/quote.validation';
 
-import QuoteClientField from './QuoteClientField';
 import QuoteLinesField from './QuoteLinesField';
 import QuoteTotal from './QuoteTotal';
 
@@ -110,7 +110,7 @@ const QuoteForm = ({
   return (
     <Form form={form} formId={QUOTE_FORM_ID} onSubmit={onSubmit}>
       <Stack spacing={2.5}>
-        <QuoteClientField
+        <ClientPickerField
           initialClient={quote?.client ?? amendedQuote?.client ?? prefill?.client}
           lockedHelperText={lockedClientParent
             ? t('project:quote.clientLocked', { number: lockedClientParent.number })

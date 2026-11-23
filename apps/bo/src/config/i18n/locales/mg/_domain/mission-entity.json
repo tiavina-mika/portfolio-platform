@@ -1,0 +1,67 @@
+{
+  "mission": {
+    "missions": "Asa",
+    "mission": "Asa",
+    "thisMission": "ity asa ity",
+    "createMission": "Asa vaovao",
+    "editMission": "Hanova {{title}}",
+    "createMissionFromQuote": "Asa vaovao ho an'ny tolotra vidiny {{number}}",
+    "createFromQuote": "Hamorona ny asa",
+    "title": "Lohateny",
+    "quote": "Tolotra vidiny",
+    "quoteHelper": "Tsy voatery: tolotra vidiny neken'ny mpanjifa.",
+    "noQuote": "Tsy misy tolotra vidiny",
+    "quoteOption": "{{number}} · {{title}}",
+    "fromQuote": "Tolotra vidiny {{number}}",
+    "withoutQuote": "Tsy misy tolotra vidiny",
+    "assignee": "Tanterahin'i",
+    "noAssignee": "Tsy misy aloha",
+    "myMissions": "Ny asako",
+    "phase": "Dingana",
+    "phaseHelper": "Ny dingan'ny asa {{status}}.",
+    "noPhase": "Tsy misy dingana",
+    "startDate": "Daty fanombohana",
+    "endDate": "Daty fiafarana",
+    "dates": "Daty",
+    "startsOn": "Fanombohana: {{date}}",
+    "endsOn": "Fiafarana: {{date}}",
+    "dateNotSet": "tsy voafaritra",
+    "description": "Famaritana",
+    "endBeforeStart": "Tsy azo atao mialoha ny daty fanombohana ny daty fiafarana.",
+    "partiesLocked": "{{status}} ity asa ity: tsy miova intsony ny mpanjifany sy ny tolotra vidiny.",
+    "searchMission": "Hikaroka amin'ny lohateny",
+    "statuses": {
+      "planned": "Voalamina",
+      "inProgress": "An-dalam-pandehanana",
+      "done": "Vita",
+      "cancelled": "Nofoanana"
+    },
+    "phases": {
+      "waitingClient": "Miandry ny mpanjifa",
+      "scheduled": "Voalahatra",
+      "design": "Modely",
+      "development": "Fampandrosoana",
+      "testing": "Fitsapana",
+      "clientReview": "Hevitry ny mpanjifa",
+      "release": "Famoahana",
+      "handover": "Fanolorana ny kaody sy ny kaonty",
+      "warranty": "Fiantohana",
+      "closed": "Vita tanteraka",
+      "byClient": "Nofoanan'ny mpanjifa",
+      "byAgency": "Nofoanantsika",
+      "unpaid": "Tsy voaloa"
+    },
+    "actions": {
+      "start": "Hanomboka",
+      "finish": "Marihina ho vita",
+      "cancel": "Hanafoana ny asa"
+    },
+    "messages": {
+      "created": "Voaforona ny asa « {{title}} ».",
+      "updated": "Voaova ny asa « {{title}} ».",
+      "inProgress": "Nanomboka ny asa « {{title}} ».",
+      "done": "Vita ny asa « {{title}} ».",
+      "cancelled": "Nofoanana ny asa « {{title}} »."
+    }
+  }
+}

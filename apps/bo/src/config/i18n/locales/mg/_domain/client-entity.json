@@ -30,6 +30,7 @@
     "archiveClient": "Tahirizina",
     "restoreClient": "Averina ao amin'ny lisitra",
     "searchClient": "Hikaroka amin'ny anarana na mailaka",
+    "noActiveClient": "Tsy misy mpanjifa mavitrika mifanaraka",
     "messages": {
       "created": "Tafiditra ho mpanjifa i {{name}}.",
       "updated": "Voaova i {{name}}.",

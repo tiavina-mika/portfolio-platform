@@ -15,6 +15,7 @@ Domain class names are in `libs/shared-domain-constants` (`DOMAIN_COLLECTIONS`);
 |---|---|---|
 | `Project` (domain) | Portfolio projects | server, bo, web |
 | `Client` (domain) | Clients of the Aldaron workspace; reached through their Cloud Functions only, never public | server, bo |
+| `Mission` (domain) | Missions of the Aldaron workspace: title, client and accepted quote pointers, assignee, status and phase, start and end dates; reached through their Cloud Functions only, never public | server, bo |
 | `Quote` (domain) | Quotes of the Aldaron workspace: number, client pointer, lines, currency, VAT rate, total and status computed by the server; reached through their Cloud Functions only, never public | server, bo |
 | `Article` | Blog articles (translated content, `active`, `deleted` flags) | server, bo, web |
 | `Page` | Editorial pages | server, bo, web |
@@ -42,6 +43,7 @@ Indexes are declared in code, in `apps/server/src/config/db-indexes.ts` (`INDEXE
 - `Newsletter`: `email`, and `confirmationTokenHash` (sparse) for the confirmation link.
 - `Client`: `email` (unique when not empty, so one address is one client) and `status` + `name` for the list.
 - `Quote`: `number` + `version` (unique), `_p_client` + `status` (the quotes of a client, and the refusal to delete a client that has some), `status` + `issuedAt` for the list.
+- `Mission`: `_p_client` + `status` (the missions of a client, and the refusal to delete a client that has some), `status` + `startDate` for the list, `_p_assignee` + `status` for "my missions".
 - `Counter`: `name` (unique, one row per sequence).
 - `Notification`: recipient list, read-state and send-type filters, `idempotencyKey` (unique, sparse).
 - `Invitation`: `token` (unique, sparse) and `email`.
@@ -58,4 +60,4 @@ Indexes are declared in code, in `apps/server/src/config/db-indexes.ts` (`INDEXE
 
 ## Gotchas
 
-- The `Project`, `Client` and `Quote` class names are not in `collections`: they come from `DOMAIN_COLLECTIONS`, so a core file that needs them must import them from the shared lib.
+- The `Project`, `Client`, `Quote` and `Mission` class names are not in `collections`: they come from `DOMAIN_COLLECTIONS`, so a core file that needs them must import them from the shared lib.

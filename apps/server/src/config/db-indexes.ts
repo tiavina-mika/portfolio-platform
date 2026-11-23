@@ -236,6 +236,14 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
     // the back-office list: one status (the tab), newest sent first
     { spec: { status: 1, issuedAt: -1 } },
   ],
+  [DOMAIN_COLLECTIONS.mission]: [
+    // the missions of one client by status, and the refusal to delete a client that has missions
+    { spec: { _p_client: 1, status: 1 } },
+    // the back-office list: one status (the tab), by start date
+    { spec: { status: 1, startDate: -1 } },
+    // "my missions": the ones given to the signed-in user, by status
+    { spec: { _p_assignee: 1, status: 1 } },
+  ],
   [collections.Counter]: [
     /*
      * one row per sequence: two first quotes of a year created at the same moment both try to create

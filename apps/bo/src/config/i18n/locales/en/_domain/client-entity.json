@@ -30,6 +30,7 @@
     "archiveClient": "Archive",
     "restoreClient": "Put back in the list",
     "searchClient": "Search by name or e-mail",
+    "noActiveClient": "No active client matches",
     "messages": {
       "created": "{{name}} was added to the clients.",
       "updated": "{{name}} was updated.",

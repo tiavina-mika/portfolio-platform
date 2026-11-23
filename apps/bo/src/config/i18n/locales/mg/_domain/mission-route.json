@@ -1,0 +1,9 @@
+{
+  "missions": "asa",
+  "missionTabs": {
+    "planned": "voalamina",
+    "inProgress": "an-dalana",
+    "done": "vita",
+    "cancelled": "nofoanana"
+  }
+}

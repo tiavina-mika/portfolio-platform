@@ -19,8 +19,6 @@
     "reviseTitle": "Réviser le devis {{number}}",
     "reviseDescription": "Une copie brouillon de ce devis est créée en version {{version}}, sous le même numéro {{number}}. La version envoyée devient aussitôt expirée : envoyez la nouvelle au client.",
     "client": "Client",
-    "newClient": "Nouveau client",
-    "noClient": "Aucun client actif ne correspond",
     "title": "Titre",
     "lines": "Lignes",
     "lineNumber": "Ligne {{index}}",

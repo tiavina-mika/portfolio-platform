@@ -101,8 +101,8 @@ Source: `apps/server/src/cloud/`. Each kind has a `_core/` folder (generic) and 
 
 | Kind | Files |
 |---|---|
-| Functions | `_core/`: `accountHelp`, `admins`, `app`, `article`, `auditLog`, `auth`, `category`, `contact`, `contactChange`, `contentVersion`, `dashboard`, `faq`, `globalSearch`, `impersonation`, `invitation`, `mfa`, `misc`, `notification`, `page`, `pageSection`, `passwordResetDelay`, `role`, `stepUpVerification`, `user`, `userSession`, `utils` (and `test`, local and test only). `_domain/`: `client`, `project`, `quote` |
-| Triggers | `_core/`: `app`, `article`, `auth`, `category`, `contact`, `country-scope`, `newsletter`, `notification`, `page`, `pageSection`, `role`, `user`. `_domain/`: `client`, `project`, `quote` |
+| Functions | `_core/`: `accountHelp`, `admins`, `app`, `article`, `auditLog`, `auth`, `category`, `contact`, `contactChange`, `contentVersion`, `dashboard`, `faq`, `globalSearch`, `impersonation`, `invitation`, `mfa`, `misc`, `notification`, `page`, `pageSection`, `passwordResetDelay`, `role`, `stepUpVerification`, `user`, `userSession`, `utils` (and `test`, local and test only). `_domain/`: `client`, `mission`, `project`, `quote` |
+| Triggers | `_core/`: `app`, `article`, `auth`, `category`, `contact`, `country-scope`, `newsletter`, `notification`, `page`, `pageSection`, `role`, `user`. `_domain/`: `client`, `mission`, `project`, `quote` |
 | Jobs | `_core/`: `category`, `cms`, `email`, `impersonation`, `misc`, `newsletter`, `notification`, `retention`, `user` (and `test`). `_domain/`: none |
 
 ## Scheduled tasks
@@ -115,7 +115,7 @@ Roles `OWNER` and `SUPER_ADMIN` (highest level), and the default roles `MANAGER`
 
 ## Collections and indexes
 
-Domain collections `Project`, `Client` and `Quote` (the clients and quotes of the Aldaron workspace, reached through their Cloud Functions only); core collections `Article`, `Page`, `PageSection`, `Category`, `Contact`, `Newsletter`, `App`, `Notification`, `Counter` (numbering sequences), the audit and session logs, and Parse's `_User`, `_Role` and `_Session`. Indexes are declared in code (`apps/server/src/config/db-indexes.ts`). Details: [collections and indexes](code/en/COLLECTIONS_AND_INDEXES.md).
+Domain collections `Project`, `Client`, `Quote` and `Mission` (the clients, quotes and missions of the Aldaron workspace, reached through their Cloud Functions only); core collections `Article`, `Page`, `PageSection`, `Category`, `Contact`, `Newsletter`, `App`, `Notification`, `Counter` (numbering sequences), the audit and session logs, and Parse's `_User`, `_Role` and `_Session`. Indexes are declared in code (`apps/server/src/config/db-indexes.ts`). Details: [collections and indexes](code/en/COLLECTIONS_AND_INDEXES.md).
 
 ## Emails
 
