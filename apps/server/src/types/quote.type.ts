@@ -24,6 +24,8 @@ export interface IQuoteAttributes {
   notes?: string;
   // 1 for a first quote; a revision of the same number raises it
   version: number;
+  // the quote this one revises (same number) or amends (its own number); unset for a first quote
+  parentQuote?: Parse.Object;
   acceptedAt?: Date;
   acceptanceMethod?: QuoteAcceptanceMethodEnum;
   // the file the acceptance rests on (signed quote, client's e-mail), attached only when it is accepted
@@ -40,6 +42,15 @@ export type QuoteInput = Pick<IQuoteAttributes, 'title' | 'lines' | 'currency'> 
   validUntil: Date | null;
   notes: string | null;
 };
+
+/**
+ * How a quote stands to the quote it points to: a revision is a new version of a sent quote, under the
+ * same number; an amendment is extra work after an accepted quote, under a number of its own.
+ */
+export enum QuoteParentRelationEnum {
+  REVISION = 'revision',
+  AMENDMENT = 'amendment'
+}
 
 /** a named counter, such as the row incremented to number the quotes of one year */
 export interface ICounterAttributes {

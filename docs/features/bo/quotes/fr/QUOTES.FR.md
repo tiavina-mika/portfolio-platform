@@ -15,6 +15,8 @@
   - [Créer un client sans quitter le devis](#créer-un-client-sans-quitter-le-devis)
   - [Modifier un brouillon](#modifier-un-brouillon)
   - [Envoyer, accepter, refuser ou faire expirer un devis](#envoyer-accepter-refuser-ou-faire-expirer-un-devis)
+  - [Réviser un devis envoyé](#réviser-un-devis-envoyé)
+  - [Créer un avenant à un devis accepté](#créer-un-avenant-à-un-devis-accepté)
 - [La devise par défaut](#la-devise-par-défaut)
 - [Cas d'utilisation typiques](#cas-dutilisation-typiques)
 - [Points d'attention / limites actuelles](#points-dattention--limites-actuelles)
@@ -52,10 +54,12 @@ comptes Owner et Super Admin ont tous les droits et tous les espaces.
 | Droit | Ce qu'il permet ici |
 |---|---|
 | Lister | Afficher la page et l'entrée **Devis** du menu |
-| Créer | Bouton « Nouveau devis » en haut de la page |
+| Créer | Bouton « Nouveau devis » en haut de la page, et action « Créer un avenant » sur un devis accepté |
 | Modifier | Action « Modifier » sur un brouillon, et les actions qui changent le statut |
 
 Le raccourci « Nouveau client » du formulaire demande en plus le droit **Créer** sur les clients.
+L'action « Réviser » demande les droits **Créer** et **Modifier** : elle crée une nouvelle version et fait
+expirer l'ancienne.
 
 ## Ce que l'on voit à l'écran
 
@@ -63,7 +67,7 @@ Le raccourci « Nouveau client » du formulaire demande en plus le droit **Crée
 
 | Colonne | Signification |
 |---|---|
-| Devis | Le numéro du devis, avec son titre en dessous |
+| Devis | Le numéro du devis (suivi de sa version, « v2 », quand il a été révisé), avec son titre en dessous ; pour une révision, le devis qu'elle révise (« Révise AL-2026-001 v1 ») ; pour un avenant, le devis qu'il complète (« Avenant au devis AL-2026-003 ») |
 | Client | Le nom du client, toujours à jour : s'il est renommé, la liste montre le nouveau nom |
 | Total TTC | Le montant total, dans la devise du devis |
 | Créé le / Modifié le | Dates de création et de dernière modification |
@@ -97,6 +101,11 @@ brouillon ──► envoyé ──► accepté
 
 Tout autre passage est refusé (par exemple d'un brouillon directement à accepté, ou d'un devis accepté
 vers envoyé).
+
+Pour changer un devis déjà envoyé, on le **révise** : une nouvelle version brouillon est créée sous le
+même numéro, et la version envoyée passe à **expiré**. Pour ajouter du travail à un devis accepté, on crée
+un **avenant** : un nouveau devis, avec son propre numéro, rattaché au devis accepté. Un devis accepté
+n'est jamais révisé.
 
 ## Actions possibles
 
@@ -148,6 +157,31 @@ recommencer.
 Dans la liste, un devis accepté avec une preuve affiche un lien **« Preuve d'acceptation »** sous son
 statut : il ouvre le fichier dans un nouvel onglet.
 
+### Réviser un devis envoyé
+
+Sur un devis envoyé, le menu de la ligne propose **« Réviser »**. Une fenêtre demande de confirmer, car la
+révision ne s'annule pas :
+
+- une **copie brouillon** du devis est créée, avec le même numéro et la version suivante (v2, puis v3…) :
+  même client, mêmes lignes, même devise, même TVA et mêmes conditions ; la date de validité est reprise
+  si elle n'est pas déjà passée, sinon elle est laissée vide pour être saisie à nouveau ;
+- la version envoyée passe aussitôt à **expiré** : c'est la nouvelle version qu'il faut envoyer au client.
+
+La nouvelle version apparaît en haut de la liste ; on la corrige avec « Modifier », puis on la marque comme
+envoyée comme n'importe quel devis. Son client ne peut pas être changé.
+
+Un brouillon, un devis refusé, expiré ou accepté ne se révise pas. Pour un devis accepté, le message
+propose de créer un avenant à la place.
+
+### Créer un avenant à un devis accepté
+
+Sur un devis accepté, le menu de la ligne propose **« Créer un avenant »**. La fenêtre de création s'ouvre,
+déjà remplie avec le client (qui ne peut pas être changé), la devise, le taux de TVA et les conditions du
+devis accepté ; on saisit le titre et les lignes du travail en plus.
+
+L'avenant reçoit son **propre numéro** et suit ensuite la vie d'un devis normal : brouillon, envoyé, puis
+accepté ou refusé. Dans la liste, il indique le devis qu'il complète.
+
 ## La devise par défaut
 
 Dans **Paramètres** → **Langues**, l'espace Aldaron propose la **devise par défaut des devis**. Elle ne
@@ -163,6 +197,10 @@ ne modifie aucun devis existant. C'est un réglage propre à la personne connect
 4. **Noter la réponse** : « Marquer comme accepté » (en indiquant comment, et en joignant le devis signé
    si on l'a) ou « Marquer comme refusé ».
 5. **Faire le point** : l'onglet Envoyé liste les devis en attente de réponse.
+6. **Le client demande un changement avant de répondre** : « Réviser » sur le devis envoyé, corriger la
+   nouvelle version, puis la marquer comme envoyée.
+7. **Le client demande du travail en plus après avoir accepté** : « Créer un avenant » sur le devis
+   accepté.
 
 ## Points d'attention / limites actuelles
 
@@ -171,7 +209,6 @@ ne modifie aucun devis existant. C'est un réglage propre à la personne connect
 - La preuve d'acceptation ne se remplace pas et ne se retire pas une fois le devis accepté. Son lien
   est une adresse longue et impossible à deviner, mais quiconque la reçoit peut ouvrir le fichier, comme
   pour les autres fichiers du back-office : ne la transmettez pas en dehors de l'équipe.
-- Pas encore de révision d'un devis envoyé ni d'avenant à un devis accepté.
 - Un devis envoyé n'expire pas tout seul à sa date de validité : il faut le marquer comme expiré.
 - Pas encore de paiements rattachés à un devis accepté.
 - Une demande de devis reçue depuis le site ne se transforme pas encore en devis.

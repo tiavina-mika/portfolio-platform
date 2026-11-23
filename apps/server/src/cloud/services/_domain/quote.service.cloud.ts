@@ -4,11 +4,13 @@ import { QuoteStatusEnum, type QuoteAcceptanceMethodEnum } from '@shared/domain-
 import type { IUploadedFile, Locale } from '@/types/app.type';
 import type { QuoteInput } from '@/types/quote.type';
 
+import { translate } from '@/config/i18n';
 import { USE_MASTER_KEY } from '@/constants/_core/constants';
 import {
-  QUOTE_EDITABLE_FIELDS, QUOTE_LIST_FIELDS, QUOTE_ORDER_FIELDS,
+  QUOTE_EDITABLE_FIELDS, QUOTE_INCLUDED_POINTERS, QUOTE_LIST_FIELDS, QUOTE_ORDER_FIELDS,
 } from '@/constants/_domain/quote.constants';
 import { escapeText, setValues } from '@/utils/_core/utils';
+import { isQuoteValidityAhead } from '@/utils/_domain/quote.utils';
 
 import { convertIdToPointer } from '../../utils/_core/parse.utils.cloud';
 
@@ -58,7 +60,7 @@ export const getQuotesService = async ({
   else query.descending(sortField);
 
   const result: Record<string, any> = await query
-    .include('client')
+    .include(QUOTE_INCLUDED_POINTERS)
     .select(QUOTE_LIST_FIELDS)
     .limit(limit)
     .skip(skip)
@@ -75,7 +77,7 @@ export const getQuotesService = async ({
  */
 export const getQuoteByIdService = async (id: string): Promise<Parse.Object | false> => {
   const quote = await buildQuoteQuery()
-    .include('client')
+    .include(QUOTE_INCLUDED_POINTERS)
     .select(QUOTE_LIST_FIELDS)
     .equalTo('objectId', id)
     .first(USE_MASTER_KEY);
@@ -103,10 +105,14 @@ export const hasClientQuotesService = async (client: Parse.Object): Promise<bool
  * @param values the validated fields; a `null` unsets the column
  * @param user the back-office user who saves it
  * @param locale the language of a refusal
- * @param quote the quote edited, left out to create one
+ * @param target `quote`: the quote edited, left out to create one; `parentQuoteId`: on a new quote, the
+ * accepted quote it amends (whether it may is the trigger's check)
  */
 export const saveQuoteService = async (
-  values: QuoteInput, user: Parse.User, locale: Locale | undefined, quote?: Parse.Object
+  values: QuoteInput,
+  user: Parse.User,
+  locale: Locale | undefined,
+  { quote, parentQuoteId }: { quote?: Parse.Object; parentQuoteId?: string } = {}
 ): Promise<Parse.Object> => {
   const parseQuote = quote ?? new Parse.Object(DOMAIN_COLLECTIONS.quote);
   const { client, ...fields } = values;
@@ -115,6 +121,9 @@ export const saveQuoteService = async (
   // only a new client is written, so an unchanged one is not seen as a change by the trigger
   if (parseQuote.get('client')?.id !== client) {
     parseQuote.set('client', convertIdToPointer(DOMAIN_COLLECTIONS.client, client));
+  }
+  if (!quote && parentQuoteId) {
+    parseQuote.set('parentQuote', convertIdToPointer(DOMAIN_COLLECTIONS.quote, parentQuoteId));
   }
 
   const saved = await parseQuote.save(null, { ...USE_MASTER_KEY, context: buildSaveContext(user, locale) });
@@ -151,4 +160,50 @@ export const changeQuoteStatusService = async (
   const saved = await quote.save(null, { ...USE_MASTER_KEY, context: buildSaveContext(user, locale) });
 
   return (await getQuoteByIdService(saved.id)) || saved;
+};
+
+/** the new draft version and the version it replaces, now expired: the list updates both rows */
+export type QuoteRevision = {
+  quote: Parse.Object;
+  revisedQuote: Parse.Object;
+};
+
+/**
+ * Revises a sent quote: a draft copy of what was sent, under the same number, the next version and
+ * pointing to it, then the sent version expires. The number and the version are the trigger's, read
+ * from the quote pointed to. The draft is written first: if the expiry fails, the sent version simply
+ * stays sent, and a second revision of it is refused by the unique number + version index.
+ * @param quote the sent quote, as read by the function
+ */
+export const reviseQuoteService = async (
+  quote: Parse.Object, user: Parse.User, locale: Locale | undefined
+): Promise<QuoteRevision> => {
+  const revision = new Parse.Object(DOMAIN_COLLECTIONS.quote);
+
+  // what was sent, as it was typed; the client as a bare pointer, not the object read with the quote
+  QUOTE_EDITABLE_FIELDS.filter((field) => field !== 'client').forEach((field) => {
+    const value = quote.get(field);
+
+    if (value !== undefined && value !== null) revision.set(field, value);
+  });
+  // a validity already over would make the new version born out of date: it is typed again instead
+  if (!isQuoteValidityAhead(quote.get('validUntil'), new Date())) revision.unset('validUntil');
+  revision.set('client', convertIdToPointer(DOMAIN_COLLECTIONS.client, quote.get('client').id));
+  revision.set('parentQuote', convertIdToPointer(DOMAIN_COLLECTIONS.quote, quote.id));
+
+  try {
+    await revision.save(null, { ...USE_MASTER_KEY, context: buildSaveContext(user, locale) });
+  } catch (error) {
+    // another revision of the same version was written at the same moment: the index refused this one
+    if ((error as Parse.Error).code === Parse.Error.DUPLICATE_VALUE) {
+      throw new Error(translate('quote.alreadyRevised', locale, { number: quote.get('number') }));
+    }
+    throw error;
+  }
+
+  const revisedQuote = await changeQuoteStatusService(
+    quote, { status: QuoteStatusEnum.EXPIRED }, user, locale
+  );
+
+  return { quote: (await getQuoteByIdService(revision.id)) || revision, revisedQuote };
 };

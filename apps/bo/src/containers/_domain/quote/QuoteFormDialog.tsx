@@ -12,17 +12,26 @@ type Props = {
   onSubmit: (values: IQuoteFormValues) => void;
   // the draft edited, left out to create one
   quote?: IQuote | null;
+  // on a new quote, the accepted quote it amends
+  amendedQuote?: IQuote | null;
   loading?: boolean;
 };
 
 /**
- * The quote form in a dialog, shared by "New quote" and "Edit". The dialog stays open on a refusal, so
- * nothing typed is lost; the page closes it once saved.
+ * The quote form in a dialog, shared by "New quote", "Edit" and "Create an amendment". The dialog stays
+ * open on a refusal, so nothing typed is lost; the page closes it once saved.
  */
 const QuoteFormDialog = ({
-  open, onClose, onSubmit, quote, loading,
+  open, onClose, onSubmit, quote, amendedQuote, loading,
 }: Props) => {
   const { t } = useTranslation(['project', 'common']);
+
+  const getTitle = (): string => {
+    if (quote) return t('project:quote.editQuote', { number: quote.number });
+    if (amendedQuote) return t('project:quote.createAmendment', { number: amendedQuote.number });
+
+    return t('project:quote.createQuote');
+  };
 
   return (
     <Dialog
@@ -32,11 +41,18 @@ const QuoteFormDialog = ({
       maxWidth="md"
       open={open}
       primaryButtonText={t('common:save')}
-      title={quote ? t('project:quote.editQuote', { number: quote.number }) : t('project:quote.createQuote')}
+      title={getTitle()}
       toggle={onClose}
     >
       {/* keyed on the quote, so the form starts again from it each time the dialog opens */}
-      {open && <QuoteForm key={quote?.id ?? 'new'} onSubmit={onSubmit} quote={quote} />}
+      {open && (
+        <QuoteForm
+          amendedQuote={amendedQuote}
+          key={quote?.id ?? `new-${amendedQuote?.id ?? ''}`}
+          onSubmit={onSubmit}
+          quote={quote}
+        />
+      )}
     </Dialog>
   );
 };

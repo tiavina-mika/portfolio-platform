@@ -6,6 +6,13 @@
     "createQuote": "New quote",
     "editQuote": "Edit quote {{number}}",
     "number": "Number",
+    "numberWithVersion": "{{number}} · v{{version}}",
+    "revises": "Revises {{number}} v{{version}}",
+    "amends": "Amendment to {{number}}",
+    "createAmendment": "New amendment to quote {{number}}",
+    "clientLocked": "Same client as quote {{number}}: a revision or an amendment stays with it.",
+    "reviseTitle": "Revise quote {{number}}",
+    "reviseDescription": "A draft copy of this quote is created as version {{version}}, with the same number {{number}}. The version sent becomes expired at once: send the new one to the client.",
     "client": "Client",
     "newClient": "New client",
     "noClient": "No active client matches",
@@ -58,7 +65,9 @@
       "send": "Mark as sent",
       "accept": "Mark as accepted",
       "refuse": "Mark as refused",
-      "expire": "Mark as expired"
+      "expire": "Mark as expired",
+      "revise": "Revise",
+      "amend": "Create an amendment"
     },
     "acceptTitle": "Accept quote {{number}}",
     "acceptDescription": "The acceptance date is today. An accepted quote can no longer be edited.",
@@ -71,7 +80,9 @@
       "sent": "Quote {{number}} is marked as sent.",
       "accepted": "Quote {{number}} is marked as accepted.",
       "refused": "Quote {{number}} is marked as refused.",
-      "expired": "Quote {{number}} is marked as expired."
+      "expired": "Quote {{number}} is marked as expired.",
+      "revised": "Version {{version}} of quote {{number}} was created as a draft.",
+      "amendmentCreated": "Amendment {{number}} to quote {{parentNumber}} was created."
     }
   }
 }

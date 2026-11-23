@@ -1,5 +1,5 @@
 import { QuoteStatusEnum } from '@shared/domain-types';
-import { getNextQuoteStatuses } from '@shared/domain-utils';
+import { canAmendQuote, canReviseQuote, getNextQuoteStatuses } from '@shared/domain-utils';
 import { TargetEnum } from '@shared/types';
 import { useNavigate } from '@tanstack/react-router';
 import {
@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  FiCheckCircle, FiClock, FiSend, FiXCircle,
+  FiCheckCircle, FiClock, FiCopy, FiFilePlus, FiSend, FiXCircle,
 } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,16 +20,20 @@ import ListWithSelection from '@/components/table/ListWithSelection';
 import i18n from '@/config/i18n';
 import { MENU_ITEM_ICON_SIZE } from '@/constants/_core/ui/ui.constants';
 import {
-  QUOTE_COLLECTION, QUOTE_STATUS_ACTION_LABEL_KEYS, QUOTE_TAB_OPTIONS,
+  QUOTE_AMEND_ACTION_LABEL_KEY, QUOTE_COLLECTION, QUOTE_REVISE_ACTION_LABEL_KEY,
+  QUOTE_STATUS_ACTION_LABEL_KEYS, QUOTE_TAB_OPTIONS,
 } from '@/constants/_domain/quote.constants';
 import QuoteAcceptDialog from '@/containers/_domain/quote/QuoteAcceptDialog';
 import QuoteFormDialog from '@/containers/_domain/quote/QuoteFormDialog';
+import QuoteReviseDialog from '@/containers/_domain/quote/QuoteReviseDialog';
 import QuoteStatusCell from '@/containers/_domain/quote/QuoteStatusCell';
 import QuoteTitleCell from '@/containers/_domain/quote/QuoteTitleCell';
 import SearchQuotes from '@/containers/_domain/quote/SearchQuotes';
 import { useProtect } from '@/hooks/_core/useProtect';
 import { goToHome } from '@/redux/actions/_core/app.action';
-import { createOrUpdateQuote, loadQuotes, setQuoteStatus } from '@/redux/actions/_domain/quote.action';
+import {
+  createOrUpdateQuote, loadQuotes, reviseSentQuote, setQuoteStatus,
+} from '@/redux/actions/_domain/quote.action';
 import { getSettingsLocaleSelector, getSettingsWorkspaceSelector } from '@/redux/reducers/_core/settings.reducer';
 import { getQuoteCountSelector, getQuoteQuotesSelector } from '@/redux/reducers/_domain/quote.reducer';
 import { quotesRoute } from '@/routes/protected/_domain/quote.routes';
@@ -99,7 +103,8 @@ const headCells: ITableHeadCell<keyof IData>[] = [
 
 /**
  * The quotes Aldaron sends its clients: written as drafts, then sent, and recorded accepted, refused
- * or expired. Only a draft is edited; a quote is never deleted, it stays as history in its status.
+ * or expired. Only a draft is edited: a sent quote is revised (a new draft version under its number), an
+ * accepted one completed by an amendment. A quote is never deleted, it stays as history in its status.
  */
 const Quotes = () => {
   const dispatch = useDispatch();
@@ -117,26 +122,33 @@ const Quotes = () => {
     if (workspace !== TargetEnum.AGENCY) navigate(goToHome());
   }, [workspace, navigate]);
 
-  // the dialog is shared by "New quote" and "Edit": open on no quote to create one
+  /*
+   * the dialog is shared by "New quote", "Edit" and "Create an amendment": open on no quote to create
+   * one, with the accepted quote it amends for an amendment
+   */
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedQuote, setSelectedQuote] = useState<IQuote | null>(null);
+  const [amendedQuote, setAmendedQuote] = useState<IQuote | null>(null);
   const [acceptingQuote, setAcceptingQuote] = useState<IQuote | null>(null);
+  const [revisingQuote, setRevisingQuote] = useState<IQuote | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
-  const openDialog = useCallback((quote: IQuote | null): void => {
+  const openDialog = useCallback((quote: IQuote | null, amended: IQuote | null = null): void => {
     setSelectedQuote(quote);
+    setAmendedQuote(amended);
     setIsDialogOpen(true);
   }, []);
 
   const closeDialog = (): void => {
     setIsDialogOpen(false);
     setSelectedQuote(null);
+    setAmendedQuote(null);
   };
 
   // closed once saved only: a refusal keeps what was typed on screen
   const handleSubmit = async (values: IQuoteFormValues): Promise<void> => {
     setIsSaving(true);
-    const error = await dispatch(createOrUpdateQuote(values, selectedQuote));
+    const error = await dispatch(createOrUpdateQuote(values, selectedQuote, amendedQuote));
 
     setIsSaving(false);
     if (!error) closeDialog();
@@ -166,7 +178,28 @@ const Quotes = () => {
     dispatch(loadQuotes(queries));
   };
 
+  // the revision is asked for first: the sent version expires at once
+  const handleRevise = (quote: IQuote): void => {
+    dispatch(reviseSentQuote(quote));
+  };
+
   const dataTable = useMemo((): IData[] => quotes.map((quote: IQuote) => {
+    // a sent quote is revised (a new version), an accepted one completed by an amendment (a new quote)
+    const quoteMenus = [
+      {
+        onClick: () => setRevisingQuote(quote),
+        display: canCreate && canEdit && canReviseQuote(quote.status),
+        label: t(QUOTE_REVISE_ACTION_LABEL_KEY),
+        icon: <FiCopy aria-hidden size={MENU_ITEM_ICON_SIZE} />,
+      },
+      {
+        onClick: () => openDialog(null, quote),
+        display: canCreate && canAmendQuote(quote.status),
+        label: t(QUOTE_AMEND_ACTION_LABEL_KEY),
+        icon: <FiFilePlus aria-hidden size={MENU_ITEM_ICON_SIZE} />,
+      },
+    ];
+
     const data: Record<string, any> = {
       id: quote.id, // required even if not displayed
       quote: <QuoteTitleCell quote={quote} />,
@@ -180,18 +213,21 @@ const Quotes = () => {
           // only a draft is edited: what was sent to the client stays what is stored
           onEdit={canEdit && quote.status === QuoteStatusEnum.DRAFT ? () => openDialog(quote) : undefined}
           type="row"
-          menus={getNextQuoteStatuses(quote.status).map((status) => ({
-            onClick: () => handleStatusChange(quote, status),
-            display: canEdit,
-            label: t(QUOTE_STATUS_ACTION_LABEL_KEYS[status] ?? ''),
-            icon: STATUS_ACTION_ICONS[status],
-          }))}
+          menus={[
+            ...getNextQuoteStatuses(quote.status).map((status) => ({
+              onClick: () => handleStatusChange(quote, status),
+              display: canEdit,
+              label: t(QUOTE_STATUS_ACTION_LABEL_KEYS[status] ?? ''),
+              icon: STATUS_ACTION_ICONS[status],
+            })),
+            ...quoteMenus,
+          ]}
         />
       ),
     };
 
     return data as IData;
-  }), [quotes, canEdit, handleStatusChange, openDialog, locale, t]);
+  }), [quotes, canCreate, canEdit, handleStatusChange, openDialog, locale, t]);
 
   return (
     <>
@@ -214,11 +250,17 @@ const Quotes = () => {
         tabs={QUOTE_TAB_OPTIONS}
       />
       <QuoteFormDialog
+        amendedQuote={amendedQuote}
         loading={isSaving}
         onClose={closeDialog}
         onSubmit={handleSubmit}
         open={isDialogOpen}
         quote={selectedQuote}
+      />
+      <QuoteReviseDialog
+        onClose={() => setRevisingQuote(null)}
+        onConfirm={handleRevise}
+        quote={revisingQuote}
       />
       {/* keyed on the quote, so the method picked for one quote is never carried to the next */}
       <QuoteAcceptDialog

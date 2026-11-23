@@ -6,6 +6,13 @@
     "createQuote": "Nouveau devis",
     "editQuote": "Modifier le devis {{number}}",
     "number": "Numéro",
+    "numberWithVersion": "{{number}} · v{{version}}",
+    "revises": "Révise {{number}} v{{version}}",
+    "amends": "Avenant au devis {{number}}",
+    "createAmendment": "Nouvel avenant au devis {{number}}",
+    "clientLocked": "Même client que le devis {{number}} : une révision ou un avenant reste chez lui.",
+    "reviseTitle": "Réviser le devis {{number}}",
+    "reviseDescription": "Une copie brouillon de ce devis est créée en version {{version}}, sous le même numéro {{number}}. La version envoyée devient aussitôt expirée : envoyez la nouvelle au client.",
     "client": "Client",
     "newClient": "Nouveau client",
     "noClient": "Aucun client actif ne correspond",
@@ -58,7 +65,9 @@
       "send": "Marquer comme envoyé",
       "accept": "Marquer comme accepté",
       "refuse": "Marquer comme refusé",
-      "expire": "Marquer comme expiré"
+      "expire": "Marquer comme expiré",
+      "revise": "Réviser",
+      "amend": "Créer un avenant"
     },
     "acceptTitle": "Accepter le devis {{number}}",
     "acceptDescription": "La date d'acceptation est celle d'aujourd'hui. Un devis accepté ne peut plus être modifié.",
@@ -71,7 +80,9 @@
       "sent": "Le devis {{number}} est marqué comme envoyé.",
       "accepted": "Le devis {{number}} est marqué comme accepté.",
       "refused": "Le devis {{number}} est marqué comme refusé.",
-      "expired": "Le devis {{number}} est marqué comme expiré."
+      "expired": "Le devis {{number}} est marqué comme expiré.",
+      "revised": "La version {{version}} du devis {{number}} a été créée en brouillon.",
+      "amendmentCreated": "L'avenant {{number}} au devis {{parentNumber}} a été créé."
     }
   }
 }

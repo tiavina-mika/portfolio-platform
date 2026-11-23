@@ -1,12 +1,15 @@
 import { QuoteStatusEnum } from '@shared/domain-types';
 import {
-  canChangeQuoteStatus, computeQuoteAmounts, fromMinorUnits, getNextQuoteStatuses, toMinorUnits,
+  canAmendQuote, canChangeQuoteStatus, canReviseQuote, computeQuoteAmounts, fromMinorUnits,
+  getNextQuoteStatuses, toMinorUnits,
 } from '@shared/domain-utils';
 import { describe, expect, it } from 'vitest';
 
+import { QuoteParentRelationEnum } from '@/types/quote.type';
+
 import {
   buildQuoteCounterName, canAttachQuoteAcceptanceProof, formatQuoteNumber, getQuoteNumberYear,
-  isQuoteAcceptanceProofFile,
+  getQuoteParentRelation, isQuoteAcceptanceProofFile, isQuoteValidityAhead,
 } from './quote.utils';
 
 /*
@@ -153,5 +156,42 @@ describe('attaching the proof of an acceptance', () => {
     expect(isQuoteAcceptanceProofFile(proof, undefined)).toBe(false);
     expect(isQuoteAcceptanceProofFile(null, CLOUD)).toBe(false);
     expect(isQuoteAcceptanceProofFile({ publicId: proof.publicId, url: 'not a url' }, CLOUD)).toBe(false);
+  });
+});
+
+describe('revising and amending a quote', () => {
+  it('should revise a sent quote only', () => {
+    expect(canReviseQuote(QuoteStatusEnum.SENT)).toBe(true);
+    [QuoteStatusEnum.DRAFT, QuoteStatusEnum.ACCEPTED, QuoteStatusEnum.REFUSED, QuoteStatusEnum.EXPIRED]
+      .forEach((status) => expect(canReviseQuote(status)).toBe(false));
+  });
+
+  it('should never revise an accepted quote, which is amended instead', () => {
+    expect(canReviseQuote(QuoteStatusEnum.ACCEPTED)).toBe(false);
+    expect(canAmendQuote(QuoteStatusEnum.ACCEPTED)).toBe(true);
+  });
+
+  it('should amend an accepted quote only', () => {
+    [QuoteStatusEnum.DRAFT, QuoteStatusEnum.SENT, QuoteStatusEnum.REFUSED, QuoteStatusEnum.EXPIRED]
+      .forEach((status) => expect(canAmendQuote(status)).toBe(false));
+  });
+
+  it('should read a quote pointing to a sent quote as a revision, to an accepted one as an amendment', () => {
+    expect(getQuoteParentRelation(QuoteStatusEnum.SENT)).toBe(QuoteParentRelationEnum.REVISION);
+    expect(getQuoteParentRelation(QuoteStatusEnum.ACCEPTED)).toBe(QuoteParentRelationEnum.AMENDMENT);
+  });
+
+  it('should keep the validity of a revised quote only while it is still ahead', () => {
+    const now = new Date('2026-11-23T10:00:00Z');
+
+    expect(isQuoteValidityAhead(new Date('2026-12-31T00:00:00Z'), now)).toBe(true);
+    expect(isQuoteValidityAhead(new Date('2026-11-01T00:00:00Z'), now)).toBe(false);
+    expect(isQuoteValidityAhead(undefined, now)).toBe(false);
+    expect(isQuoteValidityAhead(null, now)).toBe(false);
+  });
+
+  it('should let no quote point to a draft, a refused or an expired quote', () => {
+    [QuoteStatusEnum.DRAFT, QuoteStatusEnum.REFUSED, QuoteStatusEnum.EXPIRED]
+      .forEach((status) => expect(getQuoteParentRelation(status)).toBeNull());
   });
 });

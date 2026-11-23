@@ -19,6 +19,11 @@ import { IQuoteClient, IQuoteFormValues } from '@/types/_domain/quote.type';
 type Props = {
   // the client of the quote edited, shown before any search
   initialClient?: IQuoteClient | null;
+  /*
+   * set when the client cannot change (a revision or an amendment keeps the client of the quote it
+   * comes from): the field is read-only and says why
+   */
+  lockedHelperText?: string;
 };
 
 const toQuoteClient = ({ id, name, email }: IClient): IQuoteClient => ({ id, name, email });
@@ -28,7 +33,8 @@ const toQuoteClient = ({ id, name, email }: IClient): IQuoteClient => ({ id, nam
  * the e-mail. A client met for the first time is created from here, without leaving the quote: the
  * "New client" shortcut opens the client form and picks the client once saved.
  */
-const QuoteClientField = ({ initialClient }: Props) => {
+const QuoteClientField = ({ initialClient, lockedHelperText }: Props) => {
+  const isLocked = !!lockedHelperText;
   const { t } = useTranslation(['project', 'common']);
   const dispatch = useDispatch();
   const { canCreate } = useProtect(CLIENT_COLLECTION);
@@ -45,9 +51,9 @@ const QuoteClientField = ({ initialClient }: Props) => {
 
   // the first clients are proposed as soon as the form opens, before anything is typed
   useEffect(() => {
-    search('');
+    if (!isLocked) search('');
     return () => search.cancel();
-  }, [search]);
+  }, [search, isLocked]);
 
   const pick = (client: IQuoteClient | null): void => {
     setSelected(client);
@@ -76,6 +82,7 @@ const QuoteClientField = ({ initialClient }: Props) => {
         render={() => (
           <Autocomplete
             fullWidth
+            disabled={isLocked}
             filterOptions={(clients) => clients}
             getOptionLabel={(client: IQuoteClient) => client.name}
             isOptionEqualToValue={(option, value) => option.id === value.id}
@@ -91,7 +98,7 @@ const QuoteClientField = ({ initialClient }: Props) => {
                 {...params}
                 required
                 error={!!errors.client}
-                helperText={errors.client?.message}
+                helperText={errors.client?.message ?? lockedHelperText}
                 label={t('project:quote.client')}
               />
             )}
@@ -106,7 +113,7 @@ const QuoteClientField = ({ initialClient }: Props) => {
           />
         )}
       />
-      {canCreate && (
+      {canCreate && !isLocked && (
         <div>
           <Button
             onClick={() => setIsClientDialogOpen(true)}

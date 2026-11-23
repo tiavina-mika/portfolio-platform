@@ -23,6 +23,8 @@ type Props = {
   onSubmit: (values: IQuoteFormValues) => void;
   // the draft edited, left out to create one
   quote?: IQuote | null;
+  // on a new quote, the accepted quote it amends: its client, currency, VAT rate and terms carry over
+  amendedQuote?: IQuote | null;
 };
 
 const twoColumns = { display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 };
@@ -42,27 +44,57 @@ const toFormValues = (quote: IQuote): IQuoteFormValues => ({
   })),
 });
 
+/*
+ * an amendment is extra work for the same client, on the same terms: what carries over from the quote
+ * it amends; what the work is and its price are typed anew
+ */
+const toAmendmentFormValues = (amendedQuote: IQuote): IQuoteFormValues => ({
+  client: amendedQuote.client.id,
+  title: '',
+  currency: amendedQuote.currency,
+  taxRate: amendedQuote.taxRate ?? '',
+  validUntil: null,
+  notes: amendedQuote.notes ?? '',
+  lines: [{ ...QUOTE_EMPTY_LINE }],
+});
+
 /**
  * What is proposed to the client and at what price. A new quote starts in the default currency of the
  * settings; once created, the currency is the quote's own, so changing that default never touches it.
- * Mounted each time the dialog opens, so it starts from the draft edited or from an empty quote.
+ * Mounted each time the dialog opens, so it starts from the draft edited, the quote amended, or an
+ * empty quote.
  */
-const QuoteForm = ({ onSubmit, quote }: Props) => {
+const QuoteForm = ({ onSubmit, quote, amendedQuote }: Props) => {
   const { t } = useTranslation(['project', 'common']);
   const defaultCurrency = getNewQuoteCurrency(useSelector(getSettingsDefaultCurrencySelector));
+
+  const getDefaultValues = (): IQuoteFormValues | Partial<IQuoteFormValues> => {
+    if (quote) return toFormValues(quote);
+    if (amendedQuote) return toAmendmentFormValues(amendedQuote);
+
+    return {
+      currency: defaultCurrency, lines: [{ ...QUOTE_EMPTY_LINE }], taxRate: '', validUntil: null,
+    };
+  };
 
   const form = useForm<IQuoteFormValues>({
     // the boxes hold text that the schema reads as numbers: its input and output types differ
     resolver: zodResolver(quoteSchema) as any,
-    defaultValues: quote
-      ? toFormValues(quote)
-      : { currency: defaultCurrency, lines: [{ ...QUOTE_EMPTY_LINE }], taxRate: '', validUntil: null },
+    defaultValues: getDefaultValues(),
   });
+
+  // a revision or an amendment stays with the client of the quote it comes from: the server holds it too
+  const lockedClientParent = amendedQuote ?? quote?.parentQuote;
 
   return (
     <Form form={form} formId={QUOTE_FORM_ID} onSubmit={onSubmit}>
       <Stack spacing={2.5}>
-        <QuoteClientField initialClient={quote?.client} />
+        <QuoteClientField
+          initialClient={quote?.client ?? amendedQuote?.client}
+          lockedHelperText={lockedClientParent
+            ? t('project:quote.clientLocked', { number: lockedClientParent.number })
+            : undefined}
+        />
         <TextField
           fullWidth
           required

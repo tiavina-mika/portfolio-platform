@@ -7,17 +7,22 @@ export const QUOTE_EDITABLE_FIELDS = [
 
 /*
  * once a quote left `draft` it is never edited: what was sent to the client stays what is stored. A
- * revision is a new version (a later ticket), never an edit of this one
+ * revision is a new version, never an edit of this one
  */
 export const QUOTE_FROZEN_FIELDS = QUOTE_EDITABLE_FIELDS;
 
 /** the columns the quote list and the edit dialog need (the dialog opens on the row already loaded) */
 export const QUOTE_LIST_FIELDS = [
   ...QUOTE_EDITABLE_FIELDS, 'number', 'status', 'totalAmount', 'paidAmount', 'issuedAt', 'version',
-  'acceptedAt', 'acceptanceMethod', 'acceptanceProof', 'createdAt', 'updatedAt',
+  'acceptedAt', 'acceptanceMethod', 'acceptanceProof', 'createdAt', 'updatedAt', 'parentQuote',
   // the client is read through its pointer, never copied: only what the list shows of it
   'client.name', 'client.email',
+  // the quote revised or amended, named in the list by its number and version
+  'parentQuote.number', 'parentQuote.version', 'parentQuote.status',
 ];
+
+// the pointers a quote is read with: its client, and the quote it revises or amends
+export const QUOTE_INCLUDED_POINTERS = ['client', 'parentQuote'];
 
 /** the columns a list may be ordered on; anything else falls back to the most recently changed */
 export const QUOTE_ORDER_FIELDS = ['number', 'title', 'totalAmount', 'issuedAt', 'createdAt', 'updatedAt'];

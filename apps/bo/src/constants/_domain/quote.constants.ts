@@ -50,6 +50,10 @@ export const QUOTE_INPUT_FIELDS = ['client', 'title', 'lines', 'currency', 'taxR
 // a new line starts with one unit and nothing typed
 export const QUOTE_EMPTY_LINE = { label: '', quantity: 1, unitAmount: 0 };
 
+// the row actions that write a new quote from this one: its next version, or an amendment
+export const QUOTE_REVISE_ACTION_LABEL_KEY = 'project:quote.actions.revise';
+export const QUOTE_AMEND_ACTION_LABEL_KEY = 'project:quote.actions.amend';
+
 export const QUOTE_FORM_ID = 'quote-form';
 export const QUOTE_ACCEPT_FORM_ID = 'quote-accept-form';
 

@@ -14,7 +14,7 @@ import {
 } from '@/redux/reducers/_domain/quote.reducer';
 import { AppDispatch, AppThunkAction, RootState } from '@/redux/store';
 import {
-  changeQuoteStatus, createQuote, fetchQuotes, updateQuote, uploadQuoteAcceptanceProof,
+  changeQuoteStatus, createQuote, fetchQuotes, reviseQuote, updateQuote, uploadQuoteAcceptanceProof,
 } from '@/services/_domain/quote.service';
 import { IQueriesInput } from '@/types/_core/app.type';
 import { IQuote, IQuoteFormValues, IQuoteInput } from '@/types/_domain/quote.type';
@@ -73,7 +73,13 @@ export const loadQuotes = (queries: IQueriesInput): any => {
   });
 };
 
-export const createOrUpdateQuote = (values: IQuoteFormValues, quote?: IQuote | null): any => {
+/**
+ * writes a draft: edits the one given, or creates a quote
+ * @param amendedQuote on a new quote, the accepted quote it amends
+ */
+export const createOrUpdateQuote = (
+  values: IQuoteFormValues, quote?: IQuote | null, amendedQuote?: IQuote | null
+): any => {
   return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
     const context = getRequestContext(getState?.()!);
     const input = toQuoteInput(values);
@@ -86,10 +92,14 @@ export const createOrUpdateQuote = (values: IQuoteFormValues, quote?: IQuote | n
       return;
     }
 
-    const created = await createQuote(input, context);
+    const created = await createQuote(input, context, amendedQuote?.id);
 
     dispatch(addQuoteToQuotesSlice(created));
-    dispatch(setMessageSlice(i18n.t('project:quote.messages.created', { number: created.number })));
+    dispatch(setMessageSlice(amendedQuote
+      ? i18n.t('project:quote.messages.amendmentCreated', {
+        number: created.number, parentNumber: amendedQuote.number,
+      })
+      : i18n.t('project:quote.messages.created', { number: created.number })));
   },
   // rights
   {
@@ -131,6 +141,28 @@ export const setQuoteStatus = (
     collection,
     action: 'update',
     hasNoRightErrorMessage: rightsError('update'),
+  });
+};
+
+/**
+ * revises a sent quote: its next version shows at the top of the list as a draft, and the sent row
+ * stays where it is, now expired
+ */
+export const reviseSentQuote = (quote: IQuote): any => {
+  return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
+    const { quote: revision, revisedQuote } = await reviseQuote(quote.id, getRequestContext(getState?.()!));
+
+    dispatch(updateQuoteInQuotesSlice(revisedQuote));
+    dispatch(addQuoteToQuotesSlice(revision));
+    dispatch(setMessageSlice(i18n.t('project:quote.messages.revised', {
+      number: revision.number, version: revision.version,
+    })));
+  },
+  // rights: a revision writes a new quote and moves the one revised
+  {
+    collection,
+    action: 'create',
+    hasNoRightErrorMessage: rightsError('create'),
   });
 };
 

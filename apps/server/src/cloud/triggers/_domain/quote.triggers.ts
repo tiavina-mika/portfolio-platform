@@ -7,13 +7,15 @@ import type { Locale } from '@/types/app.type';
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
 import { collections } from '@/constants/_core/constants';
 import { QUOTE_FROZEN_FIELDS, QUOTE_NUMBER_TIME_ZONE } from '@/constants/_domain/quote.constants';
+import { QuoteParentRelationEnum } from '@/types/quote.type';
 import {
   buildQuoteCounterName, canAttachQuoteAcceptanceProof, formatQuoteNumber, getQuoteNumberYear,
-  isQuoteAcceptanceProofFile,
+  getQuoteParentRelation, isQuoteAcceptanceProofFile,
 } from '@/utils/_domain/quote.utils';
 
 import { takeNextCounterValueService } from '../../services/_core/counter.service.cloud';
 import { getClientByIdService } from '../../services/_domain/client.service.cloud';
+import { getQuoteByIdService } from '../../services/_domain/quote.service.cloud';
 import { convertIdToPointer } from '../../utils/_core/parse.utils.cloud';
 import { parseFunction } from '../../utils/_core/utils.cloud';
 
@@ -24,7 +26,7 @@ import { parseFunction } from '../../utils/_core/utils.cloud';
  * TODO(link:060-add-quote-payments-with-the-30-40-30-schedule): let the payment trigger keep
  * `paidAmount` up to date, and put it back here for every other save.
  */
-const SERVER_OWNED_FIELDS = ['number', 'version', 'issuedAt', 'acceptedAt', 'createdBy'] as const;
+const SERVER_OWNED_FIELDS = ['number', 'version', 'parentQuote', 'issuedAt', 'acceptedAt', 'createdBy'] as const;
 
 const restoreOriginalValue = (quote: Parse.Object, original: Parse.Object, field: string): void => {
   const value = original.get(field);
@@ -44,6 +46,54 @@ const assertActiveClient = async (quote: Parse.Object, locale: Locale): Promise<
   if (!client || client.get('status') !== ClientStatusEnum.ACTIVE) {
     throw new Error(translate('quote.clientNotActive', locale));
   }
+};
+
+// the quote this one revises or amends, or `null` for a first quote
+const getParentQuote = async (quote: Parse.Object, locale: Locale): Promise<Parse.Object | null> => {
+  const parentId: string | undefined = quote.get('parentQuote')?.id;
+
+  if (!parentId) return null;
+
+  const parent = await getQuoteByIdService(parentId);
+
+  if (!parent) throw new Error(translate('quote.parentNotFound', locale));
+
+  return parent;
+};
+
+/*
+ * a revision or an amendment carries on the dealings with the same client: its client is the one of
+ * the quote it points to, from its creation to its last edit
+ */
+const assertParentClient = (quote: Parse.Object, parent: Parse.Object, locale: Locale): void => {
+  if (quote.get('client')?.id !== parent.get('client')?.id) {
+    throw new Error(translate('quote.parentClientMismatch', locale, { number: parent.get('number') }));
+  }
+};
+
+/**
+ * What a new quote pointing to another one becomes, read from where that quote stands, whatever saved
+ * it: pointing to a sent quote it is its next version, under its number; pointing to an accepted one it
+ * is an amendment, under a number of its own (taken later, like any new quote). A draft, a refused or an
+ * expired quote is pointed to by nothing.
+ * @returns whether the quote took its number from the parent (a revision)
+ */
+const applyParentRelation = (quote: Parse.Object, parent: Parse.Object, locale: Locale): boolean => {
+  const relation = getQuoteParentRelation(parent.get('status'));
+
+  if (!relation) {
+    throw new Error(translate('quote.parentNotAllowed', locale, {
+      number: parent.get('number'),
+      status: translateStatus(parent.get('status'), locale),
+    }));
+  }
+
+  if (relation !== QuoteParentRelationEnum.REVISION) return false;
+
+  quote.set('number', parent.get('number'));
+  quote.set('version', (parent.get('version') ?? 1) + 1);
+
+  return true;
 };
 
 /**
@@ -122,14 +172,23 @@ Parse.Cloud.beforeSave(
       checkUpdatedQuote(quote, request.original, locale);
     }
 
-    if (isNew || quote.dirty('client')) await assertActiveClient(quote, locale);
+    const isClientSet = isNew || quote.dirty('client');
+
+    if (isClientSet) await assertActiveClient(quote, locale);
+
+    const parent = isClientSet ? await getParentQuote(quote, locale) : null;
+
+    if (parent) assertParentClient(quote, parent, locale);
+
+    // a revision takes the number of the quote it revises, so it takes none from the counter below
+    const isRevision = isNew && !!parent && applyParentRelation(quote, parent, locale);
 
     if (author) quote.set('updatedBy', author);
 
     // the server is the source of truth of the total, whatever the form showed
     quote.set('totalAmount', computeQuoteAmounts(quote.get('lines') ?? [], quote.get('taxRate')).totalAmount);
 
-    if (!isNew) return;
+    if (!isNew || isRevision) return;
 
     /*
      * the number is taken last, once every refusal above is behind: a refused quote takes no number,

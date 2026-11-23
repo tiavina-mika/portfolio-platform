@@ -293,7 +293,10 @@ A review of this note found the points below. The first group is already written
 
 ### Written into the model
 
-- ⏳ **Revision and amendment of a quote**: `version`, `parentQuote` (see [Quote](#quote)).
+- ✅ **Revision and amendment of a quote**: `version`, `parentQuote` (see [Quote](#quote)). The back-office
+  "Revise" action calls `reviseQuote`; an amendment is a `createQuote` with `parentQuote`. The trigger
+  decides from the status of the quote pointed to (sent: revision, accepted: amendment) and keeps the
+  client of that quote.
 - ⏳ **Who does a mission**: `assignee`.
 - ✅ **Client e-mail in lowercase**, so one person is one client.
 - ⏳ **Computed fields closed**: `number`, `version`, `totalAmount`, `paidAmount`, `amount` and `percent` are computed on the server, and the validation of the create and update functions **refuses** them in input, so a faulty or malicious back-office client cannot impose them. Done for the quote (`number`, `version`, `totalAmount`, `paidAmount`); `amount` and `percent` come with the payments.

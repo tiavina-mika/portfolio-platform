@@ -1,9 +1,12 @@
 import { QUOTE_ACCEPTANCE_PROOF_EXTENSIONS, QUOTE_ACCEPTANCE_PROOF_FOLDER } from '@shared/domain-constants';
 import { QuoteStatusEnum } from '@shared/domain-types';
+import { canAmendQuote, canReviseQuote } from '@shared/domain-utils';
 
 import {
   CLOUDINARY_DELIVERY_HOST, QUOTE_COUNTER_NAME_PREFIX, QUOTE_NUMBER_PREFIX, QUOTE_NUMBER_SEQUENCE_DIGITS,
 } from '@/constants/_domain/quote.constants';
+import { QuoteParentRelationEnum } from '@/types/quote.type';
+
 
 /**
  * The counter row the quotes of one year are numbered from: one row per year, so the numbering starts
@@ -76,3 +79,27 @@ export const isQuoteAcceptanceProofFile = (
 
   return pathname.endsWith(`/${file.publicId}.${extension}`);
 };
+
+/**
+ * What a new quote pointing to another one is, read from where that other quote stands: a sent quote
+ * is revised (a new version, same number), an accepted one is amended (a new quote, its own number).
+ * @param parentStatus the status of the quote pointed to
+ * @returns the relation, or `null` when no quote may point to one in that status (a draft is still
+ * edited, a refused or expired quote is over)
+ */
+export const getQuoteParentRelation = (parentStatus: QuoteStatusEnum): QuoteParentRelationEnum | null => {
+  if (canReviseQuote(parentStatus)) return QuoteParentRelationEnum.REVISION;
+  if (canAmendQuote(parentStatus)) return QuoteParentRelationEnum.AMENDMENT;
+
+  return null;
+};
+
+/**
+ * Whether a validity date is still ahead, so a copy of the quote may keep it.
+ * @param validUntil the last day the quote holds, if it has one
+ * @param now the moment of the copy
+ * @example isQuoteValidityAhead(new Date('2026-12-31'), new Date('2026-11-23')) => true
+ */
+export const isQuoteValidityAhead = (validUntil: Date | null | undefined, now: Date): boolean => (
+  !!validUntil && validUntil.getTime() > now.getTime()
+);

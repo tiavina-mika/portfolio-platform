@@ -67,6 +67,8 @@ const requestFieldsSchema = {
 
 export const createQuoteSchema = z.strictObject({
   ...quoteFieldsSchema,
+  // an amendment: the accepted quote it completes. A revision is never created here (`reviseQuote`)
+  parentQuote: objectIdFieldSchema.optional(),
   ...requestFieldsSchema,
 });
 
@@ -110,6 +112,9 @@ export const getQuoteSchema = z.strictObject({
   id: objectIdFieldSchema,
   ...requestFieldsSchema,
 });
+
+// the sent quote to revise, nothing else: the new version is a copy of it, edited afterwards as a draft
+export const reviseQuoteSchema = getQuoteSchema;
 
 const quotesFiltersSchema = z.object({
   status: z.enum(QuoteStatusEnum).optional(),

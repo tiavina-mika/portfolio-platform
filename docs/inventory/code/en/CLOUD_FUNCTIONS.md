@@ -49,7 +49,7 @@ Files are in `apps/server/src/cloud/functions/_core/` unless noted.
 | `test.functions.ts` | `getTestEmailSendersOptions`, `createBatchTest`, `destroyBatchTest`, `sendArticleToNewsletterTest`, `sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest`, `sendInvitationTest`, `sendWelcomeEmailTest`, `sendVerificationCodeSmsTest` (test helpers, imported only in local development and tests) |
 | `_domain/client.functions.ts` | `getClients`, `getClient`, `createClient`, `updateClient`, `archiveClient` (Aldaron workspace only: each one starts with `resolveWorkspace`; no delete function) |
 | `_domain/project.functions.ts` | `getProjects`, `getProject`, `getProjectForClient` |
-| `_domain/quote.functions.ts` | `getQuotes`, `getQuote`, `createQuote`, `updateQuote` (a draft only), `changeQuoteStatus` (Aldaron workspace only: each one starts with `resolveWorkspace`; no delete function) |
+| `_domain/quote.functions.ts` | `getQuotes`, `getQuote`, `createQuote` (also an amendment of an accepted quote), `updateQuote` (a draft only), `reviseQuote` (a new draft version of a sent quote), `changeQuoteStatus` (Aldaron workspace only: each one starts with `resolveWorkspace`; no delete function) |
 
 ## Triggers
 
