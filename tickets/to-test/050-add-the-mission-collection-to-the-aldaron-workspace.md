@@ -2,7 +2,7 @@
 type: feat
 apps: [libs, server, bo]
 branch: feat/aldaron-mission-collection
-pr:
+pr: https://github.com/tiavina-mika/portfolio-platform/pull/45
 ---
 
 ## Context
