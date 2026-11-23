@@ -2,7 +2,7 @@
 type: feat
 apps: [server, bo, aldaron-web]
 branch: feat/site-quote-request-conversion
-pr:
+pr: https://github.com/tiavina-mika/portfolio-platform/pull/44
 ---
 
 ## Context
