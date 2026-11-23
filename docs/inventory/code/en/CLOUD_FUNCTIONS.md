@@ -47,6 +47,7 @@ Files are in `apps/server/src/cloud/functions/_core/` unless noted.
 | `userSession.functions.ts` | `registerSession`, `getUserSessions`, `revokeSession`, `revokeOtherSessions`, `adminGetUserSessions`, `adminRevokeUserSession`, `adminRevokeAllUserSessions` |
 | `utils.functions.ts` | `getJobStatus`, `destroyObjects` |
 | `test.functions.ts` | `getTestEmailSendersOptions`, `createBatchTest`, `destroyBatchTest`, `sendArticleToNewsletterTest`, `sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest`, `sendInvitationTest`, `sendWelcomeEmailTest`, `sendVerificationCodeSmsTest` (test helpers, imported only in local development and tests) |
+| `_domain/client.functions.ts` | `getClients`, `getClient`, `createClient`, `updateClient`, `archiveClient` (Aldaron workspace only: each one starts with `resolveWorkspace`; no delete function) |
 | `_domain/project.functions.ts` | `getProjects`, `getProject`, `getProjectForClient` |
 
 ## Triggers
@@ -67,6 +68,7 @@ Files are in `apps/server/src/cloud/triggers/_core/` unless noted.
 | `pageSection.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `PageSection` |
 | `role.triggers.ts` | `beforeSave`, `afterSave`, `beforeDelete`, `afterDelete` `_Role` |
 | `user.triggers.ts` | `beforeSave`, `afterSave`, `beforeDelete`, `afterDelete` `_User` |
+| `_domain/client.triggers.ts` | `beforeSave` `Client` (e-mail in lowercase and unique, status and authors) |
 | `_domain/project.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `Project` |
 
 ## Cloud Jobs

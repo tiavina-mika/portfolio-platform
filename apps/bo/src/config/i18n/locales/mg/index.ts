@@ -9,6 +9,8 @@ import userInbox from './_core/user/inbox.json';
 import userNotification from './_core/user/notification.json';
 import user from './_core/user/user.json';
 import zod from './_core/zod.json';
+import clientEntity from './_domain/client-entity.json';
+import clientRoute from './_domain/client-route.json';
 import projectDashboard from './_domain/project-dashboard.json';
 import projectEntity from './_domain/project-entity.json';
 import projectRoute from './_domain/project-route.json';
@@ -24,7 +26,9 @@ export default {
   common,
   cms,
   dashboard: { ...dashboard, ...projectDashboard },
-  route: { ...route, ...projectRoute, website: { ...route.website, ...projectRoute.website } },
+  route: {
+    ...route, ...projectRoute, ...clientRoute, website: { ...route.website, ...projectRoute.website },
+  },
   user: {
     ...user, ...userInbox, ...userNotification,
   },
@@ -33,5 +37,5 @@ export default {
    * by `zod-i18n.ts`, and served as a namespace too so a validator can name one by hand
    */
   zod,
-  project: { ...project, ...projectEntity },
+  project: { ...project, ...projectEntity, ...clientEntity },
 } satisfies LocaleShape;

@@ -24,6 +24,7 @@ The sections follow the real sidebar groups, in menu order. Every sidebar entry 
   - [Liste](projects/fr/PROJECTS_LIST.FR.md)
   - [Ajout et modification](projects/fr/PROJECTS_ADD_EDIT.FR.md)
   - [Aperçu](projects/fr/PROJECTS_PREVIEW.FR.md)
+- [Clients](clients/fr/CLIENTS.FR.md) : liste, ajout, modification et archivage, dans l'espace Aldaron seulement.
 
 ## Communauté
 

@@ -1,0 +1,7 @@
+{
+  "clients": "clients",
+  "clientTabs": {
+    "active": "actifs",
+    "archived": "archives"
+  }
+}

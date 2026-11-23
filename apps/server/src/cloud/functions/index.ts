@@ -29,6 +29,7 @@ import './_core/contactChange.functions';
 import './_core/userSession.functions';
 
 // _domain = business-domain functions (the portfolio projects)
+import './_domain/client.functions';
 import './_domain/project.functions';
 
 if (IS_LOCAL || IS_TEST) {

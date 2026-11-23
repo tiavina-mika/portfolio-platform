@@ -24,6 +24,7 @@ export const PATH_NAMES = {
   notFound: '/' + i18n.t('route:notFound'),
   unauthorized: '/' + i18n.t('route:unauthorized'),
   projects: '/' + i18n.t('route:projects'),
+  clients: '/' + i18n.t('route:clients'),
   account: {
     root: '/' + i18n.t('route:account'),
     confirmResetPasswordCode: '/' + i18n.t('route:confirmCode'),

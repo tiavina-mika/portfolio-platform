@@ -1,0 +1,6 @@
+{
+  "client": {
+    "emailAlreadyUsed": "Efa an'ny mpanjifa « {{- name}} » io adiresy mailaka io.",
+    "notFound": "Tsy hita ilay mpanjifa."
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "client": {
+    "clients": "Clients",
+    "client": "Client",
+    "thisClient": "ce client",
+    "createClient": "Nouveau client",
+    "editClient": "Modifier {{name}}",
+    "kind": "Type",
+    "kinds": {
+      "company": "Entreprise",
+      "individual": "Particulier"
+    },
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "taxId": "Numéro d'entreprise ou de TVA",
+    "addressFields": {
+      "line1": "Adresse",
+      "line2": "Complément d'adresse",
+      "postalCode": "Code postal",
+      "city": "Ville",
+      "country": "Pays"
+    },
+    "notes": "Notes internes",
+    "notesHelper": "Visibles par l'équipe seulement, jamais envoyées au client.",
+    "statuses": {
+      "active": "Actif",
+      "archived": "Archivé",
+      "anonymized": "Anonymisé"
+    },
+    "archiveClient": "Archiver",
+    "restoreClient": "Remettre dans la liste",
+    "searchClient": "Rechercher par nom ou e-mail",
+    "messages": {
+      "created": "{{name}} a été ajouté aux clients.",
+      "updated": "{{name}} a été modifié.",
+      "archived": "{{name}} a été archivé.",
+      "restored": "{{name}} est de retour dans la liste."
+    }
+  }
+}

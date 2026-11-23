@@ -29,10 +29,10 @@ A role carries custom fields:
 - `rights`: a list of `{ className, rights }` where `rights` is a map of booleans for the operations `create`, `update`, `get`, `find`, `delete`, `destroy`.
 - `ui`: the back-office "ui" rights (`UIRoleEnum` in `apps/bo/src/types/_core/role.type.ts`): `migrations`, `cron`, `tests` (the tabs of the miscellaneous page), `impersonation`, `broadcast`, `staff`. The server mirrors the ones it must enforce (for example `IMPERSONATION_UI_RIGHT`).
 - `countries`: the countries the role is limited to (the `country-scope` trigger narrows queries accordingly).
-- `workspaces`: the workspaces (`portfolio`, `aldaron`, the values of `TargetEnum`) the role opens. A role without the field opens the portfolio only; the highest roles open every workspace without storing it. The workspaces of an account are the union of its roles', computed by `getCurrentUserWorkspaces`, and the list and detail functions of projects, articles, pages and categories refuse a workspace the account does not hold (`resolveWorkspace` in `apps/server/src/cloud/utils/_core/role.utils.cloud.ts`).
+- `workspaces`: the workspaces (`portfolio`, `aldaron`, the values of `TargetEnum`) the role opens. A role without the field opens the portfolio only; the highest roles open every workspace without storing it. The workspaces of an account are the union of its roles', computed by `getCurrentUserWorkspaces`, and the list and detail functions of projects, articles, pages and categories refuse a workspace the account does not hold (`resolveWorkspace` in `apps/server/src/cloud/utils/_core/role.utils.cloud.ts`). Every client function requires the `aldaron` workspace, whatever the rights on `Client`.
 - a custom back-office inactivity timeout, bounded between 15 and 480 minutes.
 
-Entities that can receive rights in the back-office form: `_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Notification`, `UserAuditLog` (`ENTITIES_WITH_RIGHTS_OPTIONS` in `apps/bo/src/constants/_core/user.constants.ts`), plus the entities a domain registers with `registerRightsEntities` (the `Project` domain does it in `apps/bo/src/utils/_domain/project-role.utils.ts`).
+Entities that can receive rights in the back-office form: `_User`, `_Role`, `Article`, `Page`, `Category`, `Contact`, `Notification`, `UserAuditLog` (`ENTITIES_WITH_RIGHTS_OPTIONS` in `apps/bo/src/constants/_core/user.constants.ts`), plus the entities a domain registers with `registerRightsEntities` (the domain does it for `Project` in `apps/bo/src/utils/_domain/project-role.utils.ts` and for `Client` in `apps/bo/src/utils/_domain/client-role.utils.ts`). The server accepts a right on any class of `collections` or of `DOMAIN_COLLECTIONS`.
 
 ## How a check works
 
@@ -41,7 +41,7 @@ Entities that can receive rights in the back-office form: `_User`, `_Role`, `Art
 1. `OWNER` and `SUPER_ADMIN` users always pass.
 2. Otherwise the rights of the user's roles for the entity add up: each requested operation must be granted by at least one role.
 
-`fromBO(action, rights, className)` applies this check to a Cloud Function; with no `rights` argument it only requires a logged-in user. `hasBoRight(user, uiRight)` checks a "ui" right. Server-side queries use the master key, so these checks are the guard of a back-office function. The Parse class-level permissions (CLP) are rebuilt from the roles at every boot (`rebuildAllCLP`); the classes in `ALWAYS_LOCKED_CLASSES` are never granted to a role.
+`fromBO(action, rights, className)` applies this check to a Cloud Function; with no `rights` argument it only requires a logged-in user. `hasBoRight(user, uiRight)` checks a "ui" right. Server-side queries use the master key, so these checks are the guard of a back-office function. The Parse class-level permissions (CLP) are rebuilt from the roles at every boot (`rebuildAllCLP`); the classes in `ALWAYS_LOCKED_CLASSES` are never granted to a role. The classes in `FUNCTION_ONLY_CLASSES` (`Client`) take no CLP grant from the role rights either: a raw SDK call would skip the workspace check, so they are reached through their Cloud Functions only, where `fromBO` still applies the role rights.
 
 ## How the first Owners appear
 

@@ -7,12 +7,16 @@ import { t, type InitOptions } from "i18next";
 import commonEn from './locales/en/_core/common.json' with { type: 'json' };
 import commonFr from './locales/fr/_core/common.json' with { type: 'json' };
 import commonMg from './locales/mg/_core/common.json' with { type: 'json' };
+import clientEn from './locales/en/_domain/client.json' with { type: 'json' };
+import clientFr from './locales/fr/_domain/client.json' with { type: 'json' };
+import clientMg from './locales/mg/_domain/client.json' with { type: 'json' };
 import type { Locale } from "@/types/app.type";
 
+// the domain's own messages sit under their own top-level key, so merging them never replaces a core one
 export const resources = {
-  en: { common: commonEn },
-  fr: { common: commonFr },
-  mg: { common: commonMg },
+  en: { common: { ...commonEn, ...clientEn } },
+  fr: { common: { ...commonFr, ...clientFr } },
+  mg: { common: { ...commonMg, ...clientMg } },
 };
 
 export const locales = Object.keys(resources);

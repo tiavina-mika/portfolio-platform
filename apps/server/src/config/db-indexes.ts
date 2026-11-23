@@ -207,6 +207,19 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
     { spec: { 'translated.en.slug': 1 } },
     { spec: { 'translated.mg.slug': 1 } },
   ],
+  [DOMAIN_COLLECTIONS.client]: [
+    /*
+     * one e-mail, one client: the `beforeSave` trigger refuses a taken address with a readable
+     * message, and this index is what still holds under two saves at the same moment. Partial on a
+     * non-empty address, so the anonymized clients, whose address is erased, never collide.
+     */
+    {
+      spec: { email: 1 },
+      options: { name: 'clientEmail_unique', unique: true, partialFilterExpression: { email: { $gt: '' } } },
+    },
+    // the back-office list: one status (the tab), ordered or searched by name
+    { spec: { status: 1, name: 1 } },
+  ],
   [collections.Page]: [
     /*
      * the technical code the mobile app reads a page by (`CGU`, `PRIVACY_POLICY`) — same reasoning
