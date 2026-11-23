@@ -2,7 +2,7 @@
 type: feat
 apps: [server, bo]
 branch: feat/quote-revisions-and-amendments
-pr:
+pr: https://github.com/tiavina-mika/portfolio-platform/pull/43
 ---
 
 ## Context
