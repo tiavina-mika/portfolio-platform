@@ -1,0 +1,40 @@
+{
+  "client": {
+    "clients": "Clients",
+    "client": "Client",
+    "thisClient": "this client",
+    "createClient": "New client",
+    "editClient": "Edit {{name}}",
+    "kind": "Kind",
+    "kinds": {
+      "company": "Company",
+      "individual": "Individual"
+    },
+    "email": "E-mail",
+    "phone": "Phone",
+    "taxId": "Company or VAT number",
+    "addressFields": {
+      "line1": "Address line 1",
+      "line2": "Address line 2",
+      "postalCode": "Postal code",
+      "city": "City",
+      "country": "Country"
+    },
+    "notes": "Internal notes",
+    "notesHelper": "Seen by the team only, never sent to the client.",
+    "statuses": {
+      "active": "Active",
+      "archived": "Archived",
+      "anonymized": "Anonymized"
+    },
+    "archiveClient": "Archive",
+    "restoreClient": "Put back in the list",
+    "searchClient": "Search by name or e-mail",
+    "messages": {
+      "created": "{{name}} was added to the clients.",
+      "updated": "{{name}} was updated.",
+      "archived": "{{name}} was archived.",
+      "restored": "{{name}} is back in the list."
+    }
+  }
+}

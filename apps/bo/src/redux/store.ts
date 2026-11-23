@@ -22,6 +22,7 @@ import settingsReducer from '@/redux/reducers/_core/settings.reducer';
 import userReducer from '@/redux/reducers/_core/user.reducer';
 import userBlockReducer from '@/redux/reducers/_core/userBlock.reducer';
 import userSessionReducer from '@/redux/reducers/_core/userSession.reducer';
+import clientReducer from '@/redux/reducers/_domain/client.reducer';
 import projectReducer from '@/redux/reducers/_domain/project.reducer';
 
 /*
@@ -50,6 +51,7 @@ const reducers = {
   roleAuditLog: roleAuditLogReducer,
   page: pageReducer,
   project: projectReducer,
+  client: clientReducer,
   notification: notificationReducer,
   globalSearch: globalSearchReducer,
   impersonation: impersonationReducer,

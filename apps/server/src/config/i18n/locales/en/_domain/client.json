@@ -1,0 +1,6 @@
+{
+  "client": {
+    "emailAlreadyUsed": "This e-mail address is already the one of the client \"{{- name}}\".",
+    "notFound": "Client not found."
+  }
+}

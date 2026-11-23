@@ -166,7 +166,21 @@ export const ALWAYS_LOCKED_CLASSES: string[] = [
   collections.UserAuditLog,
   collections.MfaAuditLog,
   collections.ContentVersion,
+  /*
+   * the Aldaron clients: created by their first save with the master key, so without this entry a
+   * database where no role cites them yet left them with Parse's default public CLP
+   */
+  DOMAIN_COLLECTIONS.client,
 ];
+
+/**
+ * Classes read and written only through their Cloud Functions, because a role right is not enough to
+ * reach them: the Aldaron classes also need the account's roles to open the Aldaron workspace, which
+ * only `resolveWorkspace` in those functions checks. Their CLP never mirrors the role rights (a raw
+ * SDK call would skip the workspace check) and stays limited to `HIGHEST_LEVEL_ROLES`, who hold every
+ * workspace. The role rights still apply: `fromBO` checks them in each function.
+ */
+export const FUNCTION_ONLY_CLASSES: string[] = [DOMAIN_COLLECTIONS.client];
 
 /**
  * Fields pre-created in the schema (master key, at CLP rebuild time) so the column

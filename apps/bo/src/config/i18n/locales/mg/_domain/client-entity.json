@@ -1,0 +1,40 @@
+{
+  "client": {
+    "clients": "Mpanjifa",
+    "client": "Mpanjifa",
+    "thisClient": "ity mpanjifa ity",
+    "createClient": "Mpanjifa vaovao",
+    "editClient": "Hanova an'i {{name}}",
+    "kind": "Karazana",
+    "kinds": {
+      "company": "Orinasa",
+      "individual": "Olon-tsotra"
+    },
+    "email": "Mailaka",
+    "phone": "Telefaonina",
+    "taxId": "Laharan'ny orinasa na ny TVA",
+    "addressFields": {
+      "line1": "Adiresy",
+      "line2": "Fanampin'ny adiresy",
+      "postalCode": "Kaody paositra",
+      "city": "Tanàna",
+      "country": "Firenena"
+    },
+    "notes": "Fanamarihana anatiny",
+    "notesHelper": "Ny ekipa ihany no mahita azy, tsy alefa amin'ny mpanjifa mihitsy.",
+    "statuses": {
+      "active": "Mavitrika",
+      "archived": "Voatahiry",
+      "anonymized": "Tsy fantatra anarana"
+    },
+    "archiveClient": "Tahirizina",
+    "restoreClient": "Averina ao amin'ny lisitra",
+    "searchClient": "Hikaroka amin'ny anarana na mailaka",
+    "messages": {
+      "created": "Tafiditra ho mpanjifa i {{name}}.",
+      "updated": "Voaova i {{name}}.",
+      "archived": "Voatahiry i {{name}}.",
+      "restored": "Niverina tao amin'ny lisitra i {{name}}."
+    }
+  }
+}

@@ -69,8 +69,9 @@ export interface IThemeColors {
 }
 
 /**
- * What a workspace changes in the back-office: the brand the sidebar wears and the settings sections
- * that make no sense in it. The one place to edit to add a workspace or hide a section.
+ * What a workspace changes in the back-office: the brand the sidebar wears, and the settings sections
+ * and sidebar entries that make no sense in it. The one place to edit to add a workspace or hide a
+ * section.
  */
 export interface IWorkspaceConfig {
   /** the translation key of the workspace's name */
@@ -83,6 +84,8 @@ export interface IWorkspaceConfig {
   icon: { black: string; white: string };
   /** the settings sections hidden while working in this workspace */
   hiddenSettingsSections: SettingsSection[];
+  /** the sidebar entries (their `id`) hidden while working in this workspace */
+  hiddenMenuIds: string[];
 }
 
 /*

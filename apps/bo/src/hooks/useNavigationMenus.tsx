@@ -1,6 +1,7 @@
 import { useNavigate } from '@tanstack/react-router';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { capitalize } from 'string-ts';
 
 import {
@@ -15,9 +16,11 @@ import {
   MessageCircleIcon,
   ServerIcon,
   SettingsIcon,
+  SmileIcon,
   UserIcon,
 } from '@/components/icons/SidebarIcons';
 import { COLLECTIONS } from '@/constants/_core/app.constants';
+import { WORKSPACES } from '@/constants/_core/workspace.constants';
 import { goToHome, goToMisc, goToSettings } from '@/redux/actions/_core/app.action';
 import { goToArticles } from '@/redux/actions/_core/article.action';
 import { goToCategories } from '@/redux/actions/_core/category.action';
@@ -27,6 +30,7 @@ import { goToRoles } from '@/redux/actions/_core/role.action';
 import { goToUsers } from '@/redux/actions/_core/user.action';
 import { goToList } from '@/redux/actions/_core/util.action';
 import { goToProjects } from '@/redux/actions/_domain/project.action';
+import { getSettingsWorkspaceSelector } from '@/redux/reducers/_core/settings.reducer';
 import { ISidebarMenu } from '@/types/_core/navigation.type';
 import { UIRoleEnum } from '@/types/_core/role.type';
 import { PATH_NAMES } from '@/utils/_core/pathnames';
@@ -42,8 +46,9 @@ const ICON_SIZE = 18;
 export const useNavigationMenus = (): ISidebarMenu[] => {
   const { t } = useTranslation(['common', 'route', 'user', 'statistics', 'project']);
   const navigate = useNavigate();
+  const workspace = useSelector(getSettingsWorkspaceSelector);
 
-  return useMemo(() => [
+  return useMemo(() => ([
     {
       title: t('common:sidebar.operations'),
       subMenus: [
@@ -60,6 +65,14 @@ export const useNavigationMenus = (): ISidebarMenu[] => {
           onClick: () => navigate(goToProjects()),
           icon: <CodeIcon size={ICON_SIZE} />,
           className: COLLECTIONS.project,
+          hasRightName: 'canFind',
+        },
+        {
+          id: PATH_NAMES.clients,
+          label: t('project:client.clients'),
+          onClick: () => navigate(goToList('clients')),
+          icon: <SmileIcon size={ICON_SIZE} />,
+          className: COLLECTIONS.client,
           hasRightName: 'canFind',
         },
       ],
@@ -163,7 +176,10 @@ export const useNavigationMenus = (): ISidebarMenu[] => {
         },
       ],
     },
-
-
-  ], [t, navigate]);
+  ] satisfies ISidebarMenu[])
+    // what the workspace worked in hides is left out, as the registry says — one edit per workspace
+    .map((menu) => ({
+      ...menu,
+      subMenus: menu.subMenus.filter((subMenu) => !WORKSPACES[workspace].hiddenMenuIds.includes(subMenu.id)),
+    })), [t, navigate, workspace]);
 };

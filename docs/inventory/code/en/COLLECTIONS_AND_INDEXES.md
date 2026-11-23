@@ -14,6 +14,7 @@ Domain class names are in `libs/shared-domain-constants` (`DOMAIN_COLLECTIONS`);
 | Collection | Holds | Used by |
 |---|---|---|
 | `Project` (domain) | Portfolio projects | server, bo, web |
+| `Client` (domain) | Clients of the Aldaron workspace; reached through their Cloud Functions only, never public | server, bo |
 | `Article` | Blog articles (translated content, `active`, `deleted` flags) | server, bo, web |
 | `Page` | Editorial pages | server, bo, web |
 | `PageSection` | Sections grouping the pages | server, bo, web |
@@ -37,6 +38,7 @@ Indexes are declared in code, in `apps/server/src/config/db-indexes.ts` (`INDEXE
 
 - `Project` and `Article`: `translated.fr.slug`, `translated.en.slug` and `translated.mg.slug`, for the public read by slug.
 - `Newsletter`: `email`, and `confirmationTokenHash` (sparse) for the confirmation link.
+- `Client`: `email` (unique when not empty, so one address is one client) and `status` + `name` for the list.
 - `Notification`: recipient list, read-state and send-type filters, `idempotencyKey` (unique, sparse).
 - `Invitation`: `token` (unique, sparse) and `email`.
 - `User`, `Contact`, `Category`, `Page` (`code`, unique when set), `ContentVersion`, `UserSession` and the audit logs have their own indexes.
@@ -52,4 +54,4 @@ Indexes are declared in code, in `apps/server/src/config/db-indexes.ts` (`INDEXE
 
 ## Gotchas
 
-- The `Project` class name is not in `collections`: it comes from `DOMAIN_COLLECTIONS`, so a core file that needs it must import it from the shared lib.
+- The `Project` and `Client` class names are not in `collections`: they come from `DOMAIN_COLLECTIONS`, so a core file that needs them must import them from the shared lib.

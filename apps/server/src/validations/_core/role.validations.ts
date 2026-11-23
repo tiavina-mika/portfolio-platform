@@ -1,6 +1,7 @@
 import {
   COUNTRIES, ROLE_SESSION_TIMEOUT_MAX_MINUTES, ROLE_SESSION_TIMEOUT_MIN_MINUTES,
 } from '@shared/constants';
+import { DOMAIN_COLLECTIONS } from '@shared/domain-constants';
 import { TargetEnum } from '@shared/types';
 import {
   string, object, array, boolean, partialRecord, number, z,
@@ -33,8 +34,13 @@ export const removeRolesForUserSchema = object({
   roleNames: array(string()).min(1).max(ROLE_NAMES_MAX_COUNT),
 });
 
+/*
+ * the domain classes (`Project`, `Client`…) carry role rights too: leaving them out refused every role
+ * saved with a right on them
+ */
 const validClassNamesList: string[] = [
   ...Object.values(collections),
+  ...Object.values(DOMAIN_COLLECTIONS),
   '_Role',
 ];
 

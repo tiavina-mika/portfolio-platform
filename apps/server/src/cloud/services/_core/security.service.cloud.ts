@@ -5,6 +5,7 @@ import {
   CLP_CLASS_ALIASES,
   EXTRA_SCHEMA_FIELDS,
   FULL_ACCESS_OPERATIONS,
+  FUNCTION_ONLY_CLASSES,
   OWNER_POINTER_FIELDS,
   ALWAYS_REBUILT_CLASSES,
   PUBLIC_READ_CLASSES,
@@ -50,7 +51,10 @@ export const buildCLPForClass = (
     clp.addField[`role:${roleName}`] = true;
   };
 
-  for (const role of roleRights) {
+  // a class reached through its Cloud Functions only takes no grant from the role rights
+  const grantingRoles = FUNCTION_ONLY_CLASSES.includes(className) ? [] : roleRights;
+
+  for (const role of grantingRoles) {
     const classEntry = role.rights.find((r) => r.className === sourceClassName);
 
     if (!classEntry) continue;

@@ -296,7 +296,7 @@ Une relecture de cette note a trouvé les points ci-dessous. Le premier groupe e
 - ⏳ **Révision et avenant d'un devis** : `version`, `parentQuote` (voir [Devis](#devis)).
 - ⏳ **Preuve d'acceptation** : `acceptedAt`, `acceptanceMethod`, `acceptanceProof`.
 - ⏳ **Qui fait une mission** : `assignee`.
-- ⏳ **E-mail du client en minuscules**, pour qu'une personne soit un seul client.
+- ✅ **E-mail du client en minuscules**, pour qu'une personne soit un seul client.
 - ⏳ **Champs calculés fermés** : `number`, `version`, `totalAmount`, `paidAmount`, `amount` et `percent` sont calculés côté serveur, et la validation des fonctions de création et de mise à jour les **refuse** en entrée, pour qu'un client du back-office défaillant ou malveillant ne puisse pas les imposer.
 
 ### À construire avec la première collection
@@ -341,8 +341,8 @@ Une relecture de cette note a trouvé les points ci-dessous. Le premier groupe e
 
 ## Ordre de travail
 
-1. ⏳ Constantes et enums partagés, `Client` côté serveur (service, fonctions, trigger, index, i18n).
-2. ⏳ `Client` dans le back-office (pages, route, entrée de menu via le registre, droits), et sa page de fonctionnalité française.
+1. ✅ Constantes et enums partagés, `Client` côté serveur (service, fonctions, trigger, index, i18n).
+2. ✅ `Client` dans le back-office (pages, route, entrée de menu via le registre, droits), et sa page de fonctionnalité française.
 3. ⏳ `Quote` côté serveur (numéro, total, transitions), puis dans le back-office, et sa page de fonctionnalité française.
    Puis les demandes de devis : `target` et `quote` sur `Contact`, la cible envoyée par `aldaron-web`, la liste des contacts qui suit l'espace de travail et l'action « Créer le client et le devis ».
 4. ⏳ `Mission` côté serveur, puis dans le back-office, et sa page de fonctionnalité française.

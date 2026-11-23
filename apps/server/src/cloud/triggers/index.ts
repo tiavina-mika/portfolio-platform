@@ -13,4 +13,5 @@ import './_core/role.triggers';
 import './_core/user.triggers';
 
 // _domain = business-domain triggers (the portfolio projects)
+import './_domain/client.triggers';
 import './_domain/project.triggers';

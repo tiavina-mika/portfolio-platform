@@ -3,6 +3,7 @@ import { TargetEnum } from '@shared/types';
 import { IMAGES } from '@/constants/_core/app.constants';
 import { WEBSITE_SETTINGS_SECTIONS } from '@/constants/_core/settings.constants';
 import { IWorkspaceConfig } from '@/types/_core/setting.type';
+import { PATH_NAMES } from '@/utils/_core/pathnames';
 
 /**
  * What each workspace shows: the one place to edit to add a workspace or to hide a section in one.
@@ -16,6 +17,8 @@ export const WORKSPACES: Record<TargetEnum, IWorkspaceConfig> = {
     logoWidth: 80,
     icon: { black: IMAGES.blackIconLogo, white: IMAGES.whiteIconLogo },
     hiddenSettingsSections: [],
+    // the clients are Aldaron's business, the portfolio has none
+    hiddenMenuIds: [PATH_NAMES.clients],
   },
   [TargetEnum.ALDARON]: {
     labelKey: 'cms:target.aldaron',
@@ -24,5 +27,6 @@ export const WORKSPACES: Record<TargetEnum, IWorkspaceConfig> = {
     icon: { black: IMAGES.aldaronBlackIconLogo, white: IMAGES.aldaronWhiteIconLogo },
     // these forms edit the portfolio's website, which Aldaron does not have
     hiddenSettingsSections: WEBSITE_SETTINGS_SECTIONS,
+    hiddenMenuIds: [],
   },
 };

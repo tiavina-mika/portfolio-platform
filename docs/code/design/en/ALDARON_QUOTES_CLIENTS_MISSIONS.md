@@ -296,7 +296,7 @@ A review of this note found the points below. The first group is already written
 - ⏳ **Revision and amendment of a quote**: `version`, `parentQuote` (see [Quote](#quote)).
 - ⏳ **Proof of acceptance**: `acceptedAt`, `acceptanceMethod`, `acceptanceProof`.
 - ⏳ **Who does a mission**: `assignee`.
-- ⏳ **Client e-mail in lowercase**, so one person is one client.
+- ✅ **Client e-mail in lowercase**, so one person is one client.
 - ⏳ **Computed fields closed**: `number`, `version`, `totalAmount`, `paidAmount`, `amount` and `percent` are computed on the server, and the validation of the create and update functions **refuses** them in input, so a faulty or malicious back-office client cannot impose them.
 
 ### To build with the first collection
@@ -341,8 +341,8 @@ A review of this note found the points below. The first group is already written
 
 ## Order of work
 
-1. ⏳ Shared constants and enums, `Client` on the server (service, functions, trigger, indexes, i18n).
-2. ⏳ `Client` in the back-office (pages, route, menu entry through the registry, rights), and its French feature page.
+1. ✅ Shared constants and enums, `Client` on the server (service, functions, trigger, indexes, i18n).
+2. ✅ `Client` in the back-office (pages, route, menu entry through the registry, rights), and its French feature page.
 3. ⏳ `Quote` on the server (number, total, transitions), then in the back-office, and its French feature page.
    Then the quote requests: `target` and `quote` on `Contact`, the target sent by `aldaron-web`, the contact list following the workspace and the "Create the client and the quote" action.
 4. ⏳ `Mission` on the server, then in the back-office, and its French feature page.
