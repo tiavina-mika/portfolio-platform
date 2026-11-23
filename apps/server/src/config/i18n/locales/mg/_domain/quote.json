@@ -1,0 +1,16 @@
+{
+  "quote": {
+    "acceptanceMethodRequired": "Lazao ny fomba nanekeran'ny mpanjifa ilay tolotra vidiny.",
+    "clientNotActive": "Voatahiry na tsy fantatra anarana io mpanjifa io: avereno ao amin'ny lisitra aloha vao manoratra tolotra vidiny ho azy.",
+    "notEditable": "Tsy azo ovaina intsony ny tolotra vidiny {{status}}: ny drafitra ihany no azo ovaina.",
+    "notFound": "Tsy hita ilay tolotra vidiny.",
+    "statusChangeNotAllowed": "Tsy afaka ho {{to}} ny tolotra vidiny {{from}}.",
+    "statuses": {
+      "accepted": "neken'ny mpanjifa",
+      "draft": "drafitra",
+      "expired": "lany daty",
+      "refused": "nolavina",
+      "sent": "nalefa"
+    }
+  }
+}

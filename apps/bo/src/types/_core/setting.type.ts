@@ -1,7 +1,9 @@
 import { PaletteColorOptions, PaletteMode } from '@mui/material';
 
+
 import type { LanguageCode } from '@shared/constants';
 import type { TargetEnum } from '@shared/types';
+import type { ComponentType } from 'react';
 
 
 export type Locale = LanguageCode | '';
@@ -35,6 +37,11 @@ export interface ISettingState {
    * in: amounts of two currencies are never added up. Optional: a state saved before it existed has none.
    */
   moneyCountry?: string;
+  /**
+   * The ISO 4217 code a new money record (a quote) starts in: it only prefills a form, the record then
+   * stores its own currency. Optional: a state saved before it existed has none.
+   */
+  defaultCurrency?: string;
   isAuthenticated?: boolean;
   /**
    * The workspace the signed-in person works in — a local preference like the theme, never stored on
@@ -103,3 +110,15 @@ export enum SettingsSectionEnum {
 }
 
 export type SettingsSection = `${SettingsSectionEnum}`;
+
+/**
+ * A setting a business domain adds to a section of the settings page, shown only in the workspaces it
+ * belongs to. The generic page renders it without knowing the domain.
+ */
+export interface ISettingsExtraRow {
+  // a stable key for the list
+  id: string;
+  section: SettingsSection;
+  workspaces: TargetEnum[];
+  component: ComponentType;
+}

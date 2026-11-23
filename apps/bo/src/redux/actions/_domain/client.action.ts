@@ -1,9 +1,12 @@
+import { ClientStatusEnum } from '@shared/domain-types';
 import { TargetEnum } from '@shared/types';
 import pick from 'lodash/pick';
 
 import i18n from '@/config/i18n';
 import { DEFAULT_PAGINATION, Errors, PAGINATION } from '@/constants/_core/app.constants';
-import { CLIENT_COLLECTION, CLIENT_INPUT_FIELDS, CLIENT_TAB_OPTIONS } from '@/constants/_domain/client.constants';
+import {
+  CLIENT_COLLECTION, CLIENT_INPUT_FIELDS, CLIENT_PICKER_OPTIONS_LIMIT, CLIENT_TAB_OPTIONS,
+} from '@/constants/_domain/client.constants';
 import { actionWithLoader, onEnterActionWithLoader } from '@/redux/actions/_core/util.action';
 import { setMessageSlice } from '@/redux/reducers/_core/app.reducer';
 import { getSettingsLocaleSelector, getSettingsWorkspaceSelector } from '@/redux/reducers/_core/settings.reducer';
@@ -52,7 +55,13 @@ export const loadClients = (queries: IQueriesInput): any => {
   });
 };
 
-export const createOrUpdateClient = (values: IClientInput, client?: IClient | null): any => {
+/**
+ * @param onCreated handed the client just created, so a form that created it on the way (the quote
+ * form) can pick it at once
+ */
+export const createOrUpdateClient = (
+  values: IClientInput, client?: IClient | null, onCreated?: (client: IClient) => void
+): any => {
   return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
     const context = getRequestContext(getState?.()!);
     const input = toClientInput(values);
@@ -63,8 +72,11 @@ export const createOrUpdateClient = (values: IClientInput, client?: IClient | nu
       return;
     }
 
-    dispatch(addClientToClientsSlice(await createClient(input, context)));
+    const created = await createClient(input, context);
+
+    dispatch(addClientToClientsSlice(created));
     dispatch(setMessageSlice(i18n.t('project:client.messages.created', { name: input.name })));
+    onCreated?.(created);
   },
   // rights
   {
@@ -96,6 +108,32 @@ export const setClientArchived = (client: IClient, archived: boolean): any => {
     hasNoRightErrorMessage: i18n.t('common:errors.hasNoRightToUpdate', {
       value: i18n.t('project:client.thisClient'),
     }),
+  });
+};
+
+/**
+ * the active clients whose name or e-mail holds what is typed, for a client picker: an archived or
+ * anonymized client gets no new quote
+ * @param onLoaded handed the clients found
+ */
+export const searchActiveClients = (text: string, onLoaded: (clients: IClient[]) => void): any => {
+  return actionWithLoader(async (_dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
+    const result = await fetchClients({
+      limit: CLIENT_PICKER_OPTIONS_LIMIT,
+      skip: 0,
+      orderBy: 'name',
+      order: 'asc',
+      filters: { status: ClientStatusEnum.ACTIVE },
+      search: text ? { text } : undefined,
+      ...getRequestContext(getState?.()!),
+    });
+
+    onLoaded(result.results);
+  },
+  // rights
+  {
+    collection,
+    action: 'find',
   });
 };
 

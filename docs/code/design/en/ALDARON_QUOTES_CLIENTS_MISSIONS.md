@@ -297,11 +297,11 @@ A review of this note found the points below. The first group is already written
 - ⏳ **Proof of acceptance**: `acceptedAt`, `acceptanceMethod`, `acceptanceProof`.
 - ⏳ **Who does a mission**: `assignee`.
 - ✅ **Client e-mail in lowercase**, so one person is one client.
-- ⏳ **Computed fields closed**: `number`, `version`, `totalAmount`, `paidAmount`, `amount` and `percent` are computed on the server, and the validation of the create and update functions **refuses** them in input, so a faulty or malicious back-office client cannot impose them.
+- ⏳ **Computed fields closed**: `number`, `version`, `totalAmount`, `paidAmount`, `amount` and `percent` are computed on the server, and the validation of the create and update functions **refuses** them in input, so a faulty or malicious back-office client cannot impose them. Done for the quote (`number`, `version`, `totalAmount`, `paidAmount`); `amount` and `percent` come with the payments.
 
 ### To build with the first collection
 
-- ⏳ **Number without a gap.** A counter row (class `Counter`: `name` such as `quote-2026`, `value`, unique index on `name`) incremented atomically with Parse's `increment` in the same save, never read then written. Declared with the other indexes.
+- ✅ **Number without a gap.** A counter row (class `Counter`: `name` such as `quote-2026`, `value`, unique index on `name`) incremented atomically with Parse's `increment` in the same save, never read then written. Declared with the other indexes.
 - ⏳ **Audit trail.** For money, `updatedAt` is not enough: who changed which status, when. An append-only collection of events (class of the entity, id, action, previous and new value, user, date), written by the triggers of quotes, payments and missions. First check whether the project already has a journal; this note did not verify it.
 - ⏳ **Anonymize a client.** Archiving conflicts with the right to erasure of an individual client. An "anonymize" action (owner only) erases name, e-mail, phone, address, tax id and notes, keeps the id, the amounts and the dates, and sets the status `anonymized`; lists show a translated "anonymized client". The retention time of the accounting data is to confirm with the accountant, and the privacy policy of `aldaron-web` must mention how long clients and quotes are kept.
 - ⏳ **Expire quotes automatically.** A daily job (`node-cron`, wired in `index.ts` and imported in `cloud/jobs/index.ts`) sets `expired` on a `sent` quote whose `validUntil` has passed. It is added to the jobs of `docs/inventory/README.md`.
@@ -343,8 +343,8 @@ A review of this note found the points below. The first group is already written
 
 1. ✅ Shared constants and enums, `Client` on the server (service, functions, trigger, indexes, i18n).
 2. ✅ `Client` in the back-office (pages, route, menu entry through the registry, rights), and its French feature page.
-3. ⏳ `Quote` on the server (number, total, transitions), then in the back-office, and its French feature page.
-   Then the quote requests: `target` and `quote` on `Contact`, the target sent by `aldaron-web`, the contact list following the workspace and the "Create the client and the quote" action.
+3. ✅ `Quote` on the server (number, total, transitions), then in the back-office, and its French feature page. The acceptance proof file is its own ticket (`025-attach-an-acceptance-proof-file-to-a-quote`).
+   ⏳ Then the quote requests: `target` and `quote` on `Contact`, the target sent by `aldaron-web`, the contact list following the workspace and the "Create the client and the quote" action.
 4. ⏳ `Mission` on the server, then in the back-office, and its French feature page.
 5. ⏳ `Payment`: the schedule constant, the creation on acceptance, the triggers, then the back-office (payments of a quote, mark as paid), and its French feature page.
 6. ⏳ Dashboard card, inventory, and marking step 4 ✅ in the workspace note.

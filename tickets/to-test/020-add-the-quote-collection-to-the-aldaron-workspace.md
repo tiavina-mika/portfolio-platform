@@ -1,7 +1,7 @@
 ---
 type: feat
 apps: [libs, server, bo]
-branch:
+branch: feat/aldaron-quote-collection
 pr:
 ---
 
@@ -58,12 +58,55 @@ unwired: each part must be reachable from the back-office).
 - [ ] Each new quote gets a unique readable number with no gap inside a year
 - [ ] A quote can go `draft → sent → accepted`, `refused` or `expired`, and any other transition is refused
 - [ ] The lines of a quote that left `draft` cannot be changed
-- [ ] Sending a number, a total or a paid amount in the request does not change the stored values
+- [x] Sending a number, a total or a paid amount in the request does not change the stored values
 - [ ] Accepting a quote records the date and the acceptance method (and an optional proof file)
 - [ ] The list filters by status and shows the client name without a copied name stored on the quote
-- [ ] Labels and errors exist in `fr`, `en` and `mg`
+- [x] Labels and errors exist in `fr`, `en` and `mg`
 
 ## Comments
 
 ### 2026-11-22 · Claude · backlog
 Written from the design note.
+
+### 2026-11-23 · Claude · in-progress
+Taken by `/dev --auto` (first usable ticket: `todo/` empty). Branch `feat/aldaron-quote-collection` from
+`develop`. Too big for one session with the acceptance proof file: that part is split into
+`025-attach-an-acceptance-proof-file-to-a-quote` (backlog); this ticket records the date and the method.
+
+### 2026-11-23 · Claude · to-test
+**What changed**: a `Quote` collection for the Aldaron workspace. Server: five Cloud Functions (`getQuotes`,
+`getQuote`, `createQuote`, `updateQuote`, `changeQuoteStatus`), each checking the Aldaron workspace then the
+right; a `beforeSave` trigger (born draft, total recomputed, number `AL-<year>-<NNN>` from an atomic yearly
+`Counter` taken last, transitions `draft → sent → accepted | refused | expired`, content frozen out of
+draft, `issuedAt`, `acceptedAt` + method); a `beforeDelete` on `Client` refusing a client with quotes;
+indexes; locked class permissions. Shared: enums, currencies (EUR 2 decimals, MGA 0), the total and the
+transitions in `@shared/domain-utils`. Back-office: the Quotes list (tabs per status, search), a dialog
+with a client picker and a "New client" shortcut, lines, currency, VAT, live total, row actions limited to
+the allowed moves, an "Accept" dialog asking the method, a default currency in Settings → Languages
+(Aldaron only, through a settings registry), sidebar entry hidden in the portfolio, rights, locales. Docs:
+feature page, BO index, clients and settings pages, inventory, design note.
+
+**Branch / PR**: `feat/aldaron-quote-collection`, PR linked in `pr:`.
+
+**What Claude ran**: `pnpm nx run-many -t lint typecheck -p server bo shared-domain-utils
+shared-domain-constants shared-domain-types` ok (0 errors); `pnpm nx run-many -t test build -p server bo`
+ok (server: 6 files, 68 tests); `pnpm check-i18n`, `check-doc-links`, `check-doc-twins --worktree`,
+`lint:docs` ok. Review: `docs/code/reviews/en/261123-feat-aldaron-quote-collection.md` (two bugs fixed on
+the branch: the numbering year read in UTC, an empty VAT box given `null`; two low risks deferred to
+`docs/code/reviews/en/debt/261123-feat-debt-aldaron-quote-collection.md`).
+
+**How to test**: follow `tickets/work/add-the-quote-collection-to-the-aldaron-workspace/tc-manual.md`, in
+pre-production or locally with `/rd` on a database: create a draft and watch the total, change the default
+currency (existing drafts keep theirs), create several quotes (numbers follow), send / accept (method) /
+refuse, check that a sent quote has no "Edit", the tabs and the client name, the "New client" shortcut,
+and that the portfolio workspace shows nothing.
+
+**Not verified**: every live case (criteria 1, 3, 4, 5, 6, 8, 9 unticked), no local database on the
+machine. Criterion 8 is partial: the proof file is ticket `025-attach-an-acceptance-proof-file-to-a-quote`.
+
+**What is left** (`tickets/work/add-the-quote-collection-to-the-aldaron-workspace/remaining.md`): the proof
+file (`025-…`); the live cases; `paidAmount` upkeep, `TODO(link:060-add-quote-payments-with-the-30-40-30-schedule)`;
+the mission delete guard, `TODO(link:050-add-the-mission-collection-to-the-aldaron-workspace)`; the decisions
+of `recommendation.md` to validate (proof split, default currency as a local preference, content frozen,
+active client only, numbering year and prefix, line rules, no delete); two deferred low risks (debt file).
+Delivered: `implemented.md`.

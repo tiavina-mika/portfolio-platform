@@ -7,6 +7,10 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "dependencies": {
+    "@shared/domain-constants": "workspace:*",
+    "@shared/domain-types": "workspace:*"
+  },
   "devDependencies": {
     "@cspell/eslint-plugin": "^9.8.0",
     "@shared/eslint-config": "workspace:*",

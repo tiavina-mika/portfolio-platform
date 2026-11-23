@@ -15,6 +15,7 @@ Domain class names are in `libs/shared-domain-constants` (`DOMAIN_COLLECTIONS`);
 |---|---|---|
 | `Project` (domain) | Portfolio projects | server, bo, web |
 | `Client` (domain) | Clients of the Aldaron workspace; reached through their Cloud Functions only, never public | server, bo |
+| `Quote` (domain) | Quotes of the Aldaron workspace: number, client pointer, lines, currency, VAT rate, total and status computed by the server; reached through their Cloud Functions only, never public | server, bo |
 | `Article` | Blog articles (translated content, `active`, `deleted` flags) | server, bo, web |
 | `Page` | Editorial pages | server, bo, web |
 | `PageSection` | Sections grouping the pages | server, bo, web |
@@ -28,6 +29,7 @@ Domain class names are in `libs/shared-domain-constants` (`DOMAIN_COLLECTIONS`);
 | `Invitation` | Back-office invitations (token, role, expiry) | server, bo |
 | `ImpersonationSession` | "Login as" sessions | server, bo |
 | `ContentVersion` | History of the CMS content (Page, Article…) | server, bo |
+| `Counter` | Named sequences incremented atomically (`quote-<year>` numbers the quotes of a year); locked, written by the triggers only | server |
 | `_User` | Back-office users | server, bo |
 | `_Role` | Roles and their `rights`, `ui`, `countries` and `workspaces` fields | server, bo |
 | `_Session` | Parse sessions | server |
@@ -39,6 +41,8 @@ Indexes are declared in code, in `apps/server/src/config/db-indexes.ts` (`INDEXE
 - `Project` and `Article`: `translated.fr.slug`, `translated.en.slug` and `translated.mg.slug`, for the public read by slug.
 - `Newsletter`: `email`, and `confirmationTokenHash` (sparse) for the confirmation link.
 - `Client`: `email` (unique when not empty, so one address is one client) and `status` + `name` for the list.
+- `Quote`: `number` + `version` (unique), `_p_client` + `status` (the quotes of a client, and the refusal to delete a client that has some), `status` + `issuedAt` for the list.
+- `Counter`: `name` (unique, one row per sequence).
 - `Notification`: recipient list, read-state and send-type filters, `idempotencyKey` (unique, sparse).
 - `Invitation`: `token` (unique, sparse) and `email`.
 - `User`, `Contact`, `Category`, `Page` (`code`, unique when set), `ContentVersion`, `UserSession` and the audit logs have their own indexes.
@@ -54,4 +58,4 @@ Indexes are declared in code, in `apps/server/src/config/db-indexes.ts` (`INDEXE
 
 ## Gotchas
 
-- The `Project` and `Client` class names are not in `collections`: they come from `DOMAIN_COLLECTIONS`, so a core file that needs them must import them from the shared lib.
+- The `Project`, `Client` and `Quote` class names are not in `collections`: they come from `DOMAIN_COLLECTIONS`, so a core file that needs them must import them from the shared lib.

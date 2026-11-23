@@ -14,6 +14,7 @@ import roleRoutes, { rolesLayout } from '@/routes/protected/_core/role.routes';
 import userRoutes, { usersLayout } from '@/routes/protected/_core/users.routes';
 import { clientsRoute } from '@/routes/protected/_domain/client.routes';
 import projectRoutes, { projectsLayout } from '@/routes/protected/_domain/project.routes';
+import { quotesRoute } from '@/routes/protected/_domain/quote.routes';
 
 /**
  * Composition point of the private route tree: the only place that lists the core routes and the
@@ -27,6 +28,7 @@ const privateRoutes = privateLayout.addChildren([
   articlesLayout.addChildren(articleRoutes),
   projectsLayout.addChildren(projectRoutes),
   clientsRoute,
+  quotesRoute,
   pagesLayout.addChildren(pageRoutes),
   pageSectionsLayout.addChildren(pageSectionRoutes),
   usersLayout.addChildren(userRoutes),

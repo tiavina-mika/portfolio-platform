@@ -1,0 +1,16 @@
+{
+  "quote": {
+    "acceptanceMethodRequired": "Say how the client accepted the quote.",
+    "clientNotActive": "This client is archived or anonymized: put it back in the list before writing it a quote.",
+    "notEditable": "A quote that is {{status}} can no longer be edited: only a draft can.",
+    "notFound": "Quote not found.",
+    "statusChangeNotAllowed": "A quote that is {{from}} cannot become {{to}}.",
+    "statuses": {
+      "accepted": "accepted",
+      "draft": "a draft",
+      "expired": "expired",
+      "refused": "refused",
+      "sent": "sent"
+    }
+  }
+}

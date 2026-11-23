@@ -1,0 +1,10 @@
+{
+  "quotes": "quotes",
+  "quoteTabs": {
+    "draft": "drafts",
+    "sent": "sent",
+    "accepted": "accepted",
+    "refused": "refused",
+    "expired": "expired"
+  }
+}

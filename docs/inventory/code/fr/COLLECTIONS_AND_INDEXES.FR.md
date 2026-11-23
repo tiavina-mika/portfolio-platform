@@ -15,6 +15,7 @@ Les noms de classes du domaine sont dans `libs/shared-domain-constants` (`DOMAIN
 |---|---|---|
 | `Project` (domaine) | Projets du portfolio | server, bo, web |
 | `Client` (domaine) | Clients de l'espace Aldaron ; atteints par leurs Cloud Functions seulement, jamais publics | server, bo |
+| `Quote` (domaine) | Devis de l'espace Aldaron : numéro, pointeur vers le client, lignes, devise, taux de TVA, total et statut calculés par le serveur ; atteints par leurs Cloud Functions seulement, jamais publics | server, bo |
 | `Article` | Articles de blog (contenu traduit, drapeaux `active`, `deleted`) | server, bo, web |
 | `Page` | Pages éditoriales | server, bo, web |
 | `PageSection` | Sections regroupant les pages | server, bo, web |
@@ -28,6 +29,7 @@ Les noms de classes du domaine sont dans `libs/shared-domain-constants` (`DOMAIN
 | `Invitation` | Invitations au back-office (jeton, rôle, expiration) | server, bo |
 | `ImpersonationSession` | Sessions « se connecter en tant que » | server, bo |
 | `ContentVersion` | Historique des contenus du CMS (Page, Article…) | server, bo |
+| `Counter` | Séquences nommées incrémentées de façon atomique (`quote-<année>` numérote les devis d'une année) ; verrouillée, écrite par les triggers seuls | server |
 | `_User` | Utilisateurs du back-office | server, bo |
 | `_Role` | Rôles et leurs champs `rights`, `ui`, `countries` et `workspaces` | server, bo |
 | `_Session` | Sessions Parse | server |
@@ -39,6 +41,8 @@ Les index sont déclarés dans le code, dans `apps/server/src/config/db-indexes.
 - `Project` et `Article` : `translated.fr.slug`, `translated.en.slug` et `translated.mg.slug`, pour la lecture publique par slug.
 - `Newsletter` : `email`, et `confirmationTokenHash` (sparse) pour le lien de confirmation.
 - `Client` : `email` (unique quand non vide, pour qu'une adresse soit un seul client) et `status` + `name` pour la liste.
+- `Quote` : `number` + `version` (unique), `_p_client` + `status` (les devis d'un client, et le refus de supprimer un client qui en a), `status` + `issuedAt` pour la liste.
+- `Counter` : `name` (unique, une ligne par séquence).
 - `Notification` : liste par destinataire, filtres d'état de lecture et de type d'envoi, `idempotencyKey` (unique, sparse).
 - `Invitation` : `token` (unique, sparse) et `email`.
 - `User`, `Contact`, `Category`, `Page` (`code`, unique quand renseigné), `ContentVersion`, `UserSession` et les journaux d'audit ont leurs propres index.
@@ -54,4 +58,4 @@ Les index sont déclarés dans le code, dans `apps/server/src/config/db-indexes.
 
 ## Pièges
 
-- Les noms de classe `Project` et `Client` ne sont pas dans `collections` : ils viennent de `DOMAIN_COLLECTIONS`, donc un fichier du cœur qui en a besoin doit les importer depuis la lib partagée.
+- Les noms de classe `Project`, `Client` et `Quote` ne sont pas dans `collections` : ils viennent de `DOMAIN_COLLECTIONS`, donc un fichier du cœur qui en a besoin doit les importer depuis la lib partagée.
