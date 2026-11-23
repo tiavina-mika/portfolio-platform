@@ -2,7 +2,7 @@
 type: feat
 apps: [libs, server, bo]
 branch: feat/aldaron-quote-collection
-pr:
+pr: https://github.com/tiavina-mika/portfolio-platform/pull/41
 ---
 
 ## Context
@@ -86,7 +86,7 @@ the allowed moves, an "Accept" dialog asking the method, a default currency in S
 (Aldaron only, through a settings registry), sidebar entry hidden in the portfolio, rights, locales. Docs:
 feature page, BO index, clients and settings pages, inventory, design note.
 
-**Branch / PR**: `feat/aldaron-quote-collection`, PR linked in `pr:`.
+**Branch / PR**: `feat/aldaron-quote-collection`, https://github.com/tiavina-mika/portfolio-platform/pull/41.
 
 **What Claude ran**: `pnpm nx run-many -t lint typecheck -p server bo shared-domain-utils
 shared-domain-constants shared-domain-types` ok (0 errors); `pnpm nx run-many -t test build -p server bo`
