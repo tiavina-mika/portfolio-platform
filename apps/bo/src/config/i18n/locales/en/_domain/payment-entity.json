@@ -1,0 +1,61 @@
+{
+  "payment": {
+    "payments": "Payments",
+    "thisPayment": "this payment",
+    "dialogTitle": "Payments of quote {{number}}",
+    "total": "Quote total",
+    "paid": "Already paid",
+    "remaining": "Left to pay",
+    "kind": "Payment",
+    "kindWithPercent": "{{kind}} ({{percent}} %)",
+    "amount": "Amount",
+    "dueDate": "Due date",
+    "paidOn": "Paid on",
+    "notSet": "Not set",
+    "notPaid": "Not paid yet",
+    "empty": "No payment yet",
+    "emptyDescription": "This quote was accepted before the payments existed: create its 30 / 40 / 30 schedule.",
+    "method": "Payment method",
+    "reference": "Reference",
+    "referenceHelper": "Optional: the reference of the transfer.",
+    "paidAt": "Paid on",
+    "paidAtHelper": "Left empty: today.",
+    "paidInTheFuture": "A payment cannot be recorded as paid on a day still to come.",
+    "payTitle": "Mark as paid",
+    "payDescription": "{{kind}} of {{amount}}. Nothing is collected online: this only records that the client paid.",
+    "dueDateTitle": "Due date: {{kind}}",
+    "dueDateDescription": "The day the client should pay this part. Left empty, the payment goes back to planned.",
+    "cancelTitle": "Cancel: {{kind}}",
+    "cancelDescription": "The payment stays in the history as cancelled, and a new payment of the same part and amount, still to pay, takes its place. This cannot be undone.",
+    "kinds": {
+      "deposit": "Deposit",
+      "milestone": "Milestone",
+      "balance": "Balance"
+    },
+    "statuses": {
+      "planned": "Planned",
+      "due": "Due",
+      "paid": "Paid",
+      "cancelled": "Cancelled"
+    },
+    "methods": {
+      "transfer": "Bank transfer",
+      "card": "Card",
+      "cash": "Cash",
+      "other": "Other"
+    },
+    "actions": {
+      "markAsPaid": "Mark as paid",
+      "setDueDate": "Set the due date",
+      "saveDueDate": "Save the date",
+      "cancel": "Cancel and re-enter",
+      "createSchedule": "Create the payment schedule"
+    },
+    "messages": {
+      "paid": "{{kind}}: recorded as paid.",
+      "dueDateSet": "{{kind}}: due date saved.",
+      "cancelled": "{{kind}}: cancelled, a new payment takes its place.",
+      "scheduleCreated": "The payments of quote {{number}} are created."
+    }
+  }
+}

@@ -8,6 +8,7 @@
  */
 import '@/utils/_domain/client-role.utils';
 import '@/utils/_domain/mission-role.utils';
+import '@/utils/_domain/payment-role.utils';
 import '@/utils/_domain/project-dashboard.utils';
 import '@/utils/_domain/project-role.utils';
 import '@/utils/_domain/quote-contact.utils';

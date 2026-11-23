@@ -239,7 +239,9 @@ L'échéancier est une constante de `src/constants/_domain/`, identique pour tou
 
 - **Création.** Quand un devis passe à `accepted`, le trigger `afterSave` du devis crée ses trois paiements : l'acompte en `due` avec la `dueDate` du jour, les deux autres en `planned`. Les montants viennent de `totalAmount` et le dernier absorbe le reste de l'arrondi, pour que les trois fassent toujours le total exact. Le trigger ne crée rien quand des paiements existent déjà pour le devis, donc une seconde sauvegarde ne peut pas les dupliquer. Aucun autre paiement n'est créé, et rien du tout pour un devis non accepté.
 - **Marquer payé.** Un utilisateur passe un paiement à `paid` à la main et indique le moyen (et la référence s'il y en a une). Rien n'est encaissé en ligne ni relié à une banque.
-- **Historique.** Un paiement `paid` n'est jamais modifié ni supprimé : une erreur se corrige en l'annulant (`cancelled`) et en enregistrant un nouveau, pour garder la trace. `delete` n'est donné à personne.
+- **Échéance.** Poser l'échéance d'un paiement non payé le passe à `due` ; la vider le remet à `planned`. « Ce qui est à payer » est donc une requête sur le statut.
+- **Historique.** Un paiement `paid` n'est jamais modifié ni supprimé : une erreur se corrige en l'annulant (`cancelled`) et en enregistrant un nouveau, pour garder la trace. La fonction qui annule écrit elle-même le remplaçant (même type, pourcentage, montant et échéance, non payé), donc les paiements ouverts et payés d'un devis font toujours son total. `delete` n'est donné à personne.
+- **Accepté avant les paiements.** Un devis accepté avant cette collection n'a pas de paiement : le back-office propose « Créer l'échéancier » (`createQuotePayments`), qui écrit les trois paiements une seule fois et refuse un devis qui en a déjà.
 - **`paidAmount` sur le devis.** Le trigger `afterSave` de `Payment` le recalcule à partir des paiements `paid` du devis, donc le reste à payer est `totalAmount - paidAmount`.
 - Index : `quote` + `status`, `status` + `dueDate` (la liste de ce qui est à payer).
 - Une mission se retrouve par son devis : `Payment` ne porte pas de pointeur `mission`. Une mission `planned` dont l'acompte n'est pas encore `paid` peut afficher un rappel dans la liste ; cela ne change aucun statut.
@@ -300,7 +302,7 @@ Une relecture de cette note a trouvé les points ci-dessous. Le premier groupe e
 - ✅ **Qui fait une mission** : `assignee`, membre d'un rôle qui ouvre l'espace Aldaron (vérifié par le
   trigger) ; « Mes missions » dans la liste le compare à l'utilisateur connecté.
 - ✅ **E-mail du client en minuscules**, pour qu'une personne soit un seul client.
-- ⏳ **Champs calculés fermés** : `number`, `version`, `totalAmount`, `paidAmount`, `amount` et `percent` sont calculés côté serveur, et la validation des fonctions de création et de mise à jour les **refuse** en entrée, pour qu'un client du back-office défaillant ou malveillant ne puisse pas les imposer. Fait pour le devis (`number`, `version`, `totalAmount`, `paidAmount`) ; `amount` et `percent` viendront avec les paiements.
+- ✅ **Champs calculés fermés** : `number`, `version`, `totalAmount`, `paidAmount`, `amount` et `percent` sont calculés côté serveur, et la validation des fonctions de création et de mise à jour les **refuse** en entrée, pour qu'un client du back-office défaillant ou malveillant ne puisse pas les imposer. Le trigger du devis remet `paidAmount` à chaque sauvegarde sauf celle que fait le trigger des paiements.
 
 ### À construire avec la première collection
 
@@ -308,7 +310,7 @@ Une relecture de cette note a trouvé les points ci-dessous. Le premier groupe e
 - ⏳ **Journal des changements.** Pour de l'argent, `updatedAt` ne suffit pas : qui a changé quel statut, et quand. Une collection d'événements en ajout seul (classe de l'entité, id, action, valeur précédente et nouvelle, utilisateur, date), écrite par les triggers des devis, paiements et missions. Vérifier d'abord si le projet a déjà un journal ; cette note ne l'a pas vérifié.
 - ⏳ **Anonymiser un client.** L'archivage entre en conflit avec le droit à l'effacement d'un client particulier. Une action « anonymiser » (propriétaire seulement) efface nom, e-mail, téléphone, adresse, numéro fiscal et notes, garde l'id, les montants et les dates, et pose le statut `anonymized` ; les listes affichent un « client anonymisé » traduit. La durée de conservation des données comptables est à confirmer avec le comptable, et la politique de confidentialité d'`aldaron-web` doit dire combien de temps clients et devis sont gardés.
 - ⏳ **Faire expirer les devis automatiquement.** Un job quotidien (`node-cron`, branché dans `index.ts` et importé dans `cloud/jobs/index.ts`) passe en `expired` un devis `sent` dont `validUntil` est dépassée. Il est ajouté aux jobs de `docs/inventory/README.md`.
-- ⏳ **Fonctions pures dans `utils/`** : le total d'un devis, la répartition 30 / 40 / 30 avec son arrondi, et les changements de statut permis d'un devis, d'un paiement et d'une mission. Elles manipulent de l'argent et sont la partie à tester.
+- ✅ **Fonctions pures dans `utils/`** : le total d'un devis, la répartition 30 / 40 / 30 avec son arrondi, et les changements de statut permis d'un devis, d'un paiement et d'une mission (`libs/shared-domain-utils`), testées dans `apps/server`.
 
 ### Dans les listes et le tableau de bord
 
@@ -350,5 +352,5 @@ Une relecture de cette note a trouvé les points ci-dessous. Le premier groupe e
    ✅ Puis les demandes de devis : `target` et `quote` sur `Contact`, la cible envoyée par `aldaron-web`, la liste des contacts qui suit l'espace de travail et l'action « Créer le client et le devis ». Le compteur des non-lus et la recherche globale comptent encore les messages des deux espaces : ticket `190-scope-the-contact-badge-and-search-to-the-workspace`.
 4. ✅ `Mission` côté serveur, puis dans le back-office, et sa page de fonctionnalité française. La phase
    « annulée par Aldaron » est stockée `byAgency` : une valeur stockée nomme un rôle, jamais la marque.
-5. ⏳ `Payment` : la constante d'échéancier, la création à l'acceptation, les triggers, puis le back-office (paiements d'un devis, marquer payé), et sa page de fonctionnalité française.
+5. ✅ `Payment` : la constante d'échéancier, la création à l'acceptation, les triggers, puis le back-office (paiements d'un devis, marquer payé, échéance, annuler et ressaisir), et la section paiements de la page de fonctionnalité française des devis.
 6. ⏳ Carte du tableau de bord, inventaire, et marquage de l'étape 4 ✅ dans la note de l'espace de travail.

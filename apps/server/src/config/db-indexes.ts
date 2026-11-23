@@ -244,6 +244,12 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
     // "my missions": the ones given to the signed-in user, by status
     { spec: { _p_assignee: 1, status: 1 } },
   ],
+  [DOMAIN_COLLECTIONS.payment]: [
+    // the payments of one quote, the check that a quote already has some, and its paid ones summed
+    { spec: { _p_quote: 1, status: 1 } },
+    // what is to be paid: one status, by due date
+    { spec: { status: 1, dueDate: 1 } },
+  ],
   [collections.Counter]: [
     /*
      * one row per sequence: two first quotes of a year created at the same moment both try to create

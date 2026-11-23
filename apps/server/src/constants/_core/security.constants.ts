@@ -175,6 +175,8 @@ export const ALWAYS_LOCKED_CLASSES: string[] = [
   DOMAIN_COLLECTIONS.quote,
   // the Aldaron missions, same reason
   DOMAIN_COLLECTIONS.mission,
+  // the payments of the Aldaron quotes, same reason
+  DOMAIN_COLLECTIONS.payment,
   // the numbering sequences: read and incremented by the triggers with the master key only
   collections.Counter,
 ];
@@ -187,7 +189,7 @@ export const ALWAYS_LOCKED_CLASSES: string[] = [
  * workspace. The role rights still apply: `fromBO` checks them in each function.
  */
 export const FUNCTION_ONLY_CLASSES: string[] = [
-  DOMAIN_COLLECTIONS.client, DOMAIN_COLLECTIONS.quote, DOMAIN_COLLECTIONS.mission,
+  DOMAIN_COLLECTIONS.client, DOMAIN_COLLECTIONS.quote, DOMAIN_COLLECTIONS.mission, DOMAIN_COLLECTIONS.payment,
 ];
 
 /**

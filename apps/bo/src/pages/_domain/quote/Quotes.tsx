@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  FiBriefcase, FiCheckCircle, FiClock, FiCopy, FiFilePlus, FiSend, FiXCircle,
+  FiBriefcase, FiCheckCircle, FiClock, FiCopy, FiDollarSign, FiFilePlus, FiSend, FiXCircle,
 } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,11 +20,13 @@ import ListWithSelection from '@/components/table/ListWithSelection';
 import i18n from '@/config/i18n';
 import { MENU_ITEM_ICON_SIZE } from '@/constants/_core/ui/ui.constants';
 import { MISSION_COLLECTION, MISSION_CREATE_FROM_QUOTE_LABEL_KEY } from '@/constants/_domain/mission.constants';
+import { PAYMENT_COLLECTION, QUOTE_PAYMENTS_ACTION_LABEL_KEY } from '@/constants/_domain/payment.constants';
 import {
   QUOTE_AMEND_ACTION_LABEL_KEY, QUOTE_COLLECTION, QUOTE_REVISE_ACTION_LABEL_KEY,
   QUOTE_STATUS_ACTION_LABEL_KEYS, QUOTE_TAB_OPTIONS,
 } from '@/constants/_domain/quote.constants';
 import MissionFormDialog from '@/containers/_domain/mission/MissionFormDialog';
+import QuotePaymentsDialog from '@/containers/_domain/payment/QuotePaymentsDialog';
 import QuoteAcceptDialog from '@/containers/_domain/quote/QuoteAcceptDialog';
 import QuoteFormDialog from '@/containers/_domain/quote/QuoteFormDialog';
 import QuoteReviseDialog from '@/containers/_domain/quote/QuoteReviseDialog';
@@ -119,6 +121,7 @@ const Quotes = () => {
   const searchParams: QuotesRouteSearchParams = quotesRoute.useSearch();
   const { canCreate, canEdit } = useProtect(QUOTE_COLLECTION);
   const { canCreate: canCreateMission } = useProtect(MISSION_COLLECTION);
+  const { canFind: canFindPayments } = useProtect(PAYMENT_COLLECTION);
   const workspace = useSelector(getSettingsWorkspaceSelector);
   const navigate = useNavigate();
 
@@ -138,6 +141,9 @@ const Quotes = () => {
   const [revisingQuote, setRevisingQuote] = useState<IQuote | null>(null);
   // the accepted quote a mission is being created from
   const [missionPrefill, setMissionPrefill] = useState<IMissionPrefill | null>(null);
+  // the accepted quote whose payments are open; read from the list, so its paid amount stays current
+  const [paymentsQuoteId, setPaymentsQuoteId] = useState<string | null>(null);
+  const paymentsQuote = quotes.find((quote: IQuote) => quote.id === paymentsQuoteId) ?? null;
   const [isSaving, setIsSaving] = useState(false);
 
   const openDialog = useCallback((quote: IQuote | null, amended: IQuote | null = null): void => {
@@ -226,6 +232,13 @@ const Quotes = () => {
         icon: <FiFilePlus aria-hidden size={MENU_ITEM_ICON_SIZE} />,
       },
       {
+        // the 30 / 40 / 30 payments written when the quote was accepted
+        onClick: () => setPaymentsQuoteId(quote.id),
+        display: canFindPayments && quote.status === QuoteStatusEnum.ACCEPTED,
+        label: t(QUOTE_PAYMENTS_ACTION_LABEL_KEY),
+        icon: <FiDollarSign aria-hidden size={MENU_ITEM_ICON_SIZE} />,
+      },
+      {
         // accepting a quote creates nothing: a person still picks the start and who does the work
         onClick: () => openMissionDialog(quote),
         display: canCreateMission && quote.status === QuoteStatusEnum.ACCEPTED,
@@ -262,8 +275,8 @@ const Quotes = () => {
 
     return data as IData;
   }), [
-    quotes, canCreate, canEdit, canCreateMission, handleStatusChange, openDialog, openMissionDialog,
-    locale, t,
+    quotes, canCreate, canEdit, canCreateMission, canFindPayments, handleStatusChange, openDialog,
+    openMissionDialog, locale, t,
   ]);
 
   return (
@@ -306,6 +319,7 @@ const Quotes = () => {
         open={!!missionPrefill}
         prefill={missionPrefill}
       />
+      <QuotePaymentsDialog onClose={() => setPaymentsQuoteId(null)} quote={paymentsQuote} />
       {/* keyed on the quote, so the method picked for one quote is never carried to the next */}
       <QuoteAcceptDialog
         key={acceptingQuote?.id ?? 'none'}

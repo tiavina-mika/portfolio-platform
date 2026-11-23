@@ -1,0 +1,61 @@
+{
+  "payment": {
+    "payments": "Fandoavana",
+    "thisPayment": "ity fandoavana ity",
+    "dialogTitle": "Fandoavana ny tolotra vidiny {{number}}",
+    "total": "Totalin'ny tolotra vidiny",
+    "paid": "Efa voaloa",
+    "remaining": "Sisa haloa",
+    "kind": "Fandoavana",
+    "kindWithPercent": "{{kind}} ({{percent}} %)",
+    "amount": "Vola",
+    "dueDate": "Fe-potoana",
+    "paidOn": "Naloa tamin'ny",
+    "notSet": "Tsy voafaritra",
+    "notPaid": "Mbola tsy voaloa",
+    "empty": "Mbola tsy misy fandoavana",
+    "emptyDescription": "Nekena talohan'ny nisian'ny fandoavana ity tolotra vidiny ity: amboary ny fandaharam-pandoavany 30 / 40 / 30.",
+    "method": "Fomba fandoavana",
+    "reference": "Laharana",
+    "referenceHelper": "Tsy voatery: ny laharan'ny famindram-bola.",
+    "paidAt": "Naloa tamin'ny",
+    "paidAtHelper": "Raha avela ho foana: androany.",
+    "paidInTheFuture": "Tsy azo soratana fa voaloa amin'ny andro mbola ho avy ny fandoavana.",
+    "payTitle": "Soraty fa voaloa",
+    "payDescription": "{{kind}} {{amount}}. Tsy misy vola raisina an-tserasera: manoratra fotsiny fa nandoa ny mpanjifa izany.",
+    "dueDateTitle": "Fe-potoana: {{kind}}",
+    "dueDateDescription": "Ny andro tokony handoavan'ny mpanjifa ity ampahany ity. Raha avela ho foana, miverina ho voalamina ny fandoavana.",
+    "cancelTitle": "Foano: {{kind}}",
+    "cancelDescription": "Mijanona ao amin'ny tantara ho nofoanana ny fandoavana, ary fandoavana vaovao mitovy ampahany sy vola, mbola haloa, no misolo azy. Tsy azo averina izany.",
+    "kinds": {
+      "deposit": "Santam-bola",
+      "milestone": "Dingana",
+      "balance": "Ambiny"
+    },
+    "statuses": {
+      "planned": "Voalamina",
+      "due": "Tokony haloa",
+      "paid": "Voaloa",
+      "cancelled": "Nofoanana"
+    },
+    "methods": {
+      "transfer": "Famindram-bola",
+      "card": "Karatra",
+      "cash": "Vola an-tanana",
+      "other": "Hafa"
+    },
+    "actions": {
+      "markAsPaid": "Soraty fa voaloa",
+      "setDueDate": "Faritra ny fe-potoana",
+      "saveDueDate": "Tehirizo ny daty",
+      "cancel": "Foano ary soraty indray",
+      "createSchedule": "Amboary ny fandaharam-pandoavana"
+    },
+    "messages": {
+      "paid": "{{kind}}: voasoratra ny fandoavana.",
+      "dueDateSet": "{{kind}}: voatahiry ny fe-potoana.",
+      "cancelled": "{{kind}}: nofoanana ny fandoavana, misy vaovao misolo azy.",
+      "scheduleCreated": "Voaforona ny fandoavana ny tolotra vidiny {{number}}."
+    }
+  }
+}

@@ -6,8 +6,11 @@ import type { Locale } from '@/types/app.type';
 
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
 import { collections } from '@/constants/_core/constants';
+import { PAID_AMOUNT_UPKEEP_CONTEXT_KEY } from '@/constants/_domain/payment.constants';
 import { QUOTE_FROZEN_FIELDS, QUOTE_NUMBER_TIME_ZONE } from '@/constants/_domain/quote.constants';
 import { QuoteParentRelationEnum } from '@/types/quote.type';
+import { logger } from '@/utils/_core/logger';
+import { isQuoteJustAccepted } from '@/utils/_domain/payment.utils';
 import {
   buildQuoteCounterName, canAttachQuoteAcceptanceProof, formatQuoteNumber, getQuoteNumberYear,
   getQuoteParentRelation, isQuoteAcceptanceProofFile,
@@ -15,6 +18,7 @@ import {
 
 import { takeNextCounterValueService } from '../../services/_core/counter.service.cloud';
 import { getClientByIdService } from '../../services/_domain/client.service.cloud';
+import { createQuotePaymentsService, hasQuotePaymentsService } from '../../services/_domain/payment.service.cloud';
 import { getQuoteByIdService } from '../../services/_domain/quote.service.cloud';
 import { convertIdToPointer } from '../../utils/_core/parse.utils.cloud';
 import { parseFunction } from '../../utils/_core/utils.cloud';
@@ -22,9 +26,8 @@ import { parseFunction } from '../../utils/_core/utils.cloud';
 /*
  * The columns only the server writes. On an existing quote a change to one of them is put back as it
  * was, whatever wrote it: the validation of the functions already refuses them, this holds for any
- * other save. `paidAmount` is not in the list: it stays 0 until the payments exist.
- * TODO(link:060-add-quote-payments-with-the-30-40-30-schedule): let the payment trigger keep
- * `paidAmount` up to date, and put it back here for every other save.
+ * other save. `paidAmount` is put back too, except on the save the payment trigger makes to bring it up
+ * to date (see `checkUpdatedQuote`).
  */
 const SERVER_OWNED_FIELDS = ['number', 'version', 'parentQuote', 'issuedAt', 'acceptedAt', 'createdBy'] as const;
 
@@ -102,10 +105,14 @@ const applyParentRelation = (quote: Parse.Object, parent: Parse.Object, locale: 
  * accepting it dates the acceptance, requires the way the client said yes and is the only move that may
  * join a proof file.
  */
-const checkUpdatedQuote = (quote: Parse.Object, original: Parse.Object, locale: Locale): void => {
+const checkUpdatedQuote = (
+  quote: Parse.Object, original: Parse.Object, locale: Locale, isPaidAmountUpkeep: boolean
+): void => {
   SERVER_OWNED_FIELDS.forEach((field) => {
     if (quote.dirty(field)) restoreOriginalValue(quote, original, field);
   });
+  // the paid amount is the sum of the paid payments, written by the payment trigger only
+  if (!isPaidAmountUpkeep && quote.dirty('paidAmount')) restoreOriginalValue(quote, original, 'paidAmount');
 
   const from: QuoteStatusEnum = original.get('status');
   const to: QuoteStatusEnum = quote.get('status');
@@ -169,7 +176,9 @@ Parse.Cloud.beforeSave(
         .forEach((field) => quote.unset(field));
       if (author) quote.set('createdBy', author);
     } else if (request.original) {
-      checkUpdatedQuote(quote, request.original, locale);
+      const isPaidAmountUpkeep = request.context?.[PAID_AMOUNT_UPKEEP_CONTEXT_KEY] === true;
+
+      checkUpdatedQuote(quote, request.original, locale, isPaidAmountUpkeep);
     }
 
     const isClientSet = isNew || quote.dirty('client');
@@ -200,4 +209,31 @@ Parse.Cloud.beforeSave(
 
     quote.set('number', formatQuoteNumber(year, sequence));
   })
+);
+
+/*
+ * The save that accepts a quote writes its three payments (30 / 40 / 30), once: only the move to
+ * `accepted` does it, and never when the quote already has payments, so no later save of the accepted
+ * quote can write them twice. A quote that is not accepted has none. The quote is already accepted when
+ * this runs: a failure is logged, the acceptance stands.
+ */
+Parse.Cloud.afterSave(
+  DOMAIN_COLLECTIONS.quote,
+  async (request: Parse.Cloud.AfterSaveRequest): Promise<void> => {
+    const quote = request.object;
+
+    if (!isQuoteJustAccepted(quote.get('status'), request.original?.get('status'))) return;
+
+    try {
+      if (await hasQuotePaymentsService(quote.id)) return;
+
+      await createQuotePaymentsService(
+        quote,
+        request.context?.userId as string | undefined,
+        request.context?.locale as Locale | undefined
+      );
+    } catch (error) {
+      logger.error(`Quote ${quote.id}: its payments were not created on acceptance`, error);
+    }
+  }
 );

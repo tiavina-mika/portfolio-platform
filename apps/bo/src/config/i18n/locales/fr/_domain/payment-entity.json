@@ -1,0 +1,61 @@
+{
+  "payment": {
+    "payments": "Paiements",
+    "thisPayment": "ce paiement",
+    "dialogTitle": "Paiements du devis {{number}}",
+    "total": "Total du devis",
+    "paid": "Déjà payé",
+    "remaining": "Reste à payer",
+    "kind": "Paiement",
+    "kindWithPercent": "{{kind}} ({{percent}} %)",
+    "amount": "Montant",
+    "dueDate": "Échéance",
+    "paidOn": "Payé le",
+    "notSet": "Non fixée",
+    "notPaid": "Pas encore payé",
+    "empty": "Aucun paiement pour l'instant",
+    "emptyDescription": "Ce devis a été accepté avant l'arrivée des paiements : créez son échéancier 30 / 40 / 30.",
+    "method": "Moyen de paiement",
+    "reference": "Référence",
+    "referenceHelper": "Facultatif : la référence du virement.",
+    "paidAt": "Payé le",
+    "paidAtHelper": "Laissé vide : aujourd'hui.",
+    "paidInTheFuture": "Un paiement ne peut pas être marqué payé à une date qui n'est pas encore arrivée.",
+    "payTitle": "Marquer comme payé",
+    "payDescription": "{{kind}} de {{amount}}. Rien n'est encaissé en ligne : cela enregistre seulement que le client a payé.",
+    "dueDateTitle": "Échéance : {{kind}}",
+    "dueDateDescription": "Le jour où le client doit payer cette part. Laissée vide, le paiement redevient prévu.",
+    "cancelTitle": "Annuler : {{kind}}",
+    "cancelDescription": "Le paiement reste dans l'historique comme annulé, et un nouveau paiement de la même part et du même montant, à payer, prend sa place. Cette action est définitive.",
+    "kinds": {
+      "deposit": "Acompte",
+      "milestone": "Étape",
+      "balance": "Solde"
+    },
+    "statuses": {
+      "planned": "Prévu",
+      "due": "À payer",
+      "paid": "Payé",
+      "cancelled": "Annulé"
+    },
+    "methods": {
+      "transfer": "Virement",
+      "card": "Carte",
+      "cash": "Espèces",
+      "other": "Autre"
+    },
+    "actions": {
+      "markAsPaid": "Marquer comme payé",
+      "setDueDate": "Fixer l'échéance",
+      "saveDueDate": "Enregistrer la date",
+      "cancel": "Annuler et ressaisir",
+      "createSchedule": "Créer l'échéancier"
+    },
+    "messages": {
+      "paid": "{{kind}} : paiement enregistré.",
+      "dueDateSet": "{{kind}} : échéance enregistrée.",
+      "cancelled": "{{kind}} : paiement annulé, un nouveau prend sa place.",
+      "scheduleCreated": "Les paiements du devis {{number}} sont créés."
+    }
+  }
+}

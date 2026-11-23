@@ -24,6 +24,7 @@ import userBlockReducer from '@/redux/reducers/_core/userBlock.reducer';
 import userSessionReducer from '@/redux/reducers/_core/userSession.reducer';
 import clientReducer from '@/redux/reducers/_domain/client.reducer';
 import missionReducer from '@/redux/reducers/_domain/mission.reducer';
+import paymentReducer from '@/redux/reducers/_domain/payment.reducer';
 import projectReducer from '@/redux/reducers/_domain/project.reducer';
 import quoteReducer from '@/redux/reducers/_domain/quote.reducer';
 
@@ -56,6 +57,7 @@ const reducers = {
   client: clientReducer,
   quote: quoteReducer,
   mission: missionReducer,
+  payment: paymentReducer,
   notification: notificationReducer,
   globalSearch: globalSearchReducer,
   impersonation: impersonationReducer,

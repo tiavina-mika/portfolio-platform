@@ -1,0 +1,19 @@
+{
+  "payment": {
+    "alreadyScheduled": "Le devis {{number}} a déjà ses paiements.",
+    "cancelledNotEditable": "Un paiement annulé reste tel quel : il ne peut plus être modifié.",
+    "methodRequired": "Indiquez comment le client a payé avant d'enregistrer le paiement.",
+    "notFound": "Paiement introuvable.",
+    "notOpenOnCreation": "Un nouveau paiement est toujours en attente : il est marqué payé ensuite.",
+    "paidInTheFuture": "Un paiement ne peut pas être marqué payé à une date qui n'est pas encore arrivée.",
+    "paidNotEditable": "Un paiement payé n'est jamais modifié : annulez-le, un nouveau prend sa place.",
+    "quoteNotAccepted": "Seul un devis accepté a des paiements.",
+    "statusChangeNotAllowed": "Un paiement {{from}} ne peut pas devenir {{to}}.",
+    "statuses": {
+      "cancelled": "annulé",
+      "due": "à payer",
+      "paid": "payé",
+      "planned": "prévu"
+    }
+  }
+}

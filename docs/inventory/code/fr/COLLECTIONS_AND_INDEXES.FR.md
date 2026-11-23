@@ -16,6 +16,7 @@ Les noms de classes du domaine sont dans `libs/shared-domain-constants` (`DOMAIN
 | `Project` (domaine) | Projets du portfolio | server, bo, web |
 | `Client` (domaine) | Clients de l'espace Aldaron ; atteints par leurs Cloud Functions seulement, jamais publics | server, bo |
 | `Mission` (domaine) | Missions de l'espace Aldaron : titre, pointeurs vers le client et le devis accepté, personne assignée, statut et phase, dates de début et de fin ; atteintes par leurs Cloud Functions seulement, jamais publiques | server, bo |
+| `Payment` (domaine) | Paiements des devis Aldaron acceptés (30 / 40 / 30) : pointeurs vers le devis et le client, type, pourcentage, montant, statut, dates d'échéance et de paiement, moyen et référence ; jamais supprimés, une erreur est annulée puis remplacée ; atteints par leurs Cloud Functions seulement, jamais publics | server, bo |
 | `Quote` (domaine) | Devis de l'espace Aldaron : numéro, pointeur vers le client, lignes, devise, taux de TVA, total et statut calculés par le serveur ; atteints par leurs Cloud Functions seulement, jamais publics | server, bo |
 | `Article` | Articles de blog (contenu traduit, drapeaux `active`, `deleted`) | server, bo, web |
 | `Page` | Pages éditoriales | server, bo, web |
@@ -44,6 +45,7 @@ Les index sont déclarés dans le code, dans `apps/server/src/config/db-indexes.
 - `Client` : `email` (unique quand non vide, pour qu'une adresse soit un seul client) et `status` + `name` pour la liste.
 - `Quote` : `number` + `version` (unique), `_p_client` + `status` (les devis d'un client, et le refus de supprimer un client qui en a), `status` + `issuedAt` pour la liste.
 - `Mission` : `_p_client` + `status` (les missions d'un client, et le refus de supprimer un client qui en a), `status` + `startDate` pour la liste, `_p_assignee` + `status` pour « mes missions ».
+- `Payment` : `_p_quote` + `status` (les paiements d'un devis, et l'addition de ses paiements payés), `status` + `dueDate` (ce qui est à payer).
 - `Counter` : `name` (unique, une ligne par séquence).
 - `Notification` : liste par destinataire, filtres d'état de lecture et de type d'envoi, `idempotencyKey` (unique, sparse).
 - `Invitation` : `token` (unique, sparse) et `email`.
@@ -60,4 +62,4 @@ Les index sont déclarés dans le code, dans `apps/server/src/config/db-indexes.
 
 ## Pièges
 
-- Les noms de classe `Project`, `Client`, `Quote` et `Mission` ne sont pas dans `collections` : ils viennent de `DOMAIN_COLLECTIONS`, donc un fichier du cœur qui en a besoin doit les importer depuis la lib partagée.
+- Les noms de classe `Project`, `Client`, `Quote`, `Mission` et `Payment` ne sont pas dans `collections` : ils viennent de `DOMAIN_COLLECTIONS`, donc un fichier du cœur qui en a besoin doit les importer depuis la lib partagée.

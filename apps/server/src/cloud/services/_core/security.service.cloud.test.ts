@@ -47,6 +47,15 @@ describe('the class-level permissions built from the role rights', () => {
     }
   });
 
+  it('should give no role a raw access to the payments either', () => {
+    const { payment } = DOMAIN_COLLECTIONS;
+    const clp = buildCLPForClass(payment, payment, rolesGranting(payment));
+
+    for (const operation of ['find', 'get', 'count', 'create', 'update', 'addField']) {
+      expect(clp[operation]?.['role:agencySales']).toBeUndefined();
+    }
+  });
+
   it('should open the clients to nobody signed out or merely signed in', () => {
     const { client } = DOMAIN_COLLECTIONS;
     const clp = buildCLPForClass(client, client, []);
