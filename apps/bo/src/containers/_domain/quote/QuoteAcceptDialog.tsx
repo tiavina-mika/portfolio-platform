@@ -1,11 +1,17 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import Stack from '@mui/material/Stack';
+import { QUOTE_ACCEPTANCE_PROOF_MAX_SIZE_MB } from '@shared/domain-constants';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import Dialog from '@/components/Dialog';
+import DropzoneField from '@/components/form/dropzone/DropzoneField';
 import SelectField from '@/components/form/fields/SelectField';
 import Form from '@/components/form/Form';
-import { QUOTE_ACCEPT_FORM_ID, QUOTE_ACCEPTANCE_METHOD_OPTIONS } from '@/constants/_domain/quote.constants';
+import {
+  QUOTE_ACCEPT_FORM_ID, QUOTE_ACCEPTANCE_METHOD_OPTIONS, QUOTE_ACCEPTANCE_PROOF_ACCEPT,
+  QUOTE_ACCEPTANCE_PROOF_MAX_SIZE_BYTES,
+} from '@/constants/_domain/quote.constants';
 import { IQuote } from '@/types/_domain/quote.type';
 import { QuoteAcceptInput, quoteAcceptSchema } from '@/validations/_domain/quote.validation';
 
@@ -18,8 +24,8 @@ type Props = {
 };
 
 /**
- * Records that the client said yes, and how: the proof the acceptance rests on. The date is the day
- * it is recorded, set by the server.
+ * Records that the client said yes, and how, with the file that shows it if there is one (a signed
+ * quote, the client's e-mail). The date is the day it is recorded, set by the server.
  */
 const QuoteAcceptDialog = ({
   quote, onClose, onSubmit, loading,
@@ -40,13 +46,24 @@ const QuoteAcceptDialog = ({
       toggle={onClose}
     >
       <Form form={form} formId={QUOTE_ACCEPT_FORM_ID} onSubmit={onSubmit}>
-        <SelectField
-          required
-          label={t('project:quote.acceptanceMethod')}
-          name="acceptanceMethod"
-          options={QUOTE_ACCEPTANCE_METHOD_OPTIONS}
-          variant="outlined"
-        />
+        <Stack spacing={2}>
+          <SelectField
+            required
+            label={t('project:quote.acceptanceMethod')}
+            name="acceptanceMethod"
+            options={QUOTE_ACCEPTANCE_METHOD_OPTIONS}
+            variant="outlined"
+          />
+          <DropzoneField
+            accept={QUOTE_ACCEPTANCE_PROOF_ACCEPT}
+            helperText={t('project:quote.acceptanceProofHelper', { size: QUOTE_ACCEPTANCE_PROOF_MAX_SIZE_MB })}
+            inputLabel={t('project:quote.acceptanceProofDrop')}
+            label={t('project:quote.acceptanceProof')}
+            maxFiles={1}
+            maxSize={QUOTE_ACCEPTANCE_PROOF_MAX_SIZE_BYTES}
+            name="acceptanceProof"
+          />
+        </Stack>
       </Form>
     </Dialog>
   );

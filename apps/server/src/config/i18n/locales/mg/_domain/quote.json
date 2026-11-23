@@ -1,6 +1,8 @@
 {
   "quote": {
     "acceptanceMethodRequired": "Lazao ny fomba nanekeran'ny mpanjifa ilay tolotra vidiny.",
+    "acceptanceProofInvalid": "Tsy rakitra nalefa avy amin'ny back-office io porofo io: ampidiro indray ilay PDF na sary.",
+    "acceptanceProofNotAllowed": "Rehefa ekena ny tolotra vidiny ihany no azo ampiarahina porofo.",
     "clientNotActive": "Voatahiry na tsy fantatra anarana io mpanjifa io: avereno ao amin'ny lisitra aloha vao manoratra tolotra vidiny ho azy.",
     "notEditable": "Tsy azo ovaina intsony ny tolotra vidiny {{status}}: ny drafitra ihany no azo ovaina.",
     "notFound": "Tsy hita ilay tolotra vidiny.",

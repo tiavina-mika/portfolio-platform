@@ -1,9 +1,11 @@
-import { DOMAIN_COLLECTIONS, QUOTE_CURRENCIES } from '@shared/domain-constants';
+import { DOMAIN_COLLECTIONS, QUOTE_ACCEPTANCE_PROOF_MAX_SIZE_MB, QUOTE_CURRENCIES } from '@shared/domain-constants';
 import { QuoteAcceptanceMethodEnum, QuoteStatusEnum } from '@shared/domain-types';
 
 import type { StatusTone } from '@/utils/_core/theme/styles.utils';
+import type { Accept } from 'react-dropzone';
 
 import i18n from '@/config/i18n';
+import { ACCEPTED_PDF_TYPES } from '@/constants/_core/file.constants';
 import { IListTabValue, ISelectOption } from '@/types/_core/app.type';
 
 export const QUOTE_COLLECTION = DOMAIN_COLLECTIONS.quote;
@@ -50,3 +52,16 @@ export const QUOTE_EMPTY_LINE = { label: '', quantity: 1, unitAmount: 0 };
 
 export const QUOTE_FORM_ID = 'quote-form';
 export const QUOTE_ACCEPT_FORM_ID = 'quote-accept-form';
+
+// the files the acceptance dialog takes as a proof: the extensions the server checks, by type
+export const QUOTE_ACCEPTANCE_PROOF_ACCEPT: Accept = {
+  ...ACCEPTED_PDF_TYPES,
+  'image/jpeg': ['.jpg', '.jpeg'],
+  'image/png': ['.png'],
+  'image/webp': ['.webp'],
+};
+
+export const QUOTE_ACCEPTANCE_PROOF_MAX_SIZE_BYTES = QUOTE_ACCEPTANCE_PROOF_MAX_SIZE_MB * 1024 * 1024;
+
+// the paperclip before the "Acceptance proof" link of the list, at the size of its text
+export const QUOTE_ACCEPTANCE_PROOF_ICON_SIZE = 14;

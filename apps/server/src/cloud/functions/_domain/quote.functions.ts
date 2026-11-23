@@ -112,9 +112,13 @@ Parse.Cloud.define(
       await assertAgencyWorkspace(request);
 
       const quote = await getQuoteOrThrow(request);
-      const { status, acceptanceMethod, locale } = request.params;
+      const {
+        status, acceptanceMethod, acceptanceProof, locale,
+      } = request.params;
 
-      return changeQuoteStatusService(quote, { status, acceptanceMethod }, request.user!, locale);
+      return changeQuoteStatusService(
+        quote, { status, acceptanceMethod, acceptanceProof }, request.user!, locale
+      );
     },
     ['update'],
     DOMAIN_COLLECTIONS.quote

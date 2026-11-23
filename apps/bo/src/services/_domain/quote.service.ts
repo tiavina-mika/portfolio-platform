@@ -1,10 +1,16 @@
+import {
+  QUOTE_ACCEPTANCE_PROOF_EXTENSIONS, QUOTE_ACCEPTANCE_PROOF_FOLDER, QUOTE_ACCEPTANCE_PROOF_MAX_SIZE_MB,
+} from '@shared/domain-constants';
 import Parse from 'parse';
 
 import type { QuoteAcceptanceMethodEnum, QuoteStatusEnum } from '@shared/domain-types';
 import type { TargetEnum } from '@shared/types';
 
+import { fetchCurrentUserSessionToken } from '@/services/_core/auth.service';
+import { IFileCloud } from '@/types/_core/file.type';
 import { Locale } from '@/types/_core/setting.type';
 import { IQuote, IQuoteInput } from '@/types/_domain/quote.type';
+import { uploadFilesAPI } from '@/utils/_core/file.utils';
 import { toJSONWithId } from '@/utils/_core/parse.utils';
 
 /*
@@ -63,12 +69,44 @@ export const updateQuote = async (
   return toQuote(quote);
 };
 
+/**
+ * Uploads the proof of an acceptance with the other back-office files, under a generated name: the
+ * name the file had on the user's computer often carries the client's name.
+ * @returns the stored file, or `undefined` when the upload answered nothing
+ */
+export const uploadQuoteAcceptanceProof = async (
+  file: File, locale: Locale
+): Promise<IFileCloud | undefined> => {
+  const [uploaded] = await uploadFilesAPI({
+    files: [file],
+    folder: QUOTE_ACCEPTANCE_PROOF_FOLDER,
+    sessionToken: (await fetchCurrentUserSessionToken()) ?? null,
+    locale,
+    config: { use_filename: false },
+    validation: {
+      maxFileSize: QUOTE_ACCEPTANCE_PROOF_MAX_SIZE_MB,
+      acceptedFileTypes: [...QUOTE_ACCEPTANCE_PROOF_EXTENSIONS],
+    },
+  });
+
+  return uploaded;
+};
+
 export const changeQuoteStatus = async (
   id: string,
-  change: { status: QuoteStatusEnum; acceptanceMethod?: QuoteAcceptanceMethodEnum },
+  {
+    status, acceptanceMethod, acceptanceProof,
+  }: { status: QuoteStatusEnum; acceptanceMethod?: QuoteAcceptanceMethodEnum; acceptanceProof?: IFileCloud },
   context: RequestContext
 ): Promise<IQuote> => {
-  const quote = await Parse.Cloud.run('changeQuoteStatus', { id, ...change, ...context });
+  const quote = await Parse.Cloud.run('changeQuoteStatus', {
+    id,
+    status,
+    acceptanceMethod,
+    // the server takes the two fields a proof is made of, and refuses any other
+    acceptanceProof: acceptanceProof && { publicId: acceptanceProof.publicId, url: acceptanceProof.url },
+    ...context,
+  });
 
   return toQuote(quote);
 };

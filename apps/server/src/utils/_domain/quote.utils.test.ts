@@ -4,7 +4,10 @@ import {
 } from '@shared/domain-utils';
 import { describe, expect, it } from 'vitest';
 
-import { buildQuoteCounterName, formatQuoteNumber, getQuoteNumberYear } from './quote.utils';
+import {
+  buildQuoteCounterName, canAttachQuoteAcceptanceProof, formatQuoteNumber, getQuoteNumberYear,
+  isQuoteAcceptanceProofFile,
+} from './quote.utils';
 
 /*
  * The server computes the stored total and checks the transitions with the shared functions below
@@ -100,5 +103,55 @@ describe('the moves a quote may make', () => {
       expect(getNextQuoteStatuses(status)).toEqual([]);
     });
     expect(canChangeQuoteStatus(QuoteStatusEnum.ACCEPTED, QuoteStatusEnum.SENT)).toBe(false);
+  });
+});
+
+describe('attaching the proof of an acceptance', () => {
+  const CLOUD = 'demo';
+  const proof = {
+    publicId: 'quotes/acceptance-proofs/k3j2h1',
+    url: 'https://res.cloudinary.com/demo/image/upload/v1700000000/quotes/acceptance-proofs/k3j2h1.pdf',
+  };
+
+  it('should take a proof only with the move that accepts the quote', () => {
+    expect(canAttachQuoteAcceptanceProof(QuoteStatusEnum.SENT, QuoteStatusEnum.ACCEPTED)).toBe(true);
+  });
+
+  it('should refuse a proof on any other move, and on a quote already accepted', () => {
+    expect(canAttachQuoteAcceptanceProof(QuoteStatusEnum.SENT, QuoteStatusEnum.REFUSED)).toBe(false);
+    expect(canAttachQuoteAcceptanceProof(QuoteStatusEnum.SENT, QuoteStatusEnum.EXPIRED)).toBe(false);
+    expect(canAttachQuoteAcceptanceProof(QuoteStatusEnum.DRAFT, QuoteStatusEnum.SENT)).toBe(false);
+    expect(canAttachQuoteAcceptanceProof(QuoteStatusEnum.ACCEPTED, QuoteStatusEnum.ACCEPTED)).toBe(false);
+  });
+
+  it('should accept a PDF or an image stored in the proofs folder of the platform', () => {
+    expect(isQuoteAcceptanceProofFile(proof, CLOUD)).toBe(true);
+    ['jpg', 'jpeg', 'png', 'webp', 'PDF'].forEach((extension) => {
+      expect(isQuoteAcceptanceProofFile({ ...proof, url: proof.url.replace(/pdf$/, extension) }, CLOUD))
+        .toBe(true);
+    });
+  });
+
+  it('should refuse a file of another type', () => {
+    expect(isQuoteAcceptanceProofFile({ ...proof, url: proof.url.replace(/pdf$/, 'svg') }, CLOUD)).toBe(false);
+    expect(isQuoteAcceptanceProofFile({ ...proof, url: proof.url.replace(/\.pdf$/, '') }, CLOUD)).toBe(false);
+  });
+
+  it('should refuse a link to another host, another account or over plain http', () => {
+    expect(isQuoteAcceptanceProofFile({ ...proof, url: 'https://evil.example/quotes/acceptance-proofs/k3j2h1.pdf' }, CLOUD))
+      .toBe(false);
+    expect(isQuoteAcceptanceProofFile({ ...proof, url: proof.url.replace('/demo/', '/other/') }, CLOUD)).toBe(false);
+    expect(isQuoteAcceptanceProofFile({ ...proof, url: proof.url.replace('https:', 'http:') }, CLOUD)).toBe(false);
+  });
+
+  it('should refuse a file stored outside the proofs folder, or an address naming another file', () => {
+    expect(isQuoteAcceptanceProofFile({ ...proof, publicId: 'app/portfolio-cv' }, CLOUD)).toBe(false);
+    expect(isQuoteAcceptanceProofFile({ ...proof, publicId: 'quotes/acceptance-proofs/other' }, CLOUD)).toBe(false);
+  });
+
+  it('should refuse anything when the account is not configured or the proof is not a file', () => {
+    expect(isQuoteAcceptanceProofFile(proof, undefined)).toBe(false);
+    expect(isQuoteAcceptanceProofFile(null, CLOUD)).toBe(false);
+    expect(isQuoteAcceptanceProofFile({ publicId: proof.publicId, url: 'not a url' }, CLOUD)).toBe(false);
   });
 });

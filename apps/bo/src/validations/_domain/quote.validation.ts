@@ -1,11 +1,13 @@
 import {
-  QUOTE_CURRENCIES, QUOTE_LINE_LABEL_MAX_LENGTH, QUOTE_LINE_QUANTITY_MAX, QUOTE_LINES_MAX,
-  QUOTE_NOTES_MAX_LENGTH, QUOTE_RATE_DECIMALS, QUOTE_TAX_RATE_MAX, QUOTE_TITLE_MAX_LENGTH,
+  QUOTE_ACCEPTANCE_PROOF_EXTENSIONS, QUOTE_ACCEPTANCE_PROOF_MAX_SIZE_MB, QUOTE_CURRENCIES,
+  QUOTE_LINE_LABEL_MAX_LENGTH, QUOTE_LINE_QUANTITY_MAX, QUOTE_LINES_MAX, QUOTE_NOTES_MAX_LENGTH,
+  QUOTE_RATE_DECIMALS, QUOTE_TAX_RATE_MAX, QUOTE_TITLE_MAX_LENGTH,
 } from '@shared/domain-constants';
 import { QuoteAcceptanceMethodEnum } from '@shared/domain-types';
 import { z } from 'zod';
 
 import { tabRouteSearchParams } from '@/validations/_core/app.validations';
+import { generateFileSchema } from '@/validations/_core/zodSchema.validations';
 
 export const quotesRouteSearchParams = tabRouteSearchParams;
 
@@ -43,6 +45,11 @@ export const quoteSchema = z.object({
 
 export const quoteAcceptSchema = z.object({
   acceptanceMethod: z.enum(QuoteAcceptanceMethodEnum),
+  // optional: a signed quote or the client's e-mail, as a PDF or an image
+  acceptanceProof: generateFileSchema(false, {
+    maxSize: QUOTE_ACCEPTANCE_PROOF_MAX_SIZE_MB,
+    extensions: [...QUOTE_ACCEPTANCE_PROOF_EXTENSIONS],
+  }) as z.ZodType<File | undefined, File | undefined>,
 });
 
 export type QuoteAcceptInput = z.infer<typeof quoteAcceptSchema>;

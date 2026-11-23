@@ -43,6 +43,11 @@
       "expired": "Expiré"
     },
     "acceptanceMethod": "Comment le client a accepté",
+    "acceptanceProof": "Preuve d'acceptation",
+    "acceptanceProofDrop": "Déposez ici le devis signé ou l'e-mail du client, ou cliquez pour le choisir",
+    "acceptanceProofHelper": "Facultatif. Un PDF ou une image (JPG, PNG, WEBP), {{size}} Mo au plus.",
+    "acceptanceProofUploadFailed": "La preuve n'a pas pu être envoyée : le devis n'a pas été accepté. Réessayez.",
+    "openAcceptanceProof": "Preuve d'acceptation du devis {{number}} (s'ouvre dans un nouvel onglet)",
     "acceptanceMethods": {
       "email": "Par e-mail",
       "signature": "Devis signé",

@@ -1,3 +1,4 @@
+import type { IUploadedFile } from './app.type';
 import type { IQuoteLine, QuoteAcceptanceMethodEnum, QuoteStatusEnum } from '@shared/domain-types';
 
 /** the stored fields of an Aldaron `Quote`; every amount is an integer in the smallest unit of `currency` */
@@ -25,6 +26,8 @@ export interface IQuoteAttributes {
   version: number;
   acceptedAt?: Date;
   acceptanceMethod?: QuoteAcceptanceMethodEnum;
+  // the file the acceptance rests on (signed quote, client's e-mail), attached only when it is accepted
+  acceptanceProof?: IUploadedFile;
   createdBy?: Parse.User;
   updatedBy?: Parse.User;
 }

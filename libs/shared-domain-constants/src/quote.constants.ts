@@ -40,3 +40,15 @@ export const QUOTE_LINE_UNIT_AMOUNT_MAX = 100_000_000_000;
 
 // quantities and VAT rates are typed with at most this many decimals
 export const QUOTE_RATE_DECIMALS = 2;
+
+/*
+ * the proof of an acceptance (a signed quote, the client's e-mail saved as a PDF or a screenshot) is
+ * uploaded with the other back-office files, into this folder: the server only takes a proof stored there
+ */
+export const QUOTE_ACCEPTANCE_PROOF_FOLDER = 'quotes/acceptance-proofs';
+
+// a PDF or an image, as the back-office drop accepts it and the server checks it
+export const QUOTE_ACCEPTANCE_PROOF_EXTENSIONS = ['pdf', 'jpg', 'jpeg', 'png', 'webp'] as const;
+
+// the heaviest proof the upload takes, in MB
+export const QUOTE_ACCEPTANCE_PROOF_MAX_SIZE_MB = 5;

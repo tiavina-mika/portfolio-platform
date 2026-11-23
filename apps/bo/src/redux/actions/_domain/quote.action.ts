@@ -1,7 +1,7 @@
 import { toMinorUnits } from '@shared/domain-utils';
 import { TargetEnum } from '@shared/types';
 
-import type { QuoteAcceptanceMethodEnum, QuoteStatusEnum } from '@shared/domain-types';
+import type { QuoteStatusEnum } from '@shared/domain-types';
 
 import i18n from '@/config/i18n';
 import { DEFAULT_PAGINATION, Errors, PAGINATION } from '@/constants/_core/app.constants';
@@ -14,11 +14,12 @@ import {
 } from '@/redux/reducers/_domain/quote.reducer';
 import { AppDispatch, AppThunkAction, RootState } from '@/redux/store';
 import {
-  changeQuoteStatus, createQuote, fetchQuotes, updateQuote,
+  changeQuoteStatus, createQuote, fetchQuotes, updateQuote, uploadQuoteAcceptanceProof,
 } from '@/services/_domain/quote.service';
 import { IQueriesInput } from '@/types/_core/app.type';
 import { IQuote, IQuoteFormValues, IQuoteInput } from '@/types/_domain/quote.type';
 import { convertSearchParamsToFilters } from '@/utils/_core/app.utils';
+import { QuoteAcceptInput } from '@/validations/_domain/quote.validation';
 
 const collection = QUOTE_COLLECTION;
 
@@ -101,14 +102,26 @@ export const createOrUpdateQuote = (values: IQuoteFormValues, quote?: IQuote | n
 /**
  * sends, accepts, refuses or expires a quote; the row stays where it is with its new status until the
  * list is reloaded, so the reader sees what they just did
- * @param acceptanceMethod how the client said yes, when the quote is accepted
+ * @param acceptance how the client said yes, and the file that shows it if one was dropped, when the
+ * quote is accepted. The file is uploaded first: the status changes only once it is stored
  */
 export const setQuoteStatus = (
-  quote: IQuote, status: QuoteStatusEnum, acceptanceMethod?: QuoteAcceptanceMethodEnum
+  quote: IQuote, status: QuoteStatusEnum, acceptance?: QuoteAcceptInput
 ): any => {
   return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
     const context = getRequestContext(getState?.()!);
-    const updated = await changeQuoteStatus(quote.id, { status, acceptanceMethod }, context);
+    const proofFile = acceptance?.acceptanceProof;
+    const acceptanceProof = proofFile
+      ? await uploadQuoteAcceptanceProof(proofFile, context.locale)
+      : undefined;
+
+    if (proofFile && !acceptanceProof) throw new Error(i18n.t('project:quote.acceptanceProofUploadFailed'));
+
+    const updated = await changeQuoteStatus(
+      quote.id,
+      { status, acceptanceMethod: acceptance?.acceptanceMethod, acceptanceProof },
+      context
+    );
 
     dispatch(updateQuoteInQuotesSlice(updated));
     dispatch(setMessageSlice(i18n.t(`project:quote.messages.${status}`, { number: quote.number })));

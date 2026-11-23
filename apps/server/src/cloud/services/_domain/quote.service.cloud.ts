@@ -1,7 +1,7 @@
 import { DOMAIN_COLLECTIONS } from '@shared/domain-constants';
 import { QuoteStatusEnum, type QuoteAcceptanceMethodEnum } from '@shared/domain-types';
 
-import type { Locale } from '@/types/app.type';
+import type { IUploadedFile, Locale } from '@/types/app.type';
 import type { QuoteInput } from '@/types/quote.type';
 
 import { USE_MASTER_KEY } from '@/constants/_core/constants';
@@ -123,19 +123,30 @@ export const saveQuoteService = async (
   return (await getQuoteByIdService(saved.id)) || saved;
 };
 
+type QuoteStatusChange = {
+  status: QuoteStatusEnum;
+  acceptanceMethod?: QuoteAcceptanceMethodEnum;
+  acceptanceProof?: IUploadedFile;
+};
+
 /**
- * Moves a quote to another status. Whether the move is allowed, and the dates it sets, are the
- * trigger's checks.
- * @param change the new status, and how the client said yes when the quote is accepted
+ * Moves a quote to another status. Whether the move is allowed, the dates it sets and whether the proof
+ * is one of the platform's files are the trigger's checks.
+ * @param change the new status, and how the client said yes (with the file that shows it, if any) when
+ * the quote is accepted
  */
 export const changeQuoteStatusService = async (
   quote: Parse.Object,
-  { status, acceptanceMethod }: { status: QuoteStatusEnum; acceptanceMethod?: QuoteAcceptanceMethodEnum },
+  { status, acceptanceMethod, acceptanceProof }: QuoteStatusChange,
   user: Parse.User,
   locale: Locale | undefined
 ): Promise<Parse.Object> => {
   quote.set('status', status);
   if (status === QuoteStatusEnum.ACCEPTED) quote.set('acceptanceMethod', acceptanceMethod);
+  // only the two fields the proof is made of, whatever else the object carried
+  if (acceptanceProof) {
+    quote.set('acceptanceProof', { publicId: acceptanceProof.publicId, url: acceptanceProof.url });
+  }
 
   const saved = await quote.save(null, { ...USE_MASTER_KEY, context: buildSaveContext(user, locale) });
 

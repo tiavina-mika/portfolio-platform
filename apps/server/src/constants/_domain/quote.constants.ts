@@ -14,7 +14,7 @@ export const QUOTE_FROZEN_FIELDS = QUOTE_EDITABLE_FIELDS;
 /** the columns the quote list and the edit dialog need (the dialog opens on the row already loaded) */
 export const QUOTE_LIST_FIELDS = [
   ...QUOTE_EDITABLE_FIELDS, 'number', 'status', 'totalAmount', 'paidAmount', 'issuedAt', 'version',
-  'acceptedAt', 'acceptanceMethod', 'createdAt', 'updatedAt',
+  'acceptedAt', 'acceptanceMethod', 'acceptanceProof', 'createdAt', 'updatedAt',
   // the client is read through its pointer, never copied: only what the list shows of it
   'client.name', 'client.email',
 ];
@@ -38,3 +38,10 @@ export const QUOTE_COUNTER_NAME_PREFIX = 'quote';
 
 // the numbering year turns at midnight where the business works, like the statistics' days
 export const QUOTE_NUMBER_TIME_ZONE = DEFAULT_COUNTRY.timeZone;
+
+// the host every file uploaded to Cloudinary is delivered from: an acceptance proof must come from it
+export const CLOUDINARY_DELIVERY_HOST = 'res.cloudinary.com';
+
+// far above a Cloudinary public id or delivery address, low enough that no call stores a huge string
+export const QUOTE_ACCEPTANCE_PROOF_PUBLIC_ID_MAX_LENGTH = 300;
+export const QUOTE_ACCEPTANCE_PROOF_URL_MAX_LENGTH = 1000;

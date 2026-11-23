@@ -1,3 +1,4 @@
+import type { IFileCloud } from '@/types/_core/file.type';
 import type { IQuoteLine, QuoteAcceptanceMethodEnum, QuoteStatusEnum } from '@shared/domain-types';
 
 /** the client of a quote, as much of it as the list reads through the pointer */
@@ -25,6 +26,8 @@ export interface IQuote {
   version: number;
   acceptedAt?: string;
   acceptanceMethod?: QuoteAcceptanceMethodEnum;
+  // the file the acceptance rests on, when one was joined
+  acceptanceProof?: IFileCloud;
   createdAt: string;
   updatedAt: string;
 }
