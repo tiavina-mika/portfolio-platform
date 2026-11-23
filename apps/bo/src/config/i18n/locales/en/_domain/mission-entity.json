@@ -1,0 +1,67 @@
+{
+  "mission": {
+    "missions": "Missions",
+    "mission": "Mission",
+    "thisMission": "this mission",
+    "createMission": "New mission",
+    "editMission": "Edit {{title}}",
+    "createMissionFromQuote": "New mission for quote {{number}}",
+    "createFromQuote": "Create the mission",
+    "title": "Title",
+    "quote": "Quote",
+    "quoteHelper": "Optional: an accepted quote of the client.",
+    "noQuote": "No quote",
+    "quoteOption": "{{number}} · {{title}}",
+    "fromQuote": "Quote {{number}}",
+    "withoutQuote": "No quote",
+    "assignee": "Done by",
+    "noAssignee": "Nobody yet",
+    "myMissions": "My missions",
+    "phase": "Phase",
+    "phaseHelper": "The phases of a mission that is {{status}}.",
+    "noPhase": "No phase",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "dates": "Dates",
+    "startsOn": "Start: {{date}}",
+    "endsOn": "End: {{date}}",
+    "dateNotSet": "not set",
+    "description": "Description",
+    "endBeforeStart": "The end date cannot come before the start date.",
+    "partiesLocked": "This mission is {{status}}: its client and its quote no longer change.",
+    "searchMission": "Search by title",
+    "statuses": {
+      "planned": "Planned",
+      "inProgress": "In progress",
+      "done": "Done",
+      "cancelled": "Cancelled"
+    },
+    "phases": {
+      "waitingClient": "Waiting for the client",
+      "scheduled": "Scheduled",
+      "design": "Design",
+      "development": "Development",
+      "testing": "Testing",
+      "clientReview": "Client review",
+      "release": "Release",
+      "handover": "Handover",
+      "warranty": "Warranty",
+      "closed": "Closed",
+      "byClient": "Cancelled by the client",
+      "byAgency": "Cancelled by us",
+      "unpaid": "Unpaid"
+    },
+    "actions": {
+      "start": "Start",
+      "finish": "Mark as done",
+      "cancel": "Cancel the mission"
+    },
+    "messages": {
+      "created": "The mission \"{{title}}\" was created.",
+      "updated": "The mission \"{{title}}\" was edited.",
+      "inProgress": "The mission \"{{title}}\" has started.",
+      "done": "The mission \"{{title}}\" is done.",
+      "cancelled": "The mission \"{{title}}\" was cancelled."
+    }
+  }
+}

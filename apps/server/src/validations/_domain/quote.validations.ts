@@ -130,6 +130,8 @@ export const reviseQuoteSchema = getQuoteSchema;
 
 const quotesFiltersSchema = z.object({
   status: z.enum(QuoteStatusEnum).optional(),
+  // the quotes of one client: the mission form picks among the accepted quotes of its client
+  client: objectIdFieldSchema.optional(),
 }).optional();
 
 const quotesSearchSchema = z.object({

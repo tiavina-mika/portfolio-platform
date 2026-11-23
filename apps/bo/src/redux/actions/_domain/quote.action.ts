@@ -1,7 +1,6 @@
+import { QuoteStatusEnum } from '@shared/domain-types';
 import { toMinorUnits } from '@shared/domain-utils';
 import { TargetEnum } from '@shared/types';
-
-import type { QuoteStatusEnum } from '@shared/domain-types';
 
 import i18n from '@/config/i18n';
 import { DEFAULT_PAGINATION, Errors, PAGINATION } from '@/constants/_core/app.constants';
@@ -210,6 +209,33 @@ export const createQuoteFromContact = (
     collection,
     action: 'create',
     hasNoRightErrorMessage: rightsError('create'),
+  });
+};
+
+/**
+ * The accepted quotes of one client, newest first: the quotes a mission for that client may carry out.
+ * @param clientId the client of the mission
+ * @param limit how many the picker proposes
+ */
+export const searchAcceptedClientQuotes = (
+  clientId: string, limit: number, onLoaded: (quotes: IQuote[]) => void
+): any => {
+  return actionWithLoader(async (_dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
+    const result = await fetchQuotes({
+      limit,
+      skip: 0,
+      orderBy: 'updatedAt',
+      order: 'desc',
+      filters: { status: QuoteStatusEnum.ACCEPTED, client: clientId },
+      ...getRequestContext(getState?.()!),
+    });
+
+    onLoaded(result.results);
+  },
+  // rights
+  {
+    collection,
+    action: 'find',
   });
 };
 

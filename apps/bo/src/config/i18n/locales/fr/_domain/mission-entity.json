@@ -1,0 +1,67 @@
+{
+  "mission": {
+    "missions": "Missions",
+    "mission": "Mission",
+    "thisMission": "cette mission",
+    "createMission": "Nouvelle mission",
+    "editMission": "Modifier {{title}}",
+    "createMissionFromQuote": "Nouvelle mission pour le devis {{number}}",
+    "createFromQuote": "Créer la mission",
+    "title": "Titre",
+    "quote": "Devis",
+    "quoteHelper": "Facultatif : un devis accepté du client.",
+    "noQuote": "Aucun devis",
+    "quoteOption": "{{number}} · {{title}}",
+    "fromQuote": "Devis {{number}}",
+    "withoutQuote": "Sans devis",
+    "assignee": "Réalisée par",
+    "noAssignee": "Personne pour l'instant",
+    "myMissions": "Mes missions",
+    "phase": "Phase",
+    "phaseHelper": "Les phases d'une mission {{status}}.",
+    "noPhase": "Aucune phase",
+    "startDate": "Date de début",
+    "endDate": "Date de fin",
+    "dates": "Dates",
+    "startsOn": "Début : {{date}}",
+    "endsOn": "Fin : {{date}}",
+    "dateNotSet": "non fixée",
+    "description": "Description",
+    "endBeforeStart": "La date de fin ne peut pas précéder la date de début.",
+    "partiesLocked": "Cette mission est {{status}} : son client et son devis ne changent plus.",
+    "searchMission": "Rechercher par titre",
+    "statuses": {
+      "planned": "Planifiée",
+      "inProgress": "En cours",
+      "done": "Terminée",
+      "cancelled": "Annulée"
+    },
+    "phases": {
+      "waitingClient": "En attente du client",
+      "scheduled": "Programmée",
+      "design": "Maquettes",
+      "development": "Développement",
+      "testing": "Tests et recette",
+      "clientReview": "Retours du client",
+      "release": "Mise en production",
+      "handover": "Remise du code et des accès",
+      "warranty": "Garantie",
+      "closed": "Clôturée",
+      "byClient": "Annulée par le client",
+      "byAgency": "Annulée par nous",
+      "unpaid": "Impayé"
+    },
+    "actions": {
+      "start": "Démarrer",
+      "finish": "Marquer comme terminée",
+      "cancel": "Annuler la mission"
+    },
+    "messages": {
+      "created": "La mission « {{title}} » a été créée.",
+      "updated": "La mission « {{title}} » a été modifiée.",
+      "inProgress": "La mission « {{title}} » a démarré.",
+      "done": "La mission « {{title}} » est terminée.",
+      "cancelled": "La mission « {{title}} » a été annulée."
+    }
+  }
+}

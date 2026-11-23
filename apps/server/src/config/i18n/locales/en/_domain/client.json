@@ -1,6 +1,7 @@
 {
   "client": {
     "emailAlreadyUsed": "This e-mail address is already the one of the client \"{{- name}}\".",
+    "hasMissions": "The client \"{{- name}}\" has missions: archive it instead of deleting it.",
     "hasQuotes": "The client \"{{- name}}\" has quotes: archive it instead of deleting it.",
     "notFound": "Client not found."
   }

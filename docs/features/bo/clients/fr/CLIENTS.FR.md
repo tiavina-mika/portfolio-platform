@@ -114,10 +114,10 @@ mêmes règles s'appliquent à l'adresse e-mail.
 
 ## Points d'attention / limites actuelles
 
-- Il n'y a pas encore de missions ni de paiements. Les [devis](../../quotes/fr/QUOTES.FR.md) d'un client
-  ne sont pas encore affichés depuis cette page ; un nouveau client se crée aussi depuis le formulaire d'un
-  devis.
+- Il n'y a pas encore de paiements. Les [devis](../../quotes/fr/QUOTES.FR.md) et les
+  [missions](../../missions/fr/MISSIONS.FR.md) d'un client ne sont pas encore affichés depuis cette page ;
+  un nouveau client se crée aussi depuis le formulaire d'un devis ou d'une mission.
 - Un client ne peut pas être supprimé depuis le back-office, seulement archivé ; un client qui a des
-  devis ne peut d'ailleurs jamais être supprimé.
+  devis ou des missions ne peut d'ailleurs jamais être supprimé.
 - L'effacement des données d'un particulier (anonymisation) n'est pas encore disponible.
 - Pas d'export ni de sélection de plusieurs clients à la fois.

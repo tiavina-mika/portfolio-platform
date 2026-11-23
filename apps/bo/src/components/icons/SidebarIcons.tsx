@@ -184,6 +184,21 @@ export const FileTextIcon = (props: SidebarIconProps) => (
   </Svg>
 );
 
+// a clipboard with a tick: a piece of work to carry out, such as a mission
+export const ClipboardCheckIcon = (props: SidebarIconProps) => (
+  <Svg {...props}>
+    <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" />
+    <rect
+      height="4"
+      rx="1"
+      width="8"
+      x="8"
+      y="2"
+    />
+    <path d="M9 14l2 2 4-4" />
+  </Svg>
+);
+
 export const LayoutIcon = (props: SidebarIconProps) => (
   <Svg {...props}>
     <rect

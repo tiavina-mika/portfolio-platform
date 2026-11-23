@@ -201,7 +201,7 @@ Each status has an optional **phase**, a fixed list valid only for that status:
 | | `warranty` | Bug-fix period |
 | | `closed` | Finished, nothing open |
 | `cancelled` | `byClient` | Cancelled by the client |
-| | `byAldaron` | Cancelled by Aldaron |
+| | `byAgency` | Cancelled by Aldaron |
 | | `unpaid` | Cancelled for lack of payment |
 
 - The simulator of `aldaron-web` promises the handover of the code and the accounts and 30 days of bug fixing, which is what `handover` and `warranty` stand for.
@@ -297,7 +297,8 @@ A review of this note found the points below. The first group is already written
   "Revise" action calls `reviseQuote`; an amendment is a `createQuote` with `parentQuote`. The trigger
   decides from the status of the quote pointed to (sent: revision, accepted: amendment) and keeps the
   client of that quote.
-- ⏳ **Who does a mission**: `assignee`.
+- ✅ **Who does a mission**: `assignee`, a member of a role that opens the Aldaron workspace (checked by the
+  trigger); "My missions" in the list compares it to the signed-in user.
 - ✅ **Client e-mail in lowercase**, so one person is one client.
 - ⏳ **Computed fields closed**: `number`, `version`, `totalAmount`, `paidAmount`, `amount` and `percent` are computed on the server, and the validation of the create and update functions **refuses** them in input, so a faulty or malicious back-office client cannot impose them. Done for the quote (`number`, `version`, `totalAmount`, `paidAmount`); `amount` and `percent` come with the payments.
 
@@ -347,6 +348,7 @@ A review of this note found the points below. The first group is already written
 2. ✅ `Client` in the back-office (pages, route, menu entry through the registry, rights), and its French feature page.
 3. ✅ `Quote` on the server (number, total, transitions), then in the back-office, and its French feature page. The optional acceptance proof file (a PDF or an image joined when the quote is accepted) followed in its own ticket.
    ✅ Then the quote requests: `target` and `quote` on `Contact`, the target sent by `aldaron-web`, the contact list following the workspace and the "Create the client and the quote" action. The unread badge and the global search still count the messages of both workspaces: ticket `190-scope-the-contact-badge-and-search-to-the-workspace`.
-4. ⏳ `Mission` on the server, then in the back-office, and its French feature page.
+4. ✅ `Mission` on the server, then in the back-office, and its French feature page. The phase "cancelled by
+   Aldaron" is stored as `byAgency`: a stored value names a role, never the brand.
 5. ⏳ `Payment`: the schedule constant, the creation on acceptance, the triggers, then the back-office (payments of a quote, mark as paid), and its French feature page.
 6. ⏳ Dashboard card, inventory, and marking step 4 ✅ in the workspace note.

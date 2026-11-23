@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  FiCheckCircle, FiClock, FiCopy, FiFilePlus, FiSend, FiXCircle,
+  FiBriefcase, FiCheckCircle, FiClock, FiCopy, FiFilePlus, FiSend, FiXCircle,
 } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -19,10 +19,12 @@ import DatesCell from '@/components/table/DatesCell';
 import ListWithSelection from '@/components/table/ListWithSelection';
 import i18n from '@/config/i18n';
 import { MENU_ITEM_ICON_SIZE } from '@/constants/_core/ui/ui.constants';
+import { MISSION_COLLECTION, MISSION_CREATE_FROM_QUOTE_LABEL_KEY } from '@/constants/_domain/mission.constants';
 import {
   QUOTE_AMEND_ACTION_LABEL_KEY, QUOTE_COLLECTION, QUOTE_REVISE_ACTION_LABEL_KEY,
   QUOTE_STATUS_ACTION_LABEL_KEYS, QUOTE_TAB_OPTIONS,
 } from '@/constants/_domain/quote.constants';
+import MissionFormDialog from '@/containers/_domain/mission/MissionFormDialog';
 import QuoteAcceptDialog from '@/containers/_domain/quote/QuoteAcceptDialog';
 import QuoteFormDialog from '@/containers/_domain/quote/QuoteFormDialog';
 import QuoteReviseDialog from '@/containers/_domain/quote/QuoteReviseDialog';
@@ -31,6 +33,7 @@ import QuoteTitleCell from '@/containers/_domain/quote/QuoteTitleCell';
 import SearchQuotes from '@/containers/_domain/quote/SearchQuotes';
 import { useProtect } from '@/hooks/_core/useProtect';
 import { goToHome } from '@/redux/actions/_core/app.action';
+import { createOrUpdateMission } from '@/redux/actions/_domain/mission.action';
 import {
   createOrUpdateQuote, loadQuotes, reviseSentQuote, setQuoteStatus,
 } from '@/redux/actions/_domain/quote.action';
@@ -38,6 +41,7 @@ import { getSettingsLocaleSelector, getSettingsWorkspaceSelector } from '@/redux
 import { getQuoteCountSelector, getQuoteQuotesSelector } from '@/redux/reducers/_domain/quote.reducer';
 import { quotesRoute } from '@/routes/protected/_domain/quote.routes';
 import { IQueriesInput, IRenderSearchProps, ITableHeadCell } from '@/types/_core/app.type';
+import { IMissionFormValues, IMissionPrefill } from '@/types/_domain/mission.type';
 import { IQuote, IQuoteFormValues } from '@/types/_domain/quote.type';
 import { formatQuoteAmount } from '@/utils/_domain/quote.utils';
 import { QuoteAcceptInput, QuotesRouteSearchParams } from '@/validations/_domain/quote.validation';
@@ -114,6 +118,7 @@ const Quotes = () => {
   const locale = useSelector(getSettingsLocaleSelector);
   const searchParams: QuotesRouteSearchParams = quotesRoute.useSearch();
   const { canCreate, canEdit } = useProtect(QUOTE_COLLECTION);
+  const { canCreate: canCreateMission } = useProtect(MISSION_COLLECTION);
   const workspace = useSelector(getSettingsWorkspaceSelector);
   const navigate = useNavigate();
 
@@ -131,6 +136,8 @@ const Quotes = () => {
   const [amendedQuote, setAmendedQuote] = useState<IQuote | null>(null);
   const [acceptingQuote, setAcceptingQuote] = useState<IQuote | null>(null);
   const [revisingQuote, setRevisingQuote] = useState<IQuote | null>(null);
+  // the accepted quote a mission is being created from
+  const [missionPrefill, setMissionPrefill] = useState<IMissionPrefill | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
   const openDialog = useCallback((quote: IQuote | null, amended: IQuote | null = null): void => {
@@ -178,6 +185,26 @@ const Quotes = () => {
     dispatch(loadQuotes(queries));
   };
 
+  // the work of an accepted quote: client, title and quote carried over, the rest typed by a person
+  const openMissionDialog = useCallback((quote: IQuote): void => {
+    setMissionPrefill({
+      client: quote.client,
+      title: quote.title,
+      quote: {
+        id: quote.id, number: quote.number, version: quote.version, title: quote.title,
+      },
+    });
+  }, []);
+
+  // closed once saved only: a refusal keeps what was typed on screen
+  const handleCreateMission = async (values: IMissionFormValues): Promise<void> => {
+    setIsSaving(true);
+    const error = await dispatch(createOrUpdateMission(values, null));
+
+    setIsSaving(false);
+    if (!error) setMissionPrefill(null);
+  };
+
   // the revision is asked for first: the sent version expires at once
   const handleRevise = (quote: IQuote): void => {
     dispatch(reviseSentQuote(quote));
@@ -197,6 +224,13 @@ const Quotes = () => {
         display: canCreate && canAmendQuote(quote.status),
         label: t(QUOTE_AMEND_ACTION_LABEL_KEY),
         icon: <FiFilePlus aria-hidden size={MENU_ITEM_ICON_SIZE} />,
+      },
+      {
+        // accepting a quote creates nothing: a person still picks the start and who does the work
+        onClick: () => openMissionDialog(quote),
+        display: canCreateMission && quote.status === QuoteStatusEnum.ACCEPTED,
+        label: t(MISSION_CREATE_FROM_QUOTE_LABEL_KEY),
+        icon: <FiBriefcase aria-hidden size={MENU_ITEM_ICON_SIZE} />,
       },
     ];
 
@@ -227,7 +261,10 @@ const Quotes = () => {
     };
 
     return data as IData;
-  }), [quotes, canCreate, canEdit, handleStatusChange, openDialog, locale, t]);
+  }), [
+    quotes, canCreate, canEdit, canCreateMission, handleStatusChange, openDialog, openMissionDialog,
+    locale, t,
+  ]);
 
   return (
     <>
@@ -261,6 +298,13 @@ const Quotes = () => {
         onClose={() => setRevisingQuote(null)}
         onConfirm={handleRevise}
         quote={revisingQuote}
+      />
+      <MissionFormDialog
+        loading={isSaving}
+        onClose={() => setMissionPrefill(null)}
+        onSubmit={handleCreateMission}
+        open={!!missionPrefill}
+        prefill={missionPrefill}
       />
       {/* keyed on the quote, so the method picked for one quote is never carried to the next */}
       <QuoteAcceptDialog

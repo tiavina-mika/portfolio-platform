@@ -1,0 +1,34 @@
+{
+  "mission": {
+    "assigneeNotAllowed": "Tsy afaka manokatra ny toerana fiasana Aldaron io olona io: omeo mpikambana ao amin'ny ekipa ilay asa.",
+    "clientNotActive": "Voatahiry na tsy fantatra anarana io mpanjifa io: avereno ao amin'ny lisitra aloha vao manome asa ho azy.",
+    "endBeforeStart": "Tsy azo atao mialoha ny daty fanombohana ny daty fiafaran'ny asa.",
+    "notFound": "Tsy hita ilay asa.",
+    "partiesFrozen": "Mitazona ny mpanjifany sy ny tolotra vidiny ny asa {{status}}: ny asa voalamina ihany no afaka manova azy ireo.",
+    "phaseNotAllowed": "Tsy an'ny asa {{status}} ny dingana « {{phase}} ».",
+    "phases": {
+      "byAgency": "nofoanantsika",
+      "byClient": "nofoanan'ny mpanjifa",
+      "clientReview": "hevitry ny mpanjifa",
+      "closed": "vita tanteraka",
+      "design": "modely",
+      "development": "fampandrosoana",
+      "handover": "fanolorana",
+      "release": "famoahana",
+      "scheduled": "voalahatra",
+      "testing": "fitsapana",
+      "unpaid": "tsy voaloa",
+      "waitingClient": "miandry ny mpanjifa",
+      "warranty": "fiantohana"
+    },
+    "quoteNotFound": "Tsy hita ny tolotra vidin'ilay asa.",
+    "quoteNotLinkable": "Tsy afaka ho an'ity asa ity ny tolotra vidiny {{number}}: ny tolotra vidiny neken'ny mpanjifa iray ihany no azo atao.",
+    "statusChangeNotAllowed": "Tsy afaka ho {{to}} ny asa {{from}}.",
+    "statuses": {
+      "cancelled": "nofoanana",
+      "done": "vita",
+      "inProgress": "an-dalam-pandehanana",
+      "planned": "voalamina"
+    }
+  }
+}

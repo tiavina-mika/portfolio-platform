@@ -1,6 +1,7 @@
 {
   "client": {
     "emailAlreadyUsed": "Cette adresse e-mail est déjà celle du client « {{- name}} ».",
+    "hasMissions": "Le client « {{- name}} » a des missions : archivez-le au lieu de le supprimer.",
     "hasQuotes": "Le client « {{- name}} » a des devis : archivez-le au lieu de le supprimer.",
     "notFound": "Client introuvable."
   }

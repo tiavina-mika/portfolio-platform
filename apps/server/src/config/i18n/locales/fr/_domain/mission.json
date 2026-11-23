@@ -1,0 +1,34 @@
+{
+  "mission": {
+    "assigneeNotAllowed": "Cette personne ne peut pas ouvrir l'espace Aldaron : confiez la mission à un membre de l'équipe.",
+    "clientNotActive": "Ce client est archivé ou anonymisé : remettez-le dans la liste avant de lui confier une mission.",
+    "endBeforeStart": "La date de fin d'une mission ne peut pas précéder sa date de début.",
+    "notFound": "Mission introuvable.",
+    "partiesFrozen": "Une mission {{status}} garde son client et son devis : seule une mission planifiée peut les changer.",
+    "phaseNotAllowed": "La phase « {{phase}} » n'appartient pas à une mission {{status}}.",
+    "phases": {
+      "byAgency": "annulée par nous",
+      "byClient": "annulée par le client",
+      "clientReview": "retours du client",
+      "closed": "clôturée",
+      "design": "maquettes",
+      "development": "développement",
+      "handover": "remise",
+      "release": "mise en production",
+      "scheduled": "programmée",
+      "testing": "tests",
+      "unpaid": "impayé",
+      "waitingClient": "en attente du client",
+      "warranty": "garantie"
+    },
+    "quoteNotFound": "Le devis de la mission est introuvable.",
+    "quoteNotLinkable": "Le devis {{number}} ne peut pas être celui de cette mission : seul un devis accepté du même client le peut.",
+    "statusChangeNotAllowed": "Une mission {{from}} ne peut pas devenir {{to}}.",
+    "statuses": {
+      "cancelled": "annulée",
+      "done": "terminée",
+      "inProgress": "en cours",
+      "planned": "planifiée"
+    }
+  }
+}

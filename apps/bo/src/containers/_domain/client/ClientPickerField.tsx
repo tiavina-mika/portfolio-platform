@@ -10,35 +10,39 @@ import { useDispatch } from 'react-redux';
 
 import { AUTOCOMPLETE_SEARCH_DEBOUNCE_MS } from '@/constants/_core/app.constants';
 import { CLIENT_COLLECTION } from '@/constants/_domain/client.constants';
-import ClientFormDialog from '@/containers/_domain/client/ClientFormDialog';
 import { useProtect } from '@/hooks/_core/useProtect';
 import { createOrUpdateClient, searchActiveClients } from '@/redux/actions/_domain/client.action';
 import { IClient, IClientInput } from '@/types/_domain/client.type';
-import { IQuoteClient, IQuoteFormValues } from '@/types/_domain/quote.type';
+import { IQuoteClient } from '@/types/_domain/quote.type';
+
+import ClientFormDialog from './ClientFormDialog';
+
+// the field of a form that names a client by its id: a quote, a mission
+type ClientFormValues = { client: string };
 
 type Props = {
-  // the client of the quote edited, shown before any search
+  // the client of the record edited, shown before any search
   initialClient?: IQuoteClient | null;
   /*
-   * set when the client cannot change (a revision or an amendment keeps the client of the quote it
-   * comes from): the field is read-only and says why
+   * set when the client cannot change (a revision keeps the client of the quote it revises, a started
+   * mission keeps its client): the field is read-only and says why
    */
   lockedHelperText?: string;
 };
 
-const toQuoteClient = ({ id, name, email }: IClient): IQuoteClient => ({ id, name, email });
+const toPickedClient = ({ id, name, email }: IClient): IQuoteClient => ({ id, name, email });
 
 /**
- * The client the quote is written for, picked among the active clients by a part of the name or of
- * the e-mail. A client met for the first time is created from here, without leaving the quote: the
- * "New client" shortcut opens the client form and picks the client once saved.
+ * The client a quote or a mission is written for, picked among the active clients by a part of the
+ * name or of the e-mail. A client met for the first time is created from here, without leaving the
+ * form: the "New client" shortcut opens the client form and picks the client once saved.
  */
-const QuoteClientField = ({ initialClient, lockedHelperText }: Props) => {
+const ClientPickerField = ({ initialClient, lockedHelperText }: Props) => {
   const isLocked = !!lockedHelperText;
   const { t } = useTranslation(['project', 'common']);
   const dispatch = useDispatch();
   const { canCreate } = useProtect(CLIENT_COLLECTION);
-  const { control, setValue, formState: { errors } } = useFormContext<IQuoteFormValues>();
+  const { control, setValue, formState: { errors } } = useFormContext<ClientFormValues>();
 
   const [selected, setSelected] = useState<IQuoteClient | null>(initialClient ?? null);
   const [options, setOptions] = useState<IQuoteClient[]>(initialClient ? [initialClient] : []);
@@ -46,7 +50,7 @@ const QuoteClientField = ({ initialClient, lockedHelperText }: Props) => {
   const [isSavingClient, setIsSavingClient] = useState(false);
 
   const search = useMemo(() => debounce((text: string) => {
-    dispatch(searchActiveClients(text, (clients: IClient[]) => setOptions(clients.map(toQuoteClient))));
+    dispatch(searchActiveClients(text, (clients: IClient[]) => setOptions(clients.map(toPickedClient))));
   }, AUTOCOMPLETE_SEARCH_DEBOUNCE_MS), [dispatch]);
 
   // the first clients are proposed as soon as the form opens, before anything is typed
@@ -64,7 +68,7 @@ const QuoteClientField = ({ initialClient, lockedHelperText }: Props) => {
   const handleCreateClient = async (values: IClientInput): Promise<void> => {
     setIsSavingClient(true);
     const error = await dispatch(createOrUpdateClient(values, null, (client: IClient) => {
-      const created = toQuoteClient(client);
+      const created = toPickedClient(client);
 
       setOptions((previous) => [created, ...previous]);
       pick(created);
@@ -86,7 +90,7 @@ const QuoteClientField = ({ initialClient, lockedHelperText }: Props) => {
             filterOptions={(clients) => clients}
             getOptionLabel={(client: IQuoteClient) => client.name}
             isOptionEqualToValue={(option, value) => option.id === value.id}
-            noOptionsText={t('project:quote.noClient')}
+            noOptionsText={t('project:client.noActiveClient')}
             onChange={(_, client) => pick(client)}
             options={options}
             value={selected}
@@ -99,7 +103,7 @@ const QuoteClientField = ({ initialClient, lockedHelperText }: Props) => {
                 required
                 error={!!errors.client}
                 helperText={errors.client?.message ?? lockedHelperText}
-                label={t('project:quote.client')}
+                label={t('project:client.client')}
               />
             )}
             renderOption={({ key, ...optionProps }, client) => (
@@ -120,7 +124,7 @@ const QuoteClientField = ({ initialClient, lockedHelperText }: Props) => {
             size="small"
             startIcon={<FiPlus aria-hidden />}
           >
-            {t('project:quote.newClient')}
+            {t('project:client.createClient')}
           </Button>
         </div>
       )}
@@ -134,4 +138,4 @@ const QuoteClientField = ({ initialClient, lockedHelperText }: Props) => {
   );
 };
 
-export default QuoteClientField;
+export default ClientPickerField;

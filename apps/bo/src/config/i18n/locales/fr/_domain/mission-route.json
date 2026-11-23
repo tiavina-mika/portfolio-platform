@@ -1,0 +1,9 @@
+{
+  "missions": "missions",
+  "missionTabs": {
+    "planned": "planifiees",
+    "inProgress": "en-cours",
+    "done": "terminees",
+    "cancelled": "annulees"
+  }
+}

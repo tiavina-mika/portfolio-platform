@@ -18,6 +18,7 @@
   - [Envoyer, accepter, refuser ou faire expirer un devis](#envoyer-accepter-refuser-ou-faire-expirer-un-devis)
   - [Réviser un devis envoyé](#réviser-un-devis-envoyé)
   - [Créer un avenant à un devis accepté](#créer-un-avenant-à-un-devis-accepté)
+  - [Créer la mission d'un devis accepté](#créer-la-mission-dun-devis-accepté)
 - [La devise par défaut](#la-devise-par-défaut)
 - [Cas d'utilisation typiques](#cas-dutilisation-typiques)
 - [Points d'attention / limites actuelles](#points-dattention--limites-actuelles)
@@ -192,6 +193,15 @@ devis accepté ; on saisit le titre et les lignes du travail en plus.
 L'avenant reçoit son **propre numéro** et suit ensuite la vie d'un devis normal : brouillon, envoyé, puis
 accepté ou refusé. Dans la liste, il indique le devis qu'il complète.
 
+### Créer la mission d'un devis accepté
+
+Sur un devis accepté, le menu de la ligne propose **« Créer la mission »** à qui a le droit **Créer** sur
+les missions. La fenêtre de création d'une [mission](../../missions/fr/MISSIONS.FR.md) s'ouvre, déjà remplie
+avec le client, le titre et le devis ; on choisit qui fait le travail et quand.
+
+Accepter un devis ne crée jamais de mission tout seul : c'est une personne qui décide du début et de qui
+s'en charge.
+
 ## La devise par défaut
 
 Dans **Paramètres** → **Langues**, l'espace Aldaron propose la **devise par défaut des devis**. Elle ne
@@ -211,6 +221,7 @@ ne modifie aucun devis existant. C'est un réglage propre à la personne connect
    nouvelle version, puis la marquer comme envoyée.
 7. **Le client demande du travail en plus après avoir accepté** : « Créer un avenant » sur le devis
    accepté.
+8. **Lancer le travail** une fois le devis accepté : « Créer la mission ».
 
 ## Points d'attention / limites actuelles
 
@@ -222,3 +233,4 @@ ne modifie aucun devis existant. C'est un réglage propre à la personne connect
 - Un devis envoyé n'expire pas tout seul à sa date de validité : il faut le marquer comme expiré.
 - Pas encore de paiements rattachés à un devis accepté.
 - Un client qui a des devis ne peut pas être supprimé : il est archivé.
+- Annuler la mission d'un devis ne change pas le devis : il reste accepté.

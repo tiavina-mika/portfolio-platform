@@ -48,6 +48,7 @@ Files are in `apps/server/src/cloud/functions/_core/` unless noted.
 | `utils.functions.ts` | `getJobStatus`, `destroyObjects` |
 | `test.functions.ts` | `getTestEmailSendersOptions`, `createBatchTest`, `destroyBatchTest`, `sendArticleToNewsletterTest`, `sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest`, `sendInvitationTest`, `sendWelcomeEmailTest`, `sendVerificationCodeSmsTest` (test helpers, imported only in local development and tests) |
 | `_domain/client.functions.ts` | `getClients`, `getClient`, `createClient`, `updateClient`, `archiveClient` (Aldaron workspace only: each one starts with `resolveWorkspace`; no delete function) |
+| `_domain/mission.functions.ts` | `getMissions` (with "my missions", read from the session), `getMission`, `createMission`, `updateMission`, `changeMissionStatus`, `getMissionAssignees` (the members of the roles that open the Aldaron workspace) (Aldaron workspace only: each one starts with `resolveWorkspace`; no delete function) |
 | `_domain/project.functions.ts` | `getProjects`, `getProject`, `getProjectForClient` |
 | `_domain/quote.functions.ts` | `getQuotes`, `getQuote`, `createQuote` (also an amendment of an accepted quote, or a first quote written from a quote request of the site, which then points to it), `prepareQuoteFromContact` (finds or creates the client of a quote request and reads the request into a draft to prefill), `updateQuote` (a draft only), `reviseQuote` (a new draft version of a sent quote), `changeQuoteStatus` (Aldaron workspace only: each one starts with `resolveWorkspace`; no delete function) |
 
@@ -69,8 +70,10 @@ Files are in `apps/server/src/cloud/triggers/_core/` unless noted.
 | `pageSection.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `PageSection` |
 | `role.triggers.ts` | `beforeSave`, `afterSave`, `beforeDelete`, `afterDelete` `_Role` |
 | `user.triggers.ts` | `beforeSave`, `afterSave`, `beforeDelete`, `afterDelete` `_User` |
-| `_domain/client.triggers.ts` | `beforeSave` `Client` (e-mail in lowercase and unique, status and authors); `beforeDelete` `Client` (refused while the client has quotes) |
+| `_domain/client.triggers.ts` | `beforeSave` `Client` (e-mail in lowercase and unique, status and authors); `beforeDelete` `Client` (refused while the client has quotes or missions) |
+| `_domain/mission.triggers.ts` | `beforeSave` `Mission` (born planned; status only forward, `done` and `cancelled` final; phase of the current status, cleared on a status change; start and end dates filled when empty, end never before start; client and quote frozen after `planned`; quote accepted and of the same client; assignee able to open the Aldaron workspace) |
 | `_domain/project.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `Project` |
+| `_domain/quote.triggers.ts` | `beforeSave` `Quote` (born draft, number, total, transitions, content frozen out of draft) |
 
 ## Cloud Jobs
 

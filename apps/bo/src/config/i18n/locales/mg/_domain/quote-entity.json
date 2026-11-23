@@ -19,8 +19,6 @@
     "reviseTitle": "Havaozina ny tolotra vidiny {{number}}",
     "reviseDescription": "Mamorona dika drafitra amin'ity tolotra vidiny ity ho kinova {{version}}, amin'ny laharana {{number}} ihany. Lany daty avy hatrany ny kinova nalefa: alefaso amin'ny mpanjifa ilay vaovao.",
     "client": "Mpanjifa",
-    "newClient": "Mpanjifa vaovao",
-    "noClient": "Tsy misy mpanjifa mavitrika mifanaraka",
     "title": "Lohateny",
     "lines": "Andalana",
     "lineNumber": "Andalana {{index}}",

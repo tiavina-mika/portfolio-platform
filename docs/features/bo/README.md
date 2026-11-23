@@ -26,6 +26,7 @@ The sections follow the real sidebar groups, in menu order. Every sidebar entry 
   - [Aperçu](projects/fr/PROJECTS_PREVIEW.FR.md)
 - [Clients](clients/fr/CLIENTS.FR.md) : liste, ajout, modification et archivage, dans l'espace Aldaron seulement.
 - [Devis](quotes/fr/QUOTES.FR.md) : brouillon, total calculé, envoi, acceptation, refus et expiration, dans l'espace Aldaron seulement.
+- [Missions](missions/fr/MISSIONS.FR.md) : le travail qui suit un devis accepté, qui le fait, où il en est, dans l'espace Aldaron seulement.
 
 ## Communauté
 
