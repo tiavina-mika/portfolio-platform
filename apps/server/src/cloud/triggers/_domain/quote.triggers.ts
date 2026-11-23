@@ -7,7 +7,10 @@ import type { Locale } from '@/types/app.type';
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
 import { collections } from '@/constants/_core/constants';
 import { QUOTE_FROZEN_FIELDS, QUOTE_NUMBER_TIME_ZONE } from '@/constants/_domain/quote.constants';
-import { buildQuoteCounterName, formatQuoteNumber, getQuoteNumberYear } from '@/utils/_domain/quote.utils';
+import {
+  buildQuoteCounterName, canAttachQuoteAcceptanceProof, formatQuoteNumber, getQuoteNumberYear,
+  isQuoteAcceptanceProofFile,
+} from '@/utils/_domain/quote.utils';
 
 import { takeNextCounterValueService } from '../../services/_core/counter.service.cloud';
 import { getClientByIdService } from '../../services/_domain/client.service.cloud';
@@ -46,7 +49,8 @@ const assertActiveClient = async (quote: Parse.Object, locale: Locale): Promise<
 /**
  * A quote that left `draft` is what the client received: its content no longer changes, and its
  * status only moves forward (`draft → sent → accepted | refused | expired`). Sending it dates it,
- * accepting it dates the acceptance and requires the way the client said yes.
+ * accepting it dates the acceptance, requires the way the client said yes and is the only move that may
+ * join a proof file.
  */
 const checkUpdatedQuote = (quote: Parse.Object, original: Parse.Object, locale: Locale): void => {
   SERVER_OWNED_FIELDS.forEach((field) => {
@@ -58,6 +62,16 @@ const checkUpdatedQuote = (quote: Parse.Object, original: Parse.Object, locale: 
 
   if (from !== QuoteStatusEnum.DRAFT && QUOTE_FROZEN_FIELDS.some((field) => quote.dirty(field))) {
     throw new Error(translate('quote.notEditable', locale, { status: translateStatus(from, locale) }));
+  }
+
+  // the proof is joined by the acceptance itself, and must be a file the back-office stored
+  if (quote.dirty('acceptanceProof')) {
+    if (!canAttachQuoteAcceptanceProof(from, to)) {
+      throw new Error(translate('quote.acceptanceProofNotAllowed', locale));
+    }
+    if (!isQuoteAcceptanceProofFile(quote.get('acceptanceProof'), process.env.CLOUDINARY_NAME)) {
+      throw new Error(translate('quote.acceptanceProofInvalid', locale));
+    }
   }
 
   if (from === to) {
@@ -101,7 +115,8 @@ Parse.Cloud.beforeSave(
       quote.set('status', QuoteStatusEnum.DRAFT);
       quote.set('version', 1);
       quote.set('paidAmount', 0);
-      ['number', 'issuedAt', 'acceptedAt', 'acceptanceMethod'].forEach((field) => quote.unset(field));
+      ['number', 'issuedAt', 'acceptedAt', 'acceptanceMethod', 'acceptanceProof']
+        .forEach((field) => quote.unset(field));
       if (author) quote.set('createdBy', author);
     } else if (request.original) {
       checkUpdatedQuote(quote, request.original, locale);

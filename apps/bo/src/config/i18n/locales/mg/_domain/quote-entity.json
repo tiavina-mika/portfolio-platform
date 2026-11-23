@@ -43,6 +43,11 @@
       "expired": "Lany daty"
     },
     "acceptanceMethod": "Ny fomba nanekeran'ny mpanjifa",
+    "acceptanceProof": "Porofon'ny fanekena",
+    "acceptanceProofDrop": "Apetraho eto ny tolotra vidiny voasonia na ny mailaky ny mpanjifa, na tsindrio raha hisafidy azy",
+    "acceptanceProofHelper": "Tsy voatery. PDF na sary iray (JPG, PNG, WEBP), {{size}} Mo farafahabetsany.",
+    "acceptanceProofUploadFailed": "Tsy lasa ilay porofo: tsy voaray ho nekena ilay tolotra vidiny. Andramo indray.",
+    "openAcceptanceProof": "Porofon'ny fanekena ny tolotra vidiny {{number}} (misokatra amin'ny tabilao vaovao)",
     "acceptanceMethods": {
       "email": "Tamin'ny mailaka",
       "signature": "Tolotra vidiny nosoniavina",

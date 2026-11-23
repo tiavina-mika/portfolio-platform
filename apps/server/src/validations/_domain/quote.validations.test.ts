@@ -15,6 +15,11 @@ const validQuote = {
   currency: 'EUR',
 };
 
+const proof = {
+  publicId: 'quotes/acceptance-proofs/k3j2h1',
+  url: 'https://res.cloudinary.com/demo/image/upload/v1/quotes/acceptance-proofs/k3j2h1.pdf',
+};
+
 describe('writing a draft quote from the back-office', () => {
   it('should accept a quote with a client, a title, a line and a currency', () => {
     expect(createQuoteSchema.safeParse(validQuote).success).toBe(true);
@@ -91,6 +96,32 @@ describe('moving a quote', () => {
     expect(changeQuoteStatusSchema.safeParse({
       id: 'q1', status: QuoteStatusEnum.REFUSED, acceptanceMethod: QuoteAcceptanceMethodEnum.EMAIL,
     }).success).toBe(false);
+  });
+
+  it('should take a proof file with an acceptance', () => {
+    expect(changeQuoteStatusSchema.safeParse({
+      id: 'q1',
+      status: QuoteStatusEnum.ACCEPTED,
+      acceptanceMethod: QuoteAcceptanceMethodEnum.SIGNATURE,
+      acceptanceProof: proof,
+    }).success).toBe(true);
+  });
+
+  it('should refuse a proof file on any other move', () => {
+    [QuoteStatusEnum.SENT, QuoteStatusEnum.REFUSED, QuoteStatusEnum.EXPIRED].forEach((status) => {
+      expect(changeQuoteStatusSchema.safeParse({ id: 'q1', status, acceptanceProof: proof }).success).toBe(false);
+    });
+  });
+
+  it('should refuse a proof that is not a plain file of an https address', () => {
+    const accept = { id: 'q1', status: QuoteStatusEnum.ACCEPTED, acceptanceMethod: QuoteAcceptanceMethodEnum.EMAIL };
+
+    expect(changeQuoteStatusSchema.safeParse({ ...accept, acceptanceProof: { ...proof, url: 'http://x.test/a.pdf' } })
+      .success).toBe(false);
+    expect(changeQuoteStatusSchema.safeParse({ ...accept, acceptanceProof: { ...proof, size: 10 } }).success)
+      .toBe(false);
+    expect(changeQuoteStatusSchema.safeParse({ ...accept, acceptanceProof: { url: proof.url } }).success)
+      .toBe(false);
   });
 
   it('should never take a quote back to draft', () => {

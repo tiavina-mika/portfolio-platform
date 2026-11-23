@@ -67,7 +67,7 @@ Le raccourci « Nouveau client » du formulaire demande en plus le droit **Crée
 | Client | Le nom du client, toujours à jour : s'il est renommé, la liste montre le nouveau nom |
 | Total TTC | Le montant total, dans la devise du devis |
 | Créé le / Modifié le | Dates de création et de dernière modification |
-| Statut | Brouillon, envoyé, accepté, refusé ou expiré |
+| Statut | Brouillon, envoyé, accepté, refusé ou expiré ; sous un devis accepté, le lien vers sa preuve d'acceptation s'il en a une |
 | Actions | Menu de la ligne |
 
 La liste peut être triée par numéro, titre, montant, date d'envoi ou date.
@@ -139,6 +139,15 @@ Le menu de la ligne ne propose que les passages possibles depuis le statut du de
 Accepter un devis ouvre une petite fenêtre qui demande **comment le client a accepté** : par e-mail,
 devis signé, à l'oral ou autrement. La date d'acceptation est celle du jour.
 
+La même fenêtre permet de joindre, si on le souhaite, **une preuve d'acceptation** : le devis signé ou
+l'e-mail du client, en PDF ou en image (JPG, PNG, WEBP), 5 Mo au plus. Un seul fichier par devis. La
+preuve ne peut être jointe qu'au moment de l'acceptation : ni avant, ni après, ni sur un devis refusé ou
+expiré. Si le fichier ne peut pas être envoyé, le devis n'est pas marqué comme accepté et on peut
+recommencer.
+
+Dans la liste, un devis accepté avec une preuve affiche un lien **« Preuve d'acceptation »** sous son
+statut : il ouvre le fichier dans un nouvel onglet.
+
 ## La devise par défaut
 
 Dans **Paramètres** → **Langues**, l'espace Aldaron propose la **devise par défaut des devis**. Elle ne
@@ -151,14 +160,17 @@ ne modifie aucun devis existant. C'est un réglage propre à la personne connect
    vérifier le total, enregistrer. Le devis reçoit son numéro.
 2. **Corriger un brouillon** avant de l'envoyer : « Modifier ».
 3. **Noter l'envoi** au client : « Marquer comme envoyé ».
-4. **Noter la réponse** : « Marquer comme accepté » (en indiquant comment) ou « Marquer comme refusé ».
+4. **Noter la réponse** : « Marquer comme accepté » (en indiquant comment, et en joignant le devis signé
+   si on l'a) ou « Marquer comme refusé ».
 5. **Faire le point** : l'onglet Envoyé liste les devis en attente de réponse.
 
 ## Points d'attention / limites actuelles
 
 - Le devis n'est pas encore produit en PDF ni envoyé par e-mail depuis le back-office : « Marquer comme
   envoyé » note seulement qu'il est parti.
-- On ne peut pas encore joindre de preuve (devis signé, e-mail du client) à une acceptation.
+- La preuve d'acceptation ne se remplace pas et ne se retire pas une fois le devis accepté. Son lien
+  est une adresse longue et impossible à deviner, mais quiconque la reçoit peut ouvrir le fichier, comme
+  pour les autres fichiers du back-office : ne la transmettez pas en dehors de l'équipe.
 - Pas encore de révision d'un devis envoyé ni d'avenant à un devis accepté.
 - Un devis envoyé n'expire pas tout seul à sa date de validité : il faut le marquer comme expiré.
 - Pas encore de paiements rattachés à un devis accepté.

@@ -152,11 +152,11 @@ const Quotes = () => {
     dispatch(setQuoteStatus(quote, status));
   }, [dispatch]);
 
-  const handleAccept = async ({ acceptanceMethod }: QuoteAcceptInput): Promise<void> => {
+  const handleAccept = async (values: QuoteAcceptInput): Promise<void> => {
     if (!acceptingQuote) return;
 
     setIsSaving(true);
-    const error = await dispatch(setQuoteStatus(acceptingQuote, QuoteStatusEnum.ACCEPTED, acceptanceMethod));
+    const error = await dispatch(setQuoteStatus(acceptingQuote, QuoteStatusEnum.ACCEPTED, values));
 
     setIsSaving(false);
     if (!error) setAcceptingQuote(null);

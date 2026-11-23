@@ -294,7 +294,6 @@ Une relecture de cette note a trouvé les points ci-dessous. Le premier groupe e
 ### Écrit dans le modèle
 
 - ⏳ **Révision et avenant d'un devis** : `version`, `parentQuote` (voir [Devis](#devis)).
-- ⏳ **Preuve d'acceptation** : `acceptedAt`, `acceptanceMethod`, `acceptanceProof`.
 - ⏳ **Qui fait une mission** : `assignee`.
 - ✅ **E-mail du client en minuscules**, pour qu'une personne soit un seul client.
 - ⏳ **Champs calculés fermés** : `number`, `version`, `totalAmount`, `paidAmount`, `amount` et `percent` sont calculés côté serveur, et la validation des fonctions de création et de mise à jour les **refuse** en entrée, pour qu'un client du back-office défaillant ou malveillant ne puisse pas les imposer. Fait pour le devis (`number`, `version`, `totalAmount`, `paidAmount`) ; `amount` et `percent` viendront avec les paiements.
@@ -343,7 +342,7 @@ Une relecture de cette note a trouvé les points ci-dessous. Le premier groupe e
 
 1. ✅ Constantes et enums partagés, `Client` côté serveur (service, fonctions, trigger, index, i18n).
 2. ✅ `Client` dans le back-office (pages, route, entrée de menu via le registre, droits), et sa page de fonctionnalité française.
-3. ✅ `Quote` côté serveur (numéro, total, transitions), puis dans le back-office, et sa page de fonctionnalité française. Le fichier de preuve d'acceptation a son propre ticket (`025-attach-an-acceptance-proof-file-to-a-quote`).
+3. ✅ `Quote` côté serveur (numéro, total, transitions), puis dans le back-office, et sa page de fonctionnalité française. Le fichier facultatif de preuve d'acceptation (un PDF ou une image joint quand le devis est accepté) a suivi dans son propre ticket.
    ⏳ Puis les demandes de devis : `target` et `quote` sur `Contact`, la cible envoyée par `aldaron-web`, la liste des contacts qui suit l'espace de travail et l'action « Créer le client et le devis ».
 4. ⏳ `Mission` côté serveur, puis dans le back-office, et sa page de fonctionnalité française.
 5. ⏳ `Payment` : la constante d'échéancier, la création à l'acceptation, les triggers, puis le back-office (paiements d'un devis, marquer payé), et sa page de fonctionnalité française.

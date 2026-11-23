@@ -1,6 +1,8 @@
 {
   "quote": {
     "acceptanceMethodRequired": "Indiquez comment le client a accepté le devis.",
+    "acceptanceProofInvalid": "Cette preuve n'est pas un fichier envoyé depuis le back-office : joignez à nouveau le PDF ou l'image.",
+    "acceptanceProofNotAllowed": "Une preuve ne peut être jointe qu'au moment où le devis est accepté.",
     "clientNotActive": "Ce client est archivé ou anonymisé : remettez-le dans la liste avant de lui écrire un devis.",
     "notEditable": "Un devis {{status}} ne peut plus être modifié : seul un brouillon peut l'être.",
     "notFound": "Devis introuvable.",

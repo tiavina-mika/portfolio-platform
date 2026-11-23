@@ -43,6 +43,11 @@
       "expired": "Expired"
     },
     "acceptanceMethod": "How the client accepted",
+    "acceptanceProof": "Acceptance proof",
+    "acceptanceProofDrop": "Drop the signed quote or the client's e-mail here, or click to choose it",
+    "acceptanceProofHelper": "Optional. One PDF or image (JPG, PNG, WEBP), {{size}} MB at most.",
+    "acceptanceProofUploadFailed": "The proof could not be uploaded: the quote was not accepted. Try again.",
+    "openAcceptanceProof": "Acceptance proof of quote {{number}} (opens in a new tab)",
     "acceptanceMethods": {
       "email": "By e-mail",
       "signature": "Signed quote",

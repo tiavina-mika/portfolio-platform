@@ -1,6 +1,8 @@
 {
   "quote": {
     "acceptanceMethodRequired": "Say how the client accepted the quote.",
+    "acceptanceProofInvalid": "This proof is not a file uploaded from the back-office: attach the PDF or the image again.",
+    "acceptanceProofNotAllowed": "A proof can only be attached when the quote is accepted.",
     "clientNotActive": "This client is archived or anonymized: put it back in the list before writing it a quote.",
     "notEditable": "A quote that is {{status}} can no longer be edited: only a draft can.",
     "notFound": "Quote not found.",

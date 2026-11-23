@@ -5,7 +5,9 @@ import {
 import { QuoteAcceptanceMethodEnum, QuoteStatusEnum } from '@shared/domain-types';
 import { z } from 'zod';
 
-import { QUOTE_LIST_MAX_LIMIT } from '@/constants/_domain/quote.constants';
+import {
+  QUOTE_ACCEPTANCE_PROOF_PUBLIC_ID_MAX_LENGTH, QUOTE_ACCEPTANCE_PROOF_URL_MAX_LENGTH, QUOTE_LIST_MAX_LIMIT,
+} from '@/constants/_domain/quote.constants';
 
 import {
   localeFieldSchema, objectIdFieldSchema, paginationQuerySchema, workspaceFieldSchema,
@@ -75,8 +77,18 @@ export const updateQuoteSchema = z.strictObject({
 });
 
 /*
+ * the file the back-office uploaded, as the upload answered it. Whether it really is one of the
+ * platform's proofs (host, folder, extension) is the trigger's check, which holds for every save
+ */
+const acceptanceProofSchema = z.strictObject({
+  publicId: z.string().trim().min(1).max(QUOTE_ACCEPTANCE_PROOF_PUBLIC_ID_MAX_LENGTH),
+  url: z.url({ protocol: /^https$/ }).max(QUOTE_ACCEPTANCE_PROOF_URL_MAX_LENGTH),
+});
+
+/*
  * the one way a quote moves: `draft` is where it starts, so it is never a target. Accepting it says how
- * the client said yes; which move is allowed from where the quote stands is the trigger's check
+ * the client said yes, and may join the proof of it; which move is allowed from where the quote stands
+ * is the trigger's check
  */
 export const changeQuoteStatusSchema = z.strictObject({
   id: objectIdFieldSchema,
@@ -84,10 +96,14 @@ export const changeQuoteStatusSchema = z.strictObject({
     QuoteStatusEnum.SENT, QuoteStatusEnum.ACCEPTED, QuoteStatusEnum.REFUSED, QuoteStatusEnum.EXPIRED,
   ]),
   acceptanceMethod: z.enum(QuoteAcceptanceMethodEnum).optional(),
+  acceptanceProof: acceptanceProofSchema.optional(),
   ...requestFieldsSchema,
 }).refine(
   ({ status, acceptanceMethod }) => (status === QuoteStatusEnum.ACCEPTED) === !!acceptanceMethod,
   { path: ['acceptanceMethod'] }
+).refine(
+  ({ status, acceptanceProof }) => !acceptanceProof || status === QuoteStatusEnum.ACCEPTED,
+  { path: ['acceptanceProof'] }
 );
 
 export const getQuoteSchema = z.strictObject({
