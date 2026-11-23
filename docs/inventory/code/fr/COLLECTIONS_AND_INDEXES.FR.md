@@ -20,7 +20,7 @@ Les noms de classes du domaine sont dans `libs/shared-domain-constants` (`DOMAIN
 | `Page` | Pages éditoriales | server, bo, web |
 | `PageSection` | Sections regroupant les pages | server, bo, web |
 | `Category` | Catégories d'articles et de pages | server, bo, web |
-| `Contact` | Messages du formulaire de contact du site | server, bo, web |
+| `Contact` | Messages des formulaires de contact des sites ; `target` nomme l'espace où il se lit (absent = portfolio), `quote` le devis qu'une demande Aldaron est devenue | server, bo, web, aldaron-web |
 | `Newsletter` | Abonnements à la newsletter (double opt-in, confirmé par un jeton haché) | server, web |
 | `App` | Réglages du site, dont les fichiers `image`, `imageForDarkMode` et `cv` (les anciens fichiers sont supprimés de Cloudinary au changement) | server, bo, web |
 | `Notification`, `NotificationResend` | Notifications envoyées depuis le back-office et leurs renvois | server, bo |

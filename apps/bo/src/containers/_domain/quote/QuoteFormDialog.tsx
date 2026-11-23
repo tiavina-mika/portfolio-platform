@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import Dialog from '@/components/Dialog';
 import { QUOTE_FORM_ID } from '@/constants/_domain/quote.constants';
-import { IQuote, IQuoteFormValues } from '@/types/_domain/quote.type';
+import { IQuote, IQuoteFormValues, IQuoteFromContact } from '@/types/_domain/quote.type';
 
 import QuoteForm from './QuoteForm';
 
@@ -14,6 +14,8 @@ type Props = {
   quote?: IQuote | null;
   // on a new quote, the accepted quote it amends
   amendedQuote?: IQuote | null;
+  // on a new quote, what a quote request of the site prefills
+  prefill?: IQuoteFromContact | null;
   loading?: boolean;
 };
 
@@ -22,13 +24,14 @@ type Props = {
  * open on a refusal, so nothing typed is lost; the page closes it once saved.
  */
 const QuoteFormDialog = ({
-  open, onClose, onSubmit, quote, amendedQuote, loading,
+  open, onClose, onSubmit, quote, amendedQuote, prefill, loading,
 }: Props) => {
   const { t } = useTranslation(['project', 'common']);
 
   const getTitle = (): string => {
     if (quote) return t('project:quote.editQuote', { number: quote.number });
     if (amendedQuote) return t('project:quote.createAmendment', { number: amendedQuote.number });
+    if (prefill) return t('project:quote.createQuoteFromContact', { name: prefill.client.name });
 
     return t('project:quote.createQuote');
   };
@@ -50,6 +53,7 @@ const QuoteFormDialog = ({
           amendedQuote={amendedQuote}
           key={quote?.id ?? `new-${amendedQuote?.id ?? ''}`}
           onSubmit={onSubmit}
+          prefill={prefill}
           quote={quote}
         />
       )}

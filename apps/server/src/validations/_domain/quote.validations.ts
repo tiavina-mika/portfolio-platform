@@ -69,6 +69,18 @@ export const createQuoteSchema = z.strictObject({
   ...quoteFieldsSchema,
   // an amendment: the accepted quote it completes. A revision is never created here (`reviseQuote`)
   parentQuote: objectIdFieldSchema.optional(),
+  // the quote request of the site the quote is written from: it then points to the quote
+  contact: objectIdFieldSchema.optional(),
+  ...requestFieldsSchema,
+}).refine(
+  // an amendment completes an accepted quote, a request starts a first one: never both
+  ({ parentQuote, contact }) => !(parentQuote && contact),
+  { path: ['contact'] }
+);
+
+// the quote request of the site to turn into a client and the prefill of a draft quote
+export const prepareQuoteFromContactSchema = z.strictObject({
+  id: objectIdFieldSchema,
   ...requestFieldsSchema,
 });
 

@@ -14,10 +14,13 @@ import {
 } from '@/redux/reducers/_domain/quote.reducer';
 import { AppDispatch, AppThunkAction, RootState } from '@/redux/store';
 import {
-  changeQuoteStatus, createQuote, fetchQuotes, reviseQuote, updateQuote, uploadQuoteAcceptanceProof,
+  changeQuoteStatus, createQuote, fetchQuote, fetchQuotes, prepareQuoteFromContact, reviseQuote, updateQuote,
+  uploadQuoteAcceptanceProof,
 } from '@/services/_domain/quote.service';
 import { IQueriesInput } from '@/types/_core/app.type';
-import { IQuote, IQuoteFormValues, IQuoteInput } from '@/types/_domain/quote.type';
+import {
+  IQuote, IQuoteFormValues, IQuoteFromContact, IQuoteInput,
+} from '@/types/_domain/quote.type';
 import { convertSearchParamsToFilters } from '@/utils/_core/app.utils';
 import { QuoteAcceptInput } from '@/validations/_domain/quote.validation';
 
@@ -164,6 +167,66 @@ export const reviseSentQuote = (quote: IQuote): any => {
     action: 'create',
     hasNoRightErrorMessage: rightsError('create'),
   });
+};
+
+/**
+ * First step of "Create the client and the quote" on a quote request of the site: the client (found by
+ * its e-mail or created) and what the draft starts from, handed to the form that opens prefilled.
+ */
+export const prepareContactQuote = (
+  contactId: string, onReady: (quoteFromContact: IQuoteFromContact) => void
+): any => {
+  return actionWithLoader(async (_dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
+    onReady(await prepareQuoteFromContact(contactId, getRequestContext(getState?.()!)));
+  },
+  // rights
+  {
+    collection,
+    action: 'create',
+    hasNoRightErrorMessage: rightsError('create'),
+  });
+};
+
+/**
+ * Saves the draft written from a quote request of the site: the request then points to it, and can no
+ * longer become a second quote.
+ * @param onCreated told the quote, so the message shows what it became without being read again
+ */
+export const createQuoteFromContact = (
+  values: IQuoteFormValues, contactId: string, onCreated: (quote: IQuote) => void
+): any => {
+  return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
+    const context = getRequestContext(getState?.()!);
+    const created = await createQuote(toQuoteInput(values), context, undefined, contactId);
+
+    dispatch(addQuoteToQuotesSlice(created));
+    dispatch(setMessageSlice(
+      i18n.t('project:quote.messages.createdFromContact', { number: created.number })
+    ));
+    onCreated(created);
+  },
+  // rights
+  {
+    collection,
+    action: 'create',
+    hasNoRightErrorMessage: rightsError('create'),
+  });
+};
+
+/**
+ * Reads the quote a request of the site became, for the message to name it. Silent: an account that may
+ * not read quotes still sees that the request was converted, without an error.
+ */
+export const loadQuoteOfContact = (quoteId: string, onLoaded: (quote: IQuote) => void): any => {
+  return async (_dispatch: AppDispatch, getState: () => RootState): Promise<void> => {
+    try {
+      const quote = await fetchQuote(quoteId, getRequestContext(getState()));
+
+      if (quote) onLoaded(quote);
+    }
+    // the message already says it became a quote: the number is a detail it can do without
+    catch { /* nothing to show */ }
+  };
 };
 
 /*

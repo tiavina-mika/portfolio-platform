@@ -9,5 +9,6 @@
 import '@/utils/_domain/client-role.utils';
 import '@/utils/_domain/project-dashboard.utils';
 import '@/utils/_domain/project-role.utils';
+import '@/utils/_domain/quote-contact.utils';
 import '@/utils/_domain/quote-role.utils';
 import '@/utils/_domain/quote-settings.utils';

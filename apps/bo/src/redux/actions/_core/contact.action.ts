@@ -1,3 +1,5 @@
+import type { TargetEnum } from '@shared/types';
+
 import i18n from '@/config/i18n';
 import { Errors } from '@/constants/_core/app.constants';
 import { CONTACT_PAGE_SIZE, CONTACT_SORT } from '@/constants/_core/contact.constants';
@@ -18,7 +20,8 @@ import {
   clearContactsSlice,
   updateContactInListSlice,
 } from '@/redux/reducers/_core/contact.reducer';
-import { AppDispatch, AppThunkAction } from '@/redux/store';
+import { getSettingsWorkspaceSelector } from '@/redux/reducers/_core/settings.reducer';
+import { AppDispatch, AppThunkAction, RootState } from '@/redux/store';
 import { fetchContact } from '@/services/_core/contact.service';
 import { fetchEntityList } from '@/services/_core/crud.service';
 import { IExportColumn } from '@/types/_core/app.type';
@@ -101,17 +104,23 @@ export const buildContactQueries = ({ text, deleted = false, skip = 0 }: Contact
   search: text ? { text } : {},
 });
 
-const fillContactList = async (dispatch: AppDispatch, query: ContactQuery): Promise<void> => {
-  const result = await fetchEntityList<IContact>('getContacts', buildContactQueries(query));
+/*
+ * the messages of the workspace the person works in: a quote request of the Aldaron site is never
+ * listed among the portfolio's messages, and the other way round
+ */
+const fillContactList = async (
+  dispatch: AppDispatch, query: ContactQuery, workspace: TargetEnum
+): Promise<void> => {
+  const result = await fetchEntityList<IContact>('getContacts', { ...buildContactQueries(query), workspace });
 
   dispatch(loadContactsSlice(result.results));
   dispatch(setContactsCountSlice(result.count));
-  rememberListQuery(loadContactsSlice, query);
+  rememberListQuery(loadContactsSlice, { ...query, workspace });
 };
 
 export const loadContactList = (query: ContactQuery = {}): any => {
-  return actionWithLoader(async (dispatch: AppDispatch): Promise<void> => {
-    await fillContactList(dispatch, query);
+  return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
+    await fillContactList(dispatch, query, getSettingsWorkspaceSelector(getState?.()!));
   });
 };
 
@@ -120,8 +129,8 @@ export const loadContactList = (query: ContactQuery = {}): any => {
  * placeholder rows while it fills rather than the empty state.
  */
 const loadFirstContactPage = (): any => {
-  return actionWithLoader(async (dispatch: AppDispatch): Promise<void> => {
-    await fillContactList(dispatch, {});
+  return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
+    await fillContactList(dispatch, {}, getSettingsWorkspaceSelector(getState?.()!));
   }, { localLoadingAction: setContactLoadingSlice });
 };
 
@@ -131,10 +140,13 @@ const loadFirstContactPage = (): any => {
  * ---------------------------------------- //
  */
 export const onContactsEnter = (): AppThunkAction => {
-  return onEnterActionWithLoader((dispatch: AppDispatch): void => {
+  return onEnterActionWithLoader((dispatch: AppDispatch, getState?: () => RootState): void => {
     dispatch(clearContactSlice());
+    // the workspace is part of the query, so messages loaded for the other workspace are not kept on screen
     dispatch(clearListUnlessLoadedWith(
-      loadContactsSlice, {}, [clearContactsSlice(), clearContactCountSlice()]
+      loadContactsSlice,
+      { workspace: getSettingsWorkspaceSelector(getState?.()!) },
+      [clearContactsSlice(), clearContactCountSlice()]
     ));
     dispatch(loadFirstContactPage());
   },

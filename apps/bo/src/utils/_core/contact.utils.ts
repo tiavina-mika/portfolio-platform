@@ -1,7 +1,27 @@
 import { getDisplayIdentifier, getDisplayName } from '@shared/utils';
 
-import { IContact } from '@/types/_core/contact.type';
+import type { TargetEnum } from '@shared/types';
+
+import { IContact, IContactDetailAction } from '@/types/_core/contact.type';
 import { getUserFullName } from '@/utils/_core/user.utils';
+
+/*
+ * the actions a business domain adds to the message being read, filled once at startup from
+ * `config/domain-registrations.ts`: the inbox renders them without importing the domain
+ */
+const contactDetailActions: IContactDetailAction[] = [];
+
+/** Side-effect registration of the actions a domain adds to the message being read. */
+export const registerContactDetailActions = (actions: IContactDetailAction[]): void => {
+  contactDetailActions.push(
+    ...actions.filter((action) => !contactDetailActions.some(({ id }) => id === action.id))
+  );
+};
+
+/** the actions a domain added to the message being read, kept to those of the workspace worked in */
+export const getContactDetailActions = (workspace: TargetEnum): IContactDetailAction[] => (
+  contactDetailActions.filter((action) => action.workspaces.includes(workspace))
+);
 
 /**
  * Who sent the message: the account when there is one (the name the rest of the back-office knows

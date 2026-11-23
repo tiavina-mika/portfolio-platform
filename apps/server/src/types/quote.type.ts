@@ -43,6 +43,9 @@ export type QuoteInput = Pick<IQuoteAttributes, 'title' | 'lines' | 'currency'> 
   notes: string | null;
 };
 
+/** what a quote request of the site prefills in a new draft: the team still types the prices */
+export type QuoteRequestPrefill = Pick<IQuoteAttributes, 'title' | 'lines'>;
+
 /**
  * How a quote stands to the quote it points to: a revision is a new version of a sent quote, under the
  * same number; an amendment is extra work after an accepted quote, under a number of its own.

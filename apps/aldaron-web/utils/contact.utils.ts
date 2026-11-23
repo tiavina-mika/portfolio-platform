@@ -1,4 +1,4 @@
-import { CONTACT_MESSAGE_MAX_LENGTH } from '@shared/constants';
+import { CONTACT_MESSAGE_MAX_LENGTH, QUOTE_REQUEST_MESSAGE_LABELS as LABELS } from '@shared/constants';
 
 import { IQuoteRequestInput } from '@/types/contact.type';
 
@@ -25,14 +25,15 @@ export const composeQuoteMessage = (input: IQuoteRequestInput): string => {
     .join(', ');
 
   const lines = [
-    `Product: ${input.product}`,
-    `Platforms: ${supports}`,
-    input.bring && `Brings: ${QUOTE_BRING_LABELS[input.bring]}`,
-    input.needs && `Needs:\n${input.needs}`,
+    `${LABELS.product}: ${input.product}`,
+    `${LABELS.platforms}: ${supports}`,
+    input.bring && `${LABELS.brings}: ${QUOTE_BRING_LABELS[input.bring]}`,
+    input.needs && `${LABELS.needs}:\n${input.needs}`,
   ].filter(Boolean);
 
   const head = lines.join('\n');
-  const estimatePrefix = '\nEstimate:\n';
+  // the back-office reads the estimate back from this label to prefill a quote
+  const estimatePrefix = `\n${LABELS.estimate}:\n`;
   const estimateRoom = CONTACT_MESSAGE_MAX_LENGTH - head.length - estimatePrefix.length;
 
   if (!input.estimate || estimateRoom <= ELLIPSIS.length) return truncate(head, CONTACT_MESSAGE_MAX_LENGTH);

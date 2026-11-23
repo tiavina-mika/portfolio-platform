@@ -3,14 +3,18 @@ import { QuoteStatusEnum } from '@shared/domain-types';
 import { canAmendQuote, canReviseQuote } from '@shared/domain-utils';
 import { TargetEnum } from '@shared/types';
 
-import type { QuoteInput } from '@/types/quote.type';
+import type { QuoteInput, QuoteRequestPrefill } from '@/types/quote.type';
 
 import { translate } from '@/config/i18n';
+import { parseQuoteRequestMessage } from '@/utils/_domain/quote-request.utils';
 import {
-  changeQuoteStatusSchema, createQuoteSchema, getQuoteSchema, getQuotesSchema, quoteInputSchema,
-  reviseQuoteSchema, updateQuoteSchema,
+  changeQuoteStatusSchema, createQuoteSchema, getQuoteSchema, getQuotesSchema, prepareQuoteFromContactSchema,
+  quoteInputSchema, reviseQuoteSchema, updateQuoteSchema,
 } from '@/validations/_domain/quote.validations';
 
+import {
+  findOrCreateClientFromContactService, getConvertibleContactService, linkContactToQuoteService,
+} from '../../services/_domain/contact-quote.service.cloud';
 import {
   changeQuoteStatusService, getQuoteByIdService, getQuotesService, type QuoteRevision, reviseQuoteService,
   saveQuoteService,
@@ -78,7 +82,9 @@ Parse.Cloud.define(
     async (request: Parse.Cloud.FunctionRequest): Promise<Parse.Object> => {
       await assertAgencyWorkspace(request);
 
-      const { parentQuote: parentQuoteId, locale } = request.params;
+      const { parentQuote: parentQuoteId, contact: contactId, locale } = request.params;
+      // checked again here: the request may have been turned into a quote since the form was opened
+      const contact = contactId ? await getConvertibleContactService(contactId, locale) : undefined;
 
       if (parentQuoteId) {
         const parentQuote = await getQuoteByIdService(parentQuoteId);
@@ -92,12 +98,48 @@ Parse.Cloud.define(
         }
       }
 
-      return saveQuoteService(toQuoteInput(request.params), request.user!, locale, { parentQuoteId });
+      const quote = await saveQuoteService(
+        toQuoteInput(request.params), request.user!, locale, { parentQuoteId }
+      );
+
+      if (contact) await linkContactToQuoteService(contact, quote);
+
+      return quote;
     },
     ['create'],
     DOMAIN_COLLECTIONS.quote
   ),
   parseFunctionValidation(createQuoteSchema)
+);
+
+type QuoteFromContact = {
+  // the client the quote will be written for: found by the request's e-mail, or created from it
+  client: Parse.Object;
+  prefill: QuoteRequestPrefill;
+};
+
+/*
+ * the first step of "Create the client and the quote" on a quote request of the site: the client, and
+ * what the draft starts from. Nothing of the quote is written yet: the form opens prefilled, and saving it
+ * calls `createQuote` with the request, which then points to the quote
+ */
+Parse.Cloud.define(
+  'prepareQuoteFromContact',
+  fromBO(
+    async (request: Parse.Cloud.FunctionRequest): Promise<QuoteFromContact> => {
+      await assertAgencyWorkspace(request);
+
+      const { id, locale } = request.params;
+      const contact = await getConvertibleContactService(id, locale);
+      const client = await findOrCreateClientFromContactService(contact, request.user!, locale);
+      const fallbackTitle = translate('quote.requestTitle', locale, { name: client.get('name') });
+
+      return { client, prefill: parseQuoteRequestMessage(contact.get('message') ?? '', fallbackTitle) };
+    },
+    ['create'],
+    DOMAIN_COLLECTIONS.quote
+  ),
+  parseFunctionValidation(prepareQuoteFromContactSchema)
 );
 
 // only a draft is edited: the trigger refuses it anyway, this gives the reason before anything is written

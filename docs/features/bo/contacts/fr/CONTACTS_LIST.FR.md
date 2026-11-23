@@ -18,9 +18,18 @@ haut. Adresse : `/contacts`.
 
 ## À quoi sert cette page
 
-Lire les messages envoyés par les visiteurs depuis le formulaire de contact du site public. C'est une simple
-boîte de lecture : on consulte le message et on retrouve les coordonnées de la personne pour lui écrire avec
-sa propre messagerie. La page ne permet pas de répondre.
+Lire les messages envoyés par les visiteurs depuis le formulaire de contact des sites publics. C'est une
+simple boîte de lecture : on consulte le message et on retrouve les coordonnées de la personne pour lui écrire
+avec sa propre messagerie. La page ne permet pas de répondre.
+
+La liste suit l'espace de travail choisi :
+
+- dans l'espace **portfolio**, les messages du formulaire de contact du portfolio (et tous les messages reçus
+  avant cette séparation) ;
+- dans l'espace **Aldaron**, les demandes de devis envoyées depuis la page contact du site d'Aldaron.
+
+Changer d'espace depuis la page referme le message ouvert et affiche la liste de l'autre espace. Un compte qui
+n'a pas accès à l'espace Aldaron ne voit jamais ses demandes, même avec l'adresse d'une demande.
 
 ## Qui peut l'utiliser
 
@@ -60,8 +69,15 @@ courte pause. La recherche porte sur le contenu des messages et sur les coordonn
   retrouver depuis la recherche globale.
 - **Supprimer** un message (menu à trois points du message) : il part à la corbeille.
 - **Détruire définitivement** un message depuis la corbeille.
-- **Exporter** la liste telle qu'elle est affichée (recherche comprise), en CSV ou Excel, sans limite de
-  page.
+- **Exporter** la liste telle qu'elle est affichée (espace et recherche compris), en CSV ou Excel, sans
+  limite de page.
+- **Créer le client et le devis** (espace Aldaron, sous une demande de devis, pour un compte qui a le droit
+  de créer des devis) : ouvre le formulaire de devis déjà rempli à partir de la demande. Le client est celui
+  qui a déjà la même adresse e-mail, ou un nouveau client particulier créé avec le nom, l'e-mail et le
+  téléphone de la demande. Le titre reprend le produit décrit par le visiteur, et chaque ligne de son
+  estimation devient une ligne du devis, à 0 : l'équipe saisit les prix avant d'enregistrer. Une fois le
+  devis enregistré, la demande affiche son numéro et le lien **Voir les devis**, et le bouton disparaît :
+  une demande ne devient jamais un second devis.
 
 ## Cas d'utilisation typiques
 
@@ -69,6 +85,9 @@ courte pause. La recherche porte sur le contenu des messages et sur les coordonn
 2. **Retrouver un échange** : taper le nom, l'e-mail ou un mot du message.
 3. **Faire le ménage** : supprimer les messages traités, puis vider la corbeille.
 4. **Récupérer des contacts** : exporter la liste.
+5. **Transformer une demande de devis en devis** (espace Aldaron) : ouvrir la demande, cliquer sur **Créer
+   le client et le devis**, saisir les prix des lignes, enregistrer. Le devis part en brouillon dans la page
+   **Devis**.
 
 ## Points d'attention / limites actuelles
 
@@ -76,3 +95,8 @@ courte pause. La recherche porte sur le contenu des messages et sur les coordonn
   que par le formulaire du site.
 - Le visiteur ne reçoit pas d'accusé de réception automatique.
 - Il n'existe pas de bouton « Restaurer » pour un message mis à la corbeille.
+- Le compteur des messages non lus du menu de gauche et la recherche globale comptent encore les messages des
+  deux espaces.
+- Une demande sans adresse e-mail, ou dont le client existant est archivé, ne peut pas devenir un devis
+  directement : un message l'explique. Si l'on ferme le formulaire de devis sans l'enregistrer, le client
+  créé au passage reste dans la liste des clients (il sera repris au prochain essai).

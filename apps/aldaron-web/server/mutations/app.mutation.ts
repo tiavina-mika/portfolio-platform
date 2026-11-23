@@ -1,5 +1,6 @@
 'use server';
 
+import { TargetEnum } from '@shared/types';
 import { z } from 'zod';
 
 import { action } from '@/config/safe-action';
@@ -36,6 +37,8 @@ export const createQuoteRequest = action
       name: values.name,
       email: values.email,
       message: composeQuoteMessage(values),
+      // files the request in the Aldaron workspace of the back-office, not among the portfolio's contacts
+      target: TargetEnum.AGENCY,
       locale,
       recaptchaToken,
     });

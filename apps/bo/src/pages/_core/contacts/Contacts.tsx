@@ -1,7 +1,9 @@
 import Box from '@mui/material/Box';
 import { useNavigate } from '@tanstack/react-router';
 import debounce from 'lodash/debounce';
-import { useEffect, useMemo, useState } from 'react';
+import {
+  useEffect, useMemo, useRef, useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -28,6 +30,7 @@ import {
   deleteContactsSlice, getContactContactSelector, getContactContactsSelector,
   getContactCountSelector, getContactLoadingSelector,
 } from '@/redux/reducers/_core/contact.reducer';
+import { getSettingsWorkspaceSelector } from '@/redux/reducers/_core/settings.reducer';
 import { ExportFormat } from '@/types/_core/app.type';
 import { PATH_NAMES } from '@/utils/_core/pathnames';
 
@@ -73,11 +76,26 @@ const Contacts = () => {
   const loading = useSelector(getContactLoadingSelector);
 
   const { canDelete, canDestroy } = useProtect(collection);
+  const workspace = useSelector(getSettingsWorkspaceSelector);
+  const previousWorkspace = useRef(workspace);
 
   const [scope, setScope] = useState<string>(CONTACT_ALL_SCOPE);
   const [search, setSearch] = useState('');
   // zero-based; every change of scope or search goes back to the first page
   const [page, setPage] = useState(0);
+
+  /*
+   * switching workspace from this page lists the other workspace's messages, narrowed the same way: the
+   * message being read belongs to the one left, so it is closed, and the list starts from its first page
+   */
+  useEffect(() => {
+    if (previousWorkspace.current === workspace) return;
+
+    previousWorkspace.current = workspace;
+    setPage(0);
+    navigate({ to: PATH_NAMES.contacts } as any);
+    dispatch(loadContactList({ text: search || undefined, deleted: scope === CONTACT_DELETED_SCOPE }));
+  }, [workspace, scope, search, dispatch, navigate]);
 
   const buildQuery = (nextScope: string, nextSearch: string): ContactQuery => ({
     text: nextSearch || undefined,
@@ -125,7 +143,7 @@ const Contacts = () => {
   const handleExport = (format: ExportFormat) => {
     const { limit, skip, ...queries } = buildContactQueries(buildQuery(scope, search));
 
-    dispatch(exportContacts(queries, format));
+    dispatch(exportContacts({ ...queries, workspace }, format));
   };
 
   // removing the last message of a page must not leave the reader on a page with nothing on it
