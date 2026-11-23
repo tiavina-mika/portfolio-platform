@@ -2,7 +2,7 @@
 type: feat
 apps: [libs, server, bo]
 branch: feat/quote-payments-schedule
-pr:
+pr: https://github.com/tiavina-mika/portfolio-platform/pull/46
 ---
 
 ## Context
