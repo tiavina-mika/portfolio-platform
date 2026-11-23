@@ -2,7 +2,7 @@
 type: feat
 apps: [libs, server, bo]
 branch: feat/aldaron-client-collection
-pr:
+pr: https://github.com/tiavina-mika/portfolio-platform/pull/39
 ---
 
 ## Context
@@ -62,7 +62,7 @@ pagination), a create / edit dialog, archive and put back, a sidebar entry hidde
 workspace through the workspace registry, rights in the Roles page, locales `fr` / `en` / `mg`. Docs:
 feature page, BO index, inventory, design note.
 
-**Branch / PR**: `feat/aldaron-client-collection`, PR in the `pr:` field.
+**Branch / PR**: `feat/aldaron-client-collection`, https://github.com/tiavina-mika/portfolio-platform/pull/39.
 
 **What Claude ran**: Nx hung on the machine (no output, a lock on `.nx/workspace-data`), so the app
 scripts ran directly: server and bo typecheck ok; server tests ok (4 files, 30 tests); ESLint on every
