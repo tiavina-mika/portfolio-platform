@@ -8,6 +8,7 @@ import { collections } from '@/constants/_core/constants';
 import { normalizeClientEmail } from '@/utils/_domain/client.utils';
 
 import { findClientByEmailService } from '../../services/_domain/client.service.cloud';
+import { hasClientQuotesService } from '../../services/_domain/quote.service.cloud';
 import { convertIdToPointer } from '../../utils/_core/parse.utils.cloud';
 import { parseFunction } from '../../utils/_core/utils.cloud';
 
@@ -51,8 +52,17 @@ Parse.Cloud.beforeSave(
 );
 
 /*
- * TODO(link:020-add-the-quote-collection-to-the-aldaron-workspace): refuse, in a `beforeDelete`, the
- * deletion of a client that still has quotes (and missions, with
- * 050-add-the-mission-collection-to-the-aldaron-workspace): the client is archived instead. No
- * function deletes a client today and `delete` is the owner's alone, so nothing can lose a history yet.
+ * A client named on a quote carries a history: it is archived, never deleted, whatever deletes it (no
+ * function does, and `delete` is the owner's alone, but a raw master-key call would).
+ * TODO(link:050-add-the-mission-collection-to-the-aldaron-workspace): refuse it too for a client
+ * that has missions.
  */
+Parse.Cloud.beforeDelete(
+  DOMAIN_COLLECTIONS.client,
+  parseFunction(async (request: Parse.Cloud.BeforeDeleteRequest): Promise<void> => {
+    if (await hasClientQuotesService(request.object)) {
+      // no function deletes a client, so no call hands a language over: the default one is used
+      throw new Error(translate('client.hasQuotes', DEFAULT_LANGUAGE, { name: request.object.get('name') ?? '' }));
+    }
+  })
+);

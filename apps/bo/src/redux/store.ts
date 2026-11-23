@@ -24,6 +24,7 @@ import userBlockReducer from '@/redux/reducers/_core/userBlock.reducer';
 import userSessionReducer from '@/redux/reducers/_core/userSession.reducer';
 import clientReducer from '@/redux/reducers/_domain/client.reducer';
 import projectReducer from '@/redux/reducers/_domain/project.reducer';
+import quoteReducer from '@/redux/reducers/_domain/quote.reducer';
 
 /*
  * Bypasses 'redux-persist/lib/storage', whose deep CJS subpath import breaks under
@@ -52,6 +53,7 @@ const reducers = {
   page: pageReducer,
   project: projectReducer,
   client: clientReducer,
+  quote: quoteReducer,
   notification: notificationReducer,
   globalSearch: globalSearchReducer,
   impersonation: impersonationReducer,

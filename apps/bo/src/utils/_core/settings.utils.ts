@@ -5,7 +5,7 @@ import { DEFAULT_LOCALE, PERSISTED_STATE_KEY } from '@/constants/_core/app.const
 import { WORKSPACES } from '@/constants/_core/workspace.constants';
 import { ISelectOption } from '@/types/_core/app.type';
 import {
-  IStoredData, Locale, SettingsSection, SettingsSectionEnum,
+  ISettingsExtraRow, IStoredData, Locale, SettingsSection, SettingsSectionEnum,
 } from '@/types/_core/setting.type';
 import { getLocalStorage, parseDeepJSON, setLocalStorage } from '@/utils/_core/utils';
 
@@ -95,6 +95,27 @@ export const isSettingsSectionVisible = (
 
   return !WORKSPACES[workspace].hiddenSettingsSections.includes(section);
 };
+
+/*
+ * the settings a business domain adds to the generic sections, filled once at startup from
+ * `config/domain-registrations.ts`: the settings page renders them without importing the domain
+ */
+const settingsExtraRows: ISettingsExtraRow[] = [];
+
+/**
+ * Side-effect registration of the settings a domain adds to a section, such as the default currency
+ * of the quotes in the languages section of the agency workspace.
+ */
+export const registerSettingsRows = (rows: ISettingsExtraRow[]): void => {
+  settingsExtraRows.push(...rows.filter((row) => !settingsExtraRows.some(({ id }) => id === row.id)));
+};
+
+/** the settings a domain added to a section, kept to those of the workspace the person works in */
+export const getSettingsExtraRows = (
+  section: SettingsSection, workspace: TargetEnum
+): ISettingsExtraRow[] => (
+  settingsExtraRows.filter((row) => row.section === section && row.workspaces.includes(workspace))
+);
 
 /**
  * get translated field value from database

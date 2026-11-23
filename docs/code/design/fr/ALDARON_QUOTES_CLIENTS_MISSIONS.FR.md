@@ -297,11 +297,11 @@ Une relecture de cette note a trouvé les points ci-dessous. Le premier groupe e
 - ⏳ **Preuve d'acceptation** : `acceptedAt`, `acceptanceMethod`, `acceptanceProof`.
 - ⏳ **Qui fait une mission** : `assignee`.
 - ✅ **E-mail du client en minuscules**, pour qu'une personne soit un seul client.
-- ⏳ **Champs calculés fermés** : `number`, `version`, `totalAmount`, `paidAmount`, `amount` et `percent` sont calculés côté serveur, et la validation des fonctions de création et de mise à jour les **refuse** en entrée, pour qu'un client du back-office défaillant ou malveillant ne puisse pas les imposer.
+- ⏳ **Champs calculés fermés** : `number`, `version`, `totalAmount`, `paidAmount`, `amount` et `percent` sont calculés côté serveur, et la validation des fonctions de création et de mise à jour les **refuse** en entrée, pour qu'un client du back-office défaillant ou malveillant ne puisse pas les imposer. Fait pour le devis (`number`, `version`, `totalAmount`, `paidAmount`) ; `amount` et `percent` viendront avec les paiements.
 
 ### À construire avec la première collection
 
-- ⏳ **Numéro sans trou.** Une ligne de compteur (classe `Counter` : `name` comme `quote-2026`, `value`, index unique sur `name`) incrémentée de façon atomique avec `increment` de Parse dans la même sauvegarde, jamais lue puis écrite. Déclarée avec les autres index.
+- ✅ **Numéro sans trou.** Une ligne de compteur (classe `Counter` : `name` comme `quote-2026`, `value`, index unique sur `name`) incrémentée de façon atomique avec `increment` de Parse dans la même sauvegarde, jamais lue puis écrite. Déclarée avec les autres index.
 - ⏳ **Journal des changements.** Pour de l'argent, `updatedAt` ne suffit pas : qui a changé quel statut, et quand. Une collection d'événements en ajout seul (classe de l'entité, id, action, valeur précédente et nouvelle, utilisateur, date), écrite par les triggers des devis, paiements et missions. Vérifier d'abord si le projet a déjà un journal ; cette note ne l'a pas vérifié.
 - ⏳ **Anonymiser un client.** L'archivage entre en conflit avec le droit à l'effacement d'un client particulier. Une action « anonymiser » (propriétaire seulement) efface nom, e-mail, téléphone, adresse, numéro fiscal et notes, garde l'id, les montants et les dates, et pose le statut `anonymized` ; les listes affichent un « client anonymisé » traduit. La durée de conservation des données comptables est à confirmer avec le comptable, et la politique de confidentialité d'`aldaron-web` doit dire combien de temps clients et devis sont gardés.
 - ⏳ **Faire expirer les devis automatiquement.** Un job quotidien (`node-cron`, branché dans `index.ts` et importé dans `cloud/jobs/index.ts`) passe en `expired` un devis `sent` dont `validUntil` est dépassée. Il est ajouté aux jobs de `docs/inventory/README.md`.
@@ -343,8 +343,8 @@ Une relecture de cette note a trouvé les points ci-dessous. Le premier groupe e
 
 1. ✅ Constantes et enums partagés, `Client` côté serveur (service, fonctions, trigger, index, i18n).
 2. ✅ `Client` dans le back-office (pages, route, entrée de menu via le registre, droits), et sa page de fonctionnalité française.
-3. ⏳ `Quote` côté serveur (numéro, total, transitions), puis dans le back-office, et sa page de fonctionnalité française.
-   Puis les demandes de devis : `target` et `quote` sur `Contact`, la cible envoyée par `aldaron-web`, la liste des contacts qui suit l'espace de travail et l'action « Créer le client et le devis ».
+3. ✅ `Quote` côté serveur (numéro, total, transitions), puis dans le back-office, et sa page de fonctionnalité française. Le fichier de preuve d'acceptation a son propre ticket (`025-attach-an-acceptance-proof-file-to-a-quote`).
+   ⏳ Puis les demandes de devis : `target` et `quote` sur `Contact`, la cible envoyée par `aldaron-web`, la liste des contacts qui suit l'espace de travail et l'action « Créer le client et le devis ».
 4. ⏳ `Mission` côté serveur, puis dans le back-office, et sa page de fonctionnalité française.
 5. ⏳ `Payment` : la constante d'échéancier, la création à l'acceptation, les triggers, puis le back-office (paiements d'un devis, marquer payé), et sa page de fonctionnalité française.
 6. ⏳ Carte du tableau de bord, inventaire, et marquage de l'étape 4 ✅ dans la note de l'espace de travail.

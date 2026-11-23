@@ -1,0 +1,72 @@
+{
+  "quote": {
+    "quotes": "Quotes",
+    "quote": "Quote",
+    "thisQuote": "this quote",
+    "createQuote": "New quote",
+    "editQuote": "Edit quote {{number}}",
+    "number": "Number",
+    "client": "Client",
+    "newClient": "New client",
+    "noClient": "No active client matches",
+    "title": "Title",
+    "lines": "Lines",
+    "lineNumber": "Line {{index}}",
+    "lineLabel": "Description",
+    "quantity": "Quantity",
+    "unitAmount": "Unit price excl. VAT",
+    "lineAmount": "Amount excl. VAT",
+    "addLine": "Add a line",
+    "removeLine": "Remove line {{index}}",
+    "currency": "Currency",
+    "currencies": {
+      "EUR": "Euro (€)",
+      "MGA": "Ariary (Ar)"
+    },
+    "taxRate": "VAT rate (%)",
+    "taxRateHelper": "Leave empty when there is no VAT.",
+    "validUntil": "Valid until",
+    "notes": "Terms",
+    "notesHelper": "Shown to the client on the quote.",
+    "subtotal": "Total excl. VAT",
+    "tax": "VAT ({{rate}} %)",
+    "total": "Total incl. VAT",
+    "totalHelper": "Computed here while you type; the server computes it again when it is saved.",
+    "amount": "Amount",
+    "issuedAt": "Sent on",
+    "acceptedAt": "Accepted on",
+    "statuses": {
+      "draft": "Draft",
+      "sent": "Sent",
+      "accepted": "Accepted",
+      "refused": "Refused",
+      "expired": "Expired"
+    },
+    "acceptanceMethod": "How the client accepted",
+    "acceptanceMethods": {
+      "email": "By e-mail",
+      "signature": "Signed quote",
+      "oral": "Orally",
+      "other": "Another way"
+    },
+    "actions": {
+      "send": "Mark as sent",
+      "accept": "Mark as accepted",
+      "refuse": "Mark as refused",
+      "expire": "Mark as expired"
+    },
+    "acceptTitle": "Accept quote {{number}}",
+    "acceptDescription": "The acceptance date is today. An accepted quote can no longer be edited.",
+    "searchQuote": "Search by number or title",
+    "defaultCurrency": "Default currency of the quotes",
+    "defaultCurrencyDescription": "The currency a new quote starts in. Changing it changes no existing quote.",
+    "messages": {
+      "created": "Quote {{number}} was created.",
+      "updated": "Quote {{number}} was edited.",
+      "sent": "Quote {{number}} is marked as sent.",
+      "accepted": "Quote {{number}} is marked as accepted.",
+      "refused": "Quote {{number}} is marked as refused.",
+      "expired": "Quote {{number}} is marked as expired."
+    }
+  }
+}

@@ -12,13 +12,19 @@ import clientRoute from './_domain/client-route.json';
 import projectDashboard from './_domain/project-dashboard.json';
 import projectEntity from './_domain/project-entity.json';
 import projectRoute from './_domain/project-route.json';
+import quoteEntity from './_domain/quote-entity.json';
+import quoteRoute from './_domain/quote-route.json';
 
 export default {
   cms,
   common,
   dashboard: { ...dashboard, ...projectDashboard },
   route: {
-    ...route, ...projectRoute, ...clientRoute, website: { ...route.website, ...projectRoute.website },
+    ...route,
+    ...projectRoute,
+    ...clientRoute,
+    ...quoteRoute,
+    website: { ...route.website, ...projectRoute.website },
   },
   user: {
     ...user, ...userInbox, ...userNotification,
@@ -28,5 +34,5 @@ export default {
    * by `zod-i18n.ts`, and served as a namespace too so a validator can name one by hand
    */
   zod,
-  project: { ...project, ...projectEntity, ...clientEntity },
+  project: { ...project, ...projectEntity, ...clientEntity, ...quoteEntity },
 };

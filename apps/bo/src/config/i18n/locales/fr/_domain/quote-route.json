@@ -1,0 +1,10 @@
+{
+  "quotes": "devis",
+  "quoteTabs": {
+    "draft": "brouillons",
+    "sent": "envoyes",
+    "accepted": "acceptes",
+    "refused": "refuses",
+    "expired": "expires"
+  }
+}

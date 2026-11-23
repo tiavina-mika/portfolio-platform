@@ -1395,6 +1395,13 @@ importers:
         version: 8.72.1(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3)
 
   libs/shared-domain-utils:
+    dependencies:
+      '@shared/domain-constants':
+        specifier: workspace:*
+        version: link:../shared-domain-constants
+      '@shared/domain-types':
+        specifier: workspace:*
+        version: link:../shared-domain-types
     devDependencies:
       '@cspell/eslint-plugin':
         specifier: ^9.8.0

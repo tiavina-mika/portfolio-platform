@@ -220,6 +220,25 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
     // the back-office list: one status (the tab), ordered or searched by name
     { spec: { status: 1, name: 1 } },
   ],
+  [DOMAIN_COLLECTIONS.quote]: [
+    /*
+     * one number, one version: a revision keeps the number of the quote it revises and raises the
+     * version. The counter already gives each new quote its own number; this is what still holds
+     * against a raw write
+     */
+    { spec: { number: 1, version: 1 }, options: { name: 'quoteNumberVersion_unique', unique: true } },
+    // the quotes of one client by status, and the refusal to delete a client that has quotes
+    { spec: { _p_client: 1, status: 1 } },
+    // the back-office list: one status (the tab), newest sent first
+    { spec: { status: 1, issuedAt: -1 } },
+  ],
+  [collections.Counter]: [
+    /*
+     * one row per sequence: two first quotes of a year created at the same moment both try to create
+     * `quote-<year>`, and this refuses the second, which then reads the row the first wrote
+     */
+    { spec: { name: 1 }, options: { name: 'counterName_unique', unique: true } },
+  ],
   [collections.Page]: [
     /*
      * the technical code the mobile app reads a page by (`CGU`, `PRIVACY_POLICY`) — same reasoning

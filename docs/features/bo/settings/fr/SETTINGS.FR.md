@@ -51,6 +51,10 @@ est conservé dans l'adresse de la page.
 Section **Langues** : choisir la langue d'affichage (français, anglais ou malgache). L'interface change
 aussitôt ; il n'y a rien à enregistrer. Ce choix est mémorisé sur l'appareil et le navigateur utilisés.
 
+Dans l'espace **Aldaron**, la même section propose aussi la **devise par défaut des devis** (euro ou
+ariary). Elle pré-remplit seulement la devise d'un nouveau devis et ne change aucun devis existant (voir
+[Devis](../../quotes/fr/QUOTES.FR.md)). Elle est mémorisée de la même façon que la langue.
+
 ### Changer le thème, la couleur et le menu
 
 Section **Apparence**, avec application immédiate et sans bouton d'enregistrement :

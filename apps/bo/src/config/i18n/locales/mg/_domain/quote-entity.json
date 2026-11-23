@@ -1,0 +1,72 @@
+{
+  "quote": {
+    "quotes": "Tolotra vidiny",
+    "quote": "Tolotra vidiny",
+    "thisQuote": "ity tolotra vidiny ity",
+    "createQuote": "Tolotra vidiny vaovao",
+    "editQuote": "Hanova ny tolotra vidiny {{number}}",
+    "number": "Laharana",
+    "client": "Mpanjifa",
+    "newClient": "Mpanjifa vaovao",
+    "noClient": "Tsy misy mpanjifa mavitrika mifanaraka",
+    "title": "Lohateny",
+    "lines": "Andalana",
+    "lineNumber": "Andalana {{index}}",
+    "lineLabel": "Fanazavana",
+    "quantity": "Isa",
+    "unitAmount": "Vidin'ny iray tsy misy TVA",
+    "lineAmount": "Sandany tsy misy TVA",
+    "addLine": "Hanampy andalana",
+    "removeLine": "Hanala ny andalana {{index}}",
+    "currency": "Vola",
+    "currencies": {
+      "EUR": "Euro (€)",
+      "MGA": "Ariary (Ar)"
+    },
+    "taxRate": "Taham-pahefan'ny TVA (%)",
+    "taxRateHelper": "Avelao ho foana raha tsy misy TVA.",
+    "validUntil": "Manan-kery hatramin'ny",
+    "notes": "Fepetra",
+    "notesHelper": "Hitan'ny mpanjifa ao amin'ny tolotra vidiny.",
+    "subtotal": "Totaliny tsy misy TVA",
+    "tax": "TVA ({{rate}} %)",
+    "total": "Totaliny misy TVA",
+    "totalHelper": "Kajiana eto mandritra ny fanoratana; kajian'ny mpizara indray rehefa voatahiry.",
+    "amount": "Sandany",
+    "issuedAt": "Nalefa tamin'ny",
+    "acceptedAt": "Nekena tamin'ny",
+    "statuses": {
+      "draft": "Drafitra",
+      "sent": "Nalefa",
+      "accepted": "Neken'ny mpanjifa",
+      "refused": "Nolavina",
+      "expired": "Lany daty"
+    },
+    "acceptanceMethod": "Ny fomba nanekeran'ny mpanjifa",
+    "acceptanceMethods": {
+      "email": "Tamin'ny mailaka",
+      "signature": "Tolotra vidiny nosoniavina",
+      "oral": "Tamin'ny am-bava",
+      "other": "Fomba hafa"
+    },
+    "actions": {
+      "send": "Marihina ho nalefa",
+      "accept": "Marihina ho nekena",
+      "refuse": "Marihina ho nolavina",
+      "expire": "Marihina ho lany daty"
+    },
+    "acceptTitle": "Hanaiky ny tolotra vidiny {{number}}",
+    "acceptDescription": "Androany no daty nanekena. Tsy azo ovaina intsony ny tolotra vidiny nekena.",
+    "searchQuote": "Hikaroka amin'ny laharana na lohateny",
+    "defaultCurrency": "Vola ampiasaina amin'ny tolotra vidiny",
+    "defaultCurrencyDescription": "Ny vola atolotra ho an'ny tolotra vidiny vaovao. Tsy manova tolotra vidiny efa misy ny fanovana azy.",
+    "messages": {
+      "created": "Voaforona ny tolotra vidiny {{number}}.",
+      "updated": "Voaova ny tolotra vidiny {{number}}.",
+      "sent": "Voamarika ho nalefa ny tolotra vidiny {{number}}.",
+      "accepted": "Voamarika ho nekena ny tolotra vidiny {{number}}.",
+      "refused": "Voamarika ho nolavina ny tolotra vidiny {{number}}.",
+      "expired": "Voamarika ho lany daty ny tolotra vidiny {{number}}."
+    }
+  }
+}

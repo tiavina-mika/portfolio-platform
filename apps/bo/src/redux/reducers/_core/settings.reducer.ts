@@ -33,6 +33,9 @@ export const settings: any = createSlice({
     changeMoneyCountrySlice: (state: ISettingState, action: PayloadAction<string>) => {
       state.moneyCountry = action.payload;
     },
+    changeDefaultCurrencySlice: (state: ISettingState, action: PayloadAction<string>) => {
+      state.defaultCurrency = action.payload;
+    },
     changeThemeSlice: (state: ISettingState, action: PayloadAction<PaletteMode>) => {
       state.theme = action.payload;
     },
@@ -63,6 +66,7 @@ export const settings: any = createSlice({
 export const {
   setLocaleSlice,
   changeMoneyCountrySlice,
+  changeDefaultCurrencySlice,
   toggleIsAuthenticatedSlice,
   changeThemeSlice,
   changeThemeColorSlice,
@@ -108,6 +112,13 @@ export const getSettingsIsPreviewSummaryReducedSelector = (
  */
 export const getSettingsMoneyCountrySelector = (state: Record<string, any>): string => (
   state.settings.moneyCountry ?? DEFAULT_COUNTRY_CODE
+);
+/*
+ * the currency a new money record starts in, as picked in the settings. Nothing when none was picked:
+ * the domain that reads it knows its own default
+ */
+export const getSettingsDefaultCurrencySelector = (state: Record<string, any>): string | undefined => (
+  state.settings.defaultCurrency
 );
 /*
  * the workspace the person works in: the one they picked while their roles still open it, the

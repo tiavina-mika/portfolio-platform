@@ -1,0 +1,16 @@
+{
+  "quote": {
+    "acceptanceMethodRequired": "Indiquez comment le client a accepté le devis.",
+    "clientNotActive": "Ce client est archivé ou anonymisé : remettez-le dans la liste avant de lui écrire un devis.",
+    "notEditable": "Un devis {{status}} ne peut plus être modifié : seul un brouillon peut l'être.",
+    "notFound": "Devis introuvable.",
+    "statusChangeNotAllowed": "Un devis {{from}} ne peut pas devenir {{to}}.",
+    "statuses": {
+      "accepted": "accepté",
+      "draft": "brouillon",
+      "expired": "expiré",
+      "refused": "refusé",
+      "sent": "envoyé"
+    }
+  }
+}

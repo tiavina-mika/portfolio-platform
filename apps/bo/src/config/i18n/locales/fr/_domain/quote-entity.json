@@ -1,0 +1,72 @@
+{
+  "quote": {
+    "quotes": "Devis",
+    "quote": "Devis",
+    "thisQuote": "ce devis",
+    "createQuote": "Nouveau devis",
+    "editQuote": "Modifier le devis {{number}}",
+    "number": "Numéro",
+    "client": "Client",
+    "newClient": "Nouveau client",
+    "noClient": "Aucun client actif ne correspond",
+    "title": "Titre",
+    "lines": "Lignes",
+    "lineNumber": "Ligne {{index}}",
+    "lineLabel": "Description",
+    "quantity": "Quantité",
+    "unitAmount": "Prix unitaire HT",
+    "lineAmount": "Montant HT",
+    "addLine": "Ajouter une ligne",
+    "removeLine": "Retirer la ligne {{index}}",
+    "currency": "Devise",
+    "currencies": {
+      "EUR": "Euro (€)",
+      "MGA": "Ariary (Ar)"
+    },
+    "taxRate": "Taux de TVA (%)",
+    "taxRateHelper": "Laissez vide s'il n'y a pas de TVA.",
+    "validUntil": "Valable jusqu'au",
+    "notes": "Conditions",
+    "notesHelper": "Visibles par le client sur le devis.",
+    "subtotal": "Total HT",
+    "tax": "TVA ({{rate}} %)",
+    "total": "Total TTC",
+    "totalHelper": "Calculé ici pendant la saisie ; le serveur le recalcule à l'enregistrement.",
+    "amount": "Montant",
+    "issuedAt": "Envoyé le",
+    "acceptedAt": "Accepté le",
+    "statuses": {
+      "draft": "Brouillon",
+      "sent": "Envoyé",
+      "accepted": "Accepté",
+      "refused": "Refusé",
+      "expired": "Expiré"
+    },
+    "acceptanceMethod": "Comment le client a accepté",
+    "acceptanceMethods": {
+      "email": "Par e-mail",
+      "signature": "Devis signé",
+      "oral": "À l'oral",
+      "other": "Autrement"
+    },
+    "actions": {
+      "send": "Marquer comme envoyé",
+      "accept": "Marquer comme accepté",
+      "refuse": "Marquer comme refusé",
+      "expire": "Marquer comme expiré"
+    },
+    "acceptTitle": "Accepter le devis {{number}}",
+    "acceptDescription": "La date d'acceptation est celle d'aujourd'hui. Un devis accepté ne peut plus être modifié.",
+    "searchQuote": "Rechercher par numéro ou titre",
+    "defaultCurrency": "Devise par défaut des devis",
+    "defaultCurrencyDescription": "La devise proposée pour un nouveau devis. La changer ne modifie aucun devis existant.",
+    "messages": {
+      "created": "Le devis {{number}} a été créé.",
+      "updated": "Le devis {{number}} a été modifié.",
+      "sent": "Le devis {{number}} est marqué comme envoyé.",
+      "accepted": "Le devis {{number}} est marqué comme accepté.",
+      "refused": "Le devis {{number}} est marqué comme refusé.",
+      "expired": "Le devis {{number}} est marqué comme expiré."
+    }
+  }
+}

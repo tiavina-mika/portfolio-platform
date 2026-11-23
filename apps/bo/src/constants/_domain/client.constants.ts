@@ -37,6 +37,9 @@ export const CLIENT_ADDRESS_FIELDS = ['line1', 'line2', 'postalCode', 'city', 'c
 
 export const CLIENT_FORM_ID = 'client-form';
 
+// how many active clients a client picker (the quote form's) proposes for what is typed
+export const CLIENT_PICKER_OPTIONS_LIMIT = 20;
+
 // the tint of each status in the list, in the dot language every other list uses for a state
 export const CLIENT_STATUS_TONES: Record<ClientStatusEnum, StatusTone> = {
   [ClientStatusEnum.ACTIVE]: 'success',

@@ -1,0 +1,10 @@
+{
+  "quotes": "tolotra-vidiny",
+  "quoteTabs": {
+    "draft": "drafitra",
+    "sent": "nalefa",
+    "accepted": "neken-ny-mpanjifa",
+    "refused": "nolavina",
+    "expired": "lany-daty"
+  }
+}

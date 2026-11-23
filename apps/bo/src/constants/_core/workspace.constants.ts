@@ -17,8 +17,8 @@ export const WORKSPACES: Record<TargetEnum, IWorkspaceConfig> = {
     logoWidth: 80,
     icon: { black: IMAGES.blackIconLogo, white: IMAGES.whiteIconLogo },
     hiddenSettingsSections: [],
-    // the clients are Aldaron's business, the portfolio has none
-    hiddenMenuIds: [PATH_NAMES.clients],
+    // the clients and their quotes are Aldaron's business, the portfolio has none
+    hiddenMenuIds: [PATH_NAMES.clients, PATH_NAMES.quotes],
   },
   [TargetEnum.AGENCY]: {
     labelKey: 'cms:target.agency',

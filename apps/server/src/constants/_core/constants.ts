@@ -271,6 +271,8 @@ export const collections = {
   MfaAuditLog: 'MfaAuditLog',
   UserModerationLog: 'UserModerationLog',
   NotificationResend: 'NotificationResend',
+  // named sequences incremented atomically (the yearly numbering of a document, for one)
+  Counter: 'Counter',
 };
 
 /**

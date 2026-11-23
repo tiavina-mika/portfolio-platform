@@ -1,6 +1,7 @@
 {
   "client": {
     "emailAlreadyUsed": "Efa an'ny mpanjifa « {{- name}} » io adiresy mailaka io.",
+    "hasQuotes": "Manana tolotra vidiny ny mpanjifa « {{- name}} »: ataovy arisiva fa aza fafana.",
     "notFound": "Tsy hita ilay mpanjifa."
   }
 }
