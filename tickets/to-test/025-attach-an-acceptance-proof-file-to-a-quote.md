@@ -2,7 +2,7 @@
 type: feat
 apps: [server, bo]
 branch: feat/attach-quote-acceptance-proof
-pr:
+pr: https://github.com/tiavina-mika/portfolio-platform/pull/42
 ---
 
 ## Context
