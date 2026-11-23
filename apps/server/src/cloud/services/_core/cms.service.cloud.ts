@@ -1,4 +1,6 @@
 import { COUNTRIES, DEFAULT_COUNTRY_CODE } from '@shared/constants';
+import { DOMAIN_COLLECTIONS } from '@shared/domain-constants';
+import { TargetEnum } from '@shared/types';
 
 import type { Locale } from '@/types/app.type';
 
@@ -232,12 +234,25 @@ export const getArticleEditorContentHaystack = async (): Promise<string> => {
 // the classes carrying the target fields: what an editor publishes on a website
 const TARGET_CLASS_NAMES = [collections.Article, collections.Page, collections.Category];
 
+// the value the second website was stored under before it got a role-based name
+const FORMER_AGENCY_TARGET = 'aldaron';
+
+// the array fields still to be moved from the former value to the current one, per class
+const FORMER_AGENCY_TARGET_ARRAY_FIELDS: [string, string][] = [
+  [collections.Article, 'targets'],
+  [collections.Page, 'targets'],
+  [collections.Category, 'targets'],
+  ['_Role', 'workspaces'],
+];
+
 /**
  * Moves the target fields saved under their former names onto the current ones, on every article, page
- * and category: `websites` becomes `targets` (the value `box` becomes `aldaron`) and the three
- * `box*` fields become `offer*`. Done in the database itself, in one update per class, so no trigger
+ * and category: `websites` becomes `targets` (the value `box` becomes `agency`) and the three
+ * `box*` fields become `offer*`. Then renames the former stored value `aldaron` to `agency` wherever
+ * it is kept: the `targets` of articles, pages and categories, the `target` of projects and the
+ * `workspaces` of roles. Done in the database itself, in one update per class, so no trigger
  * runs (a saved article would otherwise clear the website's cache and may start a newsletter send).
- * A row already moved no longer carries `websites`, so a second run changes nothing.
+ * A row already moved no longer matches, so a second run changes nothing.
  * @returns how many rows were moved, per class
  */
 export const renameContentTargetFields = async (): Promise<Record<string, number>> => {
@@ -252,7 +267,7 @@ export const renameContentTargetFields = async (): Promise<Record<string, number
             $map: {
               input: '$websites',
               as: 'website',
-              in: { $cond: [{ $eq: ['$$website', 'box'] }, 'aldaron', '$$website'] },
+              in: { $cond: [{ $eq: ['$$website', 'box'] }, TargetEnum.AGENCY, '$$website'] },
             },
           },
           offerIncludes: '$boxIncludes',
@@ -265,6 +280,34 @@ export const renameContentTargetFields = async (): Promise<Record<string, number
 
     moved[className] = result.modifiedCount;
   }
+
+  for (const [className, field] of FORMER_AGENCY_TARGET_ARRAY_FIELDS) {
+    const collection = await getMongoCollection(className);
+    const result = await collection.updateMany({ [field]: FORMER_AGENCY_TARGET }, [
+      {
+        $set: {
+          [field]: {
+            $map: {
+              input: `$${field}`,
+              as: 'value',
+              in: { $cond: [{ $eq: ['$$value', FORMER_AGENCY_TARGET] }, TargetEnum.AGENCY, '$$value'] },
+            },
+          },
+        },
+      },
+    ]);
+
+    moved[className] = (moved[className] ?? 0) + result.modifiedCount;
+  }
+
+  // a project holds a single target, not an array
+  const projectCollection = await getMongoCollection(DOMAIN_COLLECTIONS.project);
+  const projectResult = await projectCollection.updateMany(
+    { target: FORMER_AGENCY_TARGET },
+    { $set: { target: TargetEnum.AGENCY } }
+  );
+
+  moved[DOMAIN_COLLECTIONS.project] = projectResult.modifiedCount;
 
   return moved;
 };

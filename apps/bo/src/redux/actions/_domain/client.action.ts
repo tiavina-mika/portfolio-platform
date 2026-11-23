@@ -111,7 +111,7 @@ export const setClientArchived = (client: IClient, archived: boolean): any => {
  */
 export const onClientsEnter = (route: any): AppThunkAction => {
   return onEnterActionWithLoader((dispatch: AppDispatch, getState?: () => RootState): void => {
-    if (getSettingsWorkspaceSelector(getState?.()!) !== TargetEnum.ALDARON) {
+    if (getSettingsWorkspaceSelector(getState?.()!) !== TargetEnum.AGENCY) {
       throw new Error(Errors.redirect);
     }
 

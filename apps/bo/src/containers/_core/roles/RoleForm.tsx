@@ -159,7 +159,7 @@ const uiOptions: ISelectOption<UIRole>[] = [
 // one choice per workspace a role can open
 const workspaceOptions: ISelectOption<TargetEnum>[] = [
   { value: TargetEnum.PORTFOLIO, label: i18n.t('cms:target.portfolio') },
-  { value: TargetEnum.ALDARON, label: i18n.t('cms:target.aldaron') },
+  { value: TargetEnum.AGENCY, label: i18n.t('cms:target.agency') },
 ];
 
 const getErrorCountBySection = (errors: FieldErrors): Record<RoleFormSection, number> => {

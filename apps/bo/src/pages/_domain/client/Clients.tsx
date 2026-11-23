@@ -97,7 +97,7 @@ const Clients = () => {
 
   // the clients belong to Aldaron: switching to another workspace from this page leaves it
   useEffect(() => {
-    if (workspace !== TargetEnum.ALDARON) navigate(goToHome());
+    if (workspace !== TargetEnum.AGENCY) navigate(goToHome());
   }, [workspace, navigate]);
 
   // the dialog is shared by "New client" and "Edit": open on no client to create one

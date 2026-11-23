@@ -74,13 +74,13 @@ export const getTargetInitialValues = (item: ITargetAttributes): ITargetAttribut
  * before Aldaron was unchecked does not stay behind on the content.
  */
 export const getTargetValuesToSave = (values: ITargetAttributes): Record<string, unknown> => {
-  const isAldaron = !!values.targets?.includes(TargetEnum.ALDARON);
+  const isAgency = !!values.targets?.includes(TargetEnum.AGENCY);
 
   return {
     targets: values.targets?.length ? values.targets : DEFAULT_TARGETS,
-    offerIncludes: isAldaron ? values.offerIncludes ?? null : null,
-    offerPrice: isAldaron ? values.offerPrice ?? null : null,
-    offerDurationDays: isAldaron ? values.offerDurationDays ?? null : null,
+    offerIncludes: isAgency ? values.offerIncludes ?? null : null,
+    offerPrice: isAgency ? values.offerPrice ?? null : null,
+    offerDurationDays: isAgency ? values.offerDurationDays ?? null : null,
   };
 };
 

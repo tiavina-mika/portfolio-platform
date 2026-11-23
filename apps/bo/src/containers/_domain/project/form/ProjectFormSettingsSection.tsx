@@ -39,7 +39,7 @@ const ProjectFormSettingsSection = () => {
   // a project belongs to one website: the portfolio or Aldaron, never both
   const targetOptions: ISelectOption[] = useMemo(() => [
     { label: t('cms:target.portfolio'), value: TargetEnum.PORTFOLIO },
-    { label: t('cms:target.aldaron'), value: TargetEnum.ALDARON },
+    { label: t('cms:target.agency'), value: TargetEnum.AGENCY },
   ], [t]);
 
   return (

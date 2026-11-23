@@ -21,8 +21,8 @@ import { parseFunctionValidation } from '../../utils/_core/validation.utils.clou
  * roles open it, then `fromBO` checks the right on the collection. Both apply — holding Aldaron opens
  * the workspace, not every action in it.
  */
-const assertAldaronWorkspace = (request: Parse.Cloud.FunctionRequest): Promise<TargetEnum> => (
-  resolveWorkspace(request.user, TargetEnum.ALDARON, request.params.locale)
+const assertAgencyWorkspace = (request: Parse.Cloud.FunctionRequest): Promise<TargetEnum> => (
+  resolveWorkspace(request.user, TargetEnum.AGENCY, request.params.locale)
 );
 
 // the client named by the request, or the translated "not found" error
@@ -43,7 +43,7 @@ Parse.Cloud.define(
   'getClients',
   fromBO(
     async (request: Parse.Cloud.FunctionRequest) => {
-      await assertAldaronWorkspace(request);
+      await assertAgencyWorkspace(request);
 
       return getClientsService(request.params as Parameters<typeof getClientsService>[0]);
     },
@@ -57,7 +57,7 @@ Parse.Cloud.define(
   'getClient',
   fromBO(
     async (request: Parse.Cloud.FunctionRequest): Promise<Parse.Object | false> => {
-      await assertAldaronWorkspace(request);
+      await assertAgencyWorkspace(request);
 
       return getClientByIdService(request.params.id);
     },
@@ -71,7 +71,7 @@ Parse.Cloud.define(
   'createClient',
   fromBO(
     async (request: Parse.Cloud.FunctionRequest): Promise<Parse.Object> => {
-      await assertAldaronWorkspace(request);
+      await assertAgencyWorkspace(request);
 
       return saveClientService(toClientInput(request.params), request.user!, request.params.locale);
     },
@@ -85,7 +85,7 @@ Parse.Cloud.define(
   'updateClient',
   fromBO(
     async (request: Parse.Cloud.FunctionRequest): Promise<Parse.Object> => {
-      await assertAldaronWorkspace(request);
+      await assertAgencyWorkspace(request);
 
       const client = await getClientOrThrow(request);
 
@@ -102,7 +102,7 @@ Parse.Cloud.define(
   'archiveClient',
   fromBO(
     async (request: Parse.Cloud.FunctionRequest): Promise<Parse.Object> => {
-      await assertAldaronWorkspace(request);
+      await assertAgencyWorkspace(request);
 
       const client = await getClientOrThrow(request);
 

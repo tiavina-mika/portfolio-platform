@@ -269,7 +269,7 @@ export const contentCountryQuery = (query: Parse.Query, countryCode?: string | n
 /**
  * keeps the editorial content (articles, pages, categories, projects) published on one target. The
  * portfolio also keeps the rows saved before the field existed, which carry no target and are read
- * as the portfolio's; `aldaron` (the Aldaron website) keeps only the rows that name it.
+ * as the portfolio's; `agency` (the Aldaron website) keeps only the rows that name it.
  * @param query parse query to narrow, before any `select`/`include`: the portfolio case wraps it
  * in a new query, so the caller chains the rest on the returned one
  * @param target the target whose content is read; the portfolio when left out
@@ -282,7 +282,7 @@ export const contentTargetQuery = (
   target = TargetEnum.PORTFOLIO,
   field = 'targets'
 ): Parse.Query => {
-  if (target === TargetEnum.ALDARON) return query.equalTo(field, TargetEnum.ALDARON);
+  if (target === TargetEnum.AGENCY) return query.equalTo(field, TargetEnum.AGENCY);
 
   return Parse.Query.and(
     query,
