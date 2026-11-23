@@ -151,6 +151,37 @@ const ARTICLES_PAGE_SIZE = 20;
 export const ARTICLES_PAGE_SIZE = 20;
 ```
 
+## No proper names in identifiers
+
+A brand, a client, a product or a person can change name (rebranding, sale, new client). An
+identifier that carries it turns that change into a code rename **and** a data migration. So an
+identifier names a **role**, never an **identity**.
+
+**Forbidden in:** file and folder names, functions, variables, constants, types, enums and their
+members, i18n keys, CSS classes, env variables, Cloud Function and job names, Parse class and field
+names, **and any value stored in the database or sent over the API** (an enum value, a role name, a
+`targets` entry).
+
+**Allowed in:** user-facing text (i18n values), the content of seeds, the documentation, tickets and
+code comments that explain context, and asset files that are the brand itself (a logo file) — as long
+as the code reaches them through a role-named constant.
+
+```ts
+// ❌ identity in the identifier and in the stored value
+export enum TargetEnum { PORTFOLIO = 'portfolio', ACME = 'acme' }
+const isAcme = targets.includes(TargetEnum.ACME);
+t('cms:target.acme');
+
+// ✅ role in the identifier and in the stored value
+export enum TargetEnum { PORTFOLIO = 'portfolio', AGENCY = 'agency' }
+const isAgency = targets.includes(TargetEnum.AGENCY);
+t('cms:target.agency');   // the translated value may say "Acme"
+```
+
+- Before naming something, ask: "if the company were renamed tomorrow, would this name be wrong?"
+- Existing proper names are not renamed as a side effect of an unrelated task: the rename is its own
+  change, and a stored value comes with a migration job (see `implementation-completeness.md`).
+
 ## Language rule
 
 All identifiers, file names, comments, and error messages must be in **English**.

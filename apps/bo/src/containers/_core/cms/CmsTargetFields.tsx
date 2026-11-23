@@ -27,7 +27,7 @@ const CmsTargetFields = () => {
 
   const targetOptions: ISelectOption[] = useMemo(() => [
     { label: t('cms:target.portfolio'), value: TargetEnum.PORTFOLIO },
-    { label: t('cms:target.aldaron'), value: TargetEnum.ALDARON },
+    { label: t('cms:target.agency'), value: TargetEnum.AGENCY },
   ], [t]);
 
   const offerIncludeOptions: ISelectOption[] = useMemo(() => [
@@ -37,21 +37,21 @@ const CmsTargetFields = () => {
     { label: t('cms:target.include.webApp'), value: OfferIncludeEnum.WEB_APP },
   ], [t]);
 
-  const isAldaron = !!targets?.includes(TargetEnum.ALDARON);
-  const isAldaronOnly = isAldaron && targets?.length === 1;
+  const isAgency = !!targets?.includes(TargetEnum.AGENCY);
+  const isAgencyOnly = isAgency && targets?.length === 1;
 
   return (
     <>
       <SelectField
         isMulti
-        helperText={isAldaronOnly ? t('cms:target.aldaronOnlyHelper') : t('cms:target.targetsHelper')}
+        helperText={isAgencyOnly ? t('cms:target.agencyOnlyHelper') : t('cms:target.targetsHelper')}
         label={t('cms:target.targets')}
         name="targets"
         options={targetOptions}
         variant="outlined"
       />
 
-      {isAldaron && (
+      {isAgency && (
         <>
           <SelectField
             isClearable

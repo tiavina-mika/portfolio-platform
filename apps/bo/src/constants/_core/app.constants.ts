@@ -129,10 +129,10 @@ export const IMAGES = {
   whiteLogo: '/images/logo-white.svg',
   defaultLogo: '/images/logo.svg',
   // the Aldaron brand files (apps/aldaron-web/public/brand): dark ink for a light surface, light ink for a dark one
-  aldaronLogo: '/images/aldaron-horizontal.svg',
-  aldaronWhiteLogo: '/images/aldaron-horizontal-dark.svg',
-  aldaronBlackIconLogo: '/images/aldaron-symbol.svg',
-  aldaronWhiteIconLogo: '/images/aldaron-symbol-dark.svg',
+  agencyLogo: '/images/aldaron-horizontal.svg',
+  agencyWhiteLogo: '/images/aldaron-horizontal-dark.svg',
+  agencyBlackIconLogo: '/images/aldaron-symbol.svg',
+  agencyWhiteIconLogo: '/images/aldaron-symbol-dark.svg',
 };
 
 const DEFAULT_LIMIT = 20;

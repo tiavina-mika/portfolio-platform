@@ -176,7 +176,7 @@ type ParseQuery = InstanceType<ReturnType<typeof getParseServer>['Query']>;
 /**
  * Keeps the editorial content (articles, pages, categories, projects) published on this website, the
  * portfolio. The rows saved before the field existed carry no target and are the portfolio's too,
- * while a content that names only `aldaron` belongs to the Aldaron website and stays out.
+ * while a content that names only `agency` belongs to the Aldaron website and stays out.
  * @param query the query to narrow, before any `select`/`include`: it is wrapped in a new query,
  * so the caller chains the rest on the returned one
  * @param field the field holding the target: `targets` (a list) for articles, pages and categories,

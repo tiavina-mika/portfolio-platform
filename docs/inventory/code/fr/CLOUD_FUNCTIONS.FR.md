@@ -78,7 +78,7 @@ Les fichiers sont dans `apps/server/src/cloud/jobs/_core/` (`_domain/` n'a aucun
 | Fichier | Jobs |
 |---|---|
 | `category.jobs.ts` | `updateLinkedCategoryItemCountJob` |
-| `cms.jobs.ts` | `purgeOrphanedEditorFilesJob`, `renameContentTargetFieldsJob` (migration ponctuelle, lancée à la main) |
+| `cms.jobs.ts` | `purgeOrphanedEditorFilesJob`, `renameContentTargetFieldsJob` (migration ponctuelle des champs de cible et de l’ancienne valeur `aldaron`, lancée à la main) |
 | `email.jobs.ts` | `createContactToCloudJob` |
 | `impersonation.jobs.ts` | `revokeExpiredImpersonationSessionsJob` |
 | `misc.jobs.ts` | `clearRecycleBinInCloudJob` |

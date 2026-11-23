@@ -20,11 +20,11 @@ export const WORKSPACES: Record<TargetEnum, IWorkspaceConfig> = {
     // the clients are Aldaron's business, the portfolio has none
     hiddenMenuIds: [PATH_NAMES.clients],
   },
-  [TargetEnum.ALDARON]: {
-    labelKey: 'cms:target.aldaron',
-    logo: { default: IMAGES.aldaronLogo, white: IMAGES.aldaronWhiteLogo },
+  [TargetEnum.AGENCY]: {
+    labelKey: 'cms:target.agency',
+    logo: { default: IMAGES.agencyLogo, white: IMAGES.agencyWhiteLogo },
     logoWidth: 120,
-    icon: { black: IMAGES.aldaronBlackIconLogo, white: IMAGES.aldaronWhiteIconLogo },
+    icon: { black: IMAGES.agencyBlackIconLogo, white: IMAGES.agencyWhiteIconLogo },
     // these forms edit the portfolio's website, which Aldaron does not have
     hiddenSettingsSections: WEBSITE_SETTINGS_SECTIONS,
     hiddenMenuIds: [],

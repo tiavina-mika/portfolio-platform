@@ -8,7 +8,7 @@ const readAndWriteRights = {
 };
 
 const rolesGranting = (className: string) => [
-  { name: 'aldaronSales', rights: [{ className, rights: readAndWriteRights }] },
+  { name: 'agencySales', rights: [{ className, rights: readAndWriteRights }] },
 ];
 
 describe('the class-level permissions built from the role rights', () => {
@@ -16,8 +16,8 @@ describe('the class-level permissions built from the role rights', () => {
     const { project } = DOMAIN_COLLECTIONS;
     const clp = buildCLPForClass(project, project, rolesGranting(project));
 
-    expect(clp.find['role:aldaronSales']).toBe(true);
-    expect(clp.create['role:aldaronSales']).toBe(true);
+    expect(clp.find['role:agencySales']).toBe(true);
+    expect(clp.create['role:agencySales']).toBe(true);
   });
 
   it('should give no role a raw access to the clients, reached only through their functions', () => {
@@ -25,7 +25,7 @@ describe('the class-level permissions built from the role rights', () => {
     const clp = buildCLPForClass(client, client, rolesGranting(client));
 
     for (const operation of ['find', 'get', 'count', 'create', 'update', 'addField']) {
-      expect(clp[operation]?.['role:aldaronSales']).toBeUndefined();
+      expect(clp[operation]?.['role:agencySales']).toBeUndefined();
     }
   });
 

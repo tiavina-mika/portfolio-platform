@@ -12,7 +12,7 @@ import { filter, isNull } from '@/utils/_core/utils';
  * @param target the workspace whose rows are read
  */
 export const contentTargetQuery = (query: Parse.Query, target: TargetEnum): Parse.Query => {
-  if (target === TargetEnum.ALDARON) return query.equalTo('targets', TargetEnum.ALDARON);
+  if (target === TargetEnum.AGENCY) return query.equalTo('targets', TargetEnum.AGENCY);
 
   return Parse.Query.and(
     query,

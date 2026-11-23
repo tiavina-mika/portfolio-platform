@@ -1,10 +1,10 @@
 /**
- * Where a piece of content (article, page, category) is published. A content filed under `aldaron`
+ * Where a piece of content (article, page, category) is published. A content filed under `agency`
  * alone belongs to the Aldaron website only.
  */
 export enum TargetEnum {
   PORTFOLIO = 'portfolio',
-  ALDARON = 'aldaron'
+  AGENCY = 'agency'
 }
 
 // what an Aldaron offer can include
