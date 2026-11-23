@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import type { Theme } from '@mui/material/styles';
 
@@ -13,8 +14,9 @@ import {
   INBOX_THREAD_PADDING_Y,
 } from '@/constants/_core/ui/inbox.constants';
 import ContactDetailsCard from '@/containers/_core/contacts/ContactDetailsCard';
+import { getSettingsWorkspaceSelector } from '@/redux/reducers/_core/settings.reducer';
 import { IContact } from '@/types/_core/contact.type';
-import { getContactInitials, getContactName } from '@/utils/_core/contact.utils';
+import { getContactDetailActions, getContactInitials, getContactName } from '@/utils/_core/contact.utils';
 import { getDesignTokens } from '@/utils/_core/theme/tokens.utils';
 
 const classes = {
@@ -58,6 +60,12 @@ const classes = {
     whiteSpace: 'pre-wrap' as const,
     overflowWrap: 'anywhere' as const,
   },
+  actions: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: `${INBOX_ITEM_HEAD_GAP}px`,
+    padding: `0 ${INBOX_THREAD_PADDING_X}px ${INBOX_THREAD_PADDING_Y}px`,
+  },
 };
 
 type Props = {
@@ -73,6 +81,8 @@ const ContactDetail = ({
   contact, canDelete, canDestroy, onDelete, onDestroy,
 }: Props) => {
   const { t } = useTranslation(['common', 'user']);
+  const workspace = useSelector(getSettingsWorkspaceSelector);
+  const actions = getContactDetailActions(workspace);
 
   if (!contact) {
     return (
@@ -112,6 +122,12 @@ const ContactDetail = ({
       </Box>
       <Box css={classes.body}>
         <Typography css={classes.message} variant="body1">{contact.message}</Typography>
+        {/* what a business domain does with this message, such as turning a quote request into a quote */}
+        {actions.length > 0 && (
+          <Box css={classes.actions}>
+            {actions.map((action) => <action.component contact={contact} key={action.id} />)}
+          </Box>
+        )}
         <ContactDetailsCard contact={contact} />
       </Box>
     </Card>

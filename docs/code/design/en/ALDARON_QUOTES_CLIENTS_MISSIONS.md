@@ -346,7 +346,7 @@ A review of this note found the points below. The first group is already written
 1. ✅ Shared constants and enums, `Client` on the server (service, functions, trigger, indexes, i18n).
 2. ✅ `Client` in the back-office (pages, route, menu entry through the registry, rights), and its French feature page.
 3. ✅ `Quote` on the server (number, total, transitions), then in the back-office, and its French feature page. The optional acceptance proof file (a PDF or an image joined when the quote is accepted) followed in its own ticket.
-   ⏳ Then the quote requests: `target` and `quote` on `Contact`, the target sent by `aldaron-web`, the contact list following the workspace and the "Create the client and the quote" action.
+   ✅ Then the quote requests: `target` and `quote` on `Contact`, the target sent by `aldaron-web`, the contact list following the workspace and the "Create the client and the quote" action. The unread badge and the global search still count the messages of both workspaces: ticket `190-scope-the-contact-badge-and-search-to-the-workspace`.
 4. ⏳ `Mission` on the server, then in the back-office, and its French feature page.
 5. ⏳ `Payment`: the schedule constant, the creation on acceptance, the triggers, then the back-office (payments of a quote, mark as paid), and its French feature page.
 6. ⏳ Dashboard card, inventory, and marking step 4 ✅ in the workspace note.

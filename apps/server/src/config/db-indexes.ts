@@ -176,7 +176,11 @@ const INDEXES_BY_COLLECTION: Record<string, IndexDefinition[]> = {
     { spec: { deleted: 1, banned: 1, address: 1 } },
   ],
   // the back-office badge counts the unread contacts
-  [collections.Contact]: [BADGE_COUNT_INDEX],
+  [collections.Contact]: [
+    BADGE_COUNT_INDEX,
+    // the back-office inbox of one workspace, newest first; the portfolio's also reads the rows with no target
+    { spec: { target: 1, deleted: 1, createdAt: -1 } },
+  ],
   [collections.Category]: [
     /*
      * the technical code the apps read a category by (`equalTo('code', …).first()`): unique across

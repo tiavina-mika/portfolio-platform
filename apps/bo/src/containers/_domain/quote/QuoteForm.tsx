@@ -11,7 +11,7 @@ import TextField from '@/components/form/fields/TextField';
 import Form from '@/components/form/Form';
 import { QUOTE_CURRENCY_OPTIONS, QUOTE_EMPTY_LINE, QUOTE_FORM_ID } from '@/constants/_domain/quote.constants';
 import { getSettingsDefaultCurrencySelector } from '@/redux/reducers/_core/settings.reducer';
-import { IQuote, IQuoteFormValues } from '@/types/_domain/quote.type';
+import { IQuote, IQuoteFormValues, IQuoteFromContact } from '@/types/_domain/quote.type';
 import { getNewQuoteCurrency } from '@/utils/_domain/quote.utils';
 import { quoteSchema } from '@/validations/_domain/quote.validation';
 
@@ -25,6 +25,8 @@ type Props = {
   quote?: IQuote | null;
   // on a new quote, the accepted quote it amends: its client, currency, VAT rate and terms carry over
   amendedQuote?: IQuote | null;
+  // on a new quote written from a quote request of the site: its client, title and lines to price
+  prefill?: IQuoteFromContact | null;
 };
 
 const twoColumns = { display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 };
@@ -58,19 +60,38 @@ const toAmendmentFormValues = (amendedQuote: IQuote): IQuoteFormValues => ({
   lines: [{ ...QUOTE_EMPTY_LINE }],
 });
 
+/*
+ * a quote request of the site: its client, the product it names and the lines of its estimate, priced
+ * 0 since the estimate is a summary, not unit prices. A request with no estimate starts on an empty line
+ */
+const toRequestFormValues = (prefill: IQuoteFromContact, currency: string): IQuoteFormValues => ({
+  client: prefill.client.id,
+  title: prefill.title,
+  currency,
+  taxRate: '',
+  validUntil: null,
+  notes: '',
+  lines: prefill.lines.length
+    ? prefill.lines.map((line) => ({ ...line, unitAmount: fromMinorUnits(line.unitAmount, currency) }))
+    : [{ ...QUOTE_EMPTY_LINE }],
+});
+
 /**
  * What is proposed to the client and at what price. A new quote starts in the default currency of the
  * settings; once created, the currency is the quote's own, so changing that default never touches it.
  * Mounted each time the dialog opens, so it starts from the draft edited, the quote amended, or an
  * empty quote.
  */
-const QuoteForm = ({ onSubmit, quote, amendedQuote }: Props) => {
+const QuoteForm = ({
+  onSubmit, quote, amendedQuote, prefill,
+}: Props) => {
   const { t } = useTranslation(['project', 'common']);
   const defaultCurrency = getNewQuoteCurrency(useSelector(getSettingsDefaultCurrencySelector));
 
   const getDefaultValues = (): IQuoteFormValues | Partial<IQuoteFormValues> => {
     if (quote) return toFormValues(quote);
     if (amendedQuote) return toAmendmentFormValues(amendedQuote);
+    if (prefill) return toRequestFormValues(prefill, defaultCurrency);
 
     return {
       currency: defaultCurrency, lines: [{ ...QUOTE_EMPTY_LINE }], taxRate: '', validUntil: null,
@@ -90,7 +111,7 @@ const QuoteForm = ({ onSubmit, quote, amendedQuote }: Props) => {
     <Form form={form} formId={QUOTE_FORM_ID} onSubmit={onSubmit}>
       <Stack spacing={2.5}>
         <QuoteClientField
-          initialClient={quote?.client ?? amendedQuote?.client}
+          initialClient={quote?.client ?? amendedQuote?.client ?? prefill?.client}
           lockedHelperText={lockedClientParent
             ? t('project:quote.clientLocked', { number: lockedClientParent.number })
             : undefined}

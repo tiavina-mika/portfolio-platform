@@ -234,6 +234,8 @@ export const EXTRA_SCHEMA_FIELDS: Record<
     deleted: 'Boolean',
     seen: 'Boolean',
     locale: 'String',
+    // the workspace the message is read in (`portfolio`, `agency`)
+    target: 'String',
   },
   // public newsletter form, same split: submitted fields then trigger-set ones
   [collections.Newsletter]: {

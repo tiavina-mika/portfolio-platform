@@ -27,7 +27,7 @@ Les fichiers sont dans `apps/server/src/cloud/functions/_core/` sauf mention con
 | `auditLog.functions.ts` | `getAuditLogs`, `getAuditLogByUserId`, `getUserAuditTrail` |
 | `auth.functions.ts` | `verifyAccount`, `changePassword`, `sendVerificationCode`, `sendResetPasswordVerificationCode`, `loginWithPhone`, `loginWithEmail`, `resetPassword` |
 | `category.functions.ts` | `getCategories`, `getCategory` |
-| `contact.functions.ts` | `createPublicContact`, `subscribeToNewsletter`, `confirmNewsletterSubscription`, `getContacts`, `getContact` |
+| `contact.functions.ts` | `createPublicContact` (enregistre la `target` envoyée par le site, `portfolio` par défaut), `subscribeToNewsletter`, `confirmNewsletterSubscription`, `getContacts`, `getContact` (les deux suivent l'espace de travail : `resolveWorkspace` pour la liste, un message d'un espace que le compte n'ouvre pas se lit comme introuvable) |
 | `contactChange.functions.ts` | `requestContactChange`, `confirmContactChange` |
 | `contentVersion.functions.ts` | `getContentVersions`, `getContentVersionSnapshot` |
 | `dashboard.functions.ts` | `getDashboardKpis`, `getDashboardAlerts`, `getDashboardRecentActivity` |
@@ -49,7 +49,7 @@ Les fichiers sont dans `apps/server/src/cloud/functions/_core/` sauf mention con
 | `test.functions.ts` | `getTestEmailSendersOptions`, `createBatchTest`, `destroyBatchTest`, `sendArticleToNewsletterTest`, `sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest`, `sendInvitationTest`, `sendWelcomeEmailTest`, `sendVerificationCodeSmsTest` (aides de test, importées seulement en développement local et en test) |
 | `_domain/client.functions.ts` | `getClients`, `getClient`, `createClient`, `updateClient`, `archiveClient` (espace Aldaron seulement : chacune commence par `resolveWorkspace` ; pas de fonction de suppression) |
 | `_domain/project.functions.ts` | `getProjects`, `getProject`, `getProjectForClient` |
-| `_domain/quote.functions.ts` | `getQuotes`, `getQuote`, `createQuote` (aussi un avenant à un devis accepté), `updateQuote` (un brouillon seulement), `reviseQuote` (nouvelle version brouillon d'un devis envoyé), `changeQuoteStatus` (espace Aldaron seulement : chacune commence par `resolveWorkspace` ; pas de fonction de suppression) |
+| `_domain/quote.functions.ts` | `getQuotes`, `getQuote`, `createQuote` (aussi un avenant à un devis accepté, ou un premier devis écrit depuis une demande de devis du site, qui pointe alors vers lui), `prepareQuoteFromContact` (trouve ou crée le client d'une demande de devis et lit la demande en un brouillon à préremplir), `updateQuote` (un brouillon seulement), `reviseQuote` (nouvelle version brouillon d'un devis envoyé), `changeQuoteStatus` (espace Aldaron seulement : chacune commence par `resolveWorkspace` ; pas de fonction de suppression) |
 
 ## Triggers
 

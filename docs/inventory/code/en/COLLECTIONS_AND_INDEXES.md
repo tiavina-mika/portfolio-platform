@@ -20,7 +20,7 @@ Domain class names are in `libs/shared-domain-constants` (`DOMAIN_COLLECTIONS`);
 | `Page` | Editorial pages | server, bo, web |
 | `PageSection` | Sections grouping the pages | server, bo, web |
 | `Category` | Categories of articles and pages | server, bo, web |
-| `Contact` | Messages of the website contact form | server, bo, web |
+| `Contact` | Messages of the website contact forms; `target` names the workspace it is read in (none = portfolio), `quote` the quote an Aldaron request became | server, bo, web, aldaron-web |
 | `Newsletter` | Newsletter subscriptions (double opt-in, confirmed through a hashed token) | server, web |
 | `App` | Site-wide settings, including the `image`, `imageForDarkMode` and `cv` files (old files are deleted from Cloudinary on change) | server, bo, web |
 | `Notification`, `NotificationResend` | Notifications sent from the back-office and their re-sends | server, bo |

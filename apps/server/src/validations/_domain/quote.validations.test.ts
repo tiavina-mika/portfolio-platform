@@ -5,8 +5,8 @@ import { describe, expect, it } from 'vitest';
 import { QUOTE_LIST_MAX_LIMIT } from '@/constants/_domain/quote.constants';
 
 import {
-  changeQuoteStatusSchema, createQuoteSchema, getQuotesSchema, quoteInputSchema, reviseQuoteSchema,
-  updateQuoteSchema,
+  changeQuoteStatusSchema, createQuoteSchema, getQuotesSchema, prepareQuoteFromContactSchema,
+  quoteInputSchema, reviseQuoteSchema, updateQuoteSchema,
 } from './quote.validations';
 
 const validQuote = {
@@ -155,5 +155,22 @@ describe('the quote list', () => {
 
   it('should refuse a status filter that does not exist', () => {
     expect(getQuotesSchema.safeParse({ limit: 10, skip: 0, filters: { status: 'paid' } }).success).toBe(false);
+  });
+});
+
+describe('a quote written from a quote request of the site', () => {
+  it('should accept a first quote that names the request it comes from', () => {
+    expect(createQuoteSchema.safeParse({ ...validQuote, contact: 'contact1' }).success).toBe(true);
+  });
+
+  it('should refuse a request named on an amendment, which completes an accepted quote instead', () => {
+    expect(createQuoteSchema.safeParse({ ...validQuote, contact: 'contact1', parentQuote: 'quote1' }).success)
+      .toBe(false);
+  });
+
+  it('should prepare a quote from a request named by its id, and nothing else', () => {
+    expect(prepareQuoteFromContactSchema.safeParse({ id: 'contact1', workspace: 'agency' }).success).toBe(true);
+    expect(prepareQuoteFromContactSchema.safeParse({ id: 'contact1', client: 'client1' }).success).toBe(false);
+    expect(prepareQuoteFromContactSchema.safeParse({}).success).toBe(false);
   });
 });

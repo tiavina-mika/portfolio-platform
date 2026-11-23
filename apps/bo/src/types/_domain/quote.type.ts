@@ -1,3 +1,4 @@
+import type { IContact } from '@/types/_core/contact.type';
 import type { IFileCloud } from '@/types/_core/file.type';
 import type { IQuoteLine, QuoteAcceptanceMethodEnum, QuoteStatusEnum } from '@shared/domain-types';
 
@@ -77,6 +78,22 @@ export interface IQuoteInput {
   validUntil: Date | null;
   notes: string | null;
 }
+
+/**
+ * What a quote request of the Aldaron site starts a draft from: the client found by its e-mail (or just
+ * created from it), the product as the title and the estimate as lines priced 0, for the team to price.
+ */
+export interface IQuoteFromContact {
+  client: IQuoteClient;
+  title: string;
+  lines: IQuoteLine[];
+}
+
+/** a contact message that may have become a quote: the generic contact knows nothing of quotes */
+export type IContactWithQuote = IContact & {
+  // the quote the request was turned into, as a pointer
+  quote?: { objectId: string };
+};
 
 export interface IQuoteState {
   quotes: IQuote[];

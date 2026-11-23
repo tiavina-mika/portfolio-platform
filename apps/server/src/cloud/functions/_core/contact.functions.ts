@@ -1,7 +1,10 @@
+import { TargetEnum } from '@shared/types';
+
 import {
   collections, RECAPTCHA_VERIFICATION_FAILED, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 import { verifyRecaptchaToken } from '@/utils/_core/recaptcha.utils';
+import { isInWorkspaces } from '@/utils/_core/rights.utils';
 import {
   confirmNewsletterSubscriptionSchema, createPublicContactSchema, getContactsSchema,
   getContactSchema, subscribeToNewsletterSchema,
@@ -14,6 +17,7 @@ import {
   confirmNewsletterSubscriptionService, subscribeToNewsletterService,
 } from '../../services/_core/newsletter.service.cloud';
 import { Contact } from '../../triggers/_core/contact.triggers';
+import { getUserWorkspaces, resolveWorkspace } from '../../utils/_core/role.utils.cloud';
 import { fromBO, parseFunction } from '../../utils/_core/utils.cloud';
 import { parseFunctionValidation } from '../../utils/_core/validation.utils.cloud';
 
@@ -27,7 +31,7 @@ Parse.Cloud.define(
   'createPublicContact',
   parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<void> => {
     const {
-      email, phone, name, message, acceptNewsLetter, locale, recaptchaToken,
+      email, phone, name, message, acceptNewsLetter, locale, recaptchaToken, target,
     } = request.params;
 
     if (!(await verifyRecaptchaToken(recaptchaToken))) {
@@ -39,6 +43,8 @@ Parse.Cloud.define(
     contact.set('email', email);
     contact.set('name', name);
     contact.set('message', message);
+    // the workspace the message is read in; the portfolio site sends none
+    contact.set('target', target ?? TargetEnum.PORTFOLIO);
 
     // optional; stored without the separators a person types (spaces, dots, dashes, parentheses)
     if (phone) contact.set('phone', phone.replace(/[\s().-]/g, ''));
@@ -97,11 +103,14 @@ Parse.Cloud.define(
   'getContacts',
   fromBO(async (request: Parse.Cloud.FunctionRequest): Promise<GetContactsResult> => {
     const {
-      limit, skip, orderBy, order, filters, search, include = [],
+      limit, skip, orderBy, order, filters, search, include = [], locale,
     } = request.params;
 
+    // the workspace the agent works in, if their roles open it: Aldaron's quote requests are never listed to others
+    const workspace = await resolveWorkspace(request.user, request.params.workspace, locale);
+
     return getContactsService({
-      limit, skip, orderBy, order, filters, search, include,
+      limit, skip, orderBy, order, filters, search, include, workspace,
     });
   }, ['find'], collections.Contact),
   parseFunctionValidation(getContactsSchema)
@@ -116,6 +125,9 @@ Parse.Cloud.define(
 
     // false instead of undefined or null to avoid client serialization issues (the client return "ok" even if the page is not found)
     if (!contact) return false;
+
+    // a message filed in a workspace the account cannot work in does not exist for it
+    if (!isInWorkspaces([contact.get('target')], await getUserWorkspaces(request.user))) return false;
 
     return contact;
   }, ['get'], collections.Contact),

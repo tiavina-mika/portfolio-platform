@@ -9,7 +9,9 @@ import type { TargetEnum } from '@shared/types';
 import { fetchCurrentUserSessionToken } from '@/services/_core/auth.service';
 import { IFileCloud } from '@/types/_core/file.type';
 import { Locale } from '@/types/_core/setting.type';
-import { IQuote, IQuoteInput, IQuoteParent } from '@/types/_domain/quote.type';
+import {
+  IQuote, IQuoteFromContact, IQuoteInput, IQuoteParent,
+} from '@/types/_domain/quote.type';
 import { uploadFilesAPI } from '@/utils/_core/file.utils';
 import { toJSONWithId } from '@/utils/_core/parse.utils';
 
@@ -65,13 +67,43 @@ export const fetchQuotes = async ({
 
 /**
  * @param parentQuoteId the accepted quote the new one amends, left out for a first quote
+ * @param contactId the quote request of the site the quote is written from: it then points to the quote
  */
 export const createQuote = async (
-  values: IQuoteInput, context: RequestContext, parentQuoteId?: string
+  values: IQuoteInput, context: RequestContext, parentQuoteId?: string, contactId?: string
 ): Promise<IQuote> => {
-  const quote = await Parse.Cloud.run('createQuote', { ...values, parentQuote: parentQuoteId, ...context });
+  const quote = await Parse.Cloud.run('createQuote', {
+    ...values, parentQuote: parentQuoteId, contact: contactId, ...context,
+  });
 
   return toQuote(quote);
+};
+
+/**
+ * One quote, for a screen that only knows its id (the quote a request of the site became).
+ * @returns the quote, or `undefined` when there is none
+ */
+export const fetchQuote = async (id: string, context: RequestContext): Promise<IQuote | undefined> => {
+  const quote = await Parse.Cloud.run('getQuote', { id, ...context });
+
+  return quote ? toQuote(quote) : undefined;
+};
+
+/**
+ * The first step of turning a quote request of the site into a quote: the server finds the client
+ * holding the request's e-mail, or creates it, and reads the request into a draft to prefill. Nothing of
+ * the quote is written yet.
+ */
+export const prepareQuoteFromContact = async (
+  contactId: string, context: RequestContext
+): Promise<IQuoteFromContact> => {
+  const { client, prefill } = await Parse.Cloud.run('prepareQuoteFromContact', { id: contactId, ...context });
+
+  return {
+    client: { id: client.id, name: client.get('name') ?? '', email: client.get('email') ?? '' },
+    title: prefill.title,
+    lines: prefill.lines,
+  };
 };
 
 /**

@@ -13,6 +13,7 @@
 - [Actions possibles](#actions-possibles)
   - [Créer un devis](#créer-un-devis)
   - [Créer un client sans quitter le devis](#créer-un-client-sans-quitter-le-devis)
+  - [Créer un devis depuis une demande du site](#créer-un-devis-depuis-une-demande-du-site)
   - [Modifier un brouillon](#modifier-un-brouillon)
   - [Envoyer, accepter, refuser ou faire expirer un devis](#envoyer-accepter-refuser-ou-faire-expirer-un-devis)
   - [Réviser un devis envoyé](#réviser-un-devis-envoyé)
@@ -133,6 +134,15 @@ Si le client n'existe pas encore, le lien « Nouveau client » sous le champ cli
 création d'un client. Une fois enregistré, le client est choisi tout seul dans le devis, sans perdre ce qui
 était déjà saisi.
 
+### Créer un devis depuis une demande du site
+
+Une demande de devis envoyée depuis la page contact du site d'Aldaron arrive dans la page **Contacts** de
+l'espace Aldaron. Sous la demande, le bouton **Créer le client et le devis** ouvre ce même formulaire, déjà
+rempli : le client (celui qui a la même adresse e-mail, ou un nouveau client créé depuis la demande), le
+produit décrit comme titre, et une ligne à 0 par ligne de l'estimation du visiteur. On saisit les prix, on
+enregistre : le devis est un brouillon comme les autres, et la demande affiche désormais son numéro. Une
+même demande ne peut pas devenir un second devis.
+
 ### Modifier un brouillon
 
 L'action « Modifier » n'est proposée que sur un brouillon. Elle ouvre la même fenêtre, remplie avec le
@@ -211,5 +221,4 @@ ne modifie aucun devis existant. C'est un réglage propre à la personne connect
   pour les autres fichiers du back-office : ne la transmettez pas en dehors de l'équipe.
 - Un devis envoyé n'expire pas tout seul à sa date de validité : il faut le marquer comme expiré.
 - Pas encore de paiements rattachés à un devis accepté.
-- Une demande de devis reçue depuis le site ne se transforme pas encore en devis.
 - Un client qui a des devis ne peut pas être supprimé : il est archivé.

@@ -346,7 +346,7 @@ Une relecture de cette note a trouvé les points ci-dessous. Le premier groupe e
 1. ✅ Constantes et enums partagés, `Client` côté serveur (service, fonctions, trigger, index, i18n).
 2. ✅ `Client` dans le back-office (pages, route, entrée de menu via le registre, droits), et sa page de fonctionnalité française.
 3. ✅ `Quote` côté serveur (numéro, total, transitions), puis dans le back-office, et sa page de fonctionnalité française. Le fichier facultatif de preuve d'acceptation (un PDF ou une image joint quand le devis est accepté) a suivi dans son propre ticket.
-   ⏳ Puis les demandes de devis : `target` et `quote` sur `Contact`, la cible envoyée par `aldaron-web`, la liste des contacts qui suit l'espace de travail et l'action « Créer le client et le devis ».
+   ✅ Puis les demandes de devis : `target` et `quote` sur `Contact`, la cible envoyée par `aldaron-web`, la liste des contacts qui suit l'espace de travail et l'action « Créer le client et le devis ». Le compteur des non-lus et la recherche globale comptent encore les messages des deux espaces : ticket `190-scope-the-contact-badge-and-search-to-the-workspace`.
 4. ⏳ `Mission` côté serveur, puis dans le back-office, et sa page de fonctionnalité française.
 5. ⏳ `Payment` : la constante d'échéancier, la création à l'acceptation, les triggers, puis le back-office (paiements d'un devis, marquer payé), et sa page de fonctionnalité française.
 6. ⏳ Carte du tableau de bord, inventaire, et marquage de l'étape 4 ✅ dans la note de l'espace de travail.

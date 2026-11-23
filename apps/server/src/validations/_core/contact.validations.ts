@@ -1,8 +1,10 @@
 import { CONTACT_MESSAGE_MAX_LENGTH, CONTACT_PHONE_PATTERN } from '@shared/constants';
+import { TargetEnum } from '@shared/types';
 import { z } from 'zod';
 
 import {
-  paginationQuerySchema, dateRangeFieldSchema, includeFieldSchema, objectIdFieldSchema,
+  paginationQuerySchema, dateRangeFieldSchema, includeFieldSchema, localeFieldSchema, objectIdFieldSchema,
+  workspaceFieldSchema,
 } from './util.validations';
 
 /**
@@ -16,6 +18,8 @@ export const createPublicContactSchema = z.object({
   message: z.string().max(CONTACT_MESSAGE_MAX_LENGTH),
   acceptNewsLetter: z.boolean().optional(),
   locale: z.string().optional(),
+  // the site the message comes from: the Aldaron site files it in the Aldaron workspace
+  target: z.enum(TargetEnum).optional(),
   recaptchaToken: z.string().nonempty().max(4000),
 });
 
@@ -50,6 +54,9 @@ export const getContactsSchema = paginationQuerySchema.extend({
   filters: contactsFiltersSchema,
   search: contactsSearchSchema,
   include: includeFieldSchema,
+  // the workspace whose messages are listed: the portfolio's when left out
+  workspace: workspaceFieldSchema,
+  locale: localeFieldSchema.optional(),
 });
 
 export const getContactSchema = z.object({

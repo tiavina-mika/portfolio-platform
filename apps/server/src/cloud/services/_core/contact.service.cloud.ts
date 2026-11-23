@@ -1,8 +1,10 @@
+import { TargetEnum } from '@shared/types';
+
 import { USE_MASTER_KEY } from '@/constants/_core/constants';
 import { escapeText, isBoolean } from '@/utils/_core/utils';
 
 import { Contact } from '../../triggers/_core/contact.triggers';
-import { filtersDatesQuery } from '../../utils/_core/parse.utils.cloud';
+import { contentTargetQuery, filtersDatesQuery } from '../../utils/_core/parse.utils.cloud';
 
 // search keys with dedicated handling below, excluded from the generic free-text `matches()` loop
 const SEARCH_KEYS_WITH_DEDICATED_HANDLING = ['text', 'createdAt', 'updatedAt'];
@@ -15,10 +17,11 @@ type GetContactsFilters = {
   filters?: { deleted?: boolean };
   search?: Record<string, any>;
   include?: string[];
+  workspace?: TargetEnum;
 };
 
 export const getContactsService = async ({
-  limit, skip, orderBy, order, filters, search, include = [],
+  limit, skip, orderBy, order, filters, search, include = [], workspace = TargetEnum.PORTFOLIO,
 }: GetContactsFilters): Promise<{ results: Parse.Object[]; count: number }> => {
   let query = new Parse.Query(Contact);
 
@@ -44,6 +47,9 @@ export const getContactsService = async ({
     // query dates
     filtersDatesQuery(query, search);
   }
+
+  // the messages filed in one workspace; a message saved before the field existed is the portfolio's
+  query = contentTargetQuery(query, workspace, 'target');
 
   query.limit(+limit)
     .skip(+skip)

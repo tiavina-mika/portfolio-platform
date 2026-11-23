@@ -27,7 +27,7 @@ Files are in `apps/server/src/cloud/functions/_core/` unless noted.
 | `auditLog.functions.ts` | `getAuditLogs`, `getAuditLogByUserId`, `getUserAuditTrail` |
 | `auth.functions.ts` | `verifyAccount`, `changePassword`, `sendVerificationCode`, `sendResetPasswordVerificationCode`, `loginWithPhone`, `loginWithEmail`, `resetPassword` |
 | `category.functions.ts` | `getCategories`, `getCategory` |
-| `contact.functions.ts` | `createPublicContact`, `subscribeToNewsletter`, `confirmNewsletterSubscription`, `getContacts`, `getContact` |
+| `contact.functions.ts` | `createPublicContact` (stores the `target` the site sends, `portfolio` by default), `subscribeToNewsletter`, `confirmNewsletterSubscription`, `getContacts`, `getContact` (both follow the workspace: `resolveWorkspace` for the list, a message of a workspace the account cannot use reads as not found) |
 | `contactChange.functions.ts` | `requestContactChange`, `confirmContactChange` |
 | `contentVersion.functions.ts` | `getContentVersions`, `getContentVersionSnapshot` |
 | `dashboard.functions.ts` | `getDashboardKpis`, `getDashboardAlerts`, `getDashboardRecentActivity` |
@@ -49,7 +49,7 @@ Files are in `apps/server/src/cloud/functions/_core/` unless noted.
 | `test.functions.ts` | `getTestEmailSendersOptions`, `createBatchTest`, `destroyBatchTest`, `sendArticleToNewsletterTest`, `sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest`, `sendInvitationTest`, `sendWelcomeEmailTest`, `sendVerificationCodeSmsTest` (test helpers, imported only in local development and tests) |
 | `_domain/client.functions.ts` | `getClients`, `getClient`, `createClient`, `updateClient`, `archiveClient` (Aldaron workspace only: each one starts with `resolveWorkspace`; no delete function) |
 | `_domain/project.functions.ts` | `getProjects`, `getProject`, `getProjectForClient` |
-| `_domain/quote.functions.ts` | `getQuotes`, `getQuote`, `createQuote` (also an amendment of an accepted quote), `updateQuote` (a draft only), `reviseQuote` (a new draft version of a sent quote), `changeQuoteStatus` (Aldaron workspace only: each one starts with `resolveWorkspace`; no delete function) |
+| `_domain/quote.functions.ts` | `getQuotes`, `getQuote`, `createQuote` (also an amendment of an accepted quote, or a first quote written from a quote request of the site, which then points to it), `prepareQuoteFromContact` (finds or creates the client of a quote request and reads the request into a draft to prefill), `updateQuote` (a draft only), `reviseQuote` (a new draft version of a sent quote), `changeQuoteStatus` (Aldaron workspace only: each one starts with `resolveWorkspace`; no delete function) |
 
 ## Triggers
 
