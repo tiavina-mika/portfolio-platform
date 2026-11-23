@@ -49,6 +49,7 @@ Les fichiers sont dans `apps/server/src/cloud/functions/_core/` sauf mention con
 | `test.functions.ts` | `getTestEmailSendersOptions`, `createBatchTest`, `destroyBatchTest`, `sendArticleToNewsletterTest`, `sendVerificationCodeTest`, `sendResetPasswordVerificationCodeTest`, `sendInvitationTest`, `sendWelcomeEmailTest`, `sendVerificationCodeSmsTest` (aides de test, importées seulement en développement local et en test) |
 | `_domain/client.functions.ts` | `getClients`, `getClient`, `createClient`, `updateClient`, `archiveClient` (espace Aldaron seulement : chacune commence par `resolveWorkspace` ; pas de fonction de suppression) |
 | `_domain/mission.functions.ts` | `getMissions` (avec « mes missions », lu depuis la session), `getMission`, `createMission`, `updateMission`, `changeMissionStatus`, `getMissionAssignees` (les membres des rôles qui ouvrent l'espace Aldaron) (espace Aldaron seulement : chacune commence par `resolveWorkspace` ; pas de fonction de suppression) |
+| `_domain/payment.functions.ts` | `getQuotePayments` (les paiements d'un devis accepté), `createQuotePayments` (l'échéancier 30 / 40 / 30 d'un devis accepté qui n'en a pas encore), `markPaymentAsPaid`, `setPaymentDueDate`, `cancelPayment` (annule un paiement et écrit son remplaçant non payé) (espace Aldaron seulement : chacune commence par `resolveWorkspace` ; pas de fonction de suppression) |
 | `_domain/project.functions.ts` | `getProjects`, `getProject`, `getProjectForClient` |
 | `_domain/quote.functions.ts` | `getQuotes`, `getQuote`, `createQuote` (aussi un avenant à un devis accepté, ou un premier devis écrit depuis une demande de devis du site, qui pointe alors vers lui), `prepareQuoteFromContact` (trouve ou crée le client d'une demande de devis et lit la demande en un brouillon à préremplir), `updateQuote` (un brouillon seulement), `reviseQuote` (nouvelle version brouillon d'un devis envoyé), `changeQuoteStatus` (espace Aldaron seulement : chacune commence par `resolveWorkspace` ; pas de fonction de suppression) |
 
@@ -72,8 +73,9 @@ Les fichiers sont dans `apps/server/src/cloud/triggers/_core/` sauf mention cont
 | `user.triggers.ts` | `beforeSave`, `afterSave`, `beforeDelete`, `afterDelete` `_User` |
 | `_domain/client.triggers.ts` | `beforeSave` `Client` (e-mail en minuscules et unique, statut et auteurs) ; `beforeDelete` `Client` (refusé tant que le client a des devis ou des missions) |
 | `_domain/mission.triggers.ts` | `beforeSave` `Mission` (née planifiée ; statut seulement vers l'avant, `done` et `cancelled` définitifs ; phase du statut courant, effacée au changement de statut ; dates de début et de fin remplies si vides, fin jamais avant le début ; client et devis figés après `planned` ; devis accepté et du même client ; personne assignée capable d'ouvrir l'espace Aldaron) |
+| `_domain/payment.triggers.ts` | `beforeSave` `Payment` (écrit pour un devis accepté seulement, client lu sur le devis ; devis, client, type, pourcentage et montant figés ; un paiement payé ne devient qu'annulé, un paiement annulé ne change plus ; payé exige un moyen, la date vaut aujourd'hui par défaut et n'est jamais à venir) ; `afterSave` `Payment` (additionne les paiements payés dans le `paidAmount` du devis) |
 | `_domain/project.triggers.ts` | `beforeSave`, `afterSave`, `afterDelete` `Project` |
-| `_domain/quote.triggers.ts` | `beforeSave` `Quote` (né brouillon, numéro, total, transitions, contenu figé hors brouillon) |
+| `_domain/quote.triggers.ts` | `beforeSave` `Quote` (né brouillon, numéro, total, transitions, contenu figé hors brouillon, `paidAmount` écrit par le trigger des paiements seulement) ; `afterSave` `Quote` (écrit les trois paiements d'un devis qui vient d'être accepté, une seule fois) |
 
 ## Cloud Jobs
 

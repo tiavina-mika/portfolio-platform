@@ -8,4 +8,6 @@ export const DOMAIN_COLLECTIONS = {
   quote: 'Quote',
   // the work done for those clients after a quote is accepted, Aldaron workspace only as well
   mission: 'Mission',
+  // what the client of an accepted quote pays, and when: 30 / 40 / 30, Aldaron workspace only as well
+  payment: 'Payment',
 };

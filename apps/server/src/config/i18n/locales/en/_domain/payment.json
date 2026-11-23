@@ -1,0 +1,19 @@
+{
+  "payment": {
+    "alreadyScheduled": "Quote {{number}} already has its payments.",
+    "cancelledNotEditable": "A cancelled payment is kept as it is: it can no longer be changed.",
+    "methodRequired": "Say how the client paid before recording the payment.",
+    "notFound": "Payment not found.",
+    "notOpenOnCreation": "A new payment is always waiting to be paid: it is recorded as paid afterwards.",
+    "paidInTheFuture": "A payment cannot be recorded as paid on a day still to come.",
+    "paidNotEditable": "A paid payment is never changed: cancel it and a new one takes its place.",
+    "quoteNotAccepted": "Only an accepted quote has payments.",
+    "statusChangeNotAllowed": "A payment that is {{from}} cannot become {{to}}.",
+    "statuses": {
+      "cancelled": "cancelled",
+      "due": "due",
+      "paid": "paid",
+      "planned": "planned"
+    }
+  }
+}

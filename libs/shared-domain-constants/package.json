@@ -8,6 +8,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@shared/domain-types": "workspace:*",
     "@shared/types": "workspace:*"
   },
   "devDependencies": {

@@ -1,0 +1,19 @@
+{
+  "payment": {
+    "alreadyScheduled": "Efa manana ny fandoavany ny tolotra vidiny {{number}}.",
+    "cancelledNotEditable": "Mijanona toy izao ny fandoavana nofoanana: tsy azo ovaina intsony.",
+    "methodRequired": "Lazao ny fomba nandoavan'ny mpanjifa alohan'ny hanoratana ny fandoavana.",
+    "notFound": "Tsy hita ilay fandoavana.",
+    "notOpenOnCreation": "Miandry foana ny fandoavana vaovao: soratana fa voaloa izy avy eo.",
+    "paidInTheFuture": "Tsy azo soratana fa voaloa amin'ny andro mbola ho avy ny fandoavana.",
+    "paidNotEditable": "Tsy ovaina mihitsy ny fandoavana voaloa: foano izy dia misy vaovao misolo azy.",
+    "quoteNotAccepted": "Ny tolotra vidiny nekena ihany no manana fandoavana.",
+    "statusChangeNotAllowed": "Tsy afaka ho {{to}} ny fandoavana {{from}}.",
+    "statuses": {
+      "cancelled": "nofoanana",
+      "due": "tokony haloa",
+      "paid": "voaloa",
+      "planned": "voalamina"
+    }
+  }
+}

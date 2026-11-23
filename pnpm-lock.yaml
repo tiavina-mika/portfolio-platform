@@ -1358,6 +1358,9 @@ importers:
 
   libs/shared-domain-constants:
     dependencies:
+      '@shared/domain-types':
+        specifier: workspace:*
+        version: link:../shared-domain-types
       '@shared/types':
         specifier: workspace:*
         version: link:../shared-types

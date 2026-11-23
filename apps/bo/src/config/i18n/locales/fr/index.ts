@@ -13,6 +13,7 @@ import clientEntity from './_domain/client-entity.json';
 import clientRoute from './_domain/client-route.json';
 import missionEntity from './_domain/mission-entity.json';
 import missionRoute from './_domain/mission-route.json';
+import paymentEntity from './_domain/payment-entity.json';
 import projectDashboard from './_domain/project-dashboard.json';
 import projectEntity from './_domain/project-entity.json';
 import projectRoute from './_domain/project-route.json';
@@ -47,6 +48,6 @@ export default {
    */
   zod,
   project: {
-    ...project, ...projectEntity, ...clientEntity, ...quoteEntity, ...missionEntity,
+    ...project, ...projectEntity, ...clientEntity, ...quoteEntity, ...missionEntity, ...paymentEntity,
   },
 } satisfies LocaleShape;

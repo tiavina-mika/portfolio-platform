@@ -19,6 +19,10 @@
   - [Réviser un devis envoyé](#réviser-un-devis-envoyé)
   - [Créer un avenant à un devis accepté](#créer-un-avenant-à-un-devis-accepté)
   - [Créer la mission d'un devis accepté](#créer-la-mission-dun-devis-accepté)
+- [Les paiements d'un devis accepté](#les-paiements-dun-devis-accepté)
+  - [Marquer un paiement comme payé](#marquer-un-paiement-comme-payé)
+  - [Fixer l'échéance de l'étape ou du solde](#fixer-léchéance-de-létape-ou-du-solde)
+  - [Corriger une erreur](#corriger-une-erreur)
 - [La devise par défaut](#la-devise-par-défaut)
 - [Cas d'utilisation typiques](#cas-dutilisation-typiques)
 - [Points d'attention / limites actuelles](#points-dattention--limites-actuelles)
@@ -202,6 +206,68 @@ avec le client, le titre et le devis ; on choisit qui fait le travail et quand.
 Accepter un devis ne crée jamais de mission tout seul : c'est une personne qui décide du début et de qui
 s'en charge.
 
+## Les paiements d'un devis accepté
+
+Accepter un devis crée aussitôt ses **trois paiements**, toujours les mêmes pour tous les devis :
+
+| Paiement | Part | Échéance |
+|---|---|---|
+| Acompte | 30 % | Le jour de l'acceptation : il est tout de suite **à payer** |
+| Étape | 40 % | Fixée à la main quand elle est connue ; **prévu** en attendant |
+| Solde | 30 % | Fixée à la main quand elle est connue ; **prévu** en attendant |
+
+Les trois montants font toujours exactement le total du devis : s'il faut arrondir, c'est le solde qui
+prend la différence. Un devis qui n'est pas accepté n'a aucun paiement, et enregistrer à nouveau un devis
+accepté n'en crée jamais d'autres.
+
+Sur un devis accepté, le menu de la ligne propose **« Paiements »** à qui a le droit **Lister** sur la
+ressource **Paiements** (page **Droits**). La fenêtre montre :
+
+- le **total du devis**, ce qui est **déjà payé** et le **reste à payer** (le total moins ce qui est payé) ;
+- chaque paiement : sa part, son montant dans la devise du devis, son échéance, son statut (**prévu**,
+  **à payer**, **payé** ou **annulé**) et, une fois payé, la date, le moyen de paiement et la référence.
+
+Rien n'est encaissé en ligne ni relié à une banque : la page enregistre seulement ce qui s'est passé. Il n'y
+a pas de facture.
+
+Un devis accepté avant l'arrivée des paiements n'en a pas : la fenêtre propose alors le bouton **« Créer
+l'échéancier »**, à qui a le droit **Créer** sur les paiements, qui crée ses trois paiements une seule fois.
+
+| Droit sur « Paiements » | Ce qu'il permet ici |
+|---|---|
+| Lister | Ouvrir la fenêtre des paiements d'un devis accepté |
+| Modifier | « Marquer comme payé » et « Fixer l'échéance » |
+| Créer et Modifier | « Annuler et ressaisir » (et « Créer l'échéancier ») |
+
+Personne ne peut supprimer un paiement.
+
+### Marquer un paiement comme payé
+
+Sur un paiement prévu ou à payer, l'action **« Marquer comme payé »** demande :
+
+- le **moyen de paiement** (obligatoire) : virement, carte, espèces ou autre ;
+- la **référence** du virement, facultative ;
+- le **jour du paiement**, aujourd'hui s'il est laissé vide ; un jour à venir est refusé.
+
+Le montant déjà payé et le reste à payer du devis se mettent à jour aussitôt.
+
+### Fixer l'échéance de l'étape ou du solde
+
+Sur l'étape et le solde encore non payés, l'action **« Fixer l'échéance »** enregistre le jour où le client
+doit payer cette part : le paiement passe alors **à payer**. Vider la date le remet à **prévu**.
+
+### Corriger une erreur
+
+Un paiement payé ne se modifie jamais. Pour corriger une erreur (mauvais montant noté, mauvais jour, mauvais
+moyen), l'action **« Annuler et ressaisir »** demande une confirmation, car elle ne s'annule pas :
+
+- le paiement reste dans la liste, marqué **annulé**, comme trace ;
+- un nouveau paiement de la même part, du même montant et de la même échéance, encore à payer, prend sa
+  place juste en dessous ; on le marque ensuite comme payé avec les bonnes informations.
+
+Si le paiement annulé était payé, le montant déjà payé du devis diminue d'autant. Un paiement annulé ne
+change plus.
+
 ## La devise par défaut
 
 Dans **Paramètres** → **Langues**, l'espace Aldaron propose la **devise par défaut des devis**. Elle ne
@@ -222,6 +288,9 @@ ne modifie aucun devis existant. C'est un réglage propre à la personne connect
 7. **Le client demande du travail en plus après avoir accepté** : « Créer un avenant » sur le devis
    accepté.
 8. **Lancer le travail** une fois le devis accepté : « Créer la mission ».
+9. **Noter l'acompte reçu** : « Paiements » sur le devis accepté, puis « Marquer comme payé » sur
+   l'acompte, avec le moyen et la référence du virement.
+10. **Annoncer l'étape** au client : « Fixer l'échéance » sur le paiement de l'étape.
 
 ## Points d'attention / limites actuelles
 
@@ -231,6 +300,9 @@ ne modifie aucun devis existant. C'est un réglage propre à la personne connect
   est une adresse longue et impossible à deviner, mais quiconque la reçoit peut ouvrir le fichier, comme
   pour les autres fichiers du back-office : ne la transmettez pas en dehors de l'équipe.
 - Un devis envoyé n'expire pas tout seul à sa date de validité : il faut le marquer comme expiré.
-- Pas encore de paiements rattachés à un devis accepté.
+- Un paiement à payer dont l'échéance est passée ne s'affiche pas encore « en retard », et aucun tableau
+  de bord ne résume les montants encaissés ou à encaisser.
+- Les paiements ne s'exportent pas encore (par exemple pour un comptable).
+- L'échéancier est le même pour tous les devis (30 / 40 / 30) : il ne se modifie pas devis par devis.
 - Un client qui a des devis ne peut pas être supprimé : il est archivé.
 - Annuler la mission d'un devis ne change pas le devis : il reste accepté.

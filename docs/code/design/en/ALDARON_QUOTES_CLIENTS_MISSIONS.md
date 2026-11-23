@@ -239,7 +239,9 @@ The schedule is a constant of `src/constants/_domain/`, the same for every quote
 
 - **Creation.** When a quote becomes `accepted`, the quote's `afterSave` trigger creates its three payments: the deposit as `due` with today's `dueDate`, the two others as `planned`. Amounts come from `totalAmount` and the last one takes the rounding remainder, so the three always add up exactly. The trigger creates nothing when payments already exist for the quote, so a second save cannot duplicate them. No other payment is created, and nothing at all for a quote that is not accepted.
 - **Marking paid.** A user sets a payment to `paid` by hand and gives the method (and the reference if any). Nothing is collected online and nothing is linked to a bank.
-- **History.** A `paid` payment is never edited or deleted: a mistake is corrected by cancelling it (`cancelled`) and recording a new one, so the trace stays. `delete` is given to nobody.
+- **Due date.** Setting the due date of an unpaid payment makes it `due`; emptying it takes it back to `planned`. So "what is due" is a query on the status.
+- **History.** A `paid` payment is never edited or deleted: a mistake is corrected by cancelling it (`cancelled`) and recording a new one, so the trace stays. The function that cancels writes the replacement itself (same kind, percent, amount and due date, unpaid), so the open and paid payments of a quote always add up to its total. `delete` is given to nobody.
+- **Accepted before the payments existed.** A quote accepted before this collection has no payment: the back-office offers "Create the payment schedule" (`createQuotePayments`), which writes the three payments once and refuses a quote that already has some.
 - **`paidAmount` on the quote.** The `Payment` `afterSave` trigger recomputes it from the quote's `paid` payments, so the remainder to pay is `totalAmount - paidAmount`.
 - Indexes: `quote` + `status`, `status` + `dueDate` (the list of what is due).
 - A mission is reached through its quote: `Payment` holds no `mission` pointer. A `planned` mission whose deposit is not yet `paid` may show a reminder in the list; it changes no status.
@@ -300,7 +302,7 @@ A review of this note found the points below. The first group is already written
 - ✅ **Who does a mission**: `assignee`, a member of a role that opens the Aldaron workspace (checked by the
   trigger); "My missions" in the list compares it to the signed-in user.
 - ✅ **Client e-mail in lowercase**, so one person is one client.
-- ⏳ **Computed fields closed**: `number`, `version`, `totalAmount`, `paidAmount`, `amount` and `percent` are computed on the server, and the validation of the create and update functions **refuses** them in input, so a faulty or malicious back-office client cannot impose them. Done for the quote (`number`, `version`, `totalAmount`, `paidAmount`); `amount` and `percent` come with the payments.
+- ✅ **Computed fields closed**: `number`, `version`, `totalAmount`, `paidAmount`, `amount` and `percent` are computed on the server, and the validation of the create and update functions **refuses** them in input, so a faulty or malicious back-office client cannot impose them. The quote trigger puts `paidAmount` back on every save but the one the payment trigger makes.
 
 ### To build with the first collection
 
@@ -308,7 +310,7 @@ A review of this note found the points below. The first group is already written
 - ⏳ **Audit trail.** For money, `updatedAt` is not enough: who changed which status, when. An append-only collection of events (class of the entity, id, action, previous and new value, user, date), written by the triggers of quotes, payments and missions. First check whether the project already has a journal; this note did not verify it.
 - ⏳ **Anonymize a client.** Archiving conflicts with the right to erasure of an individual client. An "anonymize" action (owner only) erases name, e-mail, phone, address, tax id and notes, keeps the id, the amounts and the dates, and sets the status `anonymized`; lists show a translated "anonymized client". The retention time of the accounting data is to confirm with the accountant, and the privacy policy of `aldaron-web` must mention how long clients and quotes are kept.
 - ⏳ **Expire quotes automatically.** A daily job (`node-cron`, wired in `index.ts` and imported in `cloud/jobs/index.ts`) sets `expired` on a `sent` quote whose `validUntil` has passed. It is added to the jobs of `docs/inventory/README.md`.
-- ⏳ **Pure functions in `utils/`**: the quote total, the 30 / 40 / 30 split with its rounding, and the allowed status changes of a quote, a payment and a mission. They handle money and are the part to test.
+- ✅ **Pure functions in `utils/`**: the quote total, the 30 / 40 / 30 split with its rounding, and the allowed status changes of a quote, a payment and a mission (`libs/shared-domain-utils`), unit-tested in `apps/server`.
 
 ### In the lists and the dashboard
 
@@ -350,5 +352,5 @@ A review of this note found the points below. The first group is already written
    ✅ Then the quote requests: `target` and `quote` on `Contact`, the target sent by `aldaron-web`, the contact list following the workspace and the "Create the client and the quote" action. The unread badge and the global search still count the messages of both workspaces: ticket `190-scope-the-contact-badge-and-search-to-the-workspace`.
 4. ✅ `Mission` on the server, then in the back-office, and its French feature page. The phase "cancelled by
    Aldaron" is stored as `byAgency`: a stored value names a role, never the brand.
-5. ⏳ `Payment`: the schedule constant, the creation on acceptance, the triggers, then the back-office (payments of a quote, mark as paid), and its French feature page.
+5. ✅ `Payment`: the schedule constant, the creation on acceptance, the triggers, then the back-office (payments of a quote, mark as paid, due date, cancel and re-enter), and the payments section of the quotes' French feature page.
 6. ⏳ Dashboard card, inventory, and marking step 4 ✅ in the workspace note.
