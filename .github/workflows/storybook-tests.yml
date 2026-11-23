@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event_name == 'schedule' && 'develop' || github.ref }}
 
@@ -47,7 +47,7 @@ jobs:
             echo "No commit on develop for $(( age / 3600 )) hours: nothing new to test"
           fi
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         if: steps.changes.outputs.run == 'true'
         with:
           node-version: 24
@@ -71,7 +71,7 @@ jobs:
 
       - name: Cache Playwright browsers
         if: steps.changes.outputs.run == 'true'
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
           key: playwright-storybook-${{ hashFiles('pnpm-lock.yaml') }}
