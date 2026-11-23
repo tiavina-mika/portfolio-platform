@@ -293,7 +293,10 @@ Une relecture de cette note a trouvé les points ci-dessous. Le premier groupe e
 
 ### Écrit dans le modèle
 
-- ⏳ **Révision et avenant d'un devis** : `version`, `parentQuote` (voir [Devis](#devis)).
+- ✅ **Révision et avenant d'un devis** : `version`, `parentQuote` (voir [Devis](#devis)). L'action
+  « Réviser » du back-office appelle `reviseQuote` ; un avenant est un `createQuote` avec `parentQuote`.
+  Le trigger décide d'après le statut du devis visé (envoyé : révision, accepté : avenant) et garde le
+  client de ce devis.
 - ⏳ **Qui fait une mission** : `assignee`.
 - ✅ **E-mail du client en minuscules**, pour qu'une personne soit un seul client.
 - ⏳ **Champs calculés fermés** : `number`, `version`, `totalAmount`, `paidAmount`, `amount` et `percent` sont calculés côté serveur, et la validation des fonctions de création et de mise à jour les **refuse** en entrée, pour qu'un client du back-office défaillant ou malveillant ne puisse pas les imposer. Fait pour le devis (`number`, `version`, `totalAmount`, `paidAmount`) ; `amount` et `percent` viendront avec les paiements.

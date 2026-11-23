@@ -89,3 +89,12 @@ export const getNextQuoteStatuses = (status: QuoteStatusEnum): QuoteStatusEnum[]
 export const canChangeQuoteStatus = (from: QuoteStatusEnum, to: QuoteStatusEnum): boolean => (
   getNextQuoteStatuses(from).includes(to)
 );
+
+/**
+ * Whether a quote can be revised: only a sent one, still waiting for the client's answer. A revision is
+ * a new draft version of the same number; an accepted quote is completed by an amendment instead.
+ */
+export const canReviseQuote = (status: QuoteStatusEnum): boolean => status === QuoteStatusEnum.SENT;
+
+/** whether an amendment (extra work, its own number) can be written for a quote: only an accepted one */
+export const canAmendQuote = (status: QuoteStatusEnum): boolean => status === QuoteStatusEnum.ACCEPTED;

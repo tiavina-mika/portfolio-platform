@@ -5,7 +5,8 @@ import { describe, expect, it } from 'vitest';
 import { QUOTE_LIST_MAX_LIMIT } from '@/constants/_domain/quote.constants';
 
 import {
-  changeQuoteStatusSchema, createQuoteSchema, getQuotesSchema, quoteInputSchema, updateQuoteSchema,
+  changeQuoteStatusSchema, createQuoteSchema, getQuotesSchema, quoteInputSchema, reviseQuoteSchema,
+  updateQuoteSchema,
 } from './quote.validations';
 
 const validQuote = {
@@ -81,6 +82,24 @@ describe('writing a draft quote from the back-office', () => {
     const input = quoteInputSchema.parse({ ...validQuote, validUntil: '2026-12-31T00:00:00.000Z' });
 
     expect(input.validUntil).toEqual(new Date('2026-12-31T00:00:00.000Z'));
+  });
+});
+
+describe('revising and amending a quote from the back-office', () => {
+  it('should accept a new quote amending an accepted one', () => {
+    expect(createQuoteSchema.safeParse({ ...validQuote, parentQuote: 'q1' }).success).toBe(true);
+  });
+
+  it('should never take the quote amended into the typed fields, so an edit cannot change it', () => {
+    expect(quoteInputSchema.parse({ ...validQuote, parentQuote: 'q1' })).not.toHaveProperty('parentQuote');
+    expect(updateQuoteSchema.safeParse({ ...validQuote, id: 'q2', parentQuote: 'q1' }).success).toBe(false);
+  });
+
+  it('should revise a quote named by its id alone: the new version is a copy, not typed', () => {
+    expect(reviseQuoteSchema.safeParse({ id: 'q1' }).success).toBe(true);
+    expect(reviseQuoteSchema.safeParse({ id: 'q1', version: 3 }).success).toBe(false);
+    expect(reviseQuoteSchema.safeParse({ id: 'q1', title: 'Another title' }).success).toBe(false);
+    expect(reviseQuoteSchema.safeParse({}).success).toBe(false);
   });
 });
 

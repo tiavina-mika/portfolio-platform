@@ -8,6 +8,16 @@ export interface IQuoteClient {
   email: string;
 }
 
+/**
+ * the quote another one revises or amends, as much of it as the list names: a revision shares its
+ * number, an amendment has its own
+ */
+export interface IQuoteParent {
+  id: string;
+  number: string;
+  version: number;
+}
+
 /** an Aldaron quote, as the list and the edit dialog read it; amounts in the smallest unit */
 export interface IQuote {
   id: string;
@@ -24,6 +34,8 @@ export interface IQuote {
   validUntil?: string;
   notes?: string;
   version: number;
+  // the quote this one revises or amends; none for a first quote
+  parentQuote?: IQuoteParent;
   acceptedAt?: string;
   acceptanceMethod?: QuoteAcceptanceMethodEnum;
   // the file the acceptance rests on, when one was joined

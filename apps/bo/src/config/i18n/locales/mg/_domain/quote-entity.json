@@ -6,6 +6,13 @@
     "createQuote": "Tolotra vidiny vaovao",
     "editQuote": "Hanova ny tolotra vidiny {{number}}",
     "number": "Laharana",
+    "numberWithVersion": "{{number}} · v{{version}}",
+    "revises": "Manavao ny {{number}} v{{version}}",
+    "amends": "Fanampin'ny tolotra vidiny {{number}}",
+    "createAmendment": "Fanampiny vaovao amin'ny tolotra vidiny {{number}}",
+    "clientLocked": "Mpanjifa mitovy amin'ny an'ny tolotra vidiny {{number}}: mijanona aminy ny fanavaozana na ny fanampiny.",
+    "reviseTitle": "Havaozina ny tolotra vidiny {{number}}",
+    "reviseDescription": "Mamorona dika drafitra amin'ity tolotra vidiny ity ho kinova {{version}}, amin'ny laharana {{number}} ihany. Lany daty avy hatrany ny kinova nalefa: alefaso amin'ny mpanjifa ilay vaovao.",
     "client": "Mpanjifa",
     "newClient": "Mpanjifa vaovao",
     "noClient": "Tsy misy mpanjifa mavitrika mifanaraka",
@@ -58,7 +65,9 @@
       "send": "Marihina ho nalefa",
       "accept": "Marihina ho nekena",
       "refuse": "Marihina ho nolavina",
-      "expire": "Marihina ho lany daty"
+      "expire": "Marihina ho lany daty",
+      "revise": "Havaozina",
+      "amend": "Hanao fanampiny"
     },
     "acceptTitle": "Hanaiky ny tolotra vidiny {{number}}",
     "acceptDescription": "Androany no daty nanekena. Tsy azo ovaina intsony ny tolotra vidiny nekena.",
@@ -71,7 +80,9 @@
       "sent": "Voamarika ho nalefa ny tolotra vidiny {{number}}.",
       "accepted": "Voamarika ho nekena ny tolotra vidiny {{number}}.",
       "refused": "Voamarika ho nolavina ny tolotra vidiny {{number}}.",
-      "expired": "Voamarika ho lany daty ny tolotra vidiny {{number}}."
+      "expired": "Voamarika ho lany daty ny tolotra vidiny {{number}}.",
+      "revised": "Noforonina ho drafitra ny kinova {{version}} amin'ny tolotra vidiny {{number}}.",
+      "amendmentCreated": "Noforonina ny fanampiny {{number}} amin'ny tolotra vidiny {{parentNumber}}."
     }
   }
 }

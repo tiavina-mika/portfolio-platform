@@ -9,7 +9,7 @@ import type { TargetEnum } from '@shared/types';
 import { fetchCurrentUserSessionToken } from '@/services/_core/auth.service';
 import { IFileCloud } from '@/types/_core/file.type';
 import { Locale } from '@/types/_core/setting.type';
-import { IQuote, IQuoteInput } from '@/types/_domain/quote.type';
+import { IQuote, IQuoteInput, IQuoteParent } from '@/types/_domain/quote.type';
 import { uploadFilesAPI } from '@/utils/_core/file.utils';
 import { toJSONWithId } from '@/utils/_core/parse.utils';
 
@@ -25,6 +25,13 @@ const toISODate = (quote: Parse.Object, field: string): string | undefined => (
   (quote.get(field) as Date | undefined)?.toISOString()
 );
 
+// the quote revised or amended comes back as a nested Parse object: the list names it by number and version
+const toQuoteParent = (parent: Parse.Object | undefined): IQuoteParent | undefined => (
+  parent
+    ? { id: parent.id ?? '', number: parent.get('number') ?? '', version: parent.get('version') ?? 1 }
+    : undefined
+);
+
 // the client comes back as a nested Parse object: the list only needs its id, name and e-mail
 const toQuote = (quote: Parse.Object): IQuote => {
   const client = quote.get('client');
@@ -32,6 +39,7 @@ const toQuote = (quote: Parse.Object): IQuote => {
   return {
     ...toJSONWithId<IQuote>(quote),
     client: { id: client?.id, name: client?.get('name') ?? '', email: client?.get('email') ?? '' },
+    parentQuote: toQuoteParent(quote.get('parentQuote')),
     issuedAt: toISODate(quote, 'issuedAt'),
     validUntil: toISODate(quote, 'validUntil'),
     acceptedAt: toISODate(quote, 'acceptedAt'),
@@ -55,10 +63,27 @@ export const fetchQuotes = async ({
   return { results: result.results.map(toQuote), count: result.count };
 };
 
-export const createQuote = async (values: IQuoteInput, context: RequestContext): Promise<IQuote> => {
-  const quote = await Parse.Cloud.run('createQuote', { ...values, ...context });
+/**
+ * @param parentQuoteId the accepted quote the new one amends, left out for a first quote
+ */
+export const createQuote = async (
+  values: IQuoteInput, context: RequestContext, parentQuoteId?: string
+): Promise<IQuote> => {
+  const quote = await Parse.Cloud.run('createQuote', { ...values, parentQuote: parentQuoteId, ...context });
 
   return toQuote(quote);
+};
+
+/**
+ * Revises a sent quote: the server writes a draft copy as its next version and expires the sent one.
+ * @returns the new draft and the version it replaces, now expired
+ */
+export const reviseQuote = async (
+  id: string, context: RequestContext
+): Promise<{ quote: IQuote; revisedQuote: IQuote }> => {
+  const result = await Parse.Cloud.run('reviseQuote', { id, ...context });
+
+  return { quote: toQuote(result.quote), revisedQuote: toQuote(result.revisedQuote) };
 };
 
 export const updateQuote = async (
