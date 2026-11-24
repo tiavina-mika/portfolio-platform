@@ -45,6 +45,7 @@ Required only in the deployed environments (`preProduction` and `production`); o
 | `MONGO_URL` | MongoDB connection string |
 | `PARSE_APP_ID`, `PARSE_MASTER_KEY`, `REST_API_KEY` | Parse Server credentials (`REST_API_KEY` is also the value the clients send in the `X-portfolio-key` header) |
 | `SERVER_URL`, `WEBSITE_URL` | Public URLs of the API and of the website. In local, an optional `apps/server/.env.local` overrides them (localhost or a LAN ip for a phone) |
+| `AGENCY_SERVER_URL`, `AGENCY_WEBSITE_URL`, `AGENCY_APP_NAME` | Optional: the agency (Aldaron) workspace's own back-office domain (it points to this same server), its website and the name its e-mails are signed with. Used for the invitation link and the e-mail frame; while one is unset the portfolio value is used |
 | `CRYPTO_FIXED_PART_KEY`, `CRYPTO_FIXED_FULL_KEY`, `CRYPTO_IV` | Encryption keys (`CRYPTO_IV` is in `.env.example` but not checked by `validateEnv()`) |
 | `BREVO_API_KEY`, `ADMIN_EMAIL_SENDER` | Emails (API key and default sender) |
 | `OWNERS_EMAILS` | Comma-separated emails that receive a back-office invitation with the `OWNER` role at boot (see above for the deployed minimum) |
@@ -68,6 +69,7 @@ Every `VITE_*` variable is inlined in the browser bundle and is **not a secret**
 | `VITE_PARSE_APP_ID` | Parse application id |
 | `VITE_APP_ACCESS_TAG` | Value of the server `REST_API_KEY`, sent as the `X-portfolio-key` header (public by design, since it ships in the bundle) |
 | `VITE_WEBSITE_URL` | Public website URL |
+| `VITE_AGENCY_HOSTNAME` | Optional: hostname (no protocol) of the agency's own back-office domain. Opened on it, the back-office starts in the agency workspace. Public by design, not a secret |
 | `VITE_ADMIN_EMAIL_SENDER` | Sender address shown to admins |
 | `VITE_LOCAL_SERVER_PORT` | Optional: local server port when it is not the default |
 | `VITE_DISABLE_SESSION_TIMEOUT` | Optional: `true` disables the inactivity logout (development) |

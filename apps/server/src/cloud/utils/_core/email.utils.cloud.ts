@@ -1,6 +1,7 @@
 import type { Locale } from '@/types/app.type';
 import type { EmailRecipient, ICreateEmailContactResponse, ICreateEmailResponse } from '@/types/email.type';
 import type { ChannelSendResult, NotificationChannelRecipient } from '@/types/notification.type';
+import type { TargetEnum } from '@shared/types';
 
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
 import { APP_NAME } from '@/constants/_core/constants';
@@ -185,6 +186,8 @@ type SendInvitationEmailParams = {
   locale: Locale;
   sender?: string;
   roleLabel?: string;
+  /** the workspace the invited person lands in: its domain and name are the ones the mail shows */
+  workspace?: TargetEnum;
 };
 export const sendInvitationEmail = async ({
   email,
@@ -193,6 +196,7 @@ export const sendInvitationEmail = async ({
   locale = DEFAULT_LANGUAGE,
   sender,
   roleLabel,
+  workspace,
 }: SendInvitationEmailParams): Promise<boolean> => {
   const title = translate('email.invitationSubject', locale);
 
@@ -203,8 +207,9 @@ export const sendInvitationEmail = async ({
     htmlContent: generateEmailTemplate({
       locale,
       title,
+      workspace,
       content: renderInvitationContent(inviterName, locale, roleLabel),
-      buttonUrl: `${getServerUrl()}/invite?token=${token}`,
+      buttonUrl: `${getServerUrl(workspace)}/invite?token=${token}`,
       buttonText: translate('email.acceptInvitation', locale),
     }),
   };

@@ -1,8 +1,8 @@
 import type { Locale } from '@/types/app.type';
+import type { TargetEnum } from '@shared/types';
 
 import { translate } from '@/config/i18n';
-import { APP_NAME } from '@/constants/_core/constants';
-import { getClientUrl, getLogoUrl } from '@/utils/_core/utils';
+import { getAppName, getClientUrl, getLogoUrl } from '@/utils/_core/utils';
 
 import { EMAIL_COLORS } from './theme';
 
@@ -53,6 +53,8 @@ type EmailTemplateProps = {
   footer?: string;
   cardStyle?: string;
   locale?: Locale;
+  /** whose website and name frame the mail: the portfolio's unless it is sent for another workspace */
+  workspace?: TargetEnum;
 };
 
 const renderAlert = (alert: string): string => `
@@ -90,15 +92,20 @@ export const generateEmailTemplate = ({
   buttonText,
   footer,
   locale,
-}: EmailTemplateProps): string => `
+  workspace,
+}: EmailTemplateProps): string => {
+  const clientUrl = getClientUrl(workspace);
+  const appName = getAppName(workspace);
+
+  return `
   ${styles}
   <div class="em-page" style="background-color:${light.bg};padding:32px 16px;font-family:${FONT_FAMILY};">
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center"
       style="width:100%;max-width:568px;margin:0 auto;">
       <tr>
         <td style="padding-bottom:24px;">
-          <a href="${getClientUrl()}" aria-label="${APP_NAME}">
-            <img class="em-logo" alt="${APP_NAME}" src="${getLogoUrl()}" height="48"
+          <a href="${clientUrl}" aria-label="${appName}">
+            <img class="em-logo" alt="${appName}" src="${getLogoUrl()}" height="48"
               style="display:block;height:48px;width:auto;border:0;" />
           </a>
         </td>
@@ -146,19 +153,20 @@ export const generateEmailTemplate = ({
       <tr>
         <td class="em-footer" align="center" style="padding-top:16px;font:600 14px/1.5 ${FONT_FAMILY};
           text-align:center;">
-          <a href="${getClientUrl()}/${locale ?? ''}/contact" style="display:inline-block;padding:12px 8px;
+          <a href="${clientUrl}/${locale ?? ''}/contact" style="display:inline-block;padding:12px 8px;
             color:${light.link};text-decoration:underline;">${translate('email.contact', locale)}</a>
           ·
-          <a href="${getClientUrl()}" style="display:inline-block;padding:12px 8px;color:${light.link};
-            text-decoration:underline;">${APP_NAME}</a>
+          <a href="${clientUrl}" style="display:inline-block;padding:12px 8px;color:${light.link};
+            text-decoration:underline;">${appName}</a>
         </td>
       </tr>
       <tr>
         <td class="em-muted" align="center" style="font:400 12px/1.5 ${FONT_FAMILY};color:${light.muted};
           text-align:center;">
-          © ${new Date().getFullYear()}. ${APP_NAME} ${translate('email.allRightsReserved', locale)}
+          © ${new Date().getFullYear()}. ${appName} ${translate('email.allRightsReserved', locale)}
         </td>
       </tr>
     </table>
   </div>
 `;
+};

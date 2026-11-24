@@ -8,7 +8,9 @@ import {
 import { createInvitation, findValidInvitationByToken } from '../../services/_core/invitation.service.cloud';
 import { alertOwners } from '../../services/_core/ownerAlert.service.cloud';
 import { getRoleLabels } from '../../services/_core/right.service.cloud';
-import { assertCanDelegateRoles, getMissingRoleNames } from '../../services/_core/userRole.service.cloud';
+import {
+  assertCanDelegateRoles, getLandingWorkspace, getMissingRoleNames,
+} from '../../services/_core/userRole.service.cloud';
 import { sendInvitationEmail } from '../../utils/_core/email.utils.cloud';
 import { checkOwner } from '../../utils/_core/role.utils.cloud';
 import { getUserFullName } from '../../utils/_core/user.utils.cloud';
@@ -63,12 +65,14 @@ Parse.Cloud.define(
 
     const roleLabels = await getRoleLabels(roles as string[], locale);
 
+    // the link and the name in the mail are those of the workspace the roles open, not a value sent by the BO
     const isSent = await sendInvitationEmail({
       email,
       inviterName: getUserFullName(invitedBy) || invitedBy.get('email'),
       token: invitation.get('token'),
       locale,
       roleLabel: roleLabels.join(', '),
+      workspace: await getLandingWorkspace(roles as string[]),
     });
 
     return isSent;

@@ -128,7 +128,11 @@ export const getServerUrl = (): string => {
     return location.protocol + '//' + location.hostname + ':' + SERVER_PORT;
   }
 
-  return import.meta.env.VITE_SERVER_URL ?? '';
+  /*
+   * the back-office is served by the server itself, so the server is the address it was opened on, as
+   * for Parse (see initializeParse): a fixed URL would send the calls of a second domain to the first one
+   */
+  return window.location.origin;
 };
 
 /**

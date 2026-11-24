@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import { promisify } from 'util';
 
+import { TargetEnum } from '@shared/types';
 import { t } from 'i18next';
 import escapeRegExp from 'lodash/escapeRegExp.js';
 
@@ -9,6 +10,7 @@ import { DEFAULT_LANGUAGE } from '@/config/i18n';
 
 import { encrypt } from './encrypt.utils';
 import {
+  APP_NAME,
   IS_TEST,
   USE_MASTER_KEY,
 } from '../../constants/_core/constants';
@@ -178,10 +180,25 @@ export const capitalizeFirstLetter = (string: string): string => {
  * Get server url to serve the client and the api
  * In local, SERVER_URL comes from .env.local (overrides the .env.preprod / .env.prod value),
  * e.g. a LAN ip address instead of localhost because in some cases (mobile) localhost does not work
+ * @param workspace the workspace the link is for: the agency has its own back-office domain, read from
+ * AGENCY_SERVER_URL, and falls back to SERVER_URL while that variable is not set
  * @returns
  */
-export const getServerUrl = (): string => {
-  return process.env.SERVER_URL!;
+export const getServerUrl = (workspace: TargetEnum = TargetEnum.PORTFOLIO): string => {
+  const agencyUrl = workspace === TargetEnum.AGENCY ? process.env.AGENCY_SERVER_URL : undefined;
+
+  return agencyUrl || process.env.SERVER_URL!;
+};
+
+/**
+ * The name the e-mails of a workspace are signed with. The agency one comes from AGENCY_APP_NAME and
+ * falls back to the portfolio's while it is not set.
+ * @param workspace
+ */
+export const getAppName = (workspace: TargetEnum = TargetEnum.PORTFOLIO): string => {
+  const agencyName = workspace === TargetEnum.AGENCY ? process.env.AGENCY_APP_NAME : undefined;
+
+  return agencyName || APP_NAME;
 };
 
 export const generateCloudinaryUrl = (publicId: string): string => {
@@ -342,9 +359,11 @@ export const getTranslatedField = <T extends Record<string, any>>(
   return translated[language]?.[field];
 };
 
-// in local, WEBSITE_URL comes from .env.local
-export const getClientUrl = (): string => {
-  return process.env.WEBSITE_URL ?? '';
+// in local, WEBSITE_URL comes from .env.local; the agency website is AGENCY_WEBSITE_URL when set
+export const getClientUrl = (workspace: TargetEnum = TargetEnum.PORTFOLIO): string => {
+  const agencyUrl = workspace === TargetEnum.AGENCY ? process.env.AGENCY_WEBSITE_URL : undefined;
+
+  return agencyUrl || process.env.WEBSITE_URL || '';
 };
 
 /**

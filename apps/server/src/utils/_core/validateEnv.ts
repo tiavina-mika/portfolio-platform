@@ -65,6 +65,14 @@ const validateEnv = (env: Env = process.env): void => {
     CLOUDINARY_API_SECRET: str(),
     SERVER_URL: url(),
     WEBSITE_URL: url(),
+    /*
+     * The agency workspace's own back-office domain, website and e-mail name. Optional everywhere:
+     * while one is unset, the matching portfolio value is used (see getServerUrl, getClientUrl,
+     * getAppName), so a portfolio-only deployment configures nothing.
+     */
+    AGENCY_SERVER_URL: url({ default: '' }),
+    AGENCY_WEBSITE_URL: url({ default: '' }),
+    AGENCY_APP_NAME: str({ default: '' }),
     REST_API_KEY: str(),
     CRYPTO_FIXED_PART_KEY: str(),
     CRYPTO_FIXED_FULL_KEY: aes256Key(),

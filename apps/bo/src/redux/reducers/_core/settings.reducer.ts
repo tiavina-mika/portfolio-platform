@@ -8,6 +8,7 @@ import { DEFAULT_SIDEBAR_STYLE, DEFAULT_THEME_COLOR } from '@/constants/_core/th
 import {
   ISettingState, Locale, PreviewLayout, SidebarStyle,
 } from '@/types/_core/setting.type';
+import { getHostWorkspace } from '@/utils/_core/workspace.utils';
 
 const initialState: ISettingState = {
   locale: DEFAULT_LOCALE,
@@ -123,11 +124,12 @@ export const getSettingsDefaultCurrencySelector = (state: Record<string, any>): 
 /*
  * the workspace the person works in: the one they picked while their roles still open it, the
  * portfolio otherwise. Read like this rather than written back, so a role taken away sends them back
- * to the portfolio without touching their stored choice, and a state saved before the preference
- * existed (no value at all) is the portfolio's too. The available workspaces live in the roles slice.
+ * to the portfolio without touching their stored choice. Before any choice is stored (a first visit, or
+ * a state saved before the preference existed) it is the one of the domain the back-office was opened
+ * on. The available workspaces live in the roles slice.
  */
 export const getSettingsWorkspaceSelector = (state: Record<string, any>): TargetEnum => {
-  const stored: TargetEnum = state.settings.workspace ?? TargetEnum.PORTFOLIO;
+  const stored: TargetEnum = state.settings.workspace ?? getHostWorkspace();
   const available: TargetEnum[] = state.role?.currentUserWorkspaces ?? [TargetEnum.PORTFOLIO];
 
   return available.includes(stored) ? stored : TargetEnum.PORTFOLIO;
