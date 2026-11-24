@@ -7,7 +7,9 @@ import {
   bulkToggleEntitiesSeenSchema, destroyObjectsSchema, markAllEntitiesSeenSchema,
 } from '@/validations/_core/utils.validations';
 
-import { buildClassQuery, countBadgeObjects } from '../../services/_core/badgeCount.service.cloud';
+import {
+  buildScopedClassQuery, countBadgeObjects,
+} from '../../services/_core/badgeCount.service.cloud';
 import { assertHasBoRight, assertHasRight } from '../../utils/_core/role.utils.cloud';
 import { actingUserContext, fromBO } from '../../utils/_core/utils.cloud';
 import { parseFunctionValidation } from '../../utils/_core/validation.utils.cloud';
@@ -59,7 +61,8 @@ Parse.Cloud.define(
   'destroyObjects',
   fromBO(async (request: Parse.Cloud.FunctionRequest): Promise<number> => {
     const { ids, collection } = request.params;
-    const objects = await buildClassQuery(collection)
+    const query = await buildScopedClassQuery(collection, request.user);
+    const objects = await query
       .containedIn('objectId', ids)
       .equalTo('deleted', true)
       .limit(MAX_DESTROY_OBJECTS_LIMIT)
@@ -92,7 +95,8 @@ Parse.Cloud.define(
 
     await assertHasRight(request.user!, collection, ['update'], request.params.locale);
 
-    const objects = await buildClassQuery(collection)
+    const query = await buildScopedClassQuery(collection, request.user);
+    const objects = await query
       .containedIn('objectId', ids)
       .notEqualTo('seen', value)
       .select(['objectId', 'seen'])
@@ -109,7 +113,7 @@ Parse.Cloud.define(
 
     return {
       toggledIds: objects.map((object: Parse.Object): string => object.id),
-      count: await countBadgeObjects(collection),
+      count: await countBadgeObjects(collection, undefined, request.user),
     };
   }),
   parseFunctionValidation(bulkToggleEntitiesSeenSchema)
@@ -131,7 +135,8 @@ Parse.Cloud.define(
 
     await assertHasRight(request.user!, collection, ['update'], request.params.locale);
 
-    const objects = await buildClassQuery(collection)
+    const query = await buildScopedClassQuery(collection, request.user);
+    const objects = await query
       .equalTo('deleted', false)
       .notEqualTo('seen', true)
       .select(['objectId', 'seen'])
@@ -144,7 +149,7 @@ Parse.Cloud.define(
 
     return {
       markedCount: objects.length,
-      count: await countBadgeObjects(collection),
+      count: await countBadgeObjects(collection, undefined, request.user),
     };
   }),
   parseFunctionValidation(markAllEntitiesSeenSchema)

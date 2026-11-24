@@ -105,7 +105,8 @@ export const destroyFile = async (file: CloudinaryFileRef): Promise<any> => {
 
 /**
  * deletes files in one request per account: the files of a list can live in different accounts
- * @returns the response of the portfolio's account, or of the only account the files are in
+ * @returns the response of the only account the files are in, or one response whose `deleted` map
+ * gathers the results of every account
  */
 export const destroyFiles = async (files: CloudinaryFileRef[]): Promise<any> => {
   if (!Array.isArray(files)) {
@@ -120,7 +121,13 @@ export const destroyFiles = async (files: CloudinaryFileRef[]): Promise<any> => 
     )
   )));
 
-  return responses[0];
+  if (responses.length <= 1) return responses[0];
+
+  return {
+    ...responses[0],
+    deleted: Object.assign({}, ...responses.map((response) => response.deleted)),
+    partial: responses.some((response) => response.partial),
+  };
 };
 
 export const destroyFilesByFolder = async (

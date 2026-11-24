@@ -11,7 +11,6 @@ import type {
 } from '@/types/email.type';
 import type { TargetEnum } from '@shared/types';
 
-
 import { IS_E2E } from '@/constants/_core/constants';
 import { recordE2eMessage } from '@/utils/_core/e2e-outbox.utils';
 import { logger } from '@/utils/_core/logger';

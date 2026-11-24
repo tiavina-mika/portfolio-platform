@@ -8,7 +8,7 @@ allowed-tools: Read Bash PowerShell Glob Grep
 
 # /auto: chain tickets
 
-Launching `/auto` stands for `/ship` on **every** ticket the loop handles: commit, push, PR against
+Launching `/auto` stands for `/deliver` on **every** ticket the loop handles: commit, push, PR against
 `develop`, merge commit. The rules and their limits are in `.claude/rules/tickets.md`, "Autonomous mode".
 
 `/auto` develops nothing itself. It starts and watches `scripts/tickets-loop.ps1`, which runs
@@ -222,7 +222,7 @@ Read, without modifying any repository file, then apply "Do what is recommended"
   (`gh pr view <n> --json statusCheckRollup,mergeStateStatus`). **A loop PR open with a green CI is an
   oversight of the loop, not something the human waits for**: say it first, with the reason read at the
   end of the matching `run-*.log`, and rerun the loop with `-Max 1` so it merges it (loop stopped). Never
-  answer "I do not merge myself": `/auto` stands for `/ship`.
+  answer "I do not merge myself": `/auto` stands for `/deliver`.
 
 **Two lines at the top of the message, before everything else:**
 

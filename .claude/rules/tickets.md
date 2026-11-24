@@ -15,13 +15,13 @@ ticket's `branch:` field). Commits follow Conventional Commits (`git-branches.md
 |---|---|
 | Write tickets in `backlog/` | Prioritise (`backlog/` → `todo/`) |
 | Move to `in-progress/` at start, create the branch | Test what needs a human (feel, real device, validation) |
-| Code, prepare commits and the PR | **Authorise** each commit and push; move to `done/` (or run `/ship`, `/dev <ticket> ship`, `/auto`) |
+| Code, prepare commits and the PR | **Authorise** each commit and push; move to `done/` (or run `/deliver`, `/dev <ticket> ship`, `/auto`) |
 | Run every automatable test | Merge the PR |
 | Move to `to-test/` or `blocked/` with a comment | Create labels, authenticate tools |
 
 **Claude never commits or pushes without the human's explicit agreement**, even on a ticket branch and
 for docs; it lists what would be committed (files, proposed message) and waits. An agreement for one
-commit does not cover the next. Exceptions: `/ship`, `/dev <ticket> ship` (for that ticket) and `/auto`
+commit does not cover the next. Exceptions: `/deliver`, `/dev <ticket> ship` (for that ticket) and `/auto`
 (for every ticket of its queue): launching them is the explicit request to commit, push and merge.
 Starting `/dev` on a ticket is the explicit request to create its branch (`git-branches.md`).
 
@@ -65,14 +65,14 @@ Use the `/ticket` skill. Look for a duplicate first (every folder, `done/` inclu
 ## Forbidden
 
 - Working on a ticket that is not in `in-progress/`.
-- Moving a ticket to `done/`, except inside `/ship`, `/dev <ticket> ship` or `/auto`.
+- Moving a ticket to `done/`, except inside `/deliver`, `/dev <ticket> ship` or `/auto`.
 - Moving to `to-test/` without a "how to test" comment, or hiding an untreated acceptance criterion.
 - Editing a ticket of `todo/` without saying so in its comments.
 - Deleting a ticket: move it to `done/` with a comment instead.
 
 ## Autonomous mode (`/auto`)
 
-Launching `/auto` is an explicit decision that stands for `/ship` on every ticket of the queue (loop
+Launching `/auto` is an explicit decision that stands for `/deliver` on every ticket of the queue (loop
 script `scripts/tickets-loop.ps1`, one fresh `claude -p "/dev --auto"` session per ticket). In that mode
 only, and instead of the contrary rules above and in `git-branches.md`:
 

@@ -281,7 +281,7 @@ const isAuthIdentifierAllowed = async (req: Request, res: Response): Promise<boo
  */
 const authAddressRateLimiter = createRateLimiterMiddleware(
   getAuthLimiter,
-  (req) => `${req.path}:${getRequestIp(req)}`
+  (req) => `${req.path.toLowerCase()}:${getRequestIp(req)}`
 );
 
 const isAuthRequestAllowed = async (req: Request, res: Response): Promise<boolean> => (
@@ -307,14 +307,14 @@ export const dataExportRateLimiter = createRateLimiterMiddleware(getDataExportLi
  */
 export const websiteFormRateLimiter = createRateLimiterMiddleware(
   getWebsiteFormLimiter,
-  (req) => `${req.path}:${getRequestIp(req)}`
+  (req) => `${req.path.toLowerCase()}:${getRequestIp(req)}`
 );
 /**
  * One allowance per counter: a burst of views does not use up the share counter's allowance.
  */
 export const contentCounterRateLimiter = createRateLimiterMiddleware(
   getContentCounterLimiter,
-  (req) => `${req.path}:${getRequestIp(req)}`
+  (req) => `${req.path.toLowerCase()}:${getRequestIp(req)}`
 );
 /**
  * The non-credential routes capped per caller, relative to the `/parse` mount. Registered on Express

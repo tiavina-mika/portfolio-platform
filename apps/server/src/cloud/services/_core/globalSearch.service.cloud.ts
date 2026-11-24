@@ -3,7 +3,7 @@ import { CONTENT_CLASSES, COUNTRY_SCOPED_BULK_CLASSES } from '@/constants/_core/
 import { getAgentAllowedCountries } from '@/utils/_core/agent-context.utils';
 import { escapeText } from '@/utils/_core/utils';
 
-import { buildClassQuery } from './badgeCount.service.cloud';
+import { buildClassQuery, buildScopedClassQuery } from './badgeCount.service.cloud';
 import { getNotificationTextSearchQuery } from './notification-list.service.cloud';
 import { Article } from '../../triggers/_core/article.triggers';
 import { Category } from '../../triggers/_core/category.triggers';
@@ -127,6 +127,28 @@ const keepAgentCountries = async (className: string, hits: Parse.Object[]): Prom
 };
 
 /**
+ * Drops the hits filed in a workspace the caller's roles do not open (contact messages, articles, pages,
+ * categories): the lists refuse them, so the search must too. Same one-query check on the ids as above.
+ */
+const keepUserWorkspaces = async (
+  user: Parse.User,
+  className: string,
+  hits: Parse.Object[]
+): Promise<Parse.Object[]> => {
+  if (hits.length === 0) return hits;
+
+  const query = await buildScopedClassQuery(className, user);
+  const kept = await query
+    .containedIn('objectId', hits.map((hit) => hit.id))
+    .select(['objectId'])
+    .limit(hits.length)
+    .find(USE_MASTER_KEY);
+  const keptIds = new Set(kept.map((hit) => hit.id));
+
+  return hits.filter((hit) => keptIds.has(hit.id));
+};
+
+/**
  * Lets a business domain (ride/vehicle/request, ...) register its own search entity without
  * this generic service importing any domain type directly — mirrors the dashboard/statistics
  * registry pattern.
@@ -163,7 +185,9 @@ export const globalSearch = async (
       .map(async ([key, config]) => {
         const hits = await config.search(text, locales);
 
-        return [key, await keepAgentCountries(config.className, hits)] as const;
+        const countryHits = await keepAgentCountries(config.className, hits);
+
+        return [key, await keepUserWorkspaces(user, config.className, countryHits)] as const;
       })
   );
 

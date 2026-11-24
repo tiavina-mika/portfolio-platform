@@ -1,6 +1,5 @@
 import type { Request, Response } from 'express';
 
-
 import type { IUploadInput, Locale } from '@/types/app.type';
 import type { IClientFileValidationSchemaInput, IUploadedFile } from '@/types/file.type';
 import type { TargetEnum } from '@shared/types';
@@ -89,7 +88,8 @@ export const uploadFiles = async (req: Request, res: Response): Promise<void> =>
      * the one the back-office asked for when the roles open it, the account's own one otherwise
      */
     const user: Parse.User | undefined = res.locals.user;
-    const uploadWorkspace = workspace
+    // without a session there are no roles to check the requested account against, so it is never honoured
+    const uploadWorkspace = workspace && user
       ? await resolveWorkspace(user, workspace, locale)
       : await getUserWorkspace(user);
 

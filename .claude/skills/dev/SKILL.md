@@ -265,7 +265,7 @@ agreement is given: follow "Option `ship`"). The method then allows committing, 
    only: commit, then push the ticket's branch (never `develop` or `main`). Without agreement, stop there:
    no PR, no move to `to-test/` (leave the ticket in `in-progress/`), and say so.
 3. Open the PR against `develop` with `gh`, title in Conventional Commits, ticket file name in the body.
-   Follow steps 3 and 4 of `.claude/skills/ship/SKILL.md` for the push (hook rules) and the PR body.
+   Follow steps 3 and 4 of `.claude/skills/deliver/SKILL.md` for the push (hook rules) and the PR body.
 4. Wait for CI (`gh pr checks <n> --watch`).
    - **Green**: continue. CI runs lint, typecheck, build, tests and story tests: tests added for `auto`
      cases are part of it.
@@ -283,7 +283,7 @@ agreement is given: follow "Option `ship`"). The method then allows committing, 
 6. If a criterion is untreated, do not move to `to-test/` without saying it plainly in the comment. If a
    decision is missing, move to `blocked/` with the precise question.
 
-Do not merge the PR: the merge into `develop` (merge commit) is the human's, or `/ship`'s.
+Do not merge the PR: the merge into `develop` (merge commit) is the human's, or `/deliver`'s.
 
 ## 7. End of session
 
@@ -331,7 +331,7 @@ it later, not to slow progress.
 ## Option `ship`
 
 Launched by the human with `ship` in the arguments. This request is an explicit decision: it is the
-agreement to commit, push, PR and merge **this ticket**, as if the human ran `/ship` at the end. Steps 1 to
+agreement to commit, push, PR and merge **this ticket**, as if the human ran `/deliver` at the end. Steps 1 to
 5 are unchanged, stops included (product question, ⚠️, ticket in `to-test/` or `done/`, ticket too big):
 `ship` only lifts the delivery agreement.
 
@@ -342,9 +342,9 @@ At step 6, instead of the request for agreement:
 
 1. **Ship only verified work**: lint, typecheck, tests, story tests and build green locally, and every
    `auto` case of `tc.md` run. Otherwise stop and say so, without committing.
-2. **Commit and push** following steps 1 to 3 of `.claude/skills/ship/SKILL.md` (files read and added by
+2. **Commit and push** following steps 1 to 3 of `.claude/skills/deliver/SKILL.md` (files read and added by
    name, never a blind `git add -A`, secrets check: if it triggers, stop and name the file).
-3. **PR, CI and merge**: steps 4 to 7 of `/ship` (PR against `develop`, `gh pr checks --watch`, **merge
+3. **PR, CI and merge**: steps 4 to 7 of `/deliver` (PR against `develop`, `gh pr checks --watch`, **merge
    commit** `gh pr merge <n> --merge`, back on `develop`, branch deleted). Red CI: fix when the cause is in
    the ticket, push, wait again; otherwise stop with the PR open and say so. Never `--admin`, `--force`,
    `--no-verify`, never a merge without a green CI.
@@ -462,7 +462,7 @@ them, but the human must find everything in the same place.
 ### Step 6, instead of the request for agreement
 
 1. Commit the files by name (never `git add -A`), push the ticket's branch, open the PR against
-   `develop`. The secrets check of `/ship` still applies: if it triggers, `AUTO: FAIL` with the file name.
+   `develop`. The secrets check of `/deliver` still applies: if it triggers, `AUTO: FAIL` with the file name.
 2. CI: run `gh pr checks <n> --watch` **in the foreground** (timeout 600000 ms, rerun if needed) and
    **never end the turn waiting for CI**. Not in the background either. Return control only after the
    merge, or after `AUTO: BLOCKED` / `AUTO: FAIL` is written. Safety net: if the session stops anyway
@@ -472,8 +472,8 @@ them, but the human must find everything in the same place.
    in the ticket (separate commit), rerun once for a passing failure, never weaken a test or bypass a
    check. After three repair rounds without a green CI: ticket to `blocked/` with the failing step and
    what was tried, PR left open, `AUTO: BLOCKED`.
-3. **Green**: tick the proved criteria, then merge following steps 4 to 7 of `.claude/skills/ship/SKILL.md`
-   (the `/ship` skill itself cannot be called from here). Merge commit, never `--admin`, `--force` or
+3. **Green**: tick the proved criteria, then merge following steps 4 to 7 of `.claude/skills/deliver/SKILL.md`
+   (the `/deliver` skill itself cannot be called from here). Merge commit, never `--admin`, `--force` or
    `--no-verify`. The ticket is already in its final folder in the PR (see "Option `ship`", point 4):
    - no `human` case in `tc.md` and no unticked criterion: `done/` → `AUTO: DONE`;
    - otherwise **not `done/`**: `to-test/`, with the comment of step 6.5, the path of `tc-manual.md`,

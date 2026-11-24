@@ -2,6 +2,7 @@ import { DEFAULT_PROFILE_VISIBILITY, FIXED_VISIBILITY_PROFILE_FIELDS } from '@sh
 import {
   ProfileFieldEnum, type ProfileVisibility, ProfileVisibilityEnum, TargetEnum,
 } from '@shared/types';
+import uniq from 'lodash/uniq.js';
 
 import type { ActorSnapshot, IBan } from '@/types/user.type';
 
@@ -55,7 +56,11 @@ export const getAdminEmailSender = (workspace: TargetEnum = TargetEnum.PORTFOLIO
  * is only loaded by dotenv once the server starts — a top-level constant would freeze it as
  * empty, since ESM imports resolve before dotenv.config() runs
  */
-export const getAllowedTestEmailSenders = (): string[] => [getAdminEmailSender()].filter(Boolean) as string[];
+export const getAllowedTestEmailSenders = (): string[] => {
+  const senders = Object.values(TargetEnum).map((workspace) => getAdminEmailSender(workspace));
+
+  return uniq(senders.filter(Boolean)) as string[];
+};
 
 export const formatFullName = (firstName?: string, lastName?: string): string =>
   [lastName, firstName].filter(Boolean).join(' ');

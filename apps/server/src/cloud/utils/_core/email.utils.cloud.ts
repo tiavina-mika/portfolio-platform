@@ -14,6 +14,7 @@ import { renderStepUpVerificationContent } from '@/emails/templates/step-up-veri
 import { renderVerificationContent } from '@/emails/templates/verification.template';
 import { createContactEmail, sendEmail, sendEmailWithResult } from '@/services/email.service';
 import { NotificationChannelStatusEnum } from '@/types/notification.type';
+import { logger } from '@/utils/_core/logger';
 import { getChannelRecipientFromResult } from '@/utils/_core/notification.utils';
 import { formatFullName, getAdminEmailSender } from '@/utils/_core/user.utils';
 import {
@@ -50,10 +51,23 @@ export const toWorkspaceEmailRecipient = async (
   user: Parse.User,
   email?: string
 ): Promise<EmailRecipient> => {
+  let workspace = TargetEnum.PORTFOLIO;
+
+  // a failed roles lookup must not stop a login code or a password reset: the portfolio frame is the default
+  try {
+    workspace = await getUserWorkspace(user);
+  }
+  catch (e) {
+    logger.error({
+      message: 'Error while resolving the workspace of an e-mail recipient',
+      errMsg: (e as Error).message,
+    });
+  }
+
   return {
     ...toEmailRecipient(user),
     ...(email && { email }),
-    workspace: await getUserWorkspace(user),
+    workspace,
   };
 };
 
