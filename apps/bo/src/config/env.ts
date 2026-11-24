@@ -1,7 +1,6 @@
 import * as z from 'zod';
 
 const envSchema = z.object({
-  VITE_SERVER_URL: z.url(),
   VITE_PARSE_APP_ID: z.string().min(1),
   VITE_APP_ACCESS_TAG: z.string().min(1),
 });
@@ -12,7 +11,6 @@ const envSchema = z.object({
  */
 export const validateEnv = (): void => {
   const result = envSchema.safeParse({
-    VITE_SERVER_URL: import.meta.env.VITE_SERVER_URL,
     VITE_PARSE_APP_ID: import.meta.env.VITE_PARSE_APP_ID,
     VITE_APP_ACCESS_TAG: import.meta.env.VITE_APP_ACCESS_TAG,
   });

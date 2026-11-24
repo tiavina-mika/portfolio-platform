@@ -117,12 +117,6 @@ export const appTranslatedFieldsObj: TranslatedFieldOption[] = [
   { name: 'quote', required: true, max: 100 },
 ];
 
-/*
- * where an admin with no role assigned writes to ask for one — the access-refused page is mounted
- * outside the dashboard, so there is no in-app way to reach anyone from it
- */
-export const ADMIN_CONTACT_EMAIL: string = import.meta.env.VITE_ADMIN_EMAIL_SENDER ?? '';
-
 export const IMAGES = {
   whiteIconLogo: '/images/icon-logo-white.svg',
   blackIconLogo: '/images/icon-logo-black.svg',

@@ -50,6 +50,7 @@ Required only in the deployed environments (`preProduction` and `production`); o
 | `BREVO_API_KEY`, `ADMIN_EMAIL_SENDER` | Emails (API key and default sender) |
 | `AGENCY_BREVO_API_KEY`, `AGENCY_ADMIN_EMAIL_SENDER` | Optional, set together: the agency (Aldaron) workspace's own Brevo account and the sender verified in it. Every e-mail of an agency-only account goes out through them; while unset the portfolio's key and sender are used |
 | `OWNERS_EMAILS` | Comma-separated emails that receive a back-office invitation with the `OWNER` role at boot (see above for the deployed minimum) |
+| `AGENCY_OWNERS_EMAILS` | Optional: comma-separated emails of the agency (Aldaron) owners. Invited with the `OWNER` role at boot like `OWNERS_EMAILS`, but from the agency domain and with its e-mail frame; on top of `OWNERS_EMAILS`, which keeps its minimum |
 | `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | File storage |
 | `AGENCY_CLOUDINARY_NAME`, `AGENCY_CLOUDINARY_API_KEY`, `AGENCY_CLOUDINARY_API_SECRET` | Optional, set all three or none (checked at boot): the agency (Aldaron) workspace's own Cloudinary account. Its uploads go to it, a file is deleted from the account named in its address, and the `agency-logo` of its e-mails is read from it; while unset everything stays in the portfolio's account |
 | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `UPSTASH_REDIS_URL` | Upstash Redis: rate limits and the lock that lets only one server instance run a scheduled job tick |
@@ -67,12 +68,12 @@ Every `VITE_*` variable is inlined in the browser bundle and is **not a secret**
 | Variable | Purpose |
 |---|---|
 | `VITE_ENVIRONMENT` | Environment name |
-| `VITE_SERVER_URL` | Parse Server URL |
 | `VITE_PARSE_APP_ID` | Parse application id |
 | `VITE_APP_ACCESS_TAG` | Value of the server `REST_API_KEY`, sent as the `X-portfolio-key` header (public by design, since it ships in the bundle) |
 | `VITE_WEBSITE_URL` | Public website URL |
 | `VITE_AGENCY_HOSTNAME` | Optional: hostname (no protocol) of the agency's own back-office domain. Opened on it, the back-office starts in the agency workspace. Public by design, not a secret |
 | `VITE_ADMIN_EMAIL_SENDER` | Sender address shown to admins |
+| `VITE_AGENCY_ADMIN_EMAIL_SENDER` | Optional: the address an admin without a role is told to write to on the agency (Aldaron) domain; unset, `VITE_ADMIN_EMAIL_SENDER` is used there too |
 | `VITE_LOCAL_SERVER_PORT` | Optional: local server port when it is not the default |
 | `VITE_DISABLE_SESSION_TIMEOUT` | Optional: `true` disables the inactivity logout (development) |
 | `VITE_SESSION_TIMEOUT_MINUTES` | Optional: default inactivity logout delay in minutes (15 to 480, 30 when unset) for roles with no delay of their own; meant for pre-production only |

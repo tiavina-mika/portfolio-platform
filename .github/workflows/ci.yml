@@ -99,7 +99,6 @@ jobs:
       SERVER_NODE_ENV: ${{ github.base_ref == 'main' && 'production' || 'preProduction' }}
       BO_BUNDLE_FOLDER: ${{ github.base_ref == 'main' && 'prod' || 'preprod' }}
       VITE_ENVIRONMENT: ${{ github.base_ref == 'main' && 'production' || 'preProduction' }}
-      VITE_SERVER_URL: https://ci.invalid
       VITE_PARSE_APP_ID: ci
       VITE_APP_ACCESS_TAG: ci
     steps:

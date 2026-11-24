@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 import Avatar from '@/components/Avatar';
 import Logo from '@/components/Logo';
-import { ADMIN_CONTACT_EMAIL, APP_NAME } from '@/constants/_core/app.constants';
+import { APP_NAME } from '@/constants/_core/app.constants';
 import {
   UNAUTHORIZED_ACCOUNT_AVATAR_SIZE, UNAUTHORIZED_ACCOUNT_GAP, UNAUTHORIZED_ACCOUNT_PADDING_X,
   UNAUTHORIZED_ACCOUNT_PADDING_Y, UNAUTHORIZED_ACTION_ICON_SIZE, UNAUTHORIZED_ACTIONS_GAP,
@@ -24,6 +24,7 @@ import { IUser } from '@/types/_core/user.type';
 import { PATH_NAMES } from '@/utils/_core/pathnames';
 import { getDesignTokens, getTintedBackground } from '@/utils/_core/theme/tokens.utils';
 import { getUserFullName } from '@/utils/_core/user.utils';
+import { getAdminContactEmail } from '@/utils/_core/workspace.utils';
 
 const classes = {
   root: (theme: Theme) => ({
@@ -131,7 +132,7 @@ const UnauthorizedPage = () => {
         )}
         <Box className="flexRow" css={classes.actions}>
           <Button
-            href={`mailto:${ADMIN_CONTACT_EMAIL}`}
+            href={`mailto:${getAdminContactEmail()}`}
             size="large"
             startIcon={<FiMail size={UNAUTHORIZED_ACTION_ICON_SIZE} />}
             variant="outlined"
