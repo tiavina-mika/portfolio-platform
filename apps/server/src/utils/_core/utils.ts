@@ -8,6 +8,7 @@ import escapeRegExp from 'lodash/escapeRegExp.js';
 
 import { DEFAULT_LANGUAGE } from '@/config/i18n';
 
+import { getCloudinaryName } from './cloudinary.utils';
 import { encrypt } from './encrypt.utils';
 import {
   APP_NAME,
@@ -201,6 +202,17 @@ export const getAppName = (workspace: TargetEnum = TargetEnum.PORTFOLIO): string
   return agencyName || APP_NAME;
 };
 
+/**
+ * The Brevo API key of a workspace. The agency has its own Brevo account, read from AGENCY_BREVO_API_KEY,
+ * and falls back to the portfolio's key while that variable is not set.
+ * @param workspace
+ */
+export const getBrevoApiKey = (workspace: TargetEnum = TargetEnum.PORTFOLIO): string => {
+  const agencyKey = workspace === TargetEnum.AGENCY ? process.env.AGENCY_BREVO_API_KEY : undefined;
+
+  return agencyKey || process.env.BREVO_API_KEY || '';
+};
+
 export const generateCloudinaryUrl = (publicId: string): string => {
   return `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/upload/f_auto,q_auto/${publicId}`;
 };
@@ -208,15 +220,21 @@ export const generateCloudinaryUrl = (publicId: string): string => {
 /**
  * get logo url
  * cloudinary: https://res.cloudinary.com/your-cloud-name/image/upload/f_auto,q_auto/logo
- * The portfolio's logo is the root asset `logo`, the agency's the root asset `agency-logo`.
+ * The portfolio's logo is the root asset `logo`, the agency's the root asset `agency-logo`, used only
+ * once the agency is configured (AGENCY_APP_NAME set): before that its mails carry the portfolio's name,
+ * so they keep the portfolio's logo too. The agency's logo is read from its own Cloudinary account when it
+ * has one, so the asset has to exist there.
  * Delivered as PNG: mail clients do not render SVG.
  * @param workspace
  * @returns
  */
 export const getLogoUrl = (workspace: TargetEnum = TargetEnum.PORTFOLIO): string => {
-  const publicId = workspace === TargetEnum.AGENCY ? 'agency-logo' : 'logo';
+  const isAgencyConfigured = workspace === TargetEnum.AGENCY && !!process.env.AGENCY_APP_NAME;
+  const publicId = isAgencyConfigured ? 'agency-logo' : 'logo';
 
-  return `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/upload/f_png,q_auto/${publicId}`;
+  const cloudName = getCloudinaryName(isAgencyConfigured ? TargetEnum.AGENCY : TargetEnum.PORTFOLIO);
+
+  return `https://res.cloudinary.com/${cloudName}/image/upload/f_png,q_auto/${publicId}`;
 };
 
 /**

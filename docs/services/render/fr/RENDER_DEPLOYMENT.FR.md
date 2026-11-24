@@ -137,8 +137,10 @@ Dans **Advanced → Environment Variables** (ou **Environment** une fois créé)
 | `CRYPTO_FIXED_PART_KEY`, `CRYPTO_FIXED_FULL_KEY`, `CRYPTO_IV` | générées (étape 2) |
 | `BREVO_API_KEY` | depuis Brevo |
 | `ADMIN_EMAIL_SENDER` | l'adresse d'expéditeur vérifiée dans Brevo |
+| `AGENCY_BREVO_API_KEY`, `AGENCY_ADMIN_EMAIL_SENDER` | facultatif, à définir ensemble : le compte Brevo d'Aldaron (clé API v3) et l'expéditeur vérifié dedans ; non définis, ceux du portfolio servent |
 | `OWNERS_EMAILS` | adresses séparées par des virgules qui reçoivent l'invitation Owner du back-office au démarrage |
 | `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | depuis Cloudinary |
+| `AGENCY_CLOUDINARY_NAME`, `AGENCY_CLOUDINARY_API_KEY`, `AGENCY_CLOUDINARY_API_SECRET` | facultatif, les trois ou aucune : le compte Cloudinary d'Aldaron ; non définies, ses fichiers restent dans le compte du portfolio |
 
 Ne définissez **pas** `PORT` : Render l'injecte (et le serveur l'exige).
 

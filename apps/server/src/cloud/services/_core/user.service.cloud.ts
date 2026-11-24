@@ -520,7 +520,7 @@ export const deleteUser = async (
 
   // move image to recycle bin
   if (user.has('image')) {
-    const file = await moveFileToRecycleBin(user.get('image').publicId);
+    const file = await moveFileToRecycleBin(user.get('image'));
 
     // update the database object
     user.set('image', file);
@@ -664,14 +664,16 @@ export const sendVerificationCodeToEmail = async (user: Parse.User, locale: Loca
   try {
     const decryptedCode = getDecryptedUserCode(user) as string;
 
+    const recipient = await toWorkspaceEmailRecipient(user);
+
     // send email and create the contact in parallel — independent operations
     await Promise.all([
-      sendEmailVerification(await toWorkspaceEmailRecipient(user), decryptedCode, locale),
+      sendEmailVerification(recipient, decryptedCode, locale),
       /*
        * this will shallow an error if the contact already exists in the email service
        * so no need to worry about it
        */
-      createContactToCloud(user),
+      createContactToCloud(user, undefined, recipient.workspace),
     ]);
   }
   catch (error) {

@@ -25,13 +25,14 @@ export const downloadCV = async (_req: Request, res: Response): Promise<void> =>
      * always serve the CV stored today, not the public id sent by the client: a page cached by the
      * browser or the website can still carry the id of a CV that has since been replaced
      */
-    const publicId: string | undefined = app.get('cv')?.publicId;
+    const cv: { publicId?: string; url?: string } | undefined = app.get('cv');
+    const publicId = cv?.publicId;
 
-    if (!publicId) {
+    if (!cv || !publicId) {
       throw new Error('CV not found');
     }
 
-    const tempPublicLink = generatePrivateDownloadUrl(publicId, 'pdf');
+    const tempPublicLink = generatePrivateDownloadUrl({ publicId, url: cv.url }, 'pdf');
 
     const result = await fetch(tempPublicLink);
 

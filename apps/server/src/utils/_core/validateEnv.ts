@@ -64,7 +64,29 @@ const isDeployed = (env: Env): boolean => (
   env.NODE_ENV === EnvEnum.PROD || env.NODE_ENV === EnvEnum.PREPROD
 );
 
+/*
+ * variables that only work as a set: the agency's Brevo key without its sender mails from an address its
+ * account has not verified, and a Cloudinary name without its secret cannot upload at all. A half-set
+ * group stops the boot instead of failing on the first mail or upload.
+ */
+const AGENCY_VARIABLE_GROUPS = [
+  ['AGENCY_BREVO_API_KEY', 'AGENCY_ADMIN_EMAIL_SENDER'],
+  ['AGENCY_CLOUDINARY_NAME', 'AGENCY_CLOUDINARY_API_KEY', 'AGENCY_CLOUDINARY_API_SECRET'],
+] as const;
+
+const assertAgencyGroupsComplete = (env: Env): void => {
+  for (const group of AGENCY_VARIABLE_GROUPS) {
+    const setCount = group.filter((name) => !!env[name]?.trim()).length;
+
+    if (setCount > 0 && setCount < group.length) {
+      throw new Error(`${group.join(', ')} must be set together (or all left empty)`);
+    }
+  }
+};
+
 const validateEnv = (env: Env = process.env): void => {
+  assertAgencyGroupsComplete(env);
+
   cleanEnv(env, {
     NODE_ENV: str(),
     PORT: port(),
@@ -85,6 +107,21 @@ const validateEnv = (env: Env = process.env): void => {
     AGENCY_SERVER_URL: optionalUrl({ default: '' }),
     AGENCY_WEBSITE_URL: optionalUrl({ default: '' }),
     AGENCY_APP_NAME: str({ default: '' }),
+    /*
+     * The agency's own Brevo account and the sender verified in it. Optional: while unset the portfolio's
+     * key and sender are used. Set both together — a key without its sender would send from an address
+     * the agency's Brevo account has not verified, and Brevo refuses the mail.
+     */
+    AGENCY_BREVO_API_KEY: str({ default: '' }),
+    AGENCY_ADMIN_EMAIL_SENDER: str({ default: '' }),
+    /*
+     * The agency's own Cloudinary account. Optional: while unset its files go to the portfolio's account.
+     * All three are set together or none (checked below): files are uploaded to it and found again by
+     * the cloud name in their address.
+     */
+    AGENCY_CLOUDINARY_NAME: str({ default: '' }),
+    AGENCY_CLOUDINARY_API_KEY: str({ default: '' }),
+    AGENCY_CLOUDINARY_API_SECRET: str({ default: '' }),
     REST_API_KEY: str(),
     CRYPTO_FIXED_PART_KEY: str(),
     CRYPTO_FIXED_FULL_KEY: aes256Key(),

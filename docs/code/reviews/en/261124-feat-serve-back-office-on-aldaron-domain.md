@@ -46,8 +46,7 @@ No database change.
 | Severity | Type | What can happen | When | Follow-up |
 |---|---|---|---|---|
 | 🔴 High | Bug | A setting left empty in the env file (as `.env.example` ships it) stopped the server at boot: the plain URL check refuses an empty value | Copying `.env.example` without filling the new lines | ✅ fixed on the branch: an empty value now means "not set" (checked with an empty, a valid and an invalid value) |
-| 🟡 Low | Regression | Uploads called a fixed address from the build settings; they now call the page's own address, which differs if the back-office were ever hosted apart from the server | A back-office deployed on another host than the server | ⏳ deferred — [debt #1](debt/261124-feat-debt-serve-back-office-on-aldaron-domain.md#1-uploads-follow-the-page-address) |
-| 🟡 Low | Bug | A person invited with roles that open both workspaces gets the portfolio link | Mixed-role invitation | ⏳ deferred — [debt #2](debt/261124-feat-debt-serve-back-office-on-aldaron-domain.md#2-mixed-roles-get-the-portfolio-link) |
+| 🟡 Low | Bug | A person invited with roles that open both workspaces gets the portfolio link | Mixed-role invitation | ⏳ deferred — [debt #1](debt/261124-feat-debt-serve-back-office-on-aldaron-domain.md#1-mixed-roles-get-the-portfolio-link) |
 
 Details and fixes: [debt file](debt/261124-feat-debt-serve-back-office-on-aldaron-domain.md).
 

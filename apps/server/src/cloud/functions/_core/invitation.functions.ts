@@ -51,6 +51,9 @@ Parse.Cloud.define(
       throw new Error(translate('user.invitation.emailAlreadyRegistered', locale));
     }
 
+    // resolved before the invitation is saved so a failed lookup leaves no orphan invitation
+    const workspace = await getLandingWorkspace(roles as string[]);
+
     const invitation = await createInvitation(email, roles, invitedBy);
 
     const elevatedRoleNames = (roles as string[])
@@ -72,7 +75,7 @@ Parse.Cloud.define(
       token: invitation.get('token'),
       locale,
       roleLabel: roleLabels.join(', '),
-      workspace: await getLandingWorkspace(roles as string[]),
+      workspace,
     });
 
     return isSent;

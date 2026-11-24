@@ -1,3 +1,4 @@
+import { TargetEnum } from '@shared/types';
 import {
   v2 as cloudinary,
   type AdminAndResourceOptions,
@@ -7,16 +8,34 @@ import {
   type UploadApiResponse,
 } from 'cloudinary';
 import dayjs from 'dayjs';
+import groupBy from 'lodash/groupBy.js';
 
 import type { IUploadedFile } from '@/types/file.type';
 
+import {
+  type CloudinaryCallOptions, type CloudinaryFileRef, getCloudinaryCallOptions, getFileCallOptions,
+} from '@/utils/_core/cloudinary.utils';
 import { formatBufferTo64 } from '@/utils/_core/file.utils';
 import { isBoolean } from '@/utils/_core/utils';
+
+/*
+ * Every call goes to the account that holds the file (or, for an upload and a listing, the account of
+ * the workspace asked for): the agency has an account of its own next to the portfolio's. The account
+ * of a stored file is read from its address, so a file never has to say where it lives.
+ */
+
+/**
+ * The SDK reads the credentials from the options of any call, but its typings list them on some calls only
+ * (`destroy` and `rename` do not), so they are handed over as the options type the call expects.
+ */
+const toCallOptions = <T>(options: CloudinaryCallOptions): T => options as unknown as T;
 
 type UploadFileArgs = {
   file: Record<string, any>;
   folder: string;
   config?: UploadApiOptions;
+  /** whose account stores the file: the portfolio's when absent */
+  workspace?: TargetEnum;
 };
 
 export const getFile = async (publicId: string): Promise<IUploadedFile> => {
@@ -34,9 +53,12 @@ export const getFile = async (publicId: string): Promise<IUploadedFile> => {
  * @param {*} folder
  * @returns
  */
-export const uploadFile = async ({ file, folder, config }: UploadFileArgs): Promise<UploadApiResponse> => {
+export const uploadFile = async ({
+  file, folder, config, workspace,
+}: UploadFileArgs): Promise<UploadApiResponse> => {
   const defaultConfig = {
     ...config,
+    ...getCloudinaryCallOptions(workspace),
     folder,
     unique_filename: config && isBoolean(config.unique_filename) ? config.unique_filename : true,
     use_filename: config && isBoolean(config.use_filename) ? config.use_filename : true,
@@ -59,37 +81,57 @@ export const uploadFile = async ({ file, folder, config }: UploadFileArgs): Prom
  * @param {string} folder
  * @returns
  */
-export const destroyFileHooks = async (publicId: string): Promise<any> => {
-  const fileResponse = await cloudinary.uploader.destroy(publicId);
+export const destroyFileHooks = async (file: CloudinaryFileRef): Promise<any> => {
+  const fileResponse = await cloudinary.uploader.destroy(
+    file.publicId,
+    toCallOptions(getFileCallOptions(file))
+  );
 
   return fileResponse;
 };
 
-export const destroyFile = async (publicId: string): Promise<any> => {
-  const fileResponse = await cloudinary.uploader.destroy(publicId);
+export const destroyFile = async (file: CloudinaryFileRef): Promise<any> => {
+  const fileResponse = await cloudinary.uploader.destroy(
+    file.publicId,
+    toCallOptions(getFileCallOptions(file))
+  );
 
   if (fileResponse.result !== 'ok') {
-    throw new Error('Error while deleting file ' + publicId);
+    throw new Error('Error while deleting file ' + file.publicId);
   }
 
   return fileResponse;
 };
 
-export const destroyFiles = async (publicIds: string[]): Promise<any> => {
-  if (!Array.isArray(publicIds)) {
+/**
+ * deletes files in one request per account: the files of a list can live in different accounts
+ * @returns the response of the portfolio's account, or of the only account the files are in
+ */
+export const destroyFiles = async (files: CloudinaryFileRef[]): Promise<any> => {
+  if (!Array.isArray(files)) {
     return;
   }
 
-  const fileResponse = await cloudinary.api.delete_resources(publicIds);
+  const filesByWorkspace = groupBy(files, (file) => getFileCallOptions(file).cloud_name ?? '');
+  const responses = await Promise.all(Object.values(filesByWorkspace).map((group) => (
+    cloudinary.api.delete_resources(
+      group.map((file) => file.publicId),
+      getFileCallOptions(group[0])
+    )
+  )));
 
-  return fileResponse;
+  return responses[0];
 };
 
 export const destroyFilesByFolder = async (
   folder: string,
-  options?: AdminAndResourceOptions
+  options?: AdminAndResourceOptions,
+  workspace?: TargetEnum
 ): Promise<void> => {
-  const fileResponse = await cloudinary.api.delete_resources_by_prefix(folder, options);
+  const fileResponse = await cloudinary.api.delete_resources_by_prefix(
+    folder,
+    { ...options, ...getCloudinaryCallOptions(workspace) }
+  );
 
   if (fileResponse.result !== 'ok') {
     throw new Error('Error while deleting files in folder ' + folder);
@@ -114,13 +156,14 @@ type ListFilesByFolderResult = {
  */
 export const listFilesByFolder = async (
   folder: string,
-  options?: { maxResults?: number; nextCursor?: string }
+  options?: { maxResults?: number; nextCursor?: string; workspace?: TargetEnum }
 ): Promise<ListFilesByFolderResult> => {
   const response = await cloudinary.api.resources({
     type: 'upload',
     prefix: folder,
     max_results: options?.maxResults ?? 500,
     next_cursor: options?.nextCursor,
+    ...getCloudinaryCallOptions(options?.workspace),
   });
 
   return {
@@ -135,18 +178,19 @@ export const listFilesByFolder = async (
 
 const moveFile = async (
   newFolder: string,
-  publicId: string
+  file: CloudinaryFileRef
 ): Promise<UploadApiResponse> => {
   const response = await cloudinary.uploader.rename(
-    publicId,
-    newFolder + '/' + publicId
+    file.publicId,
+    newFolder + '/' + file.publicId,
+    toCallOptions(getFileCallOptions(file))
   );
 
   return response;
 };
 
-export const moveFileToRecycleBin = async (publicId: string): Promise<IUploadedFile> => {
-  const result = await moveFile('recycleBin', publicId);
+export const moveFileToRecycleBin = async (file: CloudinaryFileRef): Promise<IUploadedFile> => {
+  const result = await moveFile('recycleBin', file);
 
   return {
     publicId: result.public_id,
@@ -169,7 +213,7 @@ type PrivateDownloadArgs = Partial<{
 }>;
 
 export const generatePrivateDownloadUrl = (
-  publicId: string,
+  file: CloudinaryFileRef,
   format: string,
   options: PrivateDownloadArgs = {
     attachment: true,
@@ -179,7 +223,11 @@ export const generatePrivateDownloadUrl = (
     type: 'upload',
   }
 ): string => {
-  const response = cloudinary.utils.private_download_url(publicId, format, options);
+  const response = cloudinary.utils.private_download_url(
+    file.publicId,
+    format,
+    { ...options, ...getFileCallOptions(file) }
+  );
 
   return response;
 };

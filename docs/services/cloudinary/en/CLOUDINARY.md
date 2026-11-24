@@ -31,11 +31,28 @@ Cloudinary stores the images and files uploaded from the back-office (project an
 
 All three are required at boot by `validateEnv`.
 
+The agency (Aldaron) can have an account of its own:
+
+| Variable | App | Purpose |
+|---|---|---|
+| `AGENCY_CLOUDINARY_NAME` | server | Cloud name of the agency account |
+| `AGENCY_CLOUDINARY_API_KEY` | server | API key of the agency account |
+| `AGENCY_CLOUDINARY_API_SECRET` | server | API secret of the agency account (never expose it) |
+
+Optional, but all three or none: a partial set stops the boot. Unset, the agency's files go to the portfolio's account.
+
 ## Setup
 
 1. Create a Cloudinary account and copy the cloud name and API credentials from the dashboard.
 2. Put the three variables in `apps/server/.env.preprod` (local) or on the host.
 3. Upload a file from the back-office to check it: it appears in the Media Library under the requested folder.
+
+## Which account holds a file
+
+- An upload goes to the account of the workspace it is made for: the one the back-office is in (sent with the upload, and checked against the roles of the account), the account's own workspace when none is sent.
+- A file is found again by the cloud name in its stored address (`https://res.cloudinary.com/<cloud name>/…`): deleting, replacing, moving it to the recycle bin or downloading it goes to the account named there. Files stored before the agency had its own account carry the portfolio's name, so they stay where they are.
+- The purge jobs (recycle bin, orphaned editor images) run once per account.
+- The `agency-logo` asset of the agency's e-mails is read from the agency account, so it must be uploaded there (root, public id `agency-logo`).
 
 ## Gotchas
 

@@ -1,10 +1,13 @@
 import type { Request, Response } from 'express';
 
+
 import type { IUploadInput, Locale } from '@/types/app.type';
 import type { IClientFileValidationSchemaInput, IUploadedFile } from '@/types/file.type';
+import type { TargetEnum } from '@shared/types';
 import type { UploadApiOptions } from 'cloudinary';
 
 import { uploadFile } from '@/api/_core/cloudinary.api';
+import { getUserWorkspace, resolveWorkspace } from '@/cloud/utils/_core/role.utils.cloud';
 import { throwTranslatedErrorMessage } from '@/config/i18n/zod-i18n';
 import { convertUploadStringifiedBodyToObject, getFolderName } from '@/utils/_core/file.utils';
 import { logger } from '@/utils/_core/logger';
@@ -16,6 +19,7 @@ type Body = {
   config: string;
   locale: Locale | undefined;
   validation: string;
+  workspace?: TargetEnum;
 } & IUploadInput;
 
 /**
@@ -29,7 +33,7 @@ export const uploadFiles = async (req: Request, res: Response): Promise<void> =>
   try {
     const { files }: any = req;
     const {
-      folder, userId, config, locale, validation: clientValidation,
+      folder, userId, config, locale, validation: clientValidation, workspace,
     }: Body = req.body;
 
     logger.info({
@@ -65,6 +69,7 @@ export const uploadFiles = async (req: Request, res: Response): Promise<void> =>
         userId,
         files,
         config: configObj,
+        workspace,
         locale,
         clientValidation: clientValidationObject,
       });
@@ -79,12 +84,22 @@ export const uploadFiles = async (req: Request, res: Response): Promise<void> =>
       throw new Error('common:errorsFromServer.missingFiles');
     }
 
+    /*
+     * the Cloudinary account that stores them is the one of the workspace the files are uploaded for:
+     * the one the back-office asked for when the roles open it, the account's own one otherwise
+     */
+    const user: Parse.User | undefined = res.locals.user;
+    const uploadWorkspace = workspace
+      ? await resolveWorkspace(user, workspace, locale)
+      : await getUserWorkspace(user);
+
     // ---------- upload files ---------- //
     const responses = files.map((file: any) => {
       return uploadFile({
         file,
         folder: getFolderName(folder, userId),
         config: configObj,
+        workspace: uploadWorkspace,
       });
     });
 

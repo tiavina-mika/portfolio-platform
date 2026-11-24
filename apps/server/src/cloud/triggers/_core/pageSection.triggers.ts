@@ -27,7 +27,7 @@ const moveSectionBlockImagesToRecycleBin = async (section: Parse.Object): Promis
   const newBlocks = await Promise.all(blocks.map(async (block) => {
     if (!block.image) return block;
 
-    const file = await moveFileToRecycleBin(block.image.publicId);
+    const file = await moveFileToRecycleBin(block.image);
 
     return { ...block, image: file };
   }));
@@ -53,12 +53,12 @@ const destroyStaleBlockImages = async (
     newBlocks.filter((block) => block.image).map((block) => block.image!.publicId)
   );
 
-  const publicIdsToDelete = prevBlocks
+  const filesToDelete = prevBlocks
     .filter((block) => block.image && !newPublicIds.has(block.image.publicId))
-    .map((block) => block.image!.publicId);
+    .map((block) => block.image!);
 
-  if (publicIdsToDelete.length === 0) return;
-  await destroyFiles(publicIdsToDelete);
+  if (filesToDelete.length === 0) return;
+  await destroyFiles(filesToDelete);
 };
 
 /*
@@ -132,11 +132,11 @@ Parse.Cloud.afterDelete(
   parseFunction<Parse.Cloud.AfterDeleteRequest>(async (request): Promise<void> => {
     const section = request.object;
     const blocks: ISectionBlock[] = section.get('blocks') || [];
-    const publicIds = blocks.filter((block) => block.image).map((block) => block.image!.publicId);
+    const files = blocks.filter((block) => block.image).map((block) => block.image!);
 
     await revalidateWebCacheTag('pages');
 
-    if (publicIds.length === 0) return;
-    await destroyFiles(publicIds);
+    if (files.length === 0) return;
+    await destroyFiles(files);
   })
 );

@@ -137,8 +137,10 @@ In **Advanced → Environment Variables** (or **Environment** once created), add
 | `CRYPTO_FIXED_PART_KEY`, `CRYPTO_FIXED_FULL_KEY`, `CRYPTO_IV` | generated (Step 2) |
 | `BREVO_API_KEY` | from Brevo |
 | `ADMIN_EMAIL_SENDER` | the verified sender address in Brevo |
+| `AGENCY_BREVO_API_KEY`, `AGENCY_ADMIN_EMAIL_SENDER` | optional, set together: the Aldaron Brevo account (v3 API key) and the sender verified in it; unset, the portfolio's are used |
 | `OWNERS_EMAILS` | comma-separated emails that receive the back-office Owner invitation at boot |
 | `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | from Cloudinary |
+| `AGENCY_CLOUDINARY_NAME`, `AGENCY_CLOUDINARY_API_KEY`, `AGENCY_CLOUDINARY_API_SECRET` | optional, set all three or none: the Aldaron Cloudinary account; unset, its files stay in the portfolio's account |
 
 Do **not** set `PORT`: Render injects it (and the server requires it).
 

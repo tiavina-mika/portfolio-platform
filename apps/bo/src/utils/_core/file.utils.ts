@@ -5,6 +5,8 @@ import Parse from 'parse';
 
 import { http, protectRequest } from '@/config/http';
 import { DEFAULT_LOCALE } from '@/constants/_core/app.constants';
+import { getSettingsWorkspaceSelector } from '@/redux/reducers/_core/settings.reducer';
+import { store } from '@/redux/store';
 import { UploadApiResponse } from '@/types/_core/cloudinary.type';
 import { IFileCloud, IUploadFile, IUploadFilesAPI } from '@/types/_core/file.type';
 import { Locale } from '@/types/_core/setting.type';
@@ -144,6 +146,9 @@ export const formatUploadResponse = (saveExtraField = false) => (res: UploadApiR
  * @param sessionToken token of the current user
  * @param endpoint url of the endpoint
  * @returns
+ *
+ * The files go to the storage account of the workspace the person works in, read from the store: every
+ * caller uploads for the workspace on screen, so none of them has to pass it.
  */
 export const uploadFilesAPI = async ({
   files,
@@ -179,6 +184,7 @@ export const uploadFilesAPI = async ({
   }
 
   formData.append('locale', locale);
+  formData.append('workspace', getSettingsWorkspaceSelector(store.getState()));
 
   const response = await http.post<FormData, UploadApiResponse[]>(
     endpoint,

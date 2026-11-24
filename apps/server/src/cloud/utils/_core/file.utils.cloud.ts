@@ -13,7 +13,7 @@ export const deleteFile = async (parseObj: Record<string, any>, field: string): 
   if (!parseObj.has(field)) return;
 
   const file = parseObj.get(field);
-  const deletedFile = await destroyFileHooks(file.publicId);
+  const deletedFile = await destroyFileHooks(file);
 
   if (deletedFile.result !== 'ok') {
     throw new Error(field + ' deletion failed.');
@@ -33,7 +33,7 @@ export const deleteFiles = async (
   if (!parseObj.has(field)) return;
 
   for (const file of parseObj.get(field)) {
-    const deletedFile = await destroyFileHooks(file.publicId);
+    const deletedFile = await destroyFileHooks(file);
 
     if (deletedFile.result !== 'ok') {
       throw new Error(field + ' deletion failed.');
@@ -48,12 +48,12 @@ export const deleteOldFile = async (
 ): Promise<void | undefined> => {
   if (!oldParseObj.has(field)) return;
 
-  const { publicId: oldPublicId } = oldParseObj.get(field);
+  const oldFile = oldParseObj.get(field);
 
-  if (oldPublicId !== parseObj.get(field)?.publicId) {
-    await destroyFileHooks(oldPublicId);
+  if (oldFile.publicId !== parseObj.get(field)?.publicId) {
+    await destroyFileHooks(oldFile);
 
-    const deletedFile = await destroyFileHooks(oldPublicId);
+    const deletedFile = await destroyFileHooks(oldFile);
 
     if (deletedFile.result !== 'ok') {
       throw new Error('deletion failed.');
@@ -83,7 +83,7 @@ export const deleteOldFiles = async (
   }
   for (const oldFile of oldParseObj.get(field)) {
     if (newFileById.get(oldFile.publicId)?.publicId !== oldFile.publicId) {
-      const deletedFile = await destroyFileHooks(oldFile.publicId);
+      const deletedFile = await destroyFileHooks(oldFile);
 
       if (deletedFile.result !== 'ok') {
         throw new Error(field + ' deletion failed.');
@@ -104,23 +104,23 @@ export const destroyFilesAfterObjectDestroyed = async (
   parseObj: Parse.Object,
   fields = PAGE_FILES_FIELDS
 ): Promise<undefined | string> => {
-  const publicIdsToDelete = [];
+  const filesToDelete: IUploadedFile[] = [];
 
   // ----------- multiple files fields deletion ----------- //
   for (const field of fields) {
     if (parseObj.has(field)) {
       if (Array.isArray(parseObj.get(field))) {
-        publicIdsToDelete.push(...parseObj.get(field).map((file: IUploadedFile): string => file.publicId));
+        filesToDelete.push(...parseObj.get(field));
       }
       else {
-        publicIdsToDelete.push(parseObj.get(field).publicId);
+        filesToDelete.push(parseObj.get(field));
       }
     }
   }
 
-  if (publicIdsToDelete.length === 0) return;
-  // delete all files in a single request
-  const result = await destroyFiles(publicIdsToDelete);
+  if (filesToDelete.length === 0) return;
+  // delete all files in a single request per account
+  const result = await destroyFiles(filesToDelete);
 
   return result;
 };

@@ -1,4 +1,5 @@
 import { destroyFilesByFolder } from '@/api/_core/cloudinary.api';
+import { getCloudinaryWorkspaces } from '@/utils/_core/cloudinary.utils';
 import { logger } from '@/utils/_core/logger';
 
 import { defineJob } from '../../utils/_core/job.utils.cloud';
@@ -9,7 +10,10 @@ defineJob('clearRecycleBinInCloudJob', async (request: Parse.Cloud.JobRequest): 
   try {
     const { limit = 100 } = request.params;
 
-    await destroyFilesByFolder('recycleBin/', { max_results: limit });
+    // each Cloudinary account has its own recycle bin
+    for (const workspace of getCloudinaryWorkspaces()) {
+      await destroyFilesByFolder('recycleBin/', { max_results: limit }, workspace);
+    }
 
     return {
       message: 'Job done',

@@ -9,64 +9,82 @@ import type {
   ISendEmail,
   ISendEmailResult,
 } from '@/types/email.type';
+import type { TargetEnum } from '@shared/types';
 
-import { APP_NAME, IS_E2E } from '@/constants/_core/constants';
+
+import { IS_E2E } from '@/constants/_core/constants';
 import { recordE2eMessage } from '@/utils/_core/e2e-outbox.utils';
 import { logger } from '@/utils/_core/logger';
 import { getAdminEmailSender } from '@/utils/_core/user.utils';
+import { getAppName, getBrevoApiKey } from '@/utils/_core/utils';
 
 const CONTACT_ATTRIBUTES = [
   { attributeCategory: 'normal' as const, attributeName: 'FIRSTNAME', type: 'text' as const },
   { attributeCategory: 'normal' as const, attributeName: 'LASTNAME', type: 'text' as const },
 ];
 
-// ─── Singleton client ────────────────────────────────────────────────────────
+// ─── Clients — one per Brevo account ─────────────────────────────────────────
 
-let _client: BrevoClient | null = null;
+/*
+ * keyed by the API key, not by the workspace: a workspace without its own key shares the
+ * portfolio's account, so both resolve to the same client
+ */
+const brevoClients = new Map<string, BrevoClient>();
 
-const getBrevoClient = (): BrevoClient => {
-  if (!_client) {
-    _client = new BrevoClient({ apiKey: process.env.BREVO_API_KEY ?? '' });
+const getBrevoClient = (workspace?: TargetEnum): BrevoClient => {
+  const apiKey = getBrevoApiKey(workspace);
+  let client = brevoClients.get(apiKey);
+
+  if (!client) {
+    client = new BrevoClient({ apiKey });
+    brevoClients.set(apiKey, client);
   }
-  return _client;
+
+  return client;
 };
 
-// ─── Contact attributes — initialized once ──────────────────────────────────
+// ─── Contact attributes — initialized once per Brevo account ────────────────
 
-let _contactAttributesReady: Promise<void> | null = null;
+const contactAttributesReady = new Map<string, Promise<void>>();
 
-const createContactAttributes = async (): Promise<void> => {
-  const client = getBrevoClient();
+const createContactAttributes = async (workspace?: TargetEnum): Promise<void> => {
+  const client = getBrevoClient(workspace);
 
   await Promise.all(
     CONTACT_ATTRIBUTES.map((attribute) => client.contacts.createAttribute(attribute))
   );
 };
 
-const ensureContactAttributes = (): Promise<void> => {
-  if (!_contactAttributesReady) {
-    _contactAttributesReady = createContactAttributes().catch((error: unknown) => {
+const ensureContactAttributes = (workspace?: TargetEnum): Promise<void> => {
+  const apiKey = getBrevoApiKey(workspace);
+  let ready = contactAttributesReady.get(apiKey);
+
+  if (!ready) {
+    ready = createContactAttributes(workspace).catch((error: unknown) => {
       // Reset so it can be retried on the next call if it failed
-      _contactAttributesReady = null;
+      contactAttributesReady.delete(apiKey);
       logger.error('createContactAttributes failed', {
         status: (error as BrevoError)?.statusCode,
         body: (error as BrevoError)?.body,
       });
     });
+    contactAttributesReady.set(apiKey, ready);
   }
-  return _contactAttributesReady;
+
+  return ready;
 };
 
 // ─── Public API ─────────────────────────────────────────────────────────────
 
 export const createContactEmail = async (
   values: ICreateContactEmailParams,
-  id?: string
+  id?: string,
+  workspace?: TargetEnum
 ): Promise<ICreateEmailContactResponse> => {
   try {
-    const client = getBrevoClient();
+    const client = getBrevoClient(workspace);
 
-    await ensureContactAttributes();
+    await ensureContactAttributes(workspace);
 
     const data = await client.contacts.createContact({
       ...values,
@@ -109,8 +127,14 @@ export const getContacts = async (): Promise<IGetContactsResponse> => {
 /**
  * Sends one transactional e-mail. A refusal comes back with Brevo's own code and message rather than
  * as a bare `undefined`: a notification records them on the recipient the e-mail failed for.
+ * @param values
+ * @param workspace whose Brevo account sends it, and whose address and name it goes out under: the
+ * portfolio's when absent
  */
-export const sendEmailWithResult = async (values: ISendEmail): Promise<ISendEmailResult> => {
+export const sendEmailWithResult = async (
+  values: ISendEmail,
+  workspace?: TargetEnum
+): Promise<ISendEmailResult> => {
   // E2E runs keep the e-mail instead of calling Brevo, so a test can assert on what was sent
   if (IS_E2E) {
     recordE2eMessage({
@@ -123,10 +147,10 @@ export const sendEmailWithResult = async (values: ISendEmail): Promise<ISendEmai
   }
 
   try {
-    const client = getBrevoClient();
+    const client = getBrevoClient(workspace);
 
     if (!values.sender) {
-      values.sender = { email: getAdminEmailSender(), name: APP_NAME };
+      values.sender = { email: getAdminEmailSender(workspace), name: getAppName(workspace) };
     }
 
     const data = await client.transactionalEmails.sendTransacEmail(values);
@@ -152,6 +176,9 @@ export const sendEmailWithResult = async (values: ISendEmail): Promise<ISendEmai
   }
 };
 
-export const sendEmail = async (values: ISendEmail): Promise<ICreateEmailResponse> => (
-  (await sendEmailWithResult(values)).data
+export const sendEmail = async (
+  values: ISendEmail,
+  workspace?: TargetEnum
+): Promise<ICreateEmailResponse> => (
+  (await sendEmailWithResult(values, workspace)).data
 );

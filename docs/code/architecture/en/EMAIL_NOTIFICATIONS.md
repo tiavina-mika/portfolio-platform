@@ -23,7 +23,7 @@ Emails are transactional emails sent by the server through [Brevo](https://www.b
 
 ## Provider and configuration
 
-- `BREVO_API_KEY`, `WEBSITE_URL` and `ADMIN_EMAIL_SENDER` are required at startup (`validateEnv`). Links in emails point to `WEBSITE_URL`. A back-office invitation sent for the agency workspace (every role it grants opens that workspace alone) uses `AGENCY_SERVER_URL` for its link and `AGENCY_WEBSITE_URL` and `AGENCY_APP_NAME` for the frame; each falls back to the portfolio value while unset. The workspace comes from the roles, never from the request.
+- `BREVO_API_KEY`, `WEBSITE_URL` and `ADMIN_EMAIL_SENDER` are required at startup (`validateEnv`). Links in emails point to `WEBSITE_URL`. A back-office invitation sent for the agency workspace (every role it grants opens that workspace alone) uses `AGENCY_SERVER_URL` for its link and `AGENCY_WEBSITE_URL` and `AGENCY_APP_NAME` for the frame; each falls back to the portfolio value while unset. The agency also has its own Brevo account: every e-mail to an account that only holds the agency workspace is sent with `AGENCY_BREVO_API_KEY` from `AGENCY_ADMIN_EMAIL_SENDER` (set together, each falls back to the portfolio's while unset). The workspace comes from the roles, never from the request.
 - SMS use `MMSDUCK_API_KEY`, which is optional: without it each SMS is refused with a warning; in development they are only logged.
 - Texts are translated with the server i18n, see [I18N.md](I18N.md); the locale comes from the function parameter or the save context, default `fr`.
 

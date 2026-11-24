@@ -1,3 +1,4 @@
+import { TargetEnum } from '@shared/types';
 import { ZodType, z } from 'zod';
 
 import type { Locale } from '@/types/app.type';
@@ -102,6 +103,8 @@ export const uploadBodyRequestSchema = z.object({
     .optional(),
   config: updateApiOptionsSchema.optional(),
   locale: z.string().optional(),
+  // the workspace the files are uploaded for: it decides the Cloudinary account that stores them
+  workspace: z.enum(TargetEnum).optional(),
 });
 
 /**

@@ -45,6 +45,9 @@ const protectionMiddleware = (
         if (!user) {
           return next(new HttpException(400, 'User not found'));
         }
+
+        // the controllers that need to know who calls read it here instead of querying the session again
+        res.locals.user = user;
       }
 
       next();
