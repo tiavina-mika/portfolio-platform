@@ -6,11 +6,11 @@ import { STEP_UP_VERIFICATION_VALIDITY_MINUTES, USE_MASTER_KEY } from '@/constan
 import { decrypt } from '@/utils/_core/encrypt.utils';
 import { getStepUpDestination } from '@/utils/_core/step-up.utils';
 
-import { sendStepUpVerificationEmail } from '../../utils/_core/email.utils.cloud';
+import { sendStepUpVerificationEmail, toWorkspaceEmailRecipient } from '../../utils/_core/email.utils.cloud';
 import { sendSmsVerification } from '../../utils/_core/sms.utils.cloud';
 import {
   checkVerificationRateLimit, generateEncryptedVerificationCode,
-  getDecryptedUserCode, recordVerificationFailure, toEmailRecipient,
+  getDecryptedUserCode, recordVerificationFailure,
 } from '../../utils/_core/user.utils.cloud';
 
 const STEP_UP_FIELD = 'stepUpVerification';
@@ -42,7 +42,7 @@ export const requestStepUpVerificationService = async (
   const destination = getStepUpDestination({ email: newUser.get('email'), phone: newUser.get('phone') });
 
   const isSent = destination.channel === 'email'
-    ? await sendStepUpVerificationEmail(toEmailRecipient(newUser), code, locale)
+    ? await sendStepUpVerificationEmail(await toWorkspaceEmailRecipient(newUser), code, locale)
     : await sendSmsVerification(newUser.get('phone')?.number, code, locale, newUser.get('phone')?.code);
 
   return { ...destination, isSent };

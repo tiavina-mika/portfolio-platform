@@ -23,7 +23,7 @@ Les emails sont des emails transactionnels envoyés par le serveur via [Brevo](h
 
 ## Fournisseur et configuration
 
-- `BREVO_API_KEY`, `WEBSITE_URL` et `ADMIN_EMAIL_SENDER` sont requis au démarrage (`validateEnv`). Les liens des emails pointent vers `WEBSITE_URL`.
+- `BREVO_API_KEY`, `WEBSITE_URL` et `ADMIN_EMAIL_SENDER` sont requis au démarrage (`validateEnv`). Les liens des emails pointent vers `WEBSITE_URL`. Une invitation au back-office envoyée pour l'espace agence (tous les rôles accordés n'ouvrent que cet espace) utilise `AGENCY_SERVER_URL` pour son lien, et `AGENCY_WEBSITE_URL` et `AGENCY_APP_NAME` pour le cadre ; chacune retombe sur la valeur du portfolio tant qu'elle n'est pas définie. L'agence a aussi son propre compte Brevo : tout e-mail vers un compte qui n'a que l'espace agence part avec `AGENCY_BREVO_API_KEY` depuis `AGENCY_ADMIN_EMAIL_SENDER` (à définir ensemble, chacune retombe sur celle du portfolio tant qu'elle n'est pas définie). L'espace vient des rôles, jamais de la requête.
 - Les SMS utilisent `MMSDUCK_API_KEY`, facultative : sans elle chaque SMS est refusé avec un avertissement ; en développement ils sont seulement journalisés.
 - Les textes sont traduits avec l'i18n du serveur, voir [I18N.FR.md](I18N.FR.md) ; la locale vient du paramètre de la fonction ou du contexte d'enregistrement, `fr` par défaut.
 

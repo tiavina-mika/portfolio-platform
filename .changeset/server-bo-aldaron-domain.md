@@ -1,0 +1,6 @@
+---
+'portfolio-bo': minor
+'portfolio-server': minor
+---
+
+The Aldaron team can have its own back-office address. An employee invited with Aldaron-only roles now receives a link to that address, and the invitation e-mail carries the Aldaron name and website instead of the portfolio's. Opened on that address, the back-office starts in the Aldaron workspace; an account that only holds the portfolio workspace still stays in the portfolio. Nothing changes until the optional `AGENCY_SERVER_URL`, `AGENCY_WEBSITE_URL`, `AGENCY_APP_NAME` (server) and `VITE_AGENCY_HOSTNAME` (back-office) are set. The Aldaron workspace can also send its e-mails through its own Brevo account (`AGENCY_BREVO_API_KEY` and `AGENCY_ADMIN_EMAIL_SENDER`, set together). It can also store its files in its own Cloudinary account (`AGENCY_CLOUDINARY_NAME`, `AGENCY_CLOUDINARY_API_KEY`, `AGENCY_CLOUDINARY_API_SECRET`, all three together): the back-office sends the workspace it is in with each upload, and a file is later deleted from the account named in its address. Once `AGENCY_APP_NAME` is set, the e-mails of the Aldaron workspace use the `agency-logo` Cloudinary asset, read from the Aldaron account when it has one, which must contain it.

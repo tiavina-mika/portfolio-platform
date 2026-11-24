@@ -157,7 +157,7 @@ export const moveCMSImagesToRecycleBin = async (
     await Promise.all(singleFileFields.map(async (field: string) => {
       if (parseObj.has(field)) {
         // remove the file from the cloud
-        const file = await moveFileToRecycleBin(parseObj.get(field).publicId);
+        const file = await moveFileToRecycleBin(parseObj.get(field));
 
         // update the database object
         parseObj.set(field, file);
@@ -171,7 +171,7 @@ export const moveCMSImagesToRecycleBin = async (
 
         // remove the file from the cloud
         const newFiles = await Promise.all(files.map(async (file: IUploadedFile) => {
-          const uploadedFile = await moveFileToRecycleBin(file.publicId);
+          const uploadedFile = await moveFileToRecycleBin(file);
 
           return uploadedFile;
         }));
@@ -213,7 +213,7 @@ export const destroyOldFilesAfterUpdate = async (
   try {
     const singleFileFields = options?.singleFileFields || PAGE_SINGLE_IMAGE_FIELDS;
     const multipleFilesFields = options?.multipleFilesFields || PAGE_FILES_FIELDS;
-    const publicIdsToDelete = [];
+    const filesToDelete: IUploadedFile[] = [];
 
     // ----------- singe file fields deletion ----------- //
     for (const field of singleFileFields) {
@@ -224,7 +224,7 @@ export const destroyOldFilesAfterUpdate = async (
 
         // delete old files if there is new one
         if (prevField?.publicId !== newField?.publicId) {
-          publicIdsToDelete.push(prevField.publicId);
+          filesToDelete.push(prevField);
         }
       }
     }
@@ -238,15 +238,13 @@ export const destroyOldFilesAfterUpdate = async (
 
         const oldFilesToDelete: IUploadedFile[] = differenceBy(prevField, newField, 'publicId');
 
-        const publicIds = oldFilesToDelete.map((file: IUploadedFile): string => file.publicId);
-
-        publicIdsToDelete.push(...publicIds);
+        filesToDelete.push(...oldFilesToDelete);
       }
     }
 
-    if (publicIdsToDelete.length === 0) return;
-    // delete all files in a single request
-    await destroyFiles(publicIdsToDelete);
+    if (filesToDelete.length === 0) return;
+    // delete all files in a single request per account
+    await destroyFiles(filesToDelete);
   }
   catch (error) {
     logger.error(
@@ -274,7 +272,7 @@ export const deleteEditorFilesAfterUpdate = async (
   try {
     // check if level 1 field is changed (ex: translated)
     if (!isFieldChanged(parseObj, prevParseObj, field)) return;
-    const publicIdsToDelete = [];
+    const filesToDelete: IUploadedFile[] = [];
 
     for (const locale of locales) {
       // check if level 2 field is changed (ex: translated.fr)
@@ -304,17 +302,19 @@ export const deleteEditorFilesAfterUpdate = async (
           for (const prevFile of prevTranslatedFiles) {
             // if the old file is not used anymore
             if (!content.includes(prevFile.url)) {
-              publicIdsToDelete.push(prevFile.publicId);
+              filesToDelete.push(prevFile);
             }
           }
         }
       }
     }
 
-    logger.info('Ids to delete ', publicIdsToDelete.join(', '));
-    if (publicIdsToDelete.length === 0) return;
+    const publicIdsToDelete = filesToDelete.map((file) => file.publicId);
 
-    await destroyFiles(publicIdsToDelete);
+    logger.info('Ids to delete ', publicIdsToDelete.join(', '));
+    if (filesToDelete.length === 0) return;
+
+    await destroyFiles(filesToDelete);
     return publicIdsToDelete;
   }
   catch (error) {

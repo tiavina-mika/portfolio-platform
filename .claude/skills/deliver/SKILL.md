@@ -1,6 +1,6 @@
 ---
-name: ship
-description: Ship the current feature branch end to end — commit the pending changes, push, open a PR against develop, wait for CI, merge it, delete the branch (remote + local), then checkout develop and pull. On develop itself, only commit and push (no PR, no merge). Optional "no husky" pushes without the pre-push hook; the hook is also skipped automatically when only non-code files (docs, md, .claude…) changed. Use when the user says "ship", "commit push PR merge", "merge into develop", or invokes /ship.
+name: deliver
+description: Ship the current feature branch end to end — commit the pending changes, push, open a PR against develop, wait for CI, merge it, delete the branch (remote + local), then checkout develop and pull. On develop itself, only commit and push (no PR, no merge). Optional "no husky" pushes without the pre-push hook; the hook is also skipped automatically when only non-code files (docs, md, .claude…) changed. Use when the user says "deliver", "ship", "commit push PR merge", "merge into develop", or invokes /deliver.
 allowed-tools: Read Bash Grep Glob AskUserQuestion
 ---
 
@@ -25,12 +25,12 @@ fails and report it — never paper over a failure to reach the next step.
 ## Usage
 
 ```
-/ship                         → commit message and PR title derived from the diff
-/ship <free text>             → used as the hint for the commit message / PR title
-/ship ... one commit per topic → split the changes into several commits, one per logical unit
-/ship ... no husky            → push without running the husky pre-push hook
-/ship ... on <type>/<name>    → create that branch first, then ship from it
-/ship ... create a branch     → create a branch (name derived from the diff), then ship from it
+/deliver                         → commit message and PR title derived from the diff
+/deliver <free text>             → used as the hint for the commit message / PR title
+/deliver ... one commit per topic → split the changes into several commits, one per logical unit
+/deliver ... no husky            → push without running the husky pre-push hook
+/deliver ... on <type>/<name>    → create that branch first, then ship from it
+/deliver ... create a branch     → create a branch (name derived from the diff), then ship from it
 ```
 
 **Which branch is shipped.** Unless the text names a branch or asks to create one, ship **on the
@@ -60,8 +60,11 @@ git fetch origin develop
   feature branch is needed and ask for its name with `AskUserQuestion` — never invent one.
 - Branch names follow `<type>/<kebab-description>` (`feat/`, `fix/`, `chore/`); if not, say so but
   carry on.
-- If an open PR already exists for this branch (`gh pr view --json number,state,url`), reuse it in
-  step 4 instead of creating a second one.
+- Look for an open PR on this branch (`gh pr view --json number,state,url`):
+  - **One exists** → reuse it in step 4 instead of creating a second one.
+  - **None exists and the branch is not `develop`** → create it: never stop to tell the user to open
+    one. Steps 3 and 4 always run for such a branch, even when step 1 finds nothing to commit but the
+    branch is ahead of `origin/develop` (push what is there, then open the PR).
 
 ## Step 1 — Review what will be committed
 
@@ -77,6 +80,7 @@ git diff              # read it — the commit message is written from this, not
 - **By default everything else is committed**, even a file that looks unrelated to the branch. Don't
   ask; list in the report any file that looked unrelated.
 - Nothing to commit and nothing ahead of `origin/develop` (`git log origin/develop..HEAD`)? Stop.
+  Nothing to commit but commits ahead → skip step 2 and go on with the push and the PR.
 
 ## Step 2 — Commit
 

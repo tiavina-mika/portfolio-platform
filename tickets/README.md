@@ -11,7 +11,7 @@ file (`git mv`), never editing a status field.
 | `in-progress/` | Work started | Claude / human |
 | `to-test/` | Implemented, waiting for human validation | **Claude** |
 | `blocked/` | Waiting for a decision or information | Claude / human |
-| `done/` | Tested and validated | **Human only** (or `/ship`, `/dev <ticket> ship`, `/auto`, in their own conditions) |
+| `done/` | Tested and validated | **Human only** (or `/deliver`, `/dev <ticket> ship`, `/auto`, in their own conditions) |
 
 `work/<ticket-name>/` holds the working files of a ticket (plan, test cases, what is delivered, what is
 left). It never moves with the ticket. Rules: [.claude/rules/tickets.md](../.claude/rules/tickets.md).

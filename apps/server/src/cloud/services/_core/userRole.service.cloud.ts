@@ -1,3 +1,5 @@
+import { TargetEnum } from '@shared/types';
+
 import type { Locale } from '@/types/app.type';
 import type { Role, User } from 'parse';
 
@@ -12,7 +14,7 @@ import {
 import { OwnerAlertEventEnum } from '@/types/ownerAlert.type';
 import { type IHighestRoleAccount, type IRolesDelegation } from '@/types/user.type';
 import { logger } from '@/utils/_core/logger';
-import { isRoleWithinRights, type RoleGrants } from '@/utils/_core/rights.utils';
+import { isRoleWithinRights, mergeRoleWorkspaces, type RoleGrants } from '@/utils/_core/rights.utils';
 
 import { alertOwners } from './ownerAlert.service.cloud';
 import { createRoleAuditLog } from './roleAuditLog.service.cloud';
@@ -84,6 +86,26 @@ export const getMissingRoleNames = async (roleNames: string[]): Promise<string[]
   const existingNames = new Set(roles.map((role) => role.getName()));
 
   return roleNames.filter((roleName) => !existingNames.has(roleName));
+};
+
+/**
+ * The workspace a person holding these roles lands in: the agency's when every role opens it alone,
+ * the portfolio's otherwise. The highest roles open every workspace without storing it and are the
+ * portfolio's owners, so they land in the portfolio.
+ * @param roleNames the names of the roles an invitation grants
+ */
+export const getLandingWorkspace = async (roleNames: string[]): Promise<TargetEnum> => {
+  if (roleNames.some((roleName) => HIGHEST_LEVEL_ROLES.includes(roleName))) return TargetEnum.PORTFOLIO;
+
+  const roles = await new Parse.Query(Parse.Role)
+    .containedIn('name', roleNames)
+    .select(['workspaces'])
+    .limit(roleNames.length)
+    .find(USE_MASTER_KEY);
+
+  const workspaces = mergeRoleWorkspaces(roles.map((role) => ({ workspaces: role.get('workspaces') })));
+
+  return workspaces.includes(TargetEnum.PORTFOLIO) ? TargetEnum.PORTFOLIO : TargetEnum.AGENCY;
 };
 
 /**

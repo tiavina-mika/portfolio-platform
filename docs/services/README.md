@@ -11,8 +11,8 @@
 | Service | Used by | What for | Variables |
 |---|---|---|---|
 | MongoDB (local or Atlas) | server | Database behind Parse Server | `MONGO_URL` |
-| Brevo | server | Transactional emails and newsletter contacts | `BREVO_API_KEY`, `ADMIN_EMAIL_SENDER` |
-| Cloudinary | server (web displays the files) | Image and file storage | `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` |
+| Brevo | server | Transactional emails and newsletter contacts | `BREVO_API_KEY`, `ADMIN_EMAIL_SENDER`, `AGENCY_BREVO_API_KEY`, `AGENCY_ADMIN_EMAIL_SENDER` |
+| Cloudinary | server (web displays the files) | Image and file storage | `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, `AGENCY_CLOUDINARY_*` |
 | Google reCAPTCHA | web (token), server (check) | Bot protection of the contact and newsletter forms | `RECAPTCHA_SECRET_KEY` (server), `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` (web) |
 | Upstash Redis | server, web | Rate limits, Parse Server cache and LiveQuery, scheduled job lock | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `UPSTASH_REDIS_URL` |
 | MMSDuck | server | SMS: verification codes, notices, notification fallback | `MMSDUCK_API_KEY` |

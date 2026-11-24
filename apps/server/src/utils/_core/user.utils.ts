@@ -1,7 +1,8 @@
 import { DEFAULT_PROFILE_VISIBILITY, FIXED_VISIBILITY_PROFILE_FIELDS } from '@shared/constants';
 import {
-  ProfileFieldEnum, type ProfileVisibility, ProfileVisibilityEnum,
+  ProfileFieldEnum, type ProfileVisibility, ProfileVisibilityEnum, TargetEnum,
 } from '@shared/types';
+import uniq from 'lodash/uniq.js';
 
 import type { ActorSnapshot, IBan } from '@/types/user.type';
 
@@ -36,7 +37,16 @@ export const hasNoVerifiedContact = (
   return emailVerified === false || phoneVerified === false;
 };
 
-export const getAdminEmailSender = () => process.env.ADMIN_EMAIL_SENDER;
+/**
+ * The address the e-mails of a workspace are sent from. The agency one comes from AGENCY_ADMIN_EMAIL_SENDER
+ * (verified in the agency's own Brevo account) and falls back to the portfolio's while it is not set.
+ * @param workspace
+ */
+export const getAdminEmailSender = (workspace: TargetEnum = TargetEnum.PORTFOLIO) => {
+  const agencySender = workspace === TargetEnum.AGENCY ? process.env.AGENCY_ADMIN_EMAIL_SENDER : undefined;
+
+  return agencySender || process.env.ADMIN_EMAIL_SENDER;
+};
 
 /**
  * closed list of Brevo-verified sender addresses selectable from the BO "test emails" tool —
@@ -46,7 +56,11 @@ export const getAdminEmailSender = () => process.env.ADMIN_EMAIL_SENDER;
  * is only loaded by dotenv once the server starts — a top-level constant would freeze it as
  * empty, since ESM imports resolve before dotenv.config() runs
  */
-export const getAllowedTestEmailSenders = (): string[] => [getAdminEmailSender()].filter(Boolean) as string[];
+export const getAllowedTestEmailSenders = (): string[] => {
+  const senders = Object.values(TargetEnum).map((workspace) => getAdminEmailSender(workspace));
+
+  return uniq(senders.filter(Boolean)) as string[];
+};
 
 export const formatFullName = (firstName?: string, lastName?: string): string =>
   [lastName, firstName].filter(Boolean).join(' ');

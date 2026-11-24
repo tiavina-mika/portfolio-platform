@@ -1,9 +1,10 @@
+import { TargetEnum } from '@shared/types';
+
 import type { Locale } from '@/types/app.type';
 import type { EmailRecipient, ICreateEmailContactResponse, ICreateEmailResponse } from '@/types/email.type';
 import type { ChannelSendResult, NotificationChannelRecipient } from '@/types/notification.type';
 
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
-import { APP_NAME } from '@/constants/_core/constants';
 import { generateEmailTemplate } from '@/emails';
 import { renderContactChangeContent } from '@/emails/templates/contact-change.template';
 import { renderInvitationContent } from '@/emails/templates/invitation.template';
@@ -13,12 +14,15 @@ import { renderStepUpVerificationContent } from '@/emails/templates/step-up-veri
 import { renderVerificationContent } from '@/emails/templates/verification.template';
 import { createContactEmail, sendEmail, sendEmailWithResult } from '@/services/email.service';
 import { NotificationChannelStatusEnum } from '@/types/notification.type';
+import { logger } from '@/utils/_core/logger';
 import { getChannelRecipientFromResult } from '@/utils/_core/notification.utils';
 import { formatFullName, getAdminEmailSender } from '@/utils/_core/user.utils';
 import {
-  cutHtmlString, getArticleClientUrl, getServerUrl, getTranslatedField, getUnsubscribeNewsletterClientUrl,
+  cutHtmlString, getAppName, getArticleClientUrl, getServerUrl, getTranslatedField,
+  getUnsubscribeNewsletterClientUrl,
 } from '@/utils/_core/utils';
 
+import { getUserWorkspace } from './role.utils.cloud';
 import { toEmailRecipient } from './user.utils.cloud';
 import { isEmailEnabledForRecipient } from '../../services/_core/notification.service.cloud';
 
@@ -30,8 +34,42 @@ export const isEmailSentResponse = (data: ICreateEmailResponse): boolean =>
  * undefined falls through to sendEmail()'s own ADMIN_EMAIL_SENDER default, so every existing
  * production call site keeps sending from the same address it always has
  */
-const buildSender = (senderEmail?: string): { email: string; name: string } | undefined =>
-  senderEmail ? { email: senderEmail, name: APP_NAME } : undefined;
+const buildSender = (
+  senderEmail?: string,
+  workspace?: TargetEnum
+): { email: string; name: string } | undefined =>
+  senderEmail ? { email: senderEmail, name: getAppName(workspace) } : undefined;
+
+/**
+ * The recipient of a mail to an account, with the workspace that frames it: the agency's when the
+ * roles of the account open it alone, the portfolio's otherwise (the highest roles included).
+ * The account's roles decide, not the request that triggered the mail.
+ * @param user
+ * @param email an address other than the account's own, for a mail that confirms a new one
+ */
+export const toWorkspaceEmailRecipient = async (
+  user: Parse.User,
+  email?: string
+): Promise<EmailRecipient> => {
+  let workspace = TargetEnum.PORTFOLIO;
+
+  // a failed roles lookup must not stop a login code or a password reset: the portfolio frame is the default
+  try {
+    workspace = await getUserWorkspace(user);
+  }
+  catch (e) {
+    logger.error({
+      message: 'Error while resolving the workspace of an e-mail recipient',
+      errMsg: (e as Error).message,
+    });
+  }
+
+  return {
+    ...toEmailRecipient(user),
+    ...(email && { email }),
+    workspace,
+  };
+};
 
 /**
  * create contact in Brevo
@@ -42,7 +80,8 @@ const buildSender = (senderEmail?: string): { email: string; name: string } | un
 type UserObject = { email: string; firstName?: string; lastName: string };
 export const createContactToCloud = async (
   user: Parse.User | UserObject,
-  id?: string
+  id?: string,
+  workspace?: TargetEnum
 ): Promise<ICreateEmailContactResponse> => {
   const params = {
     email: (user as Parse.User).get ? (user as Parse.User).get('email') : (user as UserObject).email,
@@ -52,7 +91,7 @@ export const createContactToCloud = async (
     },
   };
 
-  const data = await createContactEmail(params, id);
+  const data = await createContactEmail(params, id, workspace);
 
   return data;
 };
@@ -67,20 +106,21 @@ export const sendEmailVerification = async (
   const params = {
     subject: translate('email.finishRegistrationSubject', locale),
     to: [{ email: recipient.email, firstName: recipient.firstName, lastName: recipient.lastName }],
-    sender: buildSender(senderEmail),
+    sender: buildSender(senderEmail, recipient.workspace),
     htmlContent: generateEmailTemplate({
       locale,
       title: translate('email.finishRegistrationSubject', locale),
+      workspace: recipient.workspace,
       content: renderVerificationContent(
         formatFullName(recipient.firstName, recipient.lastName) || recipient.email,
         code,
         locale,
-        getAdminEmailSender() ?? ''
+        getAdminEmailSender(recipient.workspace) ?? ''
       ),
     }),
   };
 
-  const data = await sendEmail(params);
+  const data = await sendEmail(params, recipient.workspace);
 
   return isEmailSentResponse(data);
 };
@@ -103,10 +143,11 @@ export const sendEmailResetPassword = async ({
   const params = {
     subject: title,
     to: [{ email: recipient.email, firstName: recipient.firstName, lastName: recipient.lastName }],
-    sender: buildSender(sender),
+    sender: buildSender(sender, recipient.workspace),
     htmlContent: generateEmailTemplate({
       locale,
       title,
+      workspace: recipient.workspace,
       content: renderResetPasswordContent(
         formatFullName(recipient.firstName, recipient.lastName),
         code,
@@ -115,7 +156,7 @@ export const sendEmailResetPassword = async ({
     }),
   };
 
-  const data = await sendEmail(params);
+  const data = await sendEmail(params, recipient.workspace);
 
   return isEmailSentResponse(data);
 };
@@ -136,6 +177,7 @@ export const sendStepUpVerificationEmail = async (
     htmlContent: generateEmailTemplate({
       locale,
       title: translate('email.stepUpVerificationSubject', locale),
+      workspace: recipient.workspace,
       content: renderStepUpVerificationContent(
         formatFullName(recipient.firstName, recipient.lastName) || recipient.email,
         code,
@@ -144,7 +186,7 @@ export const sendStepUpVerificationEmail = async (
     }),
   };
 
-  const data = await sendEmail(params);
+  const data = await sendEmail(params, recipient.workspace);
 
   return isEmailSentResponse(data);
 };
@@ -164,6 +206,7 @@ export const sendContactChangeVerificationEmail = async (
     htmlContent: generateEmailTemplate({
       locale,
       title: translate('email.confirmNewEmailSubject', locale),
+      workspace: recipient.workspace,
       content: renderContactChangeContent(
         formatFullName(recipient.firstName, recipient.lastName) || recipient.email,
         code,
@@ -172,7 +215,7 @@ export const sendContactChangeVerificationEmail = async (
     }),
   };
 
-  const data = await sendEmail(params);
+  const data = await sendEmail(params, recipient.workspace);
 
   return isEmailSentResponse(data);
 };
@@ -185,6 +228,8 @@ type SendInvitationEmailParams = {
   locale: Locale;
   sender?: string;
   roleLabel?: string;
+  /** the workspace the invited person lands in: its domain and name are the ones the mail shows */
+  workspace?: TargetEnum;
 };
 export const sendInvitationEmail = async ({
   email,
@@ -193,23 +238,25 @@ export const sendInvitationEmail = async ({
   locale = DEFAULT_LANGUAGE,
   sender,
   roleLabel,
+  workspace,
 }: SendInvitationEmailParams): Promise<boolean> => {
   const title = translate('email.invitationSubject', locale);
 
   const params = {
     subject: title,
     to: [{ email }],
-    sender: buildSender(sender),
+    sender: buildSender(sender, workspace),
     htmlContent: generateEmailTemplate({
       locale,
       title,
+      workspace,
       content: renderInvitationContent(inviterName, locale, roleLabel),
-      buttonUrl: `${getServerUrl()}/invite?token=${token}`,
+      buttonUrl: `${getServerUrl(workspace)}/invite?token=${token}`,
       buttonText: translate('email.acceptInvitation', locale),
     }),
   };
 
-  const data = await sendEmail(params);
+  const data = await sendEmail(params, workspace);
 
   return isEmailSentResponse(data);
 };
@@ -253,9 +300,10 @@ export const sendEmailToRecipientWithResult = async (
   const params = {
     subject: values.subject,
     to: [{ email: recipient.email, firstName: recipient.firstName, lastName: recipient.lastName }],
-    sender: buildSender(values.sender),
+    sender: buildSender(values.sender, recipient.workspace),
     htmlContent: generateEmailTemplate({
       ...(values.locale && { locale: values.locale }),
+      workspace: recipient.workspace,
       title: values.title,
       alert: values.alert,
       content: values.message,
@@ -264,7 +312,10 @@ export const sendEmailToRecipientWithResult = async (
     }),
   };
 
-  const { data, errorCode, errorMessage } = await sendEmailWithResult(params);
+  const { data, errorCode, errorMessage } = await sendEmailWithResult(
+    params,
+    recipient.workspace
+  );
 
   return { isSent: isEmailSentResponse(data), errorCode, errorMessage };
 };
@@ -277,7 +328,7 @@ export const sendEmailToRecipient = async (
 export const sendEmailToUserWithResult = async (
   user: Parse.User,
   values: Omit<EmailContent, 'sender'>
-): Promise<ChannelSendResult> => sendEmailToRecipientWithResult(toEmailRecipient(user), {
+): Promise<ChannelSendResult> => sendEmailToRecipientWithResult(await toWorkspaceEmailRecipient(user), {
   ...values,
   locale: values.locale ?? user.get('locale'),
 });

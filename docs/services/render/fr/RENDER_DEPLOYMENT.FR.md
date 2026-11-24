@@ -133,11 +133,14 @@ Dans **Advanced → Environment Variables** (ou **Environment** une fois créé)
 | `REST_API_KEY` | générée (étape 2) |
 | `SERVER_URL` | l'URL du serveur, telle qu'affichée dans le tableau de bord (`https://…`, sans `/` final) |
 | `WEBSITE_URL` | l'URL du site |
+| `AGENCY_SERVER_URL`, `AGENCY_WEBSITE_URL`, `AGENCY_APP_NAME` | facultatif : le domaine du back-office Aldaron (un domaine personnalisé de ce même service), son site et le nom de ses e-mails ; non définis, les valeurs du portfolio servent |
 | `CRYPTO_FIXED_PART_KEY`, `CRYPTO_FIXED_FULL_KEY`, `CRYPTO_IV` | générées (étape 2) |
 | `BREVO_API_KEY` | depuis Brevo |
 | `ADMIN_EMAIL_SENDER` | l'adresse d'expéditeur vérifiée dans Brevo |
+| `AGENCY_BREVO_API_KEY`, `AGENCY_ADMIN_EMAIL_SENDER` | facultatif, à définir ensemble : le compte Brevo d'Aldaron (clé API v3) et l'expéditeur vérifié dedans ; non définis, ceux du portfolio servent |
 | `OWNERS_EMAILS` | adresses séparées par des virgules qui reçoivent l'invitation Owner du back-office au démarrage |
 | `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | depuis Cloudinary |
+| `AGENCY_CLOUDINARY_NAME`, `AGENCY_CLOUDINARY_API_KEY`, `AGENCY_CLOUDINARY_API_SECRET` | facultatif, les trois ou aucune : le compte Cloudinary d'Aldaron ; non définies, ses fichiers restent dans le compte du portfolio |
 
 Ne définissez **pas** `PORT` : Render l'injecte (et le serveur l'exige).
 
@@ -150,6 +153,7 @@ Variables du back-office, lues **au moment du build** par `vite build` et inscri
 | `VITE_PARSE_APP_ID` | la même valeur que `PARSE_APP_ID` |
 | `VITE_REST_API_KEY` | la même valeur que `REST_API_KEY` |
 | `VITE_WEBSITE_URL` | la même valeur que `WEBSITE_URL` |
+| `VITE_AGENCY_HOSTNAME` | facultatif : le nom d'hôte du domaine personnalisé Aldaron, sans `https://` |
 | `VITE_ADMIN_EMAIL_SENDER` | la même valeur que `ADMIN_EMAIL_SENDER` |
 
 > Ne mettez jamais un vrai secret dans une variable `VITE_*` : la valeur serait lisible dans le JavaScript téléchargé. Sur Render, le contrôle de secrets de `pnpm copy` ne trouve aucun fichier `bo/.env.*` à comparer et s'ignore : rien ne vous protège à cet endroit.

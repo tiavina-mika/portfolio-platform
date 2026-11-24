@@ -1,14 +1,17 @@
 import crypto from 'crypto';
 import { promisify } from 'util';
 
+import { TargetEnum } from '@shared/types';
 import { t } from 'i18next';
 import escapeRegExp from 'lodash/escapeRegExp.js';
 
 
 import { DEFAULT_LANGUAGE } from '@/config/i18n';
 
+import { getCloudinaryName } from './cloudinary.utils';
 import { encrypt } from './encrypt.utils';
 import {
+  APP_NAME,
   IS_TEST,
   USE_MASTER_KEY,
 } from '../../constants/_core/constants';
@@ -178,10 +181,36 @@ export const capitalizeFirstLetter = (string: string): string => {
  * Get server url to serve the client and the api
  * In local, SERVER_URL comes from .env.local (overrides the .env.preprod / .env.prod value),
  * e.g. a LAN ip address instead of localhost because in some cases (mobile) localhost does not work
+ * @param workspace the workspace the link is for: the agency has its own back-office domain, read from
+ * AGENCY_SERVER_URL, and falls back to SERVER_URL while that variable is not set
  * @returns
  */
-export const getServerUrl = (): string => {
-  return process.env.SERVER_URL!;
+export const getServerUrl = (workspace: TargetEnum = TargetEnum.PORTFOLIO): string => {
+  const agencyUrl = workspace === TargetEnum.AGENCY ? process.env.AGENCY_SERVER_URL : undefined;
+
+  return agencyUrl || process.env.SERVER_URL!;
+};
+
+/**
+ * The name the e-mails of a workspace are signed with. The agency one comes from AGENCY_APP_NAME and
+ * falls back to the portfolio's while it is not set.
+ * @param workspace
+ */
+export const getAppName = (workspace: TargetEnum = TargetEnum.PORTFOLIO): string => {
+  const agencyName = workspace === TargetEnum.AGENCY ? process.env.AGENCY_APP_NAME : undefined;
+
+  return agencyName || APP_NAME;
+};
+
+/**
+ * The Brevo API key of a workspace. The agency has its own Brevo account, read from AGENCY_BREVO_API_KEY,
+ * and falls back to the portfolio's key while that variable is not set.
+ * @param workspace
+ */
+export const getBrevoApiKey = (workspace: TargetEnum = TargetEnum.PORTFOLIO): string => {
+  const agencyKey = workspace === TargetEnum.AGENCY ? process.env.AGENCY_BREVO_API_KEY : undefined;
+
+  return agencyKey || process.env.BREVO_API_KEY || '';
 };
 
 export const generateCloudinaryUrl = (publicId: string): string => {
@@ -191,12 +220,22 @@ export const generateCloudinaryUrl = (publicId: string): string => {
 /**
  * get logo url
  * cloudinary: https://res.cloudinary.com/your-cloud-name/image/upload/f_auto,q_auto/logo
- * @Note rename the file in cloudinary to logo, it should be in the root folder
- * @param isLocalServer
+ * The portfolio's logo is the root asset `logo`, the agency's the root asset `agency-logo`, used only
+ * once the agency is configured (AGENCY_APP_NAME set): before that its mails carry the portfolio's name,
+ * so they keep the portfolio's logo too. The agency's logo is read from its own Cloudinary account when it
+ * has one, so the asset has to exist there.
+ * Delivered as PNG: mail clients do not render SVG.
+ * @param workspace
  * @returns
  */
-export const getLogoUrl = (): string =>
-  `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/upload/f_png,q_auto/logo`;
+export const getLogoUrl = (workspace: TargetEnum = TargetEnum.PORTFOLIO): string => {
+  const isAgencyConfigured = workspace === TargetEnum.AGENCY && !!process.env.AGENCY_APP_NAME;
+  const publicId = isAgencyConfigured ? 'agency-logo' : 'logo';
+
+  const cloudName = getCloudinaryName(isAgencyConfigured ? TargetEnum.AGENCY : TargetEnum.PORTFOLIO);
+
+  return `https://res.cloudinary.com/${cloudName}/image/upload/f_png,q_auto/${publicId}`;
+};
 
 /**
  * for url name
@@ -342,9 +381,11 @@ export const getTranslatedField = <T extends Record<string, any>>(
   return translated[language]?.[field];
 };
 
-// in local, WEBSITE_URL comes from .env.local
-export const getClientUrl = (): string => {
-  return process.env.WEBSITE_URL ?? '';
+// in local, WEBSITE_URL comes from .env.local; the agency website is AGENCY_WEBSITE_URL when set
+export const getClientUrl = (workspace: TargetEnum = TargetEnum.PORTFOLIO): string => {
+  const agencyUrl = workspace === TargetEnum.AGENCY ? process.env.AGENCY_WEBSITE_URL : undefined;
+
+  return agencyUrl || process.env.WEBSITE_URL || '';
 };
 
 /**

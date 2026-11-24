@@ -9,6 +9,7 @@ import { collections } from '@/constants/_core/constants';
 import { PAID_AMOUNT_UPKEEP_CONTEXT_KEY } from '@/constants/_domain/payment.constants';
 import { QUOTE_FROZEN_FIELDS, QUOTE_NUMBER_TIME_ZONE } from '@/constants/_domain/quote.constants';
 import { QuoteParentRelationEnum } from '@/types/quote.type';
+import { getCloudinaryNames } from '@/utils/_core/cloudinary.utils';
 import { logger } from '@/utils/_core/logger';
 import { isQuoteJustAccepted } from '@/utils/_domain/payment.utils';
 import {
@@ -126,7 +127,10 @@ const checkUpdatedQuote = (
     if (!canAttachQuoteAcceptanceProof(from, to)) {
       throw new Error(translate('quote.acceptanceProofNotAllowed', locale));
     }
-    if (!isQuoteAcceptanceProofFile(quote.get('acceptanceProof'), process.env.CLOUDINARY_NAME)) {
+    // stored by the back-office in any of the platform's accounts (the portfolio's or the agency's)
+    const proof = quote.get('acceptanceProof');
+
+    if (!getCloudinaryNames().some((cloudName) => isQuoteAcceptanceProofFile(proof, cloudName))) {
       throw new Error(translate('quote.acceptanceProofInvalid', locale));
     }
   }

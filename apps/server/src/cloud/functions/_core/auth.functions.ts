@@ -23,12 +23,16 @@ import {
   findUserByVerifiedEmail,
 } from '../../services/_core/user.service.cloud';
 import { logInResolvedUser } from '../../utils/_core/auth.utils.cloud';
-import { sendEmailResetPassword, sendEmailVerification } from '../../utils/_core/email.utils.cloud';
+import {
+  sendEmailResetPassword,
+  sendEmailVerification,
+  toWorkspaceEmailRecipient,
+} from '../../utils/_core/email.utils.cloud';
 import { getClientIp } from '../../utils/_core/parse.utils.cloud';
 import { sendSmsVerification } from '../../utils/_core/sms.utils.cloud';
 import {
   checkVerificationRateLimit, generateEncryptedVerificationCode,
-  getDecryptedUserCode, logoutUserOtherDevices, recordVerificationFailure, toEmailRecipient,
+  getDecryptedUserCode, logoutUserOtherDevices, recordVerificationFailure,
   type VerificationField,
 } from '../../utils/_core/user.utils.cloud';
 import { parseFunction } from '../../utils/_core/utils.cloud';
@@ -192,13 +196,17 @@ Parse.Cloud.define(
     if (toVerify === 'email') {
       if (isFirstEmailVerification) {
         // fire-and-forget — the welcome email must not add Brevo's latency to this response
-        sendWelcomeEmail(toEmailRecipient(newUser), locale).catch((error) => {
-          logger.error('sendWelcomeEmail failed', { userId: newUser.id, error: (error as Error).message });
-        });
+        void (async () => {
+          try {
+            await sendWelcomeEmail(await toWorkspaceEmailRecipient(newUser), locale);
+          } catch (error) {
+            logger.error('sendWelcomeEmail failed', { userId: newUser.id, error: (error as Error).message });
+          }
+        })();
       }
     }
 
-    // `registerStep` is the step the sign-up moved to, left out when this confirmation was not the pending one
+    // `registerStep` is the step the sign-up moved to, left out when this was not the pending confirmation
     return { success: true, ...(registerStep ? { registerStep } : {}) };
   }),
   // -------- validation -------- //
@@ -312,7 +320,7 @@ Parse.Cloud.define(
     const code = getDecryptedUserCode(newUser) as string;
 
     const hasSent = email
-      ? await sendEmailVerification(toEmailRecipient(newUser), code, locale)
+      ? await sendEmailVerification(await toWorkspaceEmailRecipient(newUser), code, locale)
       : await sendSmsVerification(phoneNumber!, code, locale, newUser.get('phone')?.code);
 
     // the code the sign-up screen was told was not coming is on its way now
@@ -371,7 +379,7 @@ Parse.Cloud.define(
     const code = getDecryptedUserCode(newUser, RESET_PASSWORD_VERIFICATION_FIELD) as string;
 
     const isSent = email
-      ? await sendEmailResetPassword({ recipient: toEmailRecipient(newUser), code, locale })
+      ? await sendEmailResetPassword({ recipient: await toWorkspaceEmailRecipient(newUser), code, locale })
       : await sendSmsVerification(phoneNumber!, code, locale, newUser.get('phone')?.code);
 
     return isSent;

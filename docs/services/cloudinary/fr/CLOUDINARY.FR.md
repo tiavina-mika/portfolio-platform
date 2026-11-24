@@ -31,11 +31,28 @@ Cloudinary stocke les images et fichiers envoyés depuis le back-office (images 
 
 Les trois sont requises au démarrage par `validateEnv`.
 
+L'agence (Aldaron) peut avoir son propre compte :
+
+| Variable | App | Rôle |
+|---|---|---|
+| `AGENCY_CLOUDINARY_NAME` | server | Nom du cloud du compte de l'agence |
+| `AGENCY_CLOUDINARY_API_KEY` | server | Clé d'API du compte de l'agence |
+| `AGENCY_CLOUDINARY_API_SECRET` | server | Secret d'API du compte de l'agence (ne jamais l'exposer) |
+
+Facultatives, mais les trois ou aucune : un ensemble partiel arrête le démarrage. Non définies, les fichiers de l'agence vont dans le compte du portfolio.
+
 ## Mise en place
 
 1. Créer un compte Cloudinary et copier le nom du cloud et les identifiants d'API depuis le tableau de bord.
 2. Poser les trois variables dans `apps/server/.env.preprod` (local) ou sur l'hébergeur.
 3. Envoyer un fichier depuis le back-office pour vérifier : il apparaît dans la Media Library sous le dossier demandé.
+
+## Quel compte détient un fichier
+
+- Un envoi va dans le compte de l'espace pour lequel il est fait : celui où se trouve le back-office (envoyé avec le fichier, et vérifié d'après les rôles du compte), l'espace propre du compte quand aucun n'est envoyé.
+- Un fichier est retrouvé par le nom du cloud dans son adresse enregistrée (`https://res.cloudinary.com/<nom du cloud>/…`) : le supprimer, le remplacer, le mettre à la corbeille ou le télécharger passe par le compte nommé là. Les fichiers enregistrés avant que l'agence ait son compte portent le nom du portfolio : ils restent où ils sont.
+- Les jobs de purge (corbeille, images d'éditeur orphelines) tournent une fois par compte.
+- L'asset `agency-logo` des e-mails de l'agence est lu dans le compte de l'agence : il doit y être téléversé (racine, identifiant public `agency-logo`).
 
 ## Pièges
 

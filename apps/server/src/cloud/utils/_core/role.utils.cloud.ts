@@ -79,6 +79,18 @@ export const getUserWorkspaces = async (user?: User): Promise<TargetEnum[]> => {
 };
 
 /**
+ * The workspace an account works in when it names none: the agency's when its roles open it alone, the
+ * portfolio's otherwise (the highest roles included). The account's roles decide, never the request.
+ * @param user
+ */
+export const getUserWorkspace = async (user?: User): Promise<TargetEnum> => {
+  const workspaces = await getUserWorkspaces(user);
+  const isAgencyOnly = workspaces.includes(TargetEnum.AGENCY) && !workspaces.includes(TargetEnum.PORTFOLIO);
+
+  return isAgencyOnly ? TargetEnum.AGENCY : TargetEnum.PORTFOLIO;
+};
+
+/**
  * The workspace a list or a detail function reads for: the one the back-office asked for, the
  * portfolio when it asked for none. The back-office selector decides only what it shows — this is
  * where the account's roles decide whether it may be read at all.

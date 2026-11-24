@@ -36,7 +36,9 @@ import { createUserModerationLog } from './userModerationLog.service.cloud';
 import { getUserIdsFromRoles } from './userRole.service.cloud';
 import { revokeAllUserSessionsService } from './userSession.service.cloud';
 import { sendAccountReactivatedEmail } from '../../emails/_core/user.email';
-import { createContactToCloud, sendEmailToUser, sendEmailVerification } from '../../utils/_core/email.utils.cloud';
+import {
+  createContactToCloud, sendEmailToUser, sendEmailVerification, toWorkspaceEmailRecipient,
+} from '../../utils/_core/email.utils.cloud';
 import { type ParallelJobData, runJob, runParallelJob } from '../../utils/_core/job.utils.cloud';
 import { isMfaLocked } from '../../utils/_core/mfa.utils.cloud';
 import { scopeToAgentCountries } from '../../utils/_core/parse.utils.cloud';
@@ -44,7 +46,7 @@ import { assertCanActOnUser } from '../../utils/_core/role.utils.cloud';
 import { sendSmsVerification } from '../../utils/_core/sms.utils.cloud';
 import { getUserPhoneSearchQueries } from '../../utils/_core/user-search.utils.cloud';
 import {
-  getBanMessage, generateEncryptedVerificationCode, getDecryptedUserCode, toActorSnapshot, toEmailRecipient,
+  getBanMessage, generateEncryptedVerificationCode, getDecryptedUserCode, toActorSnapshot,
 } from '../../utils/_core/user.utils.cloud';
 import { actingUserContext, saveTriggerOptions } from '../../utils/_core/utils.cloud';
 
@@ -518,7 +520,7 @@ export const deleteUser = async (
 
   // move image to recycle bin
   if (user.has('image')) {
-    const file = await moveFileToRecycleBin(user.get('image').publicId);
+    const file = await moveFileToRecycleBin(user.get('image'));
 
     // update the database object
     user.set('image', file);
@@ -662,14 +664,16 @@ export const sendVerificationCodeToEmail = async (user: Parse.User, locale: Loca
   try {
     const decryptedCode = getDecryptedUserCode(user) as string;
 
+    const recipient = await toWorkspaceEmailRecipient(user);
+
     // send email and create the contact in parallel — independent operations
     await Promise.all([
-      sendEmailVerification(toEmailRecipient(user), decryptedCode, locale),
+      sendEmailVerification(recipient, decryptedCode, locale),
       /*
        * this will shallow an error if the contact already exists in the email service
        * so no need to worry about it
        */
-      createContactToCloud(user),
+      createContactToCloud(user, undefined, recipient.workspace),
     ]);
   }
   catch (error) {

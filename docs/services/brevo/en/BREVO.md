@@ -26,17 +26,21 @@ Only `apps/server` talks to Brevo; `web` and `bo` go through Cloud Functions.
 |---|---|---|
 | `BREVO_API_KEY` | server | API key (required at boot by `validateEnv`) |
 | `ADMIN_EMAIL_SENDER` | server | Default sender address |
+| `AGENCY_BREVO_API_KEY` | server | Optional: API key of the agency (Aldaron) Brevo account. Unset, the portfolio's key is used |
+| `AGENCY_ADMIN_EMAIL_SENDER` | server | Optional: sender address verified in the agency's Brevo account. Set it together with `AGENCY_BREVO_API_KEY` |
 | `VITE_ADMIN_EMAIL_SENDER` | bo | Sender address shown to admins (exposed in the browser bundle, not a secret) |
 
 ## Setup
 
 1. Create a Brevo account and generate an API key (SMTP and API settings).
-2. Validate the sender: the address in `ADMIN_EMAIL_SENDER` must be a verified sender (or domain) in Brevo, otherwise sends are rejected.
+2. Validate the sender: the address in `ADMIN_EMAIL_SENDER` must be a verified sender (or domain) in Brevo, otherwise sends are rejected. The same goes for `AGENCY_ADMIN_EMAIL_SENDER` in the agency's own account.
 3. Put the variables in `apps/server/.env.preprod` (local) or on the host.
 4. Start the server and subscribe to the newsletter once: the `FIRSTNAME` and `LASTNAME` contact attributes are created on first use.
 
 ## Gotchas
 
+- The agency has its own Brevo account: an e-mail to an account that only holds the agency workspace, and the contact created for it, go through `AGENCY_BREVO_API_KEY` and `AGENCY_ADMIN_EMAIL_SENDER`. Everything else (website forms, newsletter, portfolio accounts) uses the portfolio's.
+- The API key must be a v3 API key (it starts with `xkeysib-`); an SMTP key (`xsmtpsib-`) is refused by the API.
 - Failures of contact creation are only logged (the user flow continues); failures of `sendEmail` are thrown.
 - The free plan has a daily sending limit: a newsletter to many subscribers can be cut short.
 - The code comments mention Brevo list ids 2 and 5; the list used is the one configured in the Brevo account, check it there.

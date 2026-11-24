@@ -99,7 +99,7 @@ Parse.Cloud.define(
   fromBO(async (request: Parse.Cloud.FunctionRequest): Promise<number> => {
     const { className, status } = request.params;
 
-    return countBadgeObjects(className, status);
+    return countBadgeObjects(className, status, request.user);
   }),
   parseFunctionValidation(getObjectsCountSchema)
 );

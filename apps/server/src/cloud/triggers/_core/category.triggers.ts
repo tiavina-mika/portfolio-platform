@@ -136,7 +136,7 @@ Parse.Cloud.afterSave(
     // ----------- update ----------- //
     if (dirtyKeys.includes('image') && category.has('image')) {
       // destroy previous image
-      await destroyFile(prevCategory.get('image').publicId);
+      await destroyFile(prevCategory.get('image'));
     }
 
     if (isBeingTrashed) {
@@ -145,7 +145,7 @@ Parse.Cloud.afterSave(
 
       // move image to recycle bin
       if (category.has('image')) {
-        const file = await moveFileToRecycleBin(category.get('image').publicId);
+        const file = await moveFileToRecycleBin(category.get('image'));
 
         // update the database object
         category.set('image', file);
@@ -170,7 +170,7 @@ Parse.Cloud.afterDelete(
     await revalidateWebCacheTag('categories');
 
     if (category.has('image')) {
-      await destroyFile(category.get('image').publicId);
+      await destroyFile(category.get('image'));
     }
 
     const parentCategory = category.get('parentCategory');

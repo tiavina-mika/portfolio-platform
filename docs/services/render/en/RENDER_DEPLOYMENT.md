@@ -133,11 +133,14 @@ In **Advanced → Environment Variables** (or **Environment** once created), add
 | `REST_API_KEY` | generated (Step 2) |
 | `SERVER_URL` | the server URL, as shown in the dashboard (`https://…`, no trailing slash) |
 | `WEBSITE_URL` | the website URL |
+| `AGENCY_SERVER_URL`, `AGENCY_WEBSITE_URL`, `AGENCY_APP_NAME` | optional: the Aldaron back-office domain (a custom domain of this same service), its website and the name of its e-mails; unset, the portfolio values are used |
 | `CRYPTO_FIXED_PART_KEY`, `CRYPTO_FIXED_FULL_KEY`, `CRYPTO_IV` | generated (Step 2) |
 | `BREVO_API_KEY` | from Brevo |
 | `ADMIN_EMAIL_SENDER` | the verified sender address in Brevo |
+| `AGENCY_BREVO_API_KEY`, `AGENCY_ADMIN_EMAIL_SENDER` | optional, set together: the Aldaron Brevo account (v3 API key) and the sender verified in it; unset, the portfolio's are used |
 | `OWNERS_EMAILS` | comma-separated emails that receive the back-office Owner invitation at boot |
 | `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | from Cloudinary |
+| `AGENCY_CLOUDINARY_NAME`, `AGENCY_CLOUDINARY_API_KEY`, `AGENCY_CLOUDINARY_API_SECRET` | optional, set all three or none: the Aldaron Cloudinary account; unset, its files stay in the portfolio's account |
 
 Do **not** set `PORT`: Render injects it (and the server requires it).
 
@@ -150,6 +153,7 @@ Back-office variables, read **at build time** by `vite build` and inlined in the
 | `VITE_PARSE_APP_ID` | the same value as `PARSE_APP_ID` |
 | `VITE_REST_API_KEY` | the same value as `REST_API_KEY` |
 | `VITE_WEBSITE_URL` | the same value as `WEBSITE_URL` |
+| `VITE_AGENCY_HOSTNAME` | optional: the hostname of the Aldaron custom domain, without `https://` |
 | `VITE_ADMIN_EMAIL_SENDER` | the same value as `ADMIN_EMAIL_SENDER` |
 
 > Never put a real secret in a `VITE_*` variable: the value would be readable in the downloaded JavaScript. On Render the secret scan of `pnpm copy` finds no `bo/.env.*` file to compare with and skips itself, so nothing protects you there.
