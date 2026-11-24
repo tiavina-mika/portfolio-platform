@@ -23,7 +23,7 @@ import {
   findUserByVerifiedEmail,
 } from '../../services/_core/user.service.cloud';
 import { logInResolvedUser } from '../../utils/_core/auth.utils.cloud';
-import { sendEmailResetPassword, sendEmailVerification } from '../../utils/_core/email.utils.cloud';
+import { sendEmailResetPassword, sendEmailVerification, toWorkspaceEmailRecipient } from '../../utils/_core/email.utils.cloud';
 import { getClientIp } from '../../utils/_core/parse.utils.cloud';
 import { sendSmsVerification } from '../../utils/_core/sms.utils.cloud';
 import {
@@ -312,7 +312,7 @@ Parse.Cloud.define(
     const code = getDecryptedUserCode(newUser) as string;
 
     const hasSent = email
-      ? await sendEmailVerification(toEmailRecipient(newUser), code, locale)
+      ? await sendEmailVerification(await toWorkspaceEmailRecipient(newUser), code, locale)
       : await sendSmsVerification(phoneNumber!, code, locale, newUser.get('phone')?.code);
 
     // the code the sign-up screen was told was not coming is on its way now
@@ -371,7 +371,7 @@ Parse.Cloud.define(
     const code = getDecryptedUserCode(newUser, RESET_PASSWORD_VERIFICATION_FIELD) as string;
 
     const isSent = email
-      ? await sendEmailResetPassword({ recipient: toEmailRecipient(newUser), code, locale })
+      ? await sendEmailResetPassword({ recipient: await toWorkspaceEmailRecipient(newUser), code, locale })
       : await sendSmsVerification(phoneNumber!, code, locale, newUser.get('phone')?.code);
 
     return isSent;

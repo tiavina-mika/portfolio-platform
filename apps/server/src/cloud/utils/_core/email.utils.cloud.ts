@@ -1,7 +1,8 @@
+import { TargetEnum } from '@shared/types';
+
 import type { Locale } from '@/types/app.type';
 import type { EmailRecipient, ICreateEmailContactResponse, ICreateEmailResponse } from '@/types/email.type';
 import type { ChannelSendResult, NotificationChannelRecipient } from '@/types/notification.type';
-import type { TargetEnum } from '@shared/types';
 
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
 import { APP_NAME } from '@/constants/_core/constants';
@@ -20,6 +21,7 @@ import {
   cutHtmlString, getArticleClientUrl, getServerUrl, getTranslatedField, getUnsubscribeNewsletterClientUrl,
 } from '@/utils/_core/utils';
 
+import { getUserWorkspaces } from './role.utils.cloud';
 import { toEmailRecipient } from './user.utils.cloud';
 import { isEmailEnabledForRecipient } from '../../services/_core/notification.service.cloud';
 
@@ -33,6 +35,27 @@ export const isEmailSentResponse = (data: ICreateEmailResponse): boolean =>
  */
 const buildSender = (senderEmail?: string): { email: string; name: string } | undefined =>
   senderEmail ? { email: senderEmail, name: APP_NAME } : undefined;
+
+/**
+ * The recipient of a mail to an account, with the workspace that frames it: the agency's when the
+ * roles of the account open it alone, the portfolio's otherwise (the highest roles included).
+ * The account's roles decide, not the request that triggered the mail.
+ * @param user
+ * @param email an address other than the account's own, for a mail that confirms a new one
+ */
+export const toWorkspaceEmailRecipient = async (
+  user: Parse.User,
+  email?: string
+): Promise<EmailRecipient> => {
+  const workspaces = await getUserWorkspaces(user);
+  const isAgencyOnly = workspaces.includes(TargetEnum.AGENCY) && !workspaces.includes(TargetEnum.PORTFOLIO);
+
+  return {
+    ...toEmailRecipient(user),
+    ...(email && { email }),
+    workspace: isAgencyOnly ? TargetEnum.AGENCY : TargetEnum.PORTFOLIO,
+  };
+};
 
 /**
  * create contact in Brevo
@@ -72,6 +95,7 @@ export const sendEmailVerification = async (
     htmlContent: generateEmailTemplate({
       locale,
       title: translate('email.finishRegistrationSubject', locale),
+      workspace: recipient.workspace,
       content: renderVerificationContent(
         formatFullName(recipient.firstName, recipient.lastName) || recipient.email,
         code,
@@ -108,6 +132,7 @@ export const sendEmailResetPassword = async ({
     htmlContent: generateEmailTemplate({
       locale,
       title,
+      workspace: recipient.workspace,
       content: renderResetPasswordContent(
         formatFullName(recipient.firstName, recipient.lastName),
         code,
@@ -137,6 +162,7 @@ export const sendStepUpVerificationEmail = async (
     htmlContent: generateEmailTemplate({
       locale,
       title: translate('email.stepUpVerificationSubject', locale),
+      workspace: recipient.workspace,
       content: renderStepUpVerificationContent(
         formatFullName(recipient.firstName, recipient.lastName) || recipient.email,
         code,
@@ -165,6 +191,7 @@ export const sendContactChangeVerificationEmail = async (
     htmlContent: generateEmailTemplate({
       locale,
       title: translate('email.confirmNewEmailSubject', locale),
+      workspace: recipient.workspace,
       content: renderContactChangeContent(
         formatFullName(recipient.firstName, recipient.lastName) || recipient.email,
         code,
@@ -261,6 +288,7 @@ export const sendEmailToRecipientWithResult = async (
     sender: buildSender(values.sender),
     htmlContent: generateEmailTemplate({
       ...(values.locale && { locale: values.locale }),
+      workspace: recipient.workspace,
       title: values.title,
       alert: values.alert,
       content: values.message,
@@ -282,7 +310,7 @@ export const sendEmailToRecipient = async (
 export const sendEmailToUserWithResult = async (
   user: Parse.User,
   values: Omit<EmailContent, 'sender'>
-): Promise<ChannelSendResult> => sendEmailToRecipientWithResult(toEmailRecipient(user), {
+): Promise<ChannelSendResult> => sendEmailToRecipientWithResult(await toWorkspaceEmailRecipient(user), {
   ...values,
   locale: values.locale ?? user.get('locale'),
 });

@@ -47,8 +47,7 @@ Aucun changement en base.
 |---|---|---|---|---|
 | 🔴 Haute | Bug | Un réglage laissé vide dans le fichier d'environnement (comme `.env.example` le fournit) arrêtait le serveur au démarrage : le contrôle d'URL simple refuse une valeur vide | Copie de `.env.example` sans remplir les nouvelles lignes | ✅ corrigé sur la branche : une valeur vide veut dire « non défini » (vérifié avec une valeur vide, valide et invalide) |
 | 🟡 Faible | Régression | Les envois de fichiers appelaient une adresse fixe des réglages de build ; ils appellent maintenant l'adresse de la page, qui diffère si le back-office était hébergé à part du serveur | Back-office déployé sur un autre hôte que le serveur | ⏳ reporté — [dette n°1](debt/261124-feat-debt-serve-back-office-on-aldaron-domain.FR.md#1-les-envois-de-fichiers-suivent-ladresse-de-la-page) |
-| 🟡 Faible | Bug | Les autres e-mails à un employé Aldaron (code de vérification, mot de passe oublié, alertes) gardent le cadre et le nom du portfolio | Tout e-mail de ce type | ⏳ reporté, existait avant la branche — [dette n°2](debt/261124-feat-debt-serve-back-office-on-aldaron-domain.FR.md#2-les-autres-e-mails-gardent-le-cadre-du-portfolio) |
-| 🟡 Faible | Bug | Une personne invitée avec des rôles qui ouvrent les deux espaces reçoit le lien du portfolio | Invitation à rôles mixtes | ⏳ reporté — [dette n°3](debt/261124-feat-debt-serve-back-office-on-aldaron-domain.FR.md#3-les-rôles-mixtes-reçoivent-le-lien-du-portfolio) |
+| 🟡 Faible | Bug | Une personne invitée avec des rôles qui ouvrent les deux espaces reçoit le lien du portfolio | Invitation à rôles mixtes | ⏳ reporté — [dette n°2](debt/261124-feat-debt-serve-back-office-on-aldaron-domain.FR.md#2-les-rôles-mixtes-reçoivent-le-lien-du-portfolio) |
 
 Détails et corrections : [fichier de dette](debt/261124-feat-debt-serve-back-office-on-aldaron-domain.FR.md).
 

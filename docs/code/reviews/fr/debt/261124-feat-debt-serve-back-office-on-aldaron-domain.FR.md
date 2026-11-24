@@ -8,16 +8,14 @@
 
 - [Résumé](#résumé)
 - [1. Les envois de fichiers suivent l'adresse de la page](#1-les-envois-de-fichiers-suivent-ladresse-de-la-page)
-- [2. Les autres e-mails gardent le cadre du portfolio](#2-les-autres-e-mails-gardent-le-cadre-du-portfolio)
-- [3. Les rôles mixtes reçoivent le lien du portfolio](#3-les-rôles-mixtes-reçoivent-le-lien-du-portfolio)
+- [2. Les rôles mixtes reçoivent le lien du portfolio](#2-les-rôles-mixtes-reçoivent-le-lien-du-portfolio)
 
 ## Résumé
 
 | # | Gravité | Type | Risque | Statut |
 |---|---|---|---|---|
 | 1 | 🟡 Faible | Régression | Les envois de fichiers appellent l'adresse de la page au lieu de `VITE_SERVER_URL` | ⏳ à faire |
-| 2 | 🟡 Faible | Bug | Les e-mails de vérification, de réinitialisation et d'alerte gardent le cadre du portfolio (existait avant) | ⏳ à faire |
-| 3 | 🟡 Faible | Bug | Des rôles qui ouvrent les deux espaces reçoivent le lien du portfolio | ⏳ à faire |
+| 2 | 🟡 Faible | Bug | Des rôles qui ouvrent les deux espaces reçoivent le lien du portfolio | ⏳ à faire |
 
 ## 1. Les envois de fichiers suivent l'adresse de la page
 
@@ -36,24 +34,7 @@
    *Pourquoi* : c'est déjà l'architecture, et une seule règle pour Parse et les envois est plus simple.
 2. Rétablir `VITE_SERVER_URL` et ajouter une valeur par domaine — coûte une variable de build par domaine et annule l'intérêt d'un seul build.
 
-## 2. Les autres e-mails gardent le cadre du portfolio
-
-- **Gravité** : 🟡 Faible · **Type** : Bug · **Statut** : ⏳ à faire — existait avant la branche
-- **Concerné** : `apps/server/src/cloud/utils/_core/email.utils.cloud.ts` (vérification, réinitialisation, ré-authentification, alertes)
-
-**Ce qui peut arriver** — Un employé Aldaron reçoit un code de vérification ou une alerte signés du nom du portfolio et renvoyant vers le site du portfolio.
-
-**Pourquoi** — Seule l'invitation passe un espace à `generateEmailTemplate` ; les autres constructeurs utilisent la valeur par défaut.
-
-**Comment vérifier** — Déclencher une réinitialisation de mot de passe pour un compte Aldaron seul et lire le pied de l'e-mail.
-
-**Comment corriger**
-
-1. **(recommandé)** Déduire l'espace du destinataire avec `getUserWorkspaces` dans l'envoi d'e-mail commun et le passer au cadre.
-   *Pourquoi* : un seul endroit, pas de changement par constructeur, et ce sont les rôles du destinataire qui décident, pas la requête.
-2. Ajouter un argument `workspace` à chaque constructeur — plus de modifications, facile d'en oublier un.
-
-## 3. Les rôles mixtes reçoivent le lien du portfolio
+## 2. Les rôles mixtes reçoivent le lien du portfolio
 
 - **Gravité** : 🟡 Faible · **Type** : Bug · **Statut** : ⏳ à faire
 - **Concerné** : `apps/server/src/cloud/services/_core/userRole.service.cloud.ts` (`getLandingWorkspace`)

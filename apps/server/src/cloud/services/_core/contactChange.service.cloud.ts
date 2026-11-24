@@ -14,12 +14,12 @@ import { assertStepUpVerified } from './stepUpVerification.service.cloud';
 import { releaseUnverifiedPhoneSignup } from './user.service.cloud';
 import { revokeOtherSessionsService } from './userSession.service.cloud';
 import {
-  sendContactChangeVerificationEmail, sendEmailToRecipient,
+  sendContactChangeVerificationEmail, sendEmailToRecipient, toWorkspaceEmailRecipient,
 } from '../../utils/_core/email.utils.cloud';
 import { sendSmsToPhoneNumber, sendSmsVerification } from '../../utils/_core/sms.utils.cloud';
 import {
   checkVerificationRateLimit, generateEncryptedVerificationCode,
-  getDecryptedUserCode, recordVerificationFailure, toEmailRecipient, type VerificationField,
+  getDecryptedUserCode, recordVerificationFailure, type VerificationField,
 } from '../../utils/_core/user.utils.cloud';
 
 const CONTACT_CHANGE_FIELD: VerificationField = 'contactChangeVerification';
@@ -116,7 +116,7 @@ export const requestContactChangeService = async (
 
   if (pending.email) {
     return sendContactChangeVerificationEmail(
-      { email: pending.email, firstName: savedUser.get('firstName'), lastName: savedUser.get('lastName') },
+      await toWorkspaceEmailRecipient(savedUser, pending.email),
       code,
       locale
     );
@@ -143,7 +143,7 @@ export const notifyPreviousContact = async (
   try {
     if (input.type === ContactChangeTypeEnum.EMAIL && previous.email) {
       await sendEmailToRecipient(
-        { ...toEmailRecipient(user), email: previous.email },
+        await toWorkspaceEmailRecipient(user, previous.email),
         {
           subject: translate('email.contactChangedEmailSubject', locale),
           message: translate('email.contactChangedEmailMessage', locale),

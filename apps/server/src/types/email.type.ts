@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import type { Brevo } from '@getbrevo/brevo';
+import type { TargetEnum } from '@shared/types';
 
 import { secureCodeEmailSchema } from '@/validations/_core/email.validations';
 
@@ -14,6 +15,8 @@ export type EmailRecipient = {
   email: string;
   firstName?: string;
   lastName?: string;
+  /** whose website and name frame the mail: the portfolio's when absent */
+  workspace?: TargetEnum;
 };
 
 interface IContactEmailAttribute {

@@ -8,16 +8,14 @@
 
 - [Summary](#summary)
 - [1. Uploads follow the page address](#1-uploads-follow-the-page-address)
-- [2. Other e-mails keep the portfolio frame](#2-other-e-mails-keep-the-portfolio-frame)
-- [3. Mixed roles get the portfolio link](#3-mixed-roles-get-the-portfolio-link)
+- [2. Mixed roles get the portfolio link](#2-mixed-roles-get-the-portfolio-link)
 
 ## Summary
 
 | # | Severity | Type | Risk | Status |
 |---|---|---|---|---|
 | 1 | 🟡 Low | Regression | Uploads call the page's address instead of `VITE_SERVER_URL` | ⏳ to do |
-| 2 | 🟡 Low | Bug | Verification, reset and alert e-mails keep the portfolio frame (existed before) | ⏳ to do |
-| 3 | 🟡 Low | Bug | Roles opening both workspaces get the portfolio link | ⏳ to do |
+| 2 | 🟡 Low | Bug | Roles opening both workspaces get the portfolio link | ⏳ to do |
 
 ## 1. Uploads follow the page address
 
@@ -36,24 +34,7 @@
    *Why*: it is already the architecture, and one rule for Parse and uploads is simpler.
 2. Restore `VITE_SERVER_URL` and add a per-domain value — costs a build variable per domain and defeats the point of one build.
 
-## 2. Other e-mails keep the portfolio frame
-
-- **Severity**: 🟡 Low · **Type**: Bug · **Status**: ⏳ to do — existed before the branch
-- **Concerned**: `apps/server/src/cloud/utils/_core/email.utils.cloud.ts` (verification, reset, step-up, alerts)
-
-**What can happen** — An Aldaron employee receives a verification code or an alert signed with the portfolio name and linking to the portfolio website.
-
-**Why** — Only the invitation passes a workspace to `generateEmailTemplate`; the other builders use the default.
-
-**How to check** — Trigger a password reset for an Aldaron-only account and read the e-mail footer.
-
-**How to fix**
-
-1. **(recommended)** Derive the workspace of the recipient with `getUserWorkspaces` in the shared e-mail sender and pass it to the frame.
-   *Why*: one place, no change for each builder, and the recipient's roles decide, not the request.
-2. Add a `workspace` argument to each builder — more edits, easy to forget one.
-
-## 3. Mixed roles get the portfolio link
+## 2. Mixed roles get the portfolio link
 
 - **Severity**: 🟡 Low · **Type**: Bug · **Status**: ⏳ to do
 - **Concerned**: `apps/server/src/cloud/services/_core/userRole.service.cloud.ts` (`getLandingWorkspace`)

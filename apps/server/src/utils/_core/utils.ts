@@ -215,6 +215,7 @@ export const generateCloudinaryUrl = (publicId: string): string => {
  */
 export const getLogoUrl = (workspace: TargetEnum = TargetEnum.PORTFOLIO): string => {
   const publicId = workspace === TargetEnum.AGENCY ? 'agency-logo' : 'logo';
+
   return `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/upload/f_png,q_auto/${publicId}`;
 };
 

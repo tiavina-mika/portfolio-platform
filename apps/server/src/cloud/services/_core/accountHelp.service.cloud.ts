@@ -15,11 +15,11 @@ import {
 } from './contactChange.service.cloud';
 import { createUserModerationLog } from './userModerationLog.service.cloud';
 import { revokeAllUserSessionsService } from './userSession.service.cloud';
-import { sendEmailResetPassword } from '../../utils/_core/email.utils.cloud';
+import { sendEmailResetPassword, toWorkspaceEmailRecipient } from '../../utils/_core/email.utils.cloud';
 import { assertCanActOnUser } from '../../utils/_core/role.utils.cloud';
 import { sendSmsVerification } from '../../utils/_core/sms.utils.cloud';
 import {
-  checkVerificationRateLimit, generateEncryptedVerificationCode, getDecryptedUserCode, toEmailRecipient,
+  checkVerificationRateLimit, generateEncryptedVerificationCode, getDecryptedUserCode,
   type VerificationField,
 } from '../../utils/_core/user.utils.cloud';
 import { actingUserContext } from '../../utils/_core/utils.cloud';
@@ -155,7 +155,11 @@ export const sendMemberPasswordResetCodeService = async (
 
   const isSent = phoneNumber
     ? await sendSmsVerification(phoneNumber, code, memberLocale, phone?.code)
-    : await sendEmailResetPassword({ recipient: toEmailRecipient(member), code, locale: memberLocale });
+    : await sendEmailResetPassword({
+      recipient: await toWorkspaceEmailRecipient(member),
+      code,
+      locale: memberLocale,
+    });
 
   await recordHelp(member, request, UserModerationActionEnum.PASSWORD_RESET_SENT, isSent);
 
