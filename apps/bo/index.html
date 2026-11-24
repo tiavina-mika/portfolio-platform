@@ -5,11 +5,6 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!--
-      the Parse server answers the very first requests of a session (user, roles), so its
-      connection is opened while the scripts are still downloading
-    -->
-    <link rel="preconnect" href="%VITE_SERVER_URL%" crossorigin />
-    <!--
       DM Sans is the only typeface the back-office draws in — the weights loaded here (400/500/600)
       are exactly the three the type scale uses, and 700 backs the few places a browser would
       otherwise synthesise a bolder face. Loaded from the css2 endpoint: the `icon` endpoint this

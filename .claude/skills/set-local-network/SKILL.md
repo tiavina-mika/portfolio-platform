@@ -20,7 +20,7 @@ the truth (each app's `.env.example` lists the variables).
 | File | Variables rewritten (host → `<ip>`) |
 |---|---|
 | `apps/server/.env.preprod` | `SERVER_URL`, `WEBSITE_URL` |
-| `apps/bo/.env.preprod` | `VITE_SERVER_URL`, `VITE_WEBSITE_URL` |
+| `apps/bo/.env.preprod` | `VITE_WEBSITE_URL` |
 | `apps/web/.env.local` | `SERVER_URL`, `NEXT_PUBLIC_SERVER_URL`, `APP_URL`, `NEXT_PUBLIC_APP_URL` |
 
 These are git-ignored local config files: never commit them, and never print the value of any other

@@ -12,3 +12,14 @@ export const getHostWorkspace = (): TargetEnum => {
     ? TargetEnum.AGENCY
     : TargetEnum.PORTFOLIO;
 };
+
+/**
+ * The address an admin with no role writes to, for the workspace of the domain the back-office was opened
+ * on: the agency's own sender (VITE_AGENCY_ADMIN_EMAIL_SENDER) on its domain, the portfolio's anywhere else
+ * and while the agency one is unset.
+ */
+export const getAdminContactEmail = (): string => {
+  const agencyEmail = import.meta.env.VITE_AGENCY_ADMIN_EMAIL_SENDER;
+
+  return (getHostWorkspace() === TargetEnum.AGENCY && agencyEmail) || import.meta.env.VITE_ADMIN_EMAIL_SENDER || '';
+};

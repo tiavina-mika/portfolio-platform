@@ -10,18 +10,26 @@ import { MAX_BANS_KEPT_ON_USER } from '@/constants/_core/constants';
 import { PROFILE_FIELD_COLUMNS } from '@/constants/_core/user.constants';
 import { RegisterStepEnum } from '@/types/user.type';
 
-export const getOwnersEmails = () => (process.env.OWNERS_EMAILS || '')
+const parseEmailsList = (value?: string): string[] => (value || '')
   .split(',')
   .map((email) => email.trim().toLowerCase())
   .filter(Boolean);
 
-/** Whether an email is on the owners allowlist (`OWNERS_EMAILS`), however either side is cased. */
+export const getOwnersEmails = () => parseEmailsList(process.env.OWNERS_EMAILS);
+
+/** The owners of the agency workspace (`AGENCY_OWNERS_EMAILS`), invited from the agency's own domain. */
+export const getAgencyOwnersEmails = () => parseEmailsList(process.env.AGENCY_OWNERS_EMAILS);
+
+/**
+ * Whether an email is on an owners allowlist (`OWNERS_EMAILS` or `AGENCY_OWNERS_EMAILS`), however either
+ * side is cased.
+ */
 export const isOwnerEmail = (email?: string | null): boolean => {
   if (!email) return false;
 
   const normalized = email.trim().toLowerCase();
 
-  return getOwnersEmails().some((ownerEmail) => ownerEmail.toLowerCase() === normalized);
+  return [...getOwnersEmails(), ...getAgencyOwnersEmails()].includes(normalized);
 };
 
 /**

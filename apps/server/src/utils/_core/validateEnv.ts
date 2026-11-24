@@ -108,6 +108,11 @@ const validateEnv = (env: Env = process.env): void => {
     AGENCY_WEBSITE_URL: optionalUrl({ default: '' }),
     AGENCY_APP_NAME: str({ default: '' }),
     /*
+     * The agency's own owners, invited at boot from its domain with its e-mail frame. Optional and on top
+     * of OWNERS_EMAILS, which keeps its own minimum.
+     */
+    AGENCY_OWNERS_EMAILS: str({ default: '' }),
+    /*
      * The agency's own Brevo account and the sender verified in it. Optional: while unset the portfolio's
      * key and sender are used. Set both together — a key without its sender would send from an address
      * the agency's Brevo account has not verified, and Brevo refuses the mail.

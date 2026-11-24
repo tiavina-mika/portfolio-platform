@@ -1,3 +1,4 @@
+import { TargetEnum } from '@shared/types';
 import dayjs from 'dayjs';
 
 import type { Locale } from '@/types/app.type';
@@ -5,13 +6,13 @@ import type { IInvitation } from '@/types/invitation.type';
 
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
 import {
-  APP_NAME, collections, HIGHEST_LEVEL_ROLES, INVITATION_EXPIRY_DAYS, IS_LOCAL, IS_TEST,
+  collections, HIGHEST_LEVEL_ROLES, INVITATION_EXPIRY_DAYS, IS_LOCAL, IS_TEST,
   OWNER_INVITATION_EXPIRY_DAYS, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 import { logger } from '@/utils/_core/logger';
 import { normalizeEmail } from '@/utils/_core/signup-identity.utils';
-import { getOwnersEmails } from '@/utils/_core/user.utils';
-import { generateToken, getServerUrl } from '@/utils/_core/utils';
+import { getAgencyOwnersEmails, getOwnersEmails } from '@/utils/_core/user.utils';
+import { generateToken, getAppName, getServerUrl } from '@/utils/_core/utils';
 
 import { getRoleLabels } from './right.service.cloud';
 import { notifyOwnersOfInvitationFailure, updateRoleForUser } from './userRole.service.cloud';
@@ -154,7 +155,7 @@ export const assertValidInvitationForSignup = async (
 };
 
 /**
- * runs on every server boot — sends a BO invitation to any OWNERS_EMAILS address that has
+ * runs on every server boot — sends a BO invitation to any OWNERS_EMAILS or AGENCY_OWNERS_EMAILS address that has
  * neither an existing account nor a pending invitation yet, so the very first admin can be
  * created without a chicken-and-egg problem (sendBOInvitation requires an already-authenticated
  * admin, which does not exist yet on a fresh environment). No-op on every subsequent boot once
@@ -163,6 +164,8 @@ export const assertValidInvitationForSignup = async (
  */
 export const ensureOwnerInvitationsExist = async (): Promise<void> => {
   const ownersEmails = getOwnersEmails();
+  // an address listed in both stays a portfolio owner: it is invited once, from the portfolio's domain
+  const agencyOwnersEmails = getAgencyOwnersEmails().filter((email) => !ownersEmails.includes(email));
 
   logger.info(
     ownersEmails.length
@@ -170,7 +173,16 @@ export const ensureOwnerInvitationsExist = async (): Promise<void> => {
       : '[bootstrapAdmin] OWNERS_EMAILS is empty or unset — no owner can be bootstrapped'
   );
 
-  for (const email of ownersEmails) {
+  if (agencyOwnersEmails.length) {
+    logger.info(`[bootstrapAdmin] Recognized AGENCY_OWNERS_EMAILS: ${agencyOwnersEmails.join(', ')}`);
+  }
+
+  const owners = [
+    ...ownersEmails.map((email) => ({ email, workspace: TargetEnum.PORTFOLIO })),
+    ...agencyOwnersEmails.map((email) => ({ email, workspace: TargetEnum.AGENCY })),
+  ];
+
+  for (const { email, workspace } of owners) {
     const existingUser = await new Parse.Query(Parse.User)
       .equalTo('email', email)
       .select(['email'])
@@ -190,7 +202,7 @@ export const ensureOwnerInvitationsExist = async (): Promise<void> => {
       OWNER_INVITATION_EXPIRY_DAYS
     );
 
-    const inviteLink = `${getServerUrl()}/invite?token=${invitation.get('token')}`;
+    const inviteLink = `${getServerUrl(workspace)}/invite?token=${invitation.get('token')}`;
 
     /*
      * tests never send it: every run starts from an empty database, so each one would mail the owners.
@@ -205,10 +217,11 @@ export const ensureOwnerInvitationsExist = async (): Promise<void> => {
 
     const isSent = await sendInvitationEmail({
       email,
-      inviterName: APP_NAME,
+      inviterName: getAppName(workspace),
       token: invitation.get('token'),
       locale: DEFAULT_LANGUAGE,
       roleLabel: roleLabels.join(', '),
+      workspace,
     });
 
     if (!isSent) {

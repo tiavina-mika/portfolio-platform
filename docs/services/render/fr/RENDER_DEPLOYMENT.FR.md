@@ -139,6 +139,7 @@ Dans **Advanced → Environment Variables** (ou **Environment** une fois créé)
 | `ADMIN_EMAIL_SENDER` | l'adresse d'expéditeur vérifiée dans Brevo |
 | `AGENCY_BREVO_API_KEY`, `AGENCY_ADMIN_EMAIL_SENDER` | facultatif, à définir ensemble : le compte Brevo d'Aldaron (clé API v3) et l'expéditeur vérifié dedans ; non définis, ceux du portfolio servent |
 | `OWNERS_EMAILS` | adresses séparées par des virgules qui reçoivent l'invitation Owner du back-office au démarrage |
+| `AGENCY_OWNERS_EMAILS` | facultatif : adresses séparées par des virgules des Owners d'Aldaron, invités au démarrage depuis le domaine d'Aldaron ; en plus de `OWNERS_EMAILS` |
 | `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | depuis Cloudinary |
 | `AGENCY_CLOUDINARY_NAME`, `AGENCY_CLOUDINARY_API_KEY`, `AGENCY_CLOUDINARY_API_SECRET` | facultatif, les trois ou aucune : le compte Cloudinary d'Aldaron ; non définies, ses fichiers restent dans le compte du portfolio |
 
@@ -149,12 +150,12 @@ Variables du back-office, lues **au moment du build** par `vite build` et inscri
 | Variable | Valeur |
 |---|---|
 | `VITE_ENVIRONMENT` | `PREPROD` |
-| `VITE_SERVER_URL` | la même valeur que `SERVER_URL` |
 | `VITE_PARSE_APP_ID` | la même valeur que `PARSE_APP_ID` |
 | `VITE_REST_API_KEY` | la même valeur que `REST_API_KEY` |
 | `VITE_WEBSITE_URL` | la même valeur que `WEBSITE_URL` |
 | `VITE_AGENCY_HOSTNAME` | facultatif : le nom d'hôte du domaine personnalisé Aldaron, sans `https://` |
 | `VITE_ADMIN_EMAIL_SENDER` | la même valeur que `ADMIN_EMAIL_SENDER` |
+| `VITE_AGENCY_ADMIN_EMAIL_SENDER` | facultatif : la même valeur que `AGENCY_ADMIN_EMAIL_SENDER`, affichée sur le domaine d'Aldaron |
 
 > Ne mettez jamais un vrai secret dans une variable `VITE_*` : la valeur serait lisible dans le JavaScript téléchargé. Sur Render, le contrôle de secrets de `pnpm copy` ne trouve aucun fichier `bo/.env.*` à comparer et s'ignore : rien ne vous protège à cet endroit.
 
@@ -166,7 +167,7 @@ Variables du back-office, lues **au moment du build** par `vite build` et inscri
 
 ### 3.5 Vérifier l'URL réelle
 
-Render affiche l'URL du service sous son nom. Si elle diffère de celle saisie dans `SERVER_URL`, `VITE_SERVER_URL` et `WEBSITE_URL` (un nom déjà pris reçoit un suffixe), corrigez les variables puis faites **Manual Deploy → Clear build cache & deploy** : les valeurs `VITE_*` sont inscrites dans le bundle, un simple redémarrage ne suffit pas.
+Render affiche l'URL du service sous son nom. Si elle diffère de celle saisie dans `SERVER_URL` et `WEBSITE_URL` (un nom déjà pris reçoit un suffixe), corrigez les variables puis faites **Manual Deploy → Clear build cache & deploy** : les valeurs `VITE_*` sont inscrites dans le bundle, un simple redémarrage ne suffit pas.
 
 Test rapide : `<URL du serveur>/ping` répond `pong`, et `/` affiche la page de connexion du back-office.
 
@@ -243,7 +244,7 @@ Les valeurs `NEXT_PUBLIC_*` sont inscrites au build et visibles dans le navigate
 2. **Brevo** : vérifiez que les adresses `ADMIN_EMAIL_SENDER` et `SENDER_EMAIL` sont des expéditeurs vérifiés.
 3. **Première connexion au back-office** : au démarrage, le serveur crée une invitation Owner pour chaque adresse de `OWNERS_EMAILS`. Ouvrez l'email d'invitation, définissez le mot de passe, puis connectez-vous sur l'URL du serveur.
 4. **Contenu** : créez vos premiers projets et articles dans le back-office, puis redéployez le site (Manual Deploy) si son build s'est fait sur une base vide.
-5. **Domaine personnalisé** (facultatif) : Settings → Custom Domains sur chaque service, ajoutez l'enregistrement DNS indiqué par Render, attendez le certificat. Mettez ensuite à jour `SERVER_URL`, `VITE_SERVER_URL`, `WEBSITE_URL`, `VITE_WEBSITE_URL`, `APP_URL`, `NEXT_PUBLIC_SERVER_URL` et `NEXT_PUBLIC_APP_URL`, et redéployez les deux services en vidant le cache de build.
+5. **Domaine personnalisé** (facultatif) : Settings → Custom Domains sur chaque service, ajoutez l'enregistrement DNS indiqué par Render, attendez le certificat. Mettez ensuite à jour `SERVER_URL`, `WEBSITE_URL`, `VITE_WEBSITE_URL`, `APP_URL`, `NEXT_PUBLIC_SERVER_URL` et `NEXT_PUBLIC_APP_URL`, et redéployez les deux services en vidant le cache de build.
 
 ## Étape 6 : vérifier que tout fonctionne
 
@@ -276,7 +277,7 @@ Le projet a deux environnements, chacun avec **sa propre paire de services Rende
 | `APP_ENV` du web | `preProduction` (posé par les scripts) | `production` (posé par les scripts) |
 | URL dans les variables | les services de pré-production | les services de production |
 
-Les deux services de pré-production sont sur le même compte Render. `tiavina-mika-bo.preprod` est le service serveur : il construit le back-office et le sert, le back-office n'a donc pas de service à lui. `tiavina-mika-preprod` est le site web. L'URL publique est déduite du nom par Render et peut différer de lui : copiez toujours l'URL réelle affichée sous chaque service dans le tableau de bord (`https://<slug>.onrender.com`) dans `SERVER_URL`, `VITE_SERVER_URL`, `WEBSITE_URL`, `VITE_WEBSITE_URL`, `APP_URL`, `NEXT_PUBLIC_SERVER_URL` et `NEXT_PUBLIC_APP_URL`.
+Les deux services de pré-production sont sur le même compte Render. `tiavina-mika-bo.preprod` est le service serveur : il construit le back-office et le sert, le back-office n'a donc pas de service à lui. `tiavina-mika-preprod` est le site web. L'URL publique est déduite du nom par Render et peut différer de lui : copiez toujours l'URL réelle affichée sous chaque service dans le tableau de bord (`https://<slug>.onrender.com`) dans `SERVER_URL`, `WEBSITE_URL`, `VITE_WEBSITE_URL`, `APP_URL`, `NEXT_PUBLIC_SERVER_URL` et `NEXT_PUBLIC_APP_URL`.
 
 Tout le reste (le reste de chaque commande de build, les health checks, les noms de variables) est identique. Gardez chaque secret différent entre les deux environnements, et ne faites jamais pointer un service de pré-production vers la base ou l'URL serveur de production.
 
@@ -297,6 +298,5 @@ Tout le reste (le reste de chaque commande de build, les health checks, les noms
 | Le serveur s'arrête au démarrage avec `Missing environment variables` | le log les liste : ajoutez-les dans Environment (n'ajoutez pas `PORT`) |
 | Le serveur s'arrête avec une erreur de connexion Mongo | Network Access d'Atlas n'autorise pas `0.0.0.0/0`, ou l'utilisateur ou le mot de passe de `MONGO_URL` est faux (les caractères spéciaux doivent être encodés en URL) |
 | Le serveur est Live mais `/` répond une erreur ou une page blanche | le back-office n'a pas été copié : vérifiez l'étape `copy` dans le log de build et que `NODE_ENV=production` figure dans la commande de build |
-| Le back-office appelle le mauvais serveur | `VITE_SERVER_URL` était faux au build : corrigez-la et videz le cache de build |
 | La première requête après un moment prend 30 à 60 secondes | les instances gratuites s'endorment après environ 15 minutes ; le cron de maintien en éveil ne tourne que tant que le service est éveillé. Utilisez une instance payante pour un vrai site |
 | Mémoire insuffisante pendant le build | l'instance gratuite (512 Mo) peut être trop petite pour `next build` ou `vite build` : passez à `Starter` ou plus |

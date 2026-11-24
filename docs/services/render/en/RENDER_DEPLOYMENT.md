@@ -139,6 +139,7 @@ In **Advanced → Environment Variables** (or **Environment** once created), add
 | `ADMIN_EMAIL_SENDER` | the verified sender address in Brevo |
 | `AGENCY_BREVO_API_KEY`, `AGENCY_ADMIN_EMAIL_SENDER` | optional, set together: the Aldaron Brevo account (v3 API key) and the sender verified in it; unset, the portfolio's are used |
 | `OWNERS_EMAILS` | comma-separated emails that receive the back-office Owner invitation at boot |
+| `AGENCY_OWNERS_EMAILS` | optional: comma-separated emails of the Aldaron owners, invited at boot from the Aldaron domain; on top of `OWNERS_EMAILS` |
 | `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | from Cloudinary |
 | `AGENCY_CLOUDINARY_NAME`, `AGENCY_CLOUDINARY_API_KEY`, `AGENCY_CLOUDINARY_API_SECRET` | optional, set all three or none: the Aldaron Cloudinary account; unset, its files stay in the portfolio's account |
 
@@ -149,12 +150,12 @@ Back-office variables, read **at build time** by `vite build` and inlined in the
 | Variable | Value |
 |---|---|
 | `VITE_ENVIRONMENT` | `PREPROD` |
-| `VITE_SERVER_URL` | the same value as `SERVER_URL` |
 | `VITE_PARSE_APP_ID` | the same value as `PARSE_APP_ID` |
 | `VITE_REST_API_KEY` | the same value as `REST_API_KEY` |
 | `VITE_WEBSITE_URL` | the same value as `WEBSITE_URL` |
 | `VITE_AGENCY_HOSTNAME` | optional: the hostname of the Aldaron custom domain, without `https://` |
 | `VITE_ADMIN_EMAIL_SENDER` | the same value as `ADMIN_EMAIL_SENDER` |
+| `VITE_AGENCY_ADMIN_EMAIL_SENDER` | optional: the same value as `AGENCY_ADMIN_EMAIL_SENDER`, shown on the Aldaron domain |
 
 > Never put a real secret in a `VITE_*` variable: the value would be readable in the downloaded JavaScript. On Render the secret scan of `pnpm copy` finds no `bo/.env.*` file to compare with and skips itself, so nothing protects you there.
 
@@ -166,7 +167,7 @@ Back-office variables, read **at build time** by `vite build` and inlined in the
 
 ### 3.5 Check the real URL
 
-Render shows the service URL under its name. If it differs from the one you typed in `SERVER_URL`, `VITE_SERVER_URL` and `WEBSITE_URL` (a name already taken gets a suffix), fix the variables and use **Manual Deploy → Clear build cache & deploy**: the `VITE_*` values are baked into the bundle, a restart is not enough.
+Render shows the service URL under its name. If it differs from the one you typed in `SERVER_URL` and `WEBSITE_URL` (a name already taken gets a suffix), fix the variables and use **Manual Deploy → Clear build cache & deploy**: the `VITE_*` values are baked into the bundle, a restart is not enough.
 
 Quick test: `<server URL>/ping` answers `pong`, and `/` shows the back-office login page.
 
@@ -243,7 +244,7 @@ All of them are validated by `apps/web/env.ts`; a missing or invalid one stops t
 2. **Brevo**: check that the `ADMIN_EMAIL_SENDER` and `SENDER_EMAIL` addresses are verified senders.
 3. **Back-office first login**: the server creates an Owner invitation for every address in `OWNERS_EMAILS` at boot. Open the invitation email, set the password, then sign in at the server URL.
 4. **Content**: create your first projects and articles in the back-office, then redeploy the website (Manual Deploy) if its build ran against an empty database.
-5. **Custom domain** (optional): Settings → Custom Domains on each service, add the DNS record Render shows, wait for the certificate. Then update `SERVER_URL`, `VITE_SERVER_URL`, `WEBSITE_URL`, `VITE_WEBSITE_URL`, `APP_URL`, `NEXT_PUBLIC_SERVER_URL` and `NEXT_PUBLIC_APP_URL`, and redeploy both services with the build cache cleared.
+5. **Custom domain** (optional): Settings → Custom Domains on each service, add the DNS record Render shows, wait for the certificate. Then update `SERVER_URL`, `WEBSITE_URL`, `VITE_WEBSITE_URL`, `APP_URL`, `NEXT_PUBLIC_SERVER_URL` and `NEXT_PUBLIC_APP_URL`, and redeploy both services with the build cache cleared.
 
 ## Step 6: check that everything works
 
@@ -276,7 +277,7 @@ The project runs two environments, each with **its own pair of Render services a
 | Web `APP_ENV` | `preProduction` (set by the scripts) | `production` (set by the scripts) |
 | URLs in the variables | the pre-production services | the production services |
 
-Both pre-production services live on the same Render account. `tiavina-mika-bo.preprod` is the server service: it builds the back-office and serves it, so the back-office has no service of its own. `tiavina-mika-preprod` is the website. The public URL is derived from the name by Render and may differ from it, so always copy the real URL shown under each service in the dashboard (`https://<slug>.onrender.com`) into `SERVER_URL`, `VITE_SERVER_URL`, `WEBSITE_URL`, `VITE_WEBSITE_URL`, `APP_URL`, `NEXT_PUBLIC_SERVER_URL` and `NEXT_PUBLIC_APP_URL`.
+Both pre-production services live on the same Render account. `tiavina-mika-bo.preprod` is the server service: it builds the back-office and serves it, so the back-office has no service of its own. `tiavina-mika-preprod` is the website. The public URL is derived from the name by Render and may differ from it, so always copy the real URL shown under each service in the dashboard (`https://<slug>.onrender.com`) into `SERVER_URL`, `WEBSITE_URL`, `VITE_WEBSITE_URL`, `APP_URL`, `NEXT_PUBLIC_SERVER_URL` and `NEXT_PUBLIC_APP_URL`.
 
 Everything else (the rest of each build command, the health check paths, the variable names) is identical. Keep each secret different between the two environments, and never point a pre-production service at the production database or at the production server URL.
 
@@ -297,6 +298,5 @@ Everything else (the rest of each build command, the health check paths, the var
 | Server exits at boot with `Missing environment variables` | the log lists them: add them in Environment (do not add `PORT`) |
 | Server exits with a Mongo connection error | Atlas Network Access does not allow `0.0.0.0/0`, or the user or password in `MONGO_URL` is wrong (special characters must be URL-encoded) |
 | Server is Live but `/` answers an error or a blank page | the back-office was not copied: check the `copy` step in the build log and that `NODE_ENV=production` is in the build command |
-| Back-office calls the wrong server | `VITE_SERVER_URL` was wrong at build time: fix it and clear the build cache |
 | First request after a while takes 30–60 seconds | free instances sleep after about 15 minutes; the keep-awake cron only runs while the service is awake. Use a paid instance for a real site |
 | Out of memory during the web build | the free instance (512 MB) may be too small for `next build` or `vite build`: switch to `Starter` or more |
