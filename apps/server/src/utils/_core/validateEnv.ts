@@ -13,6 +13,18 @@ const nonEmptyStr = makeValidator((input: string): string => {
   return input;
 });
 
+/*
+ * an optional URL: a line left empty in the env file (as `.env.example` ships it) is "not set", which
+ * the plain `url()` refuses and would stop the boot
+ */
+const optionalUrl = makeValidator((input: string): string => {
+  if (!input.trim()) return '';
+
+  new URL(input);
+
+  return input;
+});
+
 const AES_256_KEY_BYTES = 32;
 
 /*
@@ -70,8 +82,8 @@ const validateEnv = (env: Env = process.env): void => {
      * while one is unset, the matching portfolio value is used (see getServerUrl, getClientUrl,
      * getAppName), so a portfolio-only deployment configures nothing.
      */
-    AGENCY_SERVER_URL: url({ default: '' }),
-    AGENCY_WEBSITE_URL: url({ default: '' }),
+    AGENCY_SERVER_URL: optionalUrl({ default: '' }),
+    AGENCY_WEBSITE_URL: optionalUrl({ default: '' }),
     AGENCY_APP_NAME: str({ default: '' }),
     REST_API_KEY: str(),
     CRYPTO_FIXED_PART_KEY: str(),
