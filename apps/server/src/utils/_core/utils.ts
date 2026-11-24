@@ -208,12 +208,15 @@ export const generateCloudinaryUrl = (publicId: string): string => {
 /**
  * get logo url
  * cloudinary: https://res.cloudinary.com/your-cloud-name/image/upload/f_auto,q_auto/logo
- * @Note rename the file in cloudinary to logo, it should be in the root folder
- * @param isLocalServer
+ * The portfolio's logo is the root asset `logo`, the agency's the root asset `agency-logo`.
+ * Delivered as PNG: mail clients do not render SVG.
+ * @param workspace
  * @returns
  */
-export const getLogoUrl = (): string =>
-  `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/upload/f_png,q_auto/logo`;
+export const getLogoUrl = (workspace: TargetEnum = TargetEnum.PORTFOLIO): string => {
+  const publicId = workspace === TargetEnum.AGENCY ? 'agency-logo' : 'logo';
+  return `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/upload/f_png,q_auto/${publicId}`;
+};
 
 /**
  * for url name

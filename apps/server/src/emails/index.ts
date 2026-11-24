@@ -105,7 +105,7 @@ export const generateEmailTemplate = ({
       <tr>
         <td style="padding-bottom:24px;">
           <a href="${clientUrl}" aria-label="${appName}">
-            <img class="em-logo" alt="${appName}" src="${getLogoUrl()}" height="48"
+            <img class="em-logo" alt="${appName}" src="${getLogoUrl(workspace)}" height="48"
               style="display:block;height:48px;width:auto;border:0;" />
           </a>
         </td>

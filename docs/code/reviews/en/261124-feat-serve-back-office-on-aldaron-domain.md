@@ -55,5 +55,4 @@ Details and fixes: [debt file](debt/261124-feat-debt-serve-back-office-on-aldaro
 ## What is left to do
 
 - Domain name, DNS and HTTPS certificate, then the four settings (yours). Set them last: a link to an address that does not answer yet would be broken.
-- An Aldaron logo for the e-mails (still the portfolio's).
 - The manual cases of `tc.md` (second hostname) have not been run.

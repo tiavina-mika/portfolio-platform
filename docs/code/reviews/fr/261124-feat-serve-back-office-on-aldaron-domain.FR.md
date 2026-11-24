@@ -55,5 +55,4 @@ Détails et corrections : [fichier de dette](debt/261124-feat-debt-serve-back-of
 ## Ce qui reste à faire
 
 - Nom de domaine, DNS et certificat HTTPS, puis les quatre réglages (de votre côté). À renseigner en dernier : un lien vers une adresse qui ne répond pas encore serait cassé.
-- Un logo Aldaron pour les e-mails (toujours celui du portfolio).
 - Les cas manuels de `tc.md` (seconde adresse) n'ont pas été exécutés.
