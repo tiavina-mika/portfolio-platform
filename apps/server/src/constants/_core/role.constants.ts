@@ -1,3 +1,5 @@
+import { TargetEnum } from '@shared/types';
+
 import {
   collections, DEFAULT_ROLES, HIGHEST_LEVEL_ROLES, STAFF_UI_RIGHT,
 } from '@/constants/_core/constants';
@@ -28,6 +30,21 @@ export const DEFAULT_ROLE_TRANSLATED_LABELS: Record<string, Record<string, { lab
     en: { label: 'Team lead' },
     fr: { label: 'Responsable d’équipe' },
     mg: { label: 'Mpitarika ekipa' },
+  },
+  [DEFAULT_ROLES[3]!]: {
+    en: { label: 'Aldaron team (Read-only)' },
+    fr: { label: 'Équipe Aldaron (lecture seule)' },
+    mg: { label: 'Ekipa Aldaron (famakiana ihany)' },
+  },
+  [DEFAULT_ROLES[4]!]: {
+    en: { label: 'Aldaron team lead' },
+    fr: { label: 'Responsable d’équipe Aldaron' },
+    mg: { label: 'Mpitarika ekipa Aldaron' },
+  },
+  [DEFAULT_ROLES[5]!]: {
+    en: { label: 'Aldaron administrator' },
+    fr: { label: 'Administrateur Aldaron' },
+    mg: { label: 'Mpitantana Aldaron' },
   },
 };
 
@@ -66,9 +83,34 @@ const TEAM_LEAD_DEFAULT_RIGHTS = SUPPORT_VIEWER_DEFAULT_RIGHTS.map((entry) => (
     : entry
 ));
 
+/**
+ * AGENCY_ADMIN's default rights: every right on every "rightable" class — the owner of the agency workspace
+ * runs it alone, so it gets all of it — except the always-locked ones, which no role ever holds.
+ */
+const AGENCY_ADMIN_DEFAULT_RIGHTS = SUPPORT_VIEWER_DEFAULT_RIGHTS.map((entry) => ({
+  ...entry,
+  rights: {
+    find: true, get: true, create: true, update: true, delete: true, destroy: true,
+  },
+}));
+
 export const DEFAULT_ROLE_RIGHTS: Record<string, typeof SUPPORT_VIEWER_DEFAULT_RIGHTS> = {
   [DEFAULT_ROLES[1]!]: SUPPORT_VIEWER_DEFAULT_RIGHTS,
   [DEFAULT_ROLES[2]!]: TEAM_LEAD_DEFAULT_RIGHTS,
+  // the agency posts read and invite like the two above, but only in the agency workspace
+  [DEFAULT_ROLES[3]!]: SUPPORT_VIEWER_DEFAULT_RIGHTS,
+  [DEFAULT_ROLES[4]!]: TEAM_LEAD_DEFAULT_RIGHTS,
+  [DEFAULT_ROLES[5]!]: AGENCY_ADMIN_DEFAULT_RIGHTS,
+};
+
+/**
+ * The workspaces a default role opens. A default role with no entry opens the portfolio only, like any
+ * role saved without the field.
+ */
+export const DEFAULT_ROLE_WORKSPACES: Record<string, TargetEnum[]> = {
+  [DEFAULT_ROLES[3]!]: [TargetEnum.AGENCY],
+  [DEFAULT_ROLES[4]!]: [TargetEnum.AGENCY],
+  [DEFAULT_ROLES[5]!]: [TargetEnum.AGENCY],
 };
 
 /*
@@ -78,6 +120,10 @@ export const DEFAULT_ROLE_RIGHTS: Record<string, typeof SUPPORT_VIEWER_DEFAULT_R
 export const DEFAULT_ROLE_UI: Record<string, string[]> = {
   [DEFAULT_ROLES[1]!]: [],
   [DEFAULT_ROLES[2]!]: [STAFF_UI_RIGHT],
+  [DEFAULT_ROLES[3]!]: [],
+  [DEFAULT_ROLES[4]!]: [STAFF_UI_RIGHT],
+  // the staff management only: impersonation, broadcast and the platform tabs stay with the owners
+  [DEFAULT_ROLES[5]!]: [STAFF_UI_RIGHT],
 };
 
 /*

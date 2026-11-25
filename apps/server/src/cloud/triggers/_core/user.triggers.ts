@@ -7,13 +7,13 @@ import type { ParseTriggerValidation } from '@/types/utils.type';
 
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
 import {
-  FROM_PROJECT, HIGHEST_LEVEL_ROLES, SKIP_SIGN_UP_VERIFICATION, USE_MASTER_KEY,
+  FROM_PROJECT, SKIP_SIGN_UP_VERIFICATION, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 import { SIGN_UP_IDENTITY_FIELDS } from '@/constants/_core/user.constants';
 import { RegisterStepEnum } from '@/types/user.type';
 import { logger } from '@/utils/_core/logger';
 import { resolveSignUpIdentity } from '@/utils/_core/signup-identity.utils';
-import { isOwnerEmail } from '@/utils/_core/user.utils';
+import { getBootstrapRoleName } from '@/utils/_core/user.utils';
 import { profileVisibilitySchema } from '@/validations/_core/user.validations';
 
 import { isImpersonatedSessionService } from '../../services/_core/impersonation.service.cloud';
@@ -402,9 +402,11 @@ Parse.Cloud.afterSave(
        * account is not confirmed yet at this point; the update branch below grants the role when
        * the code is accepted.
        */
-      if (user.get('emailVerified') && isOwnerEmail(user.get('email'))) {
+      const bootstrapRoleName = getBootstrapRoleName(user.get('email'));
+
+      if (user.get('emailVerified') && bootstrapRoleName) {
         // trusted server-side bootstrap (env-controlled allowlist) — not a user-driven request
-        await updateRoleForUser([HIGHEST_LEVEL_ROLES[0]!], user, undefined, { bypassEscalationGuard: true });
+        await updateRoleForUser([bootstrapRoleName], user, undefined, { bypassEscalationGuard: true });
       }
 
       logger.info(`End User creation afterSave [${user.id}] by ${currentUser?.get('username')}`);
@@ -436,10 +438,12 @@ Parse.Cloud.afterSave(
      * for an account already holding it — `updateRoleForUser` replaces the account's whole set of
      * roles, so granting again would strip any other role the owner was given since.
      */
-    if (dirtyKeys.includes('emailVerified') && user.get('emailVerified') && isOwnerEmail(user.get('email'))) {
-      if (!(await hasRole([HIGHEST_LEVEL_ROLES[0]!], user))) {
+    const bootstrapRoleName = getBootstrapRoleName(user.get('email'));
+
+    if (dirtyKeys.includes('emailVerified') && user.get('emailVerified') && bootstrapRoleName) {
+      if (!(await hasRole([bootstrapRoleName], user))) {
         // trusted server-side bootstrap (env-controlled allowlist) — not a user-driven request
-        await updateRoleForUser([HIGHEST_LEVEL_ROLES[0]!], user, undefined, { bypassEscalationGuard: true });
+        await updateRoleForUser([bootstrapRoleName], user, undefined, { bypassEscalationGuard: true });
       }
     }
 

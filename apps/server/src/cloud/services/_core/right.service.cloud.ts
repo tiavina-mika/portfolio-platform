@@ -10,7 +10,7 @@ import {
   DEFAULT_QUERY_LIMIT, DEFAULT_ROLES, HIGHEST_LEVEL_ROLES, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 import {
-  DEFAULT_ROLE_RIGHTS, DEFAULT_ROLE_TRANSLATED_LABELS, DEFAULT_ROLE_UI,
+  DEFAULT_ROLE_RIGHTS, DEFAULT_ROLE_TRANSLATED_LABELS, DEFAULT_ROLE_UI, DEFAULT_ROLE_WORKSPACES,
 } from '@/constants/_core/role.constants';
 import { logger } from '@/utils/_core/logger';
 import { getChangedRightsClassNames, getRoleWorkspaces } from '@/utils/_core/rights.utils';
@@ -211,6 +211,7 @@ export const createDefaultRole = async (name: string): Promise<Role> => createRo
   translated: DEFAULT_ROLE_TRANSLATED_LABELS[name],
   rights: DEFAULT_ROLE_RIGHTS[name],
   ui: DEFAULT_ROLE_UI[name],
+  workspaces: DEFAULT_ROLE_WORKSPACES[name],
 });
 
 /**

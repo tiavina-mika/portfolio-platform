@@ -40,6 +40,8 @@ pnpm nx run bo:dev
 pnpm nx run web:dev
 ```
 
+To open the back-office on the Aldaron workspace, run `pnpm --filter portfolio-bo dev:agency` next to `bo:dev`: it serves the same code on `http://localhost:5175`, which the back-office treats as the Aldaron domain (the portfolio stays on `http://localhost:5174`).
+
 ## Check your change
 
 ```bash

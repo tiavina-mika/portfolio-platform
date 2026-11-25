@@ -6,8 +6,8 @@ import type { CorsOptions } from 'cors';
 import multer from "multer";
 
 import {
-  BO_DEV_PORT, IS_E2E, IS_LOCAL, MAX_FILES_UPLOAD, MOBILE_STORYBOOK_DEV_PORT, MOBILE_WEB_DEV_PORT,
-  WEB_DEV_PORT,
+  BO_AGENCY_DEV_PORT, BO_DEV_PORT, IS_E2E, IS_LOCAL, MAX_FILES_UPLOAD, MOBILE_STORYBOOK_DEV_PORT,
+  MOBILE_WEB_DEV_PORT, WEB_DEV_PORT,
 } from '@/constants/_core/constants';
 import { getClientUrl, getServerUrl } from '@/utils/_core/utils';
 
@@ -98,6 +98,7 @@ export const helmetContentSecurityPolicy = {
 const LOCAL_DEV_PORTS = [
   WEB_DEV_PORT,
   BO_DEV_PORT,
+  BO_AGENCY_DEV_PORT,
   MOBILE_WEB_DEV_PORT,
   MOBILE_STORYBOOK_DEV_PORT,
 ];

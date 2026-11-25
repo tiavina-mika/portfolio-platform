@@ -32,6 +32,9 @@ Noms dans `libs/shared-constants/src/role.constants.ts`, libellés et droits par
 | `MANAGER` | par défaut (`DEFAULT_ROLES[0]`) | droits réglés par entité dans le back-office |
 | `SUPPORT_VIEWER` | par défaut | lecture seule |
 | `TEAM_LEAD` | par défaut | lit comme `SUPPORT_VIEWER`, peut inviter un collègue, voit la gestion du personnel |
+| `AGENCY_STAFF` | par défaut (`DEFAULT_ROLES[3]`) | mêmes droits que `SUPPORT_VIEWER`, mais n'ouvre que l'espace de l'agence (Aldaron) |
+| `AGENCY_LEAD` | par défaut (`DEFAULT_ROLES[4]`) | mêmes droits que `TEAM_LEAD`, mais n'ouvre que l'espace de l'agence (Aldaron) |
+| `AGENCY_ADMIN` | par défaut (`DEFAULT_ROLES[5]`) | tous les droits sur toutes les classes sauf celles toujours verrouillées, et la gestion du personnel, dans l'espace de l'agence (Aldaron) uniquement ; donné aux `AGENCY_OWNERS_EMAILS` à la place de `OWNER` |
 
 Les deux rôles les plus hauts passent tous les contrôles sans entrée `rights`, côté serveur (`hasRight`) et dans le back-office. Les rôles par défaut sont créés au démarrage par `ensureDefaultRolesExist`, une fois `SUPER_ADMIN` présent.
 

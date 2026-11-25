@@ -6,7 +6,7 @@ import type { IInvitation } from '@/types/invitation.type';
 
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
 import {
-  collections, HIGHEST_LEVEL_ROLES, INVITATION_EXPIRY_DAYS, IS_LOCAL, IS_TEST,
+  collections, DEFAULT_ROLES, HIGHEST_LEVEL_ROLES, INVITATION_EXPIRY_DAYS, IS_LOCAL, IS_TEST,
   OWNER_INVITATION_EXPIRY_DAYS, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 import { logger } from '@/utils/_core/logger';
@@ -177,12 +177,18 @@ export const ensureOwnerInvitationsExist = async (): Promise<void> => {
     logger.info(`[bootstrapAdmin] Recognized AGENCY_OWNERS_EMAILS: ${agencyOwnersEmails.join(', ')}`);
   }
 
+  const ownerRoleName = HIGHEST_LEVEL_ROLES[0]!;
+  // the agency's own administrator: every right, but in its workspace only
+  const agencyAdminRoleName = DEFAULT_ROLES[5]!;
+
   const owners = [
-    ...ownersEmails.map((email) => ({ email, workspace: TargetEnum.PORTFOLIO })),
-    ...agencyOwnersEmails.map((email) => ({ email, workspace: TargetEnum.AGENCY })),
+    ...ownersEmails.map((email) => ({ email, workspace: TargetEnum.PORTFOLIO, roleName: ownerRoleName })),
+    ...agencyOwnersEmails.map((email) => ({
+      email, workspace: TargetEnum.AGENCY, roleName: agencyAdminRoleName,
+    })),
   ];
 
-  for (const { email, workspace } of owners) {
+  for (const { email, workspace, roleName } of owners) {
     const existingUser = await new Parse.Query(Parse.User)
       .equalTo('email', email)
       .select(['email'])
@@ -197,7 +203,7 @@ export const ensureOwnerInvitationsExist = async (): Promise<void> => {
 
     const invitation = await createInvitation(
       email,
-      [HIGHEST_LEVEL_ROLES[0]!],
+      [roleName],
       undefined,
       OWNER_INVITATION_EXPIRY_DAYS
     );
@@ -213,7 +219,7 @@ export const ensureOwnerInvitationsExist = async (): Promise<void> => {
       continue;
     }
 
-    const roleLabels = await getRoleLabels([HIGHEST_LEVEL_ROLES[0]!], DEFAULT_LANGUAGE);
+    const roleLabels = await getRoleLabels([roleName], DEFAULT_LANGUAGE);
 
     const isSent = await sendInvitationEmail({
       email,

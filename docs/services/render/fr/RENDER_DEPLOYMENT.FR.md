@@ -133,13 +133,13 @@ Dans **Advanced → Environment Variables** (ou **Environment** une fois créé)
 | `REST_API_KEY` | générée (étape 2) |
 | `SERVER_URL` | l'URL du serveur, telle qu'affichée dans le tableau de bord (`https://…`, sans `/` final) |
 | `WEBSITE_URL` | l'URL du site |
-| `AGENCY_SERVER_URL`, `AGENCY_WEBSITE_URL`, `AGENCY_APP_NAME` | facultatif : le domaine du back-office Aldaron (un domaine personnalisé de ce même service), son site et le nom de ses e-mails ; non définis, les valeurs du portfolio servent |
+| `AGENCY_SERVER_URL`, `AGENCY_WEBSITE_URL`, `AGENCY_APP_NAME` | facultatif : l'URL du back-office Aldaron (son propre service, voir [3.6](#36-le-service-aldaron-facultatif)), son site et le nom de ses e-mails ; non définis, les valeurs du portfolio servent |
 | `CRYPTO_FIXED_PART_KEY`, `CRYPTO_FIXED_FULL_KEY`, `CRYPTO_IV` | générées (étape 2) |
 | `BREVO_API_KEY` | depuis Brevo |
 | `ADMIN_EMAIL_SENDER` | l'adresse d'expéditeur vérifiée dans Brevo |
 | `AGENCY_BREVO_API_KEY`, `AGENCY_ADMIN_EMAIL_SENDER` | facultatif, à définir ensemble : le compte Brevo d'Aldaron (clé API v3) et l'expéditeur vérifié dedans ; non définis, ceux du portfolio servent |
 | `OWNERS_EMAILS` | adresses séparées par des virgules qui reçoivent l'invitation Owner du back-office au démarrage |
-| `AGENCY_OWNERS_EMAILS` | facultatif : adresses séparées par des virgules des Owners d'Aldaron, invités au démarrage depuis le domaine d'Aldaron ; en plus de `OWNERS_EMAILS` |
+| `AGENCY_OWNERS_EMAILS` | facultatif : adresses séparées par des virgules des administrateurs d'Aldaron, invités au démarrage depuis le domaine d'Aldaron avec le rôle `AGENCY_ADMIN` (espace Aldaron uniquement) ; en plus de `OWNERS_EMAILS` |
 | `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | depuis Cloudinary |
 | `AGENCY_CLOUDINARY_NAME`, `AGENCY_CLOUDINARY_API_KEY`, `AGENCY_CLOUDINARY_API_SECRET` | facultatif, les trois ou aucune : le compte Cloudinary d'Aldaron ; non définies, ses fichiers restent dans le compte du portfolio |
 
@@ -153,7 +153,7 @@ Variables du back-office, lues **au moment du build** par `vite build` et inscri
 | `VITE_PARSE_APP_ID` | la même valeur que `PARSE_APP_ID` |
 | `VITE_REST_API_KEY` | la même valeur que `REST_API_KEY` |
 | `VITE_WEBSITE_URL` | la même valeur que `WEBSITE_URL` |
-| `VITE_AGENCY_HOSTNAME` | facultatif : le nom d'hôte du domaine personnalisé Aldaron, sans `https://` |
+| `VITE_AGENCY_HOSTNAME` | facultatif : le nom d'hôte du back-office Aldaron (voir [3.6](#36-le-service-aldaron-facultatif)), sans `https://` |
 | `VITE_ADMIN_EMAIL_SENDER` | la même valeur que `ADMIN_EMAIL_SENDER` |
 | `VITE_AGENCY_ADMIN_EMAIL_SENDER` | facultatif : la même valeur que `AGENCY_ADMIN_EMAIL_SENDER`, affichée sur le domaine d'Aldaron |
 
@@ -170,6 +170,23 @@ Variables du back-office, lues **au moment du build** par `vite build` et inscri
 Render affiche l'URL du service sous son nom. Si elle diffère de celle saisie dans `SERVER_URL` et `WEBSITE_URL` (un nom déjà pris reçoit un suffixe), corrigez les variables puis faites **Manual Deploy → Clear build cache & deploy** : les valeurs `VITE_*` sont inscrites dans le bundle, un simple redémarrage ne suffit pas.
 
 Test rapide : `<URL du serveur>/ping` répond `pong`, et `/` affiche la page de connexion du back-office.
+
+### 3.6 Le service Aldaron (facultatif)
+
+Le workspace Aldaron a sa propre adresse de back-office. Elle est servie par un **second Web Service du même dépôt** (mêmes commandes de build et de démarrage, même base MongoDB que le service serveur du 3.1). Le serveur ne sait pas qu'il est « celui d'Aldaron » : c'est l'adresse sur laquelle il est ouvert et les variables ci-dessous qui décident. Donnez-lui les mêmes variables que le service serveur, **sauf** :
+
+| Variable | Valeur sur le service Aldaron | Pourquoi |
+|---|---|---|
+| `SERVER_URL` | sa **propre** URL, par ex. `https://aldaron-labs-bo-preprod.onrender.com` | c'est l'URL affichée dans le log de démarrage, celle que Parse annonce (`serverURL` et `publicServerURL`) et celle que le ping planifié appelle. Laissée à l'URL du portfolio, ce service afficherait, annoncerait et pinguerait **l'autre** service |
+| `AGENCY_SERVER_URL` | la même URL que son `SERVER_URL` | le lien des invitations Aldaron |
+| `AGENCY_WEBSITE_URL` | le site d'Aldaron | `WEBSITE_URL` reste obligatoire (la valeur du portfolio convient) ; les e-mails et liens d'Aldaron utilisent `AGENCY_WEBSITE_URL` |
+| `VITE_AGENCY_HOSTNAME` (build) | son nom d'hôte sans `https://`, par ex. `aldaron-labs-bo-preprod.onrender.com` | ouvert sur cette adresse, le back-office démarre dans le workspace Aldaron |
+
+Sur le service **portfolio**, `SERVER_URL` ne change pas ; définissez aussi `AGENCY_SERVER_URL` pour qu'une invitation Aldaron envoyée depuis lui porte le lien Aldaron.
+
+Le succès est le même qu'au 3.4, avec l'URL d'Aldaron sous `[PREPROD]`. Comme au 3.5, l'URL réelle vient du tableau de bord : si Render a ajouté un suffixe, corrigez `SERVER_URL`, `AGENCY_SERVER_URL` et `VITE_AGENCY_HOSTNAME`, puis **Clear build cache & deploy** (les valeurs `VITE_*` sont inscrites dans le bundle).
+
+> Un domaine personnalisé ajouté au service **portfolio** à la place d'un second service fonctionne aussi : `SERVER_URL` reste alors celui du portfolio, et seuls `AGENCY_SERVER_URL` et `VITE_AGENCY_HOSTNAME` portent le nouveau domaine.
 
 ## Étape 4 : déployer le site web
 

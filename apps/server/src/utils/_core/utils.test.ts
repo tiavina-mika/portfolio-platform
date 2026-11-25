@@ -41,6 +41,13 @@ describe('URLs and name of a workspace', () => {
   });
 
   describe('when the agency variables are not set', () => {
+    // a developer's .env.local may define them: the test must not depend on the machine
+    beforeEach(() => {
+      vi.stubEnv('AGENCY_SERVER_URL', '');
+      vi.stubEnv('AGENCY_WEBSITE_URL', '');
+      vi.stubEnv('AGENCY_APP_NAME', '');
+    });
+
     it('should fall back to the portfolio values for the agency workspace', () => {
       expect(getServerUrl(TargetEnum.AGENCY)).toBe('https://portfolio.test');
       expect(getClientUrl(TargetEnum.AGENCY)).toBe('https://www.portfolio.test');

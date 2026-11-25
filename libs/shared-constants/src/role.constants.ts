@@ -1,7 +1,7 @@
 // the first role is the highest level, the order is important
 export const HIGHEST_LEVEL_ROLES = ['OWNER', 'SUPER_ADMIN'];
 // MANAGER stays DEFAULT_ROLES[0] for backward compatibility — new default roles are appended after it
-export const DEFAULT_ROLES = ['MANAGER', 'SUPPORT_VIEWER', 'TEAM_LEAD'];
+export const DEFAULT_ROLES = ['MANAGER', 'SUPPORT_VIEWER', 'TEAM_LEAD', 'AGENCY_STAFF', 'AGENCY_LEAD', 'AGENCY_ADMIN'];
 
 /*
  * bounds for a role's custom back-office inactivity timeout — an unbounded field would let an

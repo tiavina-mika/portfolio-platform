@@ -6,6 +6,7 @@
   "scripts": {
     "start": "cross-env VITE_CONFIG_NATIVE_IGNORE_WARNING=true env-cmd -f .env.prod vite",
     "dev": "cross-env VITE_CONFIG_NATIVE_IGNORE_WARNING=true vite --mode preprod",
+    "dev:agency": "cross-env VITE_CONFIG_NATIVE_IGNORE_WARNING=true VITE_AGENCY_HOSTNAME=localhost:5175 vite --mode preprod --port 5175 --strictPort",
     "typecheck": "tsc --noEmit",
     "build": "tsc && cross-env VITE_CONFIG_NATIVE_IGNORE_WARNING=true vite build",
     "build:preprod": "cross-env VITE_CONFIG_NATIVE_IGNORE_WARNING=true env-cmd -f .env.preprod vite build",

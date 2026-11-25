@@ -32,6 +32,9 @@ Names in `libs/shared-constants/src/role.constants.ts`, labels and default right
 | `MANAGER` | default (`DEFAULT_ROLES[0]`) | rights set per entity in the back-office |
 | `SUPPORT_VIEWER` | default | read only |
 | `TEAM_LEAD` | default | reads like `SUPPORT_VIEWER`, can invite a colleague, sees the staff management |
+| `AGENCY_STAFF` | default (`DEFAULT_ROLES[3]`) | same rights as `SUPPORT_VIEWER`, but opens the agency (Aldaron) workspace only |
+| `AGENCY_LEAD` | default (`DEFAULT_ROLES[4]`) | same rights as `TEAM_LEAD`, but opens the agency (Aldaron) workspace only |
+| `AGENCY_ADMIN` | default (`DEFAULT_ROLES[5]`) | every right on every class except the always-locked ones, and the staff management, in the agency (Aldaron) workspace only; given to `AGENCY_OWNERS_EMAILS` instead of `OWNER` |
 
 The two highest roles pass every check without a `rights` entry, on the server (`hasRight`) and in the back-office. Default roles are created at boot by `ensureDefaultRolesExist`, once `SUPER_ADMIN` exists.
 

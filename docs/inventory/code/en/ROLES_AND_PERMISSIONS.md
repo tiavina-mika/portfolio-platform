@@ -19,6 +19,9 @@ Names are defined in `libs/shared-constants/src/role.constants.ts` (shared by th
 | `MANAGER` | Default | `DEFAULT_ROLES[0]`; rights are set per entity in the back-office |
 | `SUPPORT_VIEWER` | Default | Read-only (`find`, `get`) on every class except the always-locked ones |
 | `TEAM_LEAD` | Default | What `SUPPORT_VIEWER` reads, plus creating an account (used to invite a colleague); sees the staff management |
+| `AGENCY_STAFF` | Default | `DEFAULT_ROLES[3]`; the rights of `SUPPORT_VIEWER`, opening the agency (Aldaron) workspace only |
+| `AGENCY_LEAD` | Default | `DEFAULT_ROLES[4]`; the rights of `TEAM_LEAD`, opening the agency (Aldaron) workspace only |
+| `AGENCY_ADMIN` | Default | `DEFAULT_ROLES[5]`; every right on every class except the always-locked ones plus the staff management, agency (Aldaron) workspace only; the role of `AGENCY_OWNERS_EMAILS` |
 
 The default roles are created at boot by `ensureDefaultRolesExist` once the `SUPER_ADMIN` role exists. Other roles can be created from the back-office (`createRole`, `updateRole`). Roles are stored in the Parse `_Role` collection; the highest roles are children of every other role.
 

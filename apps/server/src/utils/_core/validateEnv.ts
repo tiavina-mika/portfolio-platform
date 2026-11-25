@@ -108,8 +108,9 @@ const validateEnv = (env: Env = process.env): void => {
     AGENCY_WEBSITE_URL: optionalUrl({ default: '' }),
     AGENCY_APP_NAME: str({ default: '' }),
     /*
-     * The agency's own owners, invited at boot from its domain with its e-mail frame. Optional and on top
-     * of OWNERS_EMAILS, which keeps its own minimum.
+     * The agency's own administrators, invited at boot from its domain with its e-mail frame and given the
+     * AGENCY_ADMIN role: every right, in the agency workspace only. Optional and on top of OWNERS_EMAILS,
+     * which keeps its own minimum.
      */
     AGENCY_OWNERS_EMAILS: str({ default: '' }),
     /*

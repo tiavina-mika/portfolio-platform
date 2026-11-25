@@ -6,7 +6,7 @@ import uniq from 'lodash/uniq.js';
 
 import type { ActorSnapshot, IBan } from '@/types/user.type';
 
-import { MAX_BANS_KEPT_ON_USER } from '@/constants/_core/constants';
+import { DEFAULT_ROLES, HIGHEST_LEVEL_ROLES, MAX_BANS_KEPT_ON_USER } from '@/constants/_core/constants';
 import { PROFILE_FIELD_COLUMNS } from '@/constants/_core/user.constants';
 import { RegisterStepEnum } from '@/types/user.type';
 
@@ -20,16 +20,21 @@ export const getOwnersEmails = () => parseEmailsList(process.env.OWNERS_EMAILS);
 /** The owners of the agency workspace (`AGENCY_OWNERS_EMAILS`), invited from the agency's own domain. */
 export const getAgencyOwnersEmails = () => parseEmailsList(process.env.AGENCY_OWNERS_EMAILS);
 
+/** Whether an email is on the owners allowlist (`OWNERS_EMAILS`), however either side is cased. */
+export const isOwnerEmail = (email?: string | null): boolean => (
+  !!email && getOwnersEmails().includes(email.trim().toLowerCase())
+);
+
 /**
- * Whether an email is on an owners allowlist (`OWNERS_EMAILS` or `AGENCY_OWNERS_EMAILS`), however either
- * side is cased.
+ * The role an address is given as soon as it proves it reads it: OWNER on the owners allowlist, the agency
+ * administrator on the agency one (an address on both stays an owner), none for anybody else.
  */
-export const isOwnerEmail = (email?: string | null): boolean => {
-  if (!email) return false;
+export const getBootstrapRoleName = (email?: string | null): string | undefined => {
+  if (!email) return undefined;
 
-  const normalized = email.trim().toLowerCase();
+  if (isOwnerEmail(email)) return HIGHEST_LEVEL_ROLES[0];
 
-  return [...getOwnersEmails(), ...getAgencyOwnersEmails()].includes(normalized);
+  return getAgencyOwnersEmails().includes(email.trim().toLowerCase()) ? DEFAULT_ROLES[5] : undefined;
 };
 
 /**

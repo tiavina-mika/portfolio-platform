@@ -19,6 +19,9 @@ Les noms sont définis dans `libs/shared-constants/src/role.constants.ts` (parta
 | `MANAGER` | Par défaut | `DEFAULT_ROLES[0]` ; les droits se règlent par entité dans le back-office |
 | `SUPPORT_VIEWER` | Par défaut | Lecture seule (`find`, `get`) sur toutes les classes sauf celles toujours verrouillées |
 | `TEAM_LEAD` | Par défaut | Ce que lit `SUPPORT_VIEWER`, plus la création d'un compte (pour inviter un collègue) ; voit la gestion de l'équipe |
+| `AGENCY_STAFF` | Par défaut | `DEFAULT_ROLES[3]` ; les droits de `SUPPORT_VIEWER`, n'ouvre que l'espace de l'agence (Aldaron) |
+| `AGENCY_LEAD` | Par défaut | `DEFAULT_ROLES[4]` ; les droits de `TEAM_LEAD`, n'ouvre que l'espace de l'agence (Aldaron) |
+| `AGENCY_ADMIN` | Par défaut | `DEFAULT_ROLES[5]` ; tous les droits sur toutes les classes sauf les verrouillées, plus la gestion du personnel, espace de l'agence (Aldaron) uniquement ; le rôle des `AGENCY_OWNERS_EMAILS` |
 
 Les rôles par défaut sont créés au démarrage par `ensureDefaultRolesExist` une fois le rôle `SUPER_ADMIN` présent. D'autres rôles peuvent être créés depuis le back-office (`createRole`, `updateRole`). Les rôles sont stockés dans la collection Parse `_Role` ; les rôles les plus hauts sont enfants de tous les autres.
 

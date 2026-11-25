@@ -343,6 +343,8 @@ export const BO_BUILD_FOLDER = (process.env.NODE_ENV === 'production' || FORCE_P
  */
 export const WEB_DEV_PORT = 9012;
 export const BO_DEV_PORT = 5174;
+// second back-office dev server (`dev:agency`), opened on the agency workspace: same code, other port
+export const BO_AGENCY_DEV_PORT = 5175;
 /**
  * Local dev ports of the mobile app's WEB targets — Expo's own web build (`expo start --web`)
  * and its Storybook (`storybook dev -p 6007`).

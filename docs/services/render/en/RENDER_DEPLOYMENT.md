@@ -133,13 +133,13 @@ In **Advanced → Environment Variables** (or **Environment** once created), add
 | `REST_API_KEY` | generated (Step 2) |
 | `SERVER_URL` | the server URL, as shown in the dashboard (`https://…`, no trailing slash) |
 | `WEBSITE_URL` | the website URL |
-| `AGENCY_SERVER_URL`, `AGENCY_WEBSITE_URL`, `AGENCY_APP_NAME` | optional: the Aldaron back-office domain (a custom domain of this same service), its website and the name of its e-mails; unset, the portfolio values are used |
+| `AGENCY_SERVER_URL`, `AGENCY_WEBSITE_URL`, `AGENCY_APP_NAME` | optional: the Aldaron back-office URL (its own service, see [3.6](#36-the-aldaron-service-optional)), its website and the name of its e-mails; unset, the portfolio values are used |
 | `CRYPTO_FIXED_PART_KEY`, `CRYPTO_FIXED_FULL_KEY`, `CRYPTO_IV` | generated (Step 2) |
 | `BREVO_API_KEY` | from Brevo |
 | `ADMIN_EMAIL_SENDER` | the verified sender address in Brevo |
 | `AGENCY_BREVO_API_KEY`, `AGENCY_ADMIN_EMAIL_SENDER` | optional, set together: the Aldaron Brevo account (v3 API key) and the sender verified in it; unset, the portfolio's are used |
 | `OWNERS_EMAILS` | comma-separated emails that receive the back-office Owner invitation at boot |
-| `AGENCY_OWNERS_EMAILS` | optional: comma-separated emails of the Aldaron owners, invited at boot from the Aldaron domain; on top of `OWNERS_EMAILS` |
+| `AGENCY_OWNERS_EMAILS` | optional: comma-separated emails of the Aldaron administrators, invited at boot from the Aldaron domain with the `AGENCY_ADMIN` role (agency workspace only); on top of `OWNERS_EMAILS` |
 | `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | from Cloudinary |
 | `AGENCY_CLOUDINARY_NAME`, `AGENCY_CLOUDINARY_API_KEY`, `AGENCY_CLOUDINARY_API_SECRET` | optional, set all three or none: the Aldaron Cloudinary account; unset, its files stay in the portfolio's account |
 
@@ -153,7 +153,7 @@ Back-office variables, read **at build time** by `vite build` and inlined in the
 | `VITE_PARSE_APP_ID` | the same value as `PARSE_APP_ID` |
 | `VITE_REST_API_KEY` | the same value as `REST_API_KEY` |
 | `VITE_WEBSITE_URL` | the same value as `WEBSITE_URL` |
-| `VITE_AGENCY_HOSTNAME` | optional: the hostname of the Aldaron custom domain, without `https://` |
+| `VITE_AGENCY_HOSTNAME` | optional: the hostname of the Aldaron back-office (see [3.6](#36-the-aldaron-service-optional)), without `https://` |
 | `VITE_ADMIN_EMAIL_SENDER` | the same value as `ADMIN_EMAIL_SENDER` |
 | `VITE_AGENCY_ADMIN_EMAIL_SENDER` | optional: the same value as `AGENCY_ADMIN_EMAIL_SENDER`, shown on the Aldaron domain |
 
@@ -170,6 +170,23 @@ Back-office variables, read **at build time** by `vite build` and inlined in the
 Render shows the service URL under its name. If it differs from the one you typed in `SERVER_URL` and `WEBSITE_URL` (a name already taken gets a suffix), fix the variables and use **Manual Deploy → Clear build cache & deploy**: the `VITE_*` values are baked into the bundle, a restart is not enough.
 
 Quick test: `<server URL>/ping` answers `pong`, and `/` shows the back-office login page.
+
+### 3.6 The Aldaron service (optional)
+
+The Aldaron workspace has its own back-office address. It is served by a **second Web Service of the same repository** (same build and start commands, same MongoDB database as the server service of 3.1). The server has no idea it is "the Aldaron one": the address it is opened on and the variables below decide. Give it the same variables as the server service, **except**:
+
+| Variable | Value on the Aldaron service | Why |
+|---|---|---|
+| `SERVER_URL` | its **own** URL, e.g. `https://aldaron-labs-bo-preprod.onrender.com` | it is the URL shown in the start-up log, the one Parse announces (`serverURL` and `publicServerURL`) and the one the scheduled self-ping calls. Left to the portfolio URL, this service would log, announce and ping the **other** service |
+| `AGENCY_SERVER_URL` | the same URL as its `SERVER_URL` | the link of the Aldaron invitations |
+| `AGENCY_WEBSITE_URL` | the Aldaron website | `WEBSITE_URL` stays required (the portfolio's value is fine); the Aldaron e-mails and links use `AGENCY_WEBSITE_URL` |
+| `VITE_AGENCY_HOSTNAME` (build) | its hostname without `https://`, e.g. `aldaron-labs-bo-preprod.onrender.com` | opened on this address, the back-office starts in the Aldaron workspace |
+
+On the **portfolio** service, `SERVER_URL` is unchanged; set `AGENCY_SERVER_URL` there too so an Aldaron invitation sent from it carries the Aldaron link.
+
+Success is the same as in 3.4, with the Aldaron URL under `[PREPROD]`. As in 3.5, the real URL comes from the dashboard: if Render added a suffix, fix `SERVER_URL`, `AGENCY_SERVER_URL` and `VITE_AGENCY_HOSTNAME`, then **Clear build cache & deploy** (the `VITE_*` values are baked into the bundle).
+
+> A custom domain added to the **portfolio** service instead of a second service also works: then `SERVER_URL` stays the portfolio's, and only `AGENCY_SERVER_URL` and `VITE_AGENCY_HOSTNAME` carry the new domain.
 
 ## Step 4: deploy the website
 
