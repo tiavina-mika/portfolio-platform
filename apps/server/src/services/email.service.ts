@@ -1,5 +1,6 @@
 import { BrevoClient, BrevoError } from '@getbrevo/brevo';
 import { E2eOutboxChannelEnum } from '@shared/domain-types';
+import { TargetEnum } from '@shared/types';
 
 import type {
   ICreateContactEmailParams,
@@ -9,7 +10,6 @@ import type {
   ISendEmail,
   ISendEmailResult,
 } from '@/types/email.type';
-import type { TargetEnum } from '@shared/types';
 
 import { IS_E2E } from '@/constants/_core/constants';
 import { recordE2eMessage } from '@/utils/_core/e2e-outbox.utils';
@@ -123,6 +123,38 @@ export const getContacts = async (): Promise<IGetContactsResponse> => {
   }
 };
 
+// one attempt with the Brevo account and sender of a workspace; never mutates the caller's values
+const trySendEmail = async (values: ISendEmail, workspace?: TargetEnum): Promise<ISendEmailResult> => {
+  try {
+    const client = getBrevoClient(workspace);
+    const payload: ISendEmail = {
+      ...values,
+      sender: values.sender ?? { email: getAdminEmailSender(workspace), name: getAppName(workspace) },
+    };
+
+    const data = await client.transactionalEmails.sendTransacEmail(payload);
+
+    logger.info('sendEmail success:', JSON.stringify(data));
+    return { data };
+  }
+  catch (error: unknown) {
+    const brevoError = error as BrevoError | undefined;
+    const body = brevoError?.body as { code?: string; message?: string } | undefined;
+
+    logger.warn('sendEmail failed', {
+      status: brevoError?.statusCode,
+      body: brevoError?.body,
+    });
+
+    return {
+      errorCode: body?.code ?? (brevoError?.statusCode
+        ? String(brevoError.statusCode)
+        : undefined),
+      errorMessage: body?.message ?? brevoError?.message,
+    };
+  }
+};
+
 /**
  * Sends one transactional e-mail. A refusal comes back with Brevo's own code and message rather than
  * as a bare `undefined`: a notification records them on the recipient the e-mail failed for.
@@ -145,34 +177,27 @@ export const sendEmailWithResult = async (
     return { data: { messageId: 'e2e' } };
   }
 
-  try {
-    const client = getBrevoClient(workspace);
+  const result = await trySendEmail(values, workspace);
 
-    if (!values.sender) {
-      values.sender = { email: getAdminEmailSender(workspace), name: getAppName(workspace) };
-    }
+  /*
+   * The agency's own Brevo account or sender can be refused (sender not validated, key revoked):
+   * a code or a reset link that never leaves locks people out, so the portfolio's account, which
+   * is known to work, sends it instead. Only when the agency really has its own setup, and only
+   * when the caller did not pick a sender itself.
+   */
+  const hasOwnKey = getBrevoApiKey(workspace) !== getBrevoApiKey();
+  const hasOwnSender = getAdminEmailSender(workspace) !== getAdminEmailSender();
+  const hasOwnSetup = !!workspace && workspace !== TargetEnum.PORTFOLIO && (hasOwnKey || hasOwnSender);
 
-    const data = await client.transactionalEmails.sendTransacEmail(values);
+  if (result.data || values.sender || !hasOwnSetup) return result;
 
-    logger.info('sendEmail success:', JSON.stringify(data));
-    return { data };
-  }
-  catch (error: unknown) {
-    const brevoError = error as BrevoError | undefined;
-    const body = brevoError?.body as { code?: string; message?: string } | undefined;
+  logger.warn('sendEmail refused for the workspace, retrying with the portfolio account', {
+    workspace,
+    errorCode: result.errorCode,
+    errorMessage: result.errorMessage,
+  });
 
-    logger.warn('sendEmail failed', {
-      status: brevoError?.statusCode,
-      body: brevoError?.body,
-    });
-
-    return {
-      errorCode: body?.code ?? (brevoError?.statusCode
-        ? String(brevoError.statusCode)
-        : undefined),
-      errorMessage: body?.message ?? brevoError?.message,
-    };
-  }
+  return trySendEmail(values, TargetEnum.PORTFOLIO);
 };
 
 export const sendEmail = async (
