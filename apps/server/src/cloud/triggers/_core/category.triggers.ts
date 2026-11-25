@@ -13,6 +13,7 @@ import {
 } from '../../services/_core/category.service.cloud';
 import { assertTechnicalCodeIsAvailable } from '../../services/_core/cms.service.cloud';
 import { getCategoryTranslatedDefaultValues } from '../../utils/_core/cms.utils.cloud';
+import { assertCanSaveInWorkspaces } from '../../utils/_core/role.utils.cloud';
 import { parseFunction } from '../../utils/_core/utils.cloud';
 
 export const Category = Parse.Object.extend('Category');
@@ -38,6 +39,9 @@ Parse.Cloud.beforeSave(
     }
 
     if (!user) return;
+
+    // a category of another workspace is neither changed nor created by an editor who cannot open it
+    await assertCanSaveInWorkspaces(request, 'targets');
 
     /*
      * --------- creation and update --------- //

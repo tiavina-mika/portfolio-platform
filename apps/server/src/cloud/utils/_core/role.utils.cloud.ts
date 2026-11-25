@@ -7,7 +7,7 @@ import type { Role, User } from 'parse';
 
 import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
 import { ENFORCE_HIGHEST_ROLES_MFA, HIGHEST_LEVEL_ROLES } from '@/constants/_core/constants';
-import { mergeRoleCountries, mergeRoleWorkspaces } from '@/utils/_core/rights.utils';
+import { isWriteWithinWorkspaces, mergeRoleCountries, mergeRoleWorkspaces } from '@/utils/_core/rights.utils';
 
 import {
   getRolesForUser, getRolesForUserByEntity, hasRole, hasRoleAsManager, toRoleGrants,
@@ -108,6 +108,46 @@ export const resolveWorkspace = async (
   }
 
   return requested;
+};
+
+// the targets a row names: `targets` is a list (articles, pages, categories), `target` one value (projects)
+const getRowTargets = (row: Parse.Object, field: string): TargetEnum[] => {
+  const value: TargetEnum | TargetEnum[] | undefined = row.get(field);
+
+  if (Array.isArray(value)) return value;
+
+  return value ? [value] : [];
+};
+
+/**
+ * Refuses a save that reaches past the workspaces the editor's roles open: a row of another workspace
+ * cannot be changed, nor created or moved there. Meant for a `beforeSave` trigger — the lists and the
+ * details already refuse these rows, but the back-office saves with the SDK, which only the
+ * class-level permissions guard, and those know nothing about workspaces.
+ *
+ * Left alone: a save with no user (the server itself), the highest roles, and an account holding no
+ * role at all (a member of a website), which the class-level permissions already keep out.
+ * @param request the `beforeSave` request of a class filed in a workspace
+ * @param field the field holding the workspace: `targets` or `target`
+ */
+export const assertCanSaveInWorkspaces = async (
+  request: Parse.Cloud.BeforeSaveRequest,
+  field: 'targets' | 'target'
+): Promise<void> => {
+  const { user } = request;
+
+  if (!user || await isHighestRole(user)) return;
+
+  const roles = await getRolesForUser(user);
+
+  if (!roles?.length) return;
+
+  const previousTargets = request.original ? getRowTargets(request.original, field) : null;
+  const nextTargets = getRowTargets(request.object, field);
+
+  if (!isWriteWithinWorkspaces(previousTargets, nextTargets, mergeRoleWorkspaces(roles.map(toRoleGrants)))) {
+    throw new Error(translate('error.unauthorizedToDoThisAction', (request.context.locale as Locale) ?? DEFAULT_LANGUAGE));
+  }
 };
 
 /**

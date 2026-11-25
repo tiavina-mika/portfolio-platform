@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/require-await */
+
 import { DOMAIN_COLLECTIONS } from '@shared/domain-constants';
 import { TargetEnum } from '@shared/types';
 import dayjs from 'dayjs';
@@ -10,6 +10,7 @@ import { revalidateWebCacheTag } from '@/utils/_core/revalidate.utils';
 
 import { deleteEditorFilesAfterUpdate, destroyOldFilesAfterUpdate, moveCMSImagesToRecycleBin } from '../../utils/_core/cms.utils.cloud';
 import { destroyFilesAfterObjectDestroyed } from '../../utils/_core/file.utils.cloud';
+import { assertCanSaveInWorkspaces } from '../../utils/_core/role.utils.cloud';
 import { parseFunction } from '../../utils/_core/utils.cloud';
 import { getProjectTranslatedDefaultValues } from '../../utils/_domain/project.utils.cloud';
 
@@ -41,6 +42,9 @@ Parse.Cloud.beforeSave(
     }
 
     if (!user) return;
+
+    // a project of another workspace is neither changed nor created by an editor who cannot open it
+    await assertCanSaveInWorkspaces(request, 'target');
 
     // --------- creation and update --------- //
     const translated = project.get('translated');

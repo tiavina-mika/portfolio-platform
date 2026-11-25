@@ -1,4 +1,5 @@
 import { TargetEnum } from '@shared/types';
+import difference from 'lodash/difference.js';
 import isEqual from 'lodash/isEqual.js';
 import pickBy from 'lodash/pickBy.js';
 import uniq from 'lodash/uniq.js';
@@ -53,6 +54,40 @@ export const isInWorkspaces = (
 
   return (rowTargets.length ? rowTargets : [TargetEnum.PORTFOLIO])
     .some((target) => workspaces.includes(target));
+};
+
+// a row naming no target is the portfolio's
+const toEffectiveTargets = (targets: (TargetEnum | undefined)[] | undefined): TargetEnum[] => {
+  const named = uniq((targets ?? []).filter((target): target is TargetEnum => !!target));
+
+  return named.length ? named : [TargetEnum.PORTFOLIO];
+};
+
+/**
+ * Whether saving a row keeps the writer inside the workspaces their roles open. A row the writer
+ * cannot read cannot be changed, and the workspaces a save adds to the row or takes off it must be
+ * ones the writer opens — a row shared with the other workspace stays editable, as long as that
+ * other side is left as it was.
+ * @param previousTargets the targets the row had before the save, `null` for a row being created
+ * @param nextTargets the targets the row has after the save
+ * @param workspaces the workspaces the writer may use
+ */
+export const isWriteWithinWorkspaces = (
+  previousTargets: (TargetEnum | undefined)[] | null,
+  nextTargets: (TargetEnum | undefined)[] | undefined,
+  workspaces: TargetEnum[]
+): boolean => {
+  const next = toEffectiveTargets(nextTargets);
+
+  if (previousTargets === null) return next.every((target) => workspaces.includes(target));
+
+  const previous = toEffectiveTargets(previousTargets);
+
+  if (!previous.some((target) => workspaces.includes(target))) return false;
+
+  const changed = [...difference(previous, next), ...difference(next, previous)];
+
+  return changed.every((target) => workspaces.includes(target));
 };
 
 /**

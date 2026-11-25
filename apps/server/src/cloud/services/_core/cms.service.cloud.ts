@@ -12,7 +12,7 @@ import {
 } from '@/constants/_core/constants';
 
 import { contentCountryQuery } from '../../utils/_core/parse.utils.cloud';
-import { getAllowedCountryCodes } from '../../utils/_core/role.utils.cloud';
+import { assertCanSaveInWorkspaces, getAllowedCountryCodes } from '../../utils/_core/role.utils.cloud';
 
 /**
  * Refuses a technical code another row of the same collection already carries. The apps read a
@@ -115,7 +115,12 @@ export const beforeSave = async (request: Parse.Cloud.BeforeSaveRequest): Promis
 
   if (!user) return;
 
-  // --------- creation and update --------- //
+  /*
+   * --------- creation and update --------- //
+   * a row of another workspace is neither changed nor created by an editor who cannot open it
+   */
+  await assertCanSaveInWorkspaces(request, 'targets');
+
   const country: string = item.get('country') ?? prevItem?.get('country') ?? DEFAULT_COUNTRY_CODE;
 
   // a content is written for a country the platform runs in, and for one the editor's roles cover
