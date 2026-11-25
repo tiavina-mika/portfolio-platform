@@ -120,9 +120,14 @@ export const sendEmailVerification = async (
     }),
   };
 
-  const data = await sendEmail(params, recipient.workspace);
+  const { data, errorCode, errorMessage } = await sendEmailWithResult(params, recipient.workspace);
 
-  return isEmailSentResponse(data);
+  // a refusal from the provider (unverified sender, bad key) must surface instead of looking like a sent code
+  if (!isEmailSentResponse(data)) {
+    throw new Error(`Verification e-mail refused (${errorCode ?? 'unknown'}): ${errorMessage ?? 'no detail'}`);
+  }
+
+  return true;
 };
 
 // reset password
