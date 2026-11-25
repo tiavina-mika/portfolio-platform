@@ -1,3 +1,4 @@
+import { TargetEnum } from '@shared/types';
 import dayjs from 'dayjs';
 
 import {
@@ -6,10 +7,12 @@ import {
 
 import { getAllRoleUserIds, getRolesForUser } from './userRole.service.cloud';
 import { newAgentQuery } from '../../utils/_core/parse.utils.cloud';
-import { isHighestRole, rolesGrantRight } from '../../utils/_core/role.utils.cloud';
+import { getUserWorkspaces, isHighestRole, rolesGrantRight } from '../../utils/_core/role.utils.cloud';
 
 export interface IDashboardKpiContext {
   weekAgo: Date;
+  /** the workspaces the account's roles open: a provider counting workspace-filed rows narrows to them */
+  workspaces: TargetEnum[];
 }
 
 export type DashboardKpis = Record<string, unknown>;
@@ -92,8 +95,9 @@ const getUserDashboardRecentActivity = async (): Promise<DashboardRecentActivity
 registerDashboardKpiProvider(collections.User, getUserDashboardKpis);
 registerDashboardRecentActivityProvider(collections.User, getUserDashboardRecentActivity);
 
-const getKpiContext = (): IDashboardKpiContext => ({
+const getKpiContext = async (user: Parse.User): Promise<IDashboardKpiContext> => ({
   weekAgo: dayjs().subtract(7, 'day').toDate(),
+  workspaces: await getUserWorkspaces(user),
 });
 
 const merge = (results: Record<string, unknown>[]): Record<string, unknown> => Object.assign({}, ...results);
@@ -109,8 +113,10 @@ const merge = (results: Record<string, unknown>[]): Record<string, unknown> => O
  * account may read — a figure it may not read is left out, never sent as zero
  */
 export const getDashboardKpis = async (user: Parse.User): Promise<DashboardKpis> => {
-  const context = getKpiContext();
-  const providers = await getAllowedProviders(kpiProviders, user);
+  const [context, providers] = await Promise.all([
+    getKpiContext(user),
+    getAllowedProviders(kpiProviders, user),
+  ]);
 
   return merge(await Promise.all(providers.map(provider => provider(context))));
 };

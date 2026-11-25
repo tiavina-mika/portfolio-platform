@@ -294,6 +294,29 @@ export const contentTargetQuery = (
 };
 
 /**
+ * `contentTargetQuery` for a reader who may open several workspaces: nothing is narrowed when every
+ * workspace is open, and a reader limited to one workspace reads that one only.
+ * @param query parse query to narrow, before any `select`/`include` (see `contentTargetQuery`)
+ * @param workspaces the workspaces the reader's roles open
+ * @param field the field holding the target (see `contentTargetQuery`)
+ * @returns the narrowed query
+ */
+export const workspacesTargetQuery = (
+  query: Parse.Query,
+  workspaces: TargetEnum[],
+  field = 'targets'
+): Parse.Query => {
+  if (workspaces.length >= Object.values(TargetEnum).length) return query;
+
+  // the agency alone; any other limited reader works in the portfolio, which also owns the rows with no target
+  return contentTargetQuery(
+    query,
+    workspaces.includes(TargetEnum.AGENCY) ? TargetEnum.AGENCY : TargetEnum.PORTFOLIO,
+    field
+  );
+};
+
+/**
  * `contentCountryQuery` for several countries: the back-office lists of articles and pages, filtered
  * on some countries or kept inside the ones the editor's roles cover. A row with no country is read as
  * the default country's here too, as on the website.

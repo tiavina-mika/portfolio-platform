@@ -1,9 +1,7 @@
-import { TargetEnum } from '@shared/types';
-
 import { collections, USE_MASTER_KEY } from '@/constants/_core/constants';
 import { COUNTRY_SCOPED_BULK_CLASSES } from '@/constants/_core/country-scope.constants';
 
-import { contentTargetQuery, scopeToAgentCountries } from '../../utils/_core/parse.utils.cloud';
+import { scopeToAgentCountries, workspacesTargetQuery } from '../../utils/_core/parse.utils.cloud';
 import { getUserWorkspaces } from '../../utils/_core/role.utils.cloud';
 
 /**
@@ -31,6 +29,16 @@ const WORKSPACE_FIELD_BY_CLASS: Record<string, string> = {
 };
 
 /**
+ * Lets a business domain file its own class in a workspace without this generic service importing
+ * the domain — same registry pattern as the global search and the dashboard.
+ * @param className the class whose rows carry a workspace
+ * @param field the field holding it
+ */
+export const registerWorkspaceField = (className: string, field: string): void => {
+  WORKSPACE_FIELD_BY_CLASS[className] = field;
+};
+
+/**
  * `buildClassQuery`, narrowed to the workspaces the caller's roles open. Messages and content carry the
  * workspace they were filed in, so a badge, a bulk action or a search must never reach those of a
  * workspace the caller cannot open (the list and the detail already refuse them). Other classes
@@ -44,13 +52,7 @@ export const buildScopedClassQuery = async (className: string, user?: Parse.User
 
   if (!field || !user) return query;
 
-  const workspaces = await getUserWorkspaces(user);
-
-  if (workspaces.length >= Object.values(TargetEnum).length) return query;
-  if (workspaces.includes(TargetEnum.AGENCY)) return contentTargetQuery(query, TargetEnum.AGENCY, field);
-
-  // portfolio only; a row with no workspace belongs to the portfolio
-  return contentTargetQuery(query, TargetEnum.PORTFOLIO, field);
+  return workspacesTargetQuery(query, await getUserWorkspaces(user), field);
 };
 
 /**

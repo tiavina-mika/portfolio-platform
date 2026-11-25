@@ -8,6 +8,10 @@ import {
 import { escapeText, isBoolean } from '@/utils/_core/utils';
 
 import { contentTargetQuery, filtersDatesQuery, multiBooleanQuery } from '../../utils/_core/parse.utils.cloud';
+import { registerWorkspaceField } from '../_core/badgeCount.service.cloud';
+
+// a project is filed in one workspace: its badges, bulk actions and global search stay inside the caller's
+registerWorkspaceField(DOMAIN_COLLECTIONS.project, 'target');
 
 type ProjectsParams = {
   limit: number;
