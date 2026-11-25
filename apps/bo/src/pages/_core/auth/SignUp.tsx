@@ -5,10 +5,10 @@ import { useDispatch } from 'react-redux';
 
 
 import Head from '@/components/Head';
-import { APP_NAME } from '@/constants/_core/app.constants';
 import AuthLink from '@/containers/_core/auth/AuthLink';
 import AuthPageLayout from '@/containers/_core/auth/AuthPageLayout';
 import SignUpForm from '@/containers/_core/auth/SignUpForm';
+import { useWorkspaceName } from '@/hooks/_core/useWorkspaceName';
 import { signUp } from '@/redux/actions/_core/auth.action';
 import { inviteRoute } from '@/routes/public/auth.routes';
 import { ISignUpInput } from '@/types/_core/auth.type';
@@ -24,6 +24,7 @@ const SignUp = () => {
     t,
   } = useTranslation(['user']);
   const title = t('user:invitation.createAccount');
+  const appName = useWorkspaceName();
 
   const handleSubmitAccount = (values: ISignUpInput) => {
     dispatch(signUp({ ...values, invitationToken: token }, navigate));
@@ -31,10 +32,10 @@ const SignUp = () => {
 
   return (
     <AuthPageLayout
-      description={t('user:accessToBO', { app: APP_NAME })}
+      description={t('user:accessToBO', { app: appName })}
       formDescription={t('user:anAdminAcceptsYourAccount')}
       formTitle={t('user:createAnAdminAccount')}
-      title={t('user:welcomeToTheApp', { app: APP_NAME })}
+      title={t('user:welcomeToTheApp', { app: appName })}
     >
       <Head title={title} />
       <Stack spacing={2}>

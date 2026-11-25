@@ -2,7 +2,7 @@
   "about": {
     "title": "À propos",
     "pretitle": "Application",
-    "appName": "Back-office Portfolio",
+    "appName": "Back-office {{app}}",
     "details": "Détails",
     "name": "Nom",
     "version": "Version",

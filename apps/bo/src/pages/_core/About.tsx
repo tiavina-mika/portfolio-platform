@@ -13,6 +13,7 @@ import {
   ABOUT_CARD_ICON_SIZE, ABOUT_MAX_WIDTH, ABOUT_WEBSITE_BUTTON_ICON_SIZE, CONTENT_GAP,
 } from '@/constants/_core/ui/page.constants';
 import AboutInfoCard, { type AboutInfoRow } from '@/containers/_core/about/AboutInfoCard';
+import { useWorkspaceName } from '@/hooks/_core/useWorkspaceName';
 import { formatDate } from '@/utils/_core/date.utils';
 import { getAppEnvironment, getServerHost, getWebsiteUrl } from '@/utils/_core/utils';
 
@@ -36,6 +37,7 @@ const About = () => {
   const {
     t, i18n,
   } = useTranslation();
+  const workspaceName = useWorkspaceName();
 
   const title = t('about.title');
   // the countries the platform runs in, named in the language of the back-office
@@ -51,7 +53,7 @@ const About = () => {
   const websiteUrl = getWebsiteUrl();
 
   const detailsRows: AboutInfoRow[] = [
-    { label: t('about.name'), value: t('about.appName') },
+    { label: t('about.name'), value: t('about.appName', { app: workspaceName }) },
     { label: t('about.version'), value: version, isMono: true },
     { label: t('about.updatedAt'), value: formatDate(import.meta.env.VITE_APP_BUILD_TIME) },
     {

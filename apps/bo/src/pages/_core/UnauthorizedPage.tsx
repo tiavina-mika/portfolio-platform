@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 
 import Avatar from '@/components/Avatar';
 import Logo from '@/components/Logo';
-import { APP_NAME } from '@/constants/_core/app.constants';
 import {
   UNAUTHORIZED_ACCOUNT_AVATAR_SIZE, UNAUTHORIZED_ACCOUNT_GAP, UNAUTHORIZED_ACCOUNT_PADDING_X,
   UNAUTHORIZED_ACCOUNT_PADDING_Y, UNAUTHORIZED_ACTION_ICON_SIZE, UNAUTHORIZED_ACTIONS_GAP,
@@ -19,6 +18,7 @@ import {
   UNAUTHORIZED_PAGE_PADDING_MOBILE, UNAUTHORIZED_TEXT_GAP,
 } from '@/constants/_core/ui/page.constants';
 import { RADIUS } from '@/constants/_core/ui/ui.constants';
+import { useWorkspaceName } from '@/hooks/_core/useWorkspaceName';
 import { getAppCurrentUserSelector } from '@/redux/reducers/_core/app.reducer';
 import { IUser } from '@/types/_core/user.type';
 import { PATH_NAMES } from '@/utils/_core/pathnames';
@@ -90,6 +90,7 @@ const UnauthorizedPage = () => {
   } = useTranslation(['common', 'user']);
   const navigate = useNavigate();
   const currentUser = useSelector(getAppCurrentUserSelector) as IUser | null;
+  const workspaceName = useWorkspaceName();
 
   const handleLogout = () => navigate({ to: PATH_NAMES.logout });
 
@@ -150,7 +151,7 @@ const UnauthorizedPage = () => {
         </Box>
       </Card>
       <Typography sx={{ color: 'text.disabled' }} variant="caption">
-        © {new Date().getFullYear()} {APP_NAME}
+        © {new Date().getFullYear()} {workspaceName}
       </Typography>
     </div>
   );

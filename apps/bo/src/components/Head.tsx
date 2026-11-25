@@ -3,6 +3,7 @@ import { useLayoutEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch } from 'react-redux';
 
+import { useWorkspaceName } from '@/hooks/_core/useWorkspaceName';
 import { setAppPageTitleSlice } from '@/redux/reducers/_core/app.reducer';
 import { formatPageTitle } from '@/utils/_core/utils';
 
@@ -16,7 +17,8 @@ const Head = ({
 }: Props) => {
   const dispatch = useDispatch();
   const pathname = useRouterState({ select: state => state.location.pathname });
-  const formattedTitle = formatPageTitle(title!);
+  const workspaceName = useWorkspaceName();
+  const formattedTitle = formatPageTitle(title!, workspaceName);
 
   /*
    * single source of truth for "what page am I on" — also read by the AppBar's breadcrumb, which

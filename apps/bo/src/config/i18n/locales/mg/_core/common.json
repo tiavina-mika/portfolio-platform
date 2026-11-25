@@ -2,7 +2,7 @@
   "about": {
     "title": "Momba ny rindrambaiko",
     "pretitle": "Rindrambaiko",
-    "appName": "Back-office Portfolio",
+    "appName": "Back-office {{app}}",
     "details": "Antsipiriany",
     "name": "Anarana",
     "version": "Dikan-teny",

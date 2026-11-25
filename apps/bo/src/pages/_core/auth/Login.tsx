@@ -3,10 +3,9 @@ import { useSearch } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import Head from '@/components/Head';
-import { APP_NAME } from '@/constants/_core/app.constants';
 import AuthPageLayout from '@/containers/_core/auth/AuthPageLayout';
 import LoginForm from '@/containers/_core/auth/LoginForm';
-
+import { useWorkspaceName } from '@/hooks/_core/useWorkspaceName';
 
 const Login = () => {
   const {
@@ -14,12 +13,13 @@ const Login = () => {
   } = useTranslation();
 
   const { invitation } = useSearch({ strict: false });
+  const appName = useWorkspaceName();
 
   return (
     <AuthPageLayout
-      description={t('user:accessToBO', { app: APP_NAME })}
-      formTitle={t('user:loginToApp', { app: APP_NAME })}
-      title={t('user:welcomeToTheApp', { app: APP_NAME })}
+      description={t('user:accessToBO', { app: appName })}
+      formTitle={t('user:loginToApp', { app: appName })}
+      title={t('user:welcomeToTheApp', { app: appName })}
     >
       <Head title={t('user:login')} />
       <Stack spacing={2}>

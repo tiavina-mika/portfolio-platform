@@ -7,7 +7,7 @@ import { type FieldErrors } from 'react-hook-form';
 import { capitalize } from 'string-ts';
 
 import {
-  APP_NAME, PERSISTED_STATE_KEY, SERVER_PORT, WEBSITE_URL,
+  PERSISTED_STATE_KEY, SERVER_PORT, WEBSITE_URL,
 } from '@/constants/_core/app.constants';
 import { IPagination, IQueriesInput, ISelectOption } from '@/types/_core/app.type';
 import { boPalette, websitePalette } from '@/utils/_core/theme/theme.utils';
@@ -151,16 +151,17 @@ export const getWebsiteUrl = (): string => {
 /**
  * head html element title
  * @param {string} title
+ * @param {string} appName the name of the workspace the page is shown in, which ends the title
  * @returns {string}
  */
-export const formatPageTitle = (title: string): string => {
-  const appName = capitalizeFirstLetter(APP_NAME);
+export const formatPageTitle = (title: string, appName: string): string => {
+  const formattedAppName = capitalizeFirstLetter(appName);
 
   if (title) {
-    return title + ' - ' + appName;
+    return title + ' - ' + formattedAppName;
   }
 
-  return appName;
+  return formattedAppName;
 };
 
 /**

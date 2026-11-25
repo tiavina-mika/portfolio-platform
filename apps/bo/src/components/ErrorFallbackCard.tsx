@@ -4,7 +4,6 @@ import {
 import { FiHome } from 'react-icons/fi';
 
 import Logo from '@/components/Logo';
-import { APP_NAME } from '@/constants/_core/app.constants';
 import {
   STATUS_PAGE_ACTION_HEIGHT, STATUS_PAGE_ACTION_HEIGHT_MOBILE, STATUS_PAGE_ACTION_ICON_SIZE,
   STATUS_PAGE_CARD_GAP, STATUS_PAGE_CARD_PADDING_X, STATUS_PAGE_CARD_PADDING_Y, STATUS_PAGE_CARD_WIDTH,
@@ -13,6 +12,7 @@ import {
   STATUS_PAGE_TITLE_FONT_SIZE, STATUS_PAGE_TITLE_FONT_SIZE_MOBILE, STATUS_PAGE_WORD_FONT_SIZE,
   STATUS_PAGE_WORD_FONT_SIZE_MOBILE,
 } from '@/constants/_core/ui/page.constants';
+import { useWorkspaceName } from '@/hooks/_core/useWorkspaceName';
 
 const classes = {
   root: (theme: Theme) => ({
@@ -86,6 +86,8 @@ type Props = {
 const ErrorFallbackCard = ({
   code, message, actionLabel, onAction, isCodeWord = false,
 }: Props) => {
+  const workspaceName = useWorkspaceName();
+
   return (
     <div className="flexColumn center justifyCenter" css={classes.root}>
       <Logo height={STATUS_PAGE_LOGO_HEIGHT} isLinked={false} />
@@ -106,7 +108,7 @@ const ErrorFallbackCard = ({
         </Button>
       </Card>
       <Typography sx={{ color: 'text.disabled' }} variant="caption">
-        © {new Date().getFullYear()} {APP_NAME}
+        © {new Date().getFullYear()} {workspaceName}
       </Typography>
     </div>
   );
