@@ -54,7 +54,7 @@
     },
     "activeProjectVisible": "Un projet actif est visible pour les utilisateurs",
     "target": "Publié sur",
-    "targetHelper": "Le site qui affiche ce projet : le portfolio ou Aldaron, pas les deux.",
+    "targetHelper": "Le site qui affiche ce projet : le portfolio ou Aldaron Labs, pas les deux.",
     "errors": {
       "projectNotFound": "Projet introuvable"
     },

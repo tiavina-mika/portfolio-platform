@@ -247,7 +247,7 @@
     "countries": "Pays",
     "countriesHelper": "Les pays sur lesquels ce poste peut travailler. Laisser vide pour tous les pays. Un membre qui a plusieurs postes peut travailler sur tous les pays de ses postes.",
     "workspaces": "Espaces de travail",
-    "workspacesHelper": "Les espaces dans lesquels ce poste peut travailler (portfolio, Aldaron). Un membre qui a plusieurs postes peut travailler dans tous les espaces de ses postes.",
+    "workspacesHelper": "Les espaces dans lesquels ce poste peut travailler (portfolio, Aldaron Labs). Un membre qui a plusieurs postes peut travailler dans tous les espaces de ses postes.",
     "sessionTimeout": "Délai de déconnexion automatique (heures)",
     "sessionTimeoutHelper": "Entre {{min, number}} et {{max, number}} heures, par pas de {{step, number}} h (15 min). Laisser vide pour appliquer la valeur par défaut ({{default, number}} h). Si un utilisateur a plusieurs postes, le délai le plus court s'applique.",
     "resourceRights": "Droits des ressources",

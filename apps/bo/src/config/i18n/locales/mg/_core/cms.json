@@ -349,10 +349,10 @@
   },
   "target": {
     "targets": "Aseho ao amin’ny",
-    "targetsHelper": "Aiza no aseho ity votoatiny ity. “Aldaron” irery: natokana ho an’ny tranokalan’i Aldaron.",
+    "targetsHelper": "Aiza no aseho ity votoatiny ity. “Aldaron Labs” irery: natokana ho an’ny tranokalan’i Aldaron Labs.",
     "portfolio": "Portfolio",
-    "agency": "Aldaron",
-    "agencyOnlyHelper": "Natokana ho an’ny tranokalan’i Aldaron: tsy aseho ao amin’ny portfolio.",
+    "agency": "Aldaron Labs",
+    "agencyOnlyHelper": "Natokana ho an’ny tranokalan’i Aldaron Labs: tsy aseho ao amin’ny portfolio.",
     "offerIncludes": "Votoatin’ny tolotra",
     "offerIncludesHelper": "Ny ao anatin’ny tolotra.",
     "offerPrice": "Vidiny (€) (tsy voatery)",

@@ -246,7 +246,7 @@
     "countries": "Countries",
     "countriesHelper": "The countries this role can work on. Leave empty for every country. A member holding several roles can work on all the countries of their roles.",
     "workspaces": "Workspaces",
-    "workspacesHelper": "The workspaces this role can work in (portfolio, Aldaron). A member holding several roles can work in all the workspaces of their roles.",
+    "workspacesHelper": "The workspaces this role can work in (portfolio, Aldaron Labs). A member holding several roles can work in all the workspaces of their roles.",
     "sessionTimeout": "Automatic logout delay (hours)",
     "sessionTimeoutHelper": "Between {{min, number}} and {{max, number}} hours, in steps of {{step, number}} h (15 min). Leave empty to apply the default ({{default, number}} h). When a user holds several roles, the shortest delay applies.",
     "resourceRights": "Resource rights",

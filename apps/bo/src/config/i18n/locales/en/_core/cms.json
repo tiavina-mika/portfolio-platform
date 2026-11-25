@@ -349,10 +349,10 @@
   },
   "target": {
     "targets": "Published on",
-    "targetsHelper": "Where this content is published. “Aldaron” alone: reserved for the Aldaron website.",
+    "targetsHelper": "Where this content is published. “Aldaron Labs” alone: reserved for the Aldaron Labs website.",
     "portfolio": "Portfolio",
-    "agency": "Aldaron",
-    "agencyOnlyHelper": "Reserved for the Aldaron website: not shown on the portfolio.",
+    "agency": "Aldaron Labs",
+    "agencyOnlyHelper": "Reserved for the Aldaron Labs website: not shown on the portfolio.",
     "offerIncludes": "Offer content",
     "offerIncludesHelper": "What the offer includes.",
     "offerPrice": "Price (€) (optional)",

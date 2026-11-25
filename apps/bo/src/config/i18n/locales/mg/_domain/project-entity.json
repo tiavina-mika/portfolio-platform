@@ -54,7 +54,7 @@
     },
     "activeProjectVisible": "Hita ny mpampiasa ny tetikasa active",
     "target": "Aseho ao amin’ny",
-    "targetHelper": "Ny tranokala mampiseho ity tetikasa ity: ny portfolio na i Aldaron, fa tsy roa ireo.",
+    "targetHelper": "Ny tranokala mampiseho ity tetikasa ity: ny portfolio na i Aldaron Labs, fa tsy roa ireo.",
     "errors": {
       "projectNotFound": "Tsy hita ny tetikasa"
     },
