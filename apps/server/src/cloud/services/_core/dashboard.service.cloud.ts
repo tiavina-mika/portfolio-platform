@@ -5,7 +5,7 @@ import {
   collections, DASHBOARD_RECENT_ROWS_LIMIT, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 
-import { getAllRoleUserIds, getRolesForUser } from './userRole.service.cloud';
+import { getAllRoleUserIds, getRolesForUser, getStaffUserIdsHiddenFrom } from './userRole.service.cloud';
 import { newAgentQuery } from '../../utils/_core/parse.utils.cloud';
 import { getUserWorkspaces, isHighestRole, rolesGrantRight } from '../../utils/_core/role.utils.cloud';
 
@@ -19,7 +19,9 @@ export type DashboardKpis = Record<string, unknown>;
 export type DashboardRecentActivity = Record<string, unknown>;
 
 type DashboardKpiProvider = (context: IDashboardKpiContext) => Promise<DashboardKpis>;
-type DashboardRecentActivityProvider = () => Promise<DashboardRecentActivity>;
+type DashboardRecentActivityProvider = (
+  context: Pick<IDashboardKpiContext, 'workspaces'>
+) => Promise<DashboardRecentActivity>;
 
 /**
  * a provider and the collection its figures come from: the dashboard is open to every back-office
@@ -80,9 +82,14 @@ const getUserDashboardKpis = async ({ weekAgo }: IDashboardKpiContext): Promise<
   return { totalUsers, newUsersThisWeek };
 };
 
-const getUserDashboardRecentActivity = async (): Promise<DashboardRecentActivity> => {
+const getUserDashboardRecentActivity = async (
+  { workspaces }: Pick<IDashboardKpiContext, 'workspaces'>
+): Promise<DashboardRecentActivity> => {
+  // the staff of a workspace the account cannot open is not listed, as in the user list
+  const hiddenStaffIds = await getStaffUserIdsHiddenFrom(workspaces);
   const recentUsers = await newAgentQuery(Parse.User)
     .notEqualTo('deleted', true)
+    .notContainedIn('objectId', hiddenStaffIds)
     .descending('createdAt')
     .limit(DASHBOARD_RECENT_ROWS_LIMIT)
     // `phone` too: a member who signed up by phone has no email, and no name until the profile step
@@ -125,7 +132,10 @@ export const getDashboardKpis = async (user: Parse.User): Promise<DashboardKpis>
  * the recent activity columns contributed by every registered provider the account may read
  */
 export const getDashboardRecentActivity = async (user: Parse.User): Promise<DashboardRecentActivity> => {
-  const providers = await getAllowedProviders(recentActivityProviders, user);
+  const [workspaces, providers] = await Promise.all([
+    getUserWorkspaces(user),
+    getAllowedProviders(recentActivityProviders, user),
+  ]);
 
-  return merge(await Promise.all(providers.map(provider => provider())));
+  return merge(await Promise.all(providers.map(provider => provider({ workspaces }))));
 };

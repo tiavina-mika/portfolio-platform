@@ -65,6 +65,8 @@ Dans `apps/server/src/cloud/utils/_core/` :
 - `hasRight(user, className, operations)` : les rôles les plus hauts passent ; sinon chaque opération demandée doit être accordée par au moins un rôle de l'utilisateur.
 - `hasBoRight(user, uiRight)` : vérifie un droit `ui`.
 - Le trigger `country-scope` restreint les requêtes aux pays du rôle.
+- Espaces de travail (portfolio, Aldaron) : les listes, détails, badges, actions groupées, recherche globale et compteurs du tableau de bord des contenus rangés dans l'un d'eux (articles, pages, catégories, contacts, projets) restent dans les espaces ouverts par les rôles (`getUserWorkspaces`, `workspacesTargetQuery`). Une sauvegarde est refusée quand elle modifie, crée ou déplace une ligne d'un espace que l'éditeur ne peut pas ouvrir (`assertCanSaveInWorkspaces`, dans le `beforeSave` des articles, pages, catégories et projets). La liste des utilisateurs masque le staff d'un espace que le lecteur ne peut pas ouvrir (`getStaffUserIdsHiddenFrom`) ; les comptes membres sont communs aux deux espaces.
+- Les sections de page n'ont pas d'espace : les deux espaces les partagent.
 
 Les requêtes tournent ensuite avec la clé maître : ces contrôles sont la garde d'une fonction du back-office.
 

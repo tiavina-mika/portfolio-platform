@@ -65,6 +65,8 @@ In `apps/server/src/cloud/utils/_core/`:
 - `hasRight(user, className, operations)`: highest roles pass; otherwise each requested operation must be granted by at least one role of the user.
 - `hasBoRight(user, uiRight)`: checks a `ui` right.
 - The `country-scope` trigger narrows queries to the countries of the role.
+- Workspaces (portfolio, Aldaron): lists, details, badges, bulk actions, global search and dashboard counts of the content filed in one (articles, pages, categories, contacts, projects) stay inside the workspaces the roles open (`getUserWorkspaces`, `workspacesTargetQuery`). A save is refused when it changes, creates or moves a row of a workspace the editor cannot open (`assertCanSaveInWorkspaces`, in the `beforeSave` of articles, pages, categories and projects). The user list hides the staff of a workspace the reader cannot open (`getStaffUserIdsHiddenFrom`); member accounts are shared by both workspaces.
+- Page sections carry no workspace: both workspaces share them.
 
 Queries then run with the master key, so these checks are the guard of a back-office function.
 

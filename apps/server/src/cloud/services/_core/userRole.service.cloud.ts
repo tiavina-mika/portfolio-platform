@@ -269,6 +269,36 @@ export const getAllRoleUserIds = async (): Promise<string[]> => {
   return Array.from(userIds) as string[];
 };
 
+/**
+ * The staff accounts a reader limited to some workspaces must not see in the user list: those whose
+ * posts open none of the reader's workspaces. An account holding a post of the reader's workspace
+ * stays visible whatever else it holds, and so do the highest roles, which open every workspace. A
+ * reader who opens the portfolio hides nothing — member accounts and the portfolio's staff are its own.
+ * @param workspaces the workspaces the reader may use
+ */
+export const getStaffUserIdsHiddenFrom = async (workspaces: TargetEnum[]): Promise<string[]> => {
+  if (workspaces.includes(TargetEnum.PORTFOLIO)) return [];
+
+  const visibleRoles = await Parse.Query.or(
+    new Parse.Query(Parse.Role).containedIn('workspaces', workspaces),
+    new Parse.Query(Parse.Role).containedIn('name', HIGHEST_LEVEL_ROLES)
+  )
+    .select(['objectId'])
+    .limit(DEFAULT_QUERY_LIMIT)
+    .find(USE_MASTER_KEY);
+
+  const visibleIds = new Set<string>();
+
+  await Promise.all(visibleRoles.map(async (role) => {
+    await role.getUsers().query()
+      .select(['objectId'])
+      .each((user: User): void => {
+        visibleIds.add(user.id);
+      }, USE_MASTER_KEY);
+  }));
+
+  return (await getAllRoleUserIds()).filter((id) => !visibleIds.has(id));
+};
 
 /**
  * get list of users to send notification

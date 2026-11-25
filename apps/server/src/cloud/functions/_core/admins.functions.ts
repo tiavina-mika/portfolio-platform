@@ -21,11 +21,11 @@ import {
   assertCanDeleteUsers, banUser, binUserByAdmin, destroyBinnedUsers, getUserDetailsById, liftUserBan,
   redactUserDetailsSecrets,
 } from '../../services/_core/user.service.cloud';
-import { getUserIdsFromRoles } from '../../services/_core/userRole.service.cloud';
+import { getStaffUserIdsHiddenFrom, getUserIdsFromRoles } from '../../services/_core/userRole.service.cloud';
 import { assertInAgentCountries } from '../../utils/_core/agent-scope.utils.cloud';
 import { sendEmailToUser } from '../../utils/_core/email.utils.cloud';
 import { filtersDatesQuery, multiBooleanQuery, scopeToAgentCountries } from '../../utils/_core/parse.utils.cloud';
-import { assertCanActOnUser } from '../../utils/_core/role.utils.cloud';
+import { assertCanActOnUser, getUserWorkspaces } from '../../utils/_core/role.utils.cloud';
 import { sendSmsToUser } from '../../utils/_core/sms.utils.cloud';
 import { getUserPhoneSearchQueries } from '../../utils/_core/user-search.utils.cloud';
 import { isUserFromBO } from '../../utils/_core/user.utils.cloud';
@@ -70,6 +70,11 @@ Parse.Cloud.define(
     const countries = scopeCountries(search?.countries);
 
     if (countries) query.containedIn('country', countries);
+
+    // the staff of a workspace the reader cannot open is not theirs to list
+    const hiddenStaffIds = await getStaffUserIdsHiddenFrom(await getUserWorkspaces(request.user));
+
+    if (hiddenStaffIds.length) query.notContainedIn('objectId', hiddenStaffIds);
 
     query.limit(+limit).skip(+skip);
 
@@ -174,8 +179,12 @@ Parse.Cloud.define(
 
     if (id !== request.user?.id) await assertInAgentCountries(collections.User, id);
     const user = await getUserDetailsById(id, include);
+    const hiddenStaffIds = id === request.user?.id
+      ? []
+      : await getStaffUserIdsHiddenFrom(await getUserWorkspaces(request.user));
 
-    if (!user) {
+    // an account the list hides is as good as unknown
+    if (!user || hiddenStaffIds.includes(id)) {
       throw new Error('user:errors.userNotFound');
     }
 
