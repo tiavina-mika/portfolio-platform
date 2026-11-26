@@ -71,7 +71,9 @@ Après validation, un message indique que le mot de passe a été modifié avec 
 Le bouton de la ligne « Double authentification » demande d'abord le mot de passe, puis affiche un QR code à
 scanner avec une application d'authentification et un champ pour le code à six chiffres. Des codes de
 secours s'affichent alors une seule fois : il faut les noter. Pour la désactiver, le code d'authentification
-est redemandé. Voir aussi [Connexion et création de compte](../../auth/fr/AUTH.FR.md).
+est redemandé. La ligne montre et règle la double authentification de l'espace dans lequel on est connecté
+(portfolio ou Aldaron) : celle de l'autre espace se règle depuis son propre back-office. Voir aussi
+[Connexion et création de compte](../../auth/fr/AUTH.FR.md).
 
 ## Cas d'utilisation typiques
 

@@ -1,15 +1,18 @@
 import crypto from 'crypto';
 
+import { MFA_FIELD_BY_WORKSPACE } from '@shared/constants';
+import { TargetEnum } from '@shared/types';
 import dayjs from 'dayjs';
 import { authenticator } from 'otplib';
 
 import type { IMfa } from '@/types/auth.type';
 
 import {
-  APP_NAME, MFA_BACKUP_CODES_COUNT, MFA_CHALLENGE_TOKEN_TTL_SECONDS, MFA_LOCK_DURATION_MINUTES,
+  MFA_BACKUP_CODES_COUNT, MFA_CHALLENGE_TOKEN_TTL_SECONDS, MFA_LOCK_DURATION_MINUTES,
   MFA_MAX_VERIFICATION_ATTEMPTS, MFA_TOTP_STEP_SECONDS, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 import { hashBackupCode } from '@/utils/_core/encrypt.utils';
+import { getAppName } from '@/utils/_core/utils';
 
 import { createMfaAuditLog } from '../../services/_core/mfaAuditLog.service.cloud';
 
@@ -22,20 +25,52 @@ import { createMfaAuditLog } from '../../services/_core/mfaAuditLog.service.clou
 authenticator.options = { window: 1 };
 
 /**
- * Rebuilds the `otpauth://` URI for an already-generated secret — used to re-serve the same
- * pending enrollment (see enrollMfaService) instead of minting a new secret on every call.
+ * The second factor an account enrolled for one workspace: each workspace has its own, in its own
+ * column (see MFA_FIELD_BY_WORKSPACE).
+ * @param user an account read with the column of that workspace
+ * @param workspace the workspace of the session asking
  */
-export const buildMfaOtpauthUrl = (email: string, secret: string): string => {
-  return authenticator.keyuri(email, APP_NAME, secret);
+export const getUserMfa = (user: Parse.User, workspace: TargetEnum): IMfa | undefined => (
+  user.get(MFA_FIELD_BY_WORKSPACE[workspace]) as IMfa | undefined
+);
+
+/**
+ * Writes the second factor of one workspace, leaving the other workspaces' untouched. Not saved:
+ * the caller saves it along with whatever else it changes.
+ * @param user the account
+ * @param workspace the workspace the second factor belongs to
+ * @param mfa its new state, `undefined` to remove it
+ */
+export const setUserMfa = (user: Parse.User, workspace: TargetEnum, mfa: IMfa | undefined): void => {
+  const field = MFA_FIELD_BY_WORKSPACE[workspace];
+
+  if (mfa) {
+    user.set(field, mfa);
+    return;
+  }
+
+  user.unset(field);
+};
+
+/**
+ * Rebuilds the `otpauth://` URI for an already-generated secret — used to re-serve the same
+ * pending enrollment (see enrollMfaService) instead of minting a new secret on every call. The entry
+ * is named after the workspace, so the authenticator app tells the two second factors apart.
+ */
+export const buildMfaOtpauthUrl = (email: string, secret: string, workspace: TargetEnum): string => {
+  return authenticator.keyuri(email, getAppName(workspace), secret);
 };
 
 /**
  * Generates a fresh TOTP secret plus the `otpauth://` enrollment URI the BO renders as a QR code
  * (via qrcode.react — no server-side QR rendering needed).
  */
-export const generateMfaSecret = (email: string): { secret: string; otpauthUrl: string } => {
+export const generateMfaSecret = (
+  email: string,
+  workspace: TargetEnum
+): { secret: string; otpauthUrl: string } => {
   const secret = authenticator.generateSecret();
-  const otpauthUrl = buildMfaOtpauthUrl(email, secret);
+  const otpauthUrl = buildMfaOtpauthUrl(email, secret, workspace);
 
   return { secret, otpauthUrl };
 };
@@ -111,17 +146,17 @@ export const isMfaLocked = (mfa: IMfa): boolean => (
 /**
  * Increments the MFA failed-attempt counter and locks it after MFA_MAX_VERIFICATION_ATTEMPTS —
  * same lockout shape as `recordVerificationFailure` in user.utils.cloud.ts, kept separate since
- * it's scoped to `user.mfa` rather than a `VerificationField` slot.
+ * it's scoped to the second factor of one workspace rather than a `VerificationField` slot.
  */
-export const recordMfaFailure = async (user: Parse.User): Promise<boolean> => {
-  const mfa = user.get('mfa') as IMfa;
+export const recordMfaFailure = async (user: Parse.User, workspace: TargetEnum): Promise<boolean> => {
+  const mfa = getUserMfa(user, workspace)!;
   const { lockedAt: previousLockedAt, ...mfaWithoutLock } = mfa;
   // a lock that has run out starts a fresh count instead of locking again on the next typo
   const isPreviousLockOver = !!previousLockedAt && !isMfaLocked(mfa);
   const failedAttempts = (isPreviousLockOver ? 0 : (mfa.failedAttempts || 0)) + 1;
   const isLocked = failedAttempts >= MFA_MAX_VERIFICATION_ATTEMPTS;
 
-  user.set('mfa', {
+  setUserMfa(user, workspace, {
     ...mfaWithoutLock,
     failedAttempts,
     ...(isLocked ? { lockedAt: new Date() } : {}),
@@ -136,7 +171,17 @@ export const recordMfaFailure = async (user: Parse.User): Promise<boolean> => {
 
 type MfaChallengePayload = {
   userId: string;
+  /*
+   * the workspace the password was typed on: the code is checked against its second factor. Left
+   * out of the tokens issued before the second factor was split per workspace
+   */
+  workspace?: TargetEnum;
   expiredAt: number;
+};
+
+export type MfaChallenge = {
+  userId: string;
+  workspace: TargetEnum;
 };
 
 const CHALLENGE_SIGNING_LABEL = 'mfa-challenge-token';
@@ -160,9 +205,10 @@ const signChallengeBody = (body: string): string => crypto
  * Self-contained (no server-side store) — it carries no rights of its own (never a Parse session
  * token), and the actual security boundary is the TOTP/backup code check in verifyMfaLoginService.
  */
-export const createMfaChallengeToken = (userId: string): string => {
+export const createMfaChallengeToken = (userId: string, workspace: TargetEnum): string => {
   const payload: MfaChallengePayload = {
     userId,
+    workspace,
     expiredAt: Date.now() + (MFA_CHALLENGE_TOKEN_TTL_SECONDS * 1000),
   };
   const body = Buffer.from(JSON.stringify(payload)).toString('base64url');
@@ -171,10 +217,10 @@ export const createMfaChallengeToken = (userId: string): string => {
 };
 
 /**
- * Verifies a challenge token's signature and returns the userId it was issued for — undefined if
- * the token is malformed, forged, or expired.
+ * Verifies a challenge token's signature and returns the account and the workspace it was issued
+ * for — undefined if the token is malformed, forged, or expired.
  */
-export const resolveMfaChallengeToken = (token: string): string | undefined => {
+export const resolveMfaChallengeToken = (token: string): MfaChallenge | undefined => {
   const [body, signature, ...extra] = token.split('.');
 
   if (!body || !signature || extra.length) return undefined;
@@ -188,7 +234,10 @@ export const resolveMfaChallengeToken = (token: string): string | undefined => {
   try {
     const payload = JSON.parse(Buffer.from(body, 'base64url').toString('utf8')) as MfaChallengePayload;
 
-    return payload.expiredAt < Date.now() ? undefined : payload.userId;
+    if (payload.expiredAt < Date.now()) return undefined;
+
+    // a token issued before challenges named a workspace was for the only second factor there was then
+    return { userId: payload.userId, workspace: payload.workspace ?? TargetEnum.PORTFOLIO };
   } catch {
     return undefined;
   }

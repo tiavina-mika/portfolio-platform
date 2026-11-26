@@ -9,7 +9,7 @@
 - [Actions possibles](#actions-possibles)
   - [Changer la langue du back-office](#changer-la-langue-du-back-office)
   - [Changer le thème, la couleur et le menu](#changer-le-thème-la-couleur-et-le-menu)
-  - [Choisir l'espace de travail](#choisir-lespace-de-travail)
+  - [L'espace de travail](#lespace-de-travail)
   - [Modifier les textes du site](#modifier-les-textes-du-site)
   - [Modifier les images principales du site](#modifier-les-images-principales-du-site)
   - [Déposer le CV](#déposer-le-cv)
@@ -36,8 +36,7 @@ images principales et CV du site public.
 
 Un volet de navigation à gauche (sur petit écran, il passe au-dessus) avec deux groupes :
 
-- **Back office** : **Langues** (section ouverte par défaut), **Apparence** et, pour les personnes dont les postes
-  ouvrent plusieurs espaces, **Espace de travail** ;
+- **Back office** : **Langues** (section ouverte par défaut) et **Apparence** ;
 - **Site web** : **Détails**, **Images** et **CV** (ce groupe disparaît dans l'espace Aldaron).
 
 À droite, la section choisie. L'en-tête de la page indique, pour les sections du site web, si des
@@ -64,10 +63,12 @@ Section **Apparence**, avec application immédiate et sans bouton d'enregistreme
 - le **style du menu latéral** : marine, noir, blanc ou couleur du thème (le style blanc ne s'applique qu'en
   mode jour ; en mode sombre le style marine est utilisé).
 
-### Choisir l'espace de travail
+### L'espace de travail
 
-Section **Espace de travail**, visible seulement pour une personne dont les postes ouvrent à la fois le portfolio
-et Aldaron : deux cartes, chacune avec son logo. Le choix s'applique aussitôt, sans enregistrer :
+Il n'y a rien à choisir ici : l'espace (portfolio ou Aldaron) est celui de l'adresse sur laquelle on s'est
+connecté, et une connexion n'en ouvre qu'un. Une personne dont les postes ouvrent les deux espaces se connecte
+à chaque adresse (voir [Connexion et création de compte](../../auth/fr/AUTH.FR.md)). L'espace décide de ce que
+montre le back-office :
 
 - le **logo** du menu latéral (ouvert ou replié) devient celui de l'espace ;
 - la **liste des projets**, des articles, des pages et des catégories ne montre que les contenus de cet espace ;
@@ -77,7 +78,7 @@ et Aldaron : deux cartes, chacune avec son logo. Le choix s'applique aussitôt, 
 - dans Aldaron, les sections **Détails**, **Images** et **CV** (qui modifient le site du portfolio) ne sont pas
   proposées : une adresse qui les vise ouvre la section **Langues**.
 
-Une personne qui n'a qu'un espace ne voit jamais ce choix et travaille dans le portfolio.
+Une personne dont les postes n'ouvrent pas l'espace de l'adresse où elle se connecte n'y voit aucun contenu.
 
 ### Modifier les textes du site
 
@@ -107,9 +108,8 @@ le précédent. Le bouton **Enregistrer** de l'en-tête valide.
 
 ## Points d'attention / limites actuelles
 
-- L'**espace de travail** est un choix propre à l'appareil et au navigateur, comme la langue. Il ne donne aucun droit :
-  ce sont les postes qui décident des espaces utilisables, et si un poste est retiré, la personne retrouve le
-  portfolio.
+- L'**espace de travail** suit l'adresse de connexion et ne donne aucun droit : ce sont les postes qui décident
+  des espaces utilisables.
 - La **langue, le thème, la couleur et le style du menu** sont propres à l'appareil et au navigateur : ils
   ne suivent pas le compte d'un appareil à un autre.
 - Les textes, images et le CV du site sont **uniques pour tout le site** : il n'existe qu'un seul jeu de réglages,

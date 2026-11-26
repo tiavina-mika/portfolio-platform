@@ -1,3 +1,4 @@
+import { MFA_FIELD_BY_WORKSPACE } from '@shared/constants';
 import { TargetEnum } from '@shared/types';
 
 import type { Locale } from '@/types/app.type';
@@ -20,6 +21,7 @@ import { alertOwners } from './ownerAlert.service.cloud';
 import { createRoleAuditLog } from './roleAuditLog.service.cloud';
 import { forgetAllowedCountriesOf } from '../../triggers/_core/country-scope.triggers';
 import { sendEmailToUser } from '../../utils/_core/email.utils.cloud';
+import { getUserMfa } from '../../utils/_core/mfa.utils.cloud';
 
 const setRoleForUser = async (role: Role, action: 'add' | 'remove' = 'add', user?: User): Promise<void> => {
   if (!user || role?.getName() == null) return;
@@ -846,8 +848,9 @@ export const hasRoleAsManager = async (user?: User): Promise<boolean> => {
 /**
  * Every account holding OWNER or SUPER_ADMIN, for the owners to review who holds the highest powers.
  * Only what the review needs leaves the server: the second factor is a yes or no, never its secret.
+ * @param workspace the workspace whose second factor is told: each workspace has its own
  */
-export const getHighestRoleAccounts = async (): Promise<IHighestRoleAccount[]> => {
+export const getHighestRoleAccounts = async (workspace: TargetEnum): Promise<IHighestRoleAccount[]> => {
   const roles = await new Parse.Query(Parse.Role)
     .containedIn('name', HIGHEST_LEVEL_ROLES)
     .select(['name'])
@@ -857,7 +860,7 @@ export const getHighestRoleAccounts = async (): Promise<IHighestRoleAccount[]> =
 
   for (const role of roles) {
     const holders = await role.getUsers().query()
-      .select(['firstName', 'lastName', 'email', 'mfa', 'lastLoginAt'])
+      .select(['firstName', 'lastName', 'email', MFA_FIELD_BY_WORKSPACE[workspace], 'lastLoginAt'])
       .limit(DEFAULT_QUERY_LIMIT)
       .find(USE_MASTER_KEY);
 
@@ -874,7 +877,7 @@ export const getHighestRoleAccounts = async (): Promise<IHighestRoleAccount[]> =
     lastName: user.get('lastName'),
     email: user.get('email'),
     roles: roleNames,
-    isMfaEnabled: !!user.get('mfa')?.enabled,
+    isMfaEnabled: !!getUserMfa(user, workspace)?.enabled,
     lastLoginAt: user.get('lastLoginAt')?.toISOString(),
   }));
 };

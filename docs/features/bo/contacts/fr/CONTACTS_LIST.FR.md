@@ -28,8 +28,9 @@ La liste suit l'espace de travail choisi :
   avant cette séparation) ;
 - dans l'espace **Aldaron**, les demandes de devis envoyées depuis la page contact du site d'Aldaron.
 
-Changer d'espace depuis la page referme le message ouvert et affiche la liste de l'autre espace. Un compte qui
-n'a pas accès à l'espace Aldaron ne voit jamais ses demandes, même avec l'adresse d'une demande.
+L'espace est celui de l'adresse sur laquelle on s'est connecté : les demandes d'Aldaron se lisent depuis le
+back-office d'Aldaron. Un compte qui n'a pas accès à l'espace Aldaron ne voit jamais ses demandes, même avec
+l'adresse d'une demande.
 
 ## Qui peut l'utiliser
 

@@ -1,4 +1,7 @@
-import { BanTypeEnum, PlatformEnum, type NotificationType } from '@shared/types';
+import { MFA_FIELD_BY_WORKSPACE } from '@shared/constants';
+import {
+  BanTypeEnum, PlatformEnum, type NotificationType, type TargetEnum,
+} from '@shared/types';
 import { getDisplayIdentifier, toInternationalPhone } from '@shared/utils';
 import { ComponentType, ReactNode } from 'react';
 
@@ -13,7 +16,7 @@ import {
   userLocalStorageKey, notificationTypeOptions, sexOptions, USER_MESSAGE_TEMPLATE_KEYS, userPlatformOptions,
 } from '@/constants/_core/user.constants';
 import {
-  IBan, IPhone, ISex, IUser, IPlatform, UserMessageTemplateKey,
+  IBan, IMfa, IPhone, ISex, IUser, IPlatform, UserMessageTemplateKey,
 } from '@/types/_core/user.type';
 import { isDateExpired } from '@/utils/_core/date.utils';
 import { cutText } from '@/utils/_core/utils';
@@ -457,4 +460,17 @@ export const getActiveTeamBan = (user: IUser): IBan | undefined => {
  */
 export const isUserSmsFallbackEnabled = (user: IUser): boolean => (
   (user.notificationPreferences?.smsEnabled) ?? false
+);
+
+/**
+ * The second factor of the signed-in account for the workspace the back-office is used in: each
+ * workspace has its own, and the session only passed the one of the workspace it was opened on.
+ * @param user the signed-in account, as read from its own row
+ * @param workspace the workspace the back-office is used in
+ */
+export const getUserWorkspaceMfa = (
+  user: IUser | null | undefined,
+  workspace: TargetEnum
+): IMfa | undefined => (
+  user?.[MFA_FIELD_BY_WORKSPACE[workspace]]
 );

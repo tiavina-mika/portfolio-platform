@@ -49,8 +49,9 @@ Menu **Actions** de l'en-tête :
 - **Bannir** (temporaire ou permanent, avec un motif) et **Débannir**.
 - **Déconnecter tous les appareils** ; chaque session peut aussi être déconnectée une à une, avec la
   possibilité de suspendre le compte en même temps.
-- **Réinitialiser la double authentification** du compte : le compte est déconnecté partout et devra la
-  reconfigurer à sa prochaine connexion.
+- **Réinitialiser la double authentification** du compte, pour l'espace dans lequel on est connecté : le
+  compte est déconnecté partout et devra la reconfigurer à sa prochaine connexion dans cet espace. Celle de
+  l'autre espace se réinitialise depuis le back-office de cet espace.
 - **Se connecter en tant que** : démarre une session de support sur ce compte, avec un motif obligatoire
   conservé dans l'historique ; jamais possible sur un compte Owner ou Super Admin.
 - **Voir l'audit** : raccourci vers cette liste filtrée sur le compte.

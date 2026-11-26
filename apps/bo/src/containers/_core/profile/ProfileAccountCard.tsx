@@ -10,8 +10,10 @@ import ProfileAccountRow from '@/containers/_core/profile/ProfileAccountRow';
 import ProfileMfaDialog from '@/containers/_core/profile/ProfileMfaDialog';
 import ProfilePasswordDialog from '@/containers/_core/profile/ProfilePasswordDialog';
 import { useBreakpoint } from '@/hooks/_core/useBreakpoint';
+import { useWorkspace } from '@/hooks/_core/useWorkspace';
 import { getAppCurrentUserSelector } from '@/redux/reducers/_core/app.reducer';
 import { getDesignTokens } from '@/utils/_core/theme/tokens.utils';
+import { getUserWorkspaceMfa } from '@/utils/_core/user.utils';
 
 type ProfileAccountDialog = 'password' | 'mfa';
 
@@ -43,7 +45,9 @@ const ProfileAccountCard = () => {
   const isTouchScreen = useBreakpoint('sm');
   const [openDialog, setOpenDialog] = useState<ProfileAccountDialog | null>(null);
 
-  const isMfaEnabled = !!user.mfa?.enabled;
+  const { workspace } = useWorkspace();
+  // each workspace has its own second factor: the row tells the one of the workspace in use
+  const isMfaEnabled = !!getUserWorkspaceMfa(user, workspace)?.enabled;
 
   const handleCloseDialog = () => setOpenDialog(null);
   const handleOpenPasswordDialog = () => setOpenDialog('password');

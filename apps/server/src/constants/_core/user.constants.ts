@@ -1,4 +1,4 @@
-import { DEFAULT_COUNTRY } from '@shared/constants';
+import { DEFAULT_COUNTRY, MFA_FIELD_BY_WORKSPACE } from '@shared/constants';
 import { ProfileFieldEnum } from '@shared/types';
 
 /**
@@ -73,7 +73,8 @@ export const SERVER_MANAGED_USER_FIELDS: string[] = [
   // the SMS reset delay of an unused account and the sign-in date it is judged on
   'passwordResetDelay',
   'lastLoginAt',
-  'mfa',
+  // the second factor of every workspace (see MFA_FIELD_BY_WORKSPACE)
+  ...Object.values(MFA_FIELD_BY_WORKSPACE),
   'mfaEnabled',
   'mfaBackupCodes',
   'deleted',
@@ -116,7 +117,7 @@ export const USER_PROTECTED_FIELDS: string[] = [
   // a phone-signup account's username IS its number (`+261…`), and an email account's is its email
   'username',
   'phone',
-  'mfa',
+  ...Object.values(MFA_FIELD_BY_WORKSPACE),
   'mfaBackupCodes',
   'verification',
   'resetPasswordVerification',
@@ -174,7 +175,7 @@ export const USER_DETAILS_FIELDS: string[] = [
   'sexChangeCount', 'lastSexChangeAt', 'birthdayChangeCount', 'lastBirthdayChangeAt',
   // account and access
   'platform', 'platforms', 'fromBO', 'registerStep', 'emailVerified', 'phoneVerified', 'isOnline',
-  'acceptedTermsAt', 'mfa',
+  'acceptedTermsAt', ...Object.values(MFA_FIELD_BY_WORKSPACE),
   // the member's own switches (fallback text, e-mail, push…), shown read-only so the support can explain a missing text
   'notificationPreferences',
   // moderation

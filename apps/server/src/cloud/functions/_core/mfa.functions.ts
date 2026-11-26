@@ -13,6 +13,7 @@ import { alertOwners } from '../../services/_core/ownerAlert.service.cloud';
 import { hasRoleAsManager } from '../../services/_core/userRole.service.cloud';
 import { revokeOtherSessionsService } from '../../services/_core/userSession.service.cloud';
 import { checkOwner } from '../../utils/_core/role.utils.cloud';
+import { getUserMfaWorkspace } from '../../utils/_core/sessionWorkspace.utils.cloud';
 import { parseFunction } from '../../utils/_core/utils.cloud';
 import { parseFunctionValidation } from '../../utils/_core/validation.utils.cloud';
 
@@ -35,7 +36,7 @@ Parse.Cloud.define(
     const currentUser = await getBackOfficeUser(request);
     const { password, locale } = request.params;
 
-    return enrollMfaService(currentUser, password, locale);
+    return enrollMfaService(currentUser, password, await getUserMfaWorkspace(currentUser), locale);
   }),
   parseFunctionValidation(generateMfaSecretSchema)
 );
@@ -45,7 +46,9 @@ Parse.Cloud.define(
   parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<{ backupCodes: string[] }> => {
     const currentUser = await getBackOfficeUser(request);
     const { code, locale } = request.params;
-    const result = await confirmMfaEnrollmentService(currentUser, code, locale);
+    const result = await confirmMfaEnrollmentService(
+      currentUser, code, await getUserMfaWorkspace(currentUser), locale
+    );
 
     // the protection of the account just changed: sessions opened before it must not survive it
     await revokeOtherSessionsService(currentUser, currentUser.getSessionToken());
@@ -75,7 +78,7 @@ Parse.Cloud.define(
     const currentUser = await getBackOfficeUser(request);
     const { code, locale } = request.params;
 
-    await disableMfaService(currentUser, code, locale);
+    await disableMfaService(currentUser, code, await getUserMfaWorkspace(currentUser), locale);
     await revokeOtherSessionsService(currentUser, currentUser.getSessionToken());
 
     return { success: true };
@@ -89,7 +92,7 @@ Parse.Cloud.define(
     const currentUser = await getBackOfficeUser(request);
     const { code, locale } = request.params;
 
-    return regenerateMfaBackupCodesService(currentUser, code, locale);
+    return regenerateMfaBackupCodesService(currentUser, code, await getUserMfaWorkspace(currentUser), locale);
   }),
   parseFunctionValidation(regenerateMfaBackupCodesSchema)
 );
@@ -108,7 +111,8 @@ Parse.Cloud.define(
     const { userId, locale } = request.params;
 
     await checkOwner(currentUser, locale);
-    await adminResetMfaService(currentUser, userId);
+    // the second factor of the workspace the owner is signed in to: the other one is reset from there
+    await adminResetMfaService(currentUser, userId, await getUserMfaWorkspace(currentUser));
 
     const target = await new Parse.Query(Parse.User).select(['email']).get(userId, USE_MASTER_KEY);
 

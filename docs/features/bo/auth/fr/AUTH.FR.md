@@ -12,6 +12,7 @@
   - [Confirmer son compte avec le code reçu par e-mail](#confirmer-son-compte-avec-le-code-reçu-par-e-mail)
   - [Réinitialiser un mot de passe oublié](#réinitialiser-un-mot-de-passe-oublié)
   - [Activer et utiliser la double authentification](#activer-et-utiliser-la-double-authentification)
+  - [L'espace suit l'adresse de connexion](#lespace-suit-ladresse-de-connexion)
   - [Se déconnecter](#se-déconnecter)
 - [Cas d'utilisation typiques](#cas-dutilisation-typiques)
 - [Points d'attention / limites actuelles](#points-dattention--limites-actuelles)
@@ -103,6 +104,17 @@ un code. Pour les comptes **Owner** et **Super Admin**, une fenêtre impose cett
 connexion, avant toute autre action. Un administrateur peut réinitialiser la double authentification d'un
 compte depuis sa fiche.
 
+Le portfolio et Aldaron ont chacun **leur propre double authentification** : on la configure une fois
+dans chaque back-office, avec deux entrées distinctes dans l'application d'authentification (chacune au nom
+de son espace) et deux séries de codes de secours. Le code demandé à la connexion est celui de l'adresse sur
+laquelle on se connecte ; un code de l'autre espace est refusé.
+
+### L'espace suit l'adresse de connexion
+
+Une connexion ouvre **un seul espace** : celui de l'adresse sur laquelle on s'est connecté (le back-office
+du portfolio ou celui d'Aldaron). Une personne dont les postes ouvrent les deux espaces se connecte à chaque
+adresse pour travailler dans chacun.
+
 ### Se déconnecter
 
 Depuis le menu du compte (clic sur son avatar en haut à droite), entrée **Déconnexion**. On revient à
@@ -123,6 +135,8 @@ du poste du compte.
 ## Points d'attention / limites actuelles
 
 - **Pas de poste, pas d'accès** : un compte sans poste est déconnecté dès qu'il tente d'entrer.
+- **Un espace par connexion** : passer du portfolio à Aldaron demande de se connecter sur l'autre adresse,
+  avec la double authentification de cet espace.
 - Le lien d'invitation est à usage unique et expire.
 - L'écran de confirmation d'un nouveau compte n'a pas de lien « Renvoyer le code » : pour recevoir un
   nouveau code, il faut tenter de se connecter (le code est renvoyé automatiquement).

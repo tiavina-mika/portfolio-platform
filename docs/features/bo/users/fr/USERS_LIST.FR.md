@@ -43,7 +43,8 @@ Les comptes Owner et Super Admin ont tous les droits.
 - Un champ de recherche et un panneau de filtres avancés.
 - Un tableau : le compte (photo, nom, e-mail ou téléphone, mention de ban ou de suspension), la complétude du
   profil, le contact, la date de création et la dernière connexion, et les **Actions**. L'onglet
-  Administrateurs ajoute les **postes** et l'état de la **double authentification**.
+  Administrateurs ajoute les **postes** et l'état de la **double authentification** (celle de l'espace dans
+  lequel on est connecté).
 - Affichage en tableau ou en vignettes, tri par colonne, 20 lignes par écran (50 ou 75 au choix) et bouton
   **Exporter** (CSV ou Excel).
 - L'onglet **Journaux d'audit** liste, pour chaque compte supprimé : le nom et les coordonnées d'origine, qui a

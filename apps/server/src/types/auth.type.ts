@@ -22,8 +22,9 @@ export interface IPlatform {
 }
 
 /**
- * TOTP-based MFA state for a user, stored on `user.get('mfa')`. `secret` is encrypted at rest
- * (encrypt.utils) and never returned to the client after the initial enrollment step.
+ * TOTP-based MFA state for a user in one workspace, stored in that workspace's column
+ * (MFA_FIELD_BY_WORKSPACE: `mfa` for the portfolio, `agencyMfa` for the agency). `secret` is
+ * encrypted at rest (encrypt.utils) and never returned to the client after the initial enrollment step.
  * `backupCodes` are hashed (not encrypted) since they're single-use and only ever compared, never
  * decrypted back to plaintext.
  */

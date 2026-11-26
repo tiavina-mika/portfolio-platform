@@ -122,9 +122,9 @@ export const getSettingsDefaultCurrencySelector = (state: Record<string, any>): 
   state.settings.defaultCurrency
 );
 /*
- * the workspace the person works in: the one they picked while their roles still open it, the
- * portfolio otherwise. Read like this rather than written back, so a role taken away sends them back
- * to the portfolio without touching their stored choice. Before any choice is stored (a first visit, or
+ * the workspace the person works in: the one they picked while the server still opens it to them, the
+ * first one it opens otherwise. Read like this rather than written back, so a role taken away sends them
+ * elsewhere without touching their stored choice. Before any choice is stored (a first visit, or
  * a state saved before the preference existed) it is the one of the domain the back-office was opened
  * on. The available workspaces live in the roles slice.
  */
@@ -132,7 +132,13 @@ export const getSettingsWorkspaceSelector = (state: Record<string, any>): Target
   const stored: TargetEnum = state.settings.workspace ?? getHostWorkspace();
   const available: TargetEnum[] = state.role?.currentUserWorkspaces ?? [TargetEnum.PORTFOLIO];
 
-  return available.includes(stored) ? stored : TargetEnum.PORTFOLIO;
+  /*
+   * a session is bound to the workspace it was opened on, so the server may open one workspace only:
+   * the agency's when signed in on its address, however the choice stored on this browser reads
+   */
+  if (available.includes(stored)) return stored;
+
+  return available[0] ?? TargetEnum.PORTFOLIO;
 };
 export const getSettingsLocaleSelector =(state: Record<string, any>): Locale => state.settings.locale;
 export const getSettingsIsAuthenticatedSelector = (state: Record<string, any>): boolean =>

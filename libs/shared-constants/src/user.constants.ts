@@ -1,3 +1,5 @@
+import type { TargetEnum } from '@shared/types';
+
 /**
  * Minimum age (in years) required to create an account — the platform involves in-person
  * carpooling with strangers, so age is enforced at sign-up.
@@ -41,3 +43,15 @@ export const DEFAULT_PROFILE_VISIBILITY = {
  * to other members. The age stays adjustable: what is shared is the age in years, never the date.
  */
 export const FIXED_VISIBILITY_PROFILE_FIELDS = ['photo', 'name', 'phone', 'email', 'address'] as const;
+
+/**
+ * The `_User` column holding the second factor of each workspace: an account enrolls one per
+ * workspace, each with its own authenticator entry and backup codes, and a session only passes the
+ * one of the workspace it was opened on. The portfolio keeps `mfa`, the column that existed before
+ * the agency workspace, so the accounts already enrolled keep their second factor as it is.
+ * Keyed by the values of `TargetEnum`: adding a workspace without its column does not compile.
+ */
+export const MFA_FIELD_BY_WORKSPACE = {
+  portfolio: 'mfa',
+  agency: 'agencyMfa',
+} as const satisfies Record<TargetEnum, string>;

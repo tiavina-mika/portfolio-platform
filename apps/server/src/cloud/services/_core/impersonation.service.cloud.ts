@@ -17,6 +17,7 @@ import { createNotification, getNotificationMessageTemplate } from './notificati
 import { alertOwners } from './ownerAlert.service.cloud';
 import { hasRoleAsManager } from './userRole.service.cloud';
 import { issueParseSession } from '../../utils/_core/session.utils.cloud';
+import { getUserMfaWorkspace } from '../../utils/_core/sessionWorkspace.utils.cloud';
 import { toUserSnapshot } from '../../utils/_core/user-snapshot.utils.cloud';
 
 export const ImpersonationSession = Parse.Object.extend(collections.ImpersonationSession);
@@ -88,6 +89,8 @@ export const createImpersonationSessionService = async (
   const sessionToken = await issueParseSession(targetUser.id, {
     createdWith: { action: IMPERSONATION_SESSION_ACTION },
     additionalSessionData: { restricted: true, expiresAt: (Parse as any)._encode(expiresAt) },
+    // the target is never a staff account, so this binds nothing: it names the admin's own workspace
+    workspace: await getUserMfaWorkspace(admin),
   });
 
   const impersonationLog = new ImpersonationSession();

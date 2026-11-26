@@ -103,7 +103,7 @@ Les postes ne se donnent qu'aux comptes créés dans le back-office, par exemple
 ### Contrôler les comptes à poste élevé
 
 L'onglet **Comptes à poste élevé** liste les comptes Owner et Super Admin avec l'état de leur double
-authentification et leur dernière connexion. Il signale ceux **à vérifier** (double authentification
+authentification (celle de l'espace dans lequel on est connecté) et leur dernière connexion. Il signale ceux **à vérifier** (double authentification
 désactivée, jamais connecté, ou inactif depuis longtemps) et alerte quand il y a **moins de deux Owner** :
 le serveur en exige deux pour qu'un Owner bloqué puisse être débloqué par l'autre, avec un bouton pour
 inviter un Owner.

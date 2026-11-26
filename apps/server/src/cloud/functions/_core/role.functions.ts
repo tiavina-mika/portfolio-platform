@@ -14,6 +14,7 @@ import {
   addRolesToUser, getHighestRoleAccounts, getRolesDelegation, hasRole, removeRolesForUser,
 } from '../../services/_core/userRole.service.cloud';
 import { assertHasBoRight, checkHighestRole, getUserWorkspaces } from '../../utils/_core/role.utils.cloud';
+import { getUserMfaWorkspace } from '../../utils/_core/sessionWorkspace.utils.cloud';
 import { fromBO, parseFunction } from '../../utils/_core/utils.cloud';
 import { parseFunctionValidation } from '../../utils/_core/validation.utils.cloud';
 
@@ -182,7 +183,8 @@ Parse.Cloud.define(
   fromBO(async (request: Parse.Cloud.FunctionRequest): Promise<IHighestRoleAccount[]> => {
     await checkHighestRole(request.user!, request.params.locale);
 
-    return getHighestRoleAccounts();
+    // the second factor shown is the one of the workspace the owner reviews from
+    return getHighestRoleAccounts(await getUserMfaWorkspace(request.user));
   }),
   // -------- validation -------- //
   parseFunctionValidation(getHighestRoleAccountsSchema)

@@ -2,8 +2,10 @@
  * ----------------------------------------------------- //
  * -------------------- before save -------------------- //
  */
-import type { IMfa } from '@/types/auth.type';
+import { TargetEnum } from '@shared/types';
+
 import type { IBan } from '@/types/user.type';
+
 
 import { DISABLE_USER_ACCOUNT_CONFIRMATION, USE_MASTER_KEY } from '@/constants/_core/constants';
 import { logger } from '@/utils/_core/logger';
@@ -13,7 +15,7 @@ import { getRequestWorkspace } from '@/utils/_core/utils';
 import {
   deleteUserSessionByTokenService, markUserOfflineAfterLogoutService,
 } from '../../services/_core/userSession.service.cloud';
-import { createMfaChallengeToken } from '../../utils/_core/mfa.utils.cloud';
+import { createMfaChallengeToken, getUserMfa } from '../../utils/_core/mfa.utils.cloud';
 import { onStaffSessionOpened } from '../../utils/_core/session.utils.cloud';
 import { isUserCurrentlyBanned, markUserSignedIn } from '../../utils/_core/user.utils.cloud';
 import { createAccountNotVerifiedError, parseFunction } from '../../utils/_core/utils.cloud';
@@ -103,10 +105,15 @@ Parse.Cloud.beforeLogin(
       throw createAccountNotVerifiedError();
     }
 
-    const mfa: IMfa | undefined = user.get('mfa');
+    /*
+     * each workspace has its own second factor: the one asked is the one of the back-office address
+     * the password is typed on, and the session it leads to is bound to that workspace (afterLogin)
+     */
+    const workspace = getRequestWorkspace(request) ?? TargetEnum.PORTFOLIO;
+    const mfa = getUserMfa(user, workspace);
 
     if (mfa?.enabled) {
-      const mfaChallengeToken = createMfaChallengeToken(user.id);
+      const mfaChallengeToken = createMfaChallengeToken(user.id, workspace);
 
       /*
        * throwing here blocks the login outright — no session is created — exactly like the ban
@@ -161,6 +168,9 @@ Parse.Cloud.afterLogin(
     const user = request.object;
     const sessionToken = user.getSessionToken();
 
-    if (sessionToken) await onStaffSessionOpened(user, sessionToken);
+    if (!sessionToken) return;
+
+    // bound to the workspace beforeLogin checked the second factor of
+    await onStaffSessionOpened(user, sessionToken, getRequestWorkspace(request) ?? TargetEnum.PORTFOLIO);
   })
 );

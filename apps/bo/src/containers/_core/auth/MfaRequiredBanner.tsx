@@ -1,4 +1,5 @@
 import { Box, Skeleton, Stack } from '@mui/material';
+import { useRouter } from '@tanstack/react-router';
 import { lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,9 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Dialog from '@/components/Dialog';
 import { MFA_QR_CODE_SIZE } from '@/constants/_core/auth.constants';
 import { HIGHEST_LEVEL_ROLES } from '@/constants/_core/user.constants';
+import { useWorkspace } from '@/hooks/_core/useWorkspace';
 import { clearMfaEnrollment } from '@/redux/actions/_core/auth.action';
 import { getAppCurrentUserSelector, getAppMfaBackupCodesSelector } from '@/redux/reducers/_core/app.reducer';
 import { IRole } from '@/types/_core/role.type';
+import { getUserWorkspaceMfa } from '@/utils/_core/user.utils';
 
 import MfaBackupCodesDisplay from './MfaBackupCodesDisplay';
 
@@ -45,8 +48,11 @@ const MfaRequiredBanner = ({ roles }: Props) => {
     t,
   } = useTranslation(['user']);
   const dispatch = useDispatch();
+  const router = useRouter();
   const currentUser = useSelector(getAppCurrentUserSelector);
   const backupCodes = useSelector(getAppMfaBackupCodesSelector);
+  // each workspace has its own second factor: the one asked is the one of the workspace in use
+  const { workspace } = useWorkspace();
 
   const hasHighestRole = roles.some((role) => HIGHEST_LEVEL_ROLES.includes(role.name));
   /*
@@ -54,7 +60,8 @@ const MfaRequiredBanner = ({ roles }: Props) => {
    * unknown, not false — enforcing on null would flash the setup dialog to an already-enrolled
    * admin on every page load until onDashboardEnter finishes loading them.
    */
-  const shouldEnforce = hasHighestRole && !!currentUser && !currentUser.mfa?.enabled;
+  const isMfaEnabled = !!getUserWorkspaceMfa(currentUser, workspace)?.enabled;
+  const shouldEnforce = hasHighestRole && !!currentUser && !isMfaEnabled;
 
   /*
    * Keep the dialog open while backup codes are pending display even once `shouldEnforce` has
@@ -65,8 +72,15 @@ const MfaRequiredBanner = ({ roles }: Props) => {
    */
   if (!shouldEnforce && !backupCodes) return null;
 
-  // dropping the codes is what closes the dialog: `shouldEnforce` is already false by this point
-  const handleBackupCodesAcknowledged = () => dispatch(clearMfaEnrollment());
+  /*
+   * dropping the codes is what closes the dialog: `shouldEnforce` is already false by this point.
+   * The page under the dialog was loaded while the server still refused every back-office function
+   * to this account, so its loaders run again now that they are allowed
+   */
+  const handleBackupCodesAcknowledged = async () => {
+    dispatch(clearMfaEnrollment());
+    await router.invalidate();
+  };
 
   return (
     <Dialog

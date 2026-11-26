@@ -26,6 +26,7 @@ import { assertInAgentCountries } from '../../utils/_core/agent-scope.utils.clou
 import { sendEmailToUser } from '../../utils/_core/email.utils.cloud';
 import { filtersDatesQuery, multiBooleanQuery, scopeToAgentCountries } from '../../utils/_core/parse.utils.cloud';
 import { assertCanActOnUser, getUserWorkspaces } from '../../utils/_core/role.utils.cloud';
+import { getUserMfaWorkspace } from '../../utils/_core/sessionWorkspace.utils.cloud';
 import { sendSmsToUser } from '../../utils/_core/sms.utils.cloud';
 import { getUserPhoneSearchQueries } from '../../utils/_core/user-search.utils.cloud';
 import { isUserFromBO } from '../../utils/_core/user.utils.cloud';
@@ -165,7 +166,9 @@ Parse.Cloud.define(
     result.results = await attachUserListCounters(result.results);
     result.results = await attachUserRoles(result.results);
     // the list shows whether the second factor is on — never its encrypted secret or backup codes
-    result.results = result.results.map(redactUserDetailsSecrets);
+    const mfaWorkspace = await getUserMfaWorkspace(request.user);
+
+    result.results = result.results.map((user: Parse.User) => redactUserDetailsSecrets(user, mfaWorkspace));
 
     return result;
   }, ['find'], collections.User),
@@ -202,7 +205,7 @@ Parse.Cloud.define(
     // false instead of undefined or null to avoid client serialization issues (the client return "ok" even if the page is not found)
     if (!user) return false;
 
-    return redactUserDetailsSecrets(user);
+    return redactUserDetailsSecrets(user, await getUserMfaWorkspace(request.user));
   }, ['get'], collections.User),
   parseFunctionValidation(getUserSchema)
 );

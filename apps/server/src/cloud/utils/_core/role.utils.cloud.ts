@@ -1,7 +1,6 @@
 import { TargetEnum } from '@shared/types';
 
 import type { DBRights, Locale } from '@/types/app.type';
-import type { IMfa } from '@/types/auth.type';
 import type { Role, User } from 'parse';
 
 
@@ -9,6 +8,8 @@ import { DEFAULT_LANGUAGE, translate } from '@/config/i18n';
 import { ENFORCE_HIGHEST_ROLES_MFA, HIGHEST_LEVEL_ROLES } from '@/constants/_core/constants';
 import { isWriteWithinWorkspaces, mergeRoleCountries, mergeRoleWorkspaces } from '@/utils/_core/rights.utils';
 
+import { getUserMfa } from './mfa.utils.cloud';
+import { getUserMfaWorkspace, getUserSessionWorkspace } from './sessionWorkspace.utils.cloud';
 import {
   getRolesForUser, getRolesForUserByEntity, hasRole, hasRoleAsManager, toRoleGrants,
 } from '../../services/_core/userRole.service.cloud';
@@ -67,15 +68,24 @@ export const getAllowedCountryCodes = async (user?: User): Promise<string[] | nu
  * their roles, the portfolio for a role saved before the field existed, and every workspace for the
  * highest roles, which do not store them. No user is the server itself (a master-key call, the only
  * one `fromBO` lets through without a session), which is never limited.
+ *
+ * The user of a request is then held to the workspace its session was opened on: each workspace has
+ * its own second factor, and a session passed only that one — a password typed on the address of the
+ * workspace left without a second factor must not read the other. An account read from the database
+ * carries no session and keeps every workspace its roles open.
  * @param user
  */
 export const getUserWorkspaces = async (user?: User): Promise<TargetEnum[]> => {
   if (!user) return Object.values(TargetEnum);
-  if (await isHighestRole(user)) return Object.values(TargetEnum);
 
-  const roles = await getRolesForUser(user);
+  const roleWorkspaces = await isHighestRole(user)
+    ? Object.values(TargetEnum)
+    : mergeRoleWorkspaces(((await getRolesForUser(user)) ?? []).map(toRoleGrants));
+  const sessionWorkspace = await getUserSessionWorkspace(user);
 
-  return mergeRoleWorkspaces((roles ?? []).map(toRoleGrants));
+  if (!sessionWorkspace) return roleWorkspaces;
+
+  return roleWorkspaces.filter((workspace) => workspace === sessionWorkspace);
 };
 
 /**
@@ -305,7 +315,8 @@ export const createSecurityError = (message: string): any => {
  */
 export const assertMfaEnabledForHighestRoles = async (user: User): Promise<void> => {
   if (!ENFORCE_HIGHEST_ROLES_MFA) return;
-  if ((user.get('mfa') as IMfa | undefined)?.enabled) return;
+  // the second factor of the workspace the session was opened on: the other one does not vouch for it
+  if (getUserMfa(user, await getUserMfaWorkspace(user))?.enabled) return;
   if (!(await isHighestRole(user))) return;
 
   throw createSecurityError(JSON.stringify({ code: 'MFA_ENROLLMENT_REQUIRED' }));

@@ -1,7 +1,9 @@
+import { MFA_FIELD_BY_WORKSPACE } from '@shared/constants';
 import {
   type AdminAccountDeletionReasonEnum, BanReasonEnum, BanTypeEnum, type TargetEnum, VerificationSmsErrorEnum,
 } from '@shared/types';
 import dayjs from 'dayjs';
+import omit from 'lodash/omit.js';
 
 
 import type { Locale } from '@/types/app.type';
@@ -40,7 +42,7 @@ import {
   createContactToCloud, sendEmailToUser, sendEmailVerification, toWorkspaceEmailRecipient,
 } from '../../utils/_core/email.utils.cloud';
 import { type ParallelJobData, runJob, runParallelJob } from '../../utils/_core/job.utils.cloud';
-import { isMfaLocked } from '../../utils/_core/mfa.utils.cloud';
+import { getUserMfa, isMfaLocked } from '../../utils/_core/mfa.utils.cloud';
 import { scopeToAgentCountries } from '../../utils/_core/parse.utils.cloud';
 import { assertCanActOnUser } from '../../utils/_core/role.utils.cloud';
 import { sendSmsVerification } from '../../utils/_core/sms.utils.cloud';
@@ -983,22 +985,28 @@ export const getUserDetailsById = async (
 };
 
 /**
- * Cuts `mfa` down to whether it is on and since when, on an account about to be sent to the
- * back-office: the encrypted secret and the backup codes never leave the server. Only on the copy
- * being answered with — it must run after any save of that object, or the save would write the
- * cut-down value back over the real secret. A clean copy is built rather than the value `set` on
- * the object: an object with a pending change is not sent back whole by Cloud Code.
+ * Cuts the second factor down to whether it is on and since when, on an account about to be sent to
+ * the back-office: the encrypted secret and the backup codes never leave the server. Each workspace
+ * has its own second factor: only the one of the workspace the reader is signed in to is told, under
+ * `mfa`. Only on the copy being answered with — it must run after any save of that object, or the
+ * save would write the cut-down value back over the real secret. A clean copy is built rather than
+ * the value `set` on the object: an object with a pending change is not sent back whole by Cloud Code.
  * @param user the account read by `getUserDetailsById`
+ * @param workspace the workspace of the reader's session
  * @returns a copy of the account, redacted
  */
-export const redactUserDetailsSecrets = (user: Parse.User): Parse.User => {
-  const mfa = user.get('mfa');
+export const redactUserDetailsSecrets = (user: Parse.User, workspace: TargetEnum): Parse.User => {
+  const mfaFields: string[] = Object.values(MFA_FIELD_BY_WORKSPACE);
 
-  if (!mfa) return user;
+  if (!mfaFields.some((field) => user.has(field))) return user;
+
+  const mfa = getUserMfa(user, workspace);
 
   return Parse.User.fromJSON({
-    ...user.toJSON(),
+    ...omit(user.toJSON(), mfaFields),
     className: '_User',
-    mfa: { enabled: !!mfa.enabled, enabledAt: mfa.enabledAt, isLocked: isMfaLocked(mfa) },
+    ...(mfa
+      ? { mfa: { enabled: !!mfa.enabled, enabledAt: mfa.enabledAt, isLocked: isMfaLocked(mfa) } }
+      : {}),
   });
 };

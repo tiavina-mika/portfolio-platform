@@ -2,18 +2,23 @@ import dayjs from 'dayjs';
 import ParseServerConfig from 'parse-server/lib/Config.js';
 import RestWrite from 'parse-server/lib/RestWrite.js';
 
+import type { TargetEnum } from '@shared/types';
+
 import { HIGHEST_LEVEL_ROLES, USE_MASTER_KEY } from '@/constants/_core/constants';
 import { BO_SESSION_MAX_HOURS } from '@/constants/_core/session.constants';
 import { OwnerAlertEventEnum } from '@/types/ownerAlert.type';
 
 import { getMongoCollection } from './db.utils.cloud';
 import { getUserRoles } from './role.utils.cloud';
+import { bindSessionToWorkspace } from './sessionWorkspace.utils.cloud';
 import { alertOwners } from '../../services/_core/ownerAlert.service.cloud';
 
 type IssueParseSessionOptions = {
   // `authProvider` is Parse's own `createdWith` field — it tells a password session from a code one
   createdWith: { action: string; authProvider?: string };
   additionalSessionData?: Record<string, unknown>;
+  // the workspace a staff session is bound to (see onStaffSessionOpened)
+  workspace: TargetEnum;
 };
 
 /**
@@ -60,14 +65,23 @@ const alertOwnersOfHighestRoleLogin = async (user: Parse.User, roles: Parse.Role
  * it goes through a Cloud Function, and the browser's inactivity timer alone cannot protect a token
  * copied out of it — and the owners hear of a highest role signing in. A member of the public keeps
  * Parse's long session (the mobile app wants to stay signed in), and a session that already expires
- * sooner is left alone.
+ * sooner is left alone. The session is also bound to the workspace it was opened on: it reads that
+ * workspace only, and passes that workspace's second factor only.
+ * @param user the account the session belongs to
+ * @param sessionToken the session just opened
+ * @param workspace the workspace of the back-office address the session was opened on
  */
-export const onStaffSessionOpened = async (user: Parse.User, sessionToken: string): Promise<void> => {
+export const onStaffSessionOpened = async (
+  user: Parse.User,
+  sessionToken: string,
+  workspace: TargetEnum
+): Promise<void> => {
   const roles = await getUserRoles(user);
 
   if (!roles?.length) return;
 
   await limitStaffSessionLifetime(sessionToken);
+  await bindSessionToWorkspace(sessionToken, workspace);
   await alertOwnersOfHighestRoleLogin(user, roles);
 };
 
@@ -83,7 +97,7 @@ export const onStaffSessionOpened = async (user: Parse.User, sessionToken: strin
  */
 export const issueParseSession = async (
   userId: string,
-  { createdWith, additionalSessionData }: IssueParseSessionOptions
+  { createdWith, additionalSessionData, workspace }: IssueParseSessionOptions
 ): Promise<string> => {
   const config = ParseServerConfig.get(Parse.applicationId);
   const { sessionData, createSession } = RestWrite.createSession(config, {
@@ -96,7 +110,7 @@ export const issueParseSession = async (
 
   const user = await new Parse.Query(Parse.User).select(['objectId']).get(userId, USE_MASTER_KEY);
 
-  await onStaffSessionOpened(user, sessionData.sessionToken);
+  await onStaffSessionOpened(user, sessionData.sessionToken, workspace);
 
   return sessionData.sessionToken;
 };

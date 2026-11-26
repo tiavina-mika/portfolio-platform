@@ -119,7 +119,13 @@ export interface IUserAttributes extends IUserDefaultRecord {
   deletionReason?: string;
   /** what the admin wrote along with the reason — always present when it is "other" */
   deletionReasonDetails?: string;
+  /**
+   * The second factor of the portfolio workspace on the signed-in account's own row, the one of the
+   * reader's workspace on an account the server sends to the back-office (it redacts the others)
+   */
   mfa?: IMfa;
+  // the second factor of the agency workspace, on the signed-in account's own row only
+  agencyMfa?: IMfa;
 }
 
 export interface IMfa {
