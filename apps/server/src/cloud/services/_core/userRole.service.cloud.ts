@@ -272,19 +272,19 @@ export const getAllRoleUserIds = async (): Promise<string[]> => {
 };
 
 /**
- * The staff accounts a reader limited to some workspaces must not see in the user list: those whose
- * posts open none of the reader's workspaces. An account holding a post of the reader's workspace
- * stays visible whatever else it holds, and so do the highest roles, which open every workspace. A
- * reader who opens the portfolio hides nothing — member accounts and the portfolio's staff are its own.
+ * The staff accounts a reader limited to some workspaces must not see in the user list: those holding
+ * no post of the reader's workspaces. The highest roles open every workspace but are the portfolio's
+ * owners and administrators, so they do not count as such a post: an account holding one is listed in
+ * the agency only when it also holds a post of the agency. A reader who opens the portfolio hides
+ * nothing — member accounts and the portfolio's staff are its own.
  * @param workspaces the workspaces the reader may use
  */
 export const getStaffUserIdsHiddenFrom = async (workspaces: TargetEnum[]): Promise<string[]> => {
   if (workspaces.includes(TargetEnum.PORTFOLIO)) return [];
 
-  const visibleRoles = await Parse.Query.or(
-    new Parse.Query(Parse.Role).containedIn('workspaces', workspaces),
-    new Parse.Query(Parse.Role).containedIn('name', HIGHEST_LEVEL_ROLES)
-  )
+  const visibleRoles = await new Parse.Query(Parse.Role)
+    .containedIn('workspaces', workspaces)
+    .notContainedIn('name', HIGHEST_LEVEL_ROLES)
     .select(['objectId'])
     .limit(DEFAULT_QUERY_LIMIT)
     .find(USE_MASTER_KEY);

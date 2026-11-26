@@ -63,7 +63,7 @@ occupe tout l'écran et se referme après un choix.
 - Un sélecteur de **pays / devise**, affiché seulement quand plusieurs pays sont disponibles.
 - Une **recherche globale** : à partir de deux lettres, elle cherche dans les articles, catégories, pages,
   contacts, utilisateurs et projets, et ouvre l'élément choisi. Côté Aldaron, les membres de la seule équipe
-  du portfolio n'y apparaissent pas, comme dans la liste des utilisateurs.
+  du portfolio, ses Owner et Super Admin compris, n'y apparaissent pas, comme dans la liste des utilisateurs.
 - Une **cloche de notifications** : elle résume ce qui est nouveau (messages de contact, nouveaux
   utilisateurs) avec un lien vers chaque liste.
 - Le **menu du profil** : **Mon profil**, **À propos** (nom de l'application, version, environnement) et
