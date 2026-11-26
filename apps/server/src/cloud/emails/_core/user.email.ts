@@ -6,6 +6,7 @@ import { translate, DEFAULT_LANGUAGE } from '@/config/i18n';
 import { formatDateInAppTimezone } from '@/utils/_core/date.utils';
 import { getChannelRecipientFromResult } from '@/utils/_core/notification.utils';
 import { formatFullName } from '@/utils/_core/user.utils';
+import { getAppName } from '@/utils/_core/utils';
 
 import {
   sendEmailToRecipient, sendEmailToUser, sendEmailToUserWithResult,
@@ -17,7 +18,7 @@ export const sendWelcomeEmail = async (
   sender?: string
 ): Promise<boolean> => {
   return sendEmailToRecipient(recipient, {
-    subject: translate('email.welcomeSubject', locale),
+    subject: translate('email.welcomeSubject', locale, { appName: getAppName(recipient.workspace) }),
     message: translate('email.welcomeMessage', locale, {
       fullName: formatFullName(recipient.firstName, recipient.lastName) || recipient.email,
     }),

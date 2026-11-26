@@ -16,7 +16,7 @@ import { createContactEmail, sendEmail, sendEmailWithResult } from '@/services/e
 import { NotificationChannelStatusEnum } from '@/types/notification.type';
 import { logger } from '@/utils/_core/logger';
 import { getChannelRecipientFromResult } from '@/utils/_core/notification.utils';
-import { formatFullName, getAdminEmailSender } from '@/utils/_core/user.utils';
+import { formatFullName, getAdminEmailSender, getBootstrapRoleName } from '@/utils/_core/user.utils';
 import {
   cutHtmlString, getAppName, getArticleClientUrl, getServerUrl, getTranslatedField,
   getUnsubscribeNewsletterClientUrl,
@@ -24,7 +24,9 @@ import {
 
 import { getUserWorkspace } from './role.utils.cloud';
 import { toEmailRecipient } from './user.utils.cloud';
+import { findPendingInvitationByEmail } from '../../services/_core/invitation.service.cloud';
 import { isEmailEnabledForRecipient } from '../../services/_core/notification.service.cloud';
+import { getLandingWorkspace, getRolesForUser } from '../../services/_core/userRole.service.cloud';
 
 export const isEmailSentResponse = (data: ICreateEmailResponse): boolean =>
   !!(data?.messageId || data?.messageIds);
@@ -40,10 +42,28 @@ const buildSender = (
 ): { email: string; name: string } | undefined =>
   senderEmail ? { email: senderEmail, name: getAppName(workspace) } : undefined;
 
+/*
+ * A back-office sign-up gets its roles only once its code is accepted: until then, the roles it is about
+ * to receive (its invitation, or the owners allowlist) say which workspace writes to it.
+ */
+const getRecipientWorkspace = async (user: Parse.User): Promise<TargetEnum> => {
+  if ((await getRolesForUser(user))?.length) return getUserWorkspace(user);
+
+  const email: string | undefined = user.get('email');
+
+  if (!email) return TargetEnum.PORTFOLIO;
+
+  const invitation = await findPendingInvitationByEmail(email);
+  const bootstrapRoleName = getBootstrapRoleName(email);
+  const roleNames = invitation?.get('roles') ?? (bootstrapRoleName ? [bootstrapRoleName] : []);
+
+  return roleNames.length ? getLandingWorkspace(roleNames) : TargetEnum.PORTFOLIO;
+};
+
 /**
  * The recipient of a mail to an account, with the workspace that frames it: the agency's when the
  * roles of the account open it alone, the portfolio's otherwise (the highest roles included).
- * The account's roles decide, not the request that triggered the mail.
+ * The account's roles (held, or pending on a sign-up) decide, not the request that triggered the mail.
  * @param user
  * @param email an address other than the account's own, for a mail that confirms a new one
  */
@@ -55,7 +75,7 @@ export const toWorkspaceEmailRecipient = async (
 
   // a failed roles lookup must not stop a login code or a password reset: the portfolio frame is the default
   try {
-    workspace = await getUserWorkspace(user);
+    workspace = await getRecipientWorkspace(user);
   }
   catch (e) {
     logger.error({
@@ -115,7 +135,7 @@ export const sendEmailVerification = async (
         formatFullName(recipient.firstName, recipient.lastName) || recipient.email,
         code,
         locale,
-        getAdminEmailSender(recipient.workspace) ?? ''
+        recipient.workspace
       ),
     }),
   };
@@ -245,7 +265,7 @@ export const sendInvitationEmail = async ({
   roleLabel,
   workspace,
 }: SendInvitationEmailParams): Promise<boolean> => {
-  const title = translate('email.invitationSubject', locale);
+  const title = translate('email.invitationSubject', locale, { appName: getAppName(workspace) });
 
   const params = {
     subject: title,
