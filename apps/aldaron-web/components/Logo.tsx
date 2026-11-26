@@ -12,7 +12,7 @@ type Props = {
 
 /**
  * The logo drawn inline with the theme tokens, so it follows the light and dark modes on its own. The
- * orange bracket always takes the brand color: it is never recolored.
+ * orange bar always takes the brand color: it is never recolored.
  */
 const Logo = ({ variant = 'horizontal', className }: Props) => (
   <svg
@@ -22,9 +22,13 @@ const Logo = ({ variant = 'horizontal', className }: Props) => (
     viewBox={LOGO.viewBox[variant]}
     xmlns="http://www.w3.org/2000/svg"
   >
-    <path className="fill-foreground" d={LOGO.leftBracket} />
-    <rect className="fill-foreground" {...LOGO.center} />
-    <path className="fill-brand" d={LOGO.rightBracket} />
+    {LOGO.bars[variant].map((bar, index) => (
+      <rect
+        className={index === LOGO.bars[variant].length - 1 ? 'fill-brand' : 'fill-foreground'}
+        key={bar.x}
+        {...bar}
+      />
+    ))}
     {variant === 'horizontal' && (
       <path
         className="fill-foreground"

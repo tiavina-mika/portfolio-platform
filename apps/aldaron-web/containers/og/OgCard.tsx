@@ -24,13 +24,17 @@ const Chip = ({ label }: ChipProps) => (
 );
 
 const LOGO_HEIGHT = 48;
-const LOGO_WIDTH = (LOGO_HEIGHT * 133) / 32;
+const LOGO_WIDTH = (LOGO_HEIGHT * 193) / 32;
 
 const Brand = () => (
   <svg height={LOGO_HEIGHT} viewBox={LOGO.viewBox.horizontal} width={LOGO_WIDTH}>
-    <path d={LOGO.leftBracket} fill={OG_CARD_COLORS.text} />
-    <rect {...LOGO.center} fill={OG_CARD_COLORS.text} />
-    <path d={LOGO.rightBracket} fill={OG_CARD_COLORS.brand} />
+    {LOGO.bars.horizontal.map((bar, index) => (
+      <rect
+        key={bar.x}
+        {...bar}
+        fill={index === LOGO.bars.horizontal.length - 1 ? OG_CARD_COLORS.brand : OG_CARD_COLORS.text}
+      />
+    ))}
     <path d={LOGO.wordmark} fill={OG_CARD_COLORS.text} transform={LOGO.wordmarkTransform} />
   </svg>
 );
