@@ -16,6 +16,7 @@ import {
 } from '@/redux/reducers/_core/role.reducer';
 import { AppDispatch, AppThunkAction, RootState } from '@/redux/store';
 import { fetchCurrentUserJson } from '@/services/_core/auth.service';
+import { isMfaEnrollmentRequiredError } from '@/services/_core/parseError.service';
 import { fetchCurrentUserWorkspaces, getRolesForUser, isAdmin } from '@/services/_core/role.service';
 import { ITabSearchParams } from '@/types/_core/app.type';
 import { IRoleAction } from '@/types/_core/role.type';
@@ -305,11 +306,16 @@ export const actionWithLoader = (
         dispatch(closeMessageSlice());
       }
 
-      // display error message
-      if (typeof error === 'string') {
+      /*
+       * display error message — except the MFA enrollment refusal: the enforced dialog already
+       * says it, and its form shows the app error, so the raw JSON payload would land in it
+       */
+      const isMfaEnrollmentRefusal = isMfaEnrollmentRequiredError(error);
+
+      if (typeof error === 'string' && !isMfaEnrollmentRefusal) {
         dispatch(setErrorSlice(translatedError(error)));
       }
-      else if (error instanceof Error) {
+      else if (error instanceof Error && !isMfaEnrollmentRefusal) {
         dispatch(setErrorSlice(translatedError((error as any).message)));
       }
     }
@@ -378,9 +384,11 @@ export const onEnterActionWithLoader = (
           case Errors.redirect:
             // eslint-disable-next-line @typescript-eslint/only-throw-error
             throw redirect({ to: options?.redirectTo || '/' });
-            // display error message
+            // display error message (the MFA enrollment refusal is already said by its dialog)
           default:
-            dispatch(setErrorSlice(translatedError(error.message)));
+            if (!isMfaEnrollmentRequiredError(error)) {
+              dispatch(setErrorSlice(translatedError(error.message)));
+            }
         }
       }
       else {

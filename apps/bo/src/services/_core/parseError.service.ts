@@ -24,6 +24,20 @@ const PARSE_ERROR_I18N_KEYS: ParseErrorOverrides = {
 };
 
 /**
+ * the server refuses every back-office function to a top-level admin who has not enrolled a second
+ * factor yet, with a JSON payload as its message — MfaRequiredBanner is already open on top of the
+ * page and says exactly that, so the refusals of the page loading under it are no news to the admin
+ * @param error the caught error
+ */
+export const isMfaEnrollmentRequiredError = (error: unknown): boolean => {
+  const message = typeof error === 'string'
+    ? error
+    : (error as Error | undefined)?.message;
+
+  return !!message?.includes('MFA_ENROLLMENT_REQUIRED');
+};
+
+/**
  * resolves a caught Parse error (or any error with a numeric `.code`) to a translated,
  * user-facing message.
  * @param error the caught error
@@ -43,12 +57,10 @@ export const getParseErrorMessage = (
     return i18n.t(key);
   }
 
-  const message = (error as Error | undefined)?.message;
-
   // a top-level admin without a second factor is refused every function but the enrollment itself
-  if (message?.includes('MFA_ENROLLMENT_REQUIRED')) {
+  if (isMfaEnrollmentRequiredError(error)) {
     return i18n.t('user:mfa.enrollmentRequired');
   }
 
-  return message || i18n.t(fallback);
+  return (error as Error | undefined)?.message || i18n.t(fallback);
 };
