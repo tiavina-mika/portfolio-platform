@@ -51,7 +51,7 @@ Deux onglets (le second réservé aux Owner et Super Admin) :
   **Charger plus** affiche d'autres postes. Un bouton d'ajout est proposé aux Owner et Super Admin.
 - **Comptes à poste élevé** : voir plus bas.
 
-Une icône d'historique ouvre le **journal des postes**.
+Une icône d'historique ouvre le **journal des postes**, limité aux postes de l'espace affiché.
 
 ## Actions possibles
 
@@ -63,12 +63,12 @@ Le formulaire s'ouvre en plein écran (« Ajouter un nouveau poste »), en deux 
   fois créé, le code ne peut plus être modifié.
 - **Configuration des accès** :
   - la **hiérarchie des postes** : les postes inclus ; toute personne ayant ce poste reçoit aussi leurs
-    droits ;
+    droits. Seuls les postes de l'espace affiché sont proposés (ceux déjà inclus restent visibles) ;
   - les **menus** visibles (Divers : migrations, cron, tests ; diffusion ;
     impersonation ; gestion du personnel) ;
   - la **durée d'inactivité** avant déconnexion automatique (de 15 minutes à 8 heures) ;
-  - les **espaces de travail** ouverts : portfolio, Aldaron, ou les deux (au moins un ; le portfolio est coché
-    par défaut) ;
+  - les **espaces de travail** ouverts : portfolio, Aldaron, ou les deux (au moins un ; pour un nouveau poste,
+    l'espace affiché est coché par défaut) ;
   - les **pays** couverts (aucun pays choisi = tous) ;
   - les **droits par ressource** : pour chaque rubrique (utilisateurs, postes, articles, pages, projets,
     catégories, contacts, notifications…), des cases lister, consulter, créer,
@@ -90,7 +90,8 @@ irréversible. Le poste Owner ne peut pas être supprimé.
 ### Donner ou retirer un poste à un compte
 
 Depuis la fiche de l'utilisateur, bloc **Postes** : ajouter un poste ou retirer celui d'une pastille, après
-confirmation. Règles imposées :
+confirmation. L'ajout et l'invitation ne proposent que les postes de l'espace affiché, plus Super Admin (le
+poste Owner n'y figure pas). Règles imposées :
 
 - on ne peut pas modifier **ses propres** postes ;
 - seul un Owner peut donner ou retirer le poste Owner ou Super Admin, et les comptes qui les détiennent ne
@@ -124,6 +125,7 @@ quand). L'aperçu d'un poste montre aussi son propre historique.
 
 ## Points d'attention / limites actuelles
 
+- Les entrées du journal d'un poste supprimé restent visibles dans les deux espaces.
 - Un poste qui ouvre Aldaron ne peut être donné que par quelqu'un qui travaille lui-même dans Aldaron. Un poste
   créé avant cette option n'ouvre que le portfolio.
 - Les droits sont appliqués par le serveur : masquer un menu ne protège pas une rubrique, c'est la coche du

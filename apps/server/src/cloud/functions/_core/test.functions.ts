@@ -86,7 +86,7 @@ Parse.Cloud.define(
     if (!article) return false;
 
     // a test only ever reaches the address it was given — never the whole newsletter list
-    return sendArticleToNewsletterEmails(email, article, locale, sender);
+    return sendArticleToNewsletterEmails(email, article, locale, { senderEmail: sender });
   }),
   parseFunctionValidation(sendArticleToNewsletterTestSchema)
 );

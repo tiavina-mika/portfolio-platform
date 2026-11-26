@@ -1,29 +1,22 @@
 import dayjs from 'dayjs';
 
-import { collections, USE_MASTER_KEY } from '@/constants/_core/constants';
+import { USE_MASTER_KEY } from '@/constants/_core/constants';
 import { decrypt } from '@/utils/_core/encrypt.utils';
 import { getObjectsCountSchema, incrementShareCountSchema } from '@/validations/_core/app.validations';
 import { addUnsubscribeNewsletterSchema, unsubscribeNewsletterSchema } from '@/validations/_core/email.validations';
 
 import { countBadgeObjects } from '../../services/_core/badgeCount.service.cloud';
+import { findNewsletterOfLink } from '../../services/_core/newsletter.service.cloud';
 import { sendNewsletterUnsubscribeConfirmationEmail } from '../../utils/_core/email.utils.cloud';
 import { fromBO, parseFunction } from '../../utils/_core/utils.cloud';
 import { parseFunctionValidation } from '../../utils/_core/validation.utils.cloud';
 
-/*
- * defined locally rather than imported from `triggers/_core/newsletter.triggers` — see the same
- * constant in `cloud/utils/_core/user.utils.cloud.ts` for why importing it from the trigger file
- * risks a circular require. `Parse.Object.extend` is idempotent — this returns the same cached
- * subclass.
- */
-const Newsletter = Parse.Object.extend(collections.Newsletter);
-
 Parse.Cloud.define(
   'unsubscribeNewsletter',
   parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<boolean> => {
-    const { encryptedEmail, locale } = (request).params;
+    const { encryptedEmail, locale, target } = (request).params;
     const decryptedEmail = decrypt(encryptedEmail, null, false);
-    const newsletter = await new Parse.Query(Newsletter).equalTo('email', decryptedEmail).first(USE_MASTER_KEY);
+    const newsletter = await findNewsletterOfLink(decryptedEmail as string, target);
 
     if (!newsletter) {
       return false;
@@ -37,7 +30,9 @@ Parse.Cloud.define(
     newsletter.set('unsubscribeAt', dayjs().toDate());
     const updatedEmail = await newsletter.save(null, USE_MASTER_KEY);
 
-    await sendNewsletterUnsubscribeConfirmationEmail(decryptedEmail as string, locale);
+    await sendNewsletterUnsubscribeConfirmationEmail(
+      decryptedEmail as string, locale, newsletter.get('target')
+    );
 
     return !!updatedEmail.get('email');
   }),
@@ -48,9 +43,9 @@ Parse.Cloud.define(
 Parse.Cloud.define(
   'resubscribeNewsletter',
   parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<boolean> => {
-    const { encryptedEmail } = (request).params;
+    const { encryptedEmail, target } = (request).params;
     const decryptedEmail = decrypt(encryptedEmail, null, false);
-    const newsletter = await new Parse.Query(Newsletter).equalTo('email', decryptedEmail).first(USE_MASTER_KEY);
+    const newsletter = await findNewsletterOfLink(decryptedEmail as string, target);
 
     if (!newsletter) {
       return false;
@@ -73,9 +68,9 @@ Parse.Cloud.define(
 Parse.Cloud.define(
   'addReasonToUnsubscribeToTheNewsletter',
   parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<boolean> => {
-    const { encryptedEmail, reason } = (request).params;
+    const { encryptedEmail, reason, target } = (request).params;
     const decryptedEmail = decrypt(encryptedEmail, null, false);
-    const newsletter = await new Parse.Query(Newsletter).equalTo('email', decryptedEmail).first(USE_MASTER_KEY);
+    const newsletter = await findNewsletterOfLink(decryptedEmail as string, target);
 
     if (!newsletter || (newsletter?.get('active') === true)) {
       return false;

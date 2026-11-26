@@ -14,7 +14,6 @@ import {
   MAX_VERIFICATION_ATTEMPTS,
   USE_MASTER_KEY,
   VERIFICATION_CODE_COOLDOWN_SECONDS, VERIFICATION_CODE_DAILY_LIMIT,
-  collections,
 } from '@/constants/_core/constants';
 import { SERVER_MANAGED_USER_FIELDS } from '@/constants/_core/user.constants';
 import { formatDateInAppTimezone } from '@/utils/_core/date.utils';
@@ -22,16 +21,6 @@ import { decrypt, encrypt } from '@/utils/_core/encrypt.utils';
 import { consumeSmsSendQuota } from '@/utils/_core/sms-quota.utils';
 import { formatFullName, hasNoVerifiedContact } from '@/utils/_core/user.utils';
 import { generateNumber } from '@/utils/_core/utils';
-
-/*
- * defined locally rather than imported from `triggers/_core/newsletter.triggers` — that trigger
- * file imports `utils.cloud.ts` (this file's neighbor) too, and this module sits on
- * `utils.cloud.ts`'s own import chain (via `role.utils.cloud.ts` -> `userRole.service.cloud.ts`),
- * so importing the class from there closes a circular require that crashes with
- * "Cannot access 'parseFunction' before initialization" depending on load order.
- * `Parse.Object.extend` is idempotent — calling it here returns the same cached subclass.
- */
-const Newsletter = Parse.Object.extend(collections.Newsletter);
 
 /**
  * generate 6 digits number the encrypt it to save to db
@@ -324,20 +313,6 @@ export const getUserPlatforms = (prevUser: Parse.User, user: Parse.User): IPlatf
       lastConnectedAt: dayjs().toDate(),
     };
   });
-};
-
-export const createNewsletter = async (email: string, locale: string): Promise<Parse.Object | undefined> => {
-  const existingNewsletter = await new Parse.Query('Newsletter').equalTo('email', email).first();
-
-  if (existingNewsletter) return;
-  const newsLetter = new Newsletter();
-
-  newsLetter.set('email', email);
-  newsLetter.set('language', locale);
-
-  const savedNewsletter = await newsLetter.save(null, USE_MASTER_KEY);
-
-  return savedNewsletter;
 };
 
 /**

@@ -2,6 +2,7 @@ import {
   HIGHEST_LEVEL_ROLES, ROLE_SESSION_TIMEOUT_MAX_MINUTES, ROLE_SESSION_TIMEOUT_MIN_MINUTES,
   SHARED_CLASS_ALIASES,
 } from '@shared/constants';
+import { TargetEnum } from '@shared/types';
 import dayjs from 'dayjs';
 import clamp from 'lodash/clamp';
 
@@ -9,6 +10,7 @@ import { DEFAULT_LOCALE } from '@/constants/_core/app.constants';
 import {
   MINUTES_PER_HOUR, MS_PER_MINUTE, SESSION_INACTIVITY_TIMEOUT_MS,
 } from '@/constants/_core/auth.constants';
+import { DEFAULT_TARGETS } from '@/constants/_core/cms.constants';
 import { HIGHEST_ROLE_STALE_LOGIN_DAYS } from '@/constants/_core/user.constants';
 import { ITabSearchParams } from '@/types/_core/app.type';
 import { ISidebarSubMenu } from '@/types/_core/navigation.type';
@@ -280,6 +282,11 @@ export const getSessionTimeoutMinutesFromHours = (hours?: number): number | null
 export const getRoleLabel = (role: IRole, locale: string): string => {
   return role.translated?.[locale]?.label || role.translated?.[DEFAULT_LOCALE]?.label || role.name;
 };
+
+/** whether a post opens a workspace — a post saved without the field opens the portfolio only */
+export const isRoleOfWorkspace = (role: IRole, workspace: TargetEnum): boolean => (
+  (role.workspaces?.length ? role.workspaces : DEFAULT_TARGETS).includes(workspace)
+);
 
 /**
  * whether the roles of the signed-in account should be re-read: only when the tab is visible and

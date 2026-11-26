@@ -96,7 +96,8 @@ Chaque image fait 5 Mo au maximum.
 
 Remplir le formulaire puis enregistrer avec les boutons fixés en bas de l'écran. À la réussite, la fiche de
 l'article s'ouvre. Si l'article est **actif** à sa création, il est aussitôt **envoyé par e-mail aux abonnés
-actifs à la newsletter**, chacun dans sa langue.
+actifs à la newsletter**, chacun dans sa langue. Seuls les abonnés des sites de destination de l'article le
+reçoivent, avec la marque et les liens du site sur lequel ils se sont inscrits.
 
 ### Modifier un article
 
@@ -131,3 +132,5 @@ En haut de la page : **Retourner à la liste** ; en modification, aussi **Ajoute
   « brouillon » distinct de « non actif ».
 - L'envoi à la newsletter n'a lieu **qu'à la création** d'un article actif : activer plus tard un article créé
   inactif, ou le corriger, n'envoie rien.
+- Chaque site a ses abonnés. Les inscriptions enregistrées avant cette séparation comptent pour le portfolio.
+  Une adresse inscrite sur les deux sites reçoit deux e-mails pour un article destiné aux deux.

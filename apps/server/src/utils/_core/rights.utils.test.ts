@@ -1,7 +1,7 @@
 import { TargetEnum } from '@shared/types';
 import { describe, expect, it } from 'vitest';
 
-import { isWriteWithinWorkspaces } from './rights.utils';
+import { getRoleNamesOutsideWorkspace, isWriteWithinWorkspaces } from './rights.utils';
 
 const { PORTFOLIO, AGENCY } = TargetEnum;
 const BOTH = [PORTFOLIO, AGENCY];
@@ -58,5 +58,23 @@ describe('a save made by an account limited to some workspaces', () => {
     it('should be allowed anywhere for an account that opens both workspaces', () => {
       expect(isWriteWithinWorkspaces([PORTFOLIO], [AGENCY], BOTH)).toBe(true);
     });
+  });
+});
+
+describe('the posts left out of a workspace', () => {
+  const roles = [
+    { name: 'OWNER' },
+    { name: 'SUPER_ADMIN' },
+    { name: 'MANAGER' },
+    { name: 'AGENCY_ADMIN', workspaces: [TargetEnum.AGENCY] },
+    { name: 'BOTH', workspaces: [TargetEnum.PORTFOLIO, TargetEnum.AGENCY] },
+  ];
+
+  it('should leave the posts of the portfolio, old ones included, out of the agency', () => {
+    expect(getRoleNamesOutsideWorkspace(roles, TargetEnum.AGENCY)).toEqual(['MANAGER']);
+  });
+
+  it('should leave the posts of the agency out of the portfolio', () => {
+    expect(getRoleNamesOutsideWorkspace(roles, TargetEnum.PORTFOLIO)).toEqual(['AGENCY_ADMIN']);
   });
 });

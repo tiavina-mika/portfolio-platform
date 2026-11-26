@@ -1,3 +1,4 @@
+import { HIGHEST_LEVEL_ROLES } from '@shared/constants';
 import { TargetEnum } from '@shared/types';
 import difference from 'lodash/difference.js';
 import isEqual from 'lodash/isEqual.js';
@@ -30,6 +31,17 @@ export type RoleGrants = {
 export const getRoleWorkspaces = (role: RoleGrants): TargetEnum[] => (
   role.workspaces?.length ? role.workspaces : [TargetEnum.PORTFOLIO]
 );
+
+/**
+ * The names of the posts that do not open a workspace: what a list read in that workspace leaves out.
+ * The highest roles open every workspace without storing it, so they are never part of it.
+ */
+export const getRoleNamesOutsideWorkspace = (
+  roles: (RoleGrants & { name: string })[],
+  workspace: TargetEnum
+): string[] => roles
+  .filter((role) => !HIGHEST_LEVEL_ROLES.includes(role.name) && !getRoleWorkspaces(role).includes(workspace))
+  .map((role) => role.name);
 
 /**
  * The workspaces a set of roles opens: the roles add up, like rights. An account holding no role at

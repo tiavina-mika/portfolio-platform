@@ -438,8 +438,12 @@ export const getClientUrl = (workspace: TargetEnum = TargetEnum.PORTFOLIO): stri
  * @param slug
  * @returns website url, ex: https://www.example.com/en/articles/my-article
  */
-export const getArticleClientUrl = (translated: Record<string, any>, locale = DEFAULT_LANGUAGE): string => {
-  const hostname = getClientUrl();
+export const getArticleClientUrl = (
+  translated: Record<string, any>,
+  locale = DEFAULT_LANGUAGE,
+  workspace?: TargetEnum
+): string => {
+  const hostname = getClientUrl(workspace);
   const pathname = t('routes.articles');
   const slug = getTranslatedField(translated, locale, 'slug');
 
@@ -454,8 +458,12 @@ export const getArticleClientUrl = (translated: Record<string, any>, locale = DE
  * @param locale
  * @returns
  */
-export const getUnsubscribeNewsletterClientUrl = (email: string, locale = DEFAULT_LANGUAGE): string => {
-  const hostname = getClientUrl();
+export const getUnsubscribeNewsletterClientUrl = (
+  email: string,
+  locale = DEFAULT_LANGUAGE,
+  workspace?: TargetEnum
+): string => {
+  const hostname = getClientUrl(workspace);
   const unsubscribePathname = t('routes.unsubscribe');
   const encryptedEmail = encrypt(email, null, false) as string;
 

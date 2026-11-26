@@ -13,7 +13,9 @@ import { getRoleAuditLogs } from '../../services/_core/roleAuditLog.service.clou
 import {
   addRolesToUser, getHighestRoleAccounts, getRolesDelegation, hasRole, removeRolesForUser,
 } from '../../services/_core/userRole.service.cloud';
-import { assertHasBoRight, checkHighestRole, getUserWorkspaces } from '../../utils/_core/role.utils.cloud';
+import {
+  assertHasBoRight, checkHighestRole, getUserWorkspaces, resolveWorkspace,
+} from '../../utils/_core/role.utils.cloud';
 import { getUserMfaWorkspace } from '../../utils/_core/sessionWorkspace.utils.cloud';
 import { fromBO, parseFunction } from '../../utils/_core/utils.cloud';
 import { parseFunctionValidation } from '../../utils/_core/validation.utils.cloud';
@@ -163,11 +165,12 @@ Parse.Cloud.define(
     await assertHasBoRight(request.user!, STAFF_UI_RIGHT, request.params.locale);
 
     const {
-      limit, skip, orderBy, order, roleName,
+      limit, skip, orderBy, order, roleName, locale,
     } = request.params;
+    const workspace = await resolveWorkspace(request.user, request.params.workspace, locale);
 
     return getRoleAuditLogs({
-      limit, skip, orderBy, order, roleName,
+      limit, skip, orderBy, order, roleName, workspace,
     });
   }),
   // -------- validation -------- //

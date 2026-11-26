@@ -1,3 +1,4 @@
+import { TargetEnum } from '@shared/types';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -55,6 +56,7 @@ const UnsubscribeNewsletterContent = async (props: Props) => {
   const hasEmail = await getParseServer().Cloud.run('unsubscribeNewsletter', {
     encryptedEmail,
     locale,
+    target: TargetEnum.AGENCY,
   });
 
   if (!hasEmail) {

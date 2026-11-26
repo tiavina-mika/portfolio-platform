@@ -1,5 +1,6 @@
 'use server';
 
+import { TargetEnum } from '@shared/types';
 import { z } from 'zod';
 
 import { action } from '@/config/safe-action';
@@ -28,6 +29,8 @@ export const createNewsletter = action
     await Parse.Cloud.run('subscribeToNewsletter', {
       ...values,
       language: locale,
+      // the subscription is Aldaron's: its articles, brand and e-mail account
+      target: TargetEnum.AGENCY,
       recaptchaToken,
     });
 
@@ -40,7 +43,9 @@ export const resubscribeToNewsletter = action
   .inputSchema(ResubscribeToNewsletterSchema)
   .bindArgsSchemas<[z.ZodString]>([z.string()])
   .action(async ({ parsedInput: values, bindArgsParsedInputs: [locale] }) => {
-    const hasEmail = await Parse.Cloud.run('resubscribeNewsletter', { ...values, locale });
+    const hasEmail = await Parse.Cloud.run('resubscribeNewsletter', {
+      ...values, locale, target: TargetEnum.AGENCY,
+    });
 
     return hasEmail;
   });
@@ -52,7 +57,7 @@ export const addReasonToUnsubscribeToTheNewsletter = action
   .action(async ({ parsedInput: values, bindArgsParsedInputs: [locale] }) => {
     const result = await Parse.Cloud.run(
       'addReasonToUnsubscribeToTheNewsletter',
-      { ...values, locale }
+      { ...values, locale, target: TargetEnum.AGENCY }
     );
 
     return {

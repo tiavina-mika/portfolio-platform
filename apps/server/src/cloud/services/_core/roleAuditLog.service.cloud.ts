@@ -1,8 +1,10 @@
 import uniq from 'lodash/uniq.js';
 
+import type { TargetEnum } from '@shared/types';
 import type { User } from 'parse';
 
 import { collections, DEFAULT_QUERY_LIMIT, USE_MASTER_KEY } from '@/constants/_core/constants';
+import { getRoleNamesOutsideWorkspace } from '@/utils/_core/rights.utils';
 
 import { getUserFullName } from '../../utils/_core/user.utils.cloud';
 
@@ -55,6 +57,21 @@ type GetRoleAuditLogsParams = {
   orderBy?: string;
   order?: 'asc' | 'desc';
   roleName?: string;
+  /** only the entries of the posts opening this workspace */
+  workspace: TargetEnum;
+};
+
+// a deleted post is no longer there to tell its workspaces: its entries stay readable from both
+const getHiddenRoleNames = async (workspace: TargetEnum): Promise<string[]> => {
+  const roles = await new Parse.Query(Parse.Role)
+    .select(['name', 'workspaces'])
+    .limit(DEFAULT_QUERY_LIMIT)
+    .find(USE_MASTER_KEY);
+
+  return getRoleNamesOutsideWorkspace(
+    roles.map((role) => ({ name: role.getName(), workspaces: role.get('workspaces') })),
+    workspace
+  );
 };
 
 export const getRoleAuditLogs = async ({
@@ -63,7 +80,12 @@ export const getRoleAuditLogs = async ({
   orderBy = 'timestamp',
   order = 'desc',
   roleName,
+  workspace,
 }: GetRoleAuditLogsParams): Promise<{ results: Parse.Object[]; count: number }> => {
+  const hiddenRoleNames = await getHiddenRoleNames(workspace);
+
+  if (roleName && hiddenRoleNames.includes(roleName)) return { results: [], count: 0 };
+
   const query = new Parse.Query(collections.RoleAuditLog)
     .select(ROLE_AUDIT_LOG_FIELDS)
     .limit(limit)
@@ -73,6 +95,10 @@ export const getRoleAuditLogs = async ({
   if (roleName) {
     query.equalTo('roleName', roleName);
     countQuery.equalTo('roleName', roleName);
+  }
+  else {
+    query.notContainedIn('roleName', hiddenRoleNames);
+    countQuery.notContainedIn('roleName', hiddenRoleNames);
   }
 
   if (order === 'desc') {

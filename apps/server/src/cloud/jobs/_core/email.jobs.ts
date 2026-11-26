@@ -1,3 +1,5 @@
+import type { TargetEnum } from '@shared/types';
+
 import { logger } from '@/utils/_core/logger';
 
 import { createContactToCloud } from '../../utils/_core/email.utils.cloud';
@@ -8,10 +10,12 @@ interface ICreateContactToCloudJobParams {
   email?: string;
   firstName?: string;
   lastName?: string;
+  // the website the address subscribed on: its e-mail account lists it
+  target?: TargetEnum;
 }
 defineJob('createContactToCloudJob', async (request: Parse.Cloud.JobRequest<ICreateContactToCloudJobParams>): Promise<any> => {
   const {
-    id, email, firstName, lastName,
+    id, email, firstName, lastName, target,
   } = request.params;
 
   if (!id) {
@@ -35,7 +39,7 @@ defineJob('createContactToCloudJob', async (request: Parse.Cloud.JobRequest<ICre
   user.set('lastName', lastName ?? firstName ?? '');
 
   try {
-    const result = await createContactToCloud(user, id);
+    const result = await createContactToCloud(user, id, target);
 
     return result;
   }

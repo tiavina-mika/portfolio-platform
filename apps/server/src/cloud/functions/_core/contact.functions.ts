@@ -74,13 +74,15 @@ Parse.Cloud.define(
 Parse.Cloud.define(
   'subscribeToNewsletter',
   parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<void> => {
-    const { email, language, recaptchaToken } = request.params;
+    const {
+      email, language, target, recaptchaToken,
+    } = request.params;
 
     if (!(await verifyRecaptchaToken(recaptchaToken))) {
       throw new Error(RECAPTCHA_VERIFICATION_FAILED);
     }
 
-    await subscribeToNewsletterService(email, language);
+    await subscribeToNewsletterService(email, language, target);
   }),
   parseFunctionValidation(subscribeToNewsletterSchema)
 );

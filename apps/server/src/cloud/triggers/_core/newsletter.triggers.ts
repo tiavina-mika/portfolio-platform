@@ -1,5 +1,8 @@
+import { TargetEnum } from '@shared/types';
+
 import { USE_MASTER_KEY } from '@/constants/_core/constants';
 
+import { findNewsletterByEmail } from '../../services/_core/newsletter.service.cloud';
 import { runJob } from '../../utils/_core/job.utils.cloud';
 import { parseFunction, setBooleanFields } from '../../utils/_core/utils.cloud';
 
@@ -22,13 +25,12 @@ Parse.Cloud.beforeSave(
        * Code query carries no session of its own — `Newsletter` is deliberately not readable
        * without a role, so the plain query would be rejected and take the sign-up down with it
        */
-      const existingNewsletter = await new Parse.Query(Newsletter)
-        .equalTo('email', newsletter.get('email'))
-        .select(['email'])
-        .first(USE_MASTER_KEY);
+      const target = newsletter.get('target') ?? TargetEnum.PORTFOLIO;
+      const existingNewsletter = await findNewsletterByEmail(newsletter.get('email'), target);
 
       // no need to create a new newsletter if it already exists
       if (existingNewsletter) return;
+      newsletter.set('target', target);
       newsletter.set('deleted', false);
       // a double opt-in sign-up stays inactive until its address is confirmed
       newsletter.set('active', newsletter.get('confirmed') !== false);
@@ -63,6 +65,7 @@ Parse.Cloud.afterSave(
       await runJob('createContactToCloudJob', {
         id: newsletter.id,
         email,
+        target: newsletter.get('target') as TargetEnum | undefined,
         firstName: linkedUser?.get('firstName') as string | undefined,
         lastName: linkedUser?.get('lastName') as string | undefined,
       });

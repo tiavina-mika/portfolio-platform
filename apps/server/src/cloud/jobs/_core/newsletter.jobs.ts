@@ -1,3 +1,5 @@
+import { TargetEnum } from '@shared/types';
+
 import type { Locale } from '@/types/app.type';
 
 import { USE_MASTER_KEY } from '@/constants/_core/constants';
@@ -7,6 +9,7 @@ import { delay } from '@/utils/_core/utils';
 import { Article } from '../../triggers/_core/article.triggers';
 import { sendArticleToNewsletterEmails } from '../../utils/_core/email.utils.cloud';
 import { defineJob, runParallelJob } from '../../utils/_core/job.utils.cloud';
+import { workspacesTargetQuery } from '../../utils/_core/parse.utils.cloud';
 
 
 export const Test = Parse.Object.extend('Test');
@@ -36,10 +39,13 @@ defineJob('sendArticleToNewsletterJob', async (request: Parse.Cloud.JobRequest<I
 
   if (!article) return;
 
-  const query = new Parse.Query('Newsletter')
+  // an article reaches the subscribers of the websites it is published on, the portfolio's when it names none
+  const articleTargets: TargetEnum[] | undefined = article.get('targets');
+  const targets = articleTargets?.length ? articleTargets : [TargetEnum.PORTFOLIO];
+  const query = workspacesTargetQuery(new Parse.Query('Newsletter'), targets, 'target')
     .equalTo('active', true)
     .equalTo('deleted', false)
-    .select(['email', 'language']);
+    .select(['email', 'language', 'target']);
 
   try {
     const result = await runParallelJob<number>({
@@ -54,7 +60,9 @@ defineJob('sendArticleToNewsletterJob', async (request: Parse.Cloud.JobRequest<I
             title: article.get('translated')[locale].title,
             locale,
           });
-          await sendArticleToNewsletterEmails(newsletter.get('email'), article, locale);
+          await sendArticleToNewsletterEmails(newsletter.get('email'), article, locale, {
+            workspace: newsletter.get('target') ?? TargetEnum.PORTFOLIO,
+          });
         }
         catch (e) {
           logger.error({

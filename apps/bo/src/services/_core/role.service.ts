@@ -11,9 +11,17 @@ export const fetchRoles = async ({
   limit, skip = 0, withAdminOrBetter = false, withUsersCount = false, workspace,
 }: Partial<ILoadRolesInput> & { limit: number }): Promise<IRole[]> => {
   const allRoles = new Parse.Query(Parse.Role);
-  // narrowed first: the portfolio case returns a new query, which would drop an order set before it
+  /*
+   * narrowed first: the narrowing returns a new query, which would drop an order set before it. The
+   * highest roles open every workspace without storing it, so they are read whatever the workspace
+   */
   const query = (
-    workspace ? contentTargetQuery(allRoles, workspace, 'workspaces') : allRoles
+    workspace
+      ? Parse.Query.or(
+        new Parse.Query(Parse.Role).containedIn('name', HIGHEST_LEVEL_ROLES),
+        contentTargetQuery(allRoles, workspace, 'workspaces')
+      )
+      : allRoles
   ) as Parse.Query<Parse.Role>;
 
   // a stable order keeps a "load more" page from repeating or skipping a role

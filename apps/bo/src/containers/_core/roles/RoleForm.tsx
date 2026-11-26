@@ -34,6 +34,7 @@ import {
 } from '@/constants/_core/user.constants';
 import CmsFormToolbar from '@/containers/_core/cms/form/CmsFormToolbar';
 import { useTranslatedValuesByTab } from '@/hooks/_core/useTranslatedValuesByTab';
+import { useWorkspace } from '@/hooks/_core/useWorkspace';
 import { getRoleCurrentUserRolesSelector } from '@/redux/reducers/_core/role.reducer';
 import { getSettingsLocaleSelector } from '@/redux/reducers/_core/settings.reducer';
 import { ISelectOption } from '@/types/_core/app.type';
@@ -42,7 +43,7 @@ import {
 } from '@/types/_core/role.type';
 import { getCountryOptions } from '@/utils/_core/country.utils';
 import { fromNow } from '@/utils/_core/date.utils';
-import { getRoleLabel, getSessionTimeoutHoursFromMinutes } from '@/utils/_core/role.utils';
+import { getRoleLabel, getSessionTimeoutHoursFromMinutes, isRoleOfWorkspace } from '@/utils/_core/role.utils';
 import { formatTechnicalCode, getTranslatedFormTabErrors } from '@/utils/_core/utils';
 import { roleCodec, roleSchema } from '@/validations/_core/role.validations';
 
@@ -91,7 +92,7 @@ const classes = {
   },
 };
 
-const getInitialValues = (selectedRole: IRole | null | undefined) => {
+const getInitialValues = (selectedRole: IRole | null | undefined, workspace: TargetEnum) => {
   if (selectedRole) {
     const rightsWithLabel = [];
 
@@ -138,7 +139,8 @@ const getInitialValues = (selectedRole: IRole | null | undefined) => {
     name: '',
     children: [],
     countries: [],
-    workspaces: DEFAULT_TARGETS,
+    // a new post opens the workspace it is created from, so it shows in the list it comes back to
+    workspaces: [workspace],
     rights: getRightsEntities().map((className: Omit<IRightsItem, 'rights'>) => ({
       ...className,
       rights: defaultRights,
@@ -190,6 +192,7 @@ const RoleForm = ({
   } = useTranslation(['common', 'user']);
   const formId = useId();
   const currentLocale = useSelector(getSettingsLocaleSelector);
+  const { workspace } = useWorkspace();
   const [rightsSearch, setRightsSearch] = useState<string>('');
   const [section, setSection] = useState<RoleFormSection>(ROLE_FORM_SECTIONS[0]);
 
@@ -210,7 +213,7 @@ const RoleForm = ({
      * rather than the schema's own (broken) inference
      */
     resolver: zodResolver(roleSchema) as unknown as Resolver<IRoleInput, any, IRoleInput>,
-    defaultValues: getInitialValues(selectedRole),
+    defaultValues: getInitialValues(selectedRole, workspace),
   });
 
   const {
@@ -242,8 +245,11 @@ const RoleForm = ({
    */
   const lastAutoNameRef = useRef<string>('');
 
+  // a child already saved stays offered whatever its workspace, or saving the form would drop it
+  const savedChildNames = (selectedRole?.children || []).map((role: IRole) => role.name);
   const hierarchyOptions = roles
     .filter((role: IRole) => getValues().name !== role.name) // exclude the current role
+    .filter((role: IRole) => savedChildNames.includes(role.name) || isRoleOfWorkspace(role, workspace))
     // the translated label is what an admin recognises a role by, the technical name stays the value
     .map((role: IRole) => ({ value: role.name, label: getRoleLabel(role, currentLocale) }));
 

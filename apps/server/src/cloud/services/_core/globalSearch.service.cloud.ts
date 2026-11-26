@@ -5,12 +5,13 @@ import { escapeText } from '@/utils/_core/utils';
 
 import { buildClassQuery, buildScopedClassQuery } from './badgeCount.service.cloud';
 import { getNotificationTextSearchQuery } from './notification-list.service.cloud';
+import { getStaffUserIdsHiddenFrom } from './userRole.service.cloud';
 import { Article } from '../../triggers/_core/article.triggers';
 import { Category } from '../../triggers/_core/category.triggers';
 import { Contact } from '../../triggers/_core/contact.triggers';
 import { Page } from '../../triggers/_core/page.triggers';
 import { contentCountriesQuery } from '../../utils/_core/parse.utils.cloud';
-import { hasRight } from '../../utils/_core/role.utils.cloud';
+import { getUserWorkspaces, hasRight } from '../../utils/_core/role.utils.cloud';
 import { getUserPhoneSearchQueries } from '../../utils/_core/user-search.utils.cloud';
 
 export type GlobalSearchQuery = (rawText: string, locales: string[]) => Promise<Parse.Object[]>;
@@ -129,6 +130,7 @@ const keepAgentCountries = async (className: string, hits: Parse.Object[]): Prom
 /**
  * Drops the hits filed in a workspace the caller's roles do not open (contact messages, articles, pages,
  * categories): the lists refuse them, so the search must too. Same one-query check on the ids as above.
+ * An account carries no workspace: the staff the user list hides from the caller is dropped instead.
  */
 const keepUserWorkspaces = async (
   user: Parse.User,
@@ -136,6 +138,12 @@ const keepUserWorkspaces = async (
   hits: Parse.Object[]
 ): Promise<Parse.Object[]> => {
   if (hits.length === 0) return hits;
+
+  if (className === collections.User) {
+    const hiddenStaffIds = new Set(await getStaffUserIdsHiddenFrom(await getUserWorkspaces(user)));
+
+    return hits.filter((hit) => !hiddenStaffIds.has(hit.id));
+  }
 
   const query = await buildScopedClassQuery(className, user);
   const kept = await query

@@ -247,6 +247,8 @@ export const EXTRA_SCHEMA_FIELDS: Record<
   [collections.Newsletter]: {
     email: 'String',
     language: 'String',
+    // the website subscribed on (`portfolio`, `agency`)
+    target: 'String',
     deleted: 'Boolean',
     active: 'Boolean',
     seen: 'Boolean',

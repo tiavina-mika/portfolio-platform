@@ -2,7 +2,7 @@ import {
   Badge, Chip, IconButton, ListItem, ListItemAvatar, ListItemText, Skeleton, Stack, Tooltip,
   Typography,
 } from '@mui/material';
-import { PlatformEnum } from '@shared/types';
+import { PlatformEnum, TargetEnum } from '@shared/types';
 import { useNavigate } from '@tanstack/react-router';
 import dayjs from 'dayjs';
 import {
@@ -36,6 +36,7 @@ import UserContacts from '@/containers/_core/users/UserContacts';
 import UserProfileCompletenessCell from '@/containers/_core/users/UserProfileCompletenessCell';
 import { useProtect } from '@/hooks/_core/useProtect';
 import { useToggle } from '@/hooks/_core/useToggle';
+import { useWorkspace } from '@/hooks/_core/useWorkspace';
 import { markAllAsSeen } from '@/redux/actions/_core/app.action';
 import { loadAuditLogs } from '@/redux/actions/_core/auditLog.action';
 import { sendBOInvitation } from '@/redux/actions/_core/invitation.action';
@@ -268,11 +269,12 @@ const Users = () => {
   const auditLogs = useSelector(getAuditLogLogsSelector);
   const auditLogCount = useSelector(getAuditLogCountSelector);
   const roles = useSelector(getRoleRolesSelector);
+  const { workspace } = useWorkspace();
   const currentUser = useSelector(getAppCurrentUserSelector);
   // the server lets an owner, a super administrator or the staff right invite an admin: the button follows
   const canManageStaff = useSelector(getRoleCanManageStaffSelector);
-  // whether this visit already read the roles for the invite form — see handleOpenInviteDialog
-  const hasLoadedInviteRolesRef = useRef(false);
+  // the workspace this visit already read the invite form roles for — see handleOpenInviteDialog
+  const inviteRolesWorkspaceRef = useRef<TargetEnum>(undefined);
   const searchParams: IUsersRouteSearchParams = usersRoute.useSearch();
 
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
@@ -373,9 +375,9 @@ const Users = () => {
    * list without the highest-level roles, which would silently narrow the form's options
    */
   const handleOpenInviteDialog = () => {
-    if (!hasLoadedInviteRolesRef.current || roles.length === 0) {
-      hasLoadedInviteRolesRef.current = true;
-      dispatch(loadRoles({ limit: RELATION_OPTIONS_LIMIT }));
+    if (inviteRolesWorkspaceRef.current !== workspace || roles.length === 0) {
+      inviteRolesWorkspaceRef.current = workspace;
+      dispatch(loadRoles({ limit: RELATION_OPTIONS_LIMIT, workspace }));
     }
 
     toggleInviteDialog();

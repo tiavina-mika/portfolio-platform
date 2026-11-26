@@ -6,8 +6,8 @@ import { type ParseTriggerValidation } from '@/types/utils.type';
 import { logger } from '@/utils/_core/logger';
 import { contactSchema } from '@/validations/_core/app.validations';
 
+import { createNewsletter } from '../../services/_core/newsletter.service.cloud';
 import { createContactToCloud } from '../../utils/_core/email.utils.cloud';
-import { createNewsletter } from '../../utils/_core/user.utils.cloud';
 import { parseFunction, setBooleanFields } from '../../utils/_core/utils.cloud';
 import { parseTriggerValidation } from '../../utils/_core/validation.utils.cloud';
 
@@ -58,7 +58,9 @@ Parse.Cloud.afterSave(
     // ----------- edition ----------- //
     if (contact.existed()) {
       if (dirtyKeys.includes('acceptNewsLetter') && contact.get('acceptNewsLetter')) {
-        const newsletter = await createNewsletter(contact.get('email'), contact.get('locale'));
+        const newsletter = await createNewsletter(
+          contact.get('email'), contact.get('locale'), contact.get('target')
+        );
 
         if (newsletter) {
           logger.info(
@@ -72,7 +74,8 @@ Parse.Cloud.afterSave(
 
     const contactObj = { email: contact.get('email'), lastName: contact.get('name') };
 
-    await createContactToCloud(contactObj, contact.id);
+    // listed on the e-mail account of the website the message came from
+    await createContactToCloud(contactObj, contact.id, contact.get('target'));
   })
 );
 

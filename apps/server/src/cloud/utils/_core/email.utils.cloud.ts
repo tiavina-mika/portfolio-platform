@@ -440,7 +440,8 @@ export const sendEmailToStaffInTheirOwnLocale = async (
 
 export const sendNewsletterUnsubscribeConfirmationEmail = async (
   email: string,
-  locale: Locale = DEFAULT_LANGUAGE
+  locale: Locale = DEFAULT_LANGUAGE,
+  workspace?: TargetEnum
 ): Promise<boolean> => {
   const params = {
     subject: translate('email.newsletterUnsubscribeConfirmationSubject', locale),
@@ -448,10 +449,11 @@ export const sendNewsletterUnsubscribeConfirmationEmail = async (
     htmlContent: generateEmailTemplate({
       locale,
       content: translate('email.newsletterUnsubscribeConfirmationMessage', locale),
+      workspace,
     }),
   };
 
-  const data = await sendEmail(params);
+  const data = await sendEmail(params, workspace);
 
   return isEmailSentResponse(data);
 };
@@ -461,35 +463,38 @@ export const sendNewsletterUnsubscribeConfirmationEmail = async (
  * @param email
  * @param article
  * @param locale
+ * @param options the sender a test picked, and the website the address subscribed on (the portfolio's
+ * when left out)
  * @returns
  */
 export const sendArticleToNewsletterEmails = async (
   email: string,
   article: Parse.Object,
   locale = DEFAULT_LANGUAGE,
-  senderEmail?: string
+  { senderEmail, workspace }: { senderEmail?: string; workspace?: TargetEnum } = {}
 ): Promise<boolean> => {
   const translated = article.get('translated');
   const title = getTranslatedField(translated, locale, 'title');
-  const unsubscribeLink = getUnsubscribeNewsletterClientUrl(email, locale);
+  const unsubscribeLink = getUnsubscribeNewsletterClientUrl(email, locale, workspace);
   const content = cutHtmlString(getTranslatedField(translated, locale, 'content'));
 
   const params = {
     subject: title,
     to: [{ email }],
-    sender: buildSender(senderEmail),
+    sender: buildSender(senderEmail, workspace),
     htmlContent: generateEmailTemplate({
       locale,
       title,
       content,
-      buttonUrl: getArticleClientUrl(translated, locale),
+      workspace,
+      buttonUrl: getArticleClientUrl(translated, locale, workspace),
       buttonText: translate('article.readTheArticle', locale),
       footer: renderNewsletterArticleFooter(unsubscribeLink, locale),
       cardStyle: 'max-width: 100%',
     }),
   };
 
-  const data = await sendEmail(params);
+  const data = await sendEmail(params, workspace);
 
   return isEmailSentResponse(data);
 };

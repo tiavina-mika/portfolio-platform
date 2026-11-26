@@ -134,7 +134,10 @@ const fetchRolesDelegationOfStoredRoles = async (
  */
 export const loadRolesDelegation = (userId: string): any => {
   return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
-    await dispatch(loadRoles({ limit: RELATION_OPTIONS_LIMIT }));
+    // only the posts of the workspace on screen are offered
+    const workspace = getSettingsWorkspaceSelector(getState?.()!);
+
+    await dispatch(loadRoles({ limit: RELATION_OPTIONS_LIMIT, workspace }));
     await fetchRolesDelegationOfStoredRoles(dispatch, getState, userId);
   }, { localLoadingAction: setRolesDelegationLoadingSlice });
 };

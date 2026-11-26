@@ -5,7 +5,8 @@ import {
   setRoleAuditLogCountSlice,
   setRoleAuditLogLoadingSlice,
 } from '@/redux/reducers/_core/roleAuditLog.reducer';
-import { AppDispatch } from '@/redux/store';
+import { getSettingsWorkspaceSelector } from '@/redux/reducers/_core/settings.reducer';
+import { AppDispatch, RootState } from '@/redux/store';
 import { fetchRoleAuditLogs } from '@/services/_core/roleAuditLog.service';
 import { IQueriesInput } from '@/types/_core/app.type';
 
@@ -17,9 +18,9 @@ export const loadRoleAuditLogs = ({
   roleName,
 }: IQueriesInput & { roleName?: string }): any => {
   return actionWithLoader(
-    async (dispatch: AppDispatch): Promise<void> => {
+    async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
       const result = await fetchRoleAuditLogs({
-        limit, skip, orderBy, order, roleName,
+        limit, skip, orderBy, order, roleName, workspace: getSettingsWorkspaceSelector(getState?.()!),
       });
 
       dispatch(loadRoleAuditLogsSlice(result.results));

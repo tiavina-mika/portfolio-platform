@@ -26,6 +26,8 @@ export const createPublicContactSchema = z.object({
 export const subscribeToNewsletterSchema = z.object({
   email: z.string().email(),
   language: z.string().max(10).optional(),
+  // the website signed up on: the Aldaron site names the agency, the portfolio's when left out
+  target: z.enum(TargetEnum).optional(),
   recaptchaToken: z.string().nonempty().max(4000),
 });
 
