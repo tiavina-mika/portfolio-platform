@@ -63,19 +63,22 @@ const getRecipientWorkspace = async (user: Parse.User): Promise<TargetEnum> => {
 /**
  * The recipient of a mail to an account, with the workspace that frames it: the agency's when the
  * roles of the account open it alone, the portfolio's otherwise (the highest roles included).
- * The account's roles (held, or pending on a sign-up) decide, not the request that triggered the mail.
+ * The account's roles (held, or pending on a sign-up) decide, unless the request names a workspace.
  * @param user
  * @param email an address other than the account's own, for a mail that confirms a new one
+ * @param requestWorkspace the workspace of the back-office address the mail was asked from: a code
+ * asked on the agency's back-office is the agency's, whatever roles the account holds or awaits
  */
 export const toWorkspaceEmailRecipient = async (
   user: Parse.User,
-  email?: string
+  email?: string,
+  requestWorkspace?: TargetEnum
 ): Promise<EmailRecipient> => {
-  let workspace = TargetEnum.PORTFOLIO;
+  let workspace = requestWorkspace ?? TargetEnum.PORTFOLIO;
 
   // a failed roles lookup must not stop a login code or a password reset: the portfolio frame is the default
   try {
-    workspace = await getRecipientWorkspace(user);
+    if (!requestWorkspace) workspace = await getRecipientWorkspace(user);
   }
   catch (e) {
     logger.error({

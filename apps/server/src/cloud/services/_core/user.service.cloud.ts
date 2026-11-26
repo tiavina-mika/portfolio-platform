@@ -1,5 +1,5 @@
 import {
-  type AdminAccountDeletionReasonEnum, BanReasonEnum, BanTypeEnum, VerificationSmsErrorEnum,
+  type AdminAccountDeletionReasonEnum, BanReasonEnum, BanTypeEnum, type TargetEnum, VerificationSmsErrorEnum,
 } from '@shared/types';
 import dayjs from 'dayjs';
 
@@ -660,11 +660,18 @@ export const saveUserVerificationCode = async (
   return updatedUser;
 };
 
-export const sendVerificationCodeToEmail = async (user: Parse.User, locale: Locale): Promise<void> => {
+/**
+ * @param requestWorkspace the workspace of the back-office address the account signed up on, if any
+ */
+export const sendVerificationCodeToEmail = async (
+  user: Parse.User,
+  locale: Locale,
+  requestWorkspace?: TargetEnum
+): Promise<void> => {
   try {
     const decryptedCode = getDecryptedUserCode(user) as string;
 
-    const recipient = await toWorkspaceEmailRecipient(user);
+    const recipient = await toWorkspaceEmailRecipient(user, undefined, requestWorkspace);
 
     // send email and create the contact in parallel — independent operations
     await Promise.all([
@@ -687,8 +694,12 @@ export const sendVerificationCodeToEmail = async (user: Parse.User, locale: Loca
  * provider's latency does not add to the afterSave trigger response. A sign-up account is created
  * with its code (see the User beforeSave), so there is nothing left to save.
  */
-export const sendStoredCodeToEmail = (user: Parse.User, locale: Locale): void => {
-  sendVerificationCodeToEmail(user, locale).catch((error) => {
+export const sendStoredCodeToEmail = (
+  user: Parse.User,
+  locale: Locale,
+  requestWorkspace?: TargetEnum
+): void => {
+  sendVerificationCodeToEmail(user, locale, requestWorkspace).catch((error) => {
     logger.error('sendVerificationCodeToEmail failed', { userId: user.id, error: (error as Error).message });
   });
 };
@@ -699,11 +710,15 @@ export const sendStoredCodeToEmail = (user: Parse.User, locale: Locale): void =>
  * @param user
  * @param locale
  */
-export const saveUserAndSendCodeToEmail = async (user: Parse.User, locale: Locale): Promise<Parse.User> => {
+export const saveUserAndSendCodeToEmail = async (
+  user: Parse.User,
+  locale: Locale,
+  requestWorkspace?: TargetEnum
+): Promise<Parse.User> => {
   // 1. generate and save verification code — must complete so the code exists in DB before the trigger responds
   const updatedUser = await saveUserVerificationCode(user, 'email');
 
-  sendStoredCodeToEmail(updatedUser, locale);
+  sendStoredCodeToEmail(updatedUser, locale, requestWorkspace);
 
   return updatedUser;
 };

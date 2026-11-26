@@ -8,6 +8,7 @@ import type { IBan } from '@/types/user.type';
 import { DISABLE_USER_ACCOUNT_CONFIRMATION, USE_MASTER_KEY } from '@/constants/_core/constants';
 import { logger } from '@/utils/_core/logger';
 import { hasNoVerifiedContact } from '@/utils/_core/user.utils';
+import { getRequestWorkspace } from '@/utils/_core/utils';
 
 import {
   deleteUserSessionByTokenService, markUserOfflineAfterLogoutService,
@@ -56,7 +57,14 @@ Parse.Cloud.beforeLogin(
       if (!user.get('emailVerified')) {
         // resend automatically the account verification code — a refusal here must not unblock the login
         try {
-          await Parse.Cloud.run('sendVerificationCode', { email: user.get('email') });
+          /*
+           * the call below carries no browser header: the workspace of the address the person signs
+           * in on is read here and handed over, or the code would go out under the portfolio's brand
+           */
+          await Parse.Cloud.run('sendVerificationCode', {
+            email: user.get('email'),
+            workspace: getRequestWorkspace(request),
+          });
         }
         catch (error) {
           logger.error(`Could not resend the verification code to BO user ${user.id}`, {

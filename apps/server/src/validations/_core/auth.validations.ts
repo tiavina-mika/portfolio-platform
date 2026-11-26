@@ -1,3 +1,4 @@
+import { TargetEnum } from '@shared/types';
 import {
   isPasswordContainingEmailWord,
   isPasswordSameAsEmail,
@@ -38,6 +39,8 @@ export const sendVerificationCodeSchema = z.object({
   email: emailFieldSchema.optional(),
   phoneNumber: z.string().trim().nonempty().optional(),
   locale: localeFieldSchema.optional(),
+  // the brand of the e-mail: only the login names it, the other callers are read from their address
+  workspace: z.enum(TargetEnum).optional(),
 }).refine((data) => !!data.email || !!data.phoneNumber, {
   message: 'error.required',
   path: ['email'],

@@ -5,9 +5,46 @@ import {
 
 import { getAdminEmailSender } from './user.utils';
 import {
-  getAppName, getBrevoApiKey, getClientUrl, getServerUrl,
+  getAppName, getBrevoApiKey, getClientUrl, getRequestWorkspace, getServerUrl,
 } from './utils';
 import { APP_NAME } from '../../constants/_core/constants';
+
+describe('workspace of the address a request comes from', () => {
+  beforeEach(() => {
+    vi.stubEnv('AGENCY_SERVER_URL', 'https://admin.agency.test');
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it('should be the agency when the page was opened on the agency back-office', () => {
+    expect(getRequestWorkspace({ headers: { origin: 'https://admin.agency.test' } })).toBe(TargetEnum.AGENCY);
+  });
+
+  it('should read the host when the request carries no origin', () => {
+    expect(getRequestWorkspace({ headers: { host: 'admin.agency.test' } })).toBe(TargetEnum.AGENCY);
+    expect(getRequestWorkspace({ headers: { 'x-forwarded-host': 'admin.agency.test, proxy.internal' } }))
+      .toBe(TargetEnum.AGENCY);
+  });
+
+  it('should say nothing for the portfolio address, so the roles of the account decide', () => {
+    const headers = { origin: 'https://portfolio.test', host: 'portfolio.test' };
+
+    expect(getRequestWorkspace({ headers })).toBeUndefined();
+  });
+
+  it('should say nothing for a call made by the server itself', () => {
+    expect(getRequestWorkspace(undefined)).toBeUndefined();
+    expect(getRequestWorkspace({ headers: {} })).toBeUndefined();
+  });
+
+  it('should say nothing while the agency address is not set', () => {
+    vi.stubEnv('AGENCY_SERVER_URL', '');
+
+    expect(getRequestWorkspace({ headers: { origin: 'https://admin.agency.test' } })).toBeUndefined();
+  });
+});
 
 describe('URLs and name of a workspace', () => {
   beforeEach(() => {

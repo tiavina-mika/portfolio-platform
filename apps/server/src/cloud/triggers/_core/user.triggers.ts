@@ -14,6 +14,7 @@ import { RegisterStepEnum } from '@/types/user.type';
 import { logger } from '@/utils/_core/logger';
 import { resolveSignUpIdentity } from '@/utils/_core/signup-identity.utils';
 import { getBootstrapRoleName } from '@/utils/_core/user.utils';
+import { getRequestWorkspace } from '@/utils/_core/utils';
 import { profileVisibilitySchema } from '@/validations/_core/user.validations';
 
 import { isImpersonatedSessionService } from '../../services/_core/impersonation.service.cloud';
@@ -359,7 +360,9 @@ Parse.Cloud.afterSave(
       // verify directly the user if it's a local environment
       if (user.get('platform') === 'bo') {
         if (!(await autoConfirmSignUpIfAllowed(user, 'emailVerified', true))) {
-          const updatedUser = await saveUserAndSendCodeToEmail(user, locale as Locale);
+          const updatedUser = await saveUserAndSendCodeToEmail(
+            user, locale as Locale, getRequestWorkspace(request)
+          );
 
           logger.info(`Verification code sent to user ${updatedUser?.id}`);
         }

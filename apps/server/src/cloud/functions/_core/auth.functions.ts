@@ -9,6 +9,7 @@ import { decrypt, generateSingleUseToken, hashSingleUseToken } from '@/utils/_co
 import { logger } from '@/utils/_core/logger';
 import { normalizePhoneNumber } from '@/utils/_core/phone.utils';
 import { getRegisterStepAfterConfirmation } from '@/utils/_core/user.utils';
+import { getRequestWorkspace } from '@/utils/_core/utils';
 import {
   changePasswordSchema, emailFieldSchema, emailLoginSchema, phoneAuthSchema, resetPasswordSchema,
   sendVerificationCodeSchema, verifyAccountSchema,
@@ -195,10 +196,14 @@ Parse.Cloud.define(
 
     if (toVerify === 'email') {
       if (isFirstEmailVerification) {
+        const requestWorkspace = getRequestWorkspace(request);
+
         // fire-and-forget — the welcome email must not add Brevo's latency to this response
         void (async () => {
           try {
-            await sendWelcomeEmail(await toWorkspaceEmailRecipient(newUser), locale);
+            const recipient = await toWorkspaceEmailRecipient(newUser, undefined, requestWorkspace);
+
+            await sendWelcomeEmail(recipient, locale);
           } catch (error) {
             logger.error('sendWelcomeEmail failed', { userId: newUser.id, error: (error as Error).message });
           }
@@ -319,8 +324,13 @@ Parse.Cloud.define(
     const newUser = await user.save(null, USE_MASTER_KEY);
     const code = getDecryptedUserCode(newUser) as string;
 
+    // the back-office login re-asks the code from the server, so it names the workspace of its address itself
+    const requestWorkspace = request.params.workspace ?? getRequestWorkspace(request);
+
     const hasSent = email
-      ? await sendEmailVerification(await toWorkspaceEmailRecipient(newUser), code, locale)
+      ? await sendEmailVerification(
+        await toWorkspaceEmailRecipient(newUser, undefined, requestWorkspace), code, locale
+      )
       : await sendSmsVerification(phoneNumber!, code, locale, newUser.get('phone')?.code);
 
     // the code the sign-up screen was told was not coming is on its way now
@@ -379,7 +389,11 @@ Parse.Cloud.define(
     const code = getDecryptedUserCode(newUser, RESET_PASSWORD_VERIFICATION_FIELD) as string;
 
     const isSent = email
-      ? await sendEmailResetPassword({ recipient: await toWorkspaceEmailRecipient(newUser), code, locale })
+      ? await sendEmailResetPassword({
+        recipient: await toWorkspaceEmailRecipient(newUser, undefined, getRequestWorkspace(request)),
+        code,
+        locale,
+      })
       : await sendSmsVerification(phoneNumber!, code, locale, newUser.get('phone')?.code);
 
     return isSent;

@@ -12,6 +12,8 @@ import { getCloudinaryName } from './cloudinary.utils';
 import { encrypt } from './encrypt.utils';
 import {
   APP_NAME,
+  BO_AGENCY_DEV_PORT,
+  IS_LOCAL,
   IS_TEST,
   USE_MASTER_KEY,
 } from '../../constants/_core/constants';
@@ -189,6 +191,47 @@ export const getServerUrl = (workspace: TargetEnum = TargetEnum.PORTFOLIO): stri
   const agencyUrl = workspace === TargetEnum.AGENCY ? process.env.AGENCY_SERVER_URL : undefined;
 
   return agencyUrl || process.env.SERVER_URL!;
+};
+
+const readHeader = (headers: Record<string, unknown> | undefined, name: string): string | undefined => {
+  const value = headers?.[name];
+  const first: unknown = Array.isArray(value) ? value[0] : value;
+
+  return typeof first === 'string' && first ? first : undefined;
+};
+
+const toHost = (url?: string): string | undefined => {
+  if (!url) return undefined;
+
+  try {
+    return new URL(url).host;
+  }
+  catch {
+    return undefined;
+  }
+};
+
+/**
+ * The agency's workspace when a request comes from the agency's back-office address, nothing otherwise.
+ * The back-office calls Parse on the address it is opened on, so the browser's `Origin` (or the host
+ * when there is none) tells which brand the person sees. Before its code is accepted an account holds
+ * no role, and this is the only thing saying the person signed up or in on the agency's back-office.
+ * Locally, the agency's back-office is the second Vite dev server.
+ * @param request a Cloud Function or trigger request (Parse passes the headers to both, the types of a
+ * function do not declare them)
+ */
+export const getRequestWorkspace = (request?: object): TargetEnum | undefined => {
+  const { headers } = (request ?? {}) as { headers?: Record<string, unknown> };
+  const host = toHost(readHeader(headers, 'origin')) ??
+    readHeader(headers, 'x-forwarded-host')?.split(',')[0]?.trim() ??
+    readHeader(headers, 'host');
+
+  if (!host) return undefined;
+
+  const isAgencyAddress = host === toHost(process.env.AGENCY_SERVER_URL);
+  const isAgencyDevServer = IS_LOCAL && host.endsWith(`:${BO_AGENCY_DEV_PORT}`);
+
+  return isAgencyAddress || isAgencyDevServer ? TargetEnum.AGENCY : undefined;
 };
 
 /**
