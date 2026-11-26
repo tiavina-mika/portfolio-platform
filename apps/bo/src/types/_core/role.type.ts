@@ -136,6 +136,8 @@ export interface ILoadRolesInput {
   withUsersCount: boolean;
   incrementItems: boolean;
   selects: string[];
+  /** only the roles opening this workspace — left out, every role is read */
+  workspace: TargetEnum;
 }
 
 // add new ui role here

@@ -2,17 +2,22 @@ import { TargetEnum } from '@shared/types';
 import Parse from 'parse';
 
 import { HIGHEST_LEVEL_ROLES, RELATION_OPTIONS_LIMIT, ROLE_DEFAULT_LIMIT } from '@/constants/_core/user.constants';
-import { IHighestRoleAccount, IRole, IRolesDelegation } from '@/types/_core/role.type';
-import { toJSONWithId } from '@/utils/_core/parse.utils';
+import {
+  IHighestRoleAccount, ILoadRolesInput, IRole, IRolesDelegation,
+} from '@/types/_core/role.type';
+import { contentTargetQuery, toJSONWithId } from '@/utils/_core/parse.utils';
 
-export const fetchRoles = async (
-  limit: number,
-  skip: number,
-  withAdminOrBetter: boolean,
-  withUsersCount: boolean
-): Promise<IRole[]> => {
+export const fetchRoles = async ({
+  limit, skip = 0, withAdminOrBetter = false, withUsersCount = false, workspace,
+}: Partial<ILoadRolesInput> & { limit: number }): Promise<IRole[]> => {
+  const allRoles = new Parse.Query(Parse.Role);
+  // narrowed first: the portfolio case returns a new query, which would drop an order set before it
+  const query = (
+    workspace ? contentTargetQuery(allRoles, workspace, 'workspaces') : allRoles
+  ) as Parse.Query<Parse.Role>;
+
   // a stable order keeps a "load more" page from repeating or skipping a role
-  const query = new Parse.Query(Parse.Role).notEqualTo('deleted', true).ascending('name');
+  query.notEqualTo('deleted', true).ascending('name');
 
   if (withAdminOrBetter) {
     query.notEqualTo('name', HIGHEST_LEVEL_ROLES[0]);

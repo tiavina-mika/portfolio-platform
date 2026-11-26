@@ -45,7 +45,8 @@ Les actions sont aussi contrôlées par le serveur : un menu visible ne suffit p
 
 Deux onglets (le second réservé aux Owner et Super Admin) :
 
-- **Postes** : un champ de recherche et un tableau avec le **libellé**, le **code unique**, la date de
+- **Postes** : seuls les postes qui ouvrent l'espace de travail affiché (portfolio ou Aldaron) sont listés ; un
+  poste qui ouvre les deux apparaît dans les deux. Un champ de recherche et un tableau avec le **libellé**, le **code unique**, la date de
   **création**, le **nombre d'utilisateurs** et les **actions** (aperçu, modification, suppression). Le bouton
   **Charger plus** affiche d'autres postes. Un bouton d'ajout est proposé aux Owner et Super Admin.
 - **Comptes à poste élevé** : voir plus bas.

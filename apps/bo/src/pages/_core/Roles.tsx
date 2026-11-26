@@ -28,6 +28,7 @@ import RoleAuditLogDialog from '@/containers/_core/roles/RoleAuditLogDialog';
 import RoleDeleteDialog from '@/containers/_core/roles/RoleDeleteDialog';
 import RolePreviewDialog from '@/containers/_core/roles/RolePreviewDialog';
 import { useToggle } from '@/hooks/_core/useToggle';
+import { useWorkspace } from '@/hooks/_core/useWorkspace';
 import {
   destroyRole, goToAddRole, goToEditRole, loadHighestRoleAccounts, loadRoles,
 } from '@/redux/actions/_core/role.action';
@@ -82,6 +83,7 @@ const Roles = () => {
   const [previewedRole, setPreviewedRole] = useState<IRole | null>(null);
   const [roleToDelete, setRoleToDelete] = useState<IRole | null>(null);
   const locale = useSelector(getSettingsLocaleSelector);
+  const { workspace } = useWorkspace();
 
   // who holds the highest powers is for the owners and super administrators to review, nobody else
   useEffect(() => {
@@ -153,6 +155,7 @@ const Roles = () => {
       withUsersCount: true,
       skip: ROLE_DEFAULT_LIMIT * (page + 1),
       incrementItems: true,
+      workspace,
     };
 
     dispatch(loadRoles(values));

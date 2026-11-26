@@ -23,6 +23,7 @@ import {
   setUserRolesLoadingSlice,
   updateRolesByRoleSlice,
 } from '@/redux/reducers/_core/role.reducer';
+import { getSettingsWorkspaceSelector } from '@/redux/reducers/_core/settings.reducer';
 import { AppDispatch, RootState } from '@/redux/store';
 import {
   addRolesToUserInCloud,
@@ -53,13 +54,20 @@ export const loadRoles = (queries: Partial<ILoadRolesInput>): any => {
     withAdminOrBetter: hasAdminOrBetter = true,
     withUsersCount: hasUsersCount = false,
     incrementItems: shouldIncrementItems = false,
+    workspace,
   } = queries;
 
   return actionWithLoader(async (dispatch: AppDispatch, getState?: () => RootState): Promise<void> => {
     const state = getState?.();
     const oldRoles = getRoleRolesSelector(state as Record<string, any>);
     // --------- load from database --------- //
-    const rolesWithCount = await fetchRoles(+limit, +skip, hasAdminOrBetter, hasUsersCount);
+    const rolesWithCount = await fetchRoles({
+      limit: +limit,
+      skip: +skip,
+      withAdminOrBetter: hasAdminOrBetter,
+      withUsersCount: hasUsersCount,
+      workspace,
+    });
 
     const newRoles = shouldIncrementItems
       ? [...oldRoles, ...rolesWithCount]
@@ -299,8 +307,13 @@ export const destroyRole = (id: string): any => {
  * ---------------------------------------- //
  */
 export const onRolesEnter = (): any => {
-  return onEnterActionWithLoader((dispatch: AppDispatch): any => {
-    const values: Partial<ILoadRolesInput> = { withAdminOrBetter: false, withUsersCount: true };
+  return onEnterActionWithLoader((dispatch: AppDispatch, getState?: () => RootState): any => {
+    const values: Partial<ILoadRolesInput> = {
+      withAdminOrBetter: false,
+      withUsersCount: true,
+      // part of the query, so rows loaded for the other workspace are not kept on screen
+      workspace: getSettingsWorkspaceSelector(getState?.()!),
+    };
 
     dispatch(clearListUnlessLoadedWith(loadRolesSlice, values, [clearRolesSlice()]));
     dispatch(loadRoles(values));
@@ -317,7 +330,7 @@ export const onCreateRoleEnter = (): any => {
     dispatch(clearRoleSlice());
 
     // load every role for the hierarchy select field
-    const roles = await fetchRoles(RELATION_OPTIONS_LIMIT, 0, false, false);
+    const roles = await fetchRoles({ limit: RELATION_OPTIONS_LIMIT });
 
     dispatch(loadRolesSlice(roles));
     // read without the member counts the roles list shows, so that list cannot draw them
@@ -340,7 +353,7 @@ export const onEditRoleEnter = (route?: any): any => {
      * load every role: one is the edited role, the rest feed the hierarchy select field. Neither
      * shows how many accounts hold a role, so the per-role member count is not fetched
      */
-    const roles = await fetchRoles(RELATION_OPTIONS_LIMIT, 0, false, false);
+    const roles = await fetchRoles({ limit: RELATION_OPTIONS_LIMIT });
     const role = roles.find((currentRole: IRole): boolean => currentRole.id === id);
 
     if (!role) {
