@@ -16,7 +16,7 @@ import { createContactEmail, sendEmail, sendEmailWithResult } from '@/services/e
 import { NotificationChannelStatusEnum } from '@/types/notification.type';
 import { logger } from '@/utils/_core/logger';
 import { getChannelRecipientFromResult } from '@/utils/_core/notification.utils';
-import { formatFullName, getAdminEmailSender, getBootstrapRoleName } from '@/utils/_core/user.utils';
+import { formatFullName, getBootstrapRoleName } from '@/utils/_core/user.utils';
 import {
   cutHtmlString, getAppName, getArticleClientUrl, getServerUrl, getTranslatedField,
   getUnsubscribeNewsletterClientUrl,
