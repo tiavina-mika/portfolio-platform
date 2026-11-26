@@ -1,6 +1,7 @@
 import { collections, USE_MASTER_KEY } from '@/constants/_core/constants';
 import { COUNTRY_SCOPED_BULK_CLASSES } from '@/constants/_core/country-scope.constants';
 
+import { excludeStaffAccounts } from './userRole.service.cloud';
 import { scopeToAgentCountries, workspacesTargetQuery } from '../../utils/_core/parse.utils.cloud';
 import { getUserWorkspaces } from '../../utils/_core/role.utils.cloud';
 
@@ -74,7 +75,9 @@ export const buildBadgeCountQuery = async (
 
   if (status) return query.equalTo('status', status);
 
-  return query.equalTo('seen', false);
+  query.equalTo('seen', false);
+
+  return className === collections.User ? excludeStaffAccounts(query) : query;
 };
 
 export const countBadgeObjects = async (

@@ -3,7 +3,7 @@ import {
   describe, expect, it, vi,
 } from 'vitest';
 
-import { getStaffUserIdsHiddenFrom } from './userRole.service.cloud';
+import { excludeStaffAccounts, getStaffUserIdsHiddenFrom } from './userRole.service.cloud';
 
 const { PORTFOLIO, AGENCY } = TargetEnum;
 
@@ -79,6 +79,43 @@ vi.mock('./roleAuditLog.service.cloud', () => ({ createRoleAuditLog: vi.fn() }))
 vi.mock('../../triggers/_core/country-scope.triggers', () => ({ forgetAllowedCountriesOf: vi.fn() }));
 vi.mock('../../utils/_core/email.utils.cloud', () => ({ sendEmailToUser: vi.fn() }));
 vi.mock('../../utils/_core/mfa.utils.cloud', () => ({ getUserMfa: vi.fn() }));
+
+type StoredUser = { objectId: string; platforms: string[] };
+
+const STORED_USERS: StoredUser[] = [
+  { objectId: 'member', platforms: ['web'] },
+  { objectId: 'portfolio-owner', platforms: ['bo'] },
+  { objectId: 'agency-admin', platforms: ['web'] },
+  { objectId: 'invited-without-post-yet', platforms: ['bo'] },
+];
+
+// the two constraints a `_User` query is narrowed with here
+const newUserQuery = () => {
+  let users = STORED_USERS;
+  const query = {
+    notContainedIn: (_field: 'objectId', ids: string[]) => {
+      users = users.filter((user) => !ids.includes(user.objectId));
+      return query;
+    },
+    notEqualTo: (_field: 'platforms.name', name: string) => {
+      users = users.filter((user) => !user.platforms.includes(name));
+      return query;
+    },
+    read: () => users.map((user) => user.objectId),
+  };
+
+  return query;
+};
+
+describe('the accounts waiting to be discovered as new', () => {
+  it('should leave out the role holders and the back-office accounts, however they are marked', async () => {
+    const query = newUserQuery();
+
+    await excludeStaffAccounts(query as unknown as Parse.Query<Parse.User>);
+
+    expect(query.read()).toEqual(['member']);
+  });
+});
 
 describe('the staff hidden from a back-office reader', () => {
   it('should hide the staff of the portfolio, owners and super administrators included, in the agency', async () => {

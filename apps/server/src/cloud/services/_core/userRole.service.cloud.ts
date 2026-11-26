@@ -7,7 +7,7 @@ import type { Role, User } from 'parse';
 
 import { translate, DEFAULT_LANGUAGE } from '@/config/i18n';
 import {
-  DEFAULT_QUERY_LIMIT, HIGHEST_LEVEL_ROLES, STAFF_UI_RIGHT, USE_MASTER_KEY,
+  DEFAULT_QUERY_LIMIT, FROM_PROJECT, HIGHEST_LEVEL_ROLES, STAFF_UI_RIGHT, USE_MASTER_KEY,
 } from '@/constants/_core/constants';
 import {
   MIN_OWNERS_COUNT, ROLE_ANCESTORS_LEVEL_MAX_COUNT, ROLE_ANCESTORS_MAX_DEPTH,
@@ -269,6 +269,22 @@ export const getAllRoleUserIds = async (): Promise<string[]> => {
     }, USE_MASTER_KEY);
 
   return Array.from(userIds) as string[];
+};
+
+/**
+ * Narrows a `_User` query to the accounts there is to discover as new: a back-office account belongs
+ * to the administrators. Decided when reading, not from the `seen` flag alone, which is only written
+ * as the account is created: an account created earlier, or a member given a post later, keeps
+ * `seen: false`.
+ * @param query the query to narrow
+ */
+export const excludeStaffAccounts = async <T extends Parse.Query>(query: T): Promise<T> => {
+  query
+    .notContainedIn('objectId', await getAllRoleUserIds())
+    // a back-office account whose invited role has not landed yet holds none
+    .notEqualTo('platforms.name', FROM_PROJECT.BO);
+
+  return query;
 };
 
 /**

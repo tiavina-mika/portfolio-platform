@@ -39,8 +39,10 @@ Les comptes Owner et Super Admin ont tous les droits.
 
 - Onglets : **Tout**, **Nouveaux** (comptes pas encore marqués comme vus), **Administrateurs** (membres de
   l'équipe, visible des postes autorisés), **Journaux d'audit** (traces des suppressions de comptes) et
-  **Corbeille**. Un compte créé dans le back-office (Propriétaire compris) n'apparaît pas dans « Nouveaux » :
-  on le trouve directement dans « Administrateurs ».
+  **Corbeille**. Un compte créé dans le back-office (Propriétaire compris), ou un compte qui a un poste,
+  n'apparaît pas dans « Nouveaux » et n'est pas compté parmi les nouveaux utilisateurs. On trouve un compte
+  créé dans le back-office dans « Administrateurs », et une personne inscrite à qui l'on a donné un poste dans
+  « Tout ».
 - Côté Aldaron, seuls les membres de l'équipe qui ont un poste Aldaron apparaissent. L'équipe du portfolio, ses
   Owner et Super Admin compris, n'est pas listée ; les comptes des personnes inscrites sont communs aux deux
   espaces.

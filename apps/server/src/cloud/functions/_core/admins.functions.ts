@@ -21,7 +21,9 @@ import {
   assertCanDeleteUsers, banUser, binUserByAdmin, destroyBinnedUsers, getUserDetailsById, liftUserBan,
   redactUserDetailsSecrets,
 } from '../../services/_core/user.service.cloud';
-import { getStaffUserIdsHiddenFrom, getUserIdsFromRoles } from '../../services/_core/userRole.service.cloud';
+import {
+  excludeStaffAccounts, getStaffUserIdsHiddenFrom, getUserIdsFromRoles,
+} from '../../services/_core/userRole.service.cloud';
 import { assertInAgentCountries } from '../../utils/_core/agent-scope.utils.cloud';
 import { sendEmailToUser } from '../../utils/_core/email.utils.cloud';
 import { filtersDatesQuery, multiBooleanQuery, scopeToAgentCountries } from '../../utils/_core/parse.utils.cloud';
@@ -88,6 +90,9 @@ Parse.Cloud.define(
       if (isBoolean(filters.seen)) {
         query.equalTo('seen', filters.seen);
       }
+
+      // the "new accounts" tab lists what its badge counts; it replaces the hidden staff by all of it
+      if (filters.seen === false) await excludeStaffAccounts(query);
 
       if (filters.platform) {
         query.equalTo('platforms.name', filters.platform);
