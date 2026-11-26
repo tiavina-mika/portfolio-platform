@@ -81,7 +81,7 @@
     "backupCodesRegeneratedSuccess": "De nouveaux codes de secours ont été générés.",
     "enabledHint": "Un code de votre application d'authentification est demandé à chaque connexion.",
     "disabledHint": "Ajoutez une deuxième étape à la connexion avec une application d'authentification.",
-    "confirmPasswordDescription": "Saisissez à nouveau votre mot de passe pour commencer la configuration de la double authentification. Vos autres sessions seront fermées une fois celle-ci active.",
+    "confirmPasswordDescription": "Saisissez à nouveau votre mot de passe pour commencer la configuration de la double authentification. Vos autres sessions sur cet espace de travail seront fermées une fois celle-ci active.",
     "continue": "Continuer",
     "enrollmentRequired": "Configurez d'abord la double authentification : elle est requise avant toute autre action.",
     "adminReset": {

@@ -81,7 +81,7 @@
     "backupCodesRegeneratedSuccess": "New backup codes have been generated.",
     "enabledHint": "A code from your authenticator app is required at each sign-in.",
     "disabledHint": "Add a second step at sign-in with an authenticator app.",
-    "confirmPasswordDescription": "Enter your password again to start setting up two-factor authentication. Your other sessions will be signed out once it is active.",
+    "confirmPasswordDescription": "Enter your password again to start setting up two-factor authentication. Your other sessions on this workspace will be signed out once it is active.",
     "continue": "Continue",
     "enrollmentRequired": "Set up two-factor authentication first: it is required before any other action.",
     "adminReset": {

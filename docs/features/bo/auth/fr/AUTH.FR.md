@@ -109,6 +109,10 @@ dans chaque back-office, avec deux entrées distinctes dans l'application d'auth
 de son espace) et deux séries de codes de secours. Le code demandé à la connexion est celui de l'adresse sur
 laquelle on se connecte ; un code de l'autre espace est refusé.
 
+Activer ou désactiver la double authentification d'un espace ferme les autres sessions de **cet espace**
+seulement : les sessions ouvertes sur l'autre espace restent connectées. La réinitialisation par un
+administrateur, elle, déconnecte le compte partout.
+
 ### L'espace suit l'adresse de connexion
 
 Une connexion ouvre **un seul espace** : celui de l'adresse sur laquelle on s'est connecté (le back-office

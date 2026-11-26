@@ -4,16 +4,28 @@ import {
 } from 'vitest';
 
 import {
-  bindSessionToWorkspace, getUserMfaWorkspace, getUserSessionWorkspace,
+  bindSessionToWorkspace, getOtherWorkspaceSessionTokens, getUserMfaWorkspace, getUserSessionWorkspace,
 } from './sessionWorkspace.utils.cloud';
 
 // the `_Session` collection, the only thing these helpers talk to
-const storedSessions = new Map<string, { workspace?: TargetEnum }>();
+const storedSessions = new Map<string, { workspace?: TargetEnum; _p_user?: string }>();
 
 type SessionFilter = { _session_token: string };
+type OtherWorkspaceFilter = { _p_user: string; workspace: { $ne: TargetEnum } };
+
+// the sessions of the pointed account that are bound to a workspace, and not to the excluded one
+const findSessions = ({ _p_user: pointer, workspace }: OtherWorkspaceFilter) => {
+  const rows = [...storedSessions]
+    .filter(([, session]) => session._p_user === pointer)
+    .filter(([, session]) => !!session.workspace && session.workspace !== workspace.$ne)
+    .map(([token]) => ({ _session_token: token }));
+
+  return { limit: () => ({ toArray: () => Promise.resolve(rows) }) };
+};
 
 vi.mock('./db.utils.cloud', () => ({
   getMongoCollection: () => Promise.resolve({
+    find: findSessions,
     findOne: ({ _session_token: token }: SessionFilter) => Promise.resolve(storedSessions.get(token) ?? null),
     updateOne: ({ _session_token: token }: SessionFilter, { $set }: { $set: { workspace: TargetEnum } }) => {
       storedSessions.set(token, { ...storedSessions.get(token), ...$set });
@@ -70,5 +82,16 @@ describe('the workspace a staff session is bound to', () => {
   it('should bind nothing for an account read from the database, which carries no session', async () => {
     expect(await getUserSessionWorkspace(userOfSession(undefined))).toBeUndefined();
     expect(await getUserSessionWorkspace(undefined)).toBeUndefined();
+  });
+});
+
+describe('the sessions a change of one workspace second factor leaves alone', () => {
+  it('should be those of the account bound to another workspace', async () => {
+    storedSessions.set('r:agency', { _p_user: '_User$user1', workspace: TargetEnum.AGENCY });
+    storedSessions.set('r:portfolio', { _p_user: '_User$user1', workspace: TargetEnum.PORTFOLIO });
+    storedSessions.set('r:unbound', { _p_user: '_User$user1' });
+    storedSessions.set('r:stranger', { _p_user: '_User$user2', workspace: TargetEnum.PORTFOLIO });
+
+    expect(await getOtherWorkspaceSessionTokens('user1', TargetEnum.AGENCY)).toEqual(['r:portfolio']);
   });
 });

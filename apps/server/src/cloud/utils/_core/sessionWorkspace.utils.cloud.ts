@@ -1,5 +1,7 @@
 import { TargetEnum } from '@shared/types';
 
+import { DEFAULT_QUERY_LIMIT } from '@/constants/_core/constants';
+
 import { getMongoCollection } from './db.utils.cloud';
 
 /*
@@ -60,6 +62,29 @@ export const getUserSessionWorkspace = async (user?: Parse.User): Promise<Target
   if (session) rememberSessionWorkspace(sessionToken, workspace);
 
   return workspace ?? undefined;
+};
+
+/**
+ * The tokens of an account's sessions bound to another workspace than `workspace`. A session bound
+ * to no workspace is not one of them: it still reaches every workspace of the account's roles.
+ * @param userId the account the sessions belong to
+ * @param workspace the workspace to leave out
+ */
+export const getOtherWorkspaceSessionTokens = async (
+  userId: string,
+  workspace: TargetEnum
+): Promise<string[]> => {
+  const sessions = await getMongoCollection('_Session');
+  // a pointer is stored as `_p_<field>`, holding the class and the id
+  const boundElsewhere = await sessions
+    .find(
+      { _p_user: `_User$${userId}`, workspace: { $exists: true, $ne: workspace } },
+      { projection: { _session_token: 1 } }
+    )
+    .limit(DEFAULT_QUERY_LIMIT)
+    .toArray();
+
+  return boundElsewhere.map((session: { _session_token: string }) => session._session_token);
 };
 
 /**

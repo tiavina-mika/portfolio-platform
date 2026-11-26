@@ -4,6 +4,7 @@ import orderBy from 'lodash/orderBy.js';
 import type { Locale } from '@/types/app.type';
 import type { NotificationChannelRecipient, NotificationChannelSender } from '@/types/notification.type';
 import type { AdminUserSession, IUserSession, Platform } from '@/types/userSession.type';
+import type { TargetEnum } from '@shared/types';
 
 import { translate, DEFAULT_LANGUAGE } from '@/config/i18n';
 import {
@@ -24,6 +25,7 @@ import { createSessionAuditLog } from './sessionAuditLog.service.cloud';
 import { sendNewDeviceLoginEmail } from '../../emails/_core/user.email';
 import { sendNewDeviceLoginSms } from '../../sms/_core/user.sms.cloud';
 import { assertCanActOnUser } from '../../utils/_core/role.utils.cloud';
+import { getOtherWorkspaceSessionTokens } from '../../utils/_core/sessionWorkspace.utils.cloud';
 import { toUserSnapshot } from '../../utils/_core/user-snapshot.utils.cloud';
 
 export const UserSession = Parse.Object.extend('UserSession');
@@ -322,19 +324,22 @@ export const markUserOfflineAfterLogoutService = async (user: Parse.User): Promi
 };
 
 /**
- * Destroys a user's Parse sessions and UserSession rows, optionally sparing the one bound to
- * `exceptSessionToken`. Parse sessions are queried on their own (not only through UserSession
+ * Destroys a user's Parse sessions and UserSession rows, optionally sparing those of
+ * `exceptSessionTokens`. Parse sessions are queried on their own (not only through UserSession
  * rows) so a login that never registered a device row — the back-office, a failed
  * registerSession — is revoked too.
  * @returns the number of UserSession rows destroyed, i.e. the devices the user could see listed
  */
-const destroyUserSessions = async (user: Parse.User, exceptSessionToken?: string): Promise<number> => {
+const destroyUserSessions = async (
+  user: Parse.User,
+  exceptSessionTokens: string[] = []
+): Promise<number> => {
   const parseSessionsQuery = new Parse.Query(Parse.Session).equalTo('user', user);
   const userSessionsQuery = new Parse.Query(collections.UserSession).equalTo('user', user);
 
-  if (exceptSessionToken) {
-    parseSessionsQuery.notEqualTo('sessionToken', exceptSessionToken);
-    userSessionsQuery.notEqualTo('sessionToken', exceptSessionToken);
+  if (exceptSessionTokens.length) {
+    parseSessionsQuery.notContainedIn('sessionToken', exceptSessionTokens);
+    userSessionsQuery.notContainedIn('sessionToken', exceptSessionTokens);
   }
 
   const [parseSessions, userSessions] = await Promise.all([
@@ -368,7 +373,25 @@ export const revokeOtherSessionsService = async (
   user: Parse.User,
   currentSessionToken: string
 ): Promise<number> => {
-  return destroyUserSessions(user, currentSessionToken);
+  return destroyUserSessions(user, [currentSessionToken]);
+};
+
+/**
+ * Revokes the sessions a change of one workspace's second factor concerns: those of that workspace,
+ * and those bound to no workspace, which reach it too. The session making the call stays, and so do
+ * those of the other workspaces: they cannot read this one and passed their own second factor.
+ * @param user the account whose second factor changed
+ * @param currentSessionToken the session that made the change
+ * @param workspace the workspace whose second factor changed
+ */
+export const revokeOtherWorkspaceSessionsService = async (
+  user: Parse.User,
+  currentSessionToken: string,
+  workspace: TargetEnum
+): Promise<void> => {
+  const keptTokens = await getOtherWorkspaceSessionTokens(user.id, workspace);
+
+  await destroyUserSessions(user, [currentSessionToken, ...keptTokens]);
 };
 
 /**

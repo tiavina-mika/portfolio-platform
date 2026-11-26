@@ -11,7 +11,7 @@ import {
 } from '../../services/_core/mfa.service.cloud';
 import { alertOwners } from '../../services/_core/ownerAlert.service.cloud';
 import { hasRoleAsManager } from '../../services/_core/userRole.service.cloud';
-import { revokeOtherSessionsService } from '../../services/_core/userSession.service.cloud';
+import { revokeOtherWorkspaceSessionsService } from '../../services/_core/userSession.service.cloud';
 import { checkOwner } from '../../utils/_core/role.utils.cloud';
 import { getUserMfaWorkspace } from '../../utils/_core/sessionWorkspace.utils.cloud';
 import { parseFunction } from '../../utils/_core/utils.cloud';
@@ -46,12 +46,11 @@ Parse.Cloud.define(
   parseFunction(async (request: Parse.Cloud.FunctionRequest): Promise<{ backupCodes: string[] }> => {
     const currentUser = await getBackOfficeUser(request);
     const { code, locale } = request.params;
-    const result = await confirmMfaEnrollmentService(
-      currentUser, code, await getUserMfaWorkspace(currentUser), locale
-    );
+    const workspace = await getUserMfaWorkspace(currentUser);
+    const result = await confirmMfaEnrollmentService(currentUser, code, workspace, locale);
 
-    // the protection of the account just changed: sessions opened before it must not survive it
-    await revokeOtherSessionsService(currentUser, currentUser.getSessionToken());
+    // the protection of this workspace just changed: sessions opened on it before must not survive it
+    await revokeOtherWorkspaceSessionsService(currentUser, currentUser.getSessionToken(), workspace);
 
     return result;
   }),
@@ -78,8 +77,10 @@ Parse.Cloud.define(
     const currentUser = await getBackOfficeUser(request);
     const { code, locale } = request.params;
 
-    await disableMfaService(currentUser, code, await getUserMfaWorkspace(currentUser), locale);
-    await revokeOtherSessionsService(currentUser, currentUser.getSessionToken());
+    const workspace = await getUserMfaWorkspace(currentUser);
+
+    await disableMfaService(currentUser, code, workspace, locale);
+    await revokeOtherWorkspaceSessionsService(currentUser, currentUser.getSessionToken(), workspace);
 
     return { success: true };
   }),
