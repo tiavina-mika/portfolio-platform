@@ -39,7 +39,8 @@ Les comptes Owner et Super Admin ont tous les droits.
 
 - Onglets : **Tout**, **Nouveaux** (comptes pas encore marqués comme vus), **Administrateurs** (membres de
   l'équipe, visible des postes autorisés), **Journaux d'audit** (traces des suppressions de comptes) et
-  **Corbeille**.
+  **Corbeille**. Un compte créé dans le back-office (Propriétaire compris) n'apparaît pas dans « Nouveaux » :
+  on le trouve directement dans « Administrateurs ».
 - Un champ de recherche et un panneau de filtres avancés.
 - Un tableau : le compte (photo, nom, e-mail ou téléphone, mention de ban ou de suspension), la complétude du
   profil, le contact, la date de création et la dernière connexion, et les **Actions**. L'onglet

@@ -145,9 +145,12 @@ Parse.Cloud.beforeSave(
       /*
        * the back-office "new accounts" badge and its "Nouveautés" tab both query
        * `equalTo('seen', false)`, and Mongo does not match a document where the field is simply
-       * absent — leaving it unset made every freshly registered account invisible to both
+       * absent — leaving it unset made every freshly registered account invisible to both.
+       * A back-office account is the exception: it only exists through an invitation (an owner's
+       * included), so nobody has to discover it — it belongs to the administrators, not to the
+       * new accounts.
        */
-      user.set('seen', false);
+      user.set('seen', user.get('platform') === FROM_PROJECT.BO);
       if (user.has('platform')) {
         user.set('platforms', [
           {
