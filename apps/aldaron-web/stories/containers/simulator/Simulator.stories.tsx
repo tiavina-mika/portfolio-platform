@@ -24,13 +24,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /**
- * A mobile app of 100 screens, specifications in hand: the screens (2 500) and the mockups (600)
+ * A mobile app of 100 screens, specifications in hand: the screens (2 000) and the mockups (600)
  */
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await expect(canvas.getAllByText(amount('3100')).length).toBeGreaterThan(0);
+    await expect(canvas.getAllByText(amount('2600')).length).toBeGreaterThan(0);
   },
 };
 
@@ -45,11 +45,11 @@ export const ExampleThenBack: Story = {
 
     await userEvent.click(backOfficeExample);
     await expect(backOfficeExample).toHaveAttribute('aria-pressed', 'true');
-    await expect(canvas.getAllByText(amount('10500')).length).toBeGreaterThan(0);
+    await expect(canvas.getAllByText(amount('8400')).length).toBeGreaterThan(0);
 
     await userEvent.click(backOfficeExample);
     await expect(backOfficeExample).toHaveAttribute('aria-pressed', 'false');
-    await expect(canvas.getAllByText(amount('3100')).length).toBeGreaterThan(0);
+    await expect(canvas.getAllByText(amount('2600')).length).toBeGreaterThan(0);
   },
 };
 
@@ -77,7 +77,7 @@ export const MinimumOrderOfTheWeb: Story = {
 };
 
 /**
- * Mobile alone starts at 2 500, however few screens there are
+ * Mobile alone starts at 2 000, however few screens there are
  */
 export const MinimumOrderWithMobile: Story = {
   play: async ({ canvasElement }) => {
@@ -92,7 +92,23 @@ export const MinimumOrderWithMobile: Story = {
     await userEvent.type(screens, '10');
     await userEvent.tab();
 
-    await expect(canvas.getAllByText(amount('2500')).length).toBeGreaterThan(0);
+    await expect(canvas.getAllByText(amount('2000')).length).toBeGreaterThan(0);
+  },
+};
+
+/**
+ * The mockups count towards the minimum order: the screens (1 300) and the mockups (300) of the second
+ * example are topped up by 400 to reach 2 000
+ */
+export const MockupsCountTowardsTheMinimum: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const result = within(canvas.getByRole('complementary'));
+
+    await userEvent.click(canvas.getAllByRole('button', { pressed: false })[1]);
+
+    await expect(result.getAllByText(amount('2000')).length).toBeGreaterThan(0);
+    await expect(result.getByText(amount('400'))).toBeInTheDocument();
   },
 };
 
@@ -102,14 +118,14 @@ export const MinimumOrderWithMobile: Story = {
 export const PaymentOption: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    // the platforms come first, then the mobile options: chat, payment, maintenance
+    // the platforms come first, then the mobile options: chat, payment
     const payment = canvas.getAllByRole('checkbox')[5];
 
     await userEvent.click(payment);
-    await expect(canvas.getAllByText(amount('3600')).length).toBeGreaterThan(0);
+    await expect(canvas.getAllByText(amount('3100')).length).toBeGreaterThan(0);
 
     await userEvent.selectOptions(canvas.getByRole('combobox'), '3');
-    await expect(canvas.getAllByText(amount('3644')).length).toBeGreaterThan(0);
+    await expect(canvas.getAllByText(amount('3144')).length).toBeGreaterThan(0);
   },
 };
 

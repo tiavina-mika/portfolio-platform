@@ -14,11 +14,17 @@ const SimulatorPage = () => {
     <div className="flex flex-col self-stretch">
       <Section className="flex-col gap-8 pt-8 pb-12">
         <SectionIntro
+          className="max-w-[62ch]"
           description={t('lead')}
+          descriptionClassName="max-w-none md:text-lg"
           eyebrow={t('eyebrow')}
           level={1}
           title={t('title')}
-          titleClassName="max-w-none text-[30px] md:text-[48px] lg:text-[52px]"
+          titleClassName={`
+            max-w-none text-[clamp(30px,7vw,52px)] leading-[1.05] tracking-[-0.03em]
+            md:text-[52px]
+            lg:text-[52px]
+          `}
         />
         <SimulatorProvider />
       </Section>

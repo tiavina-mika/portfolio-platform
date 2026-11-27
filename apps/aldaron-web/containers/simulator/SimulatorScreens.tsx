@@ -10,6 +10,10 @@ type Props = {
    * The name of the field: "Number of screens (approximate)"
    */
   label: string;
+  /**
+   * What one screen costs, written: "20 € / écran"
+   */
+  unitPrice: string;
   value: number;
   onChange: (value: number) => void;
 };
@@ -23,7 +27,9 @@ const NUMBER_CLASS_NAME = `
  * what is written until the field is left, so clearing it to type another number is not undone; leaving
  * it empty counts as zero screens.
  */
-const SimulatorScreens = ({ label, value, onChange }: Props) => {
+const SimulatorScreens = ({
+  label, unitPrice, value, onChange,
+}: Props) => {
   const id = useId();
   const [draft, setDraft] = useState<string | null>(null);
 
@@ -41,9 +47,17 @@ const SimulatorScreens = ({ label, value, onChange }: Props) => {
 
   return (
     <div className="grid gap-3">
-      <label className="leading-[1.3] font-semibold" htmlFor={`${id}-number`} id={`${id}-label`}>
-        {label}
-      </label>
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <label className="leading-[1.3] font-semibold" htmlFor={`${id}-number`} id={`${id}-label`}>
+          {label}
+        </label>
+        <span
+          className="font-mono text-[13px] leading-[1.3] font-medium whitespace-nowrap text-muted-foreground"
+          id={`${id}-unit`}
+        >
+          {unitPrice}
+        </span>
+      </div>
       <div
         className={`
           grid grid-cols-[minmax(0,1fr)_92px] items-center gap-4
@@ -64,6 +78,7 @@ const SimulatorScreens = ({ label, value, onChange }: Props) => {
           }}
         />
         <input
+          aria-describedby={`${id}-unit`}
           className={NUMBER_CLASS_NAME}
           id={`${id}-number`}
           inputMode="numeric"

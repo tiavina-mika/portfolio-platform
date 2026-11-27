@@ -16,31 +16,31 @@
       "eyebrow": "What we build",
       "title": "Four platforms, a price per screen.",
       "description": "A distinct view counts as one screen; its states and variants are included.",
-      "minimumNote": "Minimum order: €1,500 for web, €2,500 as soon as mobile is involved.",
+      "minimumNote": "Minimum order: €1,500 for web, €2,000 as soon as mobile is involved.",
       "items": {
         "1": {
           "eyebrow": "Web",
           "title": "Static website",
           "description": "Portfolio, showcase site, product landing page, nonprofit site.",
-          "price": "€25 / screen"
+          "price": "€20 / screen"
         },
         "2": {
           "eyebrow": "Web",
           "title": "Web app",
           "description": "SaaS, dashboard, customer portal, booking platform, internal tool.",
-          "price": "€18 to €30 / screen"
+          "price": "€14 to €24 / screen"
         },
         "3": {
           "eyebrow": "Mobile",
           "title": "Mobile app",
           "description": "iOS and Android app, published on the App Store and Google Play.",
-          "price": "€25 / screen"
+          "price": "€20 / screen"
         },
         "4": {
           "eyebrow": "Administration",
           "title": "Back office",
           "description": "Content, user and order management, moderation, statistics, exports.",
-          "price": "€37.50 / screen"
+          "price": "€30 / screen"
         }
       }
     },

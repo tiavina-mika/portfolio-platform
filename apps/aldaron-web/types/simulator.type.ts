@@ -31,7 +31,6 @@ export interface ISimulatorState {
   pay: Record<SimulatorPaymentSupport, boolean>;
   payN: Record<SimulatorPaymentSupport, number>;
   chat: boolean;
-  maintenance: boolean;
   /**
    * `null` until an example sets it: counts as `standard`
    */
@@ -63,7 +62,28 @@ export interface ISimulatorParts {
 export interface ISimulatorEstimate {
   parts: ISimulatorParts;
   /**
-   * The screens alone, before the options
+   * The number of screens priced for each support (a back-office alone has a minimum)
+   */
+  screens: Record<SimulatorSupport, number>;
+  /**
+   * What one screen of each support costs, complexity included, before any rounding
+   */
+  unitPrices: Record<SimulatorSupport, number>;
+  /**
+   * The number of screens the mockups are priced on
+   */
+  designScreens: number;
+  /**
+   * What the mockups of one screen cost
+   */
+  designRate: number;
+  paymentCounts: Record<SimulatorPaymentSupport, number>;
+  /**
+   * The minimum order that applies to these answers
+   */
+  floor: number;
+  /**
+   * The screens alone, before the mockups and the options
    */
   total: number;
   price: number;
@@ -78,6 +98,14 @@ export interface ISimulatorEstimate {
   isBackOfficeOnly: boolean;
 }
 
+export interface ISimulatorMaintenanceTier {
+  id: 'essential' | 'standard' | 'ongoing';
+  /**
+   * In euros per month
+   */
+  price: number;
+}
+
 export interface ISimulatorExample {
   id: SimulatorExampleId;
   /**
@@ -85,6 +113,12 @@ export interface ISimulatorExample {
    */
   state: Partial<ISimulatorState>;
 }
+
+// a line of the detail of the estimate
+export type SimulatorLineKey = keyof ISimulatorParts;
+
+// when each of the three instalments of the price is paid
+export type SimulatorInstalment = 'signature' | 'midway' | 'launch';
 
 /**
  * How the price is shown: a floor ("from €1,500"), a large project, or the exact amount
@@ -105,7 +139,6 @@ export interface ISimulatorRecapLabels {
   support: Record<SimulatorSupport, string>;
   complexityLevel: Record<SimulatorComplexity, string>;
   richLabel: string;
-  maintenanceLine: string;
   chatLabel: string;
   paymentLabel: string;
 }

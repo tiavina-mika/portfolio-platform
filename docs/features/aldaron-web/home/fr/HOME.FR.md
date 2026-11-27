@@ -39,7 +39,7 @@ De haut en bas, la page enchaîne les blocs suivants :
    d'entrée (à partir de 1 500 €), le prix fixé à la signature et 30 jours de correction de bugs.
 2. **Ce que nous construisons** : quatre cartes — site web statique, application web, application mobile
    et back-office — chacune avec une courte description et son prix par écran. Une note rappelle le
-   minimum de commande : 1 500 € pour le web, 2 500 € dès qu'il y a du mobile.
+   minimum de commande : 1 500 € pour le web, 2 000 € dès qu'il y a du mobile.
 3. **Ce qui est compris** : deux cartes côte à côte. L'une (sombre) liste ce qui est compris dans chaque
    projet ; l'autre ce qui reste à la charge du client (hébergement, services tiers, comptes des
    boutiques d'applications, maintenance optionnelle).

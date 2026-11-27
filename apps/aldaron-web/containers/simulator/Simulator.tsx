@@ -58,7 +58,7 @@ const Simulator = ({ onRequestQuote, onCopySummary }: SimulatorProps) => {
           min-[880px]:grid-cols-[minmax(0,1fr)_380px] min-[880px]:gap-10
         `}
       >
-        <SimulatorForm dispatch={dispatch} state={state} />
+        <SimulatorForm dispatch={dispatch} estimate={estimate} state={state} />
         <SimulatorResult
           estimate={estimate}
           onCopySummary={handleCopySummary}

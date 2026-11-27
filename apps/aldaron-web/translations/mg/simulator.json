@@ -15,7 +15,7 @@
     "examples": {
       "label": "Ohatra amin’ny tsindry iray",
       "saas": "Kinova voalohany an’ny SaaS",
-      "mobile": "Application finday misy efijery mihoatra ny 100",
+      "mobile": "MVP misy back-office tsotra",
       "back": "Application finday misy back-office sarotra",
       "both": "Vokatra web sy finday misy fandoavam-bola"
     },
@@ -84,8 +84,22 @@
     },
     "maintenance": {
       "title": "Fikojakojana tsy voatery",
-      "hint": "150 hatramin’ny 400 € isam-bolana, aorian’ny andro 30 amin’ny fanitsiana bug",
-      "line": "Fikojakojana : 150 hatramin’ny 400 € isam-bolana"
+      "hint": "Aorian’ny andro 30 amin’ny fanitsiana bug :",
+      "price": "{a}/volana",
+      "tiers": {
+        "essential": {
+          "name": "Ilaina",
+          "description": "fanitsiana sy fiarovana"
+        },
+        "standard": {
+          "name": "Mahazatra",
+          "description": "fanampiny ny fanavaozana store sy 2 ora fanovana"
+        },
+        "ongoing": {
+          "name": "Fanarahana",
+          "description": "fanampiny ny 5 ora fanovana sy valiny laharam-pahamehana"
+        }
+      }
     },
     "complexity": {
       "label": "Fahasarotana",
@@ -105,7 +119,13 @@
       "design": "Maketa",
       "chat": "Resaka avy hatrany",
       "payment": "Fandoavam-bola an-tserasera",
-      "floor": "Famenoana ho amin’ny kaomandy kely indrindra"
+      "floor": "Famenoana ho amin’ny kaomandy kely indrindra",
+      "details": {
+        "screens": "{count, number} efijery × {a}",
+        "payment": "{count, number} fampidirana",
+        "paymentExtra": "{count} fampidirana : {first} + {extra} × {unit}",
+        "minimum": "Farafahakeliny {a}"
+      }
     },
     "result": {
       "title": "Ny tombanao",
@@ -127,13 +147,28 @@
         "mobile": "Hébergement sy serivisy hafa, kaontin’ny store : aloan’ny startup mivantana.",
         "web": "Hébergement sy serivisy hafa : aloan’ny startup mivantana."
       },
-      "payment": "Vidiny tsy miova rehefa manao sonia, aloa in-3 : 40 % amin’ny sonia, 30 % amin’ny demo antenatenany, 30 % amin’ny fampiharana.",
+      "payment": {
+        "intro": "Vidiny tsy miova rehefa manao sonia, aloa in-3 :",
+        "signature": {
+          "share": "40 %",
+          "when": "amin’ny sonia"
+        },
+        "midway": {
+          "share": "30 %",
+          "when": "amin’ny demo antenatenany"
+        },
+        "launch": {
+          "share": "30 %",
+          "when": "amin’ny fampiharana"
+        }
+      },
       "paymentRich": "Fanaterana isaky ny lot, aloa rehefa tonga ny lot tsirairay ; ny lot dia ifanarahana rehefa mandrafitra.",
       "paymentDesign": "Ekena ny maketa alohan’ny fanombohan’ny fampandrosoana.",
       "request": "Angataho ny tolo-bidy (fandrafetana maimaim-poana)",
       "requestShort": "Angataho ny tolo-bidy",
       "copy": "Adikao ny famintinana",
       "copied": "Voaditra ny famintinana."
-    }
+    },
+    "screenUnit": "{a} / efijery"
   }
 }

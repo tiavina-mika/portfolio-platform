@@ -29,18 +29,18 @@
           "eyebrow": "À partir de",
           "title": "Site ou application web",
           "price": "1 500 €",
-          "description": "25 € par écran pour un site statique, 18 € pour une application web simple, 30 € pour une interface riche."
+          "description": "20 € par écran pour un site statique, 14 € pour une application web simple, 24 € pour une interface riche."
         },
         {
           "eyebrow": "À partir de",
           "title": "Mobile",
-          "price": "2 500 €",
-          "description": "25 € par écran, iOS et Android. Publication sur l'App Store et Google Play comprise."
+          "price": "2 000 €",
+          "description": "20 € par écran, iOS et Android. Publication sur l'App Store et Google Play comprise."
         },
         {
           "eyebrow": "Par écran",
           "title": "Back-office",
-          "price": "37,50 €",
+          "price": "30 €",
           "description": "1,5 fois le prix d'un écran : contenus, utilisateurs, commandes, modération, statistiques, exports."
         }
       ]
@@ -98,17 +98,17 @@
         {
           "title": "Application mobile simple",
           "detail": "Une maquette · jusqu'à 100 écrans mobile",
-          "price": "2 500 €"
+          "price": "2 000 €"
         },
         {
           "title": "Application mobile avec back-office",
           "detail": "Une maquette · 60 écrans mobile · back-office de 25 écrans",
-          "price": "2 500 €"
+          "price": "2 000 €"
         },
         {
           "title": "Produit web et mobile avec paiement",
           "detail": "Une maquette · 40 écrans web · 60 écrans mobile · paiement en ligne",
-          "price": "3 000 €"
+          "price": "2 500 €"
         }
       ]
     },
@@ -148,7 +148,7 @@
         },
         {
           "title": "Minimum de commande",
-          "description": "1 500 € pour un site ou une application web, 2 500 € dès qu'il y a du mobile."
+          "description": "1 500 € pour un site ou une application web, 2 000 € dès qu'il y a du mobile."
         },
         {
           "title": "Interface riche",

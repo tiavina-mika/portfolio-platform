@@ -29,18 +29,18 @@
           "eyebrow": "Manomboka amin'ny",
           "title": "Tranonkala na application web",
           "price": "1 500 €",
-          "description": "25 € isaky ny efijery ho an'ny tranonkala static, 18 € ho an'ny application web tsotra, 30 € ho an'ny interface be fiasa."
+          "description": "20 € isaky ny efijery ho an'ny tranonkala static, 14 € ho an'ny application web tsotra, 24 € ho an'ny interface be fiasa."
         },
         {
           "eyebrow": "Manomboka amin'ny",
           "title": "Finday",
-          "price": "2 500 €",
-          "description": "25 € isaky ny efijery, iOS sy Android. Tafiditra ny famoahana ao amin'ny App Store sy Google Play."
+          "price": "2 000 €",
+          "description": "20 € isaky ny efijery, iOS sy Android. Tafiditra ny famoahana ao amin'ny App Store sy Google Play."
         },
         {
           "eyebrow": "Isaky ny efijery",
           "title": "Back-office",
-          "price": "37,50 €",
+          "price": "30 €",
           "description": "Avo 1,5 heny noho ny vidin'ny efijery iray : votoaty, mpampiasa, kaomandy, fanaraha-maso, antontan'isa, fanondranana."
         }
       ]
@@ -98,17 +98,17 @@
         {
           "title": "Application finday tsotra",
           "detail": "Maquette iray · efijery finday hatramin'ny 100",
-          "price": "2 500 €"
+          "price": "2 000 €"
         },
         {
           "title": "Application finday misy back-office",
           "detail": "Maquette iray · efijery finday 60 · back-office misy efijery 25",
-          "price": "2 500 €"
+          "price": "2 000 €"
         },
         {
           "title": "Vokatra web sy finday misy fandoavam-bola",
           "detail": "Maquette iray · efijery web 40 · efijery finday 60 · fandoavam-bola an-tserasera",
-          "price": "3 000 €"
+          "price": "2 500 €"
         }
       ]
     },
@@ -148,7 +148,7 @@
         },
         {
           "title": "Kaomandy farany ambany",
-          "description": "1 500 € ho an'ny tranonkala na application web, 2 500 € raha misy finday."
+          "description": "1 500 € ho an'ny tranonkala na application web, 2 000 € raha misy finday."
         },
         {
           "title": "Interface be fiasa",

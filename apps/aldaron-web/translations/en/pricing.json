@@ -29,18 +29,18 @@
           "eyebrow": "From",
           "title": "Website or web app",
           "price": "€1,500",
-          "description": "€25 per screen for a static site, €18 for a simple web app, €30 for a rich interface."
+          "description": "€20 per screen for a static site, €14 for a simple web app, €24 for a rich interface."
         },
         {
           "eyebrow": "From",
           "title": "Mobile",
-          "price": "€2,500",
-          "description": "€25 per screen, iOS and Android. Publication on the App Store and Google Play included."
+          "price": "€2,000",
+          "description": "€20 per screen, iOS and Android. Publication on the App Store and Google Play included."
         },
         {
           "eyebrow": "Per screen",
           "title": "Back office",
-          "price": "€37.50",
+          "price": "€30",
           "description": "1.5 times the price of a screen: content, users, orders, moderation, statistics, exports."
         }
       ]
@@ -98,17 +98,17 @@
         {
           "title": "Simple mobile app",
           "detail": "A mockup · up to 100 mobile screens",
-          "price": "€2,500"
+          "price": "€2,000"
         },
         {
           "title": "Mobile app with back office",
           "detail": "A mockup · 60 mobile screens · 25-screen back office",
-          "price": "€2,500"
+          "price": "€2,000"
         },
         {
           "title": "Web and mobile product with payment",
           "detail": "A mockup · 40 web screens · 60 mobile screens · online payment",
-          "price": "€3,000"
+          "price": "€2,500"
         }
       ]
     },
@@ -148,7 +148,7 @@
         },
         {
           "title": "Minimum order",
-          "description": "€1,500 for a website or web app, €2,500 as soon as mobile is involved."
+          "description": "€1,500 for a website or web app, €2,000 as soon as mobile is involved."
         },
         {
           "title": "Rich interface",

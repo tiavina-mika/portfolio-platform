@@ -5,7 +5,12 @@ import { Dispatch } from 'react';
 
 import OptionCard from '@/components/forms/OptionCard';
 import { useCurrency } from '@/hooks/useCurrency';
-import { ISimulatorState, SimulatorBring, SimulatorRich } from '@/types/simulator.type';
+import {
+  ISimulatorEstimate,
+  ISimulatorState,
+  SimulatorBring,
+  SimulatorRich,
+} from '@/types/simulator.type';
 import {
   SIMULATOR_BRING,
   SIMULATOR_PRICING,
@@ -13,12 +18,17 @@ import {
 } from '@/utils/simulator.constants';
 import { SimulatorAction } from '@/utils/simulator.utils';
 
+import SimulatorMaintenance from './SimulatorMaintenance';
 import SimulatorPayment from './SimulatorPayment';
 import SimulatorScreens from './SimulatorScreens';
 import SimulatorStep from './SimulatorStep';
 
 type Props = {
   state: ISimulatorState;
+  /**
+   * The estimate of the answers: it holds what a screen of each support costs
+   */
+  estimate: ISimulatorEstimate;
   dispatch: Dispatch<SimulatorAction>;
 };
 
@@ -33,9 +43,9 @@ const RICH_VALUES: SimulatorRich[] = ['simple', 'rich'];
  * The questions of the simulator. The steps of the supports that are not picked are not drawn, and the
  * numbers of the steps shown follow each other.
  */
-const SimulatorForm = ({ state, dispatch }: Props) => {
+const SimulatorForm = ({ state, estimate, dispatch }: Props) => {
   const t = useTranslations('SimulatorPage');
-  const { convertPrices, formatPrice: money } = useCurrency();
+  const { formatPrice: money } = useCurrency();
   const designRate = SIMULATOR_PRICING.design[state.bring];
   const pickedSupports = SIMULATOR_SUPPORTS.filter(support => state.sup[support]);
   // the steps before the supports are the bring and the platforms ones
@@ -60,6 +70,7 @@ const SimulatorForm = ({ state, dispatch }: Props) => {
     <SimulatorScreens
       label={t('screens')}
       onChange={value => dispatch({ type: 'setScreens', support, value })}
+      unitPrice={t('screenUnit', { a: money(estimate.unitPrices[support]) })}
       value={state[support]}
     />
   );
@@ -178,12 +189,7 @@ const SimulatorForm = ({ state, dispatch }: Props) => {
       )}
 
       <SimulatorStep number={firstSupportNumber + pickedSupports.length} title={t('steps.maintenance')}>
-        <OptionCard
-          checked={state.maintenance}
-          hint={convertPrices(t('maintenance.hint'))}
-          label={t('maintenance.title')}
-          onChange={event => dispatch({ type: 'setMaintenance', isOn: event.target.checked })}
-        />
+        <SimulatorMaintenance />
       </SimulatorStep>
     </form>
   );

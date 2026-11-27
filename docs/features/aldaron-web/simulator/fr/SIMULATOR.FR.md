@@ -33,8 +33,8 @@ Tout visiteur, sans connexion ni compte.
 ## Ce que l'on voit à l'écran
 
 En haut : le titre « Estimez le prix de votre produit » et une phrase d'explication. Dessous, quatre
-**exemples en un clic** (une première version de SaaS, une application mobile de plus de 100 écrans,
-une application mobile avec back-office complexe, un produit web et mobile avec paiement).
+**exemples en un clic** (une première version de SaaS, un MVP avec un back-office simple, une application
+mobile avec back-office complexe, un produit web et mobile avec paiement).
 
 Puis deux colonnes sur grand écran (une seule colonne sur téléphone et tablette) :
 
@@ -45,14 +45,18 @@ Puis deux colonnes sur grand écran (une seule colonne sur téléphone et tablet
 2. **Quels supports ?** Site web statique, application web, mobile, back-office (un ou plusieurs). Une
    courte description de chaque support choisi s'affiche dessous.
 3. **Une carte par support choisi** (site web, application web, mobile, back-office), dans cet ordre. Chacune
-   demande le **nombre d'écrans** (approximatif), avec un curseur et une case numérique qui se suivent.
+   demande le **nombre d'écrans** (approximatif), avec un curseur et une case numérique qui se suivent, et
+   affiche à côté le **prix d'un écran** de ce support.
    - Application web : le visiteur dit si l'interface est **simple ou riche** (tableaux, filtres, tableaux
      de bord, rôles, éditeur), et peut ajouter le **paiement en ligne**.
    - Mobile : option **discussion instantanée** et option **paiement en ligne**.
    - Pour le paiement en ligne, le visiteur indique le **nombre d'intégrations** (de 1 à 5) : la première
      est comprise dans le prix de l'option, chaque suivante coûte un supplément.
-4. **Maintenance optionnelle** : une case à cocher (150 à 400 € par mois, après les 30 jours de
-   correction de bugs).
+4. **Maintenance optionnelle** : une carte d'information, sans rien à choisir. Elle présente les trois
+   formules proposées après les 30 jours de correction de bugs : Essentiel (150 € par mois, correctifs et
+   sécurité), Standard (250 € par mois, avec en plus les mises à jour des boutiques d'applications et 2 h
+   d'évolutions) et Suivi (400 € par mois, avec en plus 5 h d'évolutions et une réponse prioritaire). La
+   maintenance n'entre pas dans l'estimation.
 
 Les cartes des supports non choisis ne s'affichent pas, et la numérotation suit les cartes visibles.
 
@@ -61,8 +65,11 @@ Les cartes des supports non choisis ne s'affichent pas, et la numérotation suit
 - le **prix** en grand : un montant, « À partir de … » tant que rien ne dépasse le minimum de commande,
   ou « Projet d'envergure : parlons-en » au-delà d'un plafond ;
 - une phrase de précision (« Première estimation, à affiner ensemble » si le visiteur n'a qu'une idée) ;
-- le **détail par ligne** (supports, maquettes, options, complément au minimum de commande) ;
-- **Ce qui est compris**, **Ce qui n'est pas compris** et **comment le prix est payé** (3 échéances) ;
+- le **détail par ligne** (supports, maquettes, options, complément au minimum de commande), chacune avec
+  son calcul (« 100 écrans × 20 € », par exemple) ; le signe « ≈ » signale un montant arrondi ;
+- **Ce qui est compris**, **Ce qui n'est pas compris** et **comment le prix est payé** : les 3 échéances en
+  liste (40 %, 30 %, 30 %), suivies des précisions sur les maquettes et l'interface riche quand elles
+  s'appliquent ;
 - deux boutons : **« Demander un devis ferme (cadrage gratuit) »** et **« Copier mon récapitulatif »**.
 
 Sur téléphone et tablette, une **barre fixée en bas de l'écran** affiche le prix et le bouton « Demander
@@ -70,14 +77,15 @@ un devis ferme », puisque l'estimation est alors plus haut dans la page.
 
 ## Comment le prix est calculé
 
-- Chaque écran a un prix : 25 € pour un site web ou un écran mobile, 18 € pour une application web
-  simple (30 € si l'interface est riche), 37,50 € pour un écran de back-office. Quand une application web
+- Chaque écran a un prix : 20 € pour un site web ou un écran mobile, 14 € pour une application web
+  simple (24 € si l'interface est riche), 30 € pour un écran de back-office. Quand une application web
   et une application mobile sont demandées ensemble, l'application web coûte la moyenne des deux tarifs.
 - Les montants de chaque ligne sont arrondis à la centaine.
 - Les **maquettes** coûtent 8 € par écran si le visiteur n'a qu'une idée, 6 € s'il a un cahier des
   charges, rien s'il a déjà une maquette.
-- Il y a un **minimum de commande** : 1 500 € pour le web, 2 500 € dès qu'il y a du mobile. Un
-  back-office seul n'a pas de minimum, mais il est compté pour au moins 15 écrans.
+- Il y a un **minimum de commande** : 1 500 € pour le web, 2 000 € dès qu'il y a du mobile. Les écrans et
+  les maquettes comptent dans ce minimum ; les options s'y ajoutent. Un back-office seul n'a pas de
+  minimum, mais il est compté pour au moins 15 écrans.
 - Les options s'ajoutent : paiement en ligne (500 € la première intégration, 22 € chacune de plus), discussion
   instantanée (500 €).
 - L'exemple « Application mobile avec back-office complexe » applique en plus une complexité métier

@@ -4,6 +4,9 @@
   "useGitignore": false,  // Disable .gitignore usage to allow custom ignorePaths
   "globRoot": "./",
   "words": [
+    "instalment",
+    "instalments",
+    "écran",
     "wordmark",
     "Familjen",
     "Grotesk",

@@ -15,7 +15,7 @@
     "examples": {
       "label": "Exemples en un clic",
       "saas": "Première version d’un SaaS",
-      "mobile": "Application mobile de plus de 100 écrans",
+      "mobile": "MVP avec back-office simple",
       "back": "Application mobile avec back-office complexe",
       "both": "Produit web et mobile avec paiement"
     },
@@ -84,8 +84,22 @@
     },
     "maintenance": {
       "title": "Maintenance optionnelle",
-      "hint": "150 à 400 € par mois, après les 30 jours de correction de bugs",
-      "line": "Maintenance : 150 à 400 € par mois"
+      "hint": "Après les 30 jours de correction de bugs :",
+      "price": "{a}/mois",
+      "tiers": {
+        "essential": {
+          "name": "Essentiel",
+          "description": "correctifs et sécurité"
+        },
+        "standard": {
+          "name": "Standard",
+          "description": "en plus, mises à jour des stores et 2 h d’évolutions"
+        },
+        "ongoing": {
+          "name": "Suivi",
+          "description": "en plus, 5 h d’évolutions et réponse prioritaire"
+        }
+      }
     },
     "complexity": {
       "label": "Complexité métier",
@@ -105,7 +119,13 @@
       "design": "Maquettes",
       "chat": "Discussion instantanée",
       "payment": "Paiement en ligne",
-      "floor": "Complément au minimum de commande"
+      "floor": "Complément au minimum de commande",
+      "details": {
+        "screens": "{count, plural, one {# écran} other {# écrans}} × {a}",
+        "payment": "{count, plural, one {# intégration} other {# intégrations}}",
+        "paymentExtra": "{count} intégrations : {first} + {extra} × {unit}",
+        "minimum": "Minimum de commande {a}"
+      }
     },
     "result": {
       "title": "Votre estimation",
@@ -127,13 +147,28 @@
         "mobile": "Hébergement et services tiers, comptes des stores : payés directement par la startup.",
         "web": "Hébergement et services tiers : payés directement par la startup."
       },
-      "payment": "Prix fixe à la signature, payé en 3 échéances : 40 % à la signature, 30 % à la démonstration de mi-parcours, 30 % à la mise en ligne.",
+      "payment": {
+        "intro": "Prix fixe à la signature, payé en 3 échéances :",
+        "signature": {
+          "share": "40 %",
+          "when": "à la signature"
+        },
+        "midway": {
+          "share": "30 %",
+          "when": "à la démonstration de mi-parcours"
+        },
+        "launch": {
+          "share": "30 %",
+          "when": "à la mise en ligne"
+        }
+      },
       "paymentRich": "Livraison par lots, chaque lot étant payé à sa livraison ; les lots sont convenus lors du cadrage.",
       "paymentDesign": "Les maquettes sont validées avant le début du développement.",
       "request": "Demander un devis ferme (cadrage gratuit)",
       "requestShort": "Demander un devis ferme",
       "copy": "Copier mon récapitulatif",
       "copied": "Récapitulatif copié."
-    }
+    },
+    "screenUnit": "{a} / écran"
   }
 }

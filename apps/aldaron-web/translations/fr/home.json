@@ -16,31 +16,31 @@
       "eyebrow": "Ce que nous construisons",
       "title": "Quatre supports, un prix par écran.",
       "description": "Une vue distincte compte pour un écran ; ses états et variantes sont inclus.",
-      "minimumNote": "Minimum de commande : 1 500 € pour le web, 2 500 € dès qu'il y a du mobile.",
+      "minimumNote": "Minimum de commande : 1 500 € pour le web, 2 000 € dès qu'il y a du mobile.",
       "items": {
         "1": {
           "eyebrow": "Web",
           "title": "Site web statique",
           "description": "Portfolio, site vitrine, page de présentation d'un produit, site associatif.",
-          "price": "25 € / écran"
+          "price": "20 € / écran"
         },
         "2": {
           "eyebrow": "Web",
           "title": "Application web",
           "description": "SaaS, tableau de bord, espace client, plateforme de réservation, outil interne.",
-          "price": "18 à 30 € / écran"
+          "price": "14 à 24 € / écran"
         },
         "3": {
           "eyebrow": "Mobile",
           "title": "Application mobile",
           "description": "Application iOS et Android, publiée sur l'App Store et Google Play.",
-          "price": "25 € / écran"
+          "price": "20 € / écran"
         },
         "4": {
           "eyebrow": "Administration",
           "title": "Back-office",
           "description": "Gestion des contenus, des utilisateurs et des commandes, modération, statistiques, exports.",
-          "price": "37,50 € / écran"
+          "price": "30 € / écran"
         }
       }
     },

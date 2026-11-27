@@ -29,6 +29,14 @@ const parseAmount = (value: string): number => {
 const groupThousands = (value: number, separator: string): string =>
   String(value).replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 
+// a euro amount can have cents (the price of a screen, "52,5 €"): only the integer part is grouped
+const writeEuros = (euros: number, separator: string, decimalMark: string): string => {
+  const [integer, decimals] = String(Math.round(euros * 100) / 100).split('.');
+  const grouped = groupThousands(Number(integer), separator);
+
+  return decimals ? `${grouped}${decimalMark}${decimals}` : grouped;
+};
+
 const isCurrency = (value: unknown): value is Currency =>
   CURRENCIES.includes(value as Currency);
 
@@ -67,9 +75,9 @@ export const formatPrice = (
   }
 
   // the English writes the euro before the amount, with a comma for the thousands: "€1,500"
-  if (locale === 'en') return `${withSymbol ? '€' : ''}${groupThousands(euros, ',')}`;
+  if (locale === 'en') return `${withSymbol ? '€' : ''}${writeEuros(euros, ',', '.')}`;
 
-  return `${groupThousands(euros, NBSP)}${withSymbol ? `${NBSP}€` : ''}`;
+  return `${writeEuros(euros, NBSP, ',')}${withSymbol ? `${NBSP}€` : ''}`;
 };
 
 // a number, as written in the texts: "1 500", "37,50", "18.5"

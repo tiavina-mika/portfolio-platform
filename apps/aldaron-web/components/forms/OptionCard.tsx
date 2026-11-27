@@ -42,11 +42,12 @@ const OptionCard = ({
       className
     )}
   >
+    {/* the native control, which the forms plugin would otherwise redraw in its own blue */}
     <input
       type={type}
       className={`
-        mt-0.5 size-5 shrink-0 cursor-pointer accent-brand
-        focus-visible:ring-0!
+        mt-0.5 size-5 shrink-0 cursor-pointer appearance-auto accent-brand
+        focus:ring-0! focus:ring-offset-0! focus:outline-hidden
       `}
       {...props}
     />

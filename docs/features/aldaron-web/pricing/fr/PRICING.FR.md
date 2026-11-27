@@ -38,7 +38,7 @@ De haut en bas, la page enchaîne les blocs suivants :
    deux boutons (**« Demander un devis »** et **« Estimer mon prix »**) et trois repères : à partir de
    1 500 €, prix fixe à la signature, 30 jours de correction de bugs.
 2. **Tarifs** : trois cartes. « Site ou application web » à partir de 1 500 €, « Mobile » à partir de
-   2 500 € (la carte mise en avant, en sombre) et « Back-office » à 37,50 € par écran. Une note précise
+   2 000 € (la carte mise en avant, en sombre) et « Back-office » à 30 € par écran. Une note précise
    qu'une vue distincte compte pour un écran, et qu'au-delà de 15 000 € le prix est fixé ensemble lors
    du cadrage.
 3. **Déroulé** : six étapes numérotées, du cadrage gratuit à la maintenance optionnelle, avec les

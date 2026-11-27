@@ -61,7 +61,7 @@ const Section = ({
           'flex flex-row',
           {
             'w-full 2xl:max-w-[1620px]': fullWidth,
-            'w-full px-4 md:px-6': !fullWidth,
+            'w-full px-5 min-[880px]:px-10': !fullWidth,
             'max-w-content': !fullWidth && (size === 'xl' || size === 'lg'),
             'max-w-[1023px]': !fullWidth && size === 'md',
           },

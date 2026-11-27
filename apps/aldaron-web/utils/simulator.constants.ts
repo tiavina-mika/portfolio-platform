@@ -1,8 +1,10 @@
 import {
   ISimulatorExample,
+  ISimulatorMaintenanceTier,
   ISimulatorViewState,
   SimulatorBring,
   SimulatorComplexity,
+  SimulatorInstalment,
   SimulatorPaymentSupport,
   SimulatorSupport,
 } from '@/types/simulator.type';
@@ -13,14 +15,14 @@ import {
  */
 export const SIMULATOR_PRICING = {
   // minimum order: with a mobile app, and for the web alone
-  floor: 2500,
+  floor: 2000,
   floorWeb: 1500,
   // per screen, what the mockups cost according to what the visitor brings
   design: { idea: 8, spec: 6, mockup: 0 } satisfies Record<SimulatorBring, number>,
   // per screen
-  screen: 25,
-  screenApp: 18,
-  screenRich: 30,
+  screen: 20,
+  screenApp: 14,
+  screenRich: 24,
   // a back-office screen costs one and a half times a plain one
   boFactor: 1.5,
   // multiplies the price of the screens
@@ -35,6 +37,13 @@ export const SIMULATOR_PRICING = {
   payExtra: 22,
   chat: 500,
 } as const;
+
+// the optional maintenance, in euros per month: it is shown, never added to the estimate
+export const SIMULATOR_MAINTENANCE_TIERS: ISimulatorMaintenanceTier[] = [
+  { id: 'essential', price: 150 },
+  { id: 'standard', price: 250 },
+  { id: 'ongoing', price: 400 },
+];
 
 // a back-office alone is never estimated under this number of screens
 export const BACK_OFFICE_MIN_SCREENS = 15;
@@ -63,7 +72,6 @@ export const SIMULATOR_INITIAL_STATE: ISimulatorViewState = {
   pay: { mobile: false, app: false },
   payN: { mobile: 1, app: 1 },
   chat: false,
-  maintenance: false,
   cx: null,
   example: null,
 };
@@ -75,15 +83,14 @@ export const SIMULATOR_EMPTY_ANSWERS = {
   mobile: 0,
   bo: 0,
   rich: 'simple',
-  maintenance: false,
   chat: false,
   pay: { mobile: false, app: false },
   payN: { mobile: 1, app: 1 },
 } satisfies Partial<ISimulatorViewState>;
 
 export const SIMULATOR_EXAMPLES: ISimulatorExample[] = [
-  { id: 'saas', state: { bring: 'idea', web: 25, mobile: 0, bo: 15, cx: 'standard' } },
-  { id: 'mobile', state: { bring: 'spec', web: 0, mobile: 200, bo: 0, cx: 'standard' } },
+  { id: 'saas', state: { bring: 'idea', web: 0, app: 30, mobile: 0, bo: 15, cx: 'standard' } },
+  { id: 'mobile', state: { bring: 'spec', web: 0, mobile: 40, bo: 15, cx: 'standard' } },
   { id: 'back', state: { bring: 'mockup', web: 0, mobile: 180, bo: 40, cx: 'heavy' } },
   {
     id: 'both',
@@ -98,6 +105,8 @@ export const SIMULATOR_EXAMPLES: ISimulatorExample[] = [
     },
   },
 ];
+
+export const SIMULATOR_INSTALMENTS: SimulatorInstalment[] = ['signature', 'midway', 'launch'];
 
 // the lines of the estimate, in this order
 export const SIMULATOR_LINES = [

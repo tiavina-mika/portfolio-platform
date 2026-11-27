@@ -32,7 +32,6 @@ export const useSimulatorRecapLabels = (): ISimulatorRecapLabels => {
       heavy: t('complexity.heavy'),
     },
     richLabel: t('rich.rich.title'),
-    maintenanceLine: t('maintenance.line'),
     chatLabel: t('lines.chat'),
     paymentLabel: t('lines.payment'),
   }), [t]);

@@ -15,7 +15,7 @@
     "examples": {
       "label": "One-click examples",
       "saas": "First version of a SaaS",
-      "mobile": "Mobile app with 100+ screens",
+      "mobile": "MVP with a simple back office",
       "back": "Mobile app with a complex back office",
       "both": "Web and mobile product with payment"
     },
@@ -84,8 +84,22 @@
     },
     "maintenance": {
       "title": "Optional maintenance",
-      "hint": "€150 to €400 per month, after the 30 days of bug fixing",
-      "line": "Maintenance: €150 to €400 per month"
+      "hint": "After the 30 days of bug fixing:",
+      "price": "{a}/month",
+      "tiers": {
+        "essential": {
+          "name": "Essential",
+          "description": "fixes and security"
+        },
+        "standard": {
+          "name": "Standard",
+          "description": "plus store updates and 2 h of changes"
+        },
+        "ongoing": {
+          "name": "Ongoing",
+          "description": "plus 5 h of changes and priority response"
+        }
+      }
     },
     "complexity": {
       "label": "Business complexity",
@@ -105,7 +119,13 @@
       "design": "Mockups",
       "chat": "Instant messaging",
       "payment": "Online payment",
-      "floor": "Top-up to the minimum order"
+      "floor": "Top-up to the minimum order",
+      "details": {
+        "screens": "{count, plural, one {# screen} other {# screens}} × {a}",
+        "payment": "{count, plural, one {# integration} other {# integrations}}",
+        "paymentExtra": "{count} integrations: {first} + {extra} × {unit}",
+        "minimum": "Order minimum {a}"
+      }
     },
     "result": {
       "title": "Your estimate",
@@ -127,13 +147,28 @@
         "mobile": "Hosting and third-party services, store accounts: paid directly by the startup.",
         "web": "Hosting and third-party services: paid directly by the startup."
       },
-      "payment": "Fixed price at signing, paid in 3 instalments: 40% at signing, 30% at the mid-way demo, 30% at launch.",
+      "payment": {
+        "intro": "Fixed price at signing, paid in 3 instalments:",
+        "signature": {
+          "share": "40%",
+          "when": "at signing"
+        },
+        "midway": {
+          "share": "30%",
+          "when": "at the mid-way demo"
+        },
+        "launch": {
+          "share": "30%",
+          "when": "at launch"
+        }
+      },
       "paymentRich": "Delivery in batches, each batch paid on delivery; batches are agreed during scoping.",
       "paymentDesign": "Mockups are approved before development starts.",
       "request": "Request a firm quote (free scoping)",
       "requestShort": "Request a firm quote",
       "copy": "Copy my summary",
       "copied": "Summary copied."
-    }
+    },
+    "screenUnit": "{a} / screen"
   }
 }

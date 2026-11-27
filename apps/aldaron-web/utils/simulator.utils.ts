@@ -86,8 +86,8 @@ const getPaymentCost = (state: ISimulatorState, support: SimulatorPaymentSupport
     : 0;
 
 /**
- * The estimate of effective answers (see `getEffectiveState`): the screens by support, the options,
- * the mockups, then the minimum order the screens are topped up to.
+ * The estimate of effective answers (see `getEffectiveState`): the screens by support and the mockups,
+ * topped up to the minimum order, then the options.
  */
 export const computeEstimate = (state: ISimulatorState): ISimulatorEstimate => {
   const pricing = SIMULATOR_PRICING;
@@ -102,40 +102,80 @@ export const computeEstimate = (state: ISimulatorState): ISimulatorEstimate => {
   const boScreens = isBoOnly ? Math.max(BACK_OFFICE_MIN_SCREENS, state.bo) : state.bo;
 
   const screens = {
-    web: roundToHundred(state.web * pricing.screen * complexity),
-    app: roundToHundred(state.app * appRate * complexity),
-    mobile: roundToHundred(state.mobile * pricing.screen * complexity),
-    bo: roundToHundred(boScreens * pricing.screen * pricing.boFactor * complexity),
+    web: state.web, app: state.app, mobile: state.mobile, bo: boScreens,
   };
-  const total = screens.web + screens.app + screens.mobile + screens.bo;
+  const unitPrices = {
+    web: pricing.screen * complexity,
+    app: appRate * complexity,
+    mobile: pricing.screen * complexity,
+    bo: pricing.screen * pricing.boFactor * complexity,
+  };
+  const screenParts = {
+    web: roundToHundred(screens.web * unitPrices.web),
+    app: roundToHundred(screens.app * unitPrices.app),
+    mobile: roundToHundred(screens.mobile * unitPrices.mobile),
+    bo: roundToHundred(screens.bo * unitPrices.bo),
+  };
+  const total = screenParts.web + screenParts.app + screenParts.mobile + screenParts.bo;
 
   // the web application and the mobile app share their mockups: the smaller one counts for half
   const designScreens = state.web +
     boScreens +
     Math.max(state.app, state.mobile) +
     (0.5 * Math.min(state.app, state.mobile));
+  const designRate = pricing.design[state.bring];
   const parts: ISimulatorParts = {
-    ...screens,
+    ...screenParts,
     payMobile: getPaymentCost(state, 'mobile'),
     payApp: getPaymentCost(state, 'app'),
     chat: state.chat ? pricing.chat : 0,
-    design: roundToHundred(designScreens * pricing.design[state.bring]),
+    design: roundToHundred(designScreens * designRate),
     floorAdj: 0,
   };
-  const options = parts.payMobile + parts.payApp + parts.chat + parts.design;
+  // the options come on top of the minimum order, while the mockups count towards it
+  const options = parts.payMobile + parts.payApp + parts.chat;
   const floor = getFloor(state);
-  const base = Math.max(isBoOnly ? 0 : floor, total);
+  const base = Math.max(isBoOnly ? 0 : floor, total + parts.design);
 
-  parts.floorAdj = base - total;
+  parts.floorAdj = base - total - parts.design;
 
   return {
     parts,
+    screens,
+    unitPrices,
+    designScreens,
+    designRate,
+    paymentCounts: {
+      mobile: clampPaymentCount(state.payN.mobile),
+      app: clampPaymentCount(state.payN.app),
+    },
+    floor,
     total,
     price: base + options,
     isOverCeiling: total > (isRich ? pricing.ceilingRich : pricing.ceiling),
     isAtFloor: !isBoOnly && base <= floor && !options,
     isBackOfficeOnly: isBoOnly,
   };
+};
+
+/**
+ * Whether the rounding moved the amount of a line away from "number of screens × price of a screen":
+ * the line then says its amount is approximate
+ */
+export const isApproximateLine = (key: keyof ISimulatorParts, estimate: ISimulatorEstimate): boolean => {
+  const {
+    parts, screens, unitPrices, designScreens, designRate,
+  } = estimate;
+  const exactAmounts: Partial<ISimulatorParts> = {
+    web: screens.web * unitPrices.web,
+    app: screens.app * unitPrices.app,
+    mobile: screens.mobile * unitPrices.mobile,
+    bo: screens.bo * unitPrices.bo,
+    design: designScreens * designRate,
+  };
+  const exact = exactAmounts[key];
+
+  return exact !== undefined && Math.abs(exact - parts[key]) >= 0.5;
 };
 
 /**
@@ -160,7 +200,6 @@ export type SimulatorAction =
   { type: 'setPayment'; support: SimulatorPaymentSupport; isOn: boolean } |
   { type: 'setPaymentCount'; support: SimulatorPaymentSupport; value: number } |
   { type: 'setChat'; isOn: boolean } |
-  { type: 'setMaintenance'; isOn: boolean } |
   { type: 'toggleExample'; id: SimulatorExampleId };
 
 export const createInitialState = (): ISimulatorViewState => clone(SIMULATOR_INITIAL_STATE);
@@ -206,8 +245,6 @@ export const simulatorReducer = (
       return { ...state, payN: { ...state.payN, [action.support]: clampPaymentCount(action.value) } };
     case 'setChat':
       return { ...state, chat: action.isOn };
-    case 'setMaintenance':
-      return { ...state, maintenance: action.isOn };
     case 'toggleExample':
       // choosing the example that is on takes the screen back to its start
       return state.example === action.id ? createInitialState() : applyExample(action.id);
@@ -242,7 +279,6 @@ export const buildRecap = (
       })
       .join('\n'),
     ...(state.cx ? [`${labels.complexity} : ${labels.complexityLevel[state.cx].toLowerCase()}`] : []),
-    ...(state.maintenance ? [labels.maintenanceLine] : []),
     ...(effective.chat
       ? [`${labels.chatLabel} (${labels.support.mobile}) : ${formatEuros(SIMULATOR_PRICING.chat, locale)}`]
       : []),

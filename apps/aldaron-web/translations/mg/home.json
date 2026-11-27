@@ -16,31 +16,31 @@
       "eyebrow": "Izay ataonay",
       "title": "Fitaovana efatra, vidiny isaky ny efijery.",
       "description": "Efijery iray ny fijery tsirairay ; tafiditra ao aminy ny toe-javatra sy ny endriny samihafa.",
-      "minimumNote": "Kaomandy farany ambany : 1 500 € ho an'ny web, 2 500 € raha misy finday.",
+      "minimumNote": "Kaomandy farany ambany : 1 500 € ho an'ny web, 2 000 € raha misy finday.",
       "items": {
         "1": {
           "eyebrow": "Web",
           "title": "Tranonkala static",
           "description": "Portfolio, tranonkala fampisehoana, pejy fampahafantarana vokatra, tranonkala fikambanana.",
-          "price": "25 € / efijery"
+          "price": "20 € / efijery"
         },
         "2": {
           "eyebrow": "Web",
           "title": "Application web",
           "description": "SaaS, tableau de bord, toerana ho an'ny mpanjifa, sehatra famandrihana, fitaovana anatiny.",
-          "price": "18 hatramin'ny 30 € / efijery"
+          "price": "14 hatramin'ny 24 € / efijery"
         },
         "3": {
           "eyebrow": "Finday",
           "title": "Application finday",
           "description": "Application iOS sy Android, avoaka ao amin'ny App Store sy Google Play.",
-          "price": "25 € / efijery"
+          "price": "20 € / efijery"
         },
         "4": {
           "eyebrow": "Fitantanana",
           "title": "Back-office",
           "description": "Fitantanana votoaty, mpampiasa ary kaomandy, fanaraha-maso, antontan'isa, fanondranana.",
-          "price": "37,50 € / efijery"
+          "price": "30 € / efijery"
         }
       }
     },

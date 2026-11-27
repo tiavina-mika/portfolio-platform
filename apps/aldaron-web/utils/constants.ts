@@ -1,4 +1,4 @@
-/* eslint-disable @cspell/spellchecker */
+
 import { DEFAULT_COUNTRY } from '@shared/constants';
 
 export const APP_NAME = 'Aldaron';
