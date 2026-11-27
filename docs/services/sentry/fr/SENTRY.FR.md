@@ -10,7 +10,7 @@
 
 ## À quoi il sert
 
-Sentry remonte les erreurs JavaScript du back-office (`apps/bo`) et du site (`apps/web`, navigateur et serveur Next.js). Les deux envoient vers le même projet Sentry : l'étiquette `app` (`bo` ou `web`) les distingue. Le serveur d'API ne remonte rien à Sentry.
+Sentry remonte les erreurs JavaScript du back-office (`apps/bo`) et des deux sites (`apps/web` et `apps/aldaron-web`, navigateur et serveur Next.js). Tous envoient vers le même projet Sentry : l'étiquette `app` (`bo`, `web` ou `aldaron-web`) les distingue. Le serveur d'API ne remonte rien à Sentry.
 
 ## Où est le code
 
@@ -35,5 +35,5 @@ Sentry remonte les erreurs JavaScript du back-office (`apps/bo`) et du site (`ap
 
 ## Pièges
 
-- Les étiquettes `app: bo` et `app: web` distinguent les applications dans le projet Sentry partagé ; le trafic public du site partage le quota avec le back-office, d'où les erreurs de bruit du navigateur ignorées.
+- Les étiquettes `app: bo`, `app: web` et `app: aldaron-web` distinguent les applications dans le projet Sentry partagé ; le trafic public des sites partage le quota avec le back-office, d'où les erreurs de bruit du navigateur ignorées.
 - La CSP n'autorise que les domaines `*.ingest.de.sentry.io` (UE).

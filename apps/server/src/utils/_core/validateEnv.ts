@@ -157,7 +157,7 @@ const validateEnv = (env: Env = process.env): void => {
     MMSDUCK_API_KEY: str({ default: '' }),
     /*
      * Shared secret that lets the server invalidate the website's CMS cache (see
-     * revalidate.utils.ts); it must equal the website's REVALIDATE_SECRET. Without it the call is
+     * revalidate.utils.ts); it must equal the REVALIDATE_SECRET of both websites. Without it the call is
      * skipped with a warning and published articles stay invisible on the site for up to an hour,
      * so the deployed environments refuse to start without it.
      */

@@ -21,7 +21,7 @@ export const getSentryOptions = (): BrowserOptions | undefined => {
     environment,
     sampleRate: SENTRY_ERROR_SAMPLE_RATE[environment],
     // the Sentry project is shared with the back-office: this tag tells the two apps apart
-    initialScope: { tags: { app: 'web' } },
+    initialScope: { tags: { app: 'aldaron-web' } },
     ignoreErrors: SENTRY_IGNORED_ERRORS,
     denyUrls: SENTRY_IGNORED_URLS,
     // the contact and newsletter pages carry e-mails and phone numbers in texts and addresses

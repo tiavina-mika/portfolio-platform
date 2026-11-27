@@ -10,7 +10,7 @@
 
 ## What it is used for
 
-Sentry reports the JavaScript errors of the back-office (`apps/bo`) and of the website (`apps/web`, browser and Next.js server). Both send to the same Sentry project: the `app` tag (`bo` or `web`) tells them apart. The API server does not report to Sentry.
+Sentry reports the JavaScript errors of the back-office (`apps/bo`) and of the two websites (`apps/web` and `apps/aldaron-web`, browser and Next.js server). All send to the same Sentry project: the `app` tag (`bo`, `web` or `aldaron-web`) tells them apart. The API server does not report to Sentry.
 
 ## Where the code is
 
@@ -35,5 +35,5 @@ Sentry reports the JavaScript errors of the back-office (`apps/bo`) and of the w
 
 ## Gotchas
 
-- The `app: bo` and `app: web` tags tell the apps apart in the shared Sentry project; the public traffic of the website shares the quota with the back-office, hence the ignored browser-noise errors.
+- The `app: bo`, `app: web` and `app: aldaron-web` tags tell the apps apart in the shared Sentry project; the public traffic of the websites shares the quota with the back-office, hence the ignored browser-noise errors.
 - The CSP only allows the `*.ingest.de.sentry.io` (EU) domains.

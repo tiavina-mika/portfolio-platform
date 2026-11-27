@@ -137,6 +137,7 @@ Dans **Advanced → Environment Variables** (ou **Environment** une fois créé)
 | `CRYPTO_FIXED_PART_KEY`, `CRYPTO_FIXED_FULL_KEY`, `CRYPTO_IV` | générées (étape 2) |
 | `BREVO_API_KEY` | depuis Brevo |
 | `ADMIN_EMAIL_SENDER` | l'adresse d'expéditeur vérifiée dans Brevo |
+| `RECAPTCHA_SECRET_KEY` | clé **secrète** reCAPTCHA, celle qui va avec la clé de site du site |
 | `AGENCY_BREVO_API_KEY`, `AGENCY_ADMIN_EMAIL_SENDER` | facultatif, à définir ensemble : le compte Brevo d'Aldaron (clé API v3) et l'expéditeur vérifié dedans ; non définis, ceux du portfolio servent |
 | `OWNERS_EMAILS` | adresses séparées par des virgules qui reçoivent l'invitation Owner du back-office au démarrage |
 | `AGENCY_OWNERS_EMAILS` | facultatif : adresses séparées par des virgules des administrateurs d'Aldaron, invités au démarrage depuis le domaine d'Aldaron avec le rôle `AGENCY_ADMIN` (espace Aldaron uniquement) ; en plus de `OWNERS_EMAILS` |
@@ -179,10 +180,10 @@ Le workspace Aldaron a sa propre adresse de back-office. Elle est servie par un 
 |---|---|---|
 | `SERVER_URL` | sa **propre** URL, par ex. `https://aldaron-labs-bo-preprod.onrender.com` | c'est l'URL affichée dans le log de démarrage, celle que Parse annonce (`serverURL` et `publicServerURL`) et celle que le ping planifié appelle. Laissée à l'URL du portfolio, ce service afficherait, annoncerait et pinguerait **l'autre** service |
 | `AGENCY_SERVER_URL` | la même URL que son `SERVER_URL` | le lien des invitations Aldaron |
-| `AGENCY_WEBSITE_URL` | le site d'Aldaron | `WEBSITE_URL` reste obligatoire (la valeur du portfolio convient) ; les e-mails et liens d'Aldaron utilisent `AGENCY_WEBSITE_URL` |
+| `AGENCY_WEBSITE_URL` | le site d'Aldaron | `WEBSITE_URL` reste obligatoire (la valeur du portfolio convient) ; les e-mails, les liens et l'invalidation du cache d'Aldaron utilisent `AGENCY_WEBSITE_URL` ; le `REVALIDATE_SECRET` du site d'Aldaron doit être égal à `WEBSITE_REVALIDATE_SECRET` |
 | `VITE_AGENCY_HOSTNAME` (build) | son nom d'hôte sans `https://`, par ex. `aldaron-labs-bo-preprod.onrender.com` | ouvert sur cette adresse, le back-office démarre dans le workspace Aldaron |
 
-Sur le service **portfolio**, `SERVER_URL` ne change pas ; définissez aussi `AGENCY_SERVER_URL` pour qu'une invitation Aldaron envoyée depuis lui porte le lien Aldaron.
+Sur le service **portfolio**, `SERVER_URL` ne change pas ; définissez aussi `AGENCY_SERVER_URL` pour qu'une invitation Aldaron envoyée depuis lui porte le lien Aldaron, et `AGENCY_WEBSITE_URL` pour qu'un contenu publié depuis lui rafraîchisse le site d'Aldaron.
 
 Le succès est le même qu'au 3.4, avec l'URL d'Aldaron sous `[PREPROD]`. Comme au 3.5, l'URL réelle vient du tableau de bord : si Render a ajouté un suffixe, corrigez `SERVER_URL`, `AGENCY_SERVER_URL` et `VITE_AGENCY_HOSTNAME`, puis **Clear build cache & deploy** (les valeurs `VITE_*` sont inscrites dans le bundle).
 
@@ -242,8 +243,6 @@ Toutes sont validées par `apps/web/env.ts` ; une variable manquante ou invalide
 | `PARSE_APP_ID` | la même que le serveur |
 | `SERVER_URL` | l'URL du serveur |
 | `APP_URL` | l'URL du site |
-| `SENDER_EMAIL` | l'adresse d'où partent les emails du formulaire de contact |
-| `RECAPTCHA_SECRET_KEY` | clé **secrète** reCAPTCHA |
 | `NEXT_PUBLIC_SERVER_URL` | la même que `SERVER_URL` |
 | `NEXT_PUBLIC_APP_URL` | la même que `APP_URL` |
 | `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` | clé de **site** reCAPTCHA |
@@ -258,7 +257,7 @@ Les valeurs `NEXT_PUBLIC_*` sont inscrites au build et visibles dans le navigate
 ## Étape 5 : boucler la configuration
 
 1. **reCAPTCHA** : dans l'admin Google reCAPTCHA, ajoutez le domaine du site (et votre domaine personnalisé) aux domaines de la clé.
-2. **Brevo** : vérifiez que les adresses `ADMIN_EMAIL_SENDER` et `SENDER_EMAIL` sont des expéditeurs vérifiés.
+2. **Brevo** : vérifiez que l'adresse `ADMIN_EMAIL_SENDER` (et `AGENCY_ADMIN_EMAIL_SENDER`, si elle est définie) est un expéditeur vérifié.
 3. **Première connexion au back-office** : au démarrage, le serveur crée une invitation Owner pour chaque adresse de `OWNERS_EMAILS`. Ouvrez l'email d'invitation, définissez le mot de passe, puis connectez-vous sur l'URL du serveur.
 4. **Contenu** : créez vos premiers projets et articles dans le back-office, puis redéployez le site (Manual Deploy) si son build s'est fait sur une base vide.
 5. **Domaine personnalisé** (facultatif) : Settings → Custom Domains sur chaque service, ajoutez l'enregistrement DNS indiqué par Render, attendez le certificat. Mettez ensuite à jour `SERVER_URL`, `WEBSITE_URL`, `VITE_WEBSITE_URL`, `APP_URL`, `NEXT_PUBLIC_SERVER_URL` et `NEXT_PUBLIC_APP_URL`, et redéployez les deux services en vidant le cache de build.

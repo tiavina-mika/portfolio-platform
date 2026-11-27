@@ -137,6 +137,7 @@ In **Advanced → Environment Variables** (or **Environment** once created), add
 | `CRYPTO_FIXED_PART_KEY`, `CRYPTO_FIXED_FULL_KEY`, `CRYPTO_IV` | generated (Step 2) |
 | `BREVO_API_KEY` | from Brevo |
 | `ADMIN_EMAIL_SENDER` | the verified sender address in Brevo |
+| `RECAPTCHA_SECRET_KEY` | reCAPTCHA **secret** key, matching the website's site key |
 | `AGENCY_BREVO_API_KEY`, `AGENCY_ADMIN_EMAIL_SENDER` | optional, set together: the Aldaron Brevo account (v3 API key) and the sender verified in it; unset, the portfolio's are used |
 | `OWNERS_EMAILS` | comma-separated emails that receive the back-office Owner invitation at boot |
 | `AGENCY_OWNERS_EMAILS` | optional: comma-separated emails of the Aldaron administrators, invited at boot from the Aldaron domain with the `AGENCY_ADMIN` role (agency workspace only); on top of `OWNERS_EMAILS` |
@@ -179,10 +180,10 @@ The Aldaron workspace has its own back-office address. It is served by a **secon
 |---|---|---|
 | `SERVER_URL` | its **own** URL, e.g. `https://aldaron-labs-bo-preprod.onrender.com` | it is the URL shown in the start-up log, the one Parse announces (`serverURL` and `publicServerURL`) and the one the scheduled self-ping calls. Left to the portfolio URL, this service would log, announce and ping the **other** service |
 | `AGENCY_SERVER_URL` | the same URL as its `SERVER_URL` | the link of the Aldaron invitations |
-| `AGENCY_WEBSITE_URL` | the Aldaron website | `WEBSITE_URL` stays required (the portfolio's value is fine); the Aldaron e-mails and links use `AGENCY_WEBSITE_URL` |
+| `AGENCY_WEBSITE_URL` | the Aldaron website | `WEBSITE_URL` stays required (the portfolio's value is fine); the Aldaron e-mails, links and cache invalidation use `AGENCY_WEBSITE_URL`; the Aldaron website's `REVALIDATE_SECRET` must equal `WEBSITE_REVALIDATE_SECRET` |
 | `VITE_AGENCY_HOSTNAME` (build) | its hostname without `https://`, e.g. `aldaron-labs-bo-preprod.onrender.com` | opened on this address, the back-office starts in the Aldaron workspace |
 
-On the **portfolio** service, `SERVER_URL` is unchanged; set `AGENCY_SERVER_URL` there too so an Aldaron invitation sent from it carries the Aldaron link.
+On the **portfolio** service, `SERVER_URL` is unchanged; set `AGENCY_SERVER_URL` there too so an Aldaron invitation sent from it carries the Aldaron link, and `AGENCY_WEBSITE_URL` so content published from it refreshes the Aldaron website.
 
 Success is the same as in 3.4, with the Aldaron URL under `[PREPROD]`. As in 3.5, the real URL comes from the dashboard: if Render added a suffix, fix `SERVER_URL`, `AGENCY_SERVER_URL` and `VITE_AGENCY_HOSTNAME`, then **Clear build cache & deploy** (the `VITE_*` values are baked into the bundle).
 
@@ -242,8 +243,6 @@ All of them are validated by `apps/web/env.ts`; a missing or invalid one stops t
 | `PARSE_APP_ID` | the same as the server |
 | `SERVER_URL` | the server URL |
 | `APP_URL` | the website URL |
-| `SENDER_EMAIL` | the address the contact form emails come from |
-| `RECAPTCHA_SECRET_KEY` | reCAPTCHA **secret** key |
 | `NEXT_PUBLIC_SERVER_URL` | the same as `SERVER_URL` |
 | `NEXT_PUBLIC_APP_URL` | the same as `APP_URL` |
 | `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` | reCAPTCHA **site** key |
@@ -258,7 +257,7 @@ All of them are validated by `apps/web/env.ts`; a missing or invalid one stops t
 ## Step 5: close the loop
 
 1. **reCAPTCHA**: in the Google reCAPTCHA admin, add the website domain (and your custom domain) to the key's domains.
-2. **Brevo**: check that the `ADMIN_EMAIL_SENDER` and `SENDER_EMAIL` addresses are verified senders.
+2. **Brevo**: check that the `ADMIN_EMAIL_SENDER` address (and `AGENCY_ADMIN_EMAIL_SENDER`, if set) is a verified sender.
 3. **Back-office first login**: the server creates an Owner invitation for every address in `OWNERS_EMAILS` at boot. Open the invitation email, set the password, then sign in at the server URL.
 4. **Content**: create your first projects and articles in the back-office, then redeploy the website (Manual Deploy) if its build ran against an empty database.
 5. **Custom domain** (optional): Settings → Custom Domains on each service, add the DNS record Render shows, wait for the certificate. Then update `SERVER_URL`, `WEBSITE_URL`, `VITE_WEBSITE_URL`, `APP_URL`, `NEXT_PUBLIC_SERVER_URL` and `NEXT_PUBLIC_APP_URL`, and redeploy both services with the build cache cleared.

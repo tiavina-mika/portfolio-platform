@@ -16,7 +16,7 @@
 | Google reCAPTCHA | web (token), server (check) | Bot protection of the contact and newsletter forms | `RECAPTCHA_SECRET_KEY` (server), `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` (web) |
 | Upstash Redis | server, web | Rate limits, Parse Server cache and LiveQuery, scheduled job lock | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `UPSTASH_REDIS_URL` |
 | MMSDuck | server | SMS: verification codes, notices, notification fallback | `MMSDUCK_API_KEY` |
-| Sentry | bo, web | Error reporting (browser; also the Next.js server for the web) | `VITE_SENTRY_DSN`, `VITE_SENTRY_ENVIRONMENT` (bo), `NEXT_PUBLIC_SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_ENVIRONMENT` (web), `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, `SENTRY_PROJECT` (build time) |
+| Sentry | bo, web, aldaron-web | Error reporting (browser; also the Next.js server for the two websites) | `VITE_SENTRY_DSN`, `VITE_SENTRY_ENVIRONMENT` (bo), `NEXT_PUBLIC_SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_ENVIRONMENT` (web, aldaron-web), `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, `SENTRY_PROJECT` (build time) |
 | Google Analytics 4 | web | Audience measurement (off when unset) | `NEXT_PUBLIC_GA_MEASUREMENT_ID` |
 | Free currency rate APIs (open.er-api.com, then the jsDelivr copy of fawazahmed0/currency-api) | aldaron-web (the visitor's browser) | Euro to dollar and Malagasy ariary rates, to show the prices in the currency the visitor picks; no key, answers cached 12 hours in the browser, fixed fallback rates when both are down | none |
 | Google Fonts | aldaron-web | Fonts downloaded at build time by `next/font`, then self-hosted: no call from the visitor's browser | none |
@@ -24,7 +24,7 @@
 | GitHub (Actions) | repository | CI, security checks, release pull request | secrets and variables listed in the [inventory](../inventory/code/en/GITHUB_VARIABLES_AND_SECRETS.md) |
 | Chromatic | CI | Published Storybooks and visual tests | `CHROMATIC_PROJECT_TOKEN_WEB` (GitHub secret) |
 
-The back-office and the website report their errors (Sentry, one shared project, an `app` tag tells them apart); the server has no error-tracking service.
+The back-office and the two websites report their errors (Sentry, one shared project, an `app` tag tells them apart); the server has no error-tracking service.
 
 The full list of variables, by app, is in the [inventory](../inventory/README.md).
 

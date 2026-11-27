@@ -36,7 +36,7 @@ Required everywhere: `PORT`, `MONGO_URL`, `PARSE_APP_ID`, `PARSE_MASTER_KEY`, `R
 Required only in the deployed environments (`preProduction` and `production`); optional in development and test:
 
 - `OWNERS_EMAILS` must list at least two distinct addresses (`MIN_OWNERS_COUNT`). A single owner who loses their authenticator leaves the OWNER-only actions out of reach, so a deployed server with one owner does not start.
-- `WEBSITE_REVALIDATE_SECRET` must not be empty: without it the website cache is never invalidated. It must equal the web `REVALIDATE_SECRET`.
+- `WEBSITE_REVALIDATE_SECRET` must not be empty: without it the website cache is never invalidated. It must equal the `REVALIDATE_SECRET` of the web and aldaron-web apps.
 
 | Variable | Purpose |
 |---|---|
@@ -45,7 +45,7 @@ Required only in the deployed environments (`preProduction` and `production`); o
 | `MONGO_URL` | MongoDB connection string |
 | `PARSE_APP_ID`, `PARSE_MASTER_KEY`, `REST_API_KEY` | Parse Server credentials (`REST_API_KEY` is also the value the clients send in the `X-portfolio-key` header) |
 | `SERVER_URL`, `WEBSITE_URL` | Public URLs of the API and of the website. In local, an optional `apps/server/.env.local` overrides them (localhost or a LAN ip for a phone) |
-| `AGENCY_SERVER_URL`, `AGENCY_WEBSITE_URL`, `AGENCY_APP_NAME` | Optional: the agency (Aldaron) workspace's own back-office address (a second service running this same code), its website and the name its e-mails are signed with. Used for the invitation link and the e-mail frame; while one is unset the portfolio value is used. The start-up log, Parse's `serverURL` and the self-ping read `SERVER_URL` only, so the agency service sets its own `SERVER_URL` too |
+| `AGENCY_SERVER_URL`, `AGENCY_WEBSITE_URL`, `AGENCY_APP_NAME` | Optional: the agency (Aldaron) workspace's own back-office address (a second service running this same code), its website and the name its e-mails are signed with. Used for the invitation link, the e-mail frame and, for the website, its cache invalidation; while one is unset the portfolio value is used. The start-up log, Parse's `serverURL` and the self-ping read `SERVER_URL` only, so the agency service sets its own `SERVER_URL` too |
 | `CRYPTO_FIXED_PART_KEY`, `CRYPTO_FIXED_FULL_KEY`, `CRYPTO_IV` | Encryption keys (`CRYPTO_IV` is in `.env.example` but not checked by `validateEnv()`) |
 | `BREVO_API_KEY`, `ADMIN_EMAIL_SENDER` | Emails (API key and default sender) |
 | `AGENCY_BREVO_API_KEY`, `AGENCY_ADMIN_EMAIL_SENDER` | Optional, set together: the agency (Aldaron) workspace's own Brevo account and the sender verified in it. Every e-mail of an agency-only account goes out through them; while unset the portfolio's key and sender are used |
@@ -54,7 +54,7 @@ Required only in the deployed environments (`preProduction` and `production`); o
 | `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | File storage |
 | `AGENCY_CLOUDINARY_NAME`, `AGENCY_CLOUDINARY_API_KEY`, `AGENCY_CLOUDINARY_API_SECRET` | Optional, set all three or none (checked at boot): the agency (Aldaron) workspace's own Cloudinary account. Its uploads go to it, a file is deleted from the account named in its address, and the `agency-logo` of its e-mails is read from it; while unset everything stays in the portfolio's account |
 | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `UPSTASH_REDIS_URL` | Upstash Redis: rate limits and the lock that lets only one server instance run a scheduled job tick |
-| `WEBSITE_REVALIDATE_SECRET` | Shared secret to invalidate the website CMS cache (must equal the web `REVALIDATE_SECRET`) |
+| `WEBSITE_REVALIDATE_SECRET` | Shared secret to invalidate the website CMS cache (must equal the `REVALIDATE_SECRET` of web and aldaron-web; the server calls `WEBSITE_URL` and `AGENCY_WEBSITE_URL`) |
 | `RECAPTCHA_SECRET_KEY` | reCAPTCHA v3 secret: the server verifies the token of the contact and newsletter forms. Skipped in development and test, fails closed elsewhere |
 | `MMSDUCK_API_KEY` | MMSDuck SMS provider key (optional: without it every SMS is refused with a warning) |
 | `DOCS_FEATURES_PASSWORD`, `DOCS_BUSINESS_PASSWORD` | Optional, validated by `validateEnv()` but not in `.env.example`: passwords of the documentation sections served by the server; a section without one stays closed (404) |
