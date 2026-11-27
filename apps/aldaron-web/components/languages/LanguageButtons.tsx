@@ -63,7 +63,7 @@ const LanguageButtons = ({ className }: Props) => {
                   border-transparent bg-primary text-primary-foreground
                   hover:bg-primary-hover
                 `
-                : 'border-input bg-transparent text-muted-foreground'
+                : 'border-input bg-transparent text-foreground'
             )}
           >
             {locale.toUpperCase()}

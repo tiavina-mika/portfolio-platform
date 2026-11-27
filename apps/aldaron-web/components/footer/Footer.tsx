@@ -32,14 +32,6 @@ const FOOTER_LINK_CLASS_NAME = `
   motion-reduce:transition-none
 `;
 
-const LEGAL_LINK_CLASS_NAME = `
-  inline-flex min-h-11 items-center label-mono text-xs font-medium text-muted-foreground transition-colors
-  duration-120
-  hover:text-foreground
-  md:text-xs
-  motion-reduce:transition-none
-`;
-
 /**
  * The footer: the brand and its networks, the pages, the contact, then the legal links and the language.
  * It sits under the page h1, so its columns are titled with h2.
@@ -104,15 +96,15 @@ const Footer = ({ menus }: Props) => {
           <div
             className={`
               flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-border pt-3
-              label-mono text-muted-foreground
+              text-[15px] leading-[1.4] text-muted-foreground
             `}
           >
             <span className="min-w-40 flex-1">© {currentYear} Aldaron · {t('region')}</span>
             <nav aria-label={t('legal')} className="flex flex-wrap justify-center gap-x-6 gap-y-1">
-              <TextLink className={LEGAL_LINK_CLASS_NAME} href={ROUTES.legal} underline={false}>
+              <TextLink className={FOOTER_LINK_CLASS_NAME} href={ROUTES.legal} underline={false}>
                 {t('legalNotice')}
               </TextLink>
-              <TextLink className={LEGAL_LINK_CLASS_NAME} href={ROUTES.privacy} underline={false}>
+              <TextLink className={FOOTER_LINK_CLASS_NAME} href={ROUTES.privacy} underline={false}>
                 {t('privacy')}
               </TextLink>
             </nav>
