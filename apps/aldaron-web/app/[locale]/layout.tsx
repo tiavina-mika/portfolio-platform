@@ -8,6 +8,7 @@ import CookieConsentBanner from '@/components/CookieConsentBanner';
 import { fontsVariables } from '@/components/fonts';
 import Footer from '@/components/footer/Footer';
 import JsonLd from '@/components/JsonLd';
+import Section from '@/components/layouts/Section';
 import NavBar from '@/components/nav-bar/NavBar';
 import ToasterProvider from '@/components/ToasterProvider';
 import ViewportIndicator from '@/components/ViewportIndicator';
@@ -172,10 +173,9 @@ const RootLayout = async (props: Props) => {
                     behind Suspense so it doesn't block the static shell shared by every route; the
                     fallback keeps its height so the page does not jump when it streams in */}
                   <Suspense fallback={(
-                    <div
-                      aria-hidden
-                      className={'h-[73px] self-stretch border-b border-border'}
-                    />
+                    <Section>
+                      <div aria-hidden className="h-[72px] w-full border-b border-border" />
+                    </Section>
                   )}
                   >
                     <NavBar currencySelect={<CurrencySelect />} menus={menus} />

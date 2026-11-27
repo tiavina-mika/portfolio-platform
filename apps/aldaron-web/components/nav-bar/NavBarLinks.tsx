@@ -11,7 +11,7 @@ type Props = {
 };
 
 /**
- * The page links of the desktop bar (>= lg)
+ * The page links of the wide bar
  */
 const NavBarLinks = ({ menus }: Props) => {
   const t = useTranslations('NavBar');

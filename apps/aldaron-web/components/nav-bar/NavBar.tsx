@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import {
-  ReactNode, useCallback, useEffect, useId, useState,
+  ReactNode, useCallback, useEffect, useId, useRef, useState,
 } from 'react';
 
 import { ROUTES } from '@/i18n/routes';
@@ -26,13 +26,15 @@ type Props = {
 };
 
 /**
- * The site navigation, one component for every width: from lg a bar with the logo, the pages and the
- * actions; below lg the logo, the actions and a button that drops the pages in a panel. The breakpoint
- * is pure CSS, so the server render is already the right one on both. Escape closes the panel.
+ * The site navigation, one component for every width: when the bar is at least 1040px wide, the logo,
+ * the pages and the actions; below that, the logo, the actions and a button that drops the pages in a
+ * panel. The switch is a CSS container query, so the server render is already the right one on both.
+ * Escape closes the panel, and so does widening the bar.
  */
 const NavBar = ({ menus, currencySelect }: Props) => {
   const t = useTranslations('NavBar');
   const menuId = useId();
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
@@ -44,51 +46,89 @@ const NavBar = ({ menus, currencySelect }: Props) => {
       if (event.key === 'Escape') setIsMenuOpen(false);
     };
 
+    /*
+     * a wide bar hides the menu button: its width drops to 0, and the panel must not come back
+     * open when the bar narrows again
+     */
+    const observer = new ResizeObserver(([entry]) => {
+      if (entry.contentRect.width === 0) setIsMenuOpen(false);
+    });
+
+    if (menuButtonRef.current) observer.observe(menuButtonRef.current);
     document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, [isMenuOpen]);
 
   return (
-    <header className="relative self-stretch border-b border-border bg-background">
-      <Section className="min-h-[72px] flex-row items-center justify-between gap-4">
-        <TextLink aria-label={t('home')} className="flex min-h-11 items-center" href="/">
-          <Logo className="h-7" />
-        </TextLink>
-        <div className={`
-          hidden
-          lg:block
-        `}
-        >
-          <NavBarLinks menus={menus} />
-        </div>
-        <div className="flex flex-row items-center gap-2">
-          <ButtonLink
-            className="max-sm:hidden"
-            href={ROUTES.simulator}
-            size="sm"
-            variant="brand"
+    // above the page content, which the menu panel drops over
+    <header className="relative z-40 self-stretch bg-background">
+      <Section>
+        <div className="@container relative w-full">
+          {/* the line sits on the row, not on the header: it stops at the edges of the page content */}
+          <div className={`
+            flex min-h-[72px] flex-row items-center justify-between gap-4 border-b border-border
+          `}
           >
-            {t('estimate')}
-          </ButtonLink>
-          {currencySelect}
-          <ToggleTheme />
-          <button
-            aria-controls={menuId}
-            aria-expanded={isMenuOpen}
-            onClick={() => setIsMenuOpen(prev => !prev)}
-            type="button"
-            className={cn(`
-              inline-flex h-11 cursor-pointer items-center rounded-md border border-input bg-transparent
-              px-3.5 text-[15px] font-medium text-foreground
-              hover:bg-muted
-              lg:hidden
-            `)}
-          >
-            {isMenuOpen ? t('closeMenu') : t('menu')}
-          </button>
+            <TextLink aria-label={t('home')} className="flex min-h-11 items-center" href="/">
+              {/* the wordmark would push the actions off a very narrow bar: the symbol stands in for it */}
+              <Logo className={`
+                h-7
+                @max-[400px]:hidden
+              `}
+              />
+              <Logo
+                variant="symbol"
+                className={`
+                  h-7
+                  @min-[400px]:hidden
+                `}
+              />
+            </TextLink>
+            <div className={`
+              hidden
+              @min-[1040px]:block
+            `}
+            >
+              <NavBarLinks menus={menus} />
+            </div>
+            <div className="flex flex-row items-center gap-2">
+              {currencySelect}
+              <ToggleTheme className="size-9" />
+              <ButtonLink
+                href={ROUTES.simulator}
+                size="sm"
+                variant="brand"
+                className={`
+                  px-3.5 font-semibold tracking-normal
+                  max-sm:hidden
+                `}
+              >
+                {t('estimate')}
+              </ButtonLink>
+              <button
+                aria-controls={menuId}
+                aria-expanded={isMenuOpen}
+                onClick={() => setIsMenuOpen(prev => !prev)}
+                ref={menuButtonRef}
+                type="button"
+                className={cn(`
+                  inline-flex h-11 cursor-pointer items-center rounded-md border border-input bg-transparent
+                  px-3.5 text-[15px] leading-none font-medium whitespace-nowrap text-foreground
+                  hover:bg-muted
+                  @min-[1040px]:hidden
+                `)}
+              >
+                {isMenuOpen ? t('closeMenu') : t('menu')}
+              </button>
+            </div>
+          </div>
+          {isMenuOpen && <NavBarMobileMenu id={menuId} menus={menus} onNavigate={closeMenu} />}
         </div>
       </Section>
-      {isMenuOpen && <NavBarMobileMenu id={menuId} menus={menus} onNavigate={closeMenu} />}
     </header>
   );
 };

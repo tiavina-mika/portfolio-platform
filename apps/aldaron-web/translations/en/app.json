@@ -51,7 +51,8 @@
     "menu": "Menu",
     "closeMenu": "Close",
     "mainNavigation": "Main",
-    "toggleTheme": "Toggle theme",
+    "lightTheme": "Light",
+    "darkTheme": "Dark",
     "blog": "Blog"
   },
   "LanguageSwitcher": {

@@ -3,34 +3,53 @@
 import { Moon, Sun } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
+import { useSyncExternalStore } from 'react';
 
 import { cn } from '@/utils/app.utils';
 
 import IconButton from './buttons/IconButton';
 
+const subscribeToNothing = () => () => undefined;
+
 type Props = {
   className?: string;
 };
+
+/**
+ * Switches between the light and dark themes. The icon and the name are those of the theme a click
+ * leads to: a moon ("Dark") on a light page, a sun ("Light") on a dark one.
+ */
 const ToggleTheme = ({ className }: Props) => {
   const t = useTranslations('NavBar');
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
+  /*
+   * the server does not know the visitor's theme: the name follows it once mounted in the browser,
+   * while the icons follow it from the first paint through CSS
+   */
+  const isMounted = useSyncExternalStore(subscribeToNothing, () => true, () => false);
+  const isDark = isMounted && resolvedTheme === 'dark';
+  const label = isDark ? t('lightTheme') : t('darkTheme');
 
   return (
     <IconButton
-      aria-label={t('toggleTheme')}
+      aria-label={label}
       className={cn('border-input', className)}
-      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      title={label}
     >
-      <Sun
-        aria-hidden
-        className="dark:hidden"
-        size={18}
-      />
       <Moon
         aria-hidden
-        size={18}
+        size={20}
         className={`
-          hidden
+          stroke-2
+          dark:hidden
+        `}
+      />
+      <Sun
+        aria-hidden
+        size={20}
+        className={`
+          hidden stroke-2
           dark:block
         `}
       />

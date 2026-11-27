@@ -1,5 +1,6 @@
 'use client';
 
+import { ChevronDown } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { ChangeEvent, useId } from 'react';
 
@@ -34,24 +35,35 @@ const CurrencySelect = ({ className }: Props) => {
 
   return (
     <div className="flex items-center gap-2">
-      <select
-        aria-describedby={isNoteShown ? noteId : undefined}
-        aria-label={t('currency')}
-        onChange={handleChange}
-        value={currency}
-        className={cn(
-          `
-            h-11 cursor-pointer rounded-md border border-input bg-transparent px-2.5 font-mono text-[13px]
-            font-medium tracking-[0.04em] text-foreground
-            focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring
-          `,
-          className
-        )}
-      >
-        {CURRENCIES.map(value => (
-          <option key={value} value={value}>{CURRENCY_LABELS[value]}</option>
-        ))}
-      </select>
+      <div className="relative flex">
+        <select
+          aria-describedby={isNoteShown ? noteId : undefined}
+          aria-label={t('currency')}
+          onChange={handleChange}
+          value={currency}
+          className={cn(
+            `
+              h-9 cursor-pointer appearance-none rounded-md border border-input bg-transparent bg-none py-0
+              pr-7 pl-2.5 font-mono text-[13px] leading-none font-medium tracking-[0.04em] text-foreground
+              hover:bg-muted
+              focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring
+              [&>option]:bg-popover [&>option]:text-popover-foreground
+            `,
+            className
+          )}
+        >
+          {CURRENCIES.map(value => (
+            <option key={value} value={value}>{CURRENCY_LABELS[value]}</option>
+          ))}
+        </select>
+        <ChevronDown
+          aria-hidden
+          size={12}
+          className={`
+            pointer-events-none absolute top-1/2 right-2.5 -translate-y-1/2 stroke-[2.5] text-muted-foreground
+          `}
+        />
+      </div>
       {isNoteShown && (
         <span className="font-mono text-xs text-muted-foreground" id={noteId}>
           {t('indicativeRate')}

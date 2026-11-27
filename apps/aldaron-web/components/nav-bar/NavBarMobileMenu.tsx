@@ -15,7 +15,7 @@ type Props = {
 };
 
 /**
- * The menu that drops under the bar below lg: the page links in a floating panel
+ * The menu that drops under a narrow bar: the page links in a floating panel
  */
 const NavBarMobileMenu = ({ id, menus, onNavigate }: Props) => {
   const t = useTranslations('NavBar');
@@ -25,9 +25,8 @@ const NavBarMobileMenu = ({ id, menus, onNavigate }: Props) => {
       aria-label={t('mainNavigation')}
       id={id}
       className={`
-        absolute inset-x-4 top-full z-50 rounded-lg border border-border bg-popover p-2 shadow-lg
-        md:inset-x-6
-        lg:hidden
+        absolute inset-x-0 top-full z-50 rounded-lg border border-border bg-popover p-2 shadow-lg
+        @min-[1040px]:hidden
       `}
     >
       <ul className="m-0 grid list-none gap-1 p-0">

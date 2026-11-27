@@ -50,8 +50,9 @@
     "indicativeRate": "Taha tombanana",
     "menu": "Lisitra",
     "closeMenu": "Hidio",
-    "mainNavigation": "Lehibe",
-    "toggleTheme": "Hanova endrika",
+    "mainNavigation": "Fototra",
+    "lightTheme": "Mazava",
+    "darkTheme": "Maizina",
     "blog": "Blog"
   },
   "LanguageSwitcher": {

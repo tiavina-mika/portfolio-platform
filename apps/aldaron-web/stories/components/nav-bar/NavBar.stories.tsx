@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 import NavBarComponent from '@/components/nav-bar/NavBar';
+import CurrencySelect from '@/containers/currency/CurrencySelect';
 
 const meta = {
   title: 'Components/NavBar',
@@ -19,6 +20,7 @@ type Story = StoryObj<typeof meta>;
 
 export const NavBar: Story = {
   args: {
+    currencySelect: <CurrencySelect />,
     menus: [
       { id: 'pricing', label: 'Offer and pricing', value: '/pricing' },
       { id: 'simulator', label: 'Simulator', value: '/simulator' },

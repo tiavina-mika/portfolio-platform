@@ -39,16 +39,19 @@ De gauche à droite :
 - le **logo**, qui ramène à l'accueil ;
 - les liens : **Offre et prix**, **Simulateur**, **Réalisations**, **À propos**, **Contact**. La page où
   l'on se trouve est soulignée en orange ;
-- le bouton **"Estimer mon prix"**, qui ouvre le simulateur ;
 - le sélecteur de **devise** : euro, dollar ou ariary ;
-- un bouton rond **soleil / lune** pour changer de thème.
+- un bouton carré pour changer de thème : une **lune** en thème clair, un **soleil** en thème sombre ;
+- le bouton **"Estimer mon prix"**, qui ouvre le simulateur.
 
 ### Barre de navigation sur téléphone et tablette
 
-Une barre plus fine avec le logo, la devise, le thème et un bouton **"Menu"**. Ce bouton ouvre un
+Quand la barre manque de place (téléphone, tablette, petite fenêtre), les liens laissent place à un
+bouton **"Menu"**, à côté de la devise, du thème et de "Estimer mon prix". Ce bouton ouvre un
 panneau sous la barre avec la liste des mêmes liens ; il devient **"Fermer"** tant qu'il est ouvert, et
-la touche Échap le referme. Un clic sur un lien referme aussi le panneau. Sur un très petit écran, le
-bouton "Estimer mon prix" disparaît de la barre : le simulateur reste dans le menu.
+la touche Échap le referme. Un clic sur un lien, ou l'élargissement de la fenêtre,
+referme aussi le panneau. Sur un très petit écran, le
+bouton "Estimer mon prix" disparaît de la barre (le simulateur reste dans le menu) et le logo se réduit à
+son symbole.
 
 ### Pied de page
 

@@ -34,15 +34,18 @@ const NavBarLink = ({
       underline={false}
       className={cn(
         `
-          flex min-h-11 flex-row items-center text-[15px] font-medium transition-colors duration-120
+          flex min-h-11 flex-row items-center leading-none font-medium whitespace-nowrap transition-colors
+          duration-120
           hover:text-foreground
           motion-reduce:transition-none
         `,
-        isActive ? 'text-foreground' : 'text-muted-foreground',
-        variant === 'inline' && cn('px-3', isActive && 'shadow-[inset_0_-2px_0_var(--brand)]'),
+        variant === 'inline' && cn(
+          'px-3 text-[15px]',
+          isActive ? 'text-foreground shadow-[inset_0_-2px_0_var(--brand)]' : 'text-muted-foreground'
+        ),
         variant === 'row' && cn(
           `
-            w-full rounded-md px-3
+            w-full rounded-md px-3 text-base text-foreground
             hover:bg-muted
           `,
           isActive && 'bg-muted'
